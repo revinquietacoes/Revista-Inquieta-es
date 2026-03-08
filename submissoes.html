@@ -1,84 +1,199 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Página dedicada ao envio de manuscritos, formulários institucionais e organização do processo de submissão." />
-  <meta name="author" content="Revista Inquietações" />
-  <title>Submissões | Revista Inquietações</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Submissões | Revista Inquietações</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+html{
+scroll-behavior:smooth;
+}
+
+.form-submissao{
+display:grid;
+gap:14px;
+max-width:700px;
+}
+
+.form-submissao input,
+.form-submissao select{
+padding:10px;
+border:1px solid #ccc;
+border-radius:6px;
+font-size:14px;
+}
+
+.form-submissao label{
+font-weight:600;
+}
+
+.success{
+display:none;
+background:#e8f6ec;
+padding:12px;
+border-radius:6px;
+color:#1e6b38;
+margin-top:10px;
+}
+
+</style>
+
 </head>
+
 <body>
-  <div class="site-shell">
-    <div class="topbar">
-      <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-      <div class="pill">Fluxo contínuo • v. 1, n. 1 (2026)</div>
-    </div>
 
-    <header class="masthead">
-      <div class="masthead-inner">
-        <div>
-          <p class="kicker">Portal científico • Revista Inquietações</p>
-          <h1>Submissões</h1>
-          <p>Página dedicada ao envio de manuscritos, formulários institucionais e organização do processo de submissão.</p>
-          <div class="masthead-meta">
-            <div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
-            <div class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
-            <div class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
-          </div>
-        </div>
-        <div class="banner-card">
-          <img src="logo-revista.png" alt="Logo da Revista Inquietações" />
-        </div>
-      </div>
-    </header>
+<div class="site-shell">
 
-    <div class="portal-grid">
-      <aside class="sidebar">
-        <h2>Navegação institucional</h2>
-        <nav class="menu">
-          <a href="index.html" class="">Início</a>
-<a href="sobre.html" class="">Sobre</a>
-<a href="edicao-atual.html" class="">Edição Atual</a>
-<a href="conteudos.html" class="">Conteúdos</a>
-<a href="equipe-editorial.html" class="">Equipe Editorial</a>
-<a href="politicas-editoriais.html" class="">Políticas Editoriais</a>
-<a href="diretrizes-autores.html" class="">Diretrizes para Autores</a>
-<a href="submissoes.html" class="active">Submissões</a>
-<a href="templates.html" class="">Templates</a>
-<a href="contato.html" class="">Contato</a>
-        </nav>
-        <div class="small-note">
-          <strong>Contato institucional</strong><br>
-          Instagram: <a href="https://www.instagram.com/revistainquietacoes/" target="_blank">@revistainquietacoes</a><br>
-          E-mail: <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
-        </div>
-      </aside>
+<header>
+<h1>Revista Inquietações</h1>
+<p>Portal de submissões</p>
+</header>
 
-      <main class="content">
-        
-<section class="panel"><div class="panel-head"><h2>Submissões em fluxo contínuo</h2><p>Canal oficial para autores e participantes das atividades da revista.</p></div><div class="panel-body">
-<div class="cta-row">
-<a class="btn" href="https://forms.gle/YoXGjm1MhuUr7UK69" target="_blank">Enviar manuscrito</a>
-<a class="btn secondary" href="templates.html">Ver templates</a>
+<main>
+
+<section class="panel">
+
+<h2>Submissões em fluxo contínuo</h2>
+
+<a class="btn" href="#formulario-submissao">Enviar manuscrito</a>
+
+<p>
+As submissões devem ser enviadas exclusivamente pelo formulário oficial.
+</p>
+
+</section>
+
+
+<section id="formulario-submissao">
+
+<h2>Envio de material para avaliação</h2>
+
+<form
+class="form-submissao"
+action="https://docs.google.com/forms/d/e/1FAIpQLSdZ8QsROVVLi-pCKXApRZ_nvqRzsDxsebwYcO84nFmVNlTIyQ/formResponse"
+method="POST"
+target="hidden_iframe"
+onsubmit="submitted=true;"
+>
+
+<label>NOME COMPLETO *</label>
+<input type="text" name="entry.478853965" required>
+
+
+<label>TÍTULO DO MATERIAL *</label>
+<input type="text" name="entry.655399159" required>
+
+
+<label>POSSUI VÍNCULO ACADÊMICO? *</label>
+<select name="entry.1771312591" required>
+<option value="">Selecione</option>
+<option value="SIM">SIM</option>
+<option value="NÃO">NÃO</option>
+</select>
+
+
+<label>E-MAIL *</label>
+<input type="email" name="entry.1086107727" required>
+
+
+<label>TELEFONE PARA CONTATO *</label>
+<input type="tel" name="entry.2047704825" required>
+
+
+<label>SEU TELEFONE É SEU WHATSAPP? *</label>
+<select name="entry.34443392" required>
+<option value="">Selecione</option>
+<option value="SIM">SIM</option>
+<option value="NÃO">NÃO</option>
+</select>
+
+
+<label>
+VOCÊ PERMITE QUE A REVISTA INQUIETAÇÕES PUBLIQUE INTEGRALMENTE SEU MATERIAL CASO ELE SEJA APROVADO NA AVALIAÇÃO?
+</label>
+
+<select name="entry.1835008994" required>
+<option value="">Selecione</option>
+<option value="SIM">SIM</option>
+<option value="NÃO">NÃO</option>
+</select>
+
+
+<label>
+VOCÊ COMPREENDE E CONCORDA QUE SEU MATERIAL PODERÁ PASSAR POR REVISÕES DE PORTUGUÊS, DIAGRAMAÇÃO E OUTROS AJUSTES?
+</label>
+
+<select name="entry.1626188455" required>
+<option value="">Selecione</option>
+<option value="SIM">SIM</option>
+<option value="NÃO CONCORDO">NÃO CONCORDO</option>
+</select>
+
+
+<label>
+VOCÊ CONSENTE QUE A EQUIPE DA REVISTA INQUIETAÇÕES ENTRE EM CONTATO COM VOCÊ?
+</label>
+
+<select name="entry.808801489" required>
+<option value="">Selecione</option>
+<option value="SIM">SIM</option>
+<option value="NÃO">NÃO</option>
+</select>
+
+
+<h3>Envio do arquivo</h3>
+
+<p>
+Após registrar seus dados, envie o arquivo (PDF, DOC, imagem ou apresentação)
+no formulário oficial da revista.
+</p>
+
+<a class="btn" href="https://docs.google.com/forms/d/e/1FAIpQLSdZ8QsROVVLi-pCKXApRZ_nvqRzsDxsebwYcO84nFmVNlTIyQ/viewform" target="_blank">
+Enviar arquivo
+</a>
+
+<br><br>
+
+<button type="submit" class="btn">Registrar submissão</button>
+
+</form>
+
+<div class="success" id="success">
+Dados registrados com sucesso. Agora envie o arquivo no botão acima.
 </div>
-<p style="margin-top:18px;">As submissões devem ser encaminhadas exclusivamente pelo formulário eletrônico oficial. Não serão aceitos envios por e-mail ou por outros meios informais.</p>
-</div></section>
-<section class="panel"><div class="panel-head"><h2>Formulários complementares</h2><p>Inscrições, certificados e atividades relacionadas ao portal da revista.</p></div><div class="panel-body">
-<div class="table-like">
-<div class="table-row"><strong>Submissão principal</strong><div><a href="https://forms.gle/YoXGjm1MhuUr7UK69" target="_blank">Formulário oficial de envio para avaliação e publicação</a></div></div>
-<div class="table-row"><strong>Inscrição em minicursos</strong><div><a href="https://forms.gle/zs2Jz4SisuV6RANE6" target="_blank">Formulário de inscrição</a></div></div>
-<div class="table-row"><strong>Solicitação de certificado</strong><div><a href="https://forms.gle/wY4KiuQ3rbZGhEK97" target="_blank">Formulário oficial</a></div></div>
+
+<iframe name="hidden_iframe" style="display:none;"></iframe>
+
+</section>
+
+</main>
+
 </div>
-</div></section>
 
-      </main>
-    </div>
 
-    <footer class="footer">
-      <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-      <p>Organização editorial: Diego Vinícius • Instagram: <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a></p>
-    </footer>
-  </div>
+<script>
+
+var submitted=false;
+
+document.querySelector("form").addEventListener("submit",function(){
+
+setTimeout(function(){
+
+document.getElementById("success").style.display="block";
+
+},1200);
+
+});
+
+</script>
+
+
 </body>
+
 </html>
