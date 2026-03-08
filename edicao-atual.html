@@ -7,6 +7,39 @@
   <meta name="author" content="Revista Inquietações" />
   <title>Edição Atual | Revista Inquietações</title>
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    .edicao-menu-lista {
+      display: grid;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .edicao-menu-link {
+      display: block;
+      text-decoration: none;
+      padding: 12px 14px;
+      border: 1px solid rgba(0, 0, 0, 0.08);
+      border-radius: 12px;
+      background: #fff;
+      transition: 0.2s ease;
+    }
+
+    .edicao-menu-link:hover {
+      transform: translateY(-1px);
+      background: rgba(0, 0, 0, 0.02);
+    }
+
+    .edicao-menu-link strong {
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .edicao-menu-link span {
+      color: #555;
+      font-size: 0.96rem;
+    }
+  </style>
 </head>
 <body>
   <div class="site-shell">
@@ -38,15 +71,15 @@
         <h2>Navegação institucional</h2>
         <nav class="menu">
           <a href="index.html" class="">Início</a>
-<a href="sobre.html" class="">Sobre</a>
-<a href="edicao-atual.html" class="active">Edição Atual</a>
-<a href="conteudos.html" class="">Conteúdos</a>
-<a href="equipe-editorial.html" class="">Equipe Editorial</a>
-<a href="politicas-editoriais.html" class="">Políticas Editoriais</a>
-<a href="diretrizes-autores.html" class="">Diretrizes para Autores</a>
-<a href="submissoes.html" class="">Submissões</a>
-<a href="templates.html" class="">Templates</a>
-<a href="contato.html" class="">Contato</a>
+          <a href="sobre.html" class="">Sobre</a>
+          <a href="edicao-atual.html" class="active">Edição Atual</a>
+          <a href="conteudos.html" class="">Conteúdos</a>
+          <a href="equipe-editorial.html" class="">Equipe Editorial</a>
+          <a href="politicas-editoriais.html" class="">Políticas Editoriais</a>
+          <a href="diretrizes-autores.html" class="">Diretrizes para Autores</a>
+          <a href="submissoes.html" class="">Submissões</a>
+          <a href="templates.html" class="">Templates</a>
+          <a href="contato.html" class="">Contato</a>
         </nav>
         <div class="small-note">
           <strong>Contato institucional</strong><br>
@@ -57,24 +90,119 @@
 
       <main class="content">
         
-<section class="panel"><div class="panel-head"><h2>v. 1, n. 1 (2026)</h2><p>Primeira edição em fluxo contínuo.</p></div><div class="panel-body">
-<div class="card-grid">
-<div class="info-card"><strong>Edição atual</strong>Jan./Dez. de 2026</div>
-<div class="info-card"><strong>e-ISSN</strong>Em breve</div>
-<div class="info-card"><strong>Status</strong>Primeira edição</div>
-<div class="info-card"><strong>Identificação</strong>International Standard Serial Number</div>
-</div>
-<div class="cta-row">
-<a class="btn" href="https://fliphtml5.com/bookcase/pelkty/" target="_blank">Versão interativa</a>
-</div>
-</div></section>
-<section class="panel"><div class="panel-head"><h2>Materiais institucionais da edição</h2><p>Links centrais para consulta e navegação editorial.</p></div><div class="panel-body">
-<div class="table-like">
-<div class="table-row"><strong>Capa da edição</strong><div><a href="https://online.fliphtml5.com/iamthed1/jeem/" target="_blank">Acessar conteúdo</a><br>Autor: Diego Vinícius Brito dos Santos</div></div>
-<div class="table-row"><strong>Expediente editorial</strong><div><a href="https://online.fliphtml5.com/iamthed1/yask/" target="_blank">Acessar conteúdo</a><br>DOI: <a href="https://doi.org/10.5281/zenodo.18795146" target="_blank">10.5281/zenodo.18795146</a></div></div>
-<div class="table-row"><strong>Mensagem editorial</strong><div><a href="https://online.fliphtml5.com/iamthed1/Mensagem/" target="_blank">Acessar conteúdo</a><br>DOI: <a href="https://doi.org/10.5281/zenodo.18816235" target="_blank">10.5281/zenodo.18816235</a></div></div>
-</div>
-</div></section>
+        <section class="panel">
+          <div class="panel-head">
+            <h2>v. 1, n. 1 (2026)</h2>
+            <p>Primeira edição em fluxo contínuo.</p>
+          </div>
+          <div class="panel-body">
+            <div class="card-grid">
+              <div class="info-card"><strong>Edição atual</strong>Jan./Dez. de 2026</div>
+              <div class="info-card"><strong>e-ISSN</strong>Em breve</div>
+              <div class="info-card"><strong>Status</strong>Primeira edição</div>
+              <div class="info-card"><strong>Identificação</strong>International Standard Serial Number</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Menu interativo da edição</h2>
+            <p>Ao clicar em uma seção, o leitor será direcionado para a página de conteúdos em sua respectiva área.</p>
+          </div>
+          <div class="panel-body">
+            <div class="edicao-menu-lista">
+              <a class="edicao-menu-link" href="conteudos.html#capa-edicao">
+                <strong>Capa da edição — v. 1, n. 1 (2026)</strong>
+                <span>Abrir a seção da capa na página Conteúdos</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#expediente-editorial">
+                <strong>Expediente Editorial</strong>
+                <span>Abrir a seção de expediente editorial</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#mensagem-autores-leitores">
+                <strong>Mensagem aos(às) autores(as) e leitores(as)</strong>
+                <span>Abrir a mensagem editorial</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#artigos">
+                <strong>Artigos</strong>
+                <span>Abrir a seção de artigos</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#resumos-expandidos">
+                <strong>Resumos expandidos</strong>
+                <span>Abrir a seção de resumos expandidos</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#ensaios">
+                <strong>Ensaios</strong>
+                <span>Abrir a seção de ensaios</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#resenhas">
+                <strong>Resenhas</strong>
+                <span>Abrir a seção de resenhas</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#traducoes">
+                <strong>Traduções</strong>
+                <span>Abrir a seção de traduções</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#fotografia-tematica">
+                <strong>Fotografia temática</strong>
+                <span>Abrir a seção de fotografia temática</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#relatos-experiencia">
+                <strong>Relatos de experiência</strong>
+                <span>Abrir a seção de relatos de experiência</span>
+              </a>
+
+              <a class="edicao-menu-link" href="conteudos.html#homenagens">
+                <strong>Homenagens</strong>
+                <span>Abrir a seção de homenagens</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Materiais institucionais da edição</h2>
+            <p>Links centrais para consulta e navegação editorial.</p>
+          </div>
+          <div class="panel-body">
+            <div class="table-like">
+              <div class="table-row">
+                <strong>Capa da edição</strong>
+                <div>
+                  <a href="conteudos.html#capa-edicao">Acessar conteúdo</a><br>
+                  Autor: Diego Vinícius Brito dos Santos
+                </div>
+              </div>
+
+              <div class="table-row">
+                <strong>Expediente editorial</strong>
+                <div>
+                  <a href="conteudos.html#expediente-editorial">Acessar conteúdo</a><br>
+                  DOI: <a href="https://doi.org/10.5281/zenodo.18795146" target="_blank">10.5281/zenodo.18795146</a>
+                </div>
+              </div>
+
+              <div class="table-row">
+                <strong>Mensagem editorial</strong>
+                <div>
+                  <a href="conteudos.html#mensagem-autores-leitores">Acessar conteúdo</a><br>
+                  DOI: <a href="https://doi.org/10.5281/zenodo.18816235" target="_blank">10.5281/zenodo.18816235</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
 
       </main>
     </div>
