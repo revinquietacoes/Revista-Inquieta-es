@@ -39,6 +39,10 @@
       margin-bottom: 16px;
     }
 
+    .video-item:last-child {
+      margin-bottom: 0;
+    }
+
     .video-item strong {
       display: block;
       margin-bottom: 8px;
@@ -73,8 +77,6 @@
       font-size: 0.85rem;
     }
 
-    /* faixa de ações dos cursos */
-
     .course-actions {
       margin-bottom: 24px;
       padding: 18px;
@@ -88,12 +90,82 @@
       color: #4a5a72;
       font-size: 0.95rem;
     }
+
+    /* seção de instrutores */
+    .instructors-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    .instructor-card {
+      background: linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      border: 1px solid #d7e0ea;
+      border-radius: 22px;
+      padding: 22px;
+      box-shadow: 0 10px 28px rgba(21, 32, 51, 0.08);
+      text-align: left;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .instructor-card::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 6px;
+      background: linear-gradient(90deg, #173f73 0%, #2f5f9f 100%);
+    }
+
+    .instructor-photo-wrap {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 16px;
+    }
+
+    .instructor-photo {
+      width: 132px;
+      height: 132px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 5px solid #eef3f8;
+      box-shadow: 0 8px 22px rgba(23, 63, 115, 0.14);
+      background: #f4f7fb;
+    }
+
+    .instructor-name {
+      margin: 0 0 8px;
+      text-align: center;
+      font-size: 1.08rem;
+      line-height: 1.35;
+      color: #173f73;
+    }
+
+    .instructor-affiliation {
+      text-align: center;
+      font-size: 0.95rem;
+      color: #5f6f87;
+      margin-bottom: 16px;
+      padding-bottom: 14px;
+      border-bottom: 1px solid #dfe7f0;
+    }
+
+    .instructor-bio p {
+      margin: 0 0 12px;
+      color: #31455f;
+      line-height: 1.72;
+      font-size: 0.97rem;
+    }
+
+    .instructor-bio p:last-child {
+      margin-bottom: 0;
+    }
   </style>
 </head>
-
 <body>
   <div class="site-shell">
-
     <div class="topbar">
       <div class="pill">Revista Inquietações • Formação e extensão</div>
       <div class="pill">Mini-cursos em vídeo incorporados</div>
@@ -108,14 +180,12 @@
             Seleção de aulas, leituras comentadas e formações da Revista Inquietações,
             com reprodução direta na página por meio de incorporação em iframe do YouTube.
           </p>
-
           <div class="masthead-meta">
             <div class="masthead-card"><strong>Formato</strong>Vídeo incorporado</div>
             <div class="masthead-card"><strong>Acesso</strong>Direto na página</div>
             <div class="masthead-card"><strong>Temas</strong>Humanidades e escrita acadêmica</div>
           </div>
         </div>
-
         <div class="banner-card">
           <img src="logo-revista.png" alt="Logo da Revista Inquietações" />
         </div>
@@ -123,11 +193,8 @@
     </header>
 
     <div class="portal-grid">
-
       <aside class="sidebar">
-
         <h2>Navegação institucional</h2>
-
         <nav class="menu">
           <a href="index.html">Início</a>
           <a href="sobre.html">Sobre</a>
@@ -145,21 +212,14 @@
         <div class="small-note">
           <strong>Contato institucional</strong><br>
           Instagram:
-          <a href="https://www.instagram.com/revistainquietacoes/" target="_blank">
-            @revistainquietacoes
-          </a><br>
+          <a href="https://www.instagram.com/revistainquietacoes/" target="_blank">@revistainquietacoes</a><br>
           E-mail:
-          <a href="mailto:rev.inquietacoes@gmail.com">
-            rev.inquietacoes@gmail.com
-          </a>
+          <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
         </div>
-
       </aside>
 
       <main class="content">
-
         <section class="panel">
-
           <div class="panel-head">
             <h2>Catálogo de mini-cursos</h2>
             <p>
@@ -169,136 +229,164 @@
           </div>
 
           <div class="panel-body">
-
-            <!-- faixa de ações -->
-
             <div class="course-actions">
-              <p>
-                Para participar dos minicursos da Revista Inquietações, utilize os links abaixo.
-              </p>
-
+              <p>Para participar dos minicursos da Revista Inquietações, utilize os links abaixo.</p>
               <div class="cta-row">
-                <a class="btn" href="https://forms.gle/UtbZb1n8fhxkfBw8A" target="_blank">
-                  Inscrição em minicurso
-                </a>
-
-                <a class="btn secondary" href="https://forms.gle/6m3ufKYR3oFXuBoM8" target="_blank">
-                  Solicitar certificado
-                </a>
-
-                <a class="btn secondary" href="https://drive.google.com/drive/folders/1t_xVWLyB8qsC6Zm77z7OUXqalRu6XdWr?usp=drive_link" target="_blank">
-                  Certificados
-                </a>
+                <a class="btn" href="https://forms.gle/UtbZb1n8fhxkfBw8A" target="_blank">Inscrição em minicurso</a>
+                <a class="btn secondary" href="https://forms.gle/6m3ufKYR3oFXuBoM8" target="_blank">Solicitar certificado</a>
+                <a class="btn secondary" href="https://drive.google.com/drive/folders/1t_xVWLyB8qsC6Zm77z7OUXqalRu6XdWr?usp=drive_link" target="_blank">Certificados</a>
               </div>
             </div>
 
             <div class="video-grid">
-
-              <!-- curso 1 -->
-
               <article class="course-card">
                 <span class="course-meta">Leitura comentada</span>
                 <h3>O Ser Social e o Preconceito: Uma Leitura Comentada</h3>
                 <p>Mini-curso completo com reprodução integrada.</p>
-
                 <div class="video-item">
                   <strong>Completo</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/EwXLrsQyGnM" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/EwXLrsQyGnM" title="O Ser Social e o Preconceito: Uma Leitura Comentada" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
-
-              <!-- curso 2 -->
 
               <article class="course-card">
                 <span class="course-meta">Filosofia</span>
-                <h3>Nietzsche e os valores modernos</h3>
-
+                <h3>Mini-curso: Nietzsche e os valores modernos: um estudo sobre o adoecimento moral do homem</h3>
+                <p>Curso dividido em duas partes para reprodução sequencial.</p>
                 <div class="video-item">
                   <strong>Parte 01</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/x7MMPwjRTPM" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/x7MMPwjRTPM" title="Nietzsche e os valores modernos - Parte 01" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                   </div>
                 </div>
-
                 <div class="video-item">
                   <strong>Parte 02</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/TWvVWFXV-lA" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/TWvVWFXV-lA" title="Nietzsche e os valores modernos - Parte 02" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
-
-              <!-- curso 3 -->
 
               <article class="course-card">
                 <span class="course-meta">Teoria social</span>
                 <h3>O Manifesto Comunista: O Texto que Mudou o Mundo</h3>
-
+                <p>Aula comentada com acesso direto no portal.</p>
                 <div class="video-item">
+                  <strong>Parte 01</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/Vw_rqRNqdd4" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/Vw_rqRNqdd4" title="O Manifesto Comunista: O Texto que Mudou o Mundo - Parte 01" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
-
-              <!-- curso 4 -->
 
               <article class="course-card">
-                <span class="course-meta">Psicanálise</span>
-                <h3>O Livro d’Isso — Georg Groddeck</h3>
-
+                <span class="course-meta">Psicanálise e leitura</span>
+                <h3>Leitura e Comentário do livro “O Livro d’Isso”, de Georg Groddeck</h3>
+                <p>Leitura comentada em vídeo incorporado.</p>
                 <div class="video-item">
+                  <strong>Parte 01</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/6hIkAqFCSO4" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/6hIkAqFCSO4" title="Leitura e Comentário do livro O Livro d'Isso - Parte 01" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
-
-              <!-- curso 5 -->
 
               <article class="course-card">
                 <span class="course-meta">Escrita acadêmica</span>
                 <h3>Como escrever um resumo expandido?</h3>
-
+                <p>Conteúdo completo voltado à orientação acadêmica.</p>
                 <div class="video-item">
+                  <strong>Completo</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/MqxG9Y34e30" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/MqxG9Y34e30" title="Como escrever um resumo expandido?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
-
-              <!-- curso 6 -->
 
               <article class="course-card">
                 <span class="course-meta">Tecnologia e ética</span>
                 <h3>Algoritmos do Passado: Inteligência Artificial, História e Ética</h3>
-
+                <p>Mini-curso completo sobre inteligência artificial, historicidade e questões éticas.</p>
                 <div class="video-item">
+                  <strong>Completo</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/OcR6JDpE6zQ" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/OcR6JDpE6zQ" title="Algoritmos do Passado: Inteligência Artificial, História e Ética" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
-
             </div>
           </div>
-
         </section>
 
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Instrutores</h2>
+            <p>Docentes e pesquisadores responsáveis pela condução dos mini-cursos e atividades formativas da Revista Inquietações.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="instructors-grid">
+              <article class="instructor-card">
+                <div class="instructor-photo-wrap">
+                  <img src="arquivos/Captura de tela 2026-03-08 063748.png" alt="Diego Vinícius Brito dos Santos" class="instructor-photo">
+                </div>
+                <h3 class="instructor-name">DIEGO VINÍCIUS BRITO DOS SANTOS</h3>
+                <div class="instructor-affiliation">Prefeitura Municipal de Carnaúba dos Dantas</div>
+                <div class="instructor-bio">
+                  <p>Professor pedagogo e servidor público efetivo, com experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui mestrado em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada na obra e filosofia de Friedrich Nietzsche.</p>
+                  <p>É graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro Universitário Internacional (UNINTER, 2022), onde desenvolveu estudos sobre desigualdade social e meritocracia no contexto escolar. É autor do livro <em>Nietzsche e os valores modernos</em> (2022).</p>
+                  <p>Dedica-se à formação continuada em Psicopedagogia Clínica e Institucional, Neuropsicopedagogia, Educação Inclusiva e Especial, Atendimento Educacional Especializado (AEE) e Educação de Jovens e Adultos (EJA). Seus interesses acadêmicos abrangem Filosofia, Educação Inclusiva, Currículo e Prática Docente, Direitos Humanos e Gestão Escolar, com foco na formação integral e inclusiva.</p>
+                </div>
+              </article>
+
+              <article class="instructor-card">
+                <div class="instructor-photo-wrap">
+                  <img src="arquivos/Captura de tela 2026-03-08 063855.png" alt="Lindoaldo Vieira Campos Júnior" class="instructor-photo">
+                </div>
+                <h3 class="instructor-name">LINDOALDO VIEIRA CAMPOS JÚNIOR</h3>
+                <div class="instructor-affiliation">Professor do Instituto Federal de Educação, Ciência e Tecnologia do Rio Grande do Norte</div>
+                <div class="instructor-bio">
+                  <p>Bacharel em Direito, Mestre em História com área de concentração em História dos Sertões, Licenciado, Mestre e Doutor em Filosofia, com ênfase na filosofia de Friedrich Nietzsche.</p>
+                </div>
+              </article>
+
+              <article class="instructor-card">
+                <div class="instructor-photo-wrap">
+                  <img src="arquivos/Captura de tela 2026-03-08 063909.png" alt="Benjamim Julião de Góis Filho" class="instructor-photo">
+                </div>
+                <h3 class="instructor-name">BENJAMIM JULIÃO DE GÓIS FILHO</h3>
+                <div class="instructor-affiliation">Universidade do Estado do Rio Grande do Norte</div>
+                <div class="instructor-bio">
+                  <p>Doutor em Filosofia pela Universidade Federal do Ceará (UFC). Mestre em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN). Especialista em Ética e Filosofia Política pela Universidade do Estado do Rio Grande do Norte (UERN). Pós-graduado em Psicanálise e Psicologia (FAMEESP).</p>
+                  <p>Licenciado em Filosofia (UERN), Licenciado e Bacharel em História (UFRN), Bacharel em Teologia pela Faculdade Kurios (FAK/CE) e pelo Seminário Teológico Potiguar (STP/RN). Psicanalista pelo Centro de Estudos Psicanalíticos de Natal (CESPN).</p>
+                  <p>Professor de Filosofia da Universidade do Estado do Rio Grande do Norte (UERN). Atua e tem interesse em Filosofia Contemporânea, com ênfase na Teoria Crítica da Escola de Frankfurt e no pensamento de Michel Foucault, além de Filosofia da Linguagem, Ontologia, Filosofia da Religião, Ética, Filosofia Política, Teoria da História, Psicanálise e Teologia Contemporânea.</p>
+                </div>
+              </article>
+
+              <article class="instructor-card">
+                <div class="instructor-photo-wrap">
+                  <img src="arquivos/Captura de tela 2026-03-08 063933.png" alt="Messias Gomes de Araújo Leal" class="instructor-photo">
+                </div>
+                <h3 class="instructor-name">MESSIAS GOMES DE ARAÚJO LEAL</h3>
+                <div class="instructor-affiliation">UFRN</div>
+                <div class="instructor-bio">
+                  <p>Graduado em Filosofia pela UERN (2003.2) e em Pedagogia pela UFRN (2026.1). Atua em monitoria de ensino e em pesquisa de inovação em diferentes grupos acadêmicos.</p>
+                  <p>Participa de iniciativas como PROJEPI, GPCAI/Surdos, GPCAI Neurociência, GPENCI – Grupo de Pesquisa em Ensino de Ciências, GENCEM – Grupo de Estudos em Neurociência Cognitiva e Educação Matemática.</p>
+                  <p>É membro do Núcleo Brasileiro de Estudos sobre Autoritarismo e Personalidade Autoritária (NBREAPA), com interesse em educação, filosofia e estudos interdisciplinares.</p>
+                </div>
+              </article>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
 
     <footer class="footer">
       <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-      <p>
-        Organização editorial: Diego Vinícius •
-        Instagram:
-        <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a>
-      </p>
+      <p>Organização editorial: Diego Vinícius • Instagram: <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a></p>
     </footer>
-
   </div>
 </body>
 </html>
