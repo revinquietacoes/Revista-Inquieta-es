@@ -3,16 +3,575 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Catálogo das seções da revista, com destaques de artigos, ensaios, resenhas, traduções e outras modalidades." />
+  <meta name="description" content="Conteúdos publicados da Revista Inquietações — v. 1, n. 1 (2026)." />
   <meta name="author" content="Revista Inquietações" />
   <title>Conteúdos Publicados | Revista Inquietações</title>
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    :root{
+      --bg:#f6f1e8;
+      --paper:#fffdf9;
+      --paper-soft:#f8f3eb;
+      --ink:#221b16;
+      --muted:#6a5f57;
+      --line:#ddd2c4;
+      --accent:#8d6740;
+      --accent-soft:#efe3d1;
+      --shadow:0 14px 36px rgba(44, 31, 18, 0.08);
+      --radius:22px;
+      --radius-sm:16px;
+      --max:1320px;
+      --ease:all .28s ease;
+    }
+
+    *{
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      margin:0;
+      font-family: Georgia, "Times New Roman", serif;
+      color:var(--ink);
+      background:
+        radial-gradient(circle at top, rgba(255,255,255,.7), transparent 30%),
+        linear-gradient(180deg, #f8f3eb 0%, #f3ede3 100%);
+      line-height:1.6;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    a{
+      color:inherit;
+    }
+
+    .site-shell{
+      min-height:100vh;
+    }
+
+    .topbar{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      justify-content:center;
+      padding:14px 18px 4px;
+    }
+
+    .pill{
+      background:rgba(141,103,64,.09);
+      color:var(--accent);
+      border:1px solid rgba(141,103,64,.14);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:.88rem;
+    }
+
+    .masthead{
+      padding:12px 20px 24px;
+    }
+
+    .masthead-inner{
+      max-width:var(--max);
+      margin:0 auto;
+      display:grid;
+      grid-template-columns:1.5fr .7fr;
+      gap:24px;
+      background:rgba(255,253,249,.85);
+      border:1px solid rgba(141,103,64,.12);
+      border-radius:30px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+
+    .masthead-inner > div:first-child{
+      padding:34px;
+    }
+
+    .kicker{
+      margin:0 0 10px;
+      text-transform:uppercase;
+      letter-spacing:.08em;
+      color:var(--accent);
+      font-size:.82rem;
+    }
+
+    .masthead h1{
+      margin:0 0 10px;
+      font-size:clamp(2rem, 4vw, 3.2rem);
+      line-height:1.06;
+    }
+
+    .masthead p{
+      margin:0;
+      color:var(--muted);
+      max-width:70ch;
+    }
+
+    .masthead-meta{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:24px;
+    }
+
+    .masthead-card{
+      background:var(--paper-soft);
+      border:1px solid var(--line);
+      border-radius:18px;
+      padding:14px 16px;
+      font-size:.95rem;
+    }
+
+    .masthead-card strong{
+      display:block;
+      margin-bottom:5px;
+      color:var(--ink);
+    }
+
+    .banner-card{
+      background:linear-gradient(180deg, rgba(141,103,64,.08), rgba(141,103,64,.02));
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:24px;
+      min-height:100%;
+    }
+
+    .banner-card img{
+      width:min(100%, 270px);
+      object-fit:contain;
+      filter:drop-shadow(0 14px 30px rgba(0,0,0,.08));
+    }
+
+    .portal-grid{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 20px 40px;
+      display:grid;
+      grid-template-columns:290px minmax(0, 1fr);
+      gap:24px;
+    }
+
+    .sidebar{
+      position:sticky;
+      top:18px;
+      align-self:start;
+      background:rgba(255,253,249,.85);
+      border:1px solid rgba(141,103,64,.12);
+      border-radius:26px;
+      box-shadow:var(--shadow);
+      padding:22px;
+    }
+
+    .sidebar h2{
+      margin:0 0 12px;
+      font-size:1.2rem;
+    }
+
+    .menu{
+      display:grid;
+      gap:8px;
+      margin-bottom:18px;
+    }
+
+    .menu a{
+      text-decoration:none;
+      padding:11px 13px;
+      border-radius:12px;
+      color:var(--muted);
+      transition:var(--ease);
+      border:1px solid transparent;
+    }
+
+    .menu a:hover,
+    .menu a.active{
+      background:rgba(141,103,64,.08);
+      color:var(--ink);
+      border-color:rgba(141,103,64,.12);
+    }
+
+    .small-note{
+      background:var(--paper-soft);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px;
+      font-size:.94rem;
+      color:var(--muted);
+    }
+
+    .content{
+      display:grid;
+      gap:22px;
+    }
+
+    .panel{
+      background:rgba(255,253,249,.9);
+      border:1px solid rgba(141,103,64,.12);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+      animation:fadeUp .55s ease both;
+    }
+
+    .panel-head{
+      padding:24px 24px 8px;
+    }
+
+    .panel-head h2{
+      margin:0 0 6px;
+      font-size:1.6rem;
+    }
+
+    .panel-head p{
+      margin:0;
+      color:var(--muted);
+    }
+
+    .panel-body{
+      padding:0 24px 24px;
+    }
+
+    .edition-cover{
+      display:grid;
+      grid-template-columns:320px 1fr;
+      gap:22px;
+      align-items:start;
+      margin-top:10px;
+    }
+
+    .cover-card{
+      background:var(--paper-soft);
+      border:1px solid var(--line);
+      border-radius:22px;
+      padding:16px;
+    }
+
+    .cover-card img{
+      width:100%;
+      border-radius:14px;
+      box-shadow:0 16px 28px rgba(0,0,0,.10);
+    }
+
+    .cover-meta{
+      display:grid;
+      gap:10px;
+    }
+
+    .meta-box{
+      background:var(--paper-soft);
+      border:1px solid var(--line);
+      border-radius:16px;
+      padding:14px 16px;
+    }
+
+    .meta-box strong{
+      display:block;
+      margin-bottom:5px;
+    }
+
+    .section-nav{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0,1fr));
+      gap:12px;
+      margin-top:16px;
+    }
+
+    .section-nav a{
+      text-decoration:none;
+      background:var(--paper-soft);
+      border:1px solid var(--line);
+      border-radius:14px;
+      padding:13px 14px;
+      transition:var(--ease);
+      font-size:.95rem;
+    }
+
+    .section-nav a:hover{
+      transform:translateY(-2px);
+      box-shadow:0 10px 18px rgba(44,31,18,.05);
+      border-color:rgba(141,103,64,.2);
+    }
+
+    .content-group{
+      background:rgba(255,255,255,.5);
+      border:1px solid rgba(141,103,64,.10);
+      border-radius:24px;
+      padding:18px;
+    }
+
+    .content-group + .content-group{
+      margin-top:18px;
+    }
+
+    .group-title{
+      margin:0 0 14px;
+      font-size:1.35rem;
+    }
+
+    details.item{
+      border:1px solid var(--line);
+      border-radius:18px;
+      background:#fffdf9;
+      overflow:hidden;
+      transition:var(--ease);
+    }
+
+    details.item + details.item{
+      margin-top:12px;
+    }
+
+    details.item[open]{
+      box-shadow:0 10px 20px rgba(44,31,18,.04);
+    }
+
+    summary.item-title{
+      list-style:none;
+      cursor:pointer;
+      padding:16px 18px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      font-weight:700;
+      font-size:1rem;
+    }
+
+    summary.item-title::-webkit-details-marker{
+      display:none;
+    }
+
+    .item-title-left{
+      display:flex;
+      flex-direction:column;
+      gap:4px;
+    }
+
+    .tag{
+      display:inline-flex;
+      width:max-content;
+      padding:5px 9px;
+      border-radius:999px;
+      background:rgba(141,103,64,.09);
+      color:var(--accent);
+      font-size:.77rem;
+      text-transform:uppercase;
+      letter-spacing:.05em;
+      font-weight:700;
+    }
+
+    .item-sub{
+      color:var(--muted);
+      font-weight:400;
+      font-size:.92rem;
+    }
+
+    .plus{
+      width:30px;
+      height:30px;
+      display:grid;
+      place-items:center;
+      border-radius:50%;
+      background:rgba(141,103,64,.08);
+      color:var(--accent);
+      flex-shrink:0;
+      transition:transform .25s ease;
+    }
+
+    details[open] .plus{
+      transform:rotate(45deg);
+    }
+
+    .item-body{
+      padding:0 18px 18px;
+    }
+
+    .doc-meta{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:10px;
+      margin-bottom:14px;
+    }
+
+    .doc-meta .meta-box{
+      padding:12px 14px;
+      font-size:.95rem;
+    }
+
+    .doi-link{
+      color:#6e4d2a;
+      word-break:break-word;
+    }
+
+    .reader-wrap{
+      border:1px solid var(--line);
+      border-radius:20px;
+      overflow:hidden;
+      background:#ece3d6;
+    }
+
+    .reader-top{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:14px;
+      padding:12px 14px;
+      background:linear-gradient(180deg, #f8f2e8, #f0e7da);
+      border-bottom:1px solid var(--line);
+    }
+
+    .reader-label{
+      font-weight:700;
+      font-size:.96rem;
+    }
+
+    .reader-note-top{
+      color:var(--muted);
+      font-size:.88rem;
+    }
+
+    .reader-stage{
+      position:relative;
+      background:#d8cbb7;
+    }
+
+    .reader-frame{
+      width:100%;
+      height:78vh;
+      min-height:720px;
+      border:0;
+      display:block;
+      background:#fff;
+    }
+
+    .reader-btn{
+      position:absolute;
+      top:14px;
+      right:14px;
+      z-index:5;
+      border:0;
+      border-radius:999px;
+      background:rgba(26,20,16,.84);
+      color:#fff;
+      padding:10px 14px;
+      font-weight:700;
+      cursor:pointer;
+      transition:var(--ease);
+    }
+
+    .reader-btn:hover{
+      background:#000;
+      transform:translateY(-1px);
+    }
+
+    .reader-foot{
+      margin-top:10px;
+      color:var(--muted);
+      font-size:.94rem;
+    }
+
+    .empty-state{
+      background:#fff8ef;
+      border:1px solid #ecd8b5;
+      border-radius:16px;
+      padding:16px;
+      color:#6b5330;
+    }
+
+    .footer{
+      max-width:var(--max);
+      margin:0 auto;
+      padding:0 20px 34px;
+    }
+
+    .footer p{
+      background:rgba(255,253,249,.88);
+      border:1px solid rgba(141,103,64,.12);
+      border-radius:20px;
+      box-shadow:var(--shadow);
+      padding:18px 20px;
+      color:var(--muted);
+      margin:0;
+    }
+
+    @keyframes fadeUp{
+      from{
+        opacity:0;
+        transform:translateY(16px);
+      }
+      to{
+        opacity:1;
+        transform:translateY(0);
+      }
+    }
+
+    @media (max-width: 1120px){
+      .portal-grid{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        position:static;
+      }
+
+      .masthead-inner{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 860px){
+      .edition-cover{
+        grid-template-columns:1fr;
+      }
+
+      .section-nav{
+        grid-template-columns:1fr 1fr;
+      }
+
+      .doc-meta{
+        grid-template-columns:1fr;
+      }
+
+      .masthead-meta{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 640px){
+      .section-nav{
+        grid-template-columns:1fr;
+      }
+
+      .reader-frame{
+        height:68vh;
+        min-height:560px;
+      }
+
+      .topbar{
+        justify-content:flex-start;
+      }
+
+      .masthead-inner > div:first-child,
+      .panel-head,
+      .panel-body{
+        padding-left:18px;
+        padding-right:18px;
+      }
+    }
+  </style>
 </head>
 <body>
   <div class="site-shell">
     <div class="topbar">
       <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-      <div class="pill">Fluxo contínuo • v. 1, n. 1 (2026)</div>
+      <div class="pill">v. 1, n. 1 (2026)</div>
+      <div class="pill">Fluxo contínuo</div>
     </div>
 
     <header class="masthead">
@@ -20,13 +579,27 @@
         <div>
           <p class="kicker">Portal científico • Revista Inquietações</p>
           <h1>Conteúdos Publicados</h1>
-          <p>Catálogo das seções da revista, com destaques de artigos, ensaios, resenhas, traduções e outras modalidades.</p>
+          <p>
+            Catálogo integral da edição, com leitura embutida dos conteúdos em PDF,
+            visualização da capa da edição e organização por seções editoriais.
+          </p>
+
           <div class="masthead-meta">
-            <div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
-            <div class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
-            <div class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
+            <div class="masthead-card">
+              <strong>Edição atual</strong>
+              Volume 1, número 1, ano de 2026
+            </div>
+            <div class="masthead-card">
+              <strong>Modalidades</strong>
+              Artigos, ensaios, resenhas, traduções, fotografia temática, relatos e mais
+            </div>
+            <div class="masthead-card">
+              <strong>Leitura integrada</strong>
+              Conteúdos acessíveis sem sair da página
+            </div>
           </div>
         </div>
+
         <div class="banner-card">
           <img src="logo-revista.png" alt="Logo da Revista Inquietações" />
         </div>
@@ -37,47 +610,744 @@
       <aside class="sidebar">
         <h2>Navegação institucional</h2>
         <nav class="menu">
-          <a href="index.html" class="">Início</a>
-<a href="sobre.html" class="">Sobre</a>
-<a href="edicao-atual.html" class="">Edição Atual</a>
-<a href="conteudos.html" class="active">Conteúdos</a>
-<a href="equipe-editorial.html" class="">Equipe Editorial</a>
-<a href="politicas-editoriais.html" class="">Políticas Editoriais</a>
-<a href="diretrizes-autores.html" class="">Diretrizes para Autores</a>
-<a href="submissoes.html" class="">Submissões</a>
-<a href="templates.html" class="">Templates</a>
-<a href="contato.html" class="">Contato</a>
+          <a href="index.html">Início</a>
+          <a href="sobre.html">Sobre</a>
+          <a href="edicao-atual.html">Edição Atual</a>
+          <a href="conteudos.html" class="active">Conteúdos</a>
+          <a href="equipe-editorial.html">Equipe Editorial</a>
+          <a href="politicas-editoriais.html">Políticas Editoriais</a>
+          <a href="diretrizes-autores.html">Diretrizes para Autores</a>
+          <a href="submissoes.html">Submissões</a>
+          <a href="templates.html">Templates</a>
+          <a href="contato.html">Contato</a>
         </nav>
+
         <div class="small-note">
           <strong>Contato institucional</strong><br>
-          Instagram: <a href="https://www.instagram.com/revistainquietacoes/" target="_blank">@revistainquietacoes</a><br>
-          E-mail: <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
+          Instagram:
+          <a href="https://www.instagram.com/revistainquietacoes/" target="_blank">@revistainquietacoes</a><br>
+          E-mail:
+          <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
         </div>
       </aside>
 
       <main class="content">
-        
-<section class="panel"><div class="panel-head"><h2>Seções da revista</h2><p>Panorama editorial das publicações e do fluxo contínuo.</p></div><div class="panel-body">
-<div class="columns-2">
-<div class="entry"><span class="badge">Artigos</span><span class="entry-title">IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA</span>Autor: Diego Vinícius Brito dos Santos<br>DOI: <a href="https://doi.org/10.5281/zenodo.18825993" target="_blank">10.5281/zenodo.18825993</a></div>
-<div class="entry"><span class="badge">Artigos</span><span class="entry-title">Algoritmos do passado: como a IA está reescrevendo a história</span>Autor: Diego Vinícius Brito dos Santos<br>DOI: <a href="https://doi.org/10.5281/zenodo.18836259" target="_blank">10.5281/zenodo.18836259</a></div>
-<div class="entry"><span class="badge">Resumo expandido</span><span class="entry-title">Paulo Freire 4.0: o chatgpt e a materialização da educação bancária</span>Autor: Diego Vinícius Brito dos Santos<br>DOI: <a href="https://doi.org/10.5281/zenodo.18820608" target="_blank">10.5281/zenodo.18820608</a></div>
-<div class="entry"><span class="badge">Ensaio</span><span class="entry-title">MAQUIAVEL E A LIBERDADE DO POVO</span>Autor: Diego Vinícius Brito dos Santos<br>DOI: <a href="http://dx.doi.org/10.5281/zenodo.18846061" target="_blank">10.5281/zenodo.18846061</a></div>
-<div class="entry"><span class="badge">Resenha</span><span class="entry-title">Revolução inconclusa e autoritarismo no Brasil</span>Autor: Diego Vinícius Brito dos Santos<br>DOI: <a href="http://dx.doi.org/10.5281/zenodo.18845109" target="_blank">10.5281/zenodo.18845109</a></div>
-<div class="entry"><span class="badge">Tradução</span><span class="entry-title">Cartas da juventude (1850–1866) de Friedrich Nietzsche</span>Autor/Tradutor: Diego Vinícius Brito dos Santos<br>ISBN: 9798251052428</div>
-<div class="entry"><span class="badge">Fotografia temática</span><span class="entry-title">O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos</span>Autor: Diego Vinícius Brito dos Santos<br>DOI: <a href="https://dx.doi.org/10.5281/zenodo.18820588" target="_blank">10.5281/zenodo.18820588</a></div>
-<div class="entry"><span class="badge">Relato de experiência</span><span class="entry-title">As cartas sociais de Vinícius</span>Autor: Diego Vinícius Brito dos Santos<br>DOI: <a href="http://dx.doi.org/10.5281/zenodo.18844651" target="_blank">10.5281/zenodo.18844651</a></div>
-</div>
-<div class="notice" style="margin-top:18px;">Há espaços reservados para novas submissões em fluxo contínuo nas seções de artigos, ensaios, homenagens, traduções, relatos de experiência e outras modalidades editoriais.</div>
-</div></section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Edição — v. 1, n. 1 (2026)</h2>
+            <p>Apresentação visual da edição e acesso rápido às seções publicadas.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="edition-cover">
+              <div class="cover-card">
+                <img src="arquivos/556376290-a0fd9bc4-9ce3-40af-a47b-180bca6a6241.png" alt="Capa da edição v. 1, n. 1 (2026)">
+              </div>
+
+              <div class="cover-meta">
+                <div class="meta-box">
+                  <strong>Capa da Edição — v. 1, n. 1 (2026)</strong>
+                  Autor: Diego Vinícius Brito dos Santos
+                </div>
+
+                <div class="meta-box">
+                  <strong>Estrutura editorial desta página</strong>
+                  Todos os conteúdos foram organizados para leitura interna, com visualização embutida e opção de tela cheia.
+                </div>
+
+                <div class="meta-box">
+                  <strong>Leitor integrado</strong>
+                  Adaptado para arquivos pesados e com fotografias, sem botões expostos de download ou impressão.
+                </div>
+
+                <div class="section-nav">
+                  <a href="#sec-expediente">Expediente e mensagem</a>
+                  <a href="#sec-artigos">Artigos e resumo expandido</a>
+                  <a href="#sec-ensaios">Ensaios e resenhas</a>
+                  <a href="#sec-traducoes">Traduções</a>
+                  <a href="#sec-fotografia">Fotografia temática</a>
+                  <a href="#sec-relatos">Relatos e homenagens</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="sec-expediente">
+          <div class="panel-head">
+            <h2>Expediente Editorial e Mensagem</h2>
+            <p>Documentos institucionais e de apresentação da edição.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="content-group">
+              <details class="item" open>
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Expediente Editorial</span>
+                    <span>Expediente Editorial</span>
+                    <span class="item-sub">Documento institucional da edição</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="https://doi.org/10.5281/zenodo.18795146" target="_blank">https://doi.org/10.5281/zenodo.18795146</a>
+                    </div>
+                    <div class="meta-box">
+                      <strong>Arquivo</strong>
+                      Revista Inquietações-1 edição.pdf
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Expediente Editorial</div>
+                      <div class="reader-note-top">Leitura embutida</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfExpediente')">Tela cheia</button>
+                      <iframe
+                        id="pdfExpediente"
+                        class="reader-frame"
+                        src="arquivos/Revista Inquietações-1 edição.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="Expediente Editorial"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+
+                  <p class="reader-foot">O conteúdo é exibido diretamente na página, sem redirecionamento externo.</p>
+                </div>
+              </details>
+
+              <details class="item">
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Mensagem</span>
+                    <span>Mensagem aos(às) autores(as) e leitores(as)</span>
+                    <span class="item-sub">Autor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="https://doi.org/10.5281/zenodo.18816235" target="_blank">https://doi.org/10.5281/zenodo.18816235</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Mensagem aos(às) autores(as) e leitores(as)</div>
+                      <div class="reader-note-top">Leitura embutida</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfMensagem')">Tela cheia</button>
+                      <iframe
+                        id="pdfMensagem"
+                        class="reader-frame"
+                        src="arquivos/Mensagem.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="Mensagem aos autores e leitores"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="sec-artigos">
+          <div class="panel-head">
+            <h2>Artigos e Resumos Expandidos</h2>
+            <p>Produções acadêmicas da edição atual.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="content-group">
+              <h3 class="group-title">Artigos</h3>
+
+              <details class="item" open>
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Artigo</span>
+                    <span>IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA: Desconstruindo binarismos e respeitando a diversidade</span>
+                    <span class="item-sub">Autor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="https://doi.org/10.5281/zenodo.18825993" target="_blank">https://doi.org/10.5281/zenodo.18825993</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Artigo 1</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfArtigo1')">Tela cheia</button>
+                      <iframe
+                        id="pdfArtigo1"
+                        class="reader-frame"
+                        src="arquivos/IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA Desconstruindo binarismos e respeitando a diversidade.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="item">
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Artigo</span>
+                    <span>Algoritmos do passado: como a IA está reescrevendo a história</span>
+                    <span class="item-sub">Autor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="https://doi.org/10.5281/zenodo.18836259" target="_blank">https://doi.org/10.5281/zenodo.18836259</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Artigo 2</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfArtigo2')">Tela cheia</button>
+                      <iframe
+                        id="pdfArtigo2"
+                        class="reader-frame"
+                        src="arquivos/Algoritmos do passado como a IA está reescrevendo a história.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="Algoritmos do passado"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div class="content-group">
+              <h3 class="group-title">Resumos Expandidos</h3>
+
+              <details class="item">
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Resumo expandido</span>
+                    <span>Paulo Freire 4.0: o chatgpt e a materialização da educação bancaria</span>
+                    <span class="item-sub">Autor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="https://doi.org/10.5281/zenodo.18820608" target="_blank">https://doi.org/10.5281/zenodo.18820608</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Resumo expandido</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfResumo1')">Tela cheia</button>
+                      <iframe
+                        id="pdfResumo1"
+                        class="reader-frame"
+                        src="arquivos/Resumo_Expandido_Revista_Inquietacoes_Edicao1-pp.1-5.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="Paulo Freire 4.0"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="sec-ensaios">
+          <div class="panel-head">
+            <h2>Ensaios e Resenhas</h2>
+            <p>Produções críticas e analíticas da edição.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="content-group">
+              <h3 class="group-title">Ensaios</h3>
+
+              <details class="item" open>
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Ensaio</span>
+                    <span>MAQUIAVEL E A LIBERDADE DO POVO</span>
+                    <span class="item-sub">Autor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="http://dx.doi.org/10.5281/zenodo.18846061" target="_blank">http://dx.doi.org/10.5281/zenodo.18846061</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Ensaio</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfEnsaio1')">Tela cheia</button>
+                      <iframe
+                        id="pdfEnsaio1"
+                        class="reader-frame"
+                        src="arquivos/Ensaio_Revista_Inquietacoes_-DIEGO-VINICIUS.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="MAQUIAVEL E A LIBERDADE DO POVO"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div class="content-group">
+              <h3 class="group-title">Resenhas</h3>
+
+              <details class="item">
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Resenha</span>
+                    <span>Revolução inconclusa e autoritarismo no Brasil: notas sobre Sérgio Buarque de Holanda e o Estado Novo</span>
+                    <span class="item-sub">Autor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="http://dx.doi.org/10.5281/zenodo.18845109" target="_blank">http://dx.doi.org/10.5281/zenodo.18845109</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Resenha 1</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfResenha1')">Tela cheia</button>
+                      <iframe
+                        id="pdfResenha1"
+                        class="reader-frame"
+                        src="arquivos/RESENHA-DIEGO-VINICIUS-BRITO-DOS-SANTOS.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="Resenha sobre Sérgio Buarque de Holanda e o Estado Novo"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="item">
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Resenha</span>
+                    <span>Memória, justiça e transição democrática: uma leitura sobre a Comissão Nacional da Verdade</span>
+                    <span class="item-sub">Autor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="https://doi.org/10.5281/zenodo.18845488" target="_blank">https://doi.org/10.5281/zenodo.18845488</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Resenha 2</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfResenha2')">Tela cheia</button>
+                      <iframe
+                        id="pdfResenha2"
+                        class="reader-frame"
+                        src="arquivos/RESENHA-DIEGO-VINICIUS-BRITO-DOS-SANTOS – CNV.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="Resenha sobre a Comissão Nacional da Verdade"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="sec-traducoes">
+          <div class="panel-head">
+            <h2>Traduções</h2>
+            <p>Traduções publicadas na edição e volumes editoriais vinculados à revista.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="content-group">
+              <details class="item" open>
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Tradução</span>
+                    <span>Assistance to black bodies in health establishments: deconstructing prejudices and promoting an ethics of care</span>
+                    <span class="item-sub">Tradutor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Tradutor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="https://doi.org/10.5281/zenodo.18841714" target="_blank">https://doi.org/10.5281/zenodo.18841714</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Tradução 1</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfTraducao1')">Tela cheia</button>
+                      <iframe
+                        id="pdfTraducao1"
+                        class="reader-frame"
+                        src="arquivos/Texto-do-artigo-em-inglês.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="Assistance to black bodies in health establishments"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="item">
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Tradução</span>
+                    <span>Cartas da juventude (1850–1866) de Friedrich Nietzsche (alemão-português)</span>
+                    <span class="item-sub">Tradutor: Diego Vinícius Brito dos Santos • ISBN: 9798251052428</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Tradutor / Editora</strong>
+                      Diego Vinícius Brito dos Santos • Revista Inquietações
+                    </div>
+                    <div class="meta-box">
+                      <strong>ISBN</strong>
+                      9798251052428
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Tradução 2</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfTraducao2')">Tela cheia</button>
+                      <iframe
+                        id="pdfTraducao2"
+                        class="reader-frame"
+                        src="arquivos/1c2.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="Cartas da juventude (1850–1866)"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="item">
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Tradução</span>
+                    <span>O Manifesto do Partido Comunista</span>
+                    <span class="item-sub">Tradutor: Diego Vinícius Brito dos Santos • ISBN: 9798251190175</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Tradutor / Editora</strong>
+                      Diego Vinícius Brito dos Santos • Revista Inquietações
+                    </div>
+                    <div class="meta-box">
+                      <strong>ISBN</strong>
+                      9798251190175
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Tradução 3</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfTraducao3')">Tela cheia</button>
+                      <iframe
+                        id="pdfTraducao3"
+                        class="reader-frame"
+                        src="arquivos/O manifesto – tradução.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="O Manifesto do Partido Comunista"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="sec-fotografia">
+          <div class="panel-head">
+            <h2>Fotografia Temática</h2>
+            <p>Ensaios visuais e estudos fotográficos publicados na edição.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="content-group">
+              <details class="item" open>
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Fotografia temática</span>
+                    <span>O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos</span>
+                    <span class="item-sub">Autor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="https://dx.doi.org/10.5281/zenodo.18820588" target="_blank">https://dx.doi.org/10.5281/zenodo.18820588</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Fotografia temática 1</div>
+                      <div class="reader-note-top">Leitura interna com imagens</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfFoto1')">Tela cheia</button>
+                      <iframe
+                        id="pdfFoto1"
+                        class="reader-frame"
+                        src="arquivos/Fotos-Diego-Vinicius-v.1-2026-Revista-Inquietacoes.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos - Diego"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+
+              <details class="item">
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Fotografia temática</span>
+                    <span>O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos</span>
+                    <span class="item-sub">Autora: Geiza Venicia dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autora</strong>
+                      Geiza Venicia dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="http://dx.doi.org/10.5281/zenodo.18841135" target="_blank">http://dx.doi.org/10.5281/zenodo.18841135</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Fotografia temática 2</div>
+                      <div class="reader-note-top">Leitura interna com imagens</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfFoto2')">Tela cheia</button>
+                      <iframe
+                        id="pdfFoto2"
+                        class="reader-frame"
+                        src="arquivos/Fotos-Geiza-v.1-2026-Revista-Inquietacoes.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos - Geiza"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="sec-relatos">
+          <div class="panel-head">
+            <h2>Relatos de Experiência e Homenagens</h2>
+            <p>Textos de experiência e espaço editorial reservado a homenagens.</p>
+          </div>
+
+          <div class="panel-body">
+            <div class="content-group">
+              <h3 class="group-title">Relatos de Experiência</h3>
+
+              <details class="item" open>
+                <summary class="item-title">
+                  <div class="item-title-left">
+                    <span class="tag">Relato de experiência</span>
+                    <span>As cartas Sociais de Vinícius</span>
+                    <span class="item-sub">Autor: Diego Vinícius Brito dos Santos</span>
+                  </div>
+                  <span class="plus">+</span>
+                </summary>
+
+                <div class="item-body">
+                  <div class="doc-meta">
+                    <div class="meta-box">
+                      <strong>Autor</strong>
+                      Diego Vinícius Brito dos Santos
+                    </div>
+                    <div class="meta-box">
+                      <strong>DOI</strong>
+                      <a class="doi-link" href="http://dx.doi.org/10.5281/zenodo.18844651" target="_blank">http://dx.doi.org/10.5281/zenodo.18844651</a>
+                    </div>
+                  </div>
+
+                  <div class="reader-wrap">
+                    <div class="reader-top">
+                      <div class="reader-label">Relato de experiência</div>
+                      <div class="reader-note-top">Leitura interna</div>
+                    </div>
+                    <div class="reader-stage">
+                      <button class="reader-btn" onclick="openReaderFullscreen('pdfRelato1')">Tela cheia</button>
+                      <iframe
+                        id="pdfRelato1"
+                        class="reader-frame"
+                        src="arquivos/As cartas sociais de Vinícius.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                        title="As cartas Sociais de Vinícius"
+                        loading="lazy"></iframe>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </div>
+
+            <div class="content-group">
+              <h3 class="group-title">Homenagens</h3>
+              <div class="empty-state">
+                Sem conteúdo no momento.
+              </div>
+            </div>
+          </div>
+        </section>
 
       </main>
     </div>
 
     <footer class="footer">
-      <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-      <p>Organização editorial: Diego Vinícius • Instagram: <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a></p>
+      <p>
+        <strong>Revista Inquietações</strong> — Portal institucional do periódico.
+        Organização editorial: Diego Vinícius • Instagram:
+        <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a>
+      </p>
     </footer>
   </div>
+
+  <script>
+    function openReaderFullscreen(id){
+      const el = document.getElementById(id);
+      if (!el) return;
+
+      if (el.requestFullscreen) {
+        el.requestFullscreen();
+      } else if (el.webkitRequestFullscreen) {
+        el.webkitRequestFullscreen();
+      } else if (el.msRequestFullscreen) {
+        el.msRequestFullscreen();
+      }
+    }
+  </script>
 </body>
 </html>
