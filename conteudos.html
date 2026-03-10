@@ -18,18 +18,20 @@
 
     .sumario-lista {
       display: grid;
-      gap: 10px;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
       margin-top: 8px;
     }
 
     .sumario-lista a {
       display: block;
-      padding: 12px 14px;
-      border-radius: 12px;
+      padding: 14px 16px;
+      border-radius: 14px;
       border: 1px solid var(--line);
       background: #fff;
       color: var(--ink);
       transition: 0.18s ease;
+      min-height: 72px;
     }
 
     .sumario-lista a:hover {
@@ -54,6 +56,89 @@
       border-radius: 14px;
       background: rgba(0,0,0,0.02);
     }
+
+    .content-accordion {
+      display: grid;
+      gap: 18px;
+      margin-top: 22px;
+    }
+
+    .content-toggle {
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
+
+    .content-toggle summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 22px 24px 18px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      background: linear-gradient(180deg, rgba(18,45,82,0.035), rgba(18,45,82,0.015));
+    }
+
+    .content-toggle summary::-webkit-details-marker {
+      display: none;
+    }
+
+    .content-toggle summary:hover {
+      background: linear-gradient(180deg, rgba(18,45,82,0.05), rgba(18,45,82,0.025));
+    }
+
+    .content-summary-text h2 {
+      margin: 0 0 6px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      letter-spacing: 0.01em;
+      font-size: 2rem;
+      color: var(--brand);
+    }
+
+    .content-summary-text p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .content-summary-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--brand);
+      transition: transform 0.2s ease;
+      padding-top: 8px;
+      flex-shrink: 0;
+    }
+
+    .content-toggle[open] .content-summary-icon {
+      transform: rotate(45deg);
+    }
+
+    .content-body {
+      padding: 22px 24px 24px;
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,0.95);
+    }
+
+    @media (max-width: 700px) {
+      .sumario-lista {
+        grid-template-columns: 1fr;
+      }
+
+      .content-toggle summary {
+        padding: 18px;
+      }
+
+      .content-body {
+        padding: 18px;
+      }
+
+      .content-summary-text h2 {
+        font-size: 1.7rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -61,7 +146,6 @@
     <nav class="skip-links" aria-label="Ir para os links de conteúdo">
       <a href="#conteudo-principal">Ir para o conteúdo principal</a>
       <a href="#navegacao-principal">Ir para a navegação</a>
-      <a href="#barra-lateral">Ir para a barra lateral</a>
       <a href="#rodape">Ir para o rodapé</a>
     </nav>
 
@@ -111,66 +195,18 @@
       </div>
     </nav>
 
-    <div class="portal-grid sidebar-compact">
-      
+    
+      <div class="content-accordion">
 
-        <section class="sidebar-block">
-          <h2>Sumário da edição</h2>
-          <ul class="info-links">
-            <li><a href="#capa-edicao">Capa da edição</a></li>
-            <li><a href="#expediente-editorial">Expediente Editorial</a></li>
-            <li><a href="#mensagem-autores-leitores">Mensagem aos(às) autores(as) e leitores(as)</a></li>
-            <li><a href="#artigos">Artigos</a></li>
-            <li><a href="#resumos-expandidos">Resumos expandidos</a></li>
-            <li><a href="#ensaios">Ensaios</a></li>
-            <li><a href="#resenhas">Resenhas</a></li>
-            <li><a href="#traducoes">Traduções</a></li>
-            <li><a href="#fotografia-tematica">Fotografia temática</a></li>
-            <li><a href="#relatos-experiencia">Relatos de experiência</a></li>
-            <li><a href="#homenagens">Homenagens</a></li>
-          </ul>
-        </section>
-
-        
-
-        
-      </aside>
-
-      <main class="content" id="conteudo-principal">
-        <section class="panel">
-          <div class="panel-head">
-            <h2>Sumário da página</h2>
-            <p>Navegue pelas seções da edição e leia os arquivos sem sair desta página.</p>
-          </div>
-          <div class="panel-body">
-            <div class="sumario-lista">
-              <a href="#capa-edicao">Capa da edição — v. 1, n. 1 (2026)</a>
-              <a href="#expediente-editorial">Expediente Editorial</a>
-              <a href="#mensagem-autores-leitores">Mensagem aos(às) autores(as) e leitores(as)</a>
-              <a href="#artigos">Artigos</a>
-              <a href="#resumos-expandidos">Resumos expandidos</a>
-              <a href="#ensaios">Ensaios</a>
-              <a href="#resenhas">Resenhas</a>
-              <a href="#traducoes">Traduções</a>
-              <a href="#fotografia-tematica">Fotografia temática</a>
-              <a href="#relatos-experiencia">Relatos de experiência</a>
-              <a href="#homenagens">Homenagens</a>
+        <details class="content-toggle section-anchor" id="capa-edicao">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Capa da Edição — v. 1, n. 1 (2026)</h2>
+              <p>Autor: Diego Vinícius Brito dos Santos</p>
             </div>
-
-            <div class="warning-note">
-              Os leitores abaixo foram configurados para exibir os conteúdos dentro da página e com opção de tela cheia.
-              Os controles visíveis de baixar e imprimir ficam ocultos no visual do PDF incorporado, mas navegadores ainda
-              podem oferecer recursos próprios fora da interface do site.
-            </div>
-          </div>
-        </section>
-
-        <section class="panel section-anchor" id="capa-edicao">
-          <div class="panel-head">
-            <h2>Capa da Edição — v. 1, n. 1 (2026)</h2>
-            <p>Autor: Diego Vinícius Brito dos Santos</p>
-          </div>
-          <div class="panel-body">
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <img
               src="arquivos/556376290-a0fd9bc4-9ce3-40af-a47b-180bca6a6241.png"
               alt="Capa da edição v. 1, n. 1 (2026) da Revista Inquietações"
@@ -178,25 +214,26 @@
               loading="lazy"
             />
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="expediente-editorial">
-          <div class="panel-head">
-            <h2>Expediente Editorial</h2>
-            <p>
-              DOI:
-              <a href="https://doi.org/10.5281/zenodo.18795146" target="_blank" rel="noopener noreferrer">
-                https://doi.org/10.5281/zenodo.18795146
-              </a>
-            </p>
-            <p class="mini-meta">
-              Página acadêmica:
-              <a href="artigos/expediente-editorial.html" target="_blank" rel="noopener noreferrer">
-                abrir página da publicação
-              </a>
-            </p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="expediente-editorial">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Expediente Editorial</h2>
+              <p>
+                DOI:
+                <a href="https://doi.org/10.5281/zenodo.18795146" target="_blank" rel="noopener noreferrer">
+                  https://doi.org/10.5281/zenodo.18795146
+                </a><br />
+                Página acadêmica:
+                <a href="artigos/expediente-editorial.html" target="_blank" rel="noopener noreferrer">
+                  abrir página da publicação
+                </a>
+              </p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="reader-block" id="reader-expediente">
               <div class="reader-topbar">
                 <div class="reader-meta">
@@ -220,26 +257,27 @@
               </div>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="mensagem-autores-leitores">
-          <div class="panel-head">
-            <h2>Mensagem aos(às) autores(as) e leitores(as)</h2>
-            <p>
-              Autor: Diego Vinícius Brito dos Santos<br />
-              DOI:
-              <a href="https://doi.org/10.5281/zenodo.18816235" target="_blank" rel="noopener noreferrer">
-                https://doi.org/10.5281/zenodo.18816235
-              </a>
-            </p>
-            <p class="mini-meta">
-              Página acadêmica:
-              <a href="artigos/mensagem-autores-leitores.html" target="_blank" rel="noopener noreferrer">
-                abrir página da publicação
-              </a>
-            </p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="mensagem-autores-leitores">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Mensagem aos(às) autores(as) e leitores(as)</h2>
+              <p>
+                Autor: Diego Vinícius Brito dos Santos<br />
+                DOI:
+                <a href="https://doi.org/10.5281/zenodo.18816235" target="_blank" rel="noopener noreferrer">
+                  https://doi.org/10.5281/zenodo.18816235
+                </a><br />
+                Página acadêmica:
+                <a href="artigos/mensagem-autores-leitores.html" target="_blank" rel="noopener noreferrer">
+                  abrir página da publicação
+                </a>
+              </p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="reader-block" id="reader-mensagem">
               <div class="reader-topbar">
                 <div class="reader-meta">
@@ -263,14 +301,17 @@
               </div>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="artigos">
-          <div class="panel-head">
-            <h2>Artigos</h2>
-            <p>Textos acadêmicos publicados na edição v. 1, n. 1 (2026).</p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="artigos">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Artigos</h2>
+              <p>Textos acadêmicos publicados na edição v. 1, n. 1 (2026).</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="entry-grid">
               <article class="entry-card">
                 <span class="badge">Artigo</span>
@@ -359,14 +400,17 @@
               </article>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="resumos-expandidos">
-          <div class="panel-head">
-            <h2>Resumos Expandidos</h2>
-            <p>Produções em formato de resumo expandido.</p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="resumos-expandidos">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Resumos Expandidos</h2>
+              <p>Produções em formato de resumo expandido.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="entry-grid">
               <article class="entry-card">
                 <span class="badge">Resumo expandido</span>
@@ -410,14 +454,17 @@
               </article>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="ensaios">
-          <div class="panel-head">
-            <h2>Ensaios</h2>
-            <p>Seção dedicada a ensaios autorais e reflexivos.</p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="ensaios">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Ensaios</h2>
+              <p>Seção dedicada a ensaios autorais e reflexivos.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="entry-grid">
               <article class="entry-card">
                 <span class="badge">Ensaio</span>
@@ -461,14 +508,17 @@
               </article>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="resenhas">
-          <div class="panel-head">
-            <h2>Resenhas</h2>
-            <p>Resenhas críticas publicadas nesta edição.</p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="resenhas">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Resenhas</h2>
+              <p>Resenhas críticas publicadas nesta edição.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="entry-grid">
               <article class="entry-card">
                 <span class="badge">Resenha</span>
@@ -553,14 +603,17 @@
               </article>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="traducoes">
-          <div class="panel-head">
-            <h2>Traduções</h2>
-            <p>Trabalhos de tradução publicados e editados no âmbito da revista.</p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="traducoes">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Traduções</h2>
+              <p>Trabalhos de tradução publicados e editados no âmbito da revista.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="entry-grid">
               <article class="entry-card">
                 <span class="badge">Tradução</span>
@@ -720,14 +773,17 @@
               </article>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="fotografia-tematica">
-          <div class="panel-head">
-            <h2>Fotografia Temática</h2>
-            <p>Ensaios fotográficos e registros visuais da edição.</p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="fotografia-tematica">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Fotografia Temática</h2>
+              <p>Ensaios fotográficos e registros visuais da edição.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="entry-grid">
               <article class="entry-card">
                 <span class="badge">Fotografia temática</span>
@@ -812,14 +868,17 @@
               </article>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="relatos-experiencia">
-          <div class="panel-head">
-            <h2>Relatos de Experiência</h2>
-            <p>Relatos e registros reflexivos vinculados à prática e à experiência autoral.</p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="relatos-experiencia">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Relatos de Experiência</h2>
+              <p>Relatos e registros reflexivos vinculados à prática e à experiência autoral.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="entry-grid">
               <article class="entry-card">
                 <span class="badge">Relato de experiência</span>
@@ -863,22 +922,26 @@
               </article>
             </div>
           </div>
-        </section>
+        </details>
 
-        <section class="panel section-anchor" id="homenagens">
-          <div class="panel-head">
-            <h2>Homenagens</h2>
-            <p>Espaço reservado para homenagens publicadas pela revista.</p>
-          </div>
-          <div class="panel-body">
+        <details class="content-toggle section-anchor" id="homenagens">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Homenagens</h2>
+              <p>Espaço reservado para homenagens publicadas pela revista.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
             <div class="empty-state">
               <strong>Sem conteúdo no momento.</strong><br />
               Esta seção permanece aberta para futuras publicações e registros editoriais.
             </div>
           </div>
-        </section>
-      </main>
-    </div>
+        </details>
+
+      </div>
+    </main>
 
     <footer class="footer" id="rodape">
       <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
