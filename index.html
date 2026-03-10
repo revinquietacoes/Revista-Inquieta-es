@@ -69,17 +69,21 @@
       A Revista Inquietações é um periódico acadêmico de fluxo contínuo voltado à circulação qualificada do conhecimento nas Ciências Humanas, com abertura para artigos, ensaios, resenhas, traduções, relatos de experiência, resumos expandidos, fotografia temática e minicursos formativos em vídeo.
     </div>
     <div class="card-grid" style="margin-top:18px;">
-      <div class="info-card"><strong>Edição atual</strong>v. 1, n. 1 — Jan./Dez. 2026</div>
-      <div class="info-card"><strong>e-ISSN</strong>ISSN: 3086-4119</div>
-      <div class="info-card"><strong>Modelo de avaliação</strong>Avaliação aberta (Open Peer Review)</div>
-      <div class="info-card"><strong>Acesso</strong>Aberto e gratuito</div>
-      <div class="info-card"><strong>Submissões</strong>Fluxo contínuo</div>
-    </div>
-    <div class="cta-row">
-      <a class="btn" href="submissoes.html">Ir para Submissões</a>
-      <a class="btn secondary" href="conteudos.html">Ver Conteúdos</a>
-      <a class="btn secondary" href="diretrizes-autores.html">Ler Diretrizes</a>
-    </div>
+  <div class="info-card"><strong>Edição atual</strong>v. 1, n. 1 — Jan./Dez. 2026</div>
+  <div class="info-card"><strong>e-ISSN</strong>ISSN: 3086-4119</div>
+  <div class="info-card"><strong>Modelo de avaliação</strong>Avaliação aberta (Open Peer Review)</div>
+  <div class="info-card"><strong>Acesso</strong>Aberto e gratuito</div>
+  <div class="info-card"><strong>Submissões</strong>Fluxo contínuo</div>
+<div class="info-card">
+<strong>Visitas ao portal</strong>
+<img src="https://revinquietacoes.goatcounter.com/counter.svg" />
+</div>
+  <div class="info-card visitor-card">
+    <strong>Visitas ao portal</strong>
+    <span id="visit-count">Carregando...</span>
+    <small>contador público de visitas</small>
+  </div>
+</div>
   </div>
 </section>
 <section class="panel">
@@ -127,5 +131,43 @@
       <p>Organização editorial: Diego Vinícius • Instagram: <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a></p>
     </footer>
   </div>
+  <script data-goatcounter="https://SEU-CODIGO.goatcounter.com/count"
+        async src="https://gc.zgo.at/count.js"></script>
+
+<script>
+  function carregarContador() {
+    var t = setInterval(function () {
+      if (window.goatcounter && window.goatcounter.visit_count) {
+        clearInterval(t);
+
+        window.goatcounter.visit_count({
+          path: "/",
+          append: "#visit-count",
+          type: "html",
+          no_branding: true
+        });
+      }
+    }, 150);
+  }
+
+  carregarContador();
+  <script>
+    function abrirTelaCheia(id) {
+      const elemento = document.getElementById(id);
+      if (!elemento) return;
+
+      if (elemento.requestFullscreen) {
+        elemento.requestFullscreen();
+      } else if (elemento.webkitRequestFullscreen) {
+        elemento.webkitRequestFullscreen();
+      } else if (elemento.msRequestFullscreen) {
+        elemento.msRequestFullscreen();
+      }
+    }
+  </script>
+
+  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
+
 </body>
 </html>
