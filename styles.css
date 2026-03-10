@@ -390,34 +390,32 @@ blockquote.academic {
   height: auto;
 }
 
-.visitor-card small {
-  color: var(--muted);
-  font-size: 0.88rem;
+.visitor-card{
+
+display:flex;
+flex-direction:column;
+justify-content:center;
+align-items:center;
+
+text-align:center;
+
+gap:10px;
+
 }
 
-@media (max-width: 980px) {
-  .masthead-inner,
-  .portal-grid,
-  .columns-2,
-  .table-row {
-    grid-template-columns: 1fr;
-  }
+.contador-visitas{
 
-  .sidebar {
-    position: relative;
-    top: 0;
-  }
+max-width:200px;
+height:auto;
+
+display:block;
+margin:0 auto;
+
 }
 
-@media (max-width: 640px) {
-  .site-shell {
-    padding: 16px 12px 42px;
-  }
+.visitor-card small{
 
-  .masthead-inner,
-  .panel-body,
-  .panel-head,
-  .sidebar {
-    padding: 18px;
-  }
+font-size:.9rem;
+color:var(--muted);
+
 }
