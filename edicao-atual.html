@@ -23,26 +23,61 @@
       border-radius: 12px;
       background: #fff;
       transition: 0.2s ease;
+      color: var(--ink);
     }
 
     .edicao-menu-link:hover {
       transform: translateY(-1px);
       background: rgba(0, 0, 0, 0.02);
+      text-decoration: none;
+      border-color: rgba(31, 74, 130, 0.22);
+      box-shadow: var(--shadow-soft);
     }
 
     .edicao-menu-link strong {
       display: block;
       margin-bottom: 4px;
+      color: var(--brand);
     }
 
     .edicao-menu-link span {
       color: #555;
       font-size: 0.96rem;
     }
+
+    .edicao-capa-preview {
+      width: 100%;
+      max-width: 520px;
+      margin: 0 auto;
+      border-radius: 16px;
+      border: 1px solid var(--line);
+      box-shadow: var(--shadow-soft);
+      background: #fff;
+    }
+
+    .edicao-grid {
+      display: grid;
+      grid-template-columns: minmax(260px, 420px) minmax(0, 1fr);
+      gap: 24px;
+      align-items: start;
+    }
+
+    @media (max-width: 900px) {
+      .edicao-grid {
+        grid-template-columns: 1fr;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="site-shell">
+    <nav class="skip-links" aria-label="Ir para os links de conteúdo">
+      <a href="#conteudo-principal">Ir para o conteúdo principal</a>
+      <a href="#navegacao-principal">Ir para a navegação</a>
+      <a href="#barra-lateral">Ir para a barra lateral</a>
+      <a href="#rodape">Ir para o rodapé</a>
+    </nav>
+
     <div class="topbar">
       <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
       <div class="pill">Fluxo contínuo • v. 1, n. 1 (2026)</div>
@@ -53,7 +88,9 @@
         <div>
           <p class="kicker">Portal científico • Revista Inquietações</p>
           <h1>Edição Atual</h1>
-          <p>Informações sobre a edição vigente, links institucionais e materiais principais da Revista Inquietações.</p>
+          <p class="hero-text">
+            Informações sobre a edição vigente, links institucionais e materiais principais da Revista Inquietações.
+          </p>
           <div class="masthead-meta">
             <div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
             <div class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
@@ -67,47 +104,145 @@
       </div>
     </header>
 
+    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        Menu
+      </button>
+      <div class="site-nav-menu" id="site-menu">
+        <a href="index.html">Início</a>
+        <a href="edicao-atual.html" class="active">Atual</a>
+        <a href="conteudos.html">Conteúdos</a>
+        <a href="minicursos.html">Mini-cursos</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="equipe-editorial.html">Equipe Editorial</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="diretrizes-autores.html">Diretrizes</a>
+        <a href="submissoes.html">Submissões</a>
+        <a href="templates.html">Templates</a>
+        <a href="contato.html">Contato</a>
+      </div>
+    </nav>
+
     <div class="portal-grid">
-      <aside class="sidebar">
-        <h2>Navegação institucional</h2>
-      <nav class="menu">
-  <a href="index.html" class="">Início</a>
-  <a href="sobre.html" class="">Sobre</a>
-  <a href="edicao-atual.html" class="">Edição Atual</a>
-  <a href="conteudos.html" class="">Conteúdos</a>
-  <a href="minicursos.html" class="">Mini-cursos</a>
-  <a href="equipe-editorial.html" class="">Equipe Editorial</a>
-  <a href="politicas-editoriais.html" class="">Políticas Editoriais</a>
-  <a href="diretrizes-autores.html" class="">Diretrizes para Autores</a>
-  <a href="submissoes.html" class="">Submissões</a>
-  <a href="templates.html" class="">Templates</a>
-  <a href="contato.html" class="">Contato</a>
-</nav>
-        <div class="small-note">
-          <strong>Contato institucional</strong><br>
-          Instagram: <a href="https://www.instagram.com/revistainquietacoes/" target="_blank">@revistainquietacoes</a><br>
-          E-mail: <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
-        </div>
+      <aside class="sidebar" id="barra-lateral" role="complementary" aria-label="Barra lateral">
+        <section class="sidebar-block">
+          <h2>Navegação institucional</h2>
+          <nav class="menu">
+            <a href="index.html">Início</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="edicao-atual.html" class="active">Edição Atual</a>
+            <a href="conteudos.html">Conteúdos</a>
+            <a href="minicursos.html">Mini-cursos</a>
+            <a href="equipe-editorial.html">Equipe Editorial</a>
+            <a href="politicas-editoriais.html">Políticas Editoriais</a>
+            <a href="diretrizes-autores.html">Diretrizes para Autores</a>
+            <a href="submissoes.html">Submissões</a>
+            <a href="templates.html">Templates</a>
+            <a href="contato.html">Contato</a>
+          </nav>
+        </section>
+
+        <section class="sidebar-block">
+          <h2>Navegação da edição</h2>
+          <ul class="info-links">
+            <li><a href="#dados-edicao">Dados da edição</a></li>
+            <li><a href="#menu-edicao">Menu interativo da edição</a></li>
+            <li><a href="#orientacao-leitura">Orientação de leitura</a></li>
+          </ul>
+        </section>
+
+        <section class="sidebar-block">
+          <h2>Contato institucional</h2>
+          <div class="small-note">
+            <strong>Instagram:</strong><br>
+            <a href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer">
+              @revistainquietacoes
+            </a><br><br>
+            <strong>E-mail:</strong><br>
+            <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
+          </div>
+        </section>
+
+        <section class="sidebar-block visitor-block">
+          <h2>Visitas</h2>
+          <div class="visitor-inline-card">
+            <img
+              src="https://revinquietacoes.goatcounter.com/counter/TOTAL.svg?no_branding=1"
+              alt="Contador de visitas da Revista Inquietações"
+              class="contador-visitas"
+            />
+          </div>
+        </section>
       </aside>
 
-      <main class="content">
-        
-        <section class="panel">
+      <main class="content" id="conteudo-principal">
+        <section class="panel" id="dados-edicao">
           <div class="panel-head">
             <h2>v. 1, n. 1 (2026)</h2>
             <p>Primeira edição em fluxo contínuo.</p>
           </div>
           <div class="panel-body">
             <div class="card-grid">
-              <div class="info-card"><strong>Edição atual</strong>Jan./Dez. de 2026</div>
-              <div class="info-card"><strong>e-ISSN</strong>ISSN: 3086-4119</div>
-              <div class="info-card"><strong>Status</strong>Primeira edição</div>
-              <div class="info-card"><strong>Identificação</strong>International Standard Serial Number</div>
+              <div class="info-card">
+                <strong>Edição atual</strong>
+                Jan./Dez. de 2026
+              </div>
+
+              <div class="info-card">
+                <strong>e-ISSN</strong>
+                ISSN: 3086-4119
+              </div>
+
+              <div class="info-card">
+                <strong>Status</strong>
+                Primeira edição
+              </div>
+
+              <div class="info-card">
+                <strong>Identificação</strong>
+                International Standard Serial Number
+              </div>
             </div>
           </div>
         </section>
 
         <section class="panel">
+          <div class="panel-head">
+            <h2>Apresentação visual da edição</h2>
+            <p>Identidade editorial vinculada à página de conteúdos publicados.</p>
+          </div>
+          <div class="panel-body">
+            <div class="edicao-grid">
+              <div>
+                <img
+                  src="arquivos/556376290-a0fd9bc4-9ce3-40af-a47b-180bca6a6241.png"
+                  alt="Capa da edição v. 1, n. 1 (2026) da Revista Inquietações"
+                  class="edicao-capa-preview"
+                  loading="lazy"
+                />
+              </div>
+
+              <div>
+                <div class="notice">
+                  A edição atual organiza os materiais principais da Revista Inquietações em fluxo contínuo, com acesso por seções editoriais e leitura integrada na página de conteúdos.
+                </div>
+
+                <div class="small-note">
+                  <strong>Seções disponíveis nesta edição:</strong><br>
+                  capa da edição, expediente editorial, mensagem aos(às) autores(as) e leitores(as), artigos,
+                  resumos expandidos, ensaios, resenhas, traduções, fotografia temática, relatos de experiência e homenagens.
+                </div>
+
+                <div class="cta-row" style="margin-top: 16px;">
+                  <a class="btn" href="conteudos.html">Abrir página de conteúdos</a>
+                  <a class="btn secondary" href="index.html">Voltar ao portal</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="menu-edicao">
           <div class="panel-head">
             <h2>Menu interativo da edição</h2>
             <p>Ao clicar em uma seção, o leitor será direcionado para a página de conteúdos em sua respectiva área.</p>
@@ -170,32 +305,57 @@
               </a>
             </div>
           </div>
-        </section>    
+        </section>
+
+        <section class="panel" id="orientacao-leitura">
+          <div class="panel-head">
+            <h2>Orientação de leitura</h2>
+            <p>Como esta edição foi organizada dentro do portal.</p>
+          </div>
+          <div class="panel-body">
+            <div class="columns-2">
+              <div class="entry">
+                <span class="entry-title">Página Edição Atual</span>
+                Reúne os dados gerais do número, sua identificação institucional e o menu de navegação por seções.
+              </div>
+
+              <div class="entry">
+                <span class="entry-title">Página Conteúdos</span>
+                Exibe os materiais efetivamente publicados, com leitores de PDF incorporados e acesso acadêmico por publicação.
+              </div>
+            </div>
+
+            <blockquote class="academic">
+              Esta organização separa a apresentação da edição da leitura dos conteúdos, tornando o portal mais claro, acadêmico e funcional.
+            </blockquote>
+          </div>
+        </section>
       </main>
     </div>
 
-    <footer class="footer">
+    <footer class="footer" id="rodape">
       <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-      <p>Organização editorial: Diego Vinícius • Instagram: <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a></p>
+      <div class="footer-meta">
+        <a href="sobre.html">Sobre</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="submissoes.html">Submissões</a>
+      </div>
     </footer>
   </div>
-    <script>
-    function abrirTelaCheia(id) {
-      const elemento = document.getElementById(id);
-      if (!elemento) return;
 
-      if (elemento.requestFullscreen) {
-        elemento.requestFullscreen();
-      } else if (elemento.webkitRequestFullscreen) {
-        elemento.webkitRequestFullscreen();
-      } else if (elemento.msRequestFullscreen) {
-        elemento.msRequestFullscreen();
-      }
+  <script>
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const navMenu = document.querySelector('.site-nav-menu');
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
     }
   </script>
 
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
-
 </body>
 </html>

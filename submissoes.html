@@ -3,16 +3,211 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Página dedicada ao envio de manuscritos, formulários institucionais e organização do processo de submissão." />
+  <meta name="description" content="Página dedicada ao envio de manuscritos, formulários institucionais e organização do processo de submissão da Revista Inquietações." />
   <meta name="author" content="Revista Inquietações" />
   <title>Submissões | Revista Inquietações</title>
   <link rel="stylesheet" href="styles.css" />
+
+  <style>
+    .submission-checklist {
+      display: grid;
+      gap: 12px;
+      margin-top: 10px;
+    }
+
+    .submission-item {
+      display: grid;
+      grid-template-columns: 24px minmax(0, 1fr);
+      gap: 12px;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+    }
+
+    .submission-check {
+      width: 24px;
+      height: 24px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--brand-3);
+      color: var(--brand);
+      font-weight: 700;
+      font-size: 0.95rem;
+      margin-top: 2px;
+    }
+
+    .submission-item p {
+      margin: 0;
+    }
+
+    .submission-item strong {
+      color: var(--brand);
+    }
+
+    .types-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .type-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      padding: 18px;
+      background: #fff;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .type-card h3 {
+      margin: 0 0 8px;
+      color: var(--brand);
+      font-size: 1.08rem;
+    }
+
+    .type-card p {
+      margin: 0;
+    }
+
+    .steps-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .step-card {
+      display: grid;
+      grid-template-columns: 54px minmax(0, 1fr);
+      gap: 14px;
+      padding: 16px;
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: var(--surface-soft);
+    }
+
+    .step-number {
+      width: 42px;
+      height: 42px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: var(--brand);
+      color: #fff;
+      font-weight: 700;
+      font-size: 1rem;
+      margin-top: 2px;
+    }
+
+    .step-card h3 {
+      margin: 0 0 4px;
+      color: var(--brand);
+      font-size: 1rem;
+    }
+
+    .step-card p {
+      margin: 0;
+    }
+
+    .normas-bloco {
+      display: grid;
+      gap: 18px;
+    }
+
+    .norma-card {
+      border: 1px solid var(--line);
+      border-radius: 16px;
+      background: #fff;
+      padding: 18px;
+    }
+
+    .norma-card h3 {
+      margin: 0 0 10px;
+      color: var(--brand);
+      font-size: 1.08rem;
+    }
+
+    .norma-card ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .norma-card li + li {
+      margin-top: 6px;
+    }
+
+    .modelo-box {
+      padding: 16px 18px;
+      border-radius: 16px;
+      border: 1px solid #d9e5f5;
+      background: #f6faff;
+    }
+
+    .modelo-box p {
+      margin: 0 0 10px;
+    }
+
+    .modelo-box p:last-child {
+      margin-bottom: 0;
+    }
+
+    .fotografia-box {
+      padding: 18px;
+      border-radius: 18px;
+      border: 1px solid #e6d4b2;
+      background: linear-gradient(180deg, #fffdf8 0%, #fff9f0 100%);
+    }
+
+    .fotografia-box h3 {
+      margin: 0 0 10px;
+      color: #8a5b10;
+    }
+
+    .fotografia-box ul {
+      margin: 0;
+      padding-left: 18px;
+    }
+
+    .fotografia-box li + li {
+      margin-top: 6px;
+    }
+
+    .faq-grid {
+      display: grid;
+      gap: 12px;
+    }
+
+    .faq-item {
+      border: 1px solid var(--line);
+      border-radius: 14px;
+      background: #fff;
+      padding: 16px;
+    }
+
+    .faq-item h3 {
+      margin: 0 0 6px;
+      color: var(--brand);
+      font-size: 1rem;
+    }
+
+    .faq-item p {
+      margin: 0;
+    }
+  </style>
 </head>
 <body>
   <div class="site-shell">
+    <nav class="skip-links" aria-label="Ir para os links de conteúdo">
+      <a href="#conteudo-principal">Ir para o conteúdo principal</a>
+      <a href="#navegacao-principal">Ir para a navegação</a>
+      <a href="#barra-lateral">Ir para a barra lateral</a>
+      <a href="#rodape">Ir para o rodapé</a>
+    </nav>
+
     <div class="topbar">
       <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-      <div class="pill">Fluxo contínuo • v. 1, n. 1 (2026)</div>
+      <div class="pill">Fluxo contínuo • Submissão permanente</div>
     </div>
 
     <header class="masthead">
@@ -20,11 +215,14 @@
         <div>
           <p class="kicker">Portal científico • Revista Inquietações</p>
           <h1>Submissões</h1>
-          <p>Página dedicada ao envio de manuscritos, formulários institucionais e organização do processo de submissão.</p>
+          <p class="hero-text">
+            Página dedicada ao envio de manuscritos, formulários institucionais e organização do processo de submissão da Revista Inquietações.
+          </p>
           <div class="masthead-meta">
             <div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
             <div class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
             <div class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
+            <div class="masthead-card"><strong>e-ISSN</strong>ISSN: 3086-4119</div>
           </div>
         </div>
         <div class="banner-card">
@@ -33,72 +231,457 @@
       </div>
     </header>
 
+    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        Menu
+      </button>
+      <div class="site-nav-menu" id="site-menu">
+        <a href="index.html">Início</a>
+        <a href="edicao-atual.html">Atual</a>
+        <a href="conteudos.html">Conteúdos</a>
+        <a href="minicursos.html">Mini-cursos</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="equipe-editorial.html">Equipe Editorial</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="diretrizes-autores.html">Diretrizes</a>
+        <a href="submissoes.html" class="active">Submissões</a>
+        <a href="templates.html">Templates</a>
+        <a href="contato.html">Contato</a>
+      </div>
+    </nav>
+
     <div class="portal-grid">
-      <aside class="sidebar">
-        <h2>Navegação institucional</h2>
-        <nav class="menu">
-         <nav class="menu">
-  <a href="index.html" class="">Início</a>
-  <a href="sobre.html" class="">Sobre</a>
-  <a href="edicao-atual.html" class="">Edição Atual</a>
-  <a href="conteudos.html" class="">Conteúdos</a>
-  <a href="minicursos.html" class="">Mini-cursos</a>
-  <a href="equipe-editorial.html" class="">Equipe Editorial</a>
-  <a href="politicas-editoriais.html" class="">Políticas Editoriais</a>
-  <a href="diretrizes-autores.html" class="">Diretrizes para Autores</a>
-  <a href="submissoes.html" class="">Submissões</a>
-  <a href="templates.html" class="">Templates</a>
-  <a href="contato.html" class="">Contato</a>
-</nav>
-        <div class="small-note">
-          <strong>Contato institucional</strong><br>
-          Instagram: <a href="https://www.instagram.com/revistainquietacoes/" target="_blank">@revistainquietacoes</a><br>
-          E-mail: <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
-        </div>
+      <aside class="sidebar" id="barra-lateral" role="complementary" aria-label="Barra lateral">
+        <section class="sidebar-block">
+          <h2>Navegação institucional</h2>
+          <nav class="menu">
+            <a href="index.html">Início</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="edicao-atual.html">Edição Atual</a>
+            <a href="conteudos.html">Conteúdos</a>
+            <a href="minicursos.html">Mini-cursos</a>
+            <a href="equipe-editorial.html">Equipe Editorial</a>
+            <a href="politicas-editoriais.html">Políticas Editoriais</a>
+            <a href="diretrizes-autores.html">Diretrizes para Autores</a>
+            <a href="submissoes.html" class="active">Submissões</a>
+            <a href="templates.html">Templates</a>
+            <a href="contato.html">Contato</a>
+          </nav>
+        </section>
+
+        <section class="sidebar-block">
+          <h2>Navegação da página</h2>
+          <ul class="info-links">
+            <li><a href="#envio-oficial">Envio oficial</a></li>
+            <li><a href="#modalidades">Modalidades aceitas</a></li>
+            <li><a href="#condicoes">Condições para submissão</a></li>
+            <li><a href="#normas-gerais">Normas gerais</a></li>
+            <li><a href="#fotografia-tematica">Fotografia temática</a></li>
+            <li><a href="#fluxo-editorial">Fluxo editorial</a></li>
+            <li><a href="#direito-autoral">Direito autoral e privacidade</a></li>
+          </ul>
+        </section>
+
+        <section class="sidebar-block">
+          <h2>Contato institucional</h2>
+          <div class="small-note">
+            <strong>Instagram:</strong><br>
+            <a href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer">
+              @revistainquietacoes
+            </a><br><br>
+            <strong>E-mail:</strong><br>
+            <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
+          </div>
+        </section>
+
+        <section class="sidebar-block visitor-block">
+          <h2>Visitas</h2>
+          <div class="visitor-inline-card">
+            <img
+              src="https://revinquietacoes.goatcounter.com/counter/TOTAL.svg?no_branding=1"
+              alt="Contador de visitas da Revista Inquietações"
+              class="contador-visitas"
+            />
+          </div>
+        </section>
       </aside>
 
-      <main class="content">
-        
-<section class="panel"><div class="panel-head"><h2>Submissões em fluxo contínuo</h2><p>Canal oficial para autores e participantes das atividades da revista.</p></div><div class="panel-body">
-<div class="cta-row">
-<a class="btn" href="https://forms.gle/YoXGjm1MhuUr7UK69" target="_blank">Enviar manuscrito</a>
-<a class="btn secondary" href="templates.html">Ver templates</a>
-</div>
-<p style="margin-top:18px;">As submissões devem ser encaminhadas exclusivamente pelo formulário eletrônico oficial. Não serão aceitos envios por e-mail ou por outros meios informais.</p>
-</div></section>
-<section class="panel"><div class="panel-head"><h2>Formulários complementares</h2><p>Inscrições, certificados e atividades relacionadas ao portal da revista.</p></div><div class="panel-body">
-<div class="table-like">
-<div class="table-row"><strong>Submissão principal</strong><div><a href="https://forms.gle/YoXGjm1MhuUr7UK69" target="_blank">Formulário oficial de envio para avaliação e publicação</a></div></div>
-<div class="table-row"><strong>Inscrição em minicursos</strong><div><a href="https://forms.gle/zs2Jz4SisuV6RANE6" target="_blank">Formulário de inscrição</a></div></div>
-<div class="table-row"><strong>Solicitação de certificado</strong><div><a href="https://forms.gle/wY4KiuQ3rbZGhEK97" target="_blank">Formulário oficial</a></div></div>
-</div>
-</div></section>
+      <main class="content" id="conteudo-principal">
+        <section class="panel" id="envio-oficial">
+          <div class="panel-head">
+            <h2>Submissões em fluxo contínuo</h2>
+            <p>Canal oficial para autores e participantes das atividades da revista.</p>
+          </div>
+          <div class="panel-body">
+            <div class="cta-row">
+              <a class="btn" href="https://forms.gle/YoXGjm1MhuUr7UK69" target="_blank" rel="noopener noreferrer">
+                Enviar manuscrito
+              </a>
+              <a class="btn secondary" href="templates.html">
+                Ver templates
+              </a>
+            </div>
 
+            <p style="margin-top:18px;">
+              As submissões devem ser encaminhadas exclusivamente pelo formulário eletrônico oficial. Não serão aceitos envios por e-mail ou por outros meios informais. Esse formulário principal já constava na página original de submissões do portal. :contentReference[oaicite:3]{index=3}
+            </p>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Formulários complementares</h2>
+            <p>Inscrições, certificados e atividades relacionadas ao portal da revista.</p>
+          </div>
+          <div class="panel-body">
+            <div class="table-like">
+              <div class="table-row">
+                <strong>Submissão principal</strong>
+                <div>
+                  <a href="https://forms.gle/YoXGjm1MhuUr7UK69" target="_blank" rel="noopener noreferrer">
+                    Formulário oficial de envio para avaliação e publicação
+                  </a>
+                </div>
+              </div>
+
+              <div class="table-row">
+                <strong>Inscrição em minicursos</strong>
+                <div>
+                  <a href="https://forms.gle/zs2Jz4SisuV6RANE6" target="_blank" rel="noopener noreferrer">
+                    Formulário de inscrição
+                  </a>
+                </div>
+              </div>
+
+              <div class="table-row">
+                <strong>Solicitação de certificado</strong>
+                <div>
+                  <a href="https://forms.gle/wY4KiuQ3rbZGhEK97" target="_blank" rel="noopener noreferrer">
+                    Formulário oficial
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="modalidades">
+          <div class="panel-head">
+            <h2>Modalidades aceitas</h2>
+            <p>Tipos de produção recebidos em fluxo contínuo pela Revista Inquietações.</p>
+          </div>
+          <div class="panel-body">
+            <div class="types-grid">
+              <div class="type-card">
+                <h3>Artigos científicos</h3>
+                <p>Textos inéditos com problema de pesquisa, fundamentação teórica, metodologia, análise e conclusão.</p>
+              </div>
+
+              <div class="type-card">
+                <h3>Resumos expandidos</h3>
+                <p>Produções sintéticas com estrutura acadêmica organizada, seguindo o modelo formal da revista.</p>
+              </div>
+
+              <div class="type-card">
+                <h3>Ensaios</h3>
+                <p>Textos reflexivos e argumentativos, com consistência teórica, densidade analítica e clareza textual.</p>
+              </div>
+
+              <div class="type-card">
+                <h3>Resenhas</h3>
+                <p>Análises críticas de obras relevantes para o campo das Ciências Humanas.</p>
+              </div>
+
+              <div class="type-card">
+                <h3>Traduções</h3>
+                <p>Textos traduzidos com interesse acadêmico, histórico, filosófico, educacional ou cultural.</p>
+              </div>
+
+              <div class="type-card">
+                <h3>Relatos de experiência</h3>
+                <p>Registros reflexivos de prática com relevância acadêmica, pedagógica, institucional ou social.</p>
+              </div>
+
+              <div class="type-card">
+                <h3>Fotografia temática</h3>
+                <p>Ensaios visuais e séries fotográficas com curadoria temática e pertinência editorial própria.</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="condicoes">
+          <div class="panel-head">
+            <h2>Condições para submissão</h2>
+            <p>Checklist obrigatório antes do envio do material.</p>
+          </div>
+          <div class="panel-body">
+            <div class="submission-checklist">
+              <div class="submission-item">
+                <div class="submission-check">✓</div>
+                <p><strong>Originalidade e ineditismo:</strong> o texto deve ser original, inédito e não pode estar simultaneamente submetido a outro periódico, edital, revista ou evento acadêmico.</p>
+              </div>
+
+              <div class="submission-item">
+                <div class="submission-check">✓</div>
+                <p><strong>Conformidade com a revista:</strong> o material precisa estar adequado às modalidades editoriais aceitas pela Revista Inquietações e às orientações disponíveis nesta página. :contentReference[oaicite:4]{index=4}</p>
+              </div>
+
+              <div class="submission-item">
+                <div class="submission-check">✓</div>
+                <p><strong>Identificação autoral:</strong> nome completo, e-mail, Orcid e currículo Lattes devem ser informados no formulário quando disponíveis. O modelo de resumo expandido já prevê essas informações como padrão de identificação. :contentReference[oaicite:5]{index=5}</p>
+              </div>
+
+              <div class="submission-item">
+                <div class="submission-check">✓</div>
+                <p><strong>Referências e citações:</strong> devem seguir padrão acadêmico uniforme, com indicação apenas das obras efetivamente citadas no texto. O modelo encaminhado já indica uso de ABNT NBR 6023/10520 como base. :contentReference[oaicite:6]{index=6}</p>
+              </div>
+
+              <div class="submission-item">
+                <div class="submission-check">✓</div>
+                <p><strong>Arquivo editável:</strong> recomenda-se o envio em formato editável compatível com os modelos oficiais da revista.</p>
+              </div>
+
+              <div class="submission-item">
+                <div class="submission-check">✓</div>
+                <p><strong>Responsabilidade do autor:</strong> dados, afirmações, imagens, direitos de uso, correção linguística e integridade intelectual do texto são de inteira responsabilidade do(a)(s) autor(a)(es).</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="normas-gerais">
+          <div class="panel-head">
+            <h2>Normas gerais de submissão</h2>
+            <p>Critérios estruturais para os materiais enviados.</p>
+          </div>
+          <div class="panel-body">
+            <div class="modelo-box">
+              <p><strong>Base de organização dos textos:</strong> o <em>Modelo de Resumo Expandido da Revista Inquietações</em> serve como referência estrutural para os demais materiais encaminhados, especialmente no que se refere a identificação autoral, resumo, palavras-chave, corpo do texto, referências e campos editoriais. A exceção é a seção <strong>Fotografia Temática</strong>, que adota critérios diferenciados, descritos abaixo. :contentReference[oaicite:7]{index=7}</p>
+              <p><strong>Estrutura-base do modelo:</strong> título, autoria, Orcid, Lattes, e-mail, resumo entre 150 e 250 palavras, 3 a 5 palavras-chave, introdução, metodologia, resultados e discussão, considerações finais, referências e nota biográfica. :contentReference[oaicite:8]{index=8}</p>
+            </div>
+
+            <div class="normas-bloco" style="margin-top: 18px;">
+              <div class="norma-card">
+                <h3>Artigos científicos</h3>
+                <ul>
+                  <li>Devem apresentar título, autoria, resumo, palavras-chave, introdução, desenvolvimento, metodologia quando cabível, resultados e/ou discussão, conclusão e referências.</li>
+                  <li>Recomenda-se resumo entre 150 e 250 palavras e de 3 a 5 palavras-chave, tomando o modelo de resumo expandido como referência formal. :contentReference[oaicite:9]{index=9}</li>
+                  <li>O texto deve evidenciar problema de pesquisa, fundamentação teórica, consistência argumentativa e contribuição acadêmica.</li>
+                </ul>
+              </div>
+
+              <div class="norma-card">
+                <h3>Resumos expandidos</h3>
+                <ul>
+                  <li>Devem seguir preferencialmente o modelo oficial da revista.</li>
+                  <li>Estrutura recomendada: introdução, metodologia, resultados e discussão, considerações finais e referências. :contentReference[oaicite:10]{index=10}</li>
+                  <li>Resumo simples e objetivo, em parágrafo único, entre 150 e 250 palavras. :contentReference[oaicite:11]{index=11}</li>
+                </ul>
+              </div>
+
+              <div class="norma-card">
+                <h3>Ensaios</h3>
+                <ul>
+                  <li>Devem apresentar unidade argumentativa, coerência interna e densidade analítica.</li>
+                  <li>Podem assumir estrutura menos rígida que o artigo, mas devem conter título, autoria, texto principal e referências.</li>
+                  <li>É desejável incluir resumo e palavras-chave para melhor padronização editorial.</li>
+                </ul>
+              </div>
+
+              <div class="norma-card">
+                <h3>Resenhas</h3>
+                <ul>
+                  <li>Devem apresentar a referência completa da obra resenhada.</li>
+                  <li>Precisam combinar síntese informativa, análise crítica e avaliação da relevância acadêmica do material.</li>
+                  <li>A recomendação é manter texto objetivo, com clareza argumentativa e referências apenas quando efetivamente utilizadas.</li>
+                </ul>
+              </div>
+
+              <div class="norma-card">
+                <h3>Traduções</h3>
+                <ul>
+                  <li>Devem informar claramente autor original, tradutor(a), título original quando pertinente e fonte textual utilizada.</li>
+                  <li>Quando necessário, podem incluir nota do tradutor, aparato introdutório e notas explicativas.</li>
+                  <li>Em caso de obra protegida, o(a) tradutor(a) deve assegurar a possibilidade legal de circulação editorial do texto.</li>
+                </ul>
+              </div>
+
+              <div class="norma-card">
+                <h3>Relatos de experiência</h3>
+                <ul>
+                  <li>Devem descrever contexto, problema, desenvolvimento da experiência e análise reflexiva dos resultados.</li>
+                  <li>É recomendável manter estrutura próxima à do resumo expandido ou artigo curto, conforme a natureza do texto.</li>
+                  <li>Precisam apresentar relevância formativa, social, educacional, institucional ou acadêmica.</li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="fotografia-tematica">
+          <div class="panel-head">
+            <h2>Critérios diferenciados para Fotografia Temática</h2>
+            <p>Normas específicas para ensaios visuais e séries fotográficas.</p>
+          </div>
+          <div class="panel-body">
+            <div class="fotografia-box">
+              <h3>Seção com critérios próprios</h3>
+              <ul>
+                <li>A submissão deve conter <strong>título do ensaio fotográfico</strong>, <strong>nome do(a) autor(a)</strong>, e-mail e, quando houver, Orcid e currículo Lattes.</li>
+                <li>Deve acompanhar um <strong>texto de apresentação</strong> do conjunto visual, com contextualização temática, objetivo da proposta e breve comentário crítico ou documental.</li>
+                <li>As imagens devem possuir <strong>boa resolução</strong>, nitidez e legibilidade visual para uso editorial e publicação digital.</li>
+                <li>O conjunto deve apresentar <strong>coerência temática, unidade estética e pertinência com o escopo da revista</strong>.</li>
+                <li>As fotografias não precisam seguir a estrutura textual de resumo expandido, artigo ou ensaio, pois esta seção possui natureza visual própria.</li>
+                <li>Quando houver pessoas identificáveis, espaços privados, obras protegidas ou elementos sensíveis, o(a) autor(a) deve garantir a responsabilidade ética e legal pelo uso e circulação das imagens.</li>
+                <li>Legendas, local, data, contexto de produção e observações técnicas podem ser solicitados pela editoria para melhor composição da publicação.</li>
+              </ul>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="fluxo-editorial">
+          <div class="panel-head">
+            <h2>Fluxo editorial da submissão</h2>
+            <p>Etapas gerais de análise e publicação.</p>
+          </div>
+          <div class="panel-body">
+            <div class="steps-grid">
+              <div class="step-card">
+                <div class="step-number">1</div>
+                <div>
+                  <h3>Recebimento do material</h3>
+                  <p>O envio é registrado exclusivamente pelo formulário oficial da revista. :contentReference[oaicite:12]{index=12}</p>
+                </div>
+              </div>
+
+              <div class="step-card">
+                <div class="step-number">2</div>
+                <div>
+                  <h3>Conferência técnica preliminar</h3>
+                  <p>A editoria verifica adequação à modalidade escolhida, completude dos dados e conformidade mínima com as normas da revista. :contentReference[oaicite:13]{index=13}</p>
+                </div>
+              </div>
+
+              <div class="step-card">
+                <div class="step-number">3</div>
+                <div>
+                  <h3>Análise editorial</h3>
+                  <p>O material é examinado quanto à pertinência temática, consistência geral, originalidade e viabilidade de publicação.</p>
+                </div>
+              </div>
+
+              <div class="step-card">
+                <div class="step-number">4</div>
+                <div>
+                  <h3>Ajustes, parecer ou decisão editorial</h3>
+                  <p>A submissão poderá ser aceita, aceita com ajustes, devolvida para revisão ou recusada, conforme os critérios da revista. :contentReference[oaicite:14]{index=14}</p>
+                </div>
+              </div>
+
+              <div class="step-card">
+                <div class="step-number">5</div>
+                <div>
+                  <h3>Preparação final e publicação</h3>
+                  <p>Após aceite, o texto passa por revisão, normalização e preparação editorial antes da publicação no portal.</p>
+                </div>
+              </div>
+            </div>
+
+            <blockquote class="academic">
+              Recomenda-se ao(à) autor(a) conferir cuidadosamente seu material antes do envio, observando coerência textual, qualidade formal, regularidade bibliográfica e adequação à modalidade selecionada.
+            </blockquote>
+          </div>
+        </section>
+
+        <section class="panel">
+          <div class="panel-head">
+            <h2>Perguntas frequentes</h2>
+            <p>Dúvidas centrais sobre o envio de materiais.</p>
+          </div>
+          <div class="panel-body">
+            <div class="faq-grid">
+              <div class="faq-item">
+                <h3>Posso enviar o texto por e-mail?</h3>
+                <p>Não. O envio deve ser realizado apenas pelo formulário oficial da revista. :contentReference[oaicite:15]{index=15}</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>Preciso usar template?</h3>
+                <p>É fortemente recomendado. O modelo de resumo expandido funciona como base estrutural para os demais textos submetidos, favorecendo uniformidade editorial. :contentReference[oaicite:16]{index=16}</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>Posso submeter fotografia temática sem resumo expandido?</h3>
+                <p>Sim. A seção de fotografia temática possui critérios próprios e não precisa seguir a mesma estrutura textual dos demais materiais.</p>
+              </div>
+
+              <div class="faq-item">
+                <h3>O texto pode estar publicado em outro lugar?</h3>
+                <p>Não. A submissão deve ser original e inédita, conforme as orientações já presentes nas diretrizes da revista. :contentReference[oaicite:17]{index=17}</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel" id="direito-autoral">
+          <div class="panel-head">
+            <h2>Direito autoral, ética e privacidade</h2>
+            <p>Responsabilidade autoral e proteção de dados no processo de submissão.</p>
+          </div>
+          <div class="panel-body">
+            <div class="columns-2">
+              <div class="entry">
+                <span class="entry-title">Direito autoral</span>
+                Os autores permanecem responsáveis por seus textos, imagens, traduções e demais conteúdos submetidos, autorizando a revista a realizar avaliação, edição e publicação em seu portal.
+              </div>
+
+              <div class="entry">
+                <span class="entry-title">Ética e integridade</span>
+                A submissão pressupõe compromisso com originalidade, respeito às fontes, correção acadêmica, boa-fé científica e ausência de plágio ou apropriação indevida.
+              </div>
+
+              <div class="entry">
+                <span class="entry-title">Privacidade</span>
+                Os dados informados no processo de submissão serão utilizados exclusivamente para fins editoriais e institucionais, em consonância com a política de privacidade já adotada pela revista. :contentReference[oaicite:18]{index=18}
+              </div>
+
+              <div class="entry">
+                <span class="entry-title">Política editorial</span>
+                O material submetido também se vincula às políticas editoriais da Revista Inquietações quanto à integridade, avaliação e responsabilidade institucional. :contentReference[oaicite:19]{index=19}
+              </div>
+            </div>
+          </div>
+        </section>
       </main>
     </div>
 
-    <footer class="footer">
+    <footer class="footer" id="rodape">
       <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-      <p>Organização editorial: Diego Vinícius • Instagram: <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a></p>
+      <div class="footer-meta">
+        <a href="sobre.html">Sobre</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="submissoes.html">Submissões</a>
+      </div>
     </footer>
   </div>
-    <script>
-    function abrirTelaCheia(id) {
-      const elemento = document.getElementById(id);
-      if (!elemento) return;
 
-      if (elemento.requestFullscreen) {
-        elemento.requestFullscreen();
-      } else if (elemento.webkitRequestFullscreen) {
-        elemento.webkitRequestFullscreen();
-      } else if (elemento.msRequestFullscreen) {
-        elemento.msRequestFullscreen();
-      }
+  <script>
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const navMenu = document.querySelector('.site-nav-menu');
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
     }
   </script>
 
-  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
-
+  <script
+    data-goatcounter="https://revinquietacoes.goatcounter.com/count"
+    async
+    src="//gc.zgo.at/count.js">
+  </script>
 </body>
 </html>

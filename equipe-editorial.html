@@ -1,107 +1,405 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Estrutura editorial, funções acadêmicas e responsabilidades institucionais da Revista Inquietações." />
-  <meta name="author" content="Revista Inquietações" />
-  <title>Equipe Editorial | Revista Inquietações</title>
-  <link rel="stylesheet" href="styles.css" />
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta name="description" content="Equipe editorial da Revista Inquietações.">
+<meta name="author" content="Revista Inquietações">
+
+<title>Equipe Editorial | Revista Inquietações</title>
+
+<link rel="stylesheet" href="styles.css">
+
+<style>
+
+.editorial-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:22px;
+margin-top:10px;
+}
+
+.editor-card{
+background:#fff;
+border:1px solid var(--line);
+border-radius:18px;
+padding:20px;
+box-shadow:var(--shadow-soft);
+}
+
+.editor-role{
+font-size:.82rem;
+letter-spacing:.08em;
+text-transform:uppercase;
+color:var(--muted);
+margin-bottom:8px;
+}
+
+.editor-name{
+font-size:1.15rem;
+font-weight:600;
+color:var(--brand);
+margin-bottom:6px;
+}
+
+.editor-affiliation{
+font-size:.94rem;
+color:#4a5a72;
+margin-bottom:8px;
+}
+
+.editor-card a{
+font-size:.9rem;
+}
+
+</style>
+
 </head>
+
 <body>
-  <div class="site-shell">
-    <div class="topbar">
-      <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-      <div class="pill">Fluxo contínuo • v. 1, n. 1 (2026)</div>
-    </div>
 
-    <header class="masthead">
-      <div class="masthead-inner">
-        <div>
-          <p class="kicker">Portal científico • Revista Inquietações</p>
-          <h1>Equipe Editorial</h1>
-          <p>Estrutura editorial, funções acadêmicas e responsabilidades institucionais da Revista Inquietações.</p>
-          <div class="masthead-meta">
-            <div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
-            <div class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
-            <div class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
-          </div>
-        </div>
-        <div class="banner-card">
-          <img src="logo-revista.png" alt="Logo da Revista Inquietações" />
-        </div>
-      </div>
-    </header>
+<div class="site-shell">
 
-    <div class="portal-grid">
-      <aside class="sidebar">
-        <h2>Navegação institucional</h2>
-        <nav class="menu">
-         <nav class="menu">
-  <a href="index.html" class="">Início</a>
-  <a href="sobre.html" class="">Sobre</a>
-  <a href="edicao-atual.html" class="">Edição Atual</a>
-  <a href="conteudos.html" class="">Conteúdos</a>
-  <a href="minicursos.html" class="">Mini-cursos</a>
-  <a href="equipe-editorial.html" class="">Equipe Editorial</a>
-  <a href="politicas-editoriais.html" class="">Políticas Editoriais</a>
-  <a href="diretrizes-autores.html" class="">Diretrizes para Autores</a>
-  <a href="submissoes.html" class="">Submissões</a>
-  <a href="templates.html" class="">Templates</a>
-  <a href="contato.html" class="">Contato</a>
+<nav class="skip-links">
+<a href="#conteudo-principal">Ir para conteúdo</a>
+<a href="#navegacao-principal">Ir para navegação</a>
+<a href="#barra-lateral">Ir para barra lateral</a>
 </nav>
-        <div class="small-note">
-          <strong>Contato institucional</strong><br>
-          Instagram: <a href="https://www.instagram.com/revistainquietacoes/" target="_blank">@revistainquietacoes</a><br>
-          E-mail: <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
-        </div>
-      </aside>
 
-      <main class="content">
-        
-<section class="panel"><div class="panel-head"><h2>Estrutura editorial</h2><p>Coordenação científica, gestão do fluxo editorial e apoio técnico.</p></div><div class="panel-body">
-<div class="card-grid">
-<div class="entry"><span class="entry-title">Editor-Chefe</span><strong>Prof. Me. Diego Vinícius Brito dos Santos</strong><br>Área: Filosofia, Educação e Ciências Sociais<br>Lattes: <a href="https://lattes.cnpq.br/4347574894656811" target="_blank">Consultar currículo</a></div>
-<div class="entry"><span class="entry-title">Editor Executivo</span><strong>Prof. Me. Diego Vinícius Brito dos Santos</strong><br>Gestão do fluxo editorial, comunicação com autores e pareceristas.</div>
-<div class="entry"><span class="entry-title">Editoria de Seção</span>Artigos e Ensaios, Resumos Expandidos e Fotografia Temática sob coordenação inicial da editoria geral.</div>
-<div class="entry"><span class="entry-title">Revisão e normalização</span><strong>Prof. Me. Diego Vinícius Brito dos Santos</strong><br>Revisão linguística, adequação às normas ABNT e padronização textual.</div>
-<div class="entry"><span class="entry-title">Projeto gráfico e diagramação</span><strong>Diego Vinícius Brito dos Santos</strong><br>Identidade visual, composição editorial e organização gráfica.</div>
-<div class="entry"><span class="entry-title">Tecnologia e plataforma digital</span><strong>Diego Vinícius Brito dos Santos</strong><br>Manutenção do portal, metadados e organização digital das edições.</div>
+
+<div class="topbar">
+<div class="pill">Revista Inquietações • Ciências Humanas</div>
+<div class="pill">Equipe Editorial</div>
 </div>
-</div></section>
-<section class="panel"><div class="panel-head"><h2>Pareceristas e conselho</h2><p>Expansão progressiva do corpo científico.</p></div><div class="panel-body">
-<div class="columns-2">
-<div class="entry"><span class="entry-title">Pareceristas ad hoc</span><strong>Diego Vinícius Brito dos Santos</strong><br>Áreas: Filosofia, Educação e Ciências Sociais<br><br><strong>Taisa Maria Brito dos Santos</strong><br>Áreas: Filosofia e Geografia<br>Lattes: <a href="https://lattes.cnpq.br/6216572061896584" target="_blank">Consultar currículo</a></div>
-<div class="entry"><span class="entry-title">Conselho editorial</span>Órgão consultivo em expansão, voltado ao fortalecimento institucional, ao apoio científico e à definição de diretrizes. A revista mantém chamada aberta para novos integrantes.</div>
+
+
+<header class="masthead">
+
+<div class="masthead-inner">
+
+<div>
+
+<p class="kicker">Portal científico</p>
+
+<h1>Equipe Editorial</h1>
+
+<p class="hero-text">
+A equipe editorial da Revista Inquietações é responsável pela organização científica,
+avaliação editorial, revisão técnica e preparação dos materiais publicados no periódico.
+</p>
+
+<div class="masthead-meta">
+
+<div class="masthead-card">
+<strong>Área</strong>
+Ciências Humanas
 </div>
-<div class="notice" style="margin-top:18px;">A Revista Inquietações encontra-se em fase de consolidação institucional, com ampliação progressiva de sua equipe editorial e científica.</div>
-</div></section>
 
-      </main>
-    </div>
+<div class="masthead-card">
+<strong>Periodicidade</strong>
+Fluxo contínuo
+</div>
 
-    <footer class="footer">
-      <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-      <p>Organização editorial: Diego Vinícius • Instagram: <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a></p>
-    </footer>
-  </div>
-    <script>
-    function abrirTelaCheia(id) {
-      const elemento = document.getElementById(id);
-      if (!elemento) return;
+<div class="masthead-card">
+<strong>Portal</strong>
+Revista Inquietações
+</div>
 
-      if (elemento.requestFullscreen) {
-        elemento.requestFullscreen();
-      } else if (elemento.webkitRequestFullscreen) {
-        elemento.webkitRequestFullscreen();
-      } else if (elemento.msRequestFullscreen) {
-        elemento.msRequestFullscreen();
-      }
-    }
-  </script>
+</div>
 
-  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+</div>
+
+<div class="banner-card">
+<img src="logo-revista.png" alt="Logo da Revista Inquietações">
+</div>
+
+</div>
+
+</header>
+
+
+<nav class="site-nav" id="navegacao-principal">
+
+<button class="site-nav-toggle">Menu</button>
+
+<div class="site-nav-menu">
+
+<a href="index.html">Início</a>
+<a href="edicao-atual.html">Atual</a>
+<a href="conteudos.html">Conteúdos</a>
+<a href="minicursos.html">Mini-cursos</a>
+<a href="sobre.html">Sobre</a>
+<a href="equipe-editorial.html" class="active">Equipe Editorial</a>
+<a href="politicas-editoriais.html">Políticas</a>
+<a href="diretrizes-autores.html">Diretrizes</a>
+<a href="submissoes.html">Submissões</a>
+<a href="templates.html">Templates</a>
+<a href="contato.html">Contato</a>
+
+</div>
+
+</nav>
+
+
+
+<div class="portal-grid">
+
+
+<aside class="sidebar" id="barra-lateral">
+
+<section class="sidebar-block">
+
+<h2>Navegação institucional</h2>
+
+<nav class="menu">
+
+<a href="index.html">Início</a>
+<a href="sobre.html">Sobre</a>
+<a href="edicao-atual.html">Edição Atual</a>
+<a href="conteudos.html">Conteúdos</a>
+<a href="minicursos.html">Mini-cursos</a>
+<a href="equipe-editorial.html" class="active">Equipe Editorial</a>
+<a href="politicas-editoriais.html">Políticas</a>
+<a href="diretrizes-autores.html">Diretrizes</a>
+<a href="submissoes.html">Submissões</a>
+<a href="templates.html">Templates</a>
+<a href="contato.html">Contato</a>
+
+</nav>
+
+</section>
+
+
+<section class="sidebar-block">
+
+<h2>Contato institucional</h2>
+
+<div class="data-list">
+
+<div>
+<strong>Instagram:</strong>
+<a href="https://www.instagram.com/revistainquietacoes/" target="_blank">
+@revistainquietacoes
+</a>
+</div>
+
+<div>
+<strong>E-mail:</strong>
+<a href="mailto:rev.inquietacoes@gmail.com">
+rev.inquietacoes@gmail.com
+</a>
+</div>
+
+</div>
+
+</section>
+
+
+<section class="sidebar-block">
+
+<h2>Visitas</h2>
+
+<div class="visitor-inline-card">
+
+<img
+src="https://revinquietacoes.goatcounter.com/counter/TOTAL.svg?no_branding=1"
+class="contador-visitas"
+alt="contador de visitas"
+/>
+
+</div>
+
+</section>
+
+</aside>
+
+
+
+<main class="content" id="conteudo-principal">
+
+
+<section class="panel">
+
+<div class="panel-head">
+<h2>Coordenação editorial</h2>
+<p>Responsável pela direção científica e organização geral do periódico.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="editorial-grid">
+
+
+<div class="editor-card">
+
+<div class="editor-role">Editor-Chefe</div>
+
+<div class="editor-name">
+Diego Vinícius Brito dos Santos
+</div>
+
+<div class="editor-affiliation">
+Revista Inquietações
+</div>
+
+<a href="https://lattes.cnpq.br" target="_blank">
+Currículo Lattes
+</a>
+
+</div>
+
+
+
+<div class="editor-card">
+
+<div class="editor-role">Editor Executivo</div>
+
+<div class="editor-name">
+Messias Gomes de Araújo Leal
+</div>
+
+<div class="editor-affiliation">
+Universidade Federal do Rio Grande do Norte
+</div>
+
+<a href="https://lattes.cnpq.br" target="_blank">
+Currículo Lattes
+</a>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="panel">
+
+<div class="panel-head">
+<h2>Revisão e preparação editorial</h2>
+<p>Equipe responsável pela revisão técnica, linguística e preparação dos textos.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="editorial-grid">
+
+
+<div class="editor-card">
+
+<div class="editor-role">Revisão textual</div>
+
+<div class="editor-name">
+Equipe editorial
+</div>
+
+<div class="editor-affiliation">
+Revista Inquietações
+</div>
+
+</div>
+
+
+
+<div class="editor-card">
+
+<div class="editor-role">Diagramação editorial</div>
+
+<div class="editor-name">
+Equipe editorial
+</div>
+
+<div class="editor-affiliation">
+Revista Inquietações
+</div>
+
+</div>
+
+
+</div>
+
+</div>
+
+</section>
+
+
+
+<section class="panel">
+
+<div class="panel-head">
+<h2>Sobre a equipe editorial</h2>
+</div>
+
+<div class="panel-body">
+
+<p>
+A equipe editorial da Revista Inquietações reúne pesquisadores, professores e colaboradores
+comprometidos com a produção e circulação do conhecimento nas Ciências Humanas.
+</p>
+
+<p>
+O periódico adota critérios de qualidade acadêmica, avaliação editorial responsável
+e compromisso com a divulgação científica aberta.
+</p>
+
+</div>
+
+</section>
+
+
+
+</main>
+
+</div>
+
+
+
+<footer class="footer">
+
+<p>
+<strong>Revista Inquietações</strong> — Portal institucional do periódico
+</p>
+
+<div class="footer-meta">
+
+<a href="sobre.html">Sobre</a>
+<a href="politicas-editoriais.html">Políticas</a>
+<a href="submissoes.html">Submissões</a>
+
+</div>
+
+</footer>
+
+
+</div>
+
+
+<script>
+
+const navToggle=document.querySelector(".site-nav-toggle")
+const navMenu=document.querySelector(".site-nav-menu")
+
+if(navToggle){
+navToggle.onclick=()=>{
+navMenu.classList.toggle("is-open")
+}
+}
+
+</script>
+
+
+<script
+data-goatcounter="https://revinquietacoes.goatcounter.com/count"
+async
+src="//gc.zgo.at/count.js">
+</script>
+
 
 </body>
 </html>

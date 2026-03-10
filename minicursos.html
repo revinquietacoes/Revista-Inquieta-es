@@ -91,7 +91,6 @@
       font-size: 0.95rem;
     }
 
-    /* seção de instrutores */
     .instructors-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -162,10 +161,27 @@
     .instructor-bio p:last-child {
       margin-bottom: 0;
     }
+
+    @media (max-width: 700px) {
+      .course-actions .cta-row {
+        flex-direction: column;
+      }
+
+      .course-actions .btn {
+        width: 100%;
+      }
+    }
   </style>
 </head>
 <body>
   <div class="site-shell">
+    <nav class="skip-links" aria-label="Ir para os links de conteúdo">
+      <a href="#conteudo-principal">Ir para o conteúdo principal</a>
+      <a href="#navegacao-principal">Ir para a navegação</a>
+      <a href="#barra-lateral">Ir para a barra lateral</a>
+      <a href="#rodape">Ir para o rodapé</a>
+    </nav>
+
     <div class="topbar">
       <div class="pill">Revista Inquietações • Formação e extensão</div>
       <div class="pill">Mini-cursos em vídeo incorporados</div>
@@ -176,7 +192,7 @@
         <div>
           <p class="kicker">Portal científico • Revista Inquietações</p>
           <h1>Mini-cursos</h1>
-          <p>
+          <p class="hero-text">
             Seleção de aulas, leituras comentadas e formações da Revista Inquietações,
             com reprodução direta na página por meio de incorporação em iframe do YouTube.
           </p>
@@ -184,6 +200,7 @@
             <div class="masthead-card"><strong>Formato</strong>Vídeo incorporado</div>
             <div class="masthead-card"><strong>Acesso</strong>Direto na página</div>
             <div class="masthead-card"><strong>Temas</strong>Humanidades e escrita acadêmica</div>
+            <div class="masthead-card"><strong>Modalidade</strong>Formação aberta</div>
           </div>
         </div>
         <div class="banner-card">
@@ -192,34 +209,83 @@
       </div>
     </header>
 
-    <div class="portal-grid">
-      <aside class="sidebar">
-        <h2>Navegação institucional</h2>
-        <nav class="menu">
-          <a href="index.html">Início</a>
-          <a href="sobre.html">Sobre</a>
-          <a href="edicao-atual.html">Edição Atual</a>
-          <a href="conteudos.html">Conteúdos</a>
-          <a href="minicursos.html" class="active">Mini-cursos</a>
-          <a href="equipe-editorial.html">Equipe Editorial</a>
-          <a href="politicas-editoriais.html">Políticas Editoriais</a>
-          <a href="diretrizes-autores.html">Diretrizes para Autores</a>
-          <a href="submissoes.html">Submissões</a>
-          <a href="templates.html">Templates</a>
-          <a href="contato.html">Contato</a>
-        </nav>
+    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        Menu
+      </button>
+      <div class="site-nav-menu" id="site-menu">
+        <a href="index.html">Início</a>
+        <a href="edicao-atual.html">Atual</a>
+        <a href="conteudos.html">Conteúdos</a>
+        <a href="minicursos.html" class="active">Mini-cursos</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="equipe-editorial.html">Equipe Editorial</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="diretrizes-autores.html">Diretrizes</a>
+        <a href="submissoes.html">Submissões</a>
+        <a href="templates.html">Templates</a>
+        <a href="contato.html">Contato</a>
+      </div>
+    </nav>
 
-        <div class="small-note">
-          <strong>Contato institucional</strong><br>
-          Instagram:
-          <a href="https://www.instagram.com/revistainquietacoes/" target="_blank">@revistainquietacoes</a><br>
-          E-mail:
-          <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
-        </div>
+    <div class="portal-grid">
+      <aside class="sidebar" id="barra-lateral" role="complementary" aria-label="Barra lateral">
+        <section class="sidebar-block">
+          <h2>Navegação institucional</h2>
+          <nav class="menu">
+            <a href="index.html">Início</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="edicao-atual.html">Edição Atual</a>
+            <a href="conteudos.html">Conteúdos</a>
+            <a href="minicursos.html" class="active">Mini-cursos</a>
+            <a href="equipe-editorial.html">Equipe Editorial</a>
+            <a href="politicas-editoriais.html">Políticas Editoriais</a>
+            <a href="diretrizes-autores.html">Diretrizes para Autores</a>
+            <a href="submissoes.html">Submissões</a>
+            <a href="templates.html">Templates</a>
+            <a href="contato.html">Contato</a>
+          </nav>
+        </section>
+
+        <section class="sidebar-block">
+          <h2>Navegação da página</h2>
+          <ul class="info-links">
+            <li><a href="#catalogo">Catálogo de mini-cursos</a></li>
+            <li><a href="#instrutores">Instrutores</a></li>
+            <li><a href="#inscricoes">Inscrições e certificados</a></li>
+          </ul>
+        </section>
+
+        <section class="sidebar-block">
+          <h2>Contato institucional</h2>
+          <div class="data-list">
+            <div>
+              <strong>Instagram:</strong>
+              <a href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer">
+                @revistainquietacoes
+              </a>
+            </div>
+            <div>
+              <strong>E-mail:</strong>
+              <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="sidebar-block visitor-block">
+          <h2>Visitas</h2>
+          <div class="visitor-inline-card">
+            <img
+              src="https://revinquietacoes.goatcounter.com/counter/TOTAL.svg?no_branding=1"
+              alt="Contador de visitas da Revista Inquietações"
+              class="contador-visitas"
+            />
+          </div>
+        </section>
       </aside>
 
-      <main class="content">
-        <section class="panel">
+      <main class="content" id="conteudo-principal">
+        <section class="panel" id="catalogo">
           <div class="panel-head">
             <h2>Catálogo de mini-cursos</h2>
             <p>
@@ -229,12 +295,12 @@
           </div>
 
           <div class="panel-body">
-            <div class="course-actions">
+            <div class="course-actions" id="inscricoes">
               <p>Para participar dos minicursos da Revista Inquietações, utilize os links abaixo.</p>
               <div class="cta-row">
-                <a class="btn" href="https://forms.gle/UtbZb1n8fhxkfBw8A" target="_blank">Inscrição em minicurso</a>
-                <a class="btn secondary" href="https://forms.gle/6m3ufKYR3oFXuBoM8" target="_blank">Solicitar certificado</a>
-                <a class="btn secondary" href="https://drive.google.com/drive/folders/1t_xVWLyB8qsC6Zm77z7OUXqalRu6XdWr?usp=drive_link" target="_blank">Certificados</a>
+                <a class="btn" href="https://forms.gle/UtbZb1n8fhxkfBw8A" target="_blank" rel="noopener noreferrer">Inscrição em minicurso</a>
+                <a class="btn secondary" href="https://forms.gle/6m3ufKYR3oFXuBoM8" target="_blank" rel="noopener noreferrer">Solicitar certificado</a>
+                <a class="btn secondary" href="https://drive.google.com/drive/folders/1t_xVWLyB8qsC6Zm77z7OUXqalRu6XdWr?usp=drive_link" target="_blank" rel="noopener noreferrer">Certificados</a>
               </div>
             </div>
 
@@ -320,7 +386,7 @@
           </div>
         </section>
 
-        <section class="panel">
+        <section class="panel" id="instrutores">
           <div class="panel-head">
             <h2>Instrutores</h2>
             <p>Docentes e pesquisadores responsáveis pela condução dos mini-cursos e atividades formativas da Revista Inquietações.</p>
@@ -383,28 +449,29 @@
       </main>
     </div>
 
-    <footer class="footer">
+    <footer class="footer" id="rodape">
       <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-      <p>Organização editorial: Diego Vinícius • Instagram: <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a></p>
+      <div class="footer-meta">
+        <a href="sobre.html">Sobre</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="submissoes.html">Submissões</a>
+      </div>
     </footer>
   </div>
-    <script>
-    function abrirTelaCheia(id) {
-      const elemento = document.getElementById(id);
-      if (!elemento) return;
 
-      if (elemento.requestFullscreen) {
-        elemento.requestFullscreen();
-      } else if (elemento.webkitRequestFullscreen) {
-        elemento.webkitRequestFullscreen();
-      } else if (elemento.msRequestFullscreen) {
-        elemento.msRequestFullscreen();
-      }
+  <script>
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const navMenu = document.querySelector('.site-nav-menu');
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
     }
   </script>
 
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
-
 </body>
 </html>

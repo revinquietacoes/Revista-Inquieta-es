@@ -12,7 +12,6 @@
   <link rel="stylesheet" href="styles.css" />
 
   <style>
-    /* Complementos leves, sem alterar o layout-base da página */
     .section-anchor {
       scroll-margin-top: 24px;
     }
@@ -24,80 +23,20 @@
     }
 
     .sumario-lista a {
-      text-decoration: none;
-    }
-
-    .reader-block {
-      margin-top: 18px;
-      border: 1px solid rgba(0,0,0,0.12);
-      border-radius: 14px;
-      overflow: hidden;
-      background: #fff;
-    }
-
-    .reader-topbar {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      gap: 12px;
-      padding: 12px 16px;
-      border-bottom: 1px solid rgba(0,0,0,0.08);
-      background: rgba(0,0,0,0.03);
-      flex-wrap: wrap;
-    }
-
-    .reader-meta {
-      display: flex;
-      flex-direction: column;
-      gap: 4px;
-      min-width: 220px;
-    }
-
-    .reader-meta strong {
-      font-size: 0.98rem;
-    }
-
-    .reader-actions {
-      display: flex;
-      gap: 10px;
-      flex-wrap: wrap;
-    }
-
-    .reader-btn {
-      appearance: none;
-      border: none;
-      border-radius: 999px;
-      padding: 10px 16px;
-      cursor: pointer;
-      font: inherit;
-      background: #1f1f1f;
-      color: #fff;
-      transition: 0.2s ease;
-    }
-
-    .reader-btn:hover {
-      opacity: 0.92;
-      transform: translateY(-1px);
-    }
-
-    .reader-frame-wrap {
-      width: 100%;
-      height: 78vh;
-      min-height: 720px;
-      background: #2b2b2b;
-    }
-
-    .reader-frame-wrap.compact {
-      min-height: 560px;
-      height: 68vh;
-    }
-
-    .reader-frame {
-      width: 100%;
-      height: 100%;
-      border: 0;
       display: block;
-      background: #2b2b2b;
+      padding: 12px 14px;
+      border-radius: 12px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      transition: 0.18s ease;
+    }
+
+    .sumario-lista a:hover {
+      text-decoration: none;
+      background: var(--brand-3);
+      color: var(--brand);
+      transform: translateY(-1px);
     }
 
     .cover-preview {
@@ -109,72 +48,23 @@
       box-shadow: 0 14px 36px rgba(0,0,0,0.12);
     }
 
-    .entry-grid {
-      display: grid;
-      gap: 18px;
-    }
-
-    .entry-card {
-      border: 1px solid rgba(0,0,0,0.08);
-      border-radius: 16px;
-      padding: 18px;
-      background: #fff;
-    }
-
-    .entry-card .badge {
-      margin-bottom: 8px;
-      display: inline-block;
-    }
-
-    .entry-card h3 {
-      margin: 0 0 8px 0;
-      font-size: 1.1rem;
-      line-height: 1.35;
-    }
-
-    .entry-card p {
-      margin: 6px 0;
-    }
-
-    .mini-meta {
-      color: #444;
-      font-size: 0.96rem;
-    }
-
-    .warning-note {
-      margin-top: 12px;
-      padding: 12px 14px;
-      border-left: 4px solid #8c6b00;
-      background: #fff8df;
-      border-radius: 10px;
-    }
-
     .empty-state {
       padding: 20px;
       border: 1px dashed rgba(0,0,0,0.16);
       border-radius: 14px;
       background: rgba(0,0,0,0.02);
     }
-
-    @media (max-width: 900px) {
-      .reader-frame-wrap {
-        min-height: 520px;
-        height: 70vh;
-      }
-
-      .reader-frame-wrap.compact {
-        min-height: 460px;
-        height: 62vh;
-      }
-
-      .reader-topbar {
-        align-items: flex-start;
-      }
-    }
   </style>
 </head>
 <body>
   <div class="site-shell">
+    <nav class="skip-links" aria-label="Ir para os links de conteúdo">
+      <a href="#conteudo-principal">Ir para o conteúdo principal</a>
+      <a href="#navegacao-principal">Ir para a navegação</a>
+      <a href="#barra-lateral">Ir para a barra lateral</a>
+      <a href="#rodape">Ir para o rodapé</a>
+    </nav>
+
     <div class="topbar">
       <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
       <div class="pill">Fluxo contínuo • v. 1, n. 1 (2026)</div>
@@ -185,7 +75,7 @@
         <div>
           <p class="kicker">Portal científico • Revista Inquietações</p>
           <h1>Conteúdos Publicados</h1>
-          <p>
+          <p class="hero-text">
             Catálogo das seções da revista com leitura integrada dos conteúdos na própria página,
             preservando a navegação editorial da edição atual.
           </p>
@@ -193,6 +83,7 @@
             <div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
             <div class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
             <div class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
+            <div class="masthead-card"><strong>e-ISSN</strong>ISSN: 3086-4119</div>
           </div>
         </div>
         <div class="banner-card">
@@ -201,34 +92,90 @@
       </div>
     </header>
 
-    <div class="portal-grid">
-      <aside class="sidebar">
-        <h2>Navegação institucional</h2>
-        <nav class="menu">
-          <a href="index.html">Início</a>
-          <a href="sobre.html">Sobre</a>
-          <a href="edicao-atual.html">Edição Atual</a>
-          <a href="conteudos.html" class="active">Conteúdos</a>
-          <a href="equipe-editorial.html">Equipe Editorial</a>
-          <a href="politicas-editoriais.html">Políticas Editoriais</a>
-          <a href="diretrizes-autores.html">Diretrizes para Autores</a>
-          <a href="submissoes.html">Submissões</a>
-          <a href="templates.html">Templates</a>
-          <a href="contato.html">Contato</a>
-        </nav>
+    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        Menu
+      </button>
+      <div class="site-nav-menu" id="site-menu">
+        <a href="index.html">Início</a>
+        <a href="edicao-atual.html">Atual</a>
+        <a href="conteudos.html" class="active">Conteúdos</a>
+        <a href="minicursos.html">Mini-cursos</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="equipe-editorial.html">Equipe Editorial</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="diretrizes-autores.html">Diretrizes</a>
+        <a href="submissoes.html">Submissões</a>
+        <a href="templates.html">Templates</a>
+        <a href="contato.html">Contato</a>
+      </div>
+    </nav>
 
-        <div class="small-note">
-          <strong>Contato institucional</strong><br />
-          Instagram:
-          <a href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer">
-            @revistainquietacoes
-          </a><br />
-          E-mail:
-          <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
-        </div>
+    <div class="portal-grid">
+      <aside class="sidebar" id="barra-lateral" role="complementary" aria-label="Barra lateral">
+        <section class="sidebar-block">
+          <h2>Navegação institucional</h2>
+          <nav class="menu">
+            <a href="index.html">Início</a>
+            <a href="sobre.html">Sobre</a>
+            <a href="edicao-atual.html">Edição Atual</a>
+            <a href="conteudos.html" class="active">Conteúdos</a>
+            <a href="minicursos.html">Mini-cursos</a>
+            <a href="equipe-editorial.html">Equipe Editorial</a>
+            <a href="politicas-editoriais.html">Políticas Editoriais</a>
+            <a href="diretrizes-autores.html">Diretrizes para Autores</a>
+            <a href="submissoes.html">Submissões</a>
+            <a href="templates.html">Templates</a>
+            <a href="contato.html">Contato</a>
+          </nav>
+        </section>
+
+        <section class="sidebar-block">
+          <h2>Sumário da edição</h2>
+          <ul class="info-links">
+            <li><a href="#capa-edicao">Capa da edição</a></li>
+            <li><a href="#expediente-editorial">Expediente Editorial</a></li>
+            <li><a href="#mensagem-autores-leitores">Mensagem aos(às) autores(as) e leitores(as)</a></li>
+            <li><a href="#artigos">Artigos</a></li>
+            <li><a href="#resumos-expandidos">Resumos expandidos</a></li>
+            <li><a href="#ensaios">Ensaios</a></li>
+            <li><a href="#resenhas">Resenhas</a></li>
+            <li><a href="#traducoes">Traduções</a></li>
+            <li><a href="#fotografia-tematica">Fotografia temática</a></li>
+            <li><a href="#relatos-experiencia">Relatos de experiência</a></li>
+            <li><a href="#homenagens">Homenagens</a></li>
+          </ul>
+        </section>
+
+        <section class="sidebar-block">
+          <h2>Contato institucional</h2>
+          <div class="data-list">
+            <div>
+              <strong>Instagram:</strong>
+              <a href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer">
+                @revistainquietacoes
+              </a>
+            </div>
+            <div>
+              <strong>E-mail:</strong>
+              <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
+            </div>
+          </div>
+        </section>
+
+        <section class="sidebar-block visitor-block">
+          <h2>Visitas</h2>
+          <div class="visitor-inline-card">
+            <img
+              src="https://revinquietacoes.goatcounter.com/counter/TOTAL.svg?no_branding=1"
+              alt="Contador de visitas da Revista Inquietações"
+              class="contador-visitas"
+            />
+          </div>
+        </section>
       </aside>
 
-      <main class="content">
+      <main class="content" id="conteudo-principal">
         <section class="panel">
           <div class="panel-head">
             <h2>Sumário da página</h2>
@@ -367,9 +314,7 @@
               <article class="entry-card">
                 <span class="badge">Artigo</span>
                 <h3>IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA: Desconstruindo binarismos e respeitando a diversidade</h3>
-                <p class="mini-meta">
-                  Autor: Diego Vinícius Brito dos Santos
-                </p>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
                 <p class="mini-meta">
                   DOI:
                   <a href="https://doi.org/10.5281/zenodo.18825993" target="_blank" rel="noopener noreferrer">
@@ -412,9 +357,7 @@
               <article class="entry-card">
                 <span class="badge">Artigo</span>
                 <h3>Algoritmos do passado: como a IA está reescrevendo a história</h3>
-                <p class="mini-meta">
-                  Autor: Diego Vinícius Brito dos Santos
-                </p>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
                 <p class="mini-meta">
                   DOI:
                   <a href="https://doi.org/10.5281/zenodo.18836259" target="_blank" rel="noopener noreferrer">
@@ -521,7 +464,7 @@
                 <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
                 <p class="mini-meta">
                   DOI:
-                  <a href="http://dx.doi.org/10.5281/zenodo.18846061" target="_blank" rel="noopener noreferrer">
+                  <a href="https://dx.doi.org/10.5281/zenodo.18846061" target="_blank" rel="noopener noreferrer">
                     http://dx.doi.org/10.5281/zenodo.18846061
                   </a>
                 </p>
@@ -572,7 +515,7 @@
                 <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
                 <p class="mini-meta">
                   DOI:
-                  <a href="http://dx.doi.org/10.5281/zenodo.18845109" target="_blank" rel="noopener noreferrer">
+                  <a href="https://dx.doi.org/10.5281/zenodo.18845109" target="_blank" rel="noopener noreferrer">
                     http://dx.doi.org/10.5281/zenodo.18845109
                   </a>
                 </p>
@@ -776,15 +719,8 @@
               <article class="entry-card">
                 <span class="badge">Tradução</span>
                 <h3>A mulher (Die Frau), de Georg Groddeck</h3>
-
-                <p class="mini-meta">
-                  Autor original: Georg Groddeck
-                </p>
-
-                <p class="mini-meta">
-                  Tradutor: Diego Vinícius Brito dos Santos
-                </p>
-
+                <p class="mini-meta">Autor original: Georg Groddeck</p>
+                <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
                 <p class="mini-meta">
                   DOI:
                   <a href="https://dx.doi.org/10.5281/zenodo.18916814" target="_blank" rel="noopener noreferrer">
@@ -804,14 +740,12 @@
                       <strong>Leitura da tradução</strong>
                       <span class="mini-meta">Arquivo: A mulher - G. G..pdf</span>
                     </div>
-
                     <div class="reader-actions">
                       <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-traducao-4')">
                         Tela cheia
                       </button>
                     </div>
                   </div>
-
                   <div class="reader-frame-wrap">
                     <iframe
                       class="reader-frame"
@@ -881,7 +815,7 @@
                 <p class="mini-meta">Autora: Geiza Venicia dos Santos</p>
                 <p class="mini-meta">
                   DOI:
-                  <a href="http://dx.doi.org/10.5281/zenodo.18841135" target="_blank" rel="noopener noreferrer">
+                  <a href="https://dx.doi.org/10.5281/zenodo.18841135" target="_blank" rel="noopener noreferrer">
                     http://dx.doi.org/10.5281/zenodo.18841135
                   </a>
                 </p>
@@ -932,7 +866,7 @@
                 <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
                 <p class="mini-meta">
                   DOI:
-                  <a href="http://dx.doi.org/10.5281/zenodo.18844651" target="_blank" rel="noopener noreferrer">
+                  <a href="https://dx.doi.org/10.5281/zenodo.18844651" target="_blank" rel="noopener noreferrer">
                     http://dx.doi.org/10.5281/zenodo.18844651
                   </a>
                 </p>
@@ -985,15 +919,13 @@
       </main>
     </div>
 
-    <footer class="footer">
+    <footer class="footer" id="rodape">
       <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-      <p>
-        Organização editorial: Diego Vinícius •
-        Instagram:
-        <a href="https://www.instagram.com/iamthed1/" target="_blank" rel="noopener noreferrer">
-          @iamthed1
-        </a>
-      </p>
+      <div class="footer-meta">
+        <a href="sobre.html">Sobre</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="submissoes.html">Submissões</a>
+      </div>
     </footer>
   </div>
 
@@ -1011,23 +943,20 @@
       }
     }
   </script>
-    <script>
-    function abrirTelaCheia(id) {
-      const elemento = document.getElementById(id);
-      if (!elemento) return;
 
-      if (elemento.requestFullscreen) {
-        elemento.requestFullscreen();
-      } else if (elemento.webkitRequestFullscreen) {
-        elemento.webkitRequestFullscreen();
-      } else if (elemento.msRequestFullscreen) {
-        elemento.msRequestFullscreen();
-      }
+  <script>
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const navMenu = document.querySelector('.site-nav-menu');
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
     }
   </script>
 
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
-
 </body>
 </html>
