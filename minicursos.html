@@ -4,14 +4,38 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<meta name="description" content="Mini-cursos e aulas comentadas da Revista Inquietações, com reprodução incorporada na própria página." />
+<meta name="description" content="Página do evento Lançamento da Revista Inquietações, com inscrições, minicursos, comunicações orais e programação." />
 <meta name="author" content="Revista Inquietações" />
 
-<title>Mini-cursos | Revista Inquietações</title>
+<title>Lançamento da Revista Inquietações | Revista Inquietações</title>
 
 <link rel="stylesheet" href="styles.css">
 
 <style>
+.event-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:22px;
+}
+
+.event-card{
+background:#ffffff;
+border:1px solid rgba(0,0,0,0.08);
+border-radius:16px;
+padding:18px;
+box-shadow:0 8px 24px rgba(0,0,0,0.06);
+}
+
+.event-card h3{
+margin:0 0 10px;
+font-size:1.08rem;
+color:var(--brand);
+}
+
+.event-card p{
+margin:0;
+color:#444;
+}
 
 .video-grid{
 display:grid;
@@ -68,6 +92,43 @@ grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
 gap:24px;
 }
 
+.notice-box{
+padding:18px;
+border-radius:16px;
+border:1px solid #d7e0ea;
+background:#f8fbff;
+}
+
+.notice-box p{
+margin:0 0 10px;
+}
+
+.notice-box p:last-child{
+margin-bottom:0;
+}
+
+.comunicacao-lista{
+display:grid;
+gap:14px;
+}
+
+.comunicacao-item{
+padding:16px;
+border:1px solid var(--line);
+border-radius:14px;
+background:#fff;
+}
+
+.comunicacao-item h3{
+margin:0 0 8px;
+font-size:1rem;
+color:var(--brand);
+}
+
+.comunicacao-item p{
+margin:0;
+color:#4c5b70;
+}
 </style>
 </head>
 
@@ -82,8 +143,8 @@ gap:24px;
 </nav>
 
 <div class="topbar">
-<div class="pill">Revista Inquietações • Formação e extensão</div>
-<div class="pill">Mini-cursos em vídeo incorporados</div>
+<div class="pill">Revista Inquietações • Evento de lançamento</div>
+<div class="pill">Inscrições, mini-cursos e comunicações</div>
 </div>
 
 <header class="masthead">
@@ -93,18 +154,19 @@ gap:24px;
 <div>
 <p class="kicker">Portal científico • Revista Inquietações</p>
 
-<h1>Mini-cursos</h1>
+<h1>Lançamento da Revista Inquietações</h1>
 
 <p class="hero-text">
-Seleção de aulas, leituras comentadas e formações da Revista Inquietações,
-com reprodução direta na página por meio de incorporação em iframe do YouTube.
+A Revista Inquietações promove seu evento oficial de lançamento, reunindo estudantes, pesquisadores(as),
+professores(as) e interessados(as) nas Ciências Humanas e Sociais em uma programação formativa com mini-cursos,
+comunicações orais e futuras palestras temáticas.
 </p>
 
 <div class="masthead-meta">
-<div class="masthead-card"><strong>Formato</strong>Vídeo incorporado</div>
-<div class="masthead-card"><strong>Acesso</strong>Direto na página</div>
-<div class="masthead-card"><strong>Temas</strong>Humanidades e escrita acadêmica</div>
-<div class="masthead-card"><strong>Modalidade</strong>Formação aberta</div>
+<div class="masthead-card"><strong>Formato</strong>Evento acadêmico</div>
+<div class="masthead-card"><strong>Atividades</strong>Mini-cursos e comunicações</div>
+<div class="masthead-card"><strong>Área</strong>Ciências Humanas e Sociais</div>
+<div class="masthead-card"><strong>Status</strong>Programação aberta</div>
 </div>
 
 </div>
@@ -124,11 +186,10 @@ Menu
 </button>
 
 <div class="site-nav-menu" id="site-menu">
-
 <a href="index.html">Início</a>
 <a href="edicao-atual.html">Atual</a>
 <a href="conteudos.html">Conteúdos</a>
-<a href="minicursos.html" class="active">Mini-cursos</a>
+<a href="minicursos.html" class="active">Evento</a>
 <a href="sobre.html">Sobre</a>
 <a href="equipe-editorial.html">Equipe Editorial</a>
 <a href="politicas-editoriais.html">Políticas</a>
@@ -136,7 +197,6 @@ Menu
 <a href="submissoes.html">Submissões</a>
 <a href="templates.html">Templates</a>
 <a href="contato.html">Contato</a>
-
 </div>
 
 </nav>
@@ -146,108 +206,201 @@ Menu
 <section class="panel">
 
 <div class="panel-head">
-<h2>Catálogo de mini-cursos</h2>
-<p>Os conteúdos abaixo podem ser assistidos diretamente na página.</p>
+<h2>Sobre o evento</h2>
+<p>Apresentação geral da proposta formativa e acadêmica do lançamento da revista.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="event-grid">
+
+<div class="event-card">
+<h3>Inscrições</h3>
+<p>O evento conta com formulário próprio para participação nas atividades oferecidas pela Revista Inquietações.</p>
+</div>
+
+<div class="event-card">
+<h3>Mini-cursos</h3>
+<p>Atividades formativas em vídeo, com temas ligados à filosofia, educação, teoria social, psicanálise e escrita acadêmica.</p>
+</div>
+
+<div class="event-card">
+<h3>Comunicações orais</h3>
+<p>Espaço destinado à apresentação de trabalhos, reflexões acadêmicas e experiências de pesquisa vinculadas às Humanidades.</p>
+</div>
+
+<div class="event-card">
+<h3>Palestras</h3>
+<p>Programação em construção. Novas atividades serão divulgadas em breve no portal e nas redes da revista.</p>
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<section class="panel" id="inscricoes">
+
+<div class="panel-head">
+<h2>Inscrições e certificados</h2>
+<p>Acesso rápido aos formulários e documentos do evento.</p>
 </div>
 
 <div class="panel-body">
 
 <div class="course-actions">
-
-<p>Para participar dos minicursos da Revista Inquietações utilize os links abaixo.</p>
+<p>Para participar do evento de lançamento da Revista Inquietações, utilize os links abaixo.</p>
 
 <div class="cta-row">
+<a class="btn" href="https://forms.gle/UtbZb1n8fhxkfBw8A" target="_blank" rel="noopener noreferrer">Inscrição no evento</a>
+<a class="btn secondary" href="https://forms.gle/6m3ufKYR3oFXuBoM8" target="_blank" rel="noopener noreferrer">Solicitar certificado</a>
+<a class="btn secondary" href="https://drive.google.com/drive/folders/1t_xVWLyB8qsC6Zm77z7OUXqalRu6XdWr" target="_blank" rel="noopener noreferrer">Certificados</a>
+</div>
+</div>
 
-<a class="btn" href="https://forms.gle/UtbZb1n8fhxkfBw8A" target="_blank">Inscrição em minicurso</a>
-
-<a class="btn secondary" href="https://forms.gle/6m3ufKYR3oFXuBoM8" target="_blank">Solicitar certificado</a>
-
-<a class="btn secondary" href="https://drive.google.com/drive/folders/1t_xVWLyB8qsC6Zm77z7OUXqalRu6XdWr" target="_blank">Certificados</a>
-
+<div class="notice-box">
+<p><strong>Público-alvo:</strong> estudantes, pesquisadores(as), professores(as) e interessados(as) em produção acadêmica, leitura crítica e formação em Ciências Humanas e Sociais.</p>
+<p><strong>Objetivo:</strong> apresentar a proposta editorial da Revista Inquietações, estimular a participação acadêmica e criar um espaço de formação e circulação do conhecimento.</p>
 </div>
 
 </div>
+
+</section>
+
+<section class="panel" id="minicursos">
+
+<div class="panel-head">
+<h2>Mini-cursos do evento</h2>
+<p>Os conteúdos abaixo podem ser assistidos diretamente na página.</p>
+</div>
+
+<div class="panel-body">
 
 <div class="video-grid">
 
 <article class="course-card">
-
 <span class="course-meta">Leitura comentada</span>
-
 <h3>O Ser Social e o Preconceito: Uma Leitura Comentada</h3>
-
 <div class="video-frame">
-<iframe src="https://www.youtube.com/embed/EwXLrsQyGnM" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/EwXLrsQyGnM" title="O Ser Social e o Preconceito: Uma Leitura Comentada" allowfullscreen></iframe>
 </div>
-
 </article>
 
 <article class="course-card">
-
 <span class="course-meta">Filosofia</span>
-
 <h3>Nietzsche e os valores modernos</h3>
-
 <div class="video-frame">
-<iframe src="https://www.youtube.com/embed/x7MMPwjRTPM" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/x7MMPwjRTPM" title="Nietzsche e os valores modernos - Parte 01" allowfullscreen></iframe>
 </div>
-
 <div style="height:12px"></div>
-
 <div class="video-frame">
-<iframe src="https://www.youtube.com/embed/TWvVWFXV-lA" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/TWvVWFXV-lA" title="Nietzsche e os valores modernos - Parte 02" allowfullscreen></iframe>
 </div>
-
 </article>
 
 <article class="course-card">
-
 <span class="course-meta">Teoria social</span>
-
 <h3>O Manifesto Comunista: O Texto que Mudou o Mundo</h3>
-
 <div class="video-frame">
-<iframe src="https://www.youtube.com/embed/Vw_rqRNqdd4" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/Vw_rqRNqdd4" title="O Manifesto Comunista: O Texto que Mudou o Mundo" allowfullscreen></iframe>
 </div>
-
 </article>
 
 <article class="course-card">
-
 <span class="course-meta">Psicanálise</span>
-
 <h3>Leitura e Comentário do livro O Livro d’Isso</h3>
-
 <div class="video-frame">
-<iframe src="https://www.youtube.com/embed/6hIkAqFCSO4" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/6hIkAqFCSO4" title="Leitura e Comentário do livro O Livro d’Isso" allowfullscreen></iframe>
 </div>
-
 </article>
 
 <article class="course-card">
-
 <span class="course-meta">Escrita acadêmica</span>
-
 <h3>Como escrever um resumo expandido?</h3>
-
 <div class="video-frame">
-<iframe src="https://www.youtube.com/embed/MqxG9Y34e30" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/MqxG9Y34e30" title="Como escrever um resumo expandido?" allowfullscreen></iframe>
 </div>
-
 </article>
 
 <article class="course-card">
-
 <span class="course-meta">Tecnologia</span>
-
 <h3>Algoritmos do Passado: Inteligência Artificial, História e Ética</h3>
-
 <div class="video-frame">
-<iframe src="https://www.youtube.com/embed/OcR6JDpE6zQ" allowfullscreen></iframe>
+<iframe src="https://www.youtube.com/embed/OcR6JDpE6zQ" title="Algoritmos do Passado: Inteligência Artificial, História e Ética" allowfullscreen></iframe>
 </div>
-
 </article>
 
+</div>
+
+</div>
+
+</section>
+
+<section class="panel" id="comunicacoes">
+
+<div class="panel-head">
+<h2>Comunicações Orais</h2>
+<p>Espaço destinado à apresentação de trabalhos e debates acadêmicos.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="comunicacao-lista">
+<div class="comunicacao-item">
+<h3>Apresentação de trabalhos</h3>
+<p>As comunicações orais destinam-se à socialização de pesquisas, ensaios, relatos de experiência e reflexões acadêmicas vinculadas às áreas de interesse da revista.</p>
+</div>
+
+<div class="comunicacao-item">
+<h3>Participação de estudantes e pesquisadores(as)</h3>
+<p>O evento busca incentivar a apresentação pública de investigações em andamento ou concluídas, fortalecendo a circulação do conhecimento e o diálogo entre diferentes percursos formativos.</p>
+</div>
+
+<div class="comunicacao-item">
+  <h3>Informações complementares</h3>
+  <p>
+    O(a) autor(a) deverá enviar seu resumo expandido conforme as diretrizes da revista, disponíveis em
+    <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/diretrizes-autores.html" target="_blank" rel="noopener noreferrer">
+      Diretrizes para Autores
+    </a>.
+    Junto ao resumo expandido, deverá também enviar um vídeo gravado na horizontal, apresentando oralmente seu trabalho, com exposição dos objetivos, metodologia, desenvolvimento e principais conclusões.
+  </p>
+  <p>
+    O(a) autor(a) poderá utilizar slides durante a gravação. Não é obrigatório aparecer em vídeo, desde que a comunicação oral seja realizada com clareza.
+  </p>
+  <p>
+    A duração mínima da comunicação oral é de 10 minutos, sendo aceito o tempo máximo de 15 minutos.
+    Recomenda-se que a gravação seja feita em local silencioso, com boa iluminação e boa qualidade de áudio.
+  </p>
+  <p>
+    Ao enviar o vídeo para a comunicação oral, o(a) autor(a) cede os direitos de imagem e exibição exclusivamente para a finalidade da comunicação oral no evento.
+  </p>
+  <p>
+    A comunicação oral ficará disponível na página do evento,
+    <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/minicursos.html" target="_blank" rel="noopener noreferrer">
+      https://revinquietacoes.github.io/Revista-Inquieta-es/minicursos.html
+    </a>,
+    aberta à comunidade acadêmica e ao público interessado, e também será registrada nos anais do evento.
+  </p>
+</div>
+
+</div>
+
+</section>
+
+<section class="panel" id="palestras">
+
+<div class="panel-head">
+<h2>Palestras</h2>
+<p>Programação em construção.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="notice-box">
+<p><strong>Em breve:</strong> esta seção receberá a programação de palestras do evento “Lançamento da Revista Inquietações”.</p>
+<p>Novos nomes, temas e horários poderão ser divulgados posteriormente, conforme a ampliação da agenda acadêmica do evento.</p>
 </div>
 
 </div>
@@ -257,8 +410,8 @@ Menu
 <section class="panel">
 
 <div class="panel-head">
-<h2>Instrutores</h2>
-<p>Docentes e pesquisadores responsáveis pelos mini-cursos.</p>
+<h2>Instrutores e participantes da programação</h2>
+<p>Docentes e pesquisadores vinculados às atividades formativas do evento.</p>
 </div>
 
 <div class="panel-body">
@@ -266,55 +419,38 @@ Menu
 <div class="instructors-grid">
 
 <article class="instructor-card">
-
 <div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063748.png" class="instructor-photo">
+<img src="arquivos/Captura de tela 2026-03-08 063748.png" class="instructor-photo" alt="Diego Vinícius Brito dos Santos">
 </div>
-
 <h3 class="instructor-name">DIEGO VINÍCIUS BRITO DOS SANTOS</h3>
-
 <div class="instructor-affiliation">Prefeitura Municipal de Carnaúba dos Dantas</div>
-
 <div class="instructor-bio">
 <p>Professor pedagogo e servidor público efetivo. Mestre em Filosofia pela UFRN com pesquisa sobre Nietzsche.</p>
 </div>
-
 </article>
 
 <article class="instructor-card">
-
 <div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063855.png" class="instructor-photo">
+<img src="arquivos/Captura de tela 2026-03-08 063855.png" class="instructor-photo" alt="Lindoaldo Vieira Campos Júnior">
 </div>
-
 <h3 class="instructor-name">LINDOALDO VIEIRA CAMPOS JÚNIOR</h3>
-
 <div class="instructor-affiliation">Instituto Federal do Rio Grande do Norte</div>
-
 </article>
 
 <article class="instructor-card">
-
 <div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063909.png" class="instructor-photo">
+<img src="arquivos/Captura de tela 2026-03-08 063909.png" class="instructor-photo" alt="Benjamim Julião de Góis Filho">
 </div>
-
 <h3 class="instructor-name">BENJAMIM JULIÃO DE GÓIS FILHO</h3>
-
 <div class="instructor-affiliation">Universidade do Estado do Rio Grande do Norte</div>
-
 </article>
 
 <article class="instructor-card">
-
 <div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063933.png" class="instructor-photo">
+<img src="arquivos/Captura de tela 2026-03-08 063933.png" class="instructor-photo" alt="Messias Gomes de Araújo Leal">
 </div>
-
 <h3 class="instructor-name">MESSIAS GOMES DE ARAÚJO LEAL</h3>
-
 <div class="instructor-affiliation">UFRN</div>
-
 </article>
 
 </div>
@@ -326,36 +462,26 @@ Menu
 </main>
 
 <footer class="footer" id="rodape">
-
 <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-
 <div class="footer-meta">
 <a href="sobre.html">Sobre</a>
 <a href="politicas-editoriais.html">Políticas</a>
 <a href="submissoes.html">Submissões</a>
 </div>
-
 </footer>
 
 </div>
 
 <script>
-
 const navToggle = document.querySelector('.site-nav-toggle');
 const navMenu = document.querySelector('.site-nav-menu');
 
 if(navToggle && navMenu){
-
-navToggle.addEventListener('click', () => {
-
-const isOpen = navMenu.classList.toggle('is-open');
-
-navToggle.setAttribute('aria-expanded',String(isOpen));
-
-});
-
+  navToggle.addEventListener('click', () => {
+    const isOpen = navMenu.classList.toggle('is-open');
+    navToggle.setAttribute('aria-expanded', String(isOpen));
+  });
 }
-
 </script>
 
 <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
