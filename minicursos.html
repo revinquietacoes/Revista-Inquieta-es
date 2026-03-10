@@ -1,828 +1,1012 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta
+    name="description"
+    content="Conteúdos publicados da Revista Inquietações, com leitura integrada na própria página."
+  />
+  <meta name="author" content="Revista Inquietações" />
+  <title>Conteúdos Publicados | Revista Inquietações</title>
+  <link rel="stylesheet" href="styles.css" />
 
-<meta name="description" content="Página do evento Lançamento da Revista Inquietações, com inscrições, minicursos, comunicações orais e programação." />
-<meta name="author" content="Revista Inquietações" />
+  <style>
+    .section-anchor {
+      scroll-margin-top: 24px;
+    }
 
-<title>Lançamento da Revista Inquietações | Revista Inquietações</title>
+    .sumario-lista {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 12px;
+      margin-top: 8px;
+    }
 
-<link rel="stylesheet" href="styles.css">
+    .sumario-lista a {
+      display: block;
+      padding: 14px 16px;
+      border-radius: 14px;
+      border: 1px solid var(--line);
+      background: #fff;
+      color: var(--ink);
+      transition: 0.18s ease;
+      min-height: 72px;
+    }
 
-<style>
-.event-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:22px;
-}
+    .sumario-lista a:hover {
+      text-decoration: none;
+      background: var(--brand-3);
+      color: var(--brand);
+      transform: translateY(-1px);
+    }
 
-.event-card{
-background:#ffffff;
-border:1px solid rgba(0,0,0,0.08);
-border-radius:16px;
-padding:18px;
-box-shadow:0 8px 24px rgba(0,0,0,0.06);
-}
+    .cover-preview {
+      width: 100%;
+      max-width: 760px;
+      display: block;
+      margin: 0 auto;
+      border-radius: 14px;
+      box-shadow: 0 14px 36px rgba(0,0,0,0.12);
+    }
 
-.event-card h3{
-margin:0 0 10px;
-font-size:1.08rem;
-color:var(--brand);
-}
+    .empty-state {
+      padding: 20px;
+      border: 1px dashed rgba(0,0,0,0.16);
+      border-radius: 14px;
+      background: rgba(0,0,0,0.02);
+    }
 
-.event-card p{
-margin:0;
-color:#444;
-}
+    .content-accordion {
+      display: grid;
+      gap: 18px;
+      margin-top: 22px;
+    }
 
-.course-accordion{
-display:grid;
-gap:16px;
-}
+    .content-toggle {
+      border: 1px solid rgba(0,0,0,0.08);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.92);
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+    }
 
-.course-toggle{
-border:1px solid rgba(0,0,0,0.08);
-border-radius:18px;
-background:#fff;
-box-shadow:0 8px 24px rgba(0,0,0,0.06);
-overflow:hidden;
-}
+    .content-toggle summary {
+      list-style: none;
+      cursor: pointer;
+      padding: 22px 24px 18px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 18px;
+      background: linear-gradient(180deg, rgba(18,45,82,0.035), rgba(18,45,82,0.015));
+    }
 
-.course-toggle summary{
-list-style:none;
-cursor:pointer;
-padding:18px 20px;
-display:flex;
-align-items:center;
-justify-content:space-between;
-gap:16px;
-font-weight:600;
-color:var(--brand);
-font-size:1.06rem;
-}
+    .content-toggle summary::-webkit-details-marker {
+      display: none;
+    }
 
-.course-toggle summary::-webkit-details-marker{
-display:none;
-}
+    .content-toggle summary:hover {
+      background: linear-gradient(180deg, rgba(18,45,82,0.05), rgba(18,45,82,0.025));
+    }
 
-.course-toggle summary:hover{
-background:#f8fbff;
-}
+    .content-summary-text h2 {
+      margin: 0 0 6px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      letter-spacing: 0.01em;
+      font-size: 2rem;
+      color: var(--brand);
+    }
 
-.course-summary-left{
-display:flex;
-flex-direction:column;
-gap:6px;
-}
+    .content-summary-text p {
+      margin: 0;
+      color: var(--muted);
+    }
 
-.course-label{
-display:inline-block;
-width:max-content;
-padding:6px 10px;
-border-radius:999px;
-background:#eef3fb;
-color:var(--brand);
-font-size:.82rem;
-font-weight:600;
-}
+    .content-summary-icon {
+      font-size: 1.5rem;
+      line-height: 1;
+      color: var(--brand);
+      transition: transform 0.2s ease;
+      padding-top: 8px;
+      flex-shrink: 0;
+    }
 
-.course-summary-title{
-font-size:1.08rem;
-line-height:1.4;
-color:var(--brand);
-}
+    .content-toggle[open] .content-summary-icon {
+      transform: rotate(45deg);
+    }
 
-.course-summary-icon{
-font-size:1.4rem;
-line-height:1;
-color:var(--brand);
-transition:transform .2s ease;
-}
+    .content-body {
+      padding: 22px 24px 24px;
+      border-top: 1px solid var(--line);
+      background: rgba(255,255,255,0.95);
+    }
 
-.course-toggle[open] .course-summary-icon{
-transform:rotate(45deg);
-}
+    @media (max-width: 700px) {
+      .sumario-lista {
+        grid-template-columns: 1fr;
+      }
 
-.course-content{
-padding:0 20px 20px;
-border-top:1px solid #e8edf4;
-background:#fcfdff;
-}
+      .content-toggle summary {
+        padding: 18px;
+      }
 
-.course-description{
-margin:16px 0 18px;
-color:#4c5b70;
-}
+      .content-body {
+        padding: 18px;
+      }
 
-.course-parts{
-display:grid;
-gap:18px;
-}
-
-.course-part{
-background:#fff;
-border:1px solid #dbe3ee;
-border-radius:16px;
-padding:16px;
-}
-
-.course-part h4{
-margin:0 0 12px;
-font-size:1rem;
-color:var(--brand);
-}
-
-.course-part p{
-margin:12px 0 0;
-}
-
-.video-frame{
-position:relative;
-width:100%;
-padding-bottom:56.25%;
-height:0;
-overflow:hidden;
-border-radius:12px;
-background:#000;
-}
-
-.video-frame iframe{
-position:absolute;
-inset:0;
-width:100%;
-height:100%;
-border:0;
-}
-
-.instructors-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:24px;
-}
-
-.notice-box{
-padding:18px;
-border-radius:16px;
-border:1px solid #d7e0ea;
-background:#f8fbff;
-}
-
-.notice-box p{
-margin:0 0 10px;
-}
-
-.notice-box p:last-child{
-margin-bottom:0;
-}
-
-.comunicacao-lista{
-display:grid;
-gap:14px;
-}
-
-.comunicacao-item{
-padding:16px;
-border:1px solid var(--line);
-border-radius:14px;
-background:#fff;
-}
-
-.comunicacao-item h3{
-margin:0 0 8px;
-font-size:1rem;
-color:var(--brand);
-}
-
-.comunicacao-item p{
-margin:0 0 10px;
-color:#4c5b70;
-}
-
-.comunicacao-item p:last-child{
-margin-bottom:0;
-}
-</style>
+      .content-summary-text h2 {
+        font-size: 1.7rem;
+      }
+    }
+  </style>
 </head>
-
 <body>
+  <div class="site-shell">
+    <nav class="skip-links" aria-label="Ir para os links de conteúdo">
+      <a href="#conteudo-principal">Ir para o conteúdo principal</a>
+      <a href="#navegacao-principal">Ir para a navegação</a>
+      <a href="#rodape">Ir para o rodapé</a>
+    </nav>
 
-<div class="site-shell">
-
-<nav class="skip-links">
-<a href="#conteudo-principal">Ir para o conteúdo principal</a>
-<a href="#navegacao-principal">Ir para a navegação</a>
-<a href="#rodape">Ir para o rodapé</a>
-</nav>
-
-<div class="topbar">
-<div class="pill">Revista Inquietações • Evento de lançamento</div>
-<div class="pill">Inscrições, mini-cursos e comunicações</div>
-</div>
-
-<header class="masthead">
-
-<div class="masthead-inner">
-
-<div>
-<p class="kicker">Portal científico • Revista Inquietações</p>
-
-<h1>Lançamento da Revista Inquietações</h1>
-
-<p class="hero-text">
-A Revista Inquietações promove seu evento oficial de lançamento, reunindo estudantes, pesquisadores(as),
-professores(as) e interessados(as) nas Ciências Humanas e Sociais em uma programação formativa com mini-cursos,
-comunicações orais e futuras palestras temáticas.
-</p>
-
-<div class="masthead-meta">
-<div class="masthead-card"><strong>Formato</strong>Evento acadêmico</div>
-<div class="masthead-card"><strong>Atividades</strong>Mini-cursos e comunicações</div>
-<div class="masthead-card"><strong>Área</strong>Ciências Humanas e Sociais</div>
-<div class="masthead-card"><strong>Status</strong>Programação aberta</div>
-</div>
-
-</div>
-
-<div class="banner-card">
-<img src="logo-revista.png" alt="Logo da Revista Inquietações">
-</div>
-
-</div>
-
-</header>
-
-<nav class="site-nav" id="navegacao-principal">
-
-<button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
-Menu
-</button>
-
-<div class="site-nav-menu" id="site-menu">
-<a href="index.html">Início</a>
-<a href="edicao-atual.html">Atual</a>
-<a href="conteudos.html">Conteúdos</a>
-<a href="minicursos.html" class="active">Evento</a>
-<a href="sobre.html">Sobre</a>
-<a href="equipe-editorial.html">Equipe Editorial</a>
-<a href="politicas-editoriais.html">Políticas</a>
-<a href="diretrizes-autores.html">Diretrizes</a>
-<a href="submissoes.html">Submissões</a>
-<a href="templates.html">Templates</a>
-<a href="contato.html">Contato</a>
-</div>
-
-</nav>
-
-<main id="conteudo-principal" class="content">
-
-<section class="panel">
-
-<div class="panel-head">
-<h2>Sobre o evento</h2>
-<p>Apresentação geral da proposta formativa e acadêmica do lançamento da revista.</p>
-</div>
-
-<div class="panel-body">
-
-<div class="event-grid">
-
-<div class="event-card">
-<h3>Inscrições</h3>
-<p>O evento conta com formulário próprio para participação nas atividades oferecidas pela Revista Inquietações.</p>
-</div>
-
-<div class="event-card">
-<h3>Mini-cursos</h3>
-<p>Atividades formativas em vídeo, com temas ligados à filosofia, educação, teoria social, psicanálise e escrita acadêmica.</p>
-</div>
-
-<div class="event-card">
-<h3>Comunicações orais</h3>
-<p>Espaço destinado à apresentação de trabalhos, reflexões acadêmicas e experiências de pesquisa vinculadas às Humanidades.</p>
-</div>
-
-<div class="event-card">
-<h3>Palestras</h3>
-<p>Programação em construção. Novas atividades serão divulgadas em breve no portal e nas redes da revista.</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="panel" id="inscricoes">
-
-<div class="panel-head">
-<h2>Inscrições e certificados</h2>
-<p>Acesso rápido aos formulários e documentos do evento.</p>
-</div>
-
-<div class="panel-body">
-
-<div class="columns-2">
-
-<div class="course-actions">
-<h3>Inscrições</h3>
-<p>Para participar do evento de lançamento da Revista Inquietações, utilize os links abaixo.</p>
-
-<div class="cta-row">
-<a class="btn" href="https://forms.gle/UtbZb1n8fhxkfBw8A" target="_blank" rel="noopener noreferrer">
-Inscrição no evento
-</a>
-
-<a class="btn secondary" href="https://forms.gle/6m3ufKYR3oFXuBoM8" target="_blank" rel="noopener noreferrer">
-Solicitar certificado
-</a>
-
-<a class="btn secondary" href="https://drive.google.com/drive/folders/1t_xVWLyB8qsC6Zm77z7OUXqalRu6XdWr" target="_blank" rel="noopener noreferrer">
-Certificados
-</a>
-</div>
-</div>
-
-<div class="notice-box">
-<h3>Informações do evento</h3>
-<p>
-<strong>Público-alvo:</strong> estudantes, pesquisadores(as), professores(as) e interessados(as) em produção acadêmica, leitura crítica e formação em Ciências Humanas e Sociais.
-</p>
-<p>
-<strong>Objetivo:</strong> apresentar a proposta editorial da Revista Inquietações, estimular a participação acadêmica e criar um espaço de formação, debate e circulação do conhecimento.
-</p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="panel" id="minicursos">
-
-<div class="panel-head">
-<h2>Mini-cursos do evento</h2>
-<p>Os cursos começam minimizados. Clique para abrir cada atividade e assistir às partes disponíveis.</p>
-</div>
-
-<div class="panel-body">
-
-<div class="course-accordion">
-
-<details class="course-toggle">
-  <summary>
-    <div class="course-summary-left">
-      <span class="course-label">Leitura comentada</span>
-      <span class="course-summary-title">Curso: O Ser Social e o Preconceito: Uma Leitura Comentada</span>
+    <div class="topbar">
+      <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
+      <div class="pill">Fluxo contínuo • v. 1, n. 1 (2026)</div>
     </div>
-    <span class="course-summary-icon">+</span>
-  </summary>
 
-  <div class="course-content">
-    <p class="course-description">
-      Leitura comentada voltada à reflexão crítica sobre o ser social, o preconceito e suas implicações formativas.
-    </p>
-
-    <div class="course-parts">
-      <div class="course-part">
-        <h4>Parte 1</h4>
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/EwXLrsQyGnM"
-            title="O Ser Social e o Preconceito: Uma Leitura Comentada"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
+    <header class="masthead">
+      <div class="masthead-inner">
+        <div>
+          <p class="kicker">Portal científico • Revista Inquietações</p>
+          <h1>Conteúdos Publicados</h1>
+          <p class="hero-text">
+            Catálogo das seções da revista com leitura integrada dos conteúdos na própria página,
+            preservando a navegação editorial da edição atual.
+          </p>
+          <div class="masthead-meta">
+            <div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
+            <div class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
+            <div class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
+            <div class="masthead-card"><strong>e-ISSN</strong>ISSN: 3086-4119</div>
+          </div>
         </div>
-        <p>
-          <a href="https://youtu.be/EwXLrsQyGnM" target="_blank" rel="noopener noreferrer">
-            Assistir no YouTube
-          </a>
-        </p>
+        <div class="banner-card">
+          <img src="logo-revista.png" alt="Logo da Revista Inquietações" />
+        </div>
       </div>
-    </div>
+    </header>
+
+    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">
+        Menu
+      </button>
+      <div class="site-nav-menu" id="site-menu">
+        <a href="index.html">Início</a>
+        <a href="edicao-atual.html">Atual</a>
+        <a href="conteudos.html" class="active">Conteúdos</a>
+        <a href="minicursos.html">Evento</a>
+        <a href="sobre.html">Sobre</a>
+        <a href="equipe-editorial.html">Equipe Editorial</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="diretrizes-autores.html">Diretrizes</a>
+        <a href="submissoes.html">Submissões</a>
+        <a href="templates.html">Templates</a>
+        <a href="contato.html">Contato</a>
+      </div>
+    </nav>
+
+    <main class="content" id="conteudo-principal">
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Sumário da página</h2>
+          <p>Navegue pelas seções da edição e leia os arquivos sem sair desta página.</p>
+        </div>
+        <div class="panel-body">
+          <div class="sumario-lista">
+            <a href="#capa-edicao">Capa da edição — v. 1, n. 1 (2026)</a>
+            <a href="#expediente-editorial">Expediente Editorial</a>
+            <a href="#mensagem-autores-leitores">Mensagem aos(às) autores(as) e leitores(as)</a>
+            <a href="#artigos">Artigos</a>
+            <a href="#resumos-expandidos">Resumos expandidos</a>
+            <a href="#ensaios">Ensaios</a>
+            <a href="#resenhas">Resenhas</a>
+            <a href="#traducoes">Traduções</a>
+            <a href="#fotografia-tematica">Fotografia temática</a>
+            <a href="#relatos-experiencia">Relatos de experiência</a>
+            <a href="#homenagens">Homenagens</a>
+          </div>
+
+          <div class="warning-note">
+            Os conteúdos abaixo começam minimizados. Clique em cada bloco para abrir a leitura integrada e usar a opção de tela cheia.
+          </div>
+        </div>
+      </section>
+
+      <div class="content-accordion">
+
+        <details class="content-toggle section-anchor" id="capa-edicao">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Capa da Edição — v. 1, n. 1 (2026)</h2>
+              <p>Autor: Diego Vinícius Brito dos Santos</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <img
+              src="arquivos/556376290-a0fd9bc4-9ce3-40af-a47b-180bca6a6241.png"
+              alt="Capa da edição v. 1, n. 1 (2026) da Revista Inquietações"
+              class="cover-preview"
+              loading="lazy"
+            />
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="expediente-editorial">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Expediente Editorial</h2>
+              <p>
+                DOI:
+                <a href="https://doi.org/10.5281/zenodo.18795146" target="_blank" rel="noopener noreferrer">
+                  https://doi.org/10.5281/zenodo.18795146
+                </a><br />
+                Página acadêmica:
+                <a href="artigos/expediente-editorial.html" target="_blank" rel="noopener noreferrer">
+                  abrir página da publicação
+                </a>
+              </p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="reader-block" id="reader-expediente">
+              <div class="reader-topbar">
+                <div class="reader-meta">
+                  <strong>Leitura integrada</strong>
+                  <span class="mini-meta">Arquivo: Revista Inquietações-1 edição.pdf</span>
+                </div>
+                <div class="reader-actions">
+                  <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-expediente')">
+                    Tela cheia
+                  </button>
+                </div>
+              </div>
+              <div class="reader-frame-wrap">
+                <iframe
+                  class="reader-frame"
+                  src="arquivos/Revista%20Inquieta%C3%A7%C3%B5es-1%20edi%C3%A7%C3%A3o.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                  title="Expediente Editorial"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="mensagem-autores-leitores">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Mensagem aos(às) autores(as) e leitores(as)</h2>
+              <p>
+                Autor: Diego Vinícius Brito dos Santos<br />
+                DOI:
+                <a href="https://doi.org/10.5281/zenodo.18816235" target="_blank" rel="noopener noreferrer">
+                  https://doi.org/10.5281/zenodo.18816235
+                </a><br />
+                Página acadêmica:
+                <a href="artigos/mensagem-autores-leitores.html" target="_blank" rel="noopener noreferrer">
+                  abrir página da publicação
+                </a>
+              </p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="reader-block" id="reader-mensagem">
+              <div class="reader-topbar">
+                <div class="reader-meta">
+                  <strong>Leitura integrada</strong>
+                  <span class="mini-meta">Arquivo: Mensagem.pdf</span>
+                </div>
+                <div class="reader-actions">
+                  <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-mensagem')">
+                    Tela cheia
+                  </button>
+                </div>
+              </div>
+              <div class="reader-frame-wrap compact">
+                <iframe
+                  class="reader-frame"
+                  src="arquivos/Mensagem.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                  title="Mensagem aos(às) autores(as) e leitores(as)"
+                  loading="lazy"
+                  referrerpolicy="no-referrer"
+                ></iframe>
+              </div>
+            </div>
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="artigos">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Artigos</h2>
+              <p>Textos acadêmicos publicados na edição v. 1, n. 1 (2026).</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="entry-grid">
+              <article class="entry-card">
+                <span class="badge">Artigo</span>
+                <h3>IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA: Desconstruindo binarismos e respeitando a diversidade</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://doi.org/10.5281/zenodo.18825993" target="_blank" rel="noopener noreferrer">
+                    https://doi.org/10.5281/zenodo.18825993
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/artigo-identidade-genero-disforia-educacao-inclusiva.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-artigo-1">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura do artigo</strong>
+                      <span class="mini-meta">
+                        Arquivo: IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA Desconstruindo binarismos e respeitando a diversidade.pdf
+                      </span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-artigo-1')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/IDENTIDADE%20DE%20G%C3%8ANERO,%20DISFORIA%20E%20EDUCA%C3%87%C3%83O%20INCLUSIVA%20Desconstruindo%20binarismos%20e%20respeitando%20a%20diversidade.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Artigo Identidade de Gênero, Disforia e Educação Inclusiva"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+
+              <article class="entry-card">
+                <span class="badge">Artigo</span>
+                <h3>Algoritmos do passado: como a IA está reescrevendo a história</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://doi.org/10.5281/zenodo.18836259" target="_blank" rel="noopener noreferrer">
+                    https://doi.org/10.5281/zenodo.18836259
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/artigo-algoritmos-do-passado.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-artigo-2">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura do artigo</strong>
+                      <span class="mini-meta">
+                        Arquivo: Algoritmos do passado como a IA está reescrevendo a história.pdf
+                      </span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-artigo-2')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/Algoritmos%20do%20passado%20como%20a%20IA%20est%C3%A1%20reescrevendo%20a%20hist%C3%B3ria.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Artigo Algoritmos do passado: como a IA está reescrevendo a história"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="resumos-expandidos">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Resumos Expandidos</h2>
+              <p>Produções em formato de resumo expandido.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="entry-grid">
+              <article class="entry-card">
+                <span class="badge">Resumo expandido</span>
+                <h3>Paulo Freire 4.0: o chatgpt e a materialização da educação bancaria</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://doi.org/10.5281/zenodo.18820608" target="_blank" rel="noopener noreferrer">
+                    https://doi.org/10.5281/zenodo.18820608
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/resumo-paulo-freire-4-0.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-resumo-1">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura do resumo expandido</strong>
+                      <span class="mini-meta">Arquivo: Resumo_Expandido_Revista_Inquietacoes_Edicao1-pp.1-5.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-resumo-1')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap compact">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/Resumo_Expandido_Revista_Inquietacoes_Edicao1-pp.1-5.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Resumo Expandido Paulo Freire 4.0"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="ensaios">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Ensaios</h2>
+              <p>Seção dedicada a ensaios autorais e reflexivos.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="entry-grid">
+              <article class="entry-card">
+                <span class="badge">Ensaio</span>
+                <h3>MAQUIAVEL E A LIBERDADE DO POVO</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://dx.doi.org/10.5281/zenodo.18846061" target="_blank" rel="noopener noreferrer">
+                    http://dx.doi.org/10.5281/zenodo.18846061
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/ensaio-maquiavel-e-a-liberdade-do-povo.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-ensaio-1">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura do ensaio</strong>
+                      <span class="mini-meta">Arquivo: Ensaio_Revista_Inquietacoes_-DIEGO-VINICIUS.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-ensaio-1')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/Ensaio_Revista_Inquietacoes_-DIEGO-VINICIUS.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Ensaio Maquiavel e a Liberdade do Povo"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="resenhas">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Resenhas</h2>
+              <p>Resenhas críticas publicadas nesta edição.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="entry-grid">
+              <article class="entry-card">
+                <span class="badge">Resenha</span>
+                <h3>Revolução inconclusa e autoritarismo no Brasil: notas sobre Sérgio Buarque de Holanda e o Estado Novo</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://dx.doi.org/10.5281/zenodo.18845109" target="_blank" rel="noopener noreferrer">
+                    http://dx.doi.org/10.5281/zenodo.18845109
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/resenha-sergio-buarque-estado-novo.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-resenha-1">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura da resenha</strong>
+                      <span class="mini-meta">Arquivo: RESENHA-DIEGO-VINICIUS-BRITO-DOS-SANTOS.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-resenha-1')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/RESENHA-DIEGO-VINICIUS-BRITO-DOS-SANTOS.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Resenha Revolução inconclusa e autoritarismo no Brasil"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+
+              <article class="entry-card">
+                <span class="badge">Resenha</span>
+                <h3>Memória, justiça e transição democrática: uma leitura sobre a Comissão Nacional da Verdade</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://doi.org/10.5281/zenodo.18845488" target="_blank" rel="noopener noreferrer">
+                    https://doi.org/10.5281/zenodo.18845488
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/resenha-comissao-nacional-da-verdade.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-resenha-2">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura da resenha</strong>
+                      <span class="mini-meta">Arquivo: RESENHA-DIEGO-VINICIUS-BRITO-DOS-SANTOS – CNV.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-resenha-2')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/RESENHA-DIEGO-VINICIUS-BRITO-DOS-SANTOS%20%E2%80%93%20CNV.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Resenha Memória, justiça e transição democrática"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="traducoes">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Traduções</h2>
+              <p>Trabalhos de tradução publicados e editados no âmbito da revista.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="entry-grid">
+              <article class="entry-card">
+                <span class="badge">Tradução</span>
+                <h3>Assistance to black bodies in health establishments: deconstructing prejudices and promoting an ethics of care</h3>
+                <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://doi.org/10.5281/zenodo.18841714" target="_blank" rel="noopener noreferrer">
+                    https://doi.org/10.5281/zenodo.18841714
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/traducao-assistance-to-black-bodies.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-traducao-1">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura da tradução</strong>
+                      <span class="mini-meta">Arquivo: Texto-do-artigo-em-inglês.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-traducao-1')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/Texto-do-artigo-em-ingl%C3%AAs.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Tradução Assistance to black bodies in health establishments"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+
+              <article class="entry-card">
+                <span class="badge">Tradução</span>
+                <h3>Cartas da juventude (1850–1866) de Friedrich Nietzsche (alemão-português)</h3>
+                <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">Editora: Revista Inquietações</p>
+                <p class="mini-meta">ISBN: 9798251052428</p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/traducao-cartas-da-juventude-nietzsche.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-traducao-2">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura da tradução</strong>
+                      <span class="mini-meta">Arquivo: 1c2.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-traducao-2')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/1c2.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Tradução Cartas da juventude de Friedrich Nietzsche"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+
+              <article class="entry-card">
+                <span class="badge">Tradução</span>
+                <h3>O Manifesto do Partido Comunista</h3>
+                <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">Editora: Revista Inquietações</p>
+                <p class="mini-meta">ISBN: 9798251190175</p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/traducao-manifesto-do-partido-comunista.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-traducao-3">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura da tradução</strong>
+                      <span class="mini-meta">Arquivo: O manifesto – tradução.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-traducao-3')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/O%20manifesto%20%E2%80%93%20tradu%C3%A7%C3%A3o.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Tradução O Manifesto do Partido Comunista"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+
+              <article class="entry-card">
+                <span class="badge">Tradução</span>
+                <h3>A mulher (Die Frau), de Georg Groddeck</h3>
+                <p class="mini-meta">Autor original: Georg Groddeck</p>
+                <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://dx.doi.org/10.5281/zenodo.18916814" target="_blank" rel="noopener noreferrer">
+                    https://dx.doi.org/10.5281/zenodo.18916814
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/traducao-a-mulher-georg-groddeck.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-traducao-4">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura da tradução</strong>
+                      <span class="mini-meta">Arquivo: A mulher - G. G..pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-traducao-4')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/A%20mulher%20-%20G.%20G..pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Tradução A mulher (Die Frau) de Georg Groddeck"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="fotografia-tematica">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Fotografia Temática</h2>
+              <p>Ensaios fotográficos e registros visuais da edição.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="entry-grid">
+              <article class="entry-card">
+                <span class="badge">Fotografia temática</span>
+                <h3>O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://dx.doi.org/10.5281/zenodo.18820588" target="_blank" rel="noopener noreferrer">
+                    https://dx.doi.org/10.5281/zenodo.18820588
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/fotografia-diego-caico.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-foto-1">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura do ensaio fotográfico</strong>
+                      <span class="mini-meta">Arquivo: Fotos-Diego-Vinicius-v.1-2026-Revista-Inquietacoes.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-foto-1')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/Fotos-Diego-Vinicius-v.1-2026-Revista-Inquietacoes.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Fotografia temática de Diego Vinícius Brito dos Santos"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+
+              <article class="entry-card">
+                <span class="badge">Fotografia temática</span>
+                <h3>O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos</h3>
+                <p class="mini-meta">Autora: Geiza Venicia dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://dx.doi.org/10.5281/zenodo.18841135" target="_blank" rel="noopener noreferrer">
+                    http://dx.doi.org/10.5281/zenodo.18841135
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/fotografia-geiza-caico.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-foto-2">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura do ensaio fotográfico</strong>
+                      <span class="mini-meta">Arquivo: Fotos-Geiza-v.1-2026-Revista-Inquietacoes.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-foto-2')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/Fotos-Geiza-v.1-2026-Revista-Inquietacoes.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Fotografia temática de Geiza Venicia dos Santos"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="relatos-experiencia">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Relatos de Experiência</h2>
+              <p>Relatos e registros reflexivos vinculados à prática e à experiência autoral.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="entry-grid">
+              <article class="entry-card">
+                <span class="badge">Relato de experiência</span>
+                <h3>As cartas Sociais de Vinícius</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://dx.doi.org/10.5281/zenodo.18844651" target="_blank" rel="noopener noreferrer">
+                    http://dx.doi.org/10.5281/zenodo.18844651
+                  </a>
+                </p>
+                <p class="mini-meta">
+                  Página acadêmica:
+                  <a href="artigos/relato-as-cartas-sociais-de-vinicius.html" target="_blank" rel="noopener noreferrer">
+                    abrir página da publicação
+                  </a>
+                </p>
+
+                <div class="reader-block" id="reader-relato-1">
+                  <div class="reader-topbar">
+                    <div class="reader-meta">
+                      <strong>Leitura do relato</strong>
+                      <span class="mini-meta">Arquivo: As cartas sociais de Vinícius.pdf</span>
+                    </div>
+                    <div class="reader-actions">
+                      <button class="reader-btn" type="button" onclick="abrirTelaCheia('reader-relato-1')">
+                        Tela cheia
+                      </button>
+                    </div>
+                  </div>
+                  <div class="reader-frame-wrap">
+                    <iframe
+                      class="reader-frame"
+                      src="arquivos/As%20cartas%20sociais%20de%20Vin%C3%ADcius.pdf#toolbar=0&navpanes=0&scrollbar=1&view=FitH"
+                      title="Relato de experiência As cartas sociais de Vinícius"
+                      loading="lazy"
+                      referrerpolicy="no-referrer"
+                    ></iframe>
+                  </div>
+                </div>
+              </article>
+            </div>
+          </div>
+        </details>
+
+        <details class="content-toggle section-anchor" id="homenagens">
+          <summary>
+            <div class="content-summary-text">
+              <h2>Homenagens</h2>
+              <p>Espaço reservado para homenagens publicadas pela revista.</p>
+            </div>
+            <span class="content-summary-icon">+</span>
+          </summary>
+          <div class="content-body">
+            <div class="empty-state">
+              <strong>Sem conteúdo no momento.</strong><br />
+              Esta seção permanece aberta para futuras publicações e registros editoriais.
+            </div>
+          </div>
+        </details>
+
+      </div>
+    </main>
+
+    <footer class="footer" id="rodape">
+      <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
+      <div class="footer-meta">
+        <a href="sobre.html">Sobre</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="submissoes.html">Submissões</a>
+      </div>
+    </footer>
   </div>
-</details>
 
-<details class="course-toggle">
-  <summary>
-    <div class="course-summary-left">
-      <span class="course-label">Filosofia</span>
-      <span class="course-summary-title">Curso: Nietzsche e os valores modernos</span>
-    </div>
-    <span class="course-summary-icon">+</span>
-  </summary>
+  <script>
+    function abrirTelaCheia(id) {
+      const elemento = document.getElementById(id);
+      if (!elemento) return;
 
-  <div class="course-content">
-    <p class="course-description">
-      Estudo sobre o adoecimento moral do homem moderno a partir da crítica nietzschiana dos valores.
-    </p>
+      if (elemento.requestFullscreen) {
+        elemento.requestFullscreen();
+      } else if (elemento.webkitRequestFullscreen) {
+        elemento.webkitRequestFullscreen();
+      } else if (elemento.msRequestFullscreen) {
+        elemento.msRequestFullscreen();
+      }
+    }
+  </script>
 
-    <div class="course-parts">
-      <div class="course-part">
-        <h4>Parte 1</h4>
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/x7MMPwjRTPM"
-            title="Nietzsche e os valores modernos - Parte 01"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <p>
-          <a href="https://youtu.be/x7MMPwjRTPM" target="_blank" rel="noopener noreferrer">
-            Assistir Parte 1 no YouTube
-          </a>
-        </p>
-      </div>
+  <script>
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const navMenu = document.querySelector('.site-nav-menu');
 
-      <div class="course-part">
-        <h4>Parte 2</h4>
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/TWvVWFXV-lA"
-            title="Nietzsche e os valores modernos - Parte 02"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <p>
-          <a href="https://www.youtube.com/watch?v=TWvVWFXV-lA" target="_blank" rel="noopener noreferrer">
-            Assistir Parte 2 no YouTube
-          </a>
-        </p>
-      </div>
-    </div>
-  </div>
-</details>
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
+  </script>
 
-<details class="course-toggle">
-  <summary>
-    <div class="course-summary-left">
-      <span class="course-label">Teoria social</span>
-      <span class="course-summary-title">Curso: O Manifesto Comunista: O Texto que Mudou o Mundo</span>
-    </div>
-    <span class="course-summary-icon">+</span>
-  </summary>
-
-  <div class="course-content">
-    <p class="course-description">
-      Introdução comentada a um dos textos mais influentes da teoria política e social moderna.
-    </p>
-
-    <div class="course-parts">
-      <div class="course-part">
-        <h4>Parte 1</h4>
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/Vw_rqRNqdd4"
-            title="O Manifesto Comunista: O Texto que Mudou o Mundo"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <p>
-          <a href="https://youtu.be/Vw_rqRNqdd4" target="_blank" rel="noopener noreferrer">
-            Assistir no YouTube
-          </a>
-        </p>
-      </div>
-    </div>
-  </div>
-</details>
-
-<details class="course-toggle">
-  <summary>
-    <div class="course-summary-left">
-      <span class="course-label">Psicanálise</span>
-      <span class="course-summary-title">Curso: Leitura e Comentário do livro O Livro d’Isso</span>
-    </div>
-    <span class="course-summary-icon">+</span>
-  </summary>
-
-  <div class="course-content">
-    <p class="course-description">
-      Leitura comentada da obra de Georg Groddeck com ênfase em suas contribuições psicanalíticas e culturais.
-    </p>
-
-    <div class="course-parts">
-      <div class="course-part">
-        <h4>Parte 1</h4>
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/6hIkAqFCSO4"
-            title="Leitura e Comentário do livro O Livro d’Isso"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <p>
-          <a href="https://youtu.be/6hIkAqFCSO4" target="_blank" rel="noopener noreferrer">
-            Assistir no YouTube
-          </a>
-        </p>
-      </div>
-    </div>
-  </div>
-</details>
-
-<details class="course-toggle">
-  <summary>
-    <div class="course-summary-left">
-      <span class="course-label">Escrita acadêmica</span>
-      <span class="course-summary-title">Curso: Como escrever um resumo expandido?</span>
-    </div>
-    <span class="course-summary-icon">+</span>
-  </summary>
-
-  <div class="course-content">
-    <p class="course-description">
-      Orientações práticas sobre estrutura, clareza e organização técnica do resumo expandido.
-    </p>
-
-    <div class="course-parts">
-      <div class="course-part">
-        <h4>Parte 1</h4>
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/MqxG9Y34e30"
-            title="Como escrever um resumo expandido?"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <p>
-          <a href="https://youtu.be/MqxG9Y34e30" target="_blank" rel="noopener noreferrer">
-            Assistir no YouTube
-          </a>
-        </p>
-      </div>
-    </div>
-  </div>
-</details>
-
-<details class="course-toggle">
-  <summary>
-    <div class="course-summary-left">
-      <span class="course-label">Tecnologia</span>
-      <span class="course-summary-title">Curso: Algoritmos do Passado: Inteligência Artificial, História e Ética</span>
-    </div>
-    <span class="course-summary-icon">+</span>
-  </summary>
-
-  <div class="course-content">
-    <p class="course-description">
-      Discussão sobre relações entre inteligência artificial, historicidade, ética e interpretação do passado.
-    </p>
-
-    <div class="course-parts">
-      <div class="course-part">
-        <h4>Parte 1</h4>
-        <div class="video-frame">
-          <iframe
-            src="https://www.youtube.com/embed/OcR6JDpE6zQ"
-            title="Algoritmos do Passado: Inteligência Artificial, História e Ética"
-            loading="lazy"
-            referrerpolicy="strict-origin-when-cross-origin"
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
-            allowfullscreen>
-          </iframe>
-        </div>
-        <p>
-          <a href="https://www.youtube.com/watch?v=OcR6JDpE6zQ" target="_blank" rel="noopener noreferrer">
-            Assistir no YouTube
-          </a>
-        </p>
-      </div>
-    </div>
-  </div>
-</details>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="panel" id="comunicacoes">
-
-<div class="panel-head">
-<h2>Comunicações Orais</h2>
-<p>Espaço destinado à apresentação de trabalhos e debates acadêmicos.</p>
-</div>
-
-<div class="panel-body">
-
-<div class="comunicacao-lista">
-<div class="comunicacao-item">
-<h3>Apresentação de trabalhos</h3>
-<p>As comunicações orais destinam-se à socialização de pesquisas, ensaios, relatos de experiência e reflexões acadêmicas vinculadas às áreas de interesse da revista.</p>
-</div>
-
-<div class="comunicacao-item">
-<h3>Participação de estudantes e pesquisadores(as)</h3>
-<p>O evento busca incentivar a apresentação pública de investigações em andamento ou concluídas, fortalecendo a circulação do conhecimento e o diálogo entre diferentes percursos formativos.</p>
-</div>
-
-<div class="comunicacao-item">
-  <h3>Informações complementares</h3>
-  <p>
-    O(a) autor(a) deverá enviar seu resumo expandido conforme as diretrizes da revista, disponíveis em
-    <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/diretrizes-autores.html" target="_blank" rel="noopener noreferrer">
-      Diretrizes para Autores
-    </a>.
-    Junto ao resumo expandido, deverá também enviar um vídeo gravado na horizontal, apresentando oralmente seu trabalho, com exposição dos objetivos, metodologia, desenvolvimento e principais conclusões.
-  </p>
-  <p>
-    O(a) autor(a) poderá utilizar slides durante a gravação. Não é obrigatório aparecer em vídeo, desde que a comunicação oral seja realizada com clareza.
-  </p>
-  <p>
-    A duração mínima da comunicação oral é de 10 minutos, sendo aceito o tempo máximo de 15 minutos.
-    Recomenda-se que a gravação seja feita em local silencioso, com boa iluminação e boa qualidade de áudio.
-  </p>
-  <p>
-    Ao enviar o vídeo para a comunicação oral, o(a) autor(a) cede os direitos de imagem e exibição exclusivamente para a finalidade da comunicação oral no evento.
-  </p>
-  <p>
-    A comunicação oral ficará disponível na página do evento,
-    <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/minicursos.html" target="_blank" rel="noopener noreferrer">
-      https://revinquietacoes.github.io/Revista-Inquieta-es/minicursos.html
-    </a>,
-    aberta à comunidade acadêmica e ao público interessado, e também será registrada nos anais do evento.
-  </p>
-</div>
-
-</div>
-
-</div>
-
-</section>
-
-<section class="panel" id="palestras">
-
-<div class="panel-head">
-<h2>Palestras</h2>
-<p>Programação em construção.</p>
-</div>
-
-<div class="panel-body">
-
-<div class="notice-box">
-<p><strong>Em breve:</strong> esta seção receberá a programação de palestras do evento “Lançamento da Revista Inquietações”.</p>
-<p>Novos nomes, temas e horários poderão ser divulgados posteriormente, conforme a ampliação da agenda acadêmica do evento.</p>
-</div>
-
-</div>
-
-</section>
-
-<section class="panel">
-
-<div class="panel-head">
-<h2>Organizadores, palestrantes e participantes da programação</h2>
-<p>Docentes e pesquisadores vinculados às atividades formativas do evento.</p>
-</div>
-
-<div class="panel-body">
-
-<div class="instructors-grid">
-
-<article class="instructor-card">
-<div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063748.png" class="instructor-photo" alt="Diego Vinícius Brito dos Santos">
-</div>
-<h3 class="instructor-name">DIEGO VINÍCIUS BRITO DOS SANTOS</h3>
-<div class="instructor-affiliation">
-Organizador do Evento e Editor da Revista Inquietações
-</div>
-<div class="instructor-bio">
-<p>
-Professor pedagogo e servidor público efetivo. Mestre em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN), com pesquisa dedicada à filosofia de Friedrich Nietzsche.
-</p>
-<p>
-Graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN) e em Pedagogia pelo Centro Universitário Internacional (UNINTER). Atua em estudos relacionados à filosofia, educação, formação docente e produção acadêmica.
-</p>
-</div>
-</article>
-
-<article class="instructor-card">
-<div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063855.png" class="instructor-photo" alt="Lindoaldo Vieira Campos Júnior">
-</div>
-<h3 class="instructor-name">
-LINDOALDO VIEIRA CAMPOS JÚNIOR
-</h3>
-<div class="instructor-affiliation">
-Instituto Federal do Rio Grande do Norte
-</div>
-<div class="instructor-bio">
-<p>
-Bacharel em Direito. Mestre em História (Área de Concentração: História dos Sertões).
-</p>
-<p>
-Licenciado, Mestre e Doutor em Filosofia, com ênfase na filosofia de Friedrich Nietzsche, dedicando-se a estudos na área de filosofia moderna e contemporânea.
-</p>
-</div>
-</article>
-
-<article class="instructor-card">
-<div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063909.png" class="instructor-photo" alt="Benjamim Julião de Góis Filho">
-</div>
-<h3 class="instructor-name">
-BENJAMIM JULIÃO DE GÓIS FILHO
-</h3>
-<div class="instructor-affiliation">
-Universidade do Estado do Rio Grande do Norte
-</div>
-<div class="instructor-bio">
-<p>
-Doutor em Filosofia pela Universidade Federal do Ceará (UFC). Mestre em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN). Especialista em Ética e Filosofia Política pela Universidade do Estado do Rio Grande do Norte (UERN).
-</p>
-<p>
-Pós-graduado em Psicanálise e Psicologia (FAMEESP). Licenciado em Filosofia (UERN). Licenciado e Bacharel em História (UFRN). Bacharel em Teologia pela Faculdade Kurios (FAK/CE) e pelo Seminário Teológico Potiguar (STP/RN).
-</p>
-<p>
-Psicanalista pelo Centro de Estudos Psicanalíticos de Natal (CESPN). Professor de Filosofia da Universidade do Estado do Rio Grande do Norte (UERN).
-</p>
-<p>
-Atua e tem interesse nas áreas de Filosofia Contemporânea (com ênfase na Teoria Crítica da Escola de Frankfurt e no pensamento de Michel Foucault), Filosofia da Linguagem, Ontologia, Filosofia da Religião, Ética, Filosofia Política, Teoria da História, Psicanálise e Teologia Contemporânea.
-</p>
-</div>
-</article>
-
-<article class="instructor-card">
-<div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063933.png" class="instructor-photo" alt="Messias Gomes de Araújo Leal">
-</div>
-<h3 class="instructor-name">
-MESSIAS GOMES DE ARAÚJO LEAL
-</h3>
-<div class="instructor-affiliation">
-Universidade Federal do Rio Grande do Norte
-</div>
-<div class="instructor-bio">
-<p>
-Graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN) em 2003.2 e em Pedagogia pela Universidade Federal do Rio Grande do Norte (UFRN) em 2026.1.
-</p>
-<p>
-Atua em atividades acadêmicas relacionadas à monitoria de ensino e pesquisa de inovação, participando de diversos grupos de pesquisa e formação científica.
-</p>
-<p>
-Integra iniciativas como PROJEPI, GPCAI/Surdos, GPCAI Neurociência, GPENCI – Grupo de Pesquisa em Ensino de Ciências, GENCEM – Grupo de Estudos em Neurociência Cognitiva e Educação Matemática.
-</p>
-<p>
-É membro do Núcleo Brasileiro de Estudos sobre Autoritarismo e Personalidade Autoritária (NBREAPA).
-</p>
-</div>
-</article>
-
-</div>
-
-</div>
-
-</section>
-
-</main>
-
-<footer class="footer" id="rodape">
-<p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
-<div class="footer-meta">
-<a href="sobre.html">Sobre</a>
-<a href="politicas-editoriais.html">Políticas</a>
-<a href="submissoes.html">Submissões</a>
-</div>
-</footer>
-
-</div>
-
-<script>
-const navToggle = document.querySelector('.site-nav-toggle');
-const navMenu = document.querySelector('.site-nav-menu');
-
-if(navToggle && navMenu){
-  navToggle.addEventListener('click', () => {
-    const isOpen = navMenu.classList.toggle('is-open');
-    navToggle.setAttribute('aria-expanded', String(isOpen));
-  });
-}
-</script>
-
-<script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
+  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
