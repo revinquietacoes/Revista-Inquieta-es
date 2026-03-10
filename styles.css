@@ -1065,4 +1065,11 @@ color:#092746;
   border: 1px solid rgba(255, 255, 255, 0.14);
   background: transparent;
   padding: 16px;
+  
+}.course-actions-evento{
+background:#eaf3ff;
+border:1px solid #c8dcf6;
+border-radius:16px;
+padding:18px;
+box-shadow:0 6px 18px rgba(0,0,0,0.05);
 }

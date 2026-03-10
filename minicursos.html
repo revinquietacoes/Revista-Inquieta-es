@@ -19,7 +19,6 @@ gap:22px;
 }
 
 .event-card{
-background:#ffffff;
 border:1px solid rgba(0,0,0,0.08);
 border-radius:16px;
 padding:18px;
@@ -37,15 +36,35 @@ margin:0;
 color:#444;
 }
 
+.event-card:nth-child(1){
+background:#eaf3ff;
+border-color:#c9dcf7;
+}
+
+.event-card:nth-child(2){
+background:#f3efff;
+border-color:#ddd2fb;
+}
+
+.event-card:nth-child(3){
+background:#ecfaf5;
+border-color:#cdebdc;
+}
+
+.event-card:nth-child(4){
+background:#fff8ea;
+border-color:#efdfb8;
+}
+
 .course-accordion{
 display:grid;
 gap:16px;
 }
 
 .course-toggle{
-border:1px solid rgba(0,0,0,0.08);
+border:1px solid #dddff0;
 border-radius:18px;
-background:#fff;
+background:#f7f4ff;
 box-shadow:0 8px 24px rgba(0,0,0,0.06);
 overflow:hidden;
 }
@@ -68,7 +87,7 @@ display:none;
 }
 
 .course-toggle summary:hover{
-background:#f8fbff;
+background:#f0ebff;
 }
 
 .course-summary-left{
@@ -82,8 +101,8 @@ display:inline-block;
 width:max-content;
 padding:6px 10px;
 border-radius:999px;
-background:#eef3fb;
-color:var(--brand);
+background:#ebe4ff;
+color:#4f4585;
 font-size:.82rem;
 font-weight:600;
 }
@@ -107,8 +126,8 @@ transform:rotate(45deg);
 
 .course-content{
 padding:0 20px 20px;
-border-top:1px solid #e8edf4;
-background:#fcfdff;
+border-top:1px solid #e7e1f6;
+background:#fcfbff;
 }
 
 .course-description{
@@ -122,8 +141,8 @@ gap:18px;
 }
 
 .course-part{
-background:#fff;
-border:1px solid #dbe3ee;
+background:#ffffff;
+border:1px solid #dddff0;
 border-radius:16px;
 padding:16px;
 }
@@ -184,9 +203,9 @@ gap:14px;
 
 .comunicacao-item{
 padding:16px;
-border:1px solid var(--line);
+border:1px solid #cfe6da;
 border-radius:14px;
-background:#fff;
+background:#eefaf4;
 }
 
 .comunicacao-item h3{
@@ -202,6 +221,92 @@ color:#4c5b70;
 
 .comunicacao-item p:last-child{
 margin-bottom:0;
+}
+
+.course-actions-evento{
+background:#eaf3ff;
+border:1px solid #c8dcf6;
+border-radius:16px;
+padding:18px;
+box-shadow:0 6px 18px rgba(0,0,0,0.05);
+}
+
+.event-info-box{
+background-image:url("assets/fundo-evento.png");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+border:1px solid #bfd0e6;
+padding:0;
+overflow:hidden;
+position:relative;
+}
+
+.event-info-overlay{
+background:rgba(255,255,255,0.84);
+backdrop-filter:blur(1.5px);
+-webkit-backdrop-filter:blur(1.5px);
+padding:18px;
+border-radius:16px;
+min-height:100%;
+}
+
+.event-info-box h3{
+margin:0 0 14px;
+color:#0d2f57;
+font-size:1.08rem;
+}
+
+.event-info-box p{
+margin:0 0 12px;
+color:#16385f;
+line-height:1.75;
+font-weight:500;
+}
+
+.event-info-box p:last-child{
+margin-bottom:0;
+}
+
+.event-info-box strong{
+color:#092746;
+}
+
+.palestra-box{
+background:#fff8ea;
+border:1px solid #efdfb8;
+}
+
+.anais-card{
+background:linear-gradient(180deg,#eef5ff 0%, #f8fbff 100%);
+border:1px solid #cfdcf2;
+border-radius:18px;
+padding:22px;
+box-shadow:0 8px 24px rgba(0,0,0,0.05);
+}
+
+.anais-card h3{
+margin:0 0 12px;
+font-size:1.2rem;
+color:var(--brand);
+}
+
+.anais-meta{
+display:grid;
+gap:10px;
+margin-top:14px;
+}
+
+.anais-meta div{
+padding:12px 14px;
+border-radius:12px;
+background:#ffffff;
+border:1px solid #dbe6f6;
+color:#42546b;
+}
+
+.anais-meta strong{
+color:var(--brand);
 }
 </style>
 </head>
@@ -316,16 +421,11 @@ Menu
 
 <section class="panel" id="inscricoes">
 
-<div class="panel-head">
-<h2>Inscrições e certificados</h2>
-<p>Acesso rápido aos formulários e documentos do evento.</p>
-</div>
-
 <div class="panel-body">
 
 <div class="columns-2">
 
-<div class="course-actions">
+<div class="course-actions course-actions-evento">
 <h3>Inscrições</h3>
 <p>Para participar do evento de lançamento da Revista Inquietações, utilize os links abaixo.</p>
 
@@ -683,7 +783,7 @@ Certificados
 
 <div class="panel-body">
 
-<div class="notice-box">
+<div class="notice-box palestra-box">
 <p><strong>Em breve:</strong> esta seção receberá a programação de palestras do evento “Lançamento da Revista Inquietações”.</p>
 <p>Novos nomes, temas e horários poderão ser divulgados posteriormente, conforme a ampliação da agenda acadêmica do evento.</p>
 </div>
@@ -793,6 +893,32 @@ Integra iniciativas como PROJEPI, GPCAI/Surdos, GPCAI Neurociência, GPENCI – 
 </div>
 </article>
 
+</div>
+
+</div>
+
+</section>
+<section class="panel" id="anais-evento">
+
+<div class="panel-head">
+<h2>Anais do evento</h2>
+<p>Registro editorial do evento acadêmico vinculado à Revista Inquietações.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="anais-card">
+<h3>Anais do Evento de Lançamento da Revista Inquietações</h3>
+
+<p>
+Publicação destinada ao registro das comunicações, atividades e produções vinculadas ao evento de lançamento da revista.
+</p>
+
+<div class="anais-meta">
+<div><strong>Status:</strong> Em breve</div>
+<div><strong>DOI:</strong> Em breve</div>
+<div><strong>ISBN:</strong> Em breve</div>
+</div>
 </div>
 
 </div>
