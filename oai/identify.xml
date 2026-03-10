@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
          http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
-  <responseDate>2026-03-10</responseDate>
+ <responseDate>2026-03-10T00:00:00Z</responseDate>
   <request verb="Identify">https://revinquietacoes.github.io/Revista-Inquieta-es/oai/identify.xml</request>
 
   <Identify>

@@ -8,7 +8,7 @@
          http://www.openarchives.org/OAI/2.0/oai_dc/
          http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
 
-  <responseDate>2026-03-10</responseDate>
+<responseDate>2026-03-10T00:00:00Z</responseDate>
   <request verb="ListRecords" metadataPrefix="oai_dc">https://revinquietacoes.github.io/Revista-Inquieta-es/oai/listrecords.xml</request>
 
   <ListRecords>
