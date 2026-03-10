@@ -1,0 +1,17 @@
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/">
+  <responseDate>2026-03-10</responseDate>
+
+  <request verb="Identify">
+  https://revinquietacoes.github.io/Revista-Inquieta-es/oai
+  </request>
+
+  <Identify>
+    <repositoryName>Revista Inquietações</repositoryName>
+    <baseURL>https://revinquietacoes.github.io/Revista-Inquieta-es/oai</baseURL>
+    <protocolVersion>2.0</protocolVersion>
+    <adminEmail>rev.inquietacoes@gmail.com</adminEmail>
+    <earliestDatestamp>2026-01-01</earliestDatestamp>
+    <deletedRecord>no</deletedRecord>
+    <granularity>YYYY-MM-DD</granularity>
+  </Identify>
+</OAI-PMH>
