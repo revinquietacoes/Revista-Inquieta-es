@@ -633,21 +633,6 @@ a:hover {
   display: block;
 }
 
-.counter-image,
-.contador-visitas {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  border: 1px solid var(--line);
-  background: #fff;
-}
-
-.visitor-inline-card {
-  padding: 10px;
-  border-radius: 14px;
-  background: #fff;
-  border: 1px solid var(--line);
-}
 
 .lang-current {
   font-weight: 600;
