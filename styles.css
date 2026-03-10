@@ -1011,4 +1011,14 @@ height:56px;
 
 .zenodo-btn{
 margin-top:6px;
+}.license-badge{
+  margin-top: 12px;
+}
+
+.cc-license-image{
+  max-width: 180px;
+  width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 8px;
 }
