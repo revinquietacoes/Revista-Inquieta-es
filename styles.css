@@ -1018,4 +1018,43 @@ margin-top:6px;
 .cc-license-image{
   max-width: 70px;
   height: auto;
+}.event-info-box{
+background-image:url("assets/fundo-evento.png");
+background-size:cover;
+background-position:center;
+background-repeat:no-repeat;
+border:1px solid #bfd0e6;
+padding:0;
+overflow:hidden;
+position:relative;
+}
+
+.event-info-overlay{
+background:rgba(255,255,255,0.84);
+backdrop-filter:blur(1.5px);
+-webkit-backdrop-filter:blur(1.5px);
+padding:18px;
+border-radius:16px;
+min-height:100%;
+}
+
+.event-info-box h3{
+margin:0 0 14px;
+color:#0d2f57;
+font-size:1.08rem;
+}
+
+.event-info-box p{
+margin:0 0 12px;
+color:#16385f;
+line-height:1.75;
+font-weight:500;
+}
+
+.event-info-box p:last-child{
+margin-bottom:0;
+}
+
+.event-info-box strong{
+color:#092746;
 }
