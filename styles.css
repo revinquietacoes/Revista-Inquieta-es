@@ -555,13 +555,26 @@ a:hover {
 }
 
 .menu a {
-  display: block;
-  padding: 12px 14px;
-  border-radius: 12px;
-  border: 1px solid transparent;
-  background: rgba(255,255,255,0.6);
-  color: var(--ink);
-  transition: background 0.18s ease, transform 0.18s ease, border-color 0.18s ease;
+}.sidebar .menu {
+  gap: 6px;
+}
+
+.sidebar-block {
+  padding: 16px;
+}
+
+.sidebar-block h2 {
+  margin: 0 0 12px;
+}
+
+.portal-grid.sidebar-compact {
+  grid-template-columns: 300px minmax(0, 1fr);
+}
+
+@media (max-width: 1100px) {
+  .portal-grid.sidebar-compact {
+    grid-template-columns: 1fr;
+  }
 }
 
 .menu a:hover,

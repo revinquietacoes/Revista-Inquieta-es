@@ -11,7 +11,7 @@
   <style>
     .video-grid {
       display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
       gap: 24px;
     }
 
@@ -28,6 +28,7 @@
       margin-bottom: 10px;
       font-size: 1.1rem;
       line-height: 1.4;
+      color: var(--brand);
     }
 
     .course-card p {
@@ -61,8 +62,7 @@
 
     .video-frame iframe {
       position: absolute;
-      top: 0;
-      left: 0;
+      inset: 0;
       width: 100%;
       height: 100%;
       border: 0;
@@ -75,6 +75,8 @@
       border-radius: 999px;
       background: #f2f2f2;
       font-size: 0.85rem;
+      color: var(--brand);
+      font-weight: 600;
     }
 
     .course-actions {
@@ -162,6 +164,12 @@
       margin-bottom: 0;
     }
 
+    .sidebar-note {
+      font-size: 0.95rem;
+      line-height: 1.55;
+      color: var(--muted);
+    }
+
     @media (max-width: 700px) {
       .course-actions .cta-row {
         flex-direction: column;
@@ -228,7 +236,7 @@
       </div>
     </nav>
 
-    <div class="portal-grid">
+    <div class="portal-grid sidebar-compact">
       <aside class="sidebar" id="barra-lateral" role="complementary" aria-label="Barra lateral">
         <section class="sidebar-block">
           <h2>Navegação institucional</h2>
@@ -257,22 +265,22 @@
         </section>
 
         <section class="sidebar-block">
-          <h2>Contato institucional</h2>
-          <div class="data-list">
-            <div>
-              <strong>Instagram:</strong>
-              <a href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer">
-                @revistainquietacoes
-              </a>
-            </div>
-            <div>
-              <strong>E-mail:</strong>
-              <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
-            </div>
-          </div>
+          <h2>Sobre esta seção</h2>
+          <p class="sidebar-note">
+            Esta página reúne aulas gravadas, leituras comentadas e formações complementares vinculadas à Revista Inquietações.
+          </p>
         </section>
 
-        
+        <section class="sidebar-block visitor-block">
+          <h2>Visitas</h2>
+          <div class="visitor-inline-card">
+            <img
+              src="https://revinquietacoes.goatcounter.com/counter/TOTAL.svg?no_branding=1"
+              alt="Contador de visitas da Revista Inquietações"
+              class="contador-visitas"
+            />
+          </div>
+        </section>
       </aside>
 
       <main class="content" id="conteudo-principal">
@@ -303,7 +311,7 @@
                 <div class="video-item">
                   <strong>Completo</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/EwXLrsQyGnM" title="O Ser Social e o Preconceito: Uma Leitura Comentada" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/EwXLrsQyGnM" title="O Ser Social e o Preconceito: Uma Leitura Comentada" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
@@ -315,13 +323,13 @@
                 <div class="video-item">
                   <strong>Parte 01</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/x7MMPwjRTPM" title="Nietzsche e os valores modernos - Parte 01" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/x7MMPwjRTPM" title="Nietzsche e os valores modernos - Parte 01" allowfullscreen></iframe>
                   </div>
                 </div>
                 <div class="video-item">
                   <strong>Parte 02</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/TWvVWFXV-lA" title="Nietzsche e os valores modernos - Parte 02" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/TWvVWFXV-lA" title="Nietzsche e os valores modernos - Parte 02" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
@@ -333,7 +341,7 @@
                 <div class="video-item">
                   <strong>Parte 01</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/Vw_rqRNqdd4" title="O Manifesto Comunista: O Texto que Mudou o Mundo - Parte 01" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/Vw_rqRNqdd4" title="O Manifesto Comunista: O Texto que Mudou o Mundo - Parte 01" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
@@ -345,7 +353,7 @@
                 <div class="video-item">
                   <strong>Parte 01</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/6hIkAqFCSO4" title="Leitura e Comentário do livro O Livro d'Isso - Parte 01" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/6hIkAqFCSO4" title="Leitura e Comentário do livro O Livro d'Isso - Parte 01" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
@@ -357,7 +365,7 @@
                 <div class="video-item">
                   <strong>Completo</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/MqxG9Y34e30" title="Como escrever um resumo expandido?" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/MqxG9Y34e30" title="Como escrever um resumo expandido?" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
@@ -369,7 +377,7 @@
                 <div class="video-item">
                   <strong>Completo</strong>
                   <div class="video-frame">
-                    <iframe src="https://www.youtube.com/embed/OcR6JDpE6zQ" title="Algoritmos do Passado: Inteligência Artificial, História e Ética" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+                    <iframe src="https://www.youtube.com/embed/OcR6JDpE6zQ" title="Algoritmos do Passado: Inteligência Artificial, História e Ética" allowfullscreen></iframe>
                   </div>
                 </div>
               </article>
@@ -462,7 +470,10 @@
     }
   </script>
 
-  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
-          async src="//gc.zgo.at/count.js"></script>
+  <script
+    data-goatcounter="https://revinquietacoes.goatcounter.com/count"
+    async
+    src="//gc.zgo.at/count.js">
+  </script>
 </body>
 </html>
