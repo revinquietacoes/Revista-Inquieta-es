@@ -972,4 +972,27 @@ hr.soft {
   .course-actions {
     flex-direction: column;
   }
+}.entry-link{
+display:block;
+text-decoration:none;
+color:inherit;
+}
+
+.entry-banner{
+width:100%;
+border-radius:12px;
+margin-bottom:10px;
+}
+
+.entry-card{
+padding:14px;
+border:1px solid rgba(0,0,0,0.08);
+border-radius:14px;
+background:#fff;
+transition:0.2s;
+}
+
+.entry-card:hover{
+transform:translateY(-2px);
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
 }
