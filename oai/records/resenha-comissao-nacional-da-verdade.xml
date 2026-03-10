@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+         http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd
+         http://www.openarchives.org/OAI/2.0/oai_dc/
+         http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <responseDate>2026-03-10</responseDate>
+  <request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:revinquietacoes.github.io:v1n1-resenha-02">
+    https://revinquietacoes.github.io/Revista-Inquieta-es/oai/records/resenha-comissao-nacional-da-verdade.xml
+  </request>
+  <GetRecord>
+    <record>
+      <header>
+        <identifier>oai:revinquietacoes.github.io:v1n1-resenha-02</identifier>
+        <datestamp>2026-01-01</datestamp>
+        <setSpec>reviews</setSpec>
+      </header>
+      <metadata>
+        <oai_dc:dc>
+          <dc:title>Memória, justiça e transição democrática: uma leitura sobre a Comissão Nacional da Verdade</dc:title>
+          <dc:creator>Diego Vinícius Brito dos Santos</dc:creator>
+          <dc:subject>Resenha</dc:subject>
+          <dc:subject>Memória</dc:subject>
+          <dc:subject>Comissão Nacional da Verdade</dc:subject>
+          <dc:description>Resenha crítica sobre memória, justiça e transição democrática.</dc:description>
+          <dc:publisher>Revista Inquietações</dc:publisher>
+          <dc:date>2026-01-01</dc:date>
+          <dc:type>Text</dc:type>
+          <dc:format>application/pdf</dc:format>
+          <dc:identifier>https://revinquietacoes.github.io/Revista-Inquieta-es/arquivos/RESENHA-DIEGO-VINICIUS-BRITO-DOS-SANTOS%20%E2%80%93%20CNV.pdf</dc:identifier>
+          <dc:identifier>https://doi.org/10.5281/zenodo.18845488</dc:identifier>
+          <dc:source>Revista Inquietações, v. 1, n. 1, 2026</dc:source>
+          <dc:language>pt-BR</dc:language>
+          <dc:rights>Acesso aberto</dc:rights>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+  </GetRecord>
+</OAI-PMH>

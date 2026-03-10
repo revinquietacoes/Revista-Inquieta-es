@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+         http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+
+  <responseDate>2026-03-10</responseDate>
+  <request verb="ListSets">https://revinquietacoes.github.io/Revista-Inquieta-es/oai/sets.xml</request>
+
+  <ListSets>
+    <set>
+      <setSpec>editorial</setSpec>
+      <setName>Editorial</setName>
+      <setDescription>
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier
+                        http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+          <repositoryIdentifier>revinquietacoes.github.io</repositoryIdentifier>
+          <delimiter>:</delimiter>
+          <sampleIdentifier>oai:revinquietacoes.github.io:v1n1-expediente-editorial</sampleIdentifier>
+        </oai-identifier>
+      </setDescription>
+    </set>
+
+    <set>
+      <setSpec>articles</setSpec>
+      <setName>Artigos</setName>
+      <setDescription>
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier
+                        http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+          <repositoryIdentifier>revinquietacoes.github.io</repositoryIdentifier>
+          <delimiter>:</delimiter>
+          <sampleIdentifier>oai:revinquietacoes.github.io:v1n1-artigo-01</sampleIdentifier>
+        </oai-identifier>
+      </setDescription>
+    </set>
+
+    <set>
+      <setSpec>extended-abstracts</setSpec>
+      <setName>Resumos Expandidos</setName>
+      <setDescription>
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier
+                        http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+          <repositoryIdentifier>revinquietacoes.github.io</repositoryIdentifier>
+          <delimiter>:</delimiter>
+          <sampleIdentifier>oai:revinquietacoes.github.io:v1n1-resumo-01</sampleIdentifier>
+        </oai-identifier>
+      </setDescription>
+    </set>
+
+    <set>
+      <setSpec>essays</setSpec>
+      <setName>Ensaios</setName>
+      <setDescription>
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier
+                        http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+          <repositoryIdentifier>revinquietacoes.github.io</repositoryIdentifier>
+          <delimiter>:</delimiter>
+          <sampleIdentifier>oai:revinquietacoes.github.io:v1n1-ensaio-01</sampleIdentifier>
+        </oai-identifier>
+      </setDescription>
+    </set>
+
+    <set>
+      <setSpec>reviews</setSpec>
+      <setName>Resenhas</setName>
+      <setDescription>
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier
+                        http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+          <repositoryIdentifier>revinquietacoes.github.io</repositoryIdentifier>
+          <delimiter>:</delimiter>
+          <sampleIdentifier>oai:revinquietacoes.github.io:v1n1-resenha-01</sampleIdentifier>
+        </oai-identifier>
+      </setDescription>
+    </set>
+
+    <set>
+      <setSpec>translations</setSpec>
+      <setName>Traduções</setName>
+      <setDescription>
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier
+                        http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+          <repositoryIdentifier>revinquietacoes.github.io</repositoryIdentifier>
+          <delimiter>:</delimiter>
+          <sampleIdentifier>oai:revinquietacoes.github.io:v1n1-traducao-01</sampleIdentifier>
+        </oai-identifier>
+      </setDescription>
+    </set>
+
+    <set>
+      <setSpec>photography</setSpec>
+      <setName>Fotografia Temática</setName>
+      <setDescription>
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier
+                        http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+          <repositoryIdentifier>revinquietacoes.github.io</repositoryIdentifier>
+          <delimiter>:</delimiter>
+          <sampleIdentifier>oai:revinquietacoes.github.io:v1n1-fotografia-01</sampleIdentifier>
+        </oai-identifier>
+      </setDescription>
+    </set>
+
+    <set>
+      <setSpec>experience-reports</setSpec>
+      <setName>Relatos de Experiência</setName>
+      <setDescription>
+        <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                        xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier
+                        http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+          <repositoryIdentifier>revinquietacoes.github.io</repositoryIdentifier>
+          <delimiter>:</delimiter>
+          <sampleIdentifier>oai:revinquietacoes.github.io:v1n1-relato-01</sampleIdentifier>
+        </oai-identifier>
+      </setDescription>
+    </set>
+
+  </ListSets>
+</OAI-PMH>

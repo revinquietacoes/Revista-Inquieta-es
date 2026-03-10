@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+         http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd
+         http://www.openarchives.org/OAI/2.0/oai_dc/
+         http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <responseDate>2026-03-10</responseDate>
+  <request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:revinquietacoes.github.io:v1n1-relato-01">
+    https://revinquietacoes.github.io/Revista-Inquieta-es/oai/records/relato-as-cartas-sociais-de-vinicius.xml
+  </request>
+  <GetRecord>
+    <record>
+      <header>
+        <identifier>oai:revinquietacoes.github.io:v1n1-relato-01</identifier>
+        <datestamp>2026-01-01</datestamp>
+        <setSpec>experience-reports</setSpec>
+      </header>
+      <metadata>
+        <oai_dc:dc>
+          <dc:title>As cartas Sociais de Vinícius</dc:title>
+          <dc:creator>Diego Vinícius Brito dos Santos</dc:creator>
+          <dc:subject>Relato de experiência</dc:subject>
+          <dc:subject>Escrita social</dc:subject>
+          <dc:subject>Experiência autoral</dc:subject>
+          <dc:description>Relato de experiência publicado na Revista Inquietações.</dc:description>
+          <dc:publisher>Revista Inquietações</dc:publisher>
+          <dc:date>2026-01-01</dc:date>
+          <dc:type>Text</dc:type>
+          <dc:format>application/pdf</dc:format>
+          <dc:identifier>https://revinquietacoes.github.io/Revista-Inquieta-es/arquivos/As%20cartas%20sociais%20de%20Vin%C3%ADcius.pdf</dc:identifier>
+          <dc:identifier>https://dx.doi.org/10.5281/zenodo.18844651</dc:identifier>
+          <dc:source>Revista Inquietações, v. 1, n. 1, 2026</dc:source>
+          <dc:language>pt-BR</dc:language>
+          <dc:rights>Acesso aberto</dc:rights>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+  </GetRecord>
+</OAI-PMH>

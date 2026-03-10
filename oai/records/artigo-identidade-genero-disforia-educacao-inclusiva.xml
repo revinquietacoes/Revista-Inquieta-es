@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns:oai_dc="http://www.openarchives.org/OAI/2.0/oai_dc/"
+         xmlns:dc="http://purl.org/dc/elements/1.1/"
+         xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+         http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd
+         http://www.openarchives.org/OAI/2.0/oai_dc/
+         http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
+  <responseDate>2026-03-10</responseDate>
+  <request verb="GetRecord" metadataPrefix="oai_dc" identifier="oai:revinquietacoes.github.io:v1n1-artigo-01">
+    https://revinquietacoes.github.io/Revista-Inquieta-es/oai/records/artigo-identidade-genero-disforia-educacao-inclusiva.xml
+  </request>
+  <GetRecord>
+    <record>
+      <header>
+        <identifier>oai:revinquietacoes.github.io:v1n1-artigo-01</identifier>
+        <datestamp>2026-01-01</datestamp>
+        <setSpec>articles</setSpec>
+      </header>
+      <metadata>
+        <oai_dc:dc>
+          <dc:title>IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA: Desconstruindo binarismos e respeitando a diversidade</dc:title>
+          <dc:creator>Diego Vinícius Brito dos Santos</dc:creator>
+          <dc:subject>Educação inclusiva</dc:subject>
+          <dc:subject>Identidade de gênero</dc:subject>
+          <dc:subject>Disforia</dc:subject>
+          <dc:description>Artigo acadêmico publicado na edição v. 1, n. 1 (2026) da Revista Inquietações.</dc:description>
+          <dc:publisher>Revista Inquietações</dc:publisher>
+          <dc:date>2026-01-01</dc:date>
+          <dc:type>Text</dc:type>
+          <dc:format>application/pdf</dc:format>
+          <dc:identifier>https://revinquietacoes.github.io/Revista-Inquieta-es/arquivos/IDENTIDADE%20DE%20G%C3%8ANERO,%20DISFORIA%20E%20EDUCA%C3%87%C3%83O%20INCLUSIVA%20Desconstruindo%20binarismos%20e%20respeitando%20a%20diversidade.pdf</dc:identifier>
+          <dc:identifier>https://doi.org/10.5281/zenodo.18825993</dc:identifier>
+          <dc:source>Revista Inquietações, v. 1, n. 1, 2026</dc:source>
+          <dc:language>pt-BR</dc:language>
+          <dc:rights>Acesso aberto</dc:rights>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+  </GetRecord>
+</OAI-PMH>
