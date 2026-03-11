@@ -195,9 +195,8 @@ a:hover {
 .banner-card {
   border-radius: 24px;
   border: 1px solid rgba(255, 255, 255, 0.14);
-  background: linear-gradient(180deg, rgba(255,255,255,0.12), rgba(255,255,255,0.05));
+  background: transparent;
   padding: 16px;
-  backdrop-filter: blur(4px);
 }
 
 .banner-card img {
@@ -360,8 +359,7 @@ a:hover {
 }
 
 .panel-body {
-  padding: 22px 24px
-  ;
+  padding: 22px 24px;
 }
 
 .notice {
@@ -641,7 +639,6 @@ a:hover {
   display: block;
 }
 
-
 .lang-current {
   font-weight: 600;
   color: var(--brand);
@@ -772,6 +769,7 @@ a:hover {
   border: 1px solid var(--line);
   border-radius: 18px;
 }
+
 .instructor-photo-wrap {
   display: flex;
   justify-content: center;
@@ -818,7 +816,6 @@ a:hover {
 .instructor-bio p:last-child {
   margin-bottom: 0;
 }
-
 
 .contact-list,
 .meta-list {
@@ -974,7 +971,9 @@ hr.soft {
   .course-actions {
     flex-direction: column;
   }
-}.entry-link{
+}
+
+.entry-link{
 display:block;
 text-decoration:none;
 color:inherit;
@@ -998,6 +997,7 @@ transition:0.2s;
 transform:translateY(-2px);
 box-shadow:0 6px 18px rgba(0,0,0,0.08);
 }
+
 .zenodo-card{
 display:flex;
 flex-direction:column;
@@ -1013,14 +1013,18 @@ height:56px;
 
 .zenodo-btn{
 margin-top:6px;
-}.license-badge{
-  margin-top: 12px;
+}
+
+.license-badge{
+margin-top:12px;
 }
 
 .cc-license-image{
-  max-width: 70px;
-  height: auto;
-}.event-info-box{
+max-width:70px;
+height:auto;
+}
+
+.event-info-box{
 background-image:url("assets/fundo-evento.png");
 background-size:cover;
 background-position:center;
@@ -1060,210 +1064,129 @@ margin-bottom:0;
 .event-info-box strong{
 color:#092746;
 }
-.banner-card {
-  border-radius: 24px;
-  border: 1px solid rgba(255, 255, 255, 0.14);
-  background: transparent;
-  padding: 16px;
-  
-}.course-actions-evento{
+
+.course-actions-evento{
 background:#eaf3ff;
 border:1px solid #c8dcf6;
 border-radius:16px;
 padding:18px;
 box-shadow:0 6px 18px rgba(0,0,0,0.05);
-}.visit-counter-card{
-  margin-top: 16px;
-  padding: 14px 16px;
-  border: 1px solid rgba(185, 151, 88, 0.28);
-  border-radius: 18px;
-  background: linear-gradient(180deg, rgba(237,243,251,0.88), rgba(255,255,255,0.96));
-  box-shadow: 0 10px 24px rgba(16,35,63,0.06);
-  text-align: center;
-  max-width: 230px;
+}
+
+.visit-counter-card{
+margin-top:16px;
+padding:14px 16px;
+border:1px solid rgba(185,151,88,0.28);
+border-radius:18px;
+background:linear-gradient(180deg, rgba(237,243,251,0.88), rgba(255,255,255,0.96));
+box-shadow:0 10px 24px rgba(16,35,63,0.06);
+text-align:center;
+max-width:230px;
 }
 
 .visit-counter-label{
-  margin-bottom: 8px;
-  font-size: 0.84rem;
-  font-weight: 700;
-  letter-spacing: 0.04em;
-  text-transform: uppercase;
-  color: var(--brand-2);
+margin-bottom:8px;
+font-size:0.84rem;
+font-weight:700;
+letter-spacing:0.04em;
+text-transform:uppercase;
+color:var(--brand-2);
 }
 
 .visit-counter-value{
-  min-height: 42px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Cormorant Garamond", Georgia, serif;
-  font-size: 2rem;
-  line-height: 1;
-  color: var(--brand);
+min-height:42px;
+display:flex;
+align-items:center;
+justify-content:center;
+font-family:"Cormorant Garamond", Georgia, serif;
+font-size:2rem;
+line-height:1;
+color:var(--brand);
 }
 
 .visit-counter-value .gcvc{
-  display: inline-flex;
-  align-items: baseline;
-  gap: 8px;
-  padding: 6px 12px;
-  border-radius: 999px;
-  background: rgba(255,255,255,0.92);
-  border: 1px solid rgba(18,45,82,0.10);
-  box-shadow: inset 0 1px 0 rgba(255,255,255,0.7);
+display:inline-flex;
+align-items:baseline;
+gap:8px;
+padding:6px 12px;
+border-radius:999px;
+background:rgba(255,255,255,0.92);
+border:1px solid rgba(18,45,82,0.10);
+box-shadow:inset 0 1px 0 rgba(255,255,255,0.7);
 }
 
 .visit-counter-value .gcvc-num{
-  font-size: 2.1rem;
-  font-weight: 700;
-  color: var(--brand);
+font-size:2.1rem;
+font-weight:700;
+color:var(--brand);
 }
 
 .visit-counter-value .gcvc-text{
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 0.88rem;
-  font-weight: 600;
-  color: var(--muted);
+font-family:"Inter", system-ui, sans-serif;
+font-size:0.88rem;
+font-weight:600;
+color:var(--muted);
 }
 
 .visit-counter-loading{
-  font-family: "Inter", system-ui, sans-serif;
-  font-size: 0.9rem;
-  color: var(--muted);
+font-family:"Inter", system-ui, sans-serif;
+font-size:0.9rem;
+color:var(--muted);
 }
 
 @media (max-width: 1100px){
-  .visit-counter-card{
-    max-width: 260px;
-  }
+.visit-counter-card{
+max-width:260px;
+}
 }
 
 @media (max-width: 560px){
-  .visit-counter-card{
-    max-width: 100%;
-  }
-
-  .visit-counter-value{
-    font-size: 1.8rem;
-  }
-
-  .visit-counter-value .gcvc-num{
-    font-size: 1.9rem;
-  }
-}.visit-counter{
-
-margin-top:14px;
-
-display:flex;
-flex-direction:column;
-align-items:center;
-
-padding:10px 14px;
-
-border-radius:14px;
-
-background:linear-gradient(180deg,#f4f7fb,#ffffff);
-
-border:1px solid rgba(16,35,63,0.08);
-
-box-shadow:0 8px 18px rgba(16,35,63,0.06);
-
-max-width:120px;
-
-font-family:Inter,system-ui;
-
+.visit-counter-card{
+max-width:100%;
 }
 
-.visit-icon{
-font-size:18px;
-opacity:.7;
+.visit-counter-value{
+font-size:1.8rem;
 }
 
-#gc-counter{
-
-font-size:28px;
-
-font-weight:700;
-
-color:#122d52;
-
-line-height:1.1;
-
+.visit-counter-value .gcvc-num{
+font-size:1.9rem;
+}
 }
 
-.visit-text{
-
-font-size:11px;
-
-letter-spacing:.08em;
-
-text-transform:uppercase;
-
-color:#6b7a90;
-
-}.visit-counter{
+.visit-counter{
 margin-top:14px;
 display:flex;
 flex-direction:column;
 align-items:center;
-padding:12px;
+justify-content:center;
+padding:12px 14px;
 border-radius:16px;
 background:linear-gradient(180deg,#f5f7fb,#ffffff);
 border:1px solid rgba(16,35,63,.08);
 box-shadow:0 8px 18px rgba(16,35,63,.06);
-width:120px;
+width:132px;
+min-height:110px;
+text-align:center;
 }
 
 .visit-icon{
 font-size:18px;
 opacity:.6;
+margin-bottom:6px;
 }
 
 #goatcounter-home-views{
-font-size:28px;
+font-size:30px;
 font-weight:700;
 color:#132d4f;
+line-height:1.1;
 }
 
 .visit-text{
+margin-top:6px;
 font-size:11px;
 letter-spacing:.08em;
 text-transform:uppercase;
 color:#6b7a90;
-}.visit-counter{
-  margin-top:14px;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  justify-content:center;
-  padding:12px 14px;
-  border-radius:16px;
-  background:linear-gradient(180deg,#f5f7fb,#ffffff);
-  border:1px solid rgba(16,35,63,.08);
-  box-shadow:0 8px 18px rgba(16,35,63,.06);
-  width:132px;
-  min-height:110px;
-  text-align:center;
-}
-
-.visit-icon{
-  font-size:18px;
-  opacity:.6;
-  margin-bottom:6px;
-}
-
-#goatcounter-home-views{
-  font-size:30px;
-  font-weight:700;
-  color:#132d4f;
-  line-height:1.1;
-}
-
-.visit-text{
-  margin-top:6px;
-  font-size:11px;
-  letter-spacing:.08em;
-  text-transform:uppercase;
-  color:#6b7a90;
 }
