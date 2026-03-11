@@ -15,19 +15,85 @@
 <style>
 .editorial-grid{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+grid-template-columns:repeat(auto-fit,minmax(240px,1fr));
 gap:22px;
 margin-top:16px;
+align-items:start;
+}
+
+.editor-top-grid{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:22px;
+margin-bottom:22px;
+align-items:start;
+}
+
+.top-editor-card{
+display:flex;
+flex-direction:column;
+padding:18px;
+border-radius:24px;
+border:1px solid var(--line);
+box-shadow:var(--shadow-soft);
+height:100%;
+min-width:0;
+overflow:hidden;
+}
+
+.top-editor-card .top-editor-head{
+margin:-18px -18px 18px;
+padding:18px 20px 14px;
+border-bottom:1px solid var(--line);
+border-radius:24px 24px 0 0;
+}
+
+.top-editor-card .top-editor-head h2{
+margin:0 0 6px;
+font-family:"Cormorant Garamond", Georgia, serif;
+font-size:2rem;
+color:var(--brand);
+line-height:1.05;
+}
+
+.top-editor-card .top-editor-head p{
+margin:0;
+font-size:.95rem;
+color:#33445a;
+line-height:1.55;
+}
+
+.top-editor-card.chefia{
+background:#f8fbff;
+border-color:#d9e5f7;
+}
+
+.top-editor-card.chefia .top-editor-head{
+background:linear-gradient(180deg,#eef4ff 0%, #f7faff 100%);
+border-bottom-color:#d9e5f7;
+}
+
+.top-editor-card.adjunta{
+background:#fbfffc;
+border-color:#d7ebdd;
+}
+
+.top-editor-card.adjunta .top-editor-head{
+background:linear-gradient(180deg,#eefbf3 0%, #f8fffb 100%);
+border-bottom-color:#d7ebdd;
 }
 
 .editor-card{
 background:#fff;
 border:1px solid var(--line);
 border-radius:20px;
-padding:22px;
+padding:18px;
 box-shadow:var(--shadow-soft);
 text-align:center;
 transition:transform .2s ease, box-shadow .2s ease;
+height:auto;
+min-width:0;
+overflow:hidden;
 }
 
 .editor-card:hover{
@@ -66,6 +132,7 @@ font-weight:700;
 color:var(--brand);
 margin-bottom:8px;
 line-height:1.35;
+word-break:break-word;
 }
 
 .editor-affiliation{
@@ -73,6 +140,8 @@ font-size:.95rem;
 color:#4a5a72;
 margin-bottom:14px;
 line-height:1.55;
+font-style:normal;
+word-break:break-word;
 }
 
 .editor-meta{
@@ -90,6 +159,10 @@ border:1px solid rgba(16,35,63,.06);
 font-size:.9rem;
 line-height:1.55;
 color:#304055;
+font-style:normal;
+min-width:0;
+overflow-wrap:anywhere;
+word-break:break-word;
 }
 
 .editor-meta strong{
@@ -100,24 +173,7 @@ margin-right:4px;
 
 .editor-meta a{
 word-break:break-word;
-}
-
-.panel-chefia .panel-head{
-background:linear-gradient(180deg,#eef4ff 0%, #f7faff 100%);
-}
-
-.panel-chefia .editor-card{
-background:#fcfdff;
-border-color:#d9e5f7;
-}
-
-.panel-adjunta .panel-head{
-background:linear-gradient(180deg,#eefbf3 0%, #f8fffb 100%);
-}
-
-.panel-adjunta .editor-card{
-background:#fcfffd;
-border-color:#d7ebdd;
+overflow-wrap:anywhere;
 }
 
 .panel-diagramacao .panel-head{
@@ -157,11 +213,68 @@ border:1px solid var(--line);
 box-shadow:var(--shadow-soft);
 font-weight:600;
 color:var(--brand);
+line-height:1.6;
+}
+
+.parecerista-item a{
+font-weight:700;
+text-decoration:none;
+}
+
+.parecerista-item a:hover{
+text-decoration:underline;
 }
 
 .editor-empty{
 color:#7a889b;
-font-style:italic;
+font-style:normal;
+}
+
+.sidebar-certificados{
+background:linear-gradient(180deg,#f5f9ff 0%, #ffffff 100%);
+border:1px solid #d8e6f7;
+}
+
+.certificados-box{
+padding:14px;
+border-radius:16px;
+background:#ffffff;
+border:1px solid rgba(16,35,63,.08);
+box-shadow:var(--shadow-soft);
+}
+
+.certificados-box p{
+margin:0 0 14px;
+color:#53637b;
+line-height:1.6;
+}
+
+.certificados-btn{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+width:100%;
+padding:12px 16px;
+border-radius:999px;
+background:#e6f0ff;
+border:1px solid #c8daf6;
+color:var(--brand);
+font-weight:700;
+text-decoration:none;
+transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+}
+
+.certificados-btn:hover{
+text-decoration:none;
+transform:translateY(-2px);
+background:#dceaff;
+box-shadow:0 10px 22px rgba(16,35,63,.08);
+}
+
+@media (max-width: 1180px){
+.editor-top-grid{
+grid-template-columns:1fr;
+}
 }
 
 @media (max-width: 640px){
@@ -279,27 +392,33 @@ rev.inquietacoes@gmail.com
 </div>
 </section>
 
-<section class="sidebar-block">
-<h2>Observação</h2>
-<p class="small-note">
-As informações biográficas e institucionais do corpo editorial poderão ser ampliadas e atualizadas posteriormente.
+<section class="sidebar-block sidebar-certificados">
+<h2>Certificados de Membros</h2>
+<div class="certificados-box">
+<p>
+Acesse a pasta institucional com os certificados dos membros do corpo editorial da Revista Inquietações.
 </p>
+<a
+href="https://drive.google.com/drive/folders/12oMGUyoZm3qLzuxdLIo-3x7plUMEWUyF?usp=drive_link"
+target="_blank"
+rel="noopener noreferrer"
+class="certificados-btn">
+Acessar certificados
+</a>
+</div>
 </section>
 
 </aside>
 
 <main class="content" id="conteudo-principal">
 
-<section class="panel panel-chefia">
+<div class="editor-top-grid">
 
-<div class="panel-head">
+<div class="top-editor-card chefia">
+<div class="top-editor-head">
 <h2>Editor-Chefe</h2>
 <p>Responsável pela direção científica e organização geral do periódico.</p>
 </div>
-
-<div class="panel-body">
-
-<div class="editorial-grid">
 
 <div class="editor-card">
 
@@ -318,29 +437,20 @@ Mestre em Filosofia (UFRN)
 </div>
 
 <div class="editor-meta">
-<div><strong>E-mail:</strong> <span class="editor-empty">rev.inquietacoes@gmail.com</span></div>
+<div><strong>E-mail:</strong> <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a></div>
 <div><strong>Instagram:</strong> @iamthed1</div>
 <div><strong>Lattes iD:</strong> <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></div>
 <div><strong>Orcid iD:</strong> <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a></div>
 </div>
 
 </div>
-
 </div>
 
-</div>
-</section>
-
-<section class="panel panel-adjunta">
-
-<div class="panel-head">
-<h2>Editores(as) Adjuntos(as)</h2>
+<div class="top-editor-card adjunta">
+<div class="top-editor-head">
+<h2>Editora Adjunta</h2>
 <p>Apoio à coordenação editorial, avaliação preliminar e acompanhamento dos fluxos do periódico.</p>
 </div>
-
-<div class="panel-body">
-
-<div class="editorial-grid">
 
 <div class="editor-card">
 
@@ -366,6 +476,13 @@ Especialista em Currículo e Prática Docente nos Anos Iniciais do Ensino Fundam
 </div>
 
 </div>
+</div>
+
+<div class="top-editor-card adjunta">
+<div class="top-editor-head">
+<h2>Editora Adjunta</h2>
+<p>Apoio à coordenação editorial, avaliação preliminar e acompanhamento dos fluxos do periódico.</p>
+</div>
 
 <div class="editor-card">
 
@@ -384,14 +501,102 @@ Graduada em Filosofia (UERN)
 </div>
 
 <div class="editor-meta">
-<div><strong>E-mail:</strong> <span class="editor-empty">taisamaria9090@gmail.com</span></div>
-<div><strong>Instagram:</strong> <span class="editor-empty">@taisasantos80476</span></div>
+<div><strong>E-mail:</strong> <a href="mailto:taisamaria9090@gmail.com">taisamaria9090@gmail.com</a></div>
+<div><strong>Instagram:</strong> @taisasantos80476</div>
 <div><strong>Lattes iD:</strong> <a href="https://lattes.cnpq.br/6216572061896584" target="_blank">https://lattes.cnpq.br/6216572061896584</a></div>
 <div><strong>Orcid iD:</strong> <a href="https://orcid.org/0000-0002-8766-5683" target="_blank">https://orcid.org/0000-0002-8766-5683</a></div>
 </div>
 
 </div>
+</div>
 
+</div>
+
+<section class="panel panel-tecnico">
+
+<div class="panel-head">
+<h2>Suporte Técnico</h2>
+<p>Tecnologia da informação, manutenção de sistemas e apoio técnico ao portal editorial.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="editorial-grid">
+
+<div class="editor-card">
+
+<div class="editor-photo-wrap">
+<img class="editor-photo" src="corpo editorial/sueliton.png" alt="Foto de Sueliton">
+</div>
+
+<div class="editor-role">Técnico de Informação</div>
+
+<div class="editor-name">
+Sueliton dos Santos Medeiros
+</div>
+
+<div class="editor-affiliation">
+Apoio técnico ao portal editorial
+</div>
+
+<div class="editor-meta">
+<div><strong>E-mail:</strong> <a href="mailto:suelitonmdr@gmail.com">suelitonmdr@gmail.com</a></div>
+<div><strong>Instagram:</strong> @suelitonx</div>
+<div><strong>Lattes iD:</strong> <a href="https://lattes.cnpq.br/7440416224129619" target="_blank">https://lattes.cnpq.br/7440416224129619</a></div>
+<div><strong>Formação Acadêmica:</strong> Bacharelado em Sistemas de Informação (UFRN)</div>
+</div>
+
+</div>
+
+<div class="editor-card">
+
+<div class="editor-photo-wrap">
+<img class="editor-photo" src="corpo editorial/diego.png" alt="Foto de Diego Vinícius Brito dos Santos">
+</div>
+
+<div class="editor-role">Suporte Técnico</div>
+
+<div class="editor-name">
+Diego Vinícius Brito dos Santos
+</div>
+
+<div class="editor-affiliation">
+Apoio técnico ao portal editorial
+</div>
+
+<div class="editor-meta">
+<div><strong>E-mail:</strong> <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a></div>
+<div><strong>Instagram:</strong> @iamthed1</div>
+<div><strong>Lattes iD:</strong> <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></div>
+<div><strong>Orcid iD:</strong> <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a></div>
+</div>
+
+</div>
+
+</div>
+
+</div>
+</section>
+
+<section class="panel panel-parecer">
+
+<div class="panel-head">
+<h2>Revisão Textual – Corpo de Pareceristas Ad Hoc</h2>
+<p>Colaboradores responsáveis pela leitura crítica, apreciação técnica e qualificação acadêmica dos textos submetidos.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="pareceristas-list">
+<div class="parecerista-item">
+<a href="http://lattes.cnpq.br/4347574894656811" target="_blank">Diego Vinícius Brito dos Santos</a>
+</div>
+<div class="parecerista-item">
+<a href="http://lattes.cnpq.br/4444946198128059" target="_blank">Geiza Venicia dos Santos</a>
+</div>
+<div class="parecerista-item">
+<a href="https://lattes.cnpq.br/6216572061896584" target="_blank">Taisa Maria Brito dos Santos</a>
+</div>
 </div>
 
 </div>
@@ -430,89 +635,6 @@ Equipe editorial — Revista Inquietações
 
 </div>
 
-</div>
-
-</div>
-</section>
-
-<section class="panel panel-tecnico">
-
-<div class="panel-head">
-<h2>Suporte Técnico</h2>
-<p>Tecnologia da informação, manutenção de sistemas e apoio técnico ao portal editorial.</p>
-</div>
-
-<div class="panel-body">
-
-<div class="editorial-grid">
-
-<div class="editor-card">
-
-<div class="editor-photo-wrap">
-<img class="editor-photo" src="corpo editorial/sueliton.png" alt="Foto de Sueliton">
-</div>
-
-<div class="editor-role">Técnico de Informação</div>
-
-<div class="editor-name">
-Sueliton dos Santos Medeiros 
-</div>
-
-<div class="editor-affiliation">
-<span class="editor-empty">Apoio técnico ao portal editorial</span>
-</div>
-
-<div class="editor-meta">
-<div><strong>E-mail:</strong> <span class="editor-empty">suelitonmdr@gmail.com</span></div>
-<div><strong>Instagram:</strong> <span class="editor-empty">@suelitonx</span></div>
-<div><strong>Lattes iD:</strong> <span class="editor-empty">https://lattes.cnpq.br/7440416224129619</span></div>
-<div><strong>Formação Acadêmica:</strong> <span class="editor-empty">Bacharelado em Sistemas de Informação (UFRN)</span></div>
-</div>
-
-</div>
-
-<div class="editor-card">
-
-<div class="editor-photo-wrap">
-<img class="editor-photo" src="corpo editorial/diego.png" alt="Foto de Diego Vinícius Brito dos Santos">
-</div>
-
-<div class="editor-role">Suporte Técnico</div>
-
-<div class="editor-name">
-Diego Vinícius Brito dos Santos
-</div>
-
-<div class="editor-affiliation">
-Apoio técnico ao portal editorial
-</div>
-
-<div class="editor-meta">
-<div><strong>Instagram:</strong> @iamthed1</div>
-<div><strong>Lattes iD:</strong> <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></div>
-<div><strong>Orcid iD:</strong> <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a></div>
-</div>
-
-</div>
-
-</div>
-
-</div>
-</section>
-
-<section class="panel panel-parecer">
-
-<div class="panel-head">
-<h2>Revisão Textual – Corpo de Pareceristas Ad Hoc</h2>
-<p>Colaboradores responsáveis pela leitura crítica, apreciação técnica e qualificação acadêmica dos textos submetidos.</p>
-</div>
-
-<div class="panel-body">
-
-<div class="pareceristas-list">
-<div class="parecerista-item">Diego Vinícius Brito dos Santos</div>
-<div class="parecerista-item">Geiza Venicia dos Santos</div>
-<div class="parecerista-item">Taisa Maria Brito dos Santos</div>
 </div>
 
 </div>
