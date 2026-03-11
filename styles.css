@@ -1231,4 +1231,39 @@ font-size:11px;
 letter-spacing:.08em;
 text-transform:uppercase;
 color:#6b7a90;
+}.visit-counter{
+  margin-top:14px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  padding:12px 14px;
+  border-radius:16px;
+  background:linear-gradient(180deg,#f5f7fb,#ffffff);
+  border:1px solid rgba(16,35,63,.08);
+  box-shadow:0 8px 18px rgba(16,35,63,.06);
+  width:132px;
+  min-height:110px;
+  text-align:center;
+}
+
+.visit-icon{
+  font-size:18px;
+  opacity:.6;
+  margin-bottom:6px;
+}
+
+#goatcounter-home-views{
+  font-size:30px;
+  font-weight:700;
+  color:#132d4f;
+  line-height:1.1;
+}
+
+.visit-text{
+  margin-top:6px;
+  font-size:11px;
+  letter-spacing:.08em;
+  text-transform:uppercase;
+  color:#6b7a90;
 }
