@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR" xml:lang="pt-BR">
 <head>
-
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
@@ -25,7 +24,7 @@
 <div class="site-shell ojs-shell">
 
 
-<nav class="skip-links">
+<nav class="skip-links" aria-label="Ir para os links de conteúdo">
 <a href="#conteudo-principal">Ir para o conteúdo principal</a>
 <a href="#navegacao-principal">Ir para a navegação</a>
 <a href="#barra-lateral">Ir para a barra lateral</a>
@@ -39,7 +38,7 @@
 </div>
 
 
-<header class="masthead masthead-ojs">
+<header class="masthead masthead-ojs" role="banner">
 
 <div class="masthead-inner masthead-inner-ojs">
 
@@ -56,25 +55,13 @@ com navegação editorial clara, acesso à edição atual e destaque para conte�
 
 <div class="masthead-meta">
 
-<div class="masthead-card">
-<strong>Status editorial</strong>
-Primeira edição
-</div>
+<div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
 
-<div class="masthead-card">
-<strong>Periodicidade</strong>
-Fluxo contínuo
-</div>
+<div class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
 
-<div class="masthead-card">
-<strong>Área</strong>
-Ciências Humanas
-</div>
+<div class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
 
-<div class="masthead-card">
-<strong>e-ISSN</strong>
-3086-4119
-</div>
+<div class="masthead-card"><strong>e-ISSN</strong>3086-4119</div>
 
 </div>
 
@@ -91,24 +78,34 @@ Ciências Humanas
 
 
 
-<nav class="site-nav site-nav-ojs" id="navegacao-principal">
+<nav class="site-nav site-nav-ojs" id="navegacao-principal" aria-label="Navegação principal">
 
-<button class="site-nav-toggle">
+<button class="site-nav-toggle" type="button">
 Menu
 </button>
 
 <div class="site-nav-menu">
 
 <a href="index.html" class="active">Início</a>
+
 <a href="edicao-atual.html">Atual</a>
+
 <a href="conteudos.html">Conteúdos</a>
+
 <a href="minicursos.html">Evento</a>
+
 <a href="sobre.html">Sobre</a>
+
 <a href="equipe-editorial.html">Equipe Editorial</a>
+
 <a href="politicas-editoriais.html">Políticas</a>
+
 <a href="diretrizes-autores.html">Diretrizes</a>
+
 <a href="submissoes.html">Submissões</a>
+
 <a href="templates.html">Templates</a>
+
 <a href="contato.html">Contato</a>
 
 </div>
@@ -120,8 +117,7 @@ Menu
 <div class="portal-grid portal-grid-ojs">
 
 
-<main class="content" id="conteudo-principal">
-
+<main class="content" id="conteudo-principal" role="main">
 
 <section class="panel panel-issue">
 
@@ -138,17 +134,6 @@ Menu
 <div class="issue-cover">
 
 <img src="logo-revista.png" alt="Identidade visual da Revista Inquietações" />
-
-
-<div class="visit-counter">
-
-<span class="visit-icon">👁</span>
-
-<span id="goatcounter-home-views">0</span>
-
-<span class="visit-text">visualizações</span>
-
-</div>
 
 </div>
 
@@ -212,8 +197,91 @@ Ler conteúdos publicados
 
 
 
+<section class="panel">
+
+<div class="panel-head">
+<h2>Acesso rápido</h2>
+<p>Páginas institucionais já disponíveis no portal.</p>
+</div>
+
+<div class="panel-body">
+
+<div class="card-grid quick-grid">
+
+<a class="info-card info-link" href="sobre.html">
+<strong>Sobre a revista</strong>
+Missão, escopo e compromissos editoriais.
+</a>
+
+<a class="info-card info-link" href="equipe-editorial.html">
+<strong>Equipe editorial</strong>
+Estrutura acadêmica e responsabilidades.
+</a>
+
+<a class="info-card info-link" href="politicas-editoriais.html">
+<strong>Políticas editoriais</strong>
+Ética, acesso aberto e integridade científica.
+</a>
+
+<a class="info-card info-link" href="diretrizes-autores.html">
+<strong>Diretrizes para autores</strong>
+Normas de submissão e fluxo editorial.
+</a>
+
+<a class="info-card info-link" href="templates.html">
+<strong>Templates oficiais</strong>
+Modelos para preparação dos manuscritos.
+</a>
+
+<a class="info-card info-link" href="submissoes.html">
+<strong>Submissões</strong>
+Formulário oficial de envio e links auxiliares.
+</a>
+
+<a class="info-card info-link" href="minicursos.html">
+<strong>Mini-cursos</strong>
+Aulas comentadas incorporadas ao portal.
+</a>
+
+<a class="info-card info-link" href="contato.html">
+<strong>Contato</strong>
+Instagram, e-mail e canais institucionais.
+</a>
+
+</div>
+
+</div>
+
+</section>
+
+
 </main>
 
+
+
+<aside class="sidebar sidebar-ojs" id="barra-lateral">
+
+<section class="sidebar-block journal-data">
+
+<h2>Dados da revista</h2>
+
+<div class="data-list">
+
+<div><strong>e-ISSN:</strong> 3086-4119</div>
+
+<div><strong>Periodicidade:</strong> Fluxo contínuo</div>
+
+<div><strong>Qualis CAPES:</strong> Em breve</div>
+
+<div><strong>Área:</strong> Ciências Humanas</div>
+
+<div><strong>Status:</strong> Primeira edição</div>
+
+</div>
+
+</section>
+
+</aside>
 
 
 </div>
@@ -225,7 +293,7 @@ Ler conteúdos publicados
 <p><strong>Revista Inquietações</strong> — periódico científico em acesso aberto.</p>
 
 <p>
-Organização editorial: Diego Vinícius Brito dos Santos •
+Organização editorial: Diego Vinícius Brito dos Santos • 
 <a href="https://www.instagram.com/iamthed1/" target="_blank">
 @iamthed1
 </a>
@@ -235,47 +303,6 @@ Organização editorial: Diego Vinícius Brito dos Santos •
 
 
 </div>
-
-
-
-<script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
-
-
-<script>
-
-(function(){
-
-function loadViews(){
-
-var el=document.getElementById("goatcounter-home-views");
-
-if(!el) return;
-
-var path="/index.html";
-
-var url="https://revinquietacoes.goatcounter.com/counter/"+encodeURIComponent(path)+".json";
-
-fetch(url)
-.then(function(r){return r.json();})
-.then(function(data){
-
-if(data && data.count){
-el.textContent=data.count;
-}
-
-})
-.catch(function(){
-el.textContent="0";
-});
-
-}
-
-document.addEventListener("DOMContentLoaded",loadViews);
-
-})();
-
-</script>
-
 
 </body>
 </html>
