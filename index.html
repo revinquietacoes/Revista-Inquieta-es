@@ -86,8 +86,15 @@
           <div class="panel-body">
             <div class="issue-highlight">
               <div class="issue-cover">
-                <img src="logo-revista.png" alt="Identidade visual da Revista Inquietações" />
-              </div>
+  <img src="logo-revista.png" alt="Identidade visual da Revista Inquietações" />
+
+  <div class="visit-counter-card" aria-label="Contador de visualizações da página inicial">
+    <div class="visit-counter-label">Visualizações desta página</div>
+    <div id="goatcounter-home-views" class="visit-counter-value">
+      <span class="visit-counter-loading">carregando...</span>
+    </div>
+  </div>
+</div>
 
               <div class="issue-summary">
                 <div class="issue-title">v. 1, n. 1 (2026) • jan./dez. 2026</div>
@@ -267,18 +274,34 @@
 
   </div>
 
-  <script>
-    const navToggle = document.querySelector('.site-nav-toggle');
-    const navMenu = document.querySelector('.site-nav-menu');
-
-    if (navToggle && navMenu) {
-      navToggle.addEventListener('click', () => {
-        const isOpen = navMenu.classList.toggle('is-open');
-        navToggle.setAttribute('aria-expanded', String(isOpen));
-      });
-    }
-  </script>
-
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+
+<script>
+  (function () {
+    function initGoatCounterViews() {
+      if (!window.goatcounter || !window.goatcounter.visit_count) return false;
+
+      const target = document.querySelector("#goatcounter-home-views");
+      if (!target) return true;
+
+      target.innerHTML = "";
+
+      window.goatcounter.visit_count({
+        append: "#goatcounter-home-views",
+        type: "html",
+        path: "index.html",
+        no_branding: true
+      });
+
+      return true;
+    }
+
+    if (!initGoatCounterViews()) {
+      const timer = setInterval(function () {
+        if (initGoatCounterViews()) clearInterval(timer);
+      }, 120);
+    }
+  })();
+</script>
 </body>
 </html>
