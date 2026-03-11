@@ -1151,4 +1151,55 @@ box-shadow:0 6px 18px rgba(0,0,0,0.05);
   .visit-counter-value .gcvc-num{
     font-size: 1.9rem;
   }
+}.visit-counter{
+
+margin-top:14px;
+
+display:flex;
+flex-direction:column;
+align-items:center;
+
+padding:10px 14px;
+
+border-radius:14px;
+
+background:linear-gradient(180deg,#f4f7fb,#ffffff);
+
+border:1px solid rgba(16,35,63,0.08);
+
+box-shadow:0 8px 18px rgba(16,35,63,0.06);
+
+max-width:120px;
+
+font-family:Inter,system-ui;
+
+}
+
+.visit-icon{
+font-size:18px;
+opacity:.7;
+}
+
+#gc-counter{
+
+font-size:28px;
+
+font-weight:700;
+
+color:#122d52;
+
+line-height:1.1;
+
+}
+
+.visit-text{
+
+font-size:11px;
+
+letter-spacing:.08em;
+
+text-transform:uppercase;
+
+color:#6b7a90;
+
 }
