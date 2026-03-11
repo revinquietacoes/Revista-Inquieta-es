@@ -290,40 +290,38 @@ Organização editorial: Diego Vinícius Brito dos Santos •
 
 </div>
 
-<script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+<script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
+async src="//gc.zgo.at/count.js"></script>
 
 <script>
 (function(){
 
-function initGoatCounterViews(){
+function initCounter(){
 
 if(!window.goatcounter || !window.goatcounter.visit_count) return false;
 
-const target=document.querySelector("#goatcounter-home-views");
-
-if(!target) return true;
-
-target.innerHTML="";
-
 window.goatcounter.visit_count({
-append:"#goatcounter-home-views",
-type:"html",
-path:"index.html",
-no_branding:true
+path: "index.html",
+callback: function(data){
+
+const el=document.getElementById("goatcounter-home-views");
+
+if(el){
+el.textContent=data.count;
+}
+
+}
+
 });
 
 return true;
 
 }
 
-if(!initGoatCounterViews()){
-
-const timer=setInterval(function(){
-
-if(initGoatCounterViews()) clearInterval(timer);
-
+if(!initCounter()){
+const t=setInterval(function(){
+if(initCounter()) clearInterval(t);
 },120);
-
 }
 
 })();
