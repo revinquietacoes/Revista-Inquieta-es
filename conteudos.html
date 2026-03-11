@@ -123,6 +123,54 @@
       background: rgba(0,0,0,0.02);
     }
 
+    .drive-panel {
+      background: #eef7ff;
+      border: 1px solid #d7e6f7;
+    }
+
+    .drive-card {
+      border: 1px solid rgba(67, 112, 170, 0.14);
+      border-radius: 22px;
+      background: rgba(255,255,255,0.95);
+      box-shadow: 0 8px 22px rgba(16, 35, 63, 0.06);
+      padding: 18px;
+    }
+
+    .drive-card h3 {
+      margin: 0 0 10px;
+      color: var(--brand);
+      font-size: 1.1rem;
+      line-height: 1.35;
+    }
+
+    .drive-card p {
+      margin: 0 0 14px;
+      color: #4f6078;
+      line-height: 1.6;
+    }
+
+    .drive-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border-radius: 999px;
+      background: #dcecff;
+      color: var(--brand);
+      border: 1px solid #bfd7f3;
+      font-weight: 600;
+      text-decoration: none;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .drive-btn:hover {
+      text-decoration: none;
+      transform: translateY(-1px);
+      box-shadow: 0 10px 20px rgba(16, 35, 63, 0.08);
+      background: #d4e7ff;
+    }
+
     /* Cores por seção */
     .sec-capa .entry-banner {
       background: #f6efe7;
@@ -393,74 +441,71 @@
       </section>
 
       <section class="catalog-section sec-resenhas" id="resenhas">
-  <h2>Resenhas</h2>
-  <p>Resenhas críticas publicadas nesta edição.</p>
+        <h2>Resenhas</h2>
+        <p>Resenhas críticas publicadas nesta edição.</p>
 
-  <div class="entry-grid">
+        <div class="entry-grid">
 
-    <article class="entry-card">
-      <a href="publicacoes/resenha-sergio-buarque-estado-novo.html" class="entry-link">
-        <div class="entry-banner">
-          <span class="badge">Resenha</span>
-          <p class="entry-banner-title">Sérgio Buarque e o Estado Novo</p>
-        </div>
-        <div class="entry-body">
-          <h3>Revolução inconclusa e autoritarismo no Brasil: notas sobre Sérgio Buarque de Holanda e o Estado Novo</h3>
-          <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-          <p class="mini-meta">
-            DOI:
-            <a href="https://dx.doi.org/10.5281/zenodo.18845109" target="_blank" rel="noopener noreferrer">
-            10.5281/zenodo.18845109
+          <article class="entry-card">
+            <a href="publicacoes/resenha-sergio-buarque-estado-novo.html" class="entry-link">
+              <div class="entry-banner">
+                <span class="badge">Resenha</span>
+                <p class="entry-banner-title">Sérgio Buarque e o Estado Novo</p>
+              </div>
+              <div class="entry-body">
+                <h3>Revolução inconclusa e autoritarismo no Brasil: notas sobre Sérgio Buarque de Holanda e o Estado Novo</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://dx.doi.org/10.5281/zenodo.18845109" target="_blank" rel="noopener noreferrer">
+                    10.5281/zenodo.18845109
+                  </a>
+                </p>
+              </div>
             </a>
-          </p>
-        </div>
-      </a>
-    </article>
+          </article>
 
-
-    <article class="entry-card">
-      <a href="publicacoes/resenha-comissao-nacional-da-verdade.html" class="entry-link">
-        <div class="entry-banner">
-          <span class="badge">Resenha</span>
-          <p class="entry-banner-title">Comissão Nacional da Verdade</p>
-        </div>
-        <div class="entry-body">
-          <h3>Memória, justiça e transição democrática: uma leitura sobre a Comissão Nacional da Verdade</h3>
-          <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-          <p class="mini-meta">
-            DOI:
-            <a href="https://doi.org/10.5281/zenodo.18845488" target="_blank" rel="noopener noreferrer">
-            10.5281/zenodo.18845488
+          <article class="entry-card">
+            <a href="publicacoes/resenha-comissao-nacional-da-verdade.html" class="entry-link">
+              <div class="entry-banner">
+                <span class="badge">Resenha</span>
+                <p class="entry-banner-title">Comissão Nacional da Verdade</p>
+              </div>
+              <div class="entry-body">
+                <h3>Memória, justiça e transição democrática: uma leitura sobre a Comissão Nacional da Verdade</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://doi.org/10.5281/zenodo.18845488" target="_blank" rel="noopener noreferrer">
+                    10.5281/zenodo.18845488
+                  </a>
+                </p>
+              </div>
             </a>
-          </p>
-        </div>
-      </a>
-    </article>
+          </article>
 
-
-    <article class="entry-card">
-      <a href="publicacoes/resenha-como-as-democracias-morrem-Steven-Levitsky.html" class="entry-link">
-        <div class="entry-banner">
-          <span class="badge">Resenha</span>
-          <p class="entry-banner-title">Como as democracias morrem</p>
-        </div>
-        <div class="entry-body">
-          <h3>Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt</h3>
-          <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-          <p class="mini-meta">
-            DOI:
-            <a href="https://doi.org/10.5281/zenodo.18945739" target="_blank" rel="noopener noreferrer">
-            10.5281/zenodo.18945739
+          <article class="entry-card">
+            <a href="publicacoes/resenha-como-as-democracias-morrem-Steven-Levitsky.html" class="entry-link">
+              <div class="entry-banner">
+                <span class="badge">Resenha</span>
+                <p class="entry-banner-title">Como as democracias morrem</p>
+              </div>
+              <div class="entry-body">
+                <h3>Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt</h3>
+                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                <p class="mini-meta">
+                  DOI:
+                  <a href="https://doi.org/10.5281/zenodo.18945739" target="_blank" rel="noopener noreferrer">
+                    10.5281/zenodo.18945739
+                  </a>
+                </p>
+              </div>
             </a>
-          </p>
+          </article>
+
         </div>
-      </a>
-    </article>
+      </section>
 
-  </div>
-</section>
-
-             
       <section class="catalog-section sec-traducoes" id="traducoes">
         <h2>Traduções</h2>
         <p>Trabalhos de tradução publicados e editados no âmbito da revista.</p>
@@ -600,10 +645,27 @@
           Esta seção permanece aberta para futuras publicações e registros editoriais.
         </div>
       </section>
-      <section class="panel">
 
-  
-</section>
+      <section class="catalog-section drive-panel" id="pareceres">
+        <h2>Pareceres</h2>
+        <p>Painel com acesso à pasta que reúne pareceres emitidos pelos(as) pareceristas ad hoc e os respectivos certificados.</p>
+
+        <div class="drive-card">
+          <h3>Pareceres e certificados dos(as) pareceristas ad hoc</h3>
+          <p>
+            Acesse a pasta institucional no Google Drive para consultar os documentos editoriais relacionados aos pareceres
+            e à certificação dos(as) pareceristas colaboradores(as) da Revista Inquietações.
+          </p>
+          <a
+            href="https://drive.google.com/drive/folders/1lUUVrXse3RAJasR79jugN4AVu_VLfGFq?usp=drive_link"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="drive-btn"
+          >
+            Acessar pasta de pareceres
+          </a>
+        </div>
+      </section>
 
     </main>
 
