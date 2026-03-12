@@ -58,14 +58,14 @@
       font-size: 0.82rem;
       font-weight: 700;
       border: 1px solid rgba(0,0,0,0.06);
-      background: rgba(255,255,255,0.75);
+      background: rgba(255,255,255,0.78);
       color: var(--brand);
     }
 
     .news-head h3 {
       margin: 0;
       font-size: 1.7rem;
-      line-height: 1.05;
+      line-height: 1.08;
       color: var(--brand);
       font-family: "Cormorant Garamond", Georgia, serif;
     }
@@ -97,37 +97,69 @@
     .news-lilac .news-head { background: #f4efff; }
     .news-green .news-head { background: #ecfaf3; }
     .news-gold .news-head { background: #fff8e8; }
-    .news-rose .news-head { background: #fff0f4; }
+    .news-rose .news-head { background: #fff1f5; }
     .news-cyan .news-head { background: #eef9fb; }
 
-    .featured-call {
-      border: 1px solid #d8e5f6;
-      border-radius: 22px;
-      background: linear-gradient(180deg, #eef5ff 0%, #f9fbff 100%);
-      box-shadow: var(--shadow-soft);
-      padding: 22px;
+    .announcement-menu {
+      display: grid;
+      gap: 12px;
     }
 
-    .featured-call h3 {
-      margin: 0 0 10px;
+    .announcement-link {
+      display: block;
+      text-decoration: none;
+      border-radius: 18px;
+      padding: 14px 16px;
+      border: 1px solid rgba(0,0,0,0.06);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+      box-shadow: 0 8px 18px rgba(16, 35, 63, 0.04);
+    }
+
+    .announcement-link:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(16, 35, 63, 0.08);
+      border-color: rgba(18,45,82,0.14);
+    }
+
+    .announcement-link strong {
+      display: block;
+      margin-bottom: 4px;
       color: var(--brand);
-      font-size: 1.3rem;
+      font-size: 0.98rem;
     }
 
-    .featured-call p {
-      margin: 0 0 12px;
-      color: #485a73;
+    .announcement-link span {
+      display: block;
+      color: #53657e;
+      font-size: 0.94rem;
+      line-height: 1.45;
     }
 
-    .featured-call p:last-child {
-      margin-bottom: 0;
+    .announcement-call {
+      background: #eef5ff;
     }
 
-    .archive-note {
+    .announcement-launch {
+      background: #f5efff;
+    }
+
+    .announcement-event {
+      background: #edf9f2;
+    }
+
+    .news-panel-note {
       padding: 16px 18px;
       border-radius: 16px;
-      border: 1px dashed rgba(18,45,82,0.18);
-      background: rgba(18,45,82,0.03);
+      border: 1px solid rgba(18,45,82,0.08);
+      background: #f8fbff;
+      color: #4d6078;
+      margin-bottom: 18px;
+    }
+
+    @media (max-width: 780px) {
+      .news-head h3 {
+        font-size: 1.45rem;
+      }
     }
   </style>
 </head>
@@ -163,8 +195,8 @@
           </div>
 
           <div class="news-hero-note">
-            Esta página pode reunir chamadas de submissão, lançamento de números,
-            avisos institucionais, divulgação de eventos e atualizações editoriais.
+            Consulte nesta página as atualizações editoriais da revista, chamadas abertas,
+            lançamentos, divulgação de eventos e comunicados institucionais.
           </div>
         </div>
 
@@ -198,21 +230,22 @@
     <div class="portal-grid sidebar-compact">
       <aside class="sidebar" id="barra-lateral">
         <section class="sidebar-block">
-          <h2>Navegação da página</h2>
-          <ul class="info-links">
-            <li><a href="#destaque">Destaque editorial</a></li>
-            <li><a href="#ultimas-noticias">Últimas notícias</a></li>
-            <li><a href="#arquivo-noticias">Arquivo e organização</a></li>
-          </ul>
-        </section>
-
-        <section class="sidebar-block">
           <h2>Tipos de anúncio</h2>
-          <div class="data-list">
-            <div><strong>Chamadas:</strong> dossiês, fluxo contínuo e convites</div>
-            <div><strong>Lançamentos:</strong> números, traduções e seções</div>
-            <div><strong>Informes:</strong> comunicados administrativos e editoriais</div>
-            <div><strong>Eventos:</strong> minicursos, mesas e atividades acadêmicas</div>
+          <div class="announcement-menu">
+            <a class="announcement-link announcement-call" href="submissoes.html">
+              <strong>Chamadas</strong>
+              <span>Dossiês, fluxo contínuo e convites para submissão.</span>
+            </a>
+
+            <a class="announcement-link announcement-launch" href="edicao-atual.html">
+              <strong>Lançamentos</strong>
+              <span>Números, traduções, seções e publicações editoriais.</span>
+            </a>
+
+            <a class="announcement-link announcement-event" href="minicursos.html">
+              <strong>Eventos</strong>
+              <span>Minicursos, mesas, encontros e atividades acadêmicas.</span>
+            </a>
           </div>
         </section>
 
@@ -232,51 +265,37 @@
       </aside>
 
       <main class="content" id="conteudo-principal">
-        <section class="panel" id="destaque">
-          <div class="panel-head">
-            <h2>Destaque editorial</h2>
-            <p>Área de abertura para os comunicados mais importantes do período.</p>
-          </div>
-          <div class="panel-body">
-            <div class="featured-call">
-              <h3>Espaço para chamada principal da revista</h3>
-              <p>
-                Este bloco pode ser usado para destacar a notícia mais importante do momento,
-                como abertura de submissões, lançamento de dossiê, publicação de nova edição,
-                divulgação de evento ou comunicado institucional relevante.
-              </p>
-              <p>
-                Basta editar o título, a descrição e os botões abaixo conforme a necessidade editorial.
-              </p>
-              <div class="news-actions">
-                <a class="btn" href="submissoes.html">Submeter trabalho</a>
-                <a class="btn secondary" href="conteudos.html">Ver conteúdos publicados</a>
-              </div>
-            </div>
-          </div>
-        </section>
-
         <section class="panel" id="ultimas-noticias">
           <div class="panel-head">
             <h2>Últimas notícias</h2>
-            <p>Cards coloridos para anúncios da revista, com leitura rápida e visual organizado.</p>
+            <p>Comunicados editoriais, chamadas, eventos e atualizações institucionais da revista.</p>
           </div>
           <div class="panel-body">
+            <div class="news-panel-note">
+              As notícias mais recentes podem ser mantidas no topo da página para facilitar a consulta pública.
+            </div>
+
             <div class="news-stack">
-              <article class="news-card news-blue">
+              <article class="news-card news-green">
                 <div class="news-head">
                   <div class="news-meta">
-                    <span class="news-badge">Lançamento</span>
-                    <span class="news-date">Março de 2026</span>
+                    <span class="news-badge">Chamada aberta</span>
+                    <span class="news-date">Parecerista ad hoc</span>
                   </div>
-                  <h3>Publicação da página de notícias da Revista Inquietações</h3>
+                  <h3>Revista Inquietações abre chamada para pareceristas ad hoc</h3>
                 </div>
                 <div class="news-body">
                   <p>
-                    A revista passa a contar com uma área própria para divulgação de anúncios,
-                    chamadas, lançamentos e informes institucionais, mantendo a identidade visual
-                    do portal e facilitando a consulta pública aos comunicados editoriais.
+                    A <strong>Revista Inquietações</strong> (<strong>e-ISSN: 3086-4119</strong>)
+                    está com chamada aberta para integrar seu corpo de <strong>pareceristas ad hoc</strong>.
                   </p>
+                  <p>
+                    Pesquisadoras, pesquisadores, docentes e demais colaboradores com interesse em atuar
+                    no processo de avaliação acadêmica podem manifestar interesse por meio do formulário oficial.
+                  </p>
+                  <div class="news-actions">
+                    <a class="btn" href="https://forms.gle/PauD2Szhkak1TjJD6" target="_blank" rel="noopener noreferrer">Preencher formulário</a>
+                  </div>
                 </div>
               </article>
 
@@ -300,21 +319,22 @@
                 </div>
               </article>
 
-              <article class="news-card news-green">
+              <article class="news-card news-blue">
                 <div class="news-head">
                   <div class="news-meta">
-                    <span class="news-badge">Evento</span>
-                    <span class="news-date">Programação aberta</span>
+                    <span class="news-badge">Lançamentos</span>
+                    <span class="news-date">Edição atual</span>
                   </div>
-                  <h3>Lançamento da revista e atividades formativas</h3>
+                  <h3>Acompanhe números, traduções e novas seções publicadas</h3>
                 </div>
                 <div class="news-body">
                   <p>
-                    A revista mantém página específica para o evento de lançamento, minicursos,
-                    comunicações orais e futuras atividades acadêmicas vinculadas ao projeto editorial.
+                    As publicações editoriais da revista, incluindo novas seções, traduções e materiais
+                    já disponibilizados ao público, podem ser acompanhadas na página da edição atual.
                   </p>
                   <div class="news-actions">
-                    <a class="btn" href="minicursos.html">Ver página do evento</a>
+                    <a class="btn" href="edicao-atual.html">Ver edição atual</a>
+                    <a class="btn secondary" href="conteudos.html">Abrir conteúdos</a>
                   </div>
                 </div>
               </article>
@@ -322,18 +342,18 @@
               <article class="news-card news-gold">
                 <div class="news-head">
                   <div class="news-meta">
-                    <span class="news-badge">Templates</span>
-                    <span class="news-date">Atualização editorial</span>
+                    <span class="news-badge">Eventos</span>
+                    <span class="news-date">Atividades acadêmicas</span>
                   </div>
-                  <h3>Modelos de formatação disponíveis para autores</h3>
+                  <h3>Minicursos, mesas e programação vinculada à revista</h3>
                 </div>
                 <div class="news-body">
                   <p>
-                    Os modelos de preparação de manuscritos estão reunidos em página própria,
-                    com acesso rápido aos templates e orientações para padronização editorial.
+                    A revista mantém uma área própria para divulgação de minicursos, mesas de debate,
+                    lançamentos e outras atividades acadêmicas relacionadas ao projeto editorial.
                   </p>
                   <div class="news-actions">
-                    <a class="btn" href="templates.html">Abrir templates</a>
+                    <a class="btn" href="minicursos.html">Ver eventos</a>
                   </div>
                 </div>
               </article>
@@ -341,19 +361,18 @@
               <article class="news-card news-rose">
                 <div class="news-head">
                   <div class="news-meta">
-                    <span class="news-badge">Conteúdos</span>
-                    <span class="news-date">Catálogo editorial</span>
+                    <span class="news-badge">Templates</span>
+                    <span class="news-date">Apoio aos autores</span>
                   </div>
-                  <h3>Acompanhamento da edição em fluxo contínuo</h3>
+                  <h3>Modelos de formatação disponíveis para submissão</h3>
                 </div>
                 <div class="news-body">
                   <p>
-                    As publicações da edição atual podem ser acompanhadas na página de conteúdos,
-                    organizada por seções e com acesso individual às páginas editoriais já disponíveis.
+                    Os modelos e documentos auxiliares para preparação de manuscritos estão reunidos
+                    em página própria, facilitando a padronização editorial dos textos submetidos.
                   </p>
                   <div class="news-actions">
-                    <a class="btn" href="conteudos.html">Ver conteúdos</a>
-                    <a class="btn secondary" href="edicao-atual.html">Abrir edição atual</a>
+                    <a class="btn" href="templates.html">Abrir templates</a>
                   </div>
                 </div>
               </article>
@@ -362,34 +381,20 @@
                 <div class="news-head">
                   <div class="news-meta">
                     <span class="news-badge">Comunicado</span>
-                    <span class="news-date">Atualização institucional</span>
+                    <span class="news-date">Contato institucional</span>
                   </div>
-                  <h3>Canal oficial de comunicação editorial</h3>
+                  <h3>Canal oficial de comunicação da Revista Inquietações</h3>
                 </div>
                 <div class="news-body">
                   <p>
-                    Os contatos institucionais da revista permanecem disponíveis para dúvidas,
-                    comunicação editorial e divulgação de informações oficiais do periódico.
+                    Dúvidas, comunicações editoriais e informações institucionais da revista
+                    podem ser acompanhadas por meio dos canais oficiais de contato.
                   </p>
                   <div class="news-actions">
                     <a class="btn" href="contato.html">Ir para contato</a>
                   </div>
                 </div>
               </article>
-            </div>
-          </div>
-        </section>
-
-        <section class="panel" id="arquivo-noticias">
-          <div class="panel-head">
-            <h2>Arquivo e organização</h2>
-            <p>Sugestão de uso editorial para manter a página sempre atualizada.</p>
-          </div>
-          <div class="panel-body">
-            <div class="archive-note">
-              Recomenda-se manter as notícias mais recentes no topo da página e, conforme o portal crescer,
-              criar blocos por ano ou por categoria, como <strong>chamadas</strong>, <strong>lançamentos</strong>,
-              <strong>eventos</strong> e <strong>comunicados institucionais</strong>.
             </div>
           </div>
         </section>
