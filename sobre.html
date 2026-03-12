@@ -13,6 +13,249 @@
 
 <link rel="stylesheet" href="styles.css">
 
+<style>
+.side-nav-card{
+display:grid;
+gap:10px;
+}
+
+.side-nav-link{
+display:block;
+text-decoration:none;
+padding:11px 14px;
+border-radius:12px;
+background:#f8fbff;
+border:1px solid #dbe6f2;
+color:var(--brand);
+font-weight:500;
+transition:background .18s ease, transform .18s ease;
+}
+
+.side-nav-link:hover{
+background:#eef5fc;
+transform:translateY(-1px);
+}
+
+.about-highlight{
+padding:18px 20px;
+border-radius:18px;
+border:1px solid #dbe6f2;
+background:linear-gradient(180deg,#f8fbff 0%, #ffffff 100%);
+}
+
+.about-highlight p{
+margin:0 0 12px;
+color:#4f6178;
+}
+
+.about-highlight p:last-child{
+margin-bottom:0;
+}
+
+.accordion-stack{
+display:grid;
+gap:16px;
+}
+
+.accordion-card{
+border:1px solid var(--line);
+border-radius:20px;
+background:#fff;
+box-shadow:var(--shadow-soft);
+overflow:hidden;
+}
+
+.accordion-card[open]{
+box-shadow:0 14px 28px rgba(16,35,63,0.08);
+}
+
+.accordion-card summary{
+list-style:none;
+cursor:pointer;
+padding:18px 22px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:16px;
+background:#fbfcfe;
+border-bottom:1px solid rgba(18,45,82,0.06);
+}
+
+.accordion-card summary::-webkit-details-marker{
+display:none;
+}
+
+.accordion-title-wrap{
+display:grid;
+gap:4px;
+}
+
+.accordion-title-wrap h3{
+margin:0;
+color:var(--brand);
+font-size:1.08rem;
+}
+
+.accordion-title-wrap p{
+margin:0;
+color:#5a6d85;
+font-size:.95rem;
+}
+
+.accordion-icon{
+width:34px;
+height:34px;
+border-radius:999px;
+flex:0 0 34px;
+display:inline-flex;
+align-items:center;
+justify-content:center;
+background:#eaf2fb;
+color:var(--brand);
+font-size:1.2rem;
+font-weight:700;
+transition:transform .2s ease;
+}
+
+.accordion-card[open] .accordion-icon{
+transform:rotate(45deg);
+}
+
+.accordion-body{
+padding:20px 22px 22px;
+background:#fff;
+}
+
+.info-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:14px;
+}
+
+.info-box{
+position:relative;
+border:1px solid var(--line);
+border-radius:18px;
+background:#fff;
+box-shadow:var(--shadow-soft);
+padding:16px;
+overflow:hidden;
+}
+
+.info-box::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:5px;
+background:#cfdced;
+}
+
+.info-box h4{
+margin:0 0 8px;
+color:var(--brand);
+font-size:1rem;
+}
+
+.info-box p{
+margin:0;
+color:#53657e;
+}
+
+.clean-grid{
+display:grid;
+gap:12px;
+}
+
+.clean-item{
+position:relative;
+border:1px solid var(--line);
+border-radius:18px;
+background:#fcfdff;
+box-shadow:var(--shadow-soft);
+padding:16px 18px 16px 52px;
+overflow:hidden;
+}
+
+.clean-item::before{
+content:"•";
+position:absolute;
+left:18px;
+top:14px;
+width:22px;
+height:22px;
+border-radius:999px;
+display:flex;
+align-items:center;
+justify-content:center;
+background:#e8f0fa;
+color:var(--brand);
+font-weight:700;
+line-height:1;
+}
+
+.clean-item strong{
+color:var(--brand);
+}
+
+.clean-item p{
+margin:0;
+color:#53657e;
+}
+
+.note-box{
+padding:18px 20px;
+border-radius:18px;
+border:1px solid #dbe6f2;
+background:#f8fbff;
+margin-bottom:18px;
+}
+
+.note-box p{
+margin:0 0 10px;
+}
+
+.note-box p:last-child{
+margin-bottom:0;
+}
+
+.ethics-grid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:14px;
+}
+
+.ethics-item{
+border:1px solid var(--line);
+border-radius:16px;
+background:#fff;
+box-shadow:var(--shadow-soft);
+padding:16px;
+}
+
+.ethics-item .entry-title{
+display:block;
+margin-bottom:6px;
+color:var(--brand);
+font-weight:700;
+}
+
+@media (max-width:860px){
+.ethics-grid{
+grid-template-columns:1fr;
+}
+
+.accordion-card summary{
+padding:16px 18px;
+}
+
+.accordion-body{
+padding:18px;
+}
+}
+</style>
+
 </head>
 
 
@@ -21,11 +264,12 @@
 <div class="site-shell">
 
 
-<nav class="skip-links">
+<nav class="skip-links" aria-label="Ir para os links de conteúdo">
 
 <a href="#conteudo-principal">Ir para conteúdo</a>
 <a href="#navegacao-principal">Ir para navegação</a>
 <a href="#barra-lateral">Ir para barra lateral</a>
+<a href="#rodape">Ir para rodapé</a>
 
 </nav>
 
@@ -52,8 +296,10 @@
 
 <p class="hero-text">
 A Revista Inquietações é um periódico acadêmico dedicado à circulação
-de pesquisas, ensaios teóricos, traduções, resenhas e outros trabalhos
-voltados às Ciências Humanas e campos interdisciplinares.
+de pesquisas, ensaios teóricos, traduções, resenhas, relatos de experiência
+e outras produções voltadas às Ciências Humanas e aos diálogos
+interdisciplinares. Esta página apresenta as principais informações
+institucionais do periódico.
 </p>
 
 <div class="masthead-meta">
@@ -73,6 +319,11 @@ Fluxo contínuo
 Acesso aberto
 </div>
 
+<div class="masthead-card">
+<strong>e-ISSN</strong>
+3086-4119
+</div>
+
 </div>
 
 </div>
@@ -87,9 +338,9 @@ Acesso aberto
 
 
 
-<nav class="site-nav" id="navegacao-principal">
+<nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
 
-<button class="site-nav-toggle">Menu</button>
+<button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
 
 <div class="site-nav-menu">
 
@@ -117,23 +368,20 @@ Acesso aberto
 
 <aside class="sidebar" id="barra-lateral">
 
-
-
-
-
-
 <section class="sidebar-block">
 
 <h2>Navegação da página</h2>
 
-<ul class="info-links">
-
-<li><a href="#escopo">Escopo da revista</a></li>
-<li><a href="#objetivos">Objetivos</a></li>
-<li><a href="#publicacoes">Tipos de publicação</a></li>
-<li><a href="#acesso">Acesso aberto</a></li>
-
-</ul>
+<div class="side-nav-card">
+<a class="side-nav-link" href="#apresentacao">Apresentação</a>
+<a class="side-nav-link" href="#escopo">Escopo da revista</a>
+<a class="side-nav-link" href="#objetivos">Objetivos</a>
+<a class="side-nav-link" href="#publicacoes">Tipos de publicação</a>
+<a class="side-nav-link" href="#acesso">Acesso aberto</a>
+<a class="side-nav-link" href="#publico">Público e interesse acadêmico</a>
+<a class="side-nav-link" href="#editorial">Compromisso editorial</a>
+<a class="side-nav-link" href="#identificacao">Identificação institucional</a>
+</div>
 
 </section>
 
@@ -147,7 +395,7 @@ Acesso aberto
 
 <div>
 <strong>Instagram:</strong>
-<a href="https://www.instagram.com/revistainquietacoes/" target="_blank">
+<a href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer">
 @revistainquietacoes
 </a>
 </div>
@@ -163,124 +411,361 @@ rev.inquietacoes@gmail.com
 
 </section>
 
-
-
-
-
 </aside>
 
 
 
 <main class="content" id="conteudo-principal">
 
-
-
-<section class="panel" id="escopo">
+<section class="panel" id="apresentacao">
 
 <div class="panel-head">
-<h2>Escopo da revista</h2>
+<h2>Apresentação institucional</h2>
+<p>Informações iniciais sobre a identidade e a proposta da revista.</p>
 </div>
 
 <div class="panel-body">
 
+<div class="about-highlight">
 <p>
-A Revista Inquietações dedica-se à publicação de trabalhos nas áreas
-das Ciências Humanas e campos interdisciplinares relacionados.
+A Revista Inquietações constitui-se como espaço de divulgação, circulação
+e interlocução acadêmica no campo das Ciências Humanas, acolhendo textos
+que contribuam para o debate crítico, para a produção de conhecimento e
+para o fortalecimento da pesquisa em perspectiva interdisciplinar.
 </p>
 
 <p>
-O periódico busca promover a circulação de pesquisas acadêmicas,
-reflexões teóricas e debates críticos voltados à compreensão da
-sociedade, da cultura e do pensamento contemporâneo.
+O periódico busca reunir trabalhos de natureza reflexiva, analítica,
+teórica, documental e tradutória, favorecendo o diálogo entre diferentes
+temas, abordagens e tradições intelectuais.
 </p>
+</div>
 
 </div>
 
 </section>
 
 
-
-<section class="panel" id="objetivos">
+<section class="panel" style="margin-top:20px;">
 
 <div class="panel-head">
-<h2>Objetivos</h2>
+<h2>Informações sobre a revista</h2>
+<p>Abra o card do tema que deseja consultar.</p>
 </div>
 
 <div class="panel-body">
 
-<ul class="clean">
+<div class="accordion-stack">
 
-<li>estimular a produção acadêmica em Ciências Humanas</li>
-
-<li>promover a circulação de pesquisas e debates críticos</li>
-
-<li>incentivar a publicação de trabalhos interdisciplinares</li>
-
-<li>ampliar o acesso público ao conhecimento científico</li>
-
-</ul>
-
+<details class="accordion-card" id="escopo">
+<summary>
+<div class="accordion-title-wrap">
+<h3>Escopo da revista</h3>
+<p>Área de atuação, enfoque editorial e campo de interesse do periódico.</p>
 </div>
+<span class="accordion-icon">+</span>
+</summary>
 
-</section>
+<div class="accordion-body">
 
-
-
-<section class="panel" id="publicacoes">
-
-<div class="panel-head">
-<h2>Tipos de publicação</h2>
-</div>
-
-<div class="panel-body">
-
-<p>A revista publica diferentes modalidades de produção acadêmica:</p>
-
-<ul class="clean">
-
-<li>artigos científicos</li>
-
-<li>ensaios teóricos</li>
-
-<li>traduções comentadas</li>
-
-<li>resenhas críticas</li>
-
-<li>relatos de experiência</li>
-
-<li>fotografia temática</li>
-
-</ul>
-
-</div>
-
-</section>
-
-
-
-<section class="panel" id="acesso">
-
-<div class="panel-head">
-<h2>Política de acesso aberto</h2>
-</div>
-
-<div class="panel-body">
-
+<div class="note-box">
 <p>
-A Revista Inquietações adota política de acesso aberto, permitindo
-a leitura e o download gratuito de todos os conteúdos publicados.
+A Revista Inquietações dedica-se à publicação de trabalhos nas áreas das
+Ciências Humanas e em campos interdisciplinares correlatos, valorizando
+pesquisas, ensaios e produções que contribuam para a compreensão crítica
+da sociedade, da cultura, da educação, da filosofia, da história,
+da linguagem e de outros domínios afins.
 </p>
+</div>
 
+<div class="clean-grid">
+
+<div class="clean-item">
+<p><strong>Âmbito temático:</strong> questões teóricas, históricas, culturais, sociais, educacionais, filosóficas e interdisciplinares.</p>
+</div>
+
+<div class="clean-item">
+<p><strong>Vocação intelectual:</strong> incentivar a reflexão crítica, a problematização conceitual e a circulação de trabalhos com relevância acadêmica e cultural.</p>
+</div>
+
+<div class="clean-item">
+<p><strong>Horizonte editorial:</strong> acolher contribuições que dialoguem com os desafios contemporâneos das Humanidades.</p>
+</div>
+
+</div>
+
+</div>
+</details>
+
+
+<details class="accordion-card" id="objetivos">
+<summary>
+<div class="accordion-title-wrap">
+<h3>Objetivos da revista</h3>
+<p>Finalidades acadêmicas, científicas e editoriais do periódico.</p>
+</div>
+<span class="accordion-icon">+</span>
+</summary>
+
+<div class="accordion-body">
+
+<div class="info-grid">
+
+<div class="info-box">
+<h4>Estimular a produção acadêmica</h4>
+<p>Promover a publicação de pesquisas e reflexões relevantes no campo das Ciências Humanas.</p>
+</div>
+
+<div class="info-box">
+<h4>Ampliar a circulação do conhecimento</h4>
+<p>Favorecer o acesso público a textos acadêmicos, traduções e materiais de interesse intelectual.</p>
+</div>
+
+<div class="info-box">
+<h4>Fortalecer debates críticos</h4>
+<p>Incentivar a interlocução entre autoras, autores, pesquisadoras, pesquisadores e leitoras e leitores.</p>
+</div>
+
+<div class="info-box">
+<h4>Valorizar a interdisciplinaridade</h4>
+<p>Receber contribuições que estabeleçam pontes entre diferentes áreas e tradições de pensamento.</p>
+</div>
+
+<div class="info-box">
+<h4>Difundir materiais diversificados</h4>
+<p>Acolher não apenas artigos, mas também ensaios, resenhas, traduções, relatos e fotografia temática.</p>
+</div>
+
+<div class="info-box">
+<h4>Contribuir para a formação acadêmica</h4>
+<p>Oferecer um espaço editorial comprometido com a leitura, a escrita e a divulgação qualificada do conhecimento.</p>
+</div>
+
+</div>
+
+</div>
+</details>
+
+
+<details class="accordion-card" id="publicacoes">
+<summary>
+<div class="accordion-title-wrap">
+<h3>Tipos de publicação</h3>
+<p>Modalidades de textos e materiais aceitos pela revista.</p>
+</div>
+<span class="accordion-icon">+</span>
+</summary>
+
+<div class="accordion-body">
+
+<div class="note-box">
 <p>
-O objetivo é ampliar a circulação do conhecimento científico e
-facilitar o acesso público à produção acadêmica.
+A revista publica diferentes modalidades de produção acadêmica e intelectual,
+considerando a diversidade de formas de escrita e apresentação próprias
+das Ciências Humanas.
 </p>
+</div>
+
+<div class="info-grid">
+
+<div class="info-box">
+<h4>Artigos científicos</h4>
+<p>Textos analíticos e argumentativos com fundamentação teórica, problema de pesquisa e desenvolvimento consistente.</p>
+</div>
+
+<div class="info-box">
+<h4>Ensaios teóricos</h4>
+<p>Produções reflexivas com densidade conceitual, clareza argumentativa e elaboração crítica.</p>
+</div>
+
+<div class="info-box">
+<h4>Traduções</h4>
+<p>Textos traduzidos de relevância acadêmica, histórica, filosófica, educacional ou cultural.</p>
+</div>
+
+<div class="info-box">
+<h4>Resenhas críticas</h4>
+<p>Análises de obras e publicações consideradas relevantes para o campo das Humanidades.</p>
+</div>
+
+<div class="info-box">
+<h4>Relatos de experiência</h4>
+<p>Registros reflexivos de práticas formativas, pedagógicas, institucionais, acadêmicas ou sociais.</p>
+</div>
+
+<div class="info-box">
+<h4>Fotografia temática</h4>
+<p>Ensaios visuais e séries fotográficas com unidade temática, valor expressivo e pertinência editorial.</p>
+</div>
+
+</div>
+
+</div>
+</details>
+
+
+<details class="accordion-card" id="acesso">
+<summary>
+<div class="accordion-title-wrap">
+<h3>Política de acesso aberto</h3>
+<p>Compromisso com a circulação livre e pública do conhecimento.</p>
+</div>
+<span class="accordion-icon">+</span>
+</summary>
+
+<div class="accordion-body">
+
+<div class="clean-grid">
+
+<div class="clean-item">
+<p><strong>Acesso livre:</strong> a Revista Inquietações adota política de acesso aberto, permitindo leitura e consulta pública de seus conteúdos.</p>
+</div>
+
+<div class="clean-item">
+<p><strong>Circulação do conhecimento:</strong> o periódico busca ampliar a difusão de pesquisas e materiais acadêmicos sem barreiras de acesso para o leitor.</p>
+</div>
+
+<div class="clean-item">
+<p><strong>Compromisso público:</strong> a proposta editorial está vinculada à valorização da socialização do conhecimento científico e humanístico.</p>
+</div>
+
+</div>
+
+</div>
+</details>
+
+
+<details class="accordion-card" id="publico">
+<summary>
+<div class="accordion-title-wrap">
+<h3>Público e interesse acadêmico</h3>
+<p>Leitoras, leitores, autoras e autores aos quais a revista se dirige.</p>
+</div>
+<span class="accordion-icon">+</span>
+</summary>
+
+<div class="accordion-body">
+
+<div class="note-box">
+<p>
+A revista dirige-se a pesquisadoras, pesquisadores, docentes, estudantes,
+tradutoras, tradutores e demais leitoras e leitores interessados nas
+Ciências Humanas e na produção crítica contemporânea.
+</p>
+</div>
+
+<div class="clean-grid">
+
+<div class="clean-item">
+<p><strong>Público acadêmico:</strong> professores, estudantes de graduação e pós-graduação, pesquisadoras e pesquisadores.</p>
+</div>
+
+<div class="clean-item">
+<p><strong>Público ampliado:</strong> leitores interessados em filosofia, educação, história, cultura, linguagem, sociedade e áreas afins.</p>
+</div>
+
+<div class="clean-item">
+<p><strong>Interesse editorial:</strong> textos e materiais que contribuam para debates relevantes e para a formação intelectual do público leitor.</p>
+</div>
+
+</div>
+
+</div>
+</details>
+
+
+<details class="accordion-card" id="editorial">
+<summary>
+<div class="accordion-title-wrap">
+<h3>Compromisso editorial</h3>
+<p>Princípios gerais que orientam a atuação da revista.</p>
+</div>
+<span class="accordion-icon">+</span>
+</summary>
+
+<div class="accordion-body">
+
+<div class="ethics-grid">
+
+<div class="ethics-item">
+<span class="entry-title">Qualidade acadêmica</span>
+A revista busca publicar materiais com consistência teórica, clareza argumentativa e relevância intelectual.
+</div>
+
+<div class="ethics-item">
+<span class="entry-title">Pluralidade temática</span>
+O periódico acolhe diferentes perspectivas, abordagens e estilos de escrita compatíveis com seu escopo editorial.
+</div>
+
+<div class="ethics-item">
+<span class="entry-title">Abertura ao diálogo</span>
+A proposta da revista valoriza o intercâmbio entre áreas, autores e tradições de pensamento.
+</div>
+
+<div class="ethics-item">
+<span class="entry-title">Responsabilidade editorial</span>
+A revista se compromete com o tratamento cuidadoso dos materiais submetidos e com a organização de seu processo de publicação.
+</div>
+
+</div>
+
+</div>
+</details>
+
+
+<details class="accordion-card" id="identificacao">
+<summary>
+<div class="accordion-title-wrap">
+<h3>Identificação institucional</h3>
+<p>Dados básicos e informações de referência do periódico.</p>
+</div>
+<span class="accordion-icon">+</span>
+</summary>
+
+<div class="accordion-body">
+
+<div class="info-grid">
+
+<div class="info-box">
+<h4>Título do periódico</h4>
+<p>Revista Inquietações</p>
+</div>
+
+<div class="info-box">
+<h4>Área principal</h4>
+<p>Ciências Humanas</p>
+</div>
+
+<div class="info-box">
+<h4>Periodicidade</h4>
+<p>Fluxo contínuo</p>
+</div>
+
+<div class="info-box">
+<h4>Regime de acesso</h4>
+<p>Acesso aberto</p>
+</div>
+
+<div class="info-box">
+<h4>e-ISSN</h4>
+<p>3086-4119</p>
+</div>
+
+<div class="info-box">
+<h4>Contato editorial</h4>
+<p>rev.inquietacoes@gmail.com</p>
+</div>
+
+</div>
+
+</div>
+</details>
+
+</div>
 
 </div>
 
 </section>
-
-
 
 </main>
 
@@ -288,7 +773,7 @@ facilitar o acesso público à produção acadêmica.
 
 
 
-<footer class="footer">
+<footer class="footer" id="rodape">
 
 <p>
 <strong>Revista Inquietações</strong> — Portal institucional do periódico
@@ -315,9 +800,10 @@ facilitar o acesso público à produção acadêmica.
 const navToggle=document.querySelector(".site-nav-toggle")
 const navMenu=document.querySelector(".site-nav-menu")
 
-if(navToggle){
+if(navToggle && navMenu){
 navToggle.onclick=()=>{
-navMenu.classList.toggle("is-open")
+const isOpen=navMenu.classList.toggle("is-open")
+navToggle.setAttribute("aria-expanded", String(isOpen))
 }
 }
 
