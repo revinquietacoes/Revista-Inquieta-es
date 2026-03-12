@@ -171,6 +171,28 @@
       background: #d4e7ff;
     }
 
+    .side-nav-card{
+      display:grid;
+      gap:10px;
+    }
+
+    .side-nav-link{
+      display:block;
+      text-decoration:none;
+      padding:11px 14px;
+      border-radius:12px;
+      background:#f8fbff;
+      border:1px solid #dbe6f2;
+      color:var(--brand);
+      font-weight:500;
+      transition:background .18s ease, transform .18s ease;
+    }
+
+    .side-nav-link:hover{
+      background:#eef5fc;
+      transform:translateY(-1px);
+    }
+
     /* Cores por seção */
     .sec-capa .entry-banner {
       background: #f6efe7;
@@ -240,6 +262,7 @@
     <nav class="skip-links" aria-label="Ir para os links de conteúdo">
       <a href="#conteudo-principal">Ir para o conteúdo principal</a>
       <a href="#navegacao-principal">Ir para a navegação</a>
+      <a href="#barra-lateral">Ir para a barra lateral</a>
       <a href="#rodape">Ir para o rodapé</a>
     </nav>
 
@@ -281,8 +304,7 @@
         <a href="sobre.html">Sobre</a>
         <a href="equipe-editorial.html">Equipe Editorial</a>
         <a href="noticias.html">Notícias</a>
-
-<a href="politicas-editoriais.html">Políticas</a>
+        <a href="politicas-editoriais.html">Políticas</a>
         <a href="diretrizes-autores.html">Diretrizes</a>
         <a href="submissoes.html">Submissões</a>
         <a href="templates.html">Templates</a>
@@ -290,386 +312,409 @@
       </div>
     </nav>
 
-    <main class="content" id="conteudo-principal">
-      <section class="catalog-section sec-capa" id="capa-edicao">
-        <h2>Capa da Edição — v. 1, n. 1 (2026)</h2>
-        <p>Autor: Diego Vinícius Brito dos Santos</p>
-        <div class="entry-grid">
-          <article class="entry-card">
-            <a href="publicacoes/capa-da-edicao-v1n1-2026.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Capa</span>
-                <p class="entry-banner-title">Capa da Edição</p>
-              </div>
-              <div class="entry-body">
-                <h3>Revista Inquietações — v. 1, n. 1 (2026)</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-              </div>
+    <div class="portal-grid sidebar-compact">
+
+      <aside class="sidebar" id="barra-lateral">
+        <section class="sidebar-block">
+          <h2>Navegação da página</h2>
+          <div class="side-nav-card">
+            <a class="side-nav-link" href="#capa-edicao">Capa da edição</a>
+            <a class="side-nav-link" href="#expediente-editorial">Expediente editorial</a>
+            <a class="side-nav-link" href="#mensagem-autores-leitores">Mensagem aos autores e leitores</a>
+            <a class="side-nav-link" href="#artigos">Artigos</a>
+            <a class="side-nav-link" href="#resumos-expandidos">Resumos expandidos</a>
+            <a class="side-nav-link" href="#ensaios">Ensaios</a>
+            <a class="side-nav-link" href="#resenhas">Resenhas</a>
+            <a class="side-nav-link" href="#traducoes">Traduções</a>
+            <a class="side-nav-link" href="#fotografia-tematica">Fotografia temática</a>
+            <a class="side-nav-link" href="#relatos-experiencia">Relatos de experiência</a>
+            <a class="side-nav-link" href="#homenagens">Homenagens</a>
+            <a class="side-nav-link" href="#pareceres">Pareceres</a>
+          </div>
+        </section>
+      </aside>
+
+      <main class="content" id="conteudo-principal">
+        <section class="catalog-section sec-capa" id="capa-edicao">
+          <h2>Capa da Edição — v. 1, n. 1 (2026)</h2>
+          <p>Autor: Diego Vinícius Brito dos Santos</p>
+          <div class="entry-grid">
+            <article class="entry-card">
+              <a href="publicacoes/capa-da-edicao-v1n1-2026.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Capa</span>
+                  <p class="entry-banner-title">Capa da Edição</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Revista Inquietações — v. 1, n. 1 (2026)</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="catalog-section sec-expediente" id="expediente-editorial">
+          <h2>Expediente Editorial</h2>
+          <p>Documentação editorial institucional da edição.</p>
+          <div class="entry-grid">
+            <article class="entry-card">
+              <a href="publicacoes/expediente-editorial.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Expediente</span>
+                  <p class="entry-banner-title">Expediente Editorial</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Expediente Editorial</h3>
+                  <p class="mini-meta">Revista Inquietações</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://doi.org/10.5281/zenodo.18795146" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18795146</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="catalog-section sec-mensagem" id="mensagem-autores-leitores">
+          <h2>Mensagem aos(às) autores(as) e leitores(as)</h2>
+          <p>Texto de abertura institucional da edição.</p>
+          <div class="entry-grid">
+            <article class="entry-card">
+              <a href="publicacoes/mensagem-autores-leitores.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Mensagem</span>
+                  <p class="entry-banner-title">Mensagem aos(às) autores(as) e leitores(as)</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Mensagem aos(às) autores(as) e leitores(as)</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://doi.org/10.5281/zenodo.18816235" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18816235</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="catalog-section sec-artigos" id="artigos">
+          <h2>Artigos</h2>
+          <p>Textos acadêmicos publicados na edição v. 1, n. 1 (2026).</p>
+          <div class="entry-grid">
+            <article class="entry-card">
+              <a href="publicacoes/artigo-identidade-genero-disforia-educacao-inclusiva.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Artigo</span>
+                  <p class="entry-banner-title">Identidade de Gênero, Disforia e Educação Inclusiva</p>
+                </div>
+                <div class="entry-body">
+                  <h3>IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA: Desconstruindo binarismos e respeitando a diversidade</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://doi.org/10.5281/zenodo.18825993" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18825993</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+
+            <article class="entry-card">
+              <a href="publicacoes/artigo-algoritmos-do-passado.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Artigo</span>
+                  <p class="entry-banner-title">Algoritmos do passado</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Algoritmos do passado: como a IA está reescrevendo a história</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://doi.org/10.5281/zenodo.18836259" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18836259</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="catalog-section sec-resumos" id="resumos-expandidos">
+          <h2>Resumos Expandidos</h2>
+          <p>Produções em formato de resumo expandido.</p>
+          <div class="entry-grid">
+            <article class="entry-card">
+              <a href="publicacoes/resumo-paulo-freire-4-0.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Resumo expandido</span>
+                  <p class="entry-banner-title">Paulo Freire 4.0</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Paulo Freire 4.0: o chatgpt e a materialização da educação bancaria</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://doi.org/10.5281/zenodo.18820608" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18820608</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="catalog-section sec-ensaios" id="ensaios">
+          <h2>Ensaios</h2>
+          <p>Seção dedicada a ensaios autorais e reflexivos.</p>
+          <div class="entry-grid">
+            <article class="entry-card">
+              <a href="publicacoes/ensaio-maquiavel-e-a-liberdade-do-povo.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Ensaio</span>
+                  <p class="entry-banner-title">Maquiavel e a liberdade do povo</p>
+                </div>
+                <div class="entry-body">
+                  <h3>MAQUIAVEL E A LIBERDADE DO POVO</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://dx.doi.org/10.5281/zenodo.18846061" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18846061</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="catalog-section sec-resenhas" id="resenhas">
+          <h2>Resenhas</h2>
+          <p>Resenhas críticas publicadas nesta edição.</p>
+
+          <div class="entry-grid">
+
+            <article class="entry-card">
+              <a href="publicacoes/resenha-sergio-buarque-estado-novo.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Resenha</span>
+                  <p class="entry-banner-title">Sérgio Buarque e o Estado Novo</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Revolução inconclusa e autoritarismo no Brasil: notas sobre Sérgio Buarque de Holanda e o Estado Novo</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://dx.doi.org/10.5281/zenodo.18845109" target="_blank" rel="noopener noreferrer">
+                      10.5281/zenodo.18845109
+                    </a>
+                  </p>
+                </div>
+              </a>
+            </article>
+
+            <article class="entry-card">
+              <a href="publicacoes/resenha-comissao-nacional-da-verdade.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Resenha</span>
+                  <p class="entry-banner-title">Comissão Nacional da Verdade</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Memória, justiça e transição democrática: uma leitura sobre a Comissão Nacional da Verdade</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://doi.org/10.5281/zenodo.18845488" target="_blank" rel="noopener noreferrer">
+                      10.5281/zenodo.18845488
+                    </a>
+                  </p>
+                </div>
+              </a>
+            </article>
+
+            <article class="entry-card">
+              <a href="publicacoes/resenha-como-as-democracias-morrem-Steven-Levitsky.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Resenha</span>
+                  <p class="entry-banner-title">Como as democracias morrem</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://doi.org/10.5281/zenodo.18945739" target="_blank" rel="noopener noreferrer">
+                      10.5281/zenodo.18945739
+                    </a>
+                  </p>
+                </div>
+              </a>
+            </article>
+
+          </div>
+        </section>
+
+        <section class="catalog-section sec-traducoes" id="traducoes">
+          <h2>Traduções</h2>
+          <p>Trabalhos de tradução publicados e editados no âmbito da revista.</p>
+          <div class="entry-grid">
+            <article class="entry-card">
+              <a href="publicacoes/traducao-assistance-to-black-bodies.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Tradução</span>
+                  <p class="entry-banner-title">Assistance to black bodies in health establishments</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Assistance to black bodies in health establishments: deconstructing prejudices and promoting an ethics of care</h3>
+                  <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://doi.org/10.5281/zenodo.18841714" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18841714</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+
+            <article class="entry-card">
+              <a href="publicacoes/traducao-cartas-da-juventude-nietzsche.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Tradução</span>
+                  <p class="entry-banner-title">Cartas da juventude de Nietzsche</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Cartas da juventude (1850–1866) de Friedrich Nietzsche (alemão-português)</h3>
+                  <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">ISBN: 9798251052428</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="entry-card">
+              <a href="publicacoes/traducao-manifesto-do-partido-comunista.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Tradução</span>
+                  <p class="entry-banner-title">O Manifesto do Partido Comunista</p>
+                </div>
+                <div class="entry-body">
+                  <h3>O Manifesto do Partido Comunista</h3>
+                  <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">ISBN: 9798251190175</p>
+                </div>
+              </a>
+            </article>
+
+            <article class="entry-card">
+              <a href="publicacoes/traducao-a-mulher-georg-groddeck.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Tradução</span>
+                  <p class="entry-banner-title">A mulher (Die Frau)</p>
+                </div>
+                <div class="entry-body">
+                  <h3>A mulher (Die Frau), de Georg Groddeck</h3>
+                  <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://dx.doi.org/10.5281/zenodo.18916814" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18916814</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="catalog-section sec-fotografia" id="fotografia-tematica">
+          <h2>Fotografia Temática</h2>
+          <p>Ensaios fotográficos e registros visuais da edição.</p>
+          <div class="entry-grid">
+            <article class="entry-card">
+              <a href="publicacoes/fotografia-diego-caico.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Fotografia temática</span>
+                  <p class="entry-banner-title">Patrimônio Arquitetônico de Caicó — Diego</p>
+                </div>
+                <div class="entry-body">
+                  <h3>O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://dx.doi.org/10.5281/zenodo.18820588" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18820588</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+
+            <article class="entry-card">
+              <a href="publicacoes/fotografia-geiza-caico.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Fotografia temática</span>
+                  <p class="entry-banner-title">Patrimônio Arquitetônico de Caicó — Geiza</p>
+                </div>
+                <div class="entry-body">
+                  <h3>O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos</h3>
+                  <p class="mini-meta">Autora: Geiza Venicia dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://dx.doi.org/10.5281/zenodo.18841135" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18841135</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="catalog-section sec-relatos" id="relatos-experiencia">
+          <h2>Relatos de Experiência</h2>
+          <p>Relatos e registros reflexivos vinculados à prática e à experiência autoral.</p>
+          <div class="entry-grid">
+            <article class="entry-card">
+              <a href="publicacoes/relato-as-cartas-sociais-de-vinicius.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Relato de experiência</span>
+                  <p class="entry-banner-title">As cartas sociais de Vinícius</p>
+                </div>
+                <div class="entry-body">
+                  <h3>As cartas Sociais de Vinícius</h3>
+                  <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
+                  <p class="mini-meta">
+                    DOI:
+                    <a href="https://dx.doi.org/10.5281/zenodo.18844651" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18844651</a>
+                  </p>
+                </div>
+              </a>
+            </article>
+          </div>
+        </section>
+
+        <section class="catalog-section sec-homenagens" id="homenagens">
+          <h2>Homenagens</h2>
+          <p>Espaço reservado para homenagens publicadas pela revista.</p>
+          <div class="empty-state">
+            <strong>Sem conteúdo no momento.</strong><br />
+            Esta seção permanece aberta para futuras publicações e registros editoriais.
+          </div>
+        </section>
+
+        <section class="catalog-section drive-panel" id="pareceres">
+          <h2>Pareceres</h2>
+          <p>Painel com acesso à pasta que reúne pareceres emitidos pelos(as) pareceristas ad hoc e os respectivos certificados.</p>
+
+          <div class="drive-card">
+            <h3>Pareceres e certificados dos(as) pareceristas ad hoc</h3>
+            <p>
+              Acesse a pasta institucional no Google Drive para consultar os documentos editoriais relacionados aos pareceres
+              e à certificação dos(as) pareceristas colaboradores(as) da Revista Inquietações.
+            </p>
+            <a
+              href="https://drive.google.com/drive/folders/1lUUVrXse3RAJasR79jugN4AVu_VLfGFq?usp=drive_link"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="drive-btn"
+            >
+              Acessar pasta de pareceres
             </a>
-          </article>
-        </div>
-      </section>
+          </div>
+        </section>
 
-      <section class="catalog-section sec-expediente" id="expediente-editorial">
-        <h2>Expediente Editorial</h2>
-        <p>Documentação editorial institucional da edição.</p>
-        <div class="entry-grid">
-          <article class="entry-card">
-            <a href="publicacoes/expediente-editorial.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Expediente</span>
-                <p class="entry-banner-title">Expediente Editorial</p>
-              </div>
-              <div class="entry-body">
-                <h3>Expediente Editorial</h3>
-                <p class="mini-meta">Revista Inquietações</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://doi.org/10.5281/zenodo.18795146" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18795146</a>
-                </p>
-              </div>
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <section class="catalog-section sec-mensagem" id="mensagem-autores-leitores">
-        <h2>Mensagem aos(às) autores(as) e leitores(as)</h2>
-        <p>Texto de abertura institucional da edição.</p>
-        <div class="entry-grid">
-          <article class="entry-card">
-            <a href="publicacoes/mensagem-autores-leitores.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Mensagem</span>
-                <p class="entry-banner-title">Mensagem aos(às) autores(as) e leitores(as)</p>
-              </div>
-              <div class="entry-body">
-                <h3>Mensagem aos(às) autores(as) e leitores(as)</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://doi.org/10.5281/zenodo.18816235" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18816235</a>
-                </p>
-              </div>
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <section class="catalog-section sec-artigos" id="artigos">
-        <h2>Artigos</h2>
-        <p>Textos acadêmicos publicados na edição v. 1, n. 1 (2026).</p>
-        <div class="entry-grid">
-          <article class="entry-card">
-            <a href="publicacoes/artigo-identidade-genero-disforia-educacao-inclusiva.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Artigo</span>
-                <p class="entry-banner-title">Identidade de Gênero, Disforia e Educação Inclusiva</p>
-              </div>
-              <div class="entry-body">
-                <h3>IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA: Desconstruindo binarismos e respeitando a diversidade</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://doi.org/10.5281/zenodo.18825993" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18825993</a>
-                </p>
-              </div>
-            </a>
-          </article>
-
-          <article class="entry-card">
-            <a href="publicacoes/artigo-algoritmos-do-passado.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Artigo</span>
-                <p class="entry-banner-title">Algoritmos do passado</p>
-              </div>
-              <div class="entry-body">
-                <h3>Algoritmos do passado: como a IA está reescrevendo a história</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://doi.org/10.5281/zenodo.18836259" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18836259</a>
-                </p>
-              </div>
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <section class="catalog-section sec-resumos" id="resumos-expandidos">
-        <h2>Resumos Expandidos</h2>
-        <p>Produções em formato de resumo expandido.</p>
-        <div class="entry-grid">
-          <article class="entry-card">
-            <a href="publicacoes/resumo-paulo-freire-4-0.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Resumo expandido</span>
-                <p class="entry-banner-title">Paulo Freire 4.0</p>
-              </div>
-              <div class="entry-body">
-                <h3>Paulo Freire 4.0: o chatgpt e a materialização da educação bancaria</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://doi.org/10.5281/zenodo.18820608" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18820608</a>
-                </p>
-              </div>
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <section class="catalog-section sec-ensaios" id="ensaios">
-        <h2>Ensaios</h2>
-        <p>Seção dedicada a ensaios autorais e reflexivos.</p>
-        <div class="entry-grid">
-          <article class="entry-card">
-            <a href="publicacoes/ensaio-maquiavel-e-a-liberdade-do-povo.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Ensaio</span>
-                <p class="entry-banner-title">Maquiavel e a liberdade do povo</p>
-              </div>
-              <div class="entry-body">
-                <h3>MAQUIAVEL E A LIBERDADE DO POVO</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://dx.doi.org/10.5281/zenodo.18846061" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18846061</a>
-                </p>
-              </div>
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <section class="catalog-section sec-resenhas" id="resenhas">
-        <h2>Resenhas</h2>
-        <p>Resenhas críticas publicadas nesta edição.</p>
-
-        <div class="entry-grid">
-
-          <article class="entry-card">
-            <a href="publicacoes/resenha-sergio-buarque-estado-novo.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Resenha</span>
-                <p class="entry-banner-title">Sérgio Buarque e o Estado Novo</p>
-              </div>
-              <div class="entry-body">
-                <h3>Revolução inconclusa e autoritarismo no Brasil: notas sobre Sérgio Buarque de Holanda e o Estado Novo</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://dx.doi.org/10.5281/zenodo.18845109" target="_blank" rel="noopener noreferrer">
-                    10.5281/zenodo.18845109
-                  </a>
-                </p>
-              </div>
-            </a>
-          </article>
-
-          <article class="entry-card">
-            <a href="publicacoes/resenha-comissao-nacional-da-verdade.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Resenha</span>
-                <p class="entry-banner-title">Comissão Nacional da Verdade</p>
-              </div>
-              <div class="entry-body">
-                <h3>Memória, justiça e transição democrática: uma leitura sobre a Comissão Nacional da Verdade</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://doi.org/10.5281/zenodo.18845488" target="_blank" rel="noopener noreferrer">
-                    10.5281/zenodo.18845488
-                  </a>
-                </p>
-              </div>
-            </a>
-          </article>
-
-          <article class="entry-card">
-            <a href="publicacoes/resenha-como-as-democracias-morrem-Steven-Levitsky.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Resenha</span>
-                <p class="entry-banner-title">Como as democracias morrem</p>
-              </div>
-              <div class="entry-body">
-                <h3>Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://doi.org/10.5281/zenodo.18945739" target="_blank" rel="noopener noreferrer">
-                    10.5281/zenodo.18945739
-                  </a>
-                </p>
-              </div>
-            </a>
-          </article>
-
-        </div>
-      </section>
-
-      <section class="catalog-section sec-traducoes" id="traducoes">
-        <h2>Traduções</h2>
-        <p>Trabalhos de tradução publicados e editados no âmbito da revista.</p>
-        <div class="entry-grid">
-          <article class="entry-card">
-            <a href="publicacoes/traducao-assistance-to-black-bodies.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Tradução</span>
-                <p class="entry-banner-title">Assistance to black bodies in health establishments</p>
-              </div>
-              <div class="entry-body">
-                <h3>Assistance to black bodies in health establishments: deconstructing prejudices and promoting an ethics of care</h3>
-                <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://doi.org/10.5281/zenodo.18841714" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18841714</a>
-                </p>
-              </div>
-            </a>
-          </article>
-
-          <article class="entry-card">
-            <a href="publicacoes/traducao-cartas-da-juventude-nietzsche.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Tradução</span>
-                <p class="entry-banner-title">Cartas da juventude de Nietzsche</p>
-              </div>
-              <div class="entry-body">
-                <h3>Cartas da juventude (1850–1866) de Friedrich Nietzsche (alemão-português)</h3>
-                <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">ISBN: 9798251052428</p>
-              </div>
-            </a>
-          </article>
-
-          <article class="entry-card">
-            <a href="publicacoes/traducao-manifesto-do-partido-comunista.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Tradução</span>
-                <p class="entry-banner-title">O Manifesto do Partido Comunista</p>
-              </div>
-              <div class="entry-body">
-                <h3>O Manifesto do Partido Comunista</h3>
-                <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">ISBN: 9798251190175</p>
-              </div>
-            </a>
-          </article>
-
-          <article class="entry-card">
-            <a href="publicacoes/traducao-a-mulher-georg-groddeck.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Tradução</span>
-                <p class="entry-banner-title">A mulher (Die Frau)</p>
-              </div>
-              <div class="entry-body">
-                <h3>A mulher (Die Frau), de Georg Groddeck</h3>
-                <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://dx.doi.org/10.5281/zenodo.18916814" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18916814</a>
-                </p>
-              </div>
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <section class="catalog-section sec-fotografia" id="fotografia-tematica">
-        <h2>Fotografia Temática</h2>
-        <p>Ensaios fotográficos e registros visuais da edição.</p>
-        <div class="entry-grid">
-          <article class="entry-card">
-            <a href="publicacoes/fotografia-diego-caico.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Fotografia temática</span>
-                <p class="entry-banner-title">Patrimônio Arquitetônico de Caicó — Diego</p>
-              </div>
-              <div class="entry-body">
-                <h3>O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://dx.doi.org/10.5281/zenodo.18820588" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18820588</a>
-                </p>
-              </div>
-            </a>
-          </article>
-
-          <article class="entry-card">
-            <a href="publicacoes/fotografia-geiza-caico.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Fotografia temática</span>
-                <p class="entry-banner-title">Patrimônio Arquitetônico de Caicó — Geiza</p>
-              </div>
-              <div class="entry-body">
-                <h3>O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos</h3>
-                <p class="mini-meta">Autora: Geiza Venicia dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://dx.doi.org/10.5281/zenodo.18841135" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18841135</a>
-                </p>
-              </div>
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <section class="catalog-section sec-relatos" id="relatos-experiencia">
-        <h2>Relatos de Experiência</h2>
-        <p>Relatos e registros reflexivos vinculados à prática e à experiência autoral.</p>
-        <div class="entry-grid">
-          <article class="entry-card">
-            <a href="publicacoes/relato-as-cartas-sociais-de-vinicius.html" class="entry-link">
-              <div class="entry-banner">
-                <span class="badge">Relato de experiência</span>
-                <p class="entry-banner-title">As cartas sociais de Vinícius</p>
-              </div>
-              <div class="entry-body">
-                <h3>As cartas Sociais de Vinícius</h3>
-                <p class="mini-meta">Autor: Diego Vinícius Brito dos Santos</p>
-                <p class="mini-meta">
-                  DOI:
-                  <a href="https://dx.doi.org/10.5281/zenodo.18844651" target="_blank" rel="noopener noreferrer">10.5281/zenodo.18844651</a>
-                </p>
-              </div>
-            </a>
-          </article>
-        </div>
-      </section>
-
-      <section class="catalog-section sec-homenagens" id="homenagens">
-        <h2>Homenagens</h2>
-        <p>Espaço reservado para homenagens publicadas pela revista.</p>
-        <div class="empty-state">
-          <strong>Sem conteúdo no momento.</strong><br />
-          Esta seção permanece aberta para futuras publicações e registros editoriais.
-        </div>
-      </section>
-
-      <section class="catalog-section drive-panel" id="pareceres">
-        <h2>Pareceres</h2>
-        <p>Painel com acesso à pasta que reúne pareceres emitidos pelos(as) pareceristas ad hoc e os respectivos certificados.</p>
-
-        <div class="drive-card">
-          <h3>Pareceres e certificados dos(as) pareceristas ad hoc</h3>
-          <p>
-            Acesse a pasta institucional no Google Drive para consultar os documentos editoriais relacionados aos pareceres
-            e à certificação dos(as) pareceristas colaboradores(as) da Revista Inquietações.
-          </p>
-          <a
-            href="https://drive.google.com/drive/folders/1lUUVrXse3RAJasR79jugN4AVu_VLfGFq?usp=drive_link"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="drive-btn"
-          >
-            Acessar pasta de pareceres
-          </a>
-        </div>
-      </section>
-
-    </main>
+      </main>
+    </div>
 
     <footer class="footer" id="rodape">
       <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>

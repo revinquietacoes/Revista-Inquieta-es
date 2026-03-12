@@ -29,6 +29,14 @@ margin-bottom:22px;
 align-items:start;
 }
 
+.panel-pair{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:22px;
+align-items:start;
+margin-top:22px;
+}
+
 .top-editor-card{
 display:flex;
 flex-direction:column;
@@ -130,50 +138,64 @@ font-weight:700;
 font-size:1.08rem;
 font-weight:700;
 color:var(--brand);
-margin-bottom:8px;
+margin-bottom:14px;
 line-height:1.35;
 word-break:break-word;
 }
 
-.editor-affiliation{
-font-size:.95rem;
-color:#4a5a72;
-margin-bottom:14px;
-line-height:1.55;
-font-style:normal;
-word-break:break-word;
-}
-
-.editor-meta{
-display:grid;
-gap:8px;
+.editor-bio-toggle{
 text-align:left;
-margin-top:10px;
+border:1px solid #dbe6f2;
+border-radius:14px;
+background:#f8fbff;
+overflow:hidden;
+margin-top:2px;
 }
 
-.editor-meta div{
-padding:10px 12px;
-border-radius:12px;
-background:#f8fafc;
-border:1px solid rgba(16,35,63,.06);
-font-size:.9rem;
-line-height:1.55;
-color:#304055;
-font-style:normal;
-min-width:0;
-overflow-wrap:anywhere;
-word-break:break-word;
-}
-
-.editor-meta strong{
+.editor-bio-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:12px 14px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+font-weight:600;
 color:var(--brand);
-display:inline-block;
-margin-right:4px;
 }
 
-.editor-meta a{
-word-break:break-word;
-overflow-wrap:anywhere;
+.editor-bio-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.editor-bio-toggle:hover summary{
+background:#f0f6fd;
+}
+
+.editor-bio-icon{
+font-size:1.15rem;
+transition:transform .2s ease;
+}
+
+.editor-bio-toggle[open] .editor-bio-icon{
+transform:rotate(45deg);
+}
+
+.editor-bio-content{
+padding:0 14px 14px;
+border-top:1px solid #dbe6f2;
+background:#fff;
+text-align:left;
+}
+
+.editor-bio-content p{
+margin:12px 0 0;
+color:#4c5b70;
+line-height:1.65;
+}
+
+.editor-bio-content p:first-child{
+margin-top:14px;
 }
 
 .panel-diagramacao .panel-head{
@@ -200,7 +222,7 @@ background:linear-gradient(180deg,#f1f7ff 0%, #fafcff 100%);
 
 .pareceristas-list{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+grid-template-columns:1fr;
 gap:14px;
 margin-top:4px;
 }
@@ -211,9 +233,14 @@ border-radius:16px;
 background:#fff;
 border:1px solid var(--line);
 box-shadow:var(--shadow-soft);
-font-weight:600;
-color:var(--brand);
 line-height:1.6;
+}
+
+.parecerista-item strong{
+display:block;
+color:var(--brand);
+margin-bottom:6px;
+font-size:1rem;
 }
 
 .parecerista-item a{
@@ -273,6 +300,12 @@ box-shadow:0 10px 22px rgba(16,35,63,.08);
 
 @media (max-width: 1180px){
 .editor-top-grid{
+grid-template-columns:1fr;
+}
+}
+
+@media (max-width: 980px){
+.panel-pair{
 grid-template-columns:1fr;
 }
 }
@@ -433,16 +466,26 @@ Acessar certificados
 Diego Vinícius Brito dos Santos
 </div>
 
-<div class="editor-affiliation">
-Mestre em Filosofia (UFRN)
+<details class="editor-bio-toggle">
+<summary>
+<span>Biografia</span>
+<span class="editor-bio-icon">+</span>
+</summary>
+<div class="editor-bio-content">
+<p>
+Mestre em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN), com atuação em estudos dedicados à filosofia, à educação e à produção acadêmica.
+</p>
+<p>
+Graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN) e em Pedagogia pelo Centro Universitário Internacional (UNINTER), desenvolvendo atividades editoriais, científicas e formativas vinculadas à Revista Inquietações.
+</p>
+<p>
+E-mail: <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a><br>
+Instagram: @iamthed1<br>
+Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a><br>
+Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a>
+</p>
 </div>
-
-<div class="editor-meta">
-<div><strong>E-mail:</strong> <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a></div>
-<div><strong>Instagram:</strong> @iamthed1</div>
-<div><strong>Lattes iD:</strong> <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></div>
-<div><strong>Orcid iD:</strong> <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a></div>
-</div>
+</details>
 
 </div>
 </div>
@@ -465,16 +508,26 @@ Mestre em Filosofia (UFRN)
 Geiza Venicia dos Santos
 </div>
 
-<div class="editor-affiliation">
-Especialista em Currículo e Prática Docente nos Anos Iniciais do Ensino Fundamental (UFPI)
+<details class="editor-bio-toggle">
+<summary>
+<span>Biografia</span>
+<span class="editor-bio-icon">+</span>
+</summary>
+<div class="editor-bio-content">
+<p>
+Especialista em Currículo e Prática Docente nos Anos Iniciais do Ensino Fundamental (UFPI), com atuação na área educacional e em atividades relacionadas à organização editorial.
+</p>
+<p>
+Participa do acompanhamento dos fluxos editoriais e do apoio institucional da Revista Inquietações.
+</p>
+<p>
+E-mail: <a href="mailto:geiza_venicia@hotmail.com">geiza_venicia@hotmail.com</a><br>
+Instagram: @geiza_venicia<br>
+Lattes: <a href="http://lattes.cnpq.br/4444946198128059" target="_blank">http://lattes.cnpq.br/4444946198128059</a><br>
+Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a>
+</p>
 </div>
-
-<div class="editor-meta">
-<div><strong>E-mail:</strong> <a href="mailto:geiza_venicia@hotmail.com">geiza_venicia@hotmail.com</a></div>
-<div><strong>Instagram:</strong> @geiza_venicia</div>
-<div><strong>Lattes iD:</strong> <a href="http://lattes.cnpq.br/4444946198128059" target="_blank">http://lattes.cnpq.br/4444946198128059</a></div>
-<div><strong>Orcid iD:</strong> <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a></div>
-</div>
+</details>
 
 </div>
 </div>
@@ -497,16 +550,26 @@ Especialista em Currículo e Prática Docente nos Anos Iniciais do Ensino Fundam
 Taisa Maria Brito dos Santos
 </div>
 
-<div class="editor-affiliation">
-Graduada em Filosofia (UERN)
+<details class="editor-bio-toggle">
+<summary>
+<span>Biografia</span>
+<span class="editor-bio-icon">+</span>
+</summary>
+<div class="editor-bio-content">
+<p>
+Graduada em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN), com interesse em estudos filosóficos e colaboração em atividades editoriais.
+</p>
+<p>
+Atua no apoio à organização do periódico e ao acompanhamento dos processos editoriais da Revista Inquietações.
+</p>
+<p>
+E-mail: <a href="mailto:taisamaria9090@gmail.com">taisamaria9090@gmail.com</a><br>
+Instagram: @taisasantos80476<br>
+Lattes: <a href="https://lattes.cnpq.br/6216572061896584" target="_blank">https://lattes.cnpq.br/6216572061896584</a><br>
+Orcid: <a href="https://orcid.org/0000-0002-8766-5683" target="_blank">https://orcid.org/0000-0002-8766-5683</a>
+</p>
 </div>
-
-<div class="editor-meta">
-<div><strong>E-mail:</strong> <a href="mailto:taisamaria9090@gmail.com">taisamaria9090@gmail.com</a></div>
-<div><strong>Instagram:</strong> @taisasantos80476</div>
-<div><strong>Lattes iD:</strong> <a href="https://lattes.cnpq.br/6216572061896584" target="_blank">https://lattes.cnpq.br/6216572061896584</a></div>
-<div><strong>Orcid iD:</strong> <a href="https://orcid.org/0000-0002-8766-5683" target="_blank">https://orcid.org/0000-0002-8766-5683</a></div>
-</div>
+</details>
 
 </div>
 </div>
@@ -527,7 +590,7 @@ Graduada em Filosofia (UERN)
 <div class="editor-card">
 
 <div class="editor-photo-wrap">
-<img class="editor-photo" src="corpo editorial/sueliton.png" alt="Foto de Sueliton">
+<img class="editor-photo" src="corpo editorial/sueliton.png" alt="Foto de Sueliton dos Santos Medeiros">
 </div>
 
 <div class="editor-role">Técnico de Informação</div>
@@ -536,16 +599,25 @@ Graduada em Filosofia (UERN)
 Sueliton dos Santos Medeiros
 </div>
 
-<div class="editor-affiliation">
-Apoio técnico ao portal editorial
+<details class="editor-bio-toggle">
+<summary>
+<span>Biografia</span>
+<span class="editor-bio-icon">+</span>
+</summary>
+<div class="editor-bio-content">
+<p>
+Bacharel em Sistemas de Informação pela Universidade Federal do Rio Grande do Norte (UFRN), com atuação em tecnologia da informação e suporte técnico ao portal editorial.
+</p>
+<p>
+Colabora na manutenção de sistemas e no apoio técnico relacionado à estrutura digital da Revista Inquietações.
+</p>
+<p>
+E-mail: <a href="mailto:suelitonmdr@gmail.com">suelitonmdr@gmail.com</a><br>
+Instagram: @suelitonx<br>
+Lattes: <a href="https://lattes.cnpq.br/7440416224129619" target="_blank">https://lattes.cnpq.br/7440416224129619</a>
+</p>
 </div>
-
-<div class="editor-meta">
-<div><strong>E-mail:</strong> <a href="mailto:suelitonmdr@gmail.com">suelitonmdr@gmail.com</a></div>
-<div><strong>Instagram:</strong> @suelitonx</div>
-<div><strong>Lattes iD:</strong> <a href="https://lattes.cnpq.br/7440416224129619" target="_blank">https://lattes.cnpq.br/7440416224129619</a></div>
-<div><strong>Formação Acadêmica:</strong> Bacharelado em Sistemas de Informação (UFRN)</div>
-</div>
+</details>
 
 </div>
 
@@ -561,16 +633,23 @@ Apoio técnico ao portal editorial
 Diego Vinícius Brito dos Santos
 </div>
 
-<div class="editor-affiliation">
-Apoio técnico ao portal editorial
+<details class="editor-bio-toggle">
+<summary>
+<span>Biografia</span>
+<span class="editor-bio-icon">+</span>
+</summary>
+<div class="editor-bio-content">
+<p>
+Além da direção editorial, também atua em atividades de apoio técnico ao portal da Revista Inquietações, colaborando na organização, manutenção e acompanhamento dos materiais digitais do periódico.
+</p>
+<p>
+E-mail: <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a><br>
+Instagram: @iamthed1<br>
+Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a><br>
+Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a>
+</p>
 </div>
-
-<div class="editor-meta">
-<div><strong>E-mail:</strong> <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a></div>
-<div><strong>Instagram:</strong> @iamthed1</div>
-<div><strong>Lattes iD:</strong> <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></div>
-<div><strong>Orcid iD:</strong> <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a></div>
-</div>
+</details>
 
 </div>
 
@@ -578,6 +657,8 @@ Apoio técnico ao portal editorial
 
 </div>
 </section>
+
+<div class="panel-pair">
 
 <section class="panel panel-parecer">
 
@@ -590,13 +671,16 @@ Apoio técnico ao portal editorial
 
 <div class="pareceristas-list">
 <div class="parecerista-item">
-<a href="http://lattes.cnpq.br/4347574894656811" target="_blank">Diego Vinícius Brito dos Santos</a>
+<strong>Diego Vinícius Brito dos Santos</strong>
+<a href="http://lattes.cnpq.br/4347574894656811" target="_blank">Currículo Lattes</a>
 </div>
 <div class="parecerista-item">
-<a href="http://lattes.cnpq.br/4444946198128059" target="_blank">Geiza Venicia dos Santos</a>
+<strong>Geiza Venicia dos Santos</strong>
+<a href="http://lattes.cnpq.br/4444946198128059" target="_blank">Currículo Lattes</a>
 </div>
 <div class="parecerista-item">
-<a href="https://lattes.cnpq.br/6216572061896584" target="_blank">Taisa Maria Brito dos Santos</a>
+<strong>Taisa Maria Brito dos Santos</strong>
+<a href="https://lattes.cnpq.br/6216572061896584" target="_blank">Currículo Lattes</a>
 </div>
 </div>
 
@@ -620,19 +704,28 @@ Apoio técnico ao portal editorial
 <img class="editor-photo" src="corpo editorial/diego.png" alt="Foto de Diego Vinícius Brito dos Santos">
 </div>
 
-<div class="editor-role">Diagramação editorial</div>
+<div class="editor-role">Diagramação Editorial</div>
 
 <div class="editor-name">
 Diego Vinícius Brito dos Santos
 </div>
 
-<div class="editor-affiliation">
-Equipe editorial — Revista Inquietações
+<details class="editor-bio-toggle">
+<summary>
+<span>Biografia</span>
+<span class="editor-bio-icon">+</span>
+</summary>
+<div class="editor-bio-content">
+<p>
+Atua na preparação visual, organização gráfica e padronização editorial dos materiais publicados pela Revista Inquietações, colaborando com a apresentação final dos conteúdos do periódico.
+</p>
+<p>
+E-mail: <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a><br>
+Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a><br>
+Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a>
+</p>
 </div>
-
-<div class="editor-meta">
-<div><strong>Função:</strong> Diagramação e organização editorial</div>
-</div>
+</details>
 
 </div>
 
@@ -640,6 +733,8 @@ Equipe editorial — Revista Inquietações
 
 </div>
 </section>
+
+</div>
 
 <section class="panel">
 
