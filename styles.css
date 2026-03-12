@@ -1203,10 +1203,13 @@ box-shadow:var(--shadow-soft);
 .parecerista-photo{
 width:56px;
 height:56px;
+min-width:56px;
+max-width:56px;
 border-radius:50%;
 object-fit:cover;
 border:3px solid #fff;
 box-shadow:0 4px 12px rgba(0,0,0,.10);
+display:block;
 }
 
 .parecerista-info{
