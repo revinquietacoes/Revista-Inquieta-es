@@ -1189,4 +1189,34 @@ font-size:11px;
 letter-spacing:.08em;
 text-transform:uppercase;
 color:#6b7a90;
+}.parecerista-item{
+display:flex;
+align-items:center;
+gap:14px;
+padding:16px 18px;
+border-radius:16px;
+background:#fff;
+border:1px solid var(--line);
+box-shadow:var(--shadow-soft);
+}
+
+.parecerista-photo{
+width:56px;
+height:56px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #fff;
+box-shadow:0 4px 12px rgba(0,0,0,.10);
+}
+
+.parecerista-info{
+display:flex;
+flex-direction:column;
+gap:4px;
+}
+
+.parecerista-links{
+display:flex;
+gap:10px;
+font-size:.9rem;
 }
