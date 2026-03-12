@@ -23,11 +23,28 @@ margin-top:12px;
 }
 
 .contact-card{
+position:relative;
 background:#fff;
 border:1px solid var(--line);
 border-radius:18px;
 padding:22px;
 box-shadow:var(--shadow-soft);
+transition:transform .18s ease, box-shadow .18s ease;
+overflow:hidden;
+}
+
+.contact-card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:6px;
+}
+
+.contact-card:hover{
+transform:translateY(-2px);
+box-shadow:0 14px 28px rgba(16,35,63,0.08);
 }
 
 .contact-card h3{
@@ -41,6 +58,35 @@ margin:6px 0;
 
 .contact-card a{
 font-weight:500;
+}
+
+/* cores dos cards */
+
+.contact-card.email{
+background:#eef5ff;
+border-color:#d7e6fb;
+}
+
+.contact-card.email::before{
+background:#8cb8f5;
+}
+
+.contact-card.instagram{
+background:#fff1f6;
+border-color:#f3d7e4;
+}
+
+.contact-card.instagram::before{
+background:#e7a6c1;
+}
+
+.contact-card.editorial{
+background:#eefaf2;
+border-color:#d7ecdf;
+}
+
+.contact-card.editorial::before{
+background:#92c9a3;
 }
 
 </style>
@@ -148,11 +194,6 @@ Instagram institucional
 
 <aside class="sidebar" id="barra-lateral">
 
-
-
-
-
-
 <section class="sidebar-block">
 
 <h2>Informações</h2>
@@ -166,10 +207,6 @@ Instagram institucional
 </ul>
 
 </section>
-
-
-
-
 
 </aside>
 
@@ -190,7 +227,7 @@ Instagram institucional
 <div class="contact-grid">
 
 
-<div class="contact-card">
+<div class="contact-card email">
 
 <h3>E-mail editorial</h3>
 
@@ -209,7 +246,7 @@ rev.inquietacoes@gmail.com
 
 
 
-<div class="contact-card">
+<div class="contact-card instagram">
 
 <h3>Instagram</h3>
 
@@ -227,7 +264,7 @@ Acompanhe as publicações, eventos, minicursos e atualizações do portal.
 
 
 
-<div class="contact-card">
+<div class="contact-card editorial">
 
 <h3>Comunicação editorial</h3>
 

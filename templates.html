@@ -17,11 +17,28 @@ margin-top:12px;
 }
 
 .template-card{
+position:relative;
 background:#fff;
 border:1px solid var(--line);
 border-radius:18px;
 padding:22px;
 box-shadow:var(--shadow-soft);
+transition:transform .18s ease, box-shadow .18s ease;
+overflow:hidden;
+}
+
+.template-card::before{
+content:"";
+position:absolute;
+top:0;
+left:0;
+right:0;
+height:6px;
+}
+
+.template-card:hover{
+transform:translateY(-2px);
+box-shadow:0 14px 28px rgba(16,35,63,0.08);
 }
 
 .template-card h3{
@@ -32,6 +49,56 @@ color:var(--brand);
 .template-card p{
 margin:6px 0 14px 0;
 }
+
+.template-card .btn{
+margin-top:4px;
+}
+
+/* cores dos cards */
+
+.template-card.artigo{
+background:#eef5ff;
+border-color:#d7e6fb;
+}
+
+.template-card.artigo::before{
+background:#8cb8f5;
+}
+
+.template-card.resumo{
+background:#fff1f6;
+border-color:#f3d7e4;
+}
+
+.template-card.resumo::before{
+background:#e7a6c1;
+}
+
+.template-card.ensaio{
+background:#eefaf2;
+border-color:#d7ecdf;
+}
+
+.template-card.ensaio::before{
+background:#92c9a3;
+}
+
+.template-card.relato{
+background:#fff8eb;
+border-color:#f3e5bf;
+}
+
+.template-card.relato::before{
+background:#e2c06f;
+}
+
+.template-note{
+padding:18px 20px;
+border-radius:18px;
+background:#f8fbff;
+border:1px solid rgba(18,45,82,0.08);
+}
+
 </style>
 
 </head>
@@ -150,7 +217,7 @@ Submissões acadêmicas
 
 <div class="template-grid">
 
-<div class="template-card" id="template-artigo">
+<div class="template-card artigo" id="template-artigo">
 
 <h3>Template de Artigo</h3>
 
@@ -161,7 +228,7 @@ Inclui formatação de título, resumo, palavras-chave e referências.
 
 <a class="btn"
 href="https://drive.google.com/file/d/1Mhe6_JYAQgW9RujyZlPfL3gCmSXBXBEI/view?usp=drive_link"
-target="_blank">
+target="_blank" rel="noopener noreferrer">
 
 Baixar template
 
@@ -169,7 +236,7 @@ Baixar template
 
 </div>
 
-<div class="template-card" id="template-resumo">
+<div class="template-card resumo" id="template-resumo">
 
 <h3>Template de Resumo Expandido</h3>
 
@@ -180,7 +247,7 @@ acadêmicas.
 
 <a class="btn"
 href="https://docs.google.com/document/d/1R1_RXqTW1uiS5oOnK9QPbpHKyg0vOxHl/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true"
-target="_blank">
+target="_blank" rel="noopener noreferrer">
 
 Baixar template
 
@@ -188,7 +255,7 @@ Baixar template
 
 </div>
 
-<div class="template-card" id="template-ensaio">
+<div class="template-card ensaio" id="template-ensaio">
 
 <h3>Template de Ensaio</h3>
 
@@ -198,7 +265,7 @@ Modelo destinado à submissão de ensaios teóricos e textos reflexivos.
 
 <a class="btn"
 href="https://docs.google.com/document/d/1moyvqQcqUOr8wRfQcmGIT276b4V21IPy/edit?usp=sharing&ouid=106454046870362039189&rtpof=true&sd=true"
-target="_blank">
+target="_blank" rel="noopener noreferrer">
 
 Baixar template
 
@@ -206,7 +273,7 @@ Baixar template
 
 </div>
 
-<div class="template-card" id="template-relato">
+<div class="template-card relato" id="template-relato">
 
 <h3>Relato de Experiência</h3>
 
@@ -216,7 +283,7 @@ Modelo para submissão de relatos de experiência acadêmica ou pedagógica.
 
 <a class="btn"
 href="https://docs.google.com/document/d/1jYV4ZzqAO1OGvELiMsHKNYTeWOYxBFPp/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true"
-target="_blank">
+target="_blank" rel="noopener noreferrer">
 
 Baixar template
 
@@ -236,6 +303,7 @@ Baixar template
 
 <div class="panel-body">
 
+<div class="template-note">
 <p>
 Recomenda-se que os autores utilizem os templates disponibilizados para
 garantir a padronização editorial dos textos submetidos.
@@ -245,6 +313,7 @@ garantir a padronização editorial dos textos submetidos.
 O uso do template facilita o processo de avaliação e preparação
 editorial dos trabalhos publicados.
 </p>
+</div>
 
 </div>
 </section>
