@@ -37,23 +37,23 @@ color:#444;
 }
 
 .event-card:nth-child(1){
-background:#eaf3ff;
-border-color:#c9dcf7;
+background:#eef5ff;
+border-color:#d7e3f5;
 }
 
 .event-card:nth-child(2){
-background:#f3efff;
-border-color:#ddd2fb;
+background:#f5f3ff;
+border-color:#e0daf7;
 }
 
 .event-card:nth-child(3){
-background:#ecfaf5;
-border-color:#cdebdc;
+background:#f1f8f4;
+border-color:#d6e7dd;
 }
 
 .event-card:nth-child(4){
-background:#fff8ea;
-border-color:#efdfb8;
+background:#fcf8ef;
+border-color:#e8dcc4;
 }
 
 .course-accordion{
@@ -175,12 +175,6 @@ height:100%;
 border:0;
 }
 
-.instructors-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:24px;
-}
-
 .notice-box{
 padding:18px;
 border-radius:16px;
@@ -196,59 +190,90 @@ margin:0 0 10px;
 margin-bottom:0;
 }
 
-.comunicacao-lista{
+.comunicacao-accordion{
 display:grid;
 gap:14px;
 }
 
-.comunicacao-item{
-padding:16px;
-border:1px solid #cfe6da;
-border-radius:14px;
-background:#eefaf4;
+.comunicacao-toggle{
+border:1px solid #d7e6dd;
+border-radius:16px;
+background:#f3faf6;
+box-shadow:0 8px 20px rgba(0,0,0,0.05);
+overflow:hidden;
 }
 
-.comunicacao-item h3{
-margin:0 0 8px;
+.comunicacao-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:16px 18px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:14px;
+}
+
+.comunicacao-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.comunicacao-toggle:hover summary{
+background:#edf7f1;
+}
+
+.comunicacao-summary-left{
+display:grid;
+gap:4px;
+}
+
+.comunicacao-summary-left h3{
+margin:0;
 font-size:1rem;
 color:var(--brand);
 }
 
-.comunicacao-item p{
-margin:0 0 10px;
+.comunicacao-summary-left p{
+margin:0;
+color:#5b6d67;
+font-size:.94rem;
+}
+
+.comunicacao-icon{
+font-size:1.3rem;
+line-height:1;
+color:var(--brand);
+transition:transform .2s ease;
+}
+
+.comunicacao-toggle[open] .comunicacao-icon{
+transform:rotate(45deg);
+}
+
+.comunicacao-body{
+padding:0 18px 18px;
+border-top:1px solid #dcebe3;
+background:#fbfefc;
+}
+
+.comunicacao-body p{
+margin:14px 0 0;
 color:#4c5b70;
 }
 
-.comunicacao-item p:last-child{
-margin-bottom:0;
-}
-
 .course-actions-evento{
-background:#eaf3ff;
-border:1px solid #c8dcf6;
+background:#eef5ff;
+border:1px solid #d3e0f2;
 border-radius:16px;
 padding:18px;
 box-shadow:0 6px 18px rgba(0,0,0,0.05);
 }
 
 .event-info-box{
-background-image:url("assets/fundo-evento.png");
-background-size:cover;
-background-position:center;
-background-repeat:no-repeat;
-border:1px solid #bfd0e6;
-padding:0;
-overflow:hidden;
-position:relative;
-}
-
-.event-info-overlay{
-background:rgba(255,255,255,0.84);
-backdrop-filter:blur(1.5px);
--webkit-backdrop-filter:blur(1.5px);
+background:#f9fbff;
+border:1px solid #d7e2f0;
 padding:18px;
 border-radius:16px;
-min-height:100%;
+box-shadow:0 6px 18px rgba(0,0,0,0.04);
 }
 
 .event-info-box h3{
@@ -259,9 +284,8 @@ font-size:1.08rem;
 
 .event-info-box p{
 margin:0 0 12px;
-color:#16385f;
+color:#3f536c;
 line-height:1.75;
-font-weight:500;
 }
 
 .event-info-box p:last-child{
@@ -269,12 +293,12 @@ margin-bottom:0;
 }
 
 .event-info-box strong{
-color:#092746;
+color:#16385f;
 }
 
 .palestra-box{
-background:#fff8ea;
-border:1px solid #efdfb8;
+background:#fcf8ef;
+border:1px solid #e6dbc5;
 }
 
 .anais-card{
@@ -308,6 +332,128 @@ color:#42546b;
 .anais-meta strong{
 color:var(--brand);
 }
+
+.side-nav-card{
+display:grid;
+gap:10px;
+}
+
+.side-nav-link{
+display:block;
+text-decoration:none;
+padding:11px 14px;
+border-radius:12px;
+background:#f8fbff;
+border:1px solid #dbe6f2;
+color:var(--brand);
+font-weight:500;
+transition:background .18s ease, transform .18s ease;
+}
+
+.side-nav-link:hover{
+background:#eef5fc;
+transform:translateY(-1px);
+}
+
+.speakers-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:22px;
+}
+
+.speaker-card{
+border:1px solid var(--line);
+border-radius:20px;
+background:#fff;
+box-shadow:var(--shadow-soft);
+padding:20px;
+text-align:center;
+}
+
+.speaker-photo-wrap{
+width:120px;
+height:120px;
+margin:0 auto 14px;
+border-radius:999px;
+overflow:hidden;
+border:4px solid #eef3fb;
+box-shadow:0 6px 18px rgba(0,0,0,0.08);
+}
+
+.speaker-photo{
+width:100%;
+height:100%;
+object-fit:cover;
+display:block;
+}
+
+.speaker-name{
+margin:0 0 6px;
+font-size:1rem;
+color:var(--brand);
+line-height:1.35;
+}
+
+.speaker-affiliation{
+margin:0 0 14px;
+color:#5a6d85;
+font-size:.94rem;
+}
+
+.bio-toggle{
+text-align:left;
+border:1px solid #dbe6f2;
+border-radius:14px;
+background:#f8fbff;
+overflow:hidden;
+}
+
+.bio-toggle summary{
+list-style:none;
+cursor:pointer;
+padding:12px 14px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:10px;
+font-weight:600;
+color:var(--brand);
+}
+
+.bio-toggle summary::-webkit-details-marker{
+display:none;
+}
+
+.bio-toggle:hover summary{
+background:#f0f6fd;
+}
+
+.bio-icon{
+font-size:1.15rem;
+transition:transform .2s ease;
+}
+
+.bio-toggle[open] .bio-icon{
+transform:rotate(45deg);
+}
+
+.bio-content{
+padding:0 14px 14px;
+border-top:1px solid #dbe6f2;
+background:#fff;
+}
+
+.bio-content p{
+margin:12px 0 0;
+color:#4c5b70;
+}
+
+@media (max-width: 760px){
+.speaker-photo-wrap{
+width:104px;
+height:104px;
+}
+}
 </style>
 </head>
 
@@ -318,6 +464,7 @@ color:var(--brand);
 <nav class="skip-links">
 <a href="#conteudo-principal">Ir para o conteúdo principal</a>
 <a href="#navegacao-principal">Ir para a navegação</a>
+<a href="#barra-lateral">Ir para a barra lateral</a>
 <a href="#rodape">Ir para o rodapé</a>
 </nav>
 
@@ -381,9 +528,28 @@ Menu
 
 </nav>
 
+<div class="portal-grid sidebar-compact">
+
+<aside class="sidebar" id="barra-lateral">
+
+<section class="sidebar-block">
+<h2>Navegação da página</h2>
+<div class="side-nav-card">
+<a class="side-nav-link" href="#sobre-evento">Sobre o evento</a>
+<a class="side-nav-link" href="#inscricoes">Inscrições</a>
+<a class="side-nav-link" href="#minicursos">Mini-cursos</a>
+<a class="side-nav-link" href="#comunicacoes">Comunicações Orais</a>
+<a class="side-nav-link" href="#palestras">Palestras</a>
+<a class="side-nav-link" href="#participantes">Organizadores e participantes</a>
+<a class="side-nav-link" href="#anais-evento">Anais do evento</a>
+</div>
+</section>
+
+</aside>
+
 <main id="conteudo-principal" class="content">
 
-<section class="panel">
+<section class="panel" id="sobre-evento">
 
 <div class="panel-head">
 <h2>Sobre o evento</h2>
@@ -446,15 +612,13 @@ Certificados
 </div>
 
 <div class="notice-box event-info-box">
-  <div class="event-info-overlay">
-    <h3>Informações do evento</h3>
-    <p>
-      <strong>Público-alvo:</strong> estudantes, pesquisadores(as), professores(as) e interessados(as) em produção acadêmica, leitura crítica e formação em Ciências Humanas e Sociais.
-    </p>
-    <p>
-      <strong>Objetivo:</strong> apresentar a proposta editorial da Revista Inquietações, estimular a participação acadêmica e criar um espaço de formação, debate e circulação do conhecimento.
-    </p>
-  </div>
+<h3>Informações do evento</h3>
+<p>
+<strong>Público-alvo:</strong> estudantes, pesquisadores(as), professores(as) e interessados(as) em produção acadêmica, leitura crítica e formação em Ciências Humanas e Sociais.
+</p>
+<p>
+<strong>Objetivo:</strong> apresentar a proposta editorial da Revista Inquietações, estimular a participação acadêmica e criar um espaço de formação, debate e circulação do conhecimento.
+</p>
 </div>
 
 </div>
@@ -730,44 +894,73 @@ Certificados
 
 <div class="panel-body">
 
-<div class="comunicacao-lista">
-<div class="comunicacao-item">
-<h3>Apresentação de trabalhos</h3>
-<p>As comunicações orais destinam-se à socialização de pesquisas, ensaios, relatos de experiência e reflexões acadêmicas vinculadas às áreas de interesse da revista.</p>
-</div>
+<div class="comunicacao-accordion">
 
-<div class="comunicacao-item">
-<h3>Participação de estudantes e pesquisadores(as)</h3>
-<p>O evento busca incentivar a apresentação pública de investigações em andamento ou concluídas, fortalecendo a circulação do conhecimento e o diálogo entre diferentes percursos formativos.</p>
-</div>
+<details class="comunicacao-toggle">
+  <summary>
+    <div class="comunicacao-summary-left">
+      <h3>Apresentação de trabalhos</h3>
+      <p>Finalidade e perfil das comunicações orais.</p>
+    </div>
+    <span class="comunicacao-icon">+</span>
+  </summary>
+  <div class="comunicacao-body">
+    <p>
+      As comunicações orais destinam-se à socialização de pesquisas, ensaios, relatos de experiência e reflexões acadêmicas vinculadas às áreas de interesse da revista.
+    </p>
+  </div>
+</details>
 
-<div class="comunicacao-item">
-  <h3>Informações complementares</h3>
-  <p>
-    O(a) autor(a) deverá enviar seu resumo expandido conforme as diretrizes da revista, disponíveis em
-    <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/diretrizes-autores.html" target="_blank" rel="noopener noreferrer">
-      Diretrizes para Autores
-    </a>.
-    Junto ao resumo expandido, deverá também enviar um vídeo gravado na horizontal, apresentando oralmente seu trabalho, com exposição dos objetivos, metodologia, desenvolvimento e principais conclusões.
-  </p>
-  <p>
-    O(a) autor(a) poderá utilizar slides durante a gravação. Não é obrigatório aparecer em vídeo, desde que a comunicação oral seja realizada com clareza.
-  </p>
-  <p>
-    A duração mínima da comunicação oral é de 10 minutos, sendo aceito o tempo máximo de 15 minutos.
-    Recomenda-se que a gravação seja feita em local silencioso, com boa iluminação e boa qualidade de áudio.
-  </p>
-  <p>
-    Ao enviar o vídeo para a comunicação oral, o(a) autor(a) cede os direitos de imagem e exibição exclusivamente para a finalidade da comunicação oral no evento.
-  </p>
-  <p>
-    A comunicação oral ficará disponível na página do evento,
-    <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/minicursos.html" target="_blank" rel="noopener noreferrer">
-      https://revinquietacoes.github.io/Revista-Inquieta-es/minicursos.html
-    </a>,
-    aberta à comunidade acadêmica e ao público interessado, e também será registrada nos anais do evento.
-  </p>
-</div>
+<details class="comunicacao-toggle">
+  <summary>
+    <div class="comunicacao-summary-left">
+      <h3>Participação de estudantes e pesquisadores(as)</h3>
+      <p>Caráter formativo e abertura acadêmica do evento.</p>
+    </div>
+    <span class="comunicacao-icon">+</span>
+  </summary>
+  <div class="comunicacao-body">
+    <p>
+      O evento busca incentivar a apresentação pública de investigações em andamento ou concluídas, fortalecendo a circulação do conhecimento e o diálogo entre diferentes percursos formativos.
+    </p>
+  </div>
+</details>
+
+<details class="comunicacao-toggle">
+  <summary>
+    <div class="comunicacao-summary-left">
+      <h3>Informações complementares</h3>
+      <p>Normas práticas para envio do resumo e da apresentação oral.</p>
+    </div>
+    <span class="comunicacao-icon">+</span>
+  </summary>
+  <div class="comunicacao-body">
+    <p>
+      O(a) autor(a) deverá enviar seu resumo expandido conforme as diretrizes da revista, disponíveis em
+      <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/diretrizes-autores.html" target="_blank" rel="noopener noreferrer">
+        Diretrizes para Autores
+      </a>.
+      Junto ao resumo expandido, deverá também enviar um vídeo gravado na horizontal, apresentando oralmente seu trabalho, com exposição dos objetivos, metodologia, desenvolvimento e principais conclusões.
+    </p>
+    <p>
+      O(a) autor(a) poderá utilizar slides durante a gravação. Não é obrigatório aparecer em vídeo, desde que a comunicação oral seja realizada com clareza.
+    </p>
+    <p>
+      A duração mínima da comunicação oral é de 10 minutos, sendo aceito o tempo máximo de 15 minutos.
+      Recomenda-se que a gravação seja feita em local silencioso, com boa iluminação e boa qualidade de áudio.
+    </p>
+    <p>
+      Ao enviar o vídeo para a comunicação oral, o(a) autor(a) cede os direitos de imagem e exibição exclusivamente para a finalidade da comunicação oral no evento.
+    </p>
+    <p>
+      A comunicação oral ficará disponível na página do evento,
+      <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/minicursos.html" target="_blank" rel="noopener noreferrer">
+        https://revinquietacoes.github.io/Revista-Inquieta-es/minicursos.html
+      </a>,
+      aberta à comunidade acadêmica e ao público interessado, e também será registrada nos anais do evento.
+    </p>
+  </div>
+</details>
 
 </div>
 
@@ -784,16 +977,27 @@ Certificados
 
 <div class="panel-body">
 
-<div class="notice-box palestra-box">
-<p><strong>Em breve:</strong> esta seção receberá a programação de palestras do evento “Lançamento da Revista Inquietações”.</p>
-<p>Novos nomes, temas e horários poderão ser divulgados posteriormente, conforme a ampliação da agenda acadêmica do evento.</p>
-</div>
+<details class="comunicacao-toggle">
+  <summary>
+    <div class="comunicacao-summary-left">
+      <h3>Programação de palestras</h3>
+      <p>Informações iniciais sobre esta seção.</p>
+    </div>
+    <span class="comunicacao-icon">+</span>
+  </summary>
+  <div class="comunicacao-body">
+    <div class="notice-box palestra-box">
+      <p><strong>Em breve:</strong> esta seção receberá a programação de palestras do evento “Lançamento da Revista Inquietações”.</p>
+      <p>Novos nomes, temas e horários poderão ser divulgados posteriormente, conforme a ampliação da agenda acadêmica do evento.</p>
+    </div>
+  </div>
+</details>
 
 </div>
 
 </section>
 
-<section class="panel">
+<section class="panel" id="participantes">
 
 <div class="panel-head">
 <h2>Organizadores, palestrantes e participantes da programação</h2>
@@ -802,96 +1006,110 @@ Certificados
 
 <div class="panel-body">
 
-<div class="instructors-grid">
+<div class="speakers-grid">
 
-<article class="instructor-card">
-<div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063748.png" class="instructor-photo" alt="Diego Vinícius Brito dos Santos">
+<article class="speaker-card">
+<div class="speaker-photo-wrap">
+<img src="arquivos/Captura de tela 2026-03-08 063748.png" class="speaker-photo" alt="Diego Vinícius Brito dos Santos">
 </div>
-<h3 class="instructor-name">DIEGO VINÍCIUS BRITO DOS SANTOS</h3>
-<div class="instructor-affiliation">
-Organizador do Evento e Editor da Revista Inquietações
-</div>
-<div class="instructor-bio">
-<p>
-Professor pedagogo e servidor público efetivo. Mestre em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN), com pesquisa dedicada à filosofia de Friedrich Nietzsche.
-</p>
-<p>
-Graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN) e em Pedagogia pelo Centro Universitário Internacional (UNINTER). Atua em estudos relacionados à filosofia, educação, formação docente e produção acadêmica.
-</p>
-</div>
+<h3 class="speaker-name">DIEGO VINÍCIUS BRITO DOS SANTOS</h3>
+<div class="speaker-affiliation">Organizador do Evento e Editor da Revista Inquietações</div>
+
+<details class="bio-toggle">
+  <summary>
+    <span>Biografia</span>
+    <span class="bio-icon">+</span>
+  </summary>
+  <div class="bio-content">
+    <p>
+      Professor pedagogo e servidor público efetivo. Mestre em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN), com pesquisa dedicada à filosofia de Friedrich Nietzsche.
+    </p>
+    <p>
+      Graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN) e em Pedagogia pelo Centro Universitário Internacional (UNINTER). Atua em estudos relacionados à filosofia, educação, formação docente e produção acadêmica.
+    </p>
+  </div>
+</details>
 </article>
 
-<article class="instructor-card">
-<div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063855.png" class="instructor-photo" alt="Lindoaldo Vieira Campos Júnior">
+<article class="speaker-card">
+<div class="speaker-photo-wrap">
+<img src="arquivos/Captura de tela 2026-03-08 063855.png" class="speaker-photo" alt="Lindoaldo Vieira Campos Júnior">
 </div>
-<h3 class="instructor-name">
-LINDOALDO VIEIRA CAMPOS JÚNIOR
-</h3>
-<div class="instructor-affiliation">
-Instituto Federal do Rio Grande do Norte
-</div>
-<div class="instructor-bio">
-<p>
-Bacharel em Direito. Mestre em História (Área de Concentração: História dos Sertões).
-</p>
-<p>
-Licenciado, Mestre e Doutor em Filosofia, com ênfase na filosofia de Friedrich Nietzsche, dedicando-se a estudos na área de filosofia moderna e contemporânea.
-</p>
-</div>
+<h3 class="speaker-name">LINDOALDO VIEIRA CAMPOS JÚNIOR</h3>
+<div class="speaker-affiliation">Instituto Federal do Rio Grande do Norte</div>
+
+<details class="bio-toggle">
+  <summary>
+    <span>Biografia</span>
+    <span class="bio-icon">+</span>
+  </summary>
+  <div class="bio-content">
+    <p>
+      Bacharel em Direito. Mestre em História (Área de Concentração: História dos Sertões).
+    </p>
+    <p>
+      Licenciado, Mestre e Doutor em Filosofia, com ênfase na filosofia de Friedrich Nietzsche, dedicando-se a estudos na área de filosofia moderna e contemporânea.
+    </p>
+  </div>
+</details>
 </article>
 
-<article class="instructor-card">
-<div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063909.png" class="instructor-photo" alt="Benjamim Julião de Góis Filho">
+<article class="speaker-card">
+<div class="speaker-photo-wrap">
+<img src="arquivos/Captura de tela 2026-03-08 063909.png" class="speaker-photo" alt="Benjamim Julião de Góis Filho">
 </div>
-<h3 class="instructor-name">
-BENJAMIM JULIÃO DE GÓIS FILHO
-</h3>
-<div class="instructor-affiliation">
-Universidade do Estado do Rio Grande do Norte
-</div>
-<div class="instructor-bio">
-<p>
-Doutor em Filosofia pela Universidade Federal do Ceará (UFC). Mestre em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN). Especialista em Ética e Filosofia Política pela Universidade do Estado do Rio Grande do Norte (UERN).
-</p>
-<p>
-Pós-graduado em Psicanálise e Psicologia (FAMEESP). Licenciado em Filosofia (UERN). Licenciado e Bacharel em História (UFRN). Bacharel em Teologia pela Faculdade Kurios (FAK/CE) e pelo Seminário Teológico Potiguar (STP/RN).
-</p>
-<p>
-Psicanalista pelo Centro de Estudos Psicanalíticos de Natal (CESPN). Professor de Filosofia da Universidade do Estado do Rio Grande do Norte (UERN).
-</p>
-<p>
-Atua e tem interesse nas áreas de Filosofia Contemporânea (com ênfase na Teoria Crítica da Escola de Frankfurt e no pensamento de Michel Foucault), Filosofia da Linguagem, Ontologia, Filosofia da Religião, Ética, Filosofia Política, Teoria da História, Psicanálise e Teologia Contemporânea.
-</p>
-</div>
+<h3 class="speaker-name">BENJAMIM JULIÃO DE GÓIS FILHO</h3>
+<div class="speaker-affiliation">Universidade do Estado do Rio Grande do Norte</div>
+
+<details class="bio-toggle">
+  <summary>
+    <span>Biografia</span>
+    <span class="bio-icon">+</span>
+  </summary>
+  <div class="bio-content">
+    <p>
+      Doutor em Filosofia pela Universidade Federal do Ceará (UFC). Mestre em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN). Especialista em Ética e Filosofia Política pela Universidade do Estado do Rio Grande do Norte (UERN).
+    </p>
+    <p>
+      Pós-graduado em Psicanálise e Psicologia (FAMEESP). Licenciado em Filosofia (UERN). Licenciado e Bacharel em História (UFRN). Bacharel em Teologia pela Faculdade Kurios (FAK/CE) e pelo Seminário Teológico Potiguar (STP/RN).
+    </p>
+    <p>
+      Psicanalista pelo Centro de Estudos Psicanalíticos de Natal (CESPN). Professor de Filosofia da Universidade do Estado do Rio Grande do Norte (UERN).
+    </p>
+    <p>
+      Atua e tem interesse nas áreas de Filosofia Contemporânea, Filosofia da Linguagem, Ontologia, Filosofia da Religião, Ética, Filosofia Política, Teoria da História, Psicanálise e Teologia Contemporânea.
+    </p>
+  </div>
+</details>
 </article>
 
-<article class="instructor-card">
-<div class="instructor-photo-wrap">
-<img src="arquivos/Captura de tela 2026-03-08 063933.png" class="instructor-photo" alt="Messias Gomes de Araújo Leal">
+<article class="speaker-card">
+<div class="speaker-photo-wrap">
+<img src="arquivos/Captura de tela 2026-03-08 063933.png" class="speaker-photo" alt="Messias Gomes de Araújo Leal">
 </div>
-<h3 class="instructor-name">
-MESSIAS GOMES DE ARAÚJO LEAL
-</h3>
-<div class="instructor-affiliation">
-Universidade Federal do Rio Grande do Norte
-</div>
-<div class="instructor-bio">
-<p>
-Graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN) em 2003.2 e em Pedagogia pela Universidade Federal do Rio Grande do Norte (UFRN) em 2026.1.
-</p>
-<p>
-Atua em atividades acadêmicas relacionadas à monitoria de ensino e pesquisa de inovação, participando de diversos grupos de pesquisa e formação científica.
-</p>
-<p>
-Integra iniciativas como PROJEPI, GPCAI/Surdos, GPCAI Neurociência, GPENCI – Grupo de Pesquisa em Ensino de Ciências, GENCEM – Grupo de Estudos em Neurociência Cognitiva e Educação Matemática.
-</p>
-<p>
-É membro do Núcleo Brasileiro de Estudos sobre Autoritarismo e Personalidade Autoritária (NBREAPA).
-</p>
-</div>
+<h3 class="speaker-name">MESSIAS GOMES DE ARAÚJO LEAL</h3>
+<div class="speaker-affiliation">Universidade Federal do Rio Grande do Norte</div>
+
+<details class="bio-toggle">
+  <summary>
+    <span>Biografia</span>
+    <span class="bio-icon">+</span>
+  </summary>
+  <div class="bio-content">
+    <p>
+      Graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN) em 2003.2 e em Pedagogia pela Universidade Federal do Rio Grande do Norte (UFRN) em 2026.1.
+    </p>
+    <p>
+      Atua em atividades acadêmicas relacionadas à monitoria de ensino e pesquisa de inovação, participando de diversos grupos de pesquisa e formação científica.
+    </p>
+    <p>
+      Integra iniciativas como PROJEPI, GPCAI/Surdos, GPCAI Neurociência, GPENCI – Grupo de Pesquisa em Ensino de Ciências, GENCEM – Grupo de Estudos em Neurociência Cognitiva e Educação Matemática.
+    </p>
+    <p>
+      É membro do Núcleo Brasileiro de Estudos sobre Autoritarismo e Personalidade Autoritária (NBREAPA).
+    </p>
+  </div>
+</details>
 </article>
 
 </div>
@@ -899,6 +1117,7 @@ Integra iniciativas como PROJEPI, GPCAI/Surdos, GPCAI Neurociência, GPENCI – 
 </div>
 
 </section>
+
 <section class="panel" id="anais-evento">
 
 <div class="panel-head">
@@ -927,6 +1146,8 @@ Publicação destinada ao registro das comunicações, atividades e produções 
 </section>
 
 </main>
+
+</div>
 
 <footer class="footer" id="rodape">
 <p><strong>Revista Inquietações</strong> — Portal institucional do periódico</p>
