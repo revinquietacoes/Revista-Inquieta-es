@@ -1,3 +1,30 @@
+Sintaticamente, **sim** — esse bloco está correto em JavaScript:
+
+```javascript
+"geiza venicia dos santos": {
+  lattes: "http://lattes.cnpq.br/4444946198128059",
+  orcid: "https://orcid.org/0000-0003-2797-8271"
+}
+```
+
+O que eu **não consigo confirmar só pelo código** é se esse ORCID é realmente da Geiza, porque ele está igual ao do Diego. Se for mesmo esse, pode manter.
+
+Abaixo está o **código completo** do `conteudos.html`, já com:
+
+* ícone do **DOI**
+* ícone do **Lattes**
+* ícone do **ORCID**
+* puxados automaticamente pelo nome do autor
+* ícones na pasta `assets/`
+* remoção da duplicação do script do GoatCounter
+
+Use estes nomes de arquivos na pasta `assets/`:
+
+* `assets/doi-icon.png`
+* `assets/lattes-icon.png`
+* `assets/orcid-icon.png`
+
+```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -193,96 +220,80 @@
       transform:translateY(-1px);
     }
 
-    /* Cores por seção */
-    .sec-capa .entry-banner {
-      background: #f6efe7;
+    .sec-capa .entry-banner { background: #f6efe7; }
+    .sec-expediente .entry-banner { background: #eef3fb; }
+    .sec-mensagem .entry-banner { background: #f8f1fb; }
+    .sec-artigos .entry-banner { background: #eef8f1; }
+    .sec-resumos .entry-banner { background: #fff5e8; }
+    .sec-ensaios .entry-banner { background: #f2f0fc; }
+    .sec-resenhas .entry-banner { background: #eef7f7; }
+    .sec-traducoes .entry-banner { background: #fdf0f2; }
+    .sec-fotografia .entry-banner { background: #f3f6ea; }
+    .sec-relatos .entry-banner { background: #eef4ff; }
+    .sec-homenagens .entry-banner { background: #f8f4ec; }
+
+    .icon-links-row{
+      margin-top: 10px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
-    .sec-expediente .entry-banner {
-      background: #eef3fb;
+    .icon-link-circle{
+      display: inline-block;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      box-shadow: 0 6px 14px rgba(16,35,63,0.10);
+      transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+      cursor: pointer;
+      flex: 0 0 38px;
+      background-position: center;
+      background-size: cover;
+      background-repeat: no-repeat;
     }
 
-    .sec-mensagem .entry-banner {
-      background: #f8f1fb;
+    .icon-link-circle:hover{
+      transform: translateY(-1px) scale(1.04);
+      box-shadow: 0 10px 18px rgba(16,35,63,0.14);
+      opacity: .96;
     }
 
-    .sec-artigos .entry-banner {
-      background: #eef8f1;
+    .icon-link-circle:focus{
+      outline: 2px solid rgba(36,50,70,0.28);
+      outline-offset: 3px;
     }
 
-    .sec-resumos .entry-banner {
-      background: #fff5e8;
+    .icon-link-circle.doi-icon{
+      background-image: url("assets/doi-icon.png");
     }
 
-    .sec-ensaios .entry-banner {
-      background: #f2f0fc;
+    .icon-link-circle.lattes-icon{
+      background-image: url("assets/lattes-icon.png");
     }
 
-    .sec-resenhas .entry-banner {
-      background: #eef7f7;
+    .icon-link-circle.orcid-icon{
+      background-image: url("assets/orcid-icon.png");
     }
 
-    .sec-traducoes .entry-banner {
-      background: #fdf0f2;
-    }
-
-    .sec-fotografia .entry-banner {
-      background: #f3f6ea;
-    }
-
-    .sec-relatos .entry-banner {
-      background: #eef4ff;
-    }
-
-    .sec-homenagens .entry-banner {
-      background: #f8f4ec;
-    }
-.doi-mini-meta{
-  margin-top: 10px;
-  display: flex;
-  align-items: center;
-}
-
-.doi-link-icon{
-  display: inline-block;
-  width: 38px;
-  height: 38px;
-  border-radius: 50%;
-  background: url("arquivos/doi-icon.png") center/cover no-repeat;
-  box-shadow: 0 6px 14px rgba(16,35,63,0.10);
-  transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
-  cursor: pointer;
-  flex: 0 0 38px;
-}
-
-.doi-link-icon:hover{
-  transform: translateY(-1px) scale(1.04);
-  box-shadow: 0 10px 18px rgba(16,35,63,0.14);
-  opacity: .96;
-}
-
-.doi-link-icon:focus{
-  outline: 2px solid rgba(36,50,70,0.28);
-  outline-offset: 3px;
-}
     @media (max-width: 700px) {
-  .catalog-section {
-    padding: 18px;
-  }
+      .catalog-section {
+        padding: 18px;
+      }
 
-  .catalog-section h2 {
-    font-size: 1.65rem;
-  }
+      .catalog-section h2 {
+        font-size: 1.65rem;
+      }
 
-  .entry-grid {
-    grid-template-columns: 1fr;
-  }
+      .entry-grid {
+        grid-template-columns: 1fr;
+      }
 
-  .entry-banner-title {
-    font-size: 1.1rem;
-  }
-}
-  
+      .entry-banner-title {
+        font-size: 1.1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -755,85 +766,114 @@
   </div>
 
   <script>
-  const navToggle = document.querySelector('.site-nav-toggle');
-  const navMenu = document.querySelector('.site-nav-menu');
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const navMenu = document.querySelector('.site-nav-menu');
 
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = navMenu.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-  }
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
+    }
 
-  document.querySelectorAll('.entry-body').forEach((entryBody) => {
-    const metas = entryBody.querySelectorAll('.mini-meta');
-    let authorMeta = null;
-    let doiMeta = null;
-    let doiAnchor = null;
-
-    metas.forEach((meta) => {
-      const link = meta.querySelector('a[href*="doi.org"], a[href*="dx.doi.org"]');
-      if (link) {
-        doiMeta = meta;
-        doiAnchor = link;
-      } else if (!authorMeta) {
-        const txt = meta.textContent.toLowerCase();
-        if (
-          txt.includes('autor:') ||
-          txt.includes('autora:') ||
-          txt.includes('tradutor:') ||
-          txt.includes('tradutora:')
-        ) {
-          authorMeta = meta;
-        }
+    const authorProfiles = {
+      "diego vinícius brito dos santos": {
+        lattes: "http://lattes.cnpq.br/4347574894656811",
+        orcid: "https://orcid.org/0000-0002-9064-0663"
+      },
+      "geiza venicia dos santos": {
+        lattes: "http://lattes.cnpq.br/4444946198128059",
+        orcid: "https://orcid.org/0000-0003-2797-8271"
       }
-    });
-
-    if (!doiMeta || !doiAnchor) return;
-
-    const doiUrl = doiAnchor.getAttribute('href');
-    const doiText = doiAnchor.textContent.trim();
-
-    const icon = document.createElement('span');
-    icon.className = 'doi-link-icon';
-    icon.setAttribute('role', 'link');
-    icon.setAttribute('tabindex', '0');
-    icon.setAttribute('aria-label', 'Abrir DOI ' + doiText);
-    icon.setAttribute('title', 'Abrir DOI ' + doiText);
-
-    const openDoi = (event) => {
-      event.preventDefault();
-      event.stopPropagation();
-      window.open(doiUrl, '_blank', 'noopener,noreferrer');
     };
 
-    icon.addEventListener('click', openDoi);
-    icon.addEventListener('keydown', (event) => {
-      if (event.key === 'Enter' || event.key === ' ') {
-        openDoi(event);
+    function createIconLink(url, className, label) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'icon-link-circle ' + className;
+      link.setAttribute('aria-label', label);
+      link.setAttribute('title', label);
+
+      link.addEventListener('click', function(event) {
+        event.stopPropagation();
+      });
+
+      return link;
+    }
+
+    document.querySelectorAll('.entry-body').forEach((entryBody) => {
+      const metas = entryBody.querySelectorAll('.mini-meta');
+      let authorMeta = null;
+      let doiMeta = null;
+      let doiAnchor = null;
+      let authorName = '';
+
+      metas.forEach((meta) => {
+        const link = meta.querySelector('a[href*="doi.org"], a[href*="dx.doi.org"]');
+
+        if (link) {
+          doiMeta = meta;
+          doiAnchor = link;
+          return;
+        }
+
+        const txt = meta.textContent.trim();
+        const lower = txt.toLowerCase();
+
+        if (
+          lower.includes('autor:') ||
+          lower.includes('autora:') ||
+          lower.includes('tradutor:') ||
+          lower.includes('tradutora:')
+        ) {
+          authorMeta = meta;
+          authorName = txt
+            .replace(/^\s*(autor|autora|tradutor|tradutora)\s*:\s*/i, '')
+            .trim()
+            .toLowerCase();
+        }
+      });
+
+      if (!authorMeta) return;
+
+      const row = document.createElement('div');
+      row.className = 'icon-links-row';
+
+      if (doiMeta && doiAnchor) {
+        const doiUrl = doiAnchor.getAttribute('href');
+        const doiText = doiAnchor.textContent.trim();
+        row.appendChild(
+          createIconLink(doiUrl, 'doi-icon', 'Abrir DOI ' + doiText)
+        );
+        doiMeta.remove();
+      }
+
+      const profile = authorProfiles[authorName];
+
+      if (profile) {
+        if (profile.lattes) {
+          row.appendChild(
+            createIconLink(profile.lattes, 'lattes-icon', 'Abrir currículo Lattes de ' + authorName)
+          );
+        }
+
+        if (profile.orcid) {
+          row.appendChild(
+            createIconLink(profile.orcid, 'orcid-icon', 'Abrir ORCID de ' + authorName)
+          );
+        }
+      }
+
+      if (row.children.length > 0) {
+        authorMeta.insertAdjacentElement('afterend', row);
       }
     });
+  </script>
 
-    doiMeta.remove();
-
-    if (authorMeta) {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'doi-mini-meta';
-      wrapper.appendChild(icon);
-      authorMeta.insertAdjacentElement('afterend', wrapper);
-    } else {
-      const wrapper = document.createElement('div');
-      wrapper.className = 'doi-mini-meta';
-      wrapper.appendChild(icon);
-      entryBody.appendChild(wrapper);
-    }
-  });
-</script>
-
-<script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
-
-<script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
-        async src="//gc.zgo.at/count.js"></script>
+  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
+          async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
+```
