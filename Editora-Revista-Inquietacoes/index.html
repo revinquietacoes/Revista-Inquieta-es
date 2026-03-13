@@ -1,83 +1,750 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xml:lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="Portal institucional da Editora Revista Inquietações, vinculada à Revista Inquietações e dedicada à publicação de obras nas áreas das Humanidades." />
+  <meta name="author" content="Editora Revista Inquietações" />
+  <meta name="theme-color" content="#1f3c88" />
+
   <title>Editora Revista Inquietações</title>
-  <link rel="stylesheet" href="styles.css">
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+  <link rel="shortcut icon" href="assets/favicon.png" />
+
+  <link rel="stylesheet" href="../styles.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --azul-principal:#1f3c88;
+      --azul-escuro:#17306d;
+      --azul-claro:#eaf0fb;
+      --azul-suave:#f5f8ff;
+      --texto:#1f2937;
+      --texto-suave:#5b6472;
+      --borda:#d8e0f0;
+      --branco:#ffffff;
+      --sombra:0 10px 30px rgba(23, 48, 109, 0.08);
+      --sombra-suave:0 6px 18px rgba(23, 48, 109, 0.06);
+      --largura:1240px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Inter", Arial, Helvetica, sans-serif;
+      color:var(--texto);
+      background:linear-gradient(180deg, #f6f8fc 0%, #eef3fb 100%);
+      line-height:1.65;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    a{
+      text-decoration:none;
+      color:var(--azul-principal);
+      transition:0.25s ease;
+    }
+
+    a:hover{
+      color:var(--azul-escuro);
+    }
+
+    .page-shell{
+      width:min(var(--largura), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .site-header{
+      background:linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul-principal) 55%, #2b4ea5 100%);
+      color:var(--branco);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:28px;
+      box-shadow:var(--sombra);
+      position:relative;
+      overflow:hidden;
+      margin:20px 0 10px;
+    }
+
+    .site-header::before{
+      content:"";
+      position:absolute;
+      inset:auto -120px -120px auto;
+      width:320px;
+      height:320px;
+      background:radial-gradient(circle, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 70%);
+      pointer-events:none;
+    }
+
+    .header-wrap{
+      width:min(var(--largura), calc(100% - 32px));
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:28px;
+      padding:34px 0;
+    }
+
+    .brand-block{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      min-width:0;
+    }
+
+    .logo-box{
+      width:92px;
+      height:92px;
+      border-radius:22px;
+      background:rgba(255,255,255,0.14);
+      border:1px solid rgba(255,255,255,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+      backdrop-filter:blur(6px);
+      box-shadow:0 8px 24px rgba(0,0,0,0.12);
+      flex-shrink:0;
+    }
+
+    .logo-box img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .brand h1{
+      font-size:clamp(1.8rem, 3vw, 2.7rem);
+      line-height:1.1;
+      margin-bottom:8px;
+      letter-spacing:-0.02em;
+    }
+
+    .brand p{
+      font-size:1rem;
+      color:rgba(255,255,255,0.88);
+      max-width:720px;
+    }
+
+    .header-badge{
+      background:rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.18);
+      color:#fff;
+      padding:12px 16px;
+      border-radius:999px;
+      font-size:0.92rem;
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    .site-nav{
+      margin:0 auto 24px;
+      max-width:1120px;
+      background:rgba(255,255,255,0.96);
+      border:1px solid rgba(31,60,136,0.10);
+      border-radius:18px;
+      box-shadow:0 8px 18px rgba(31,60,136,0.08);
+      backdrop-filter:blur(8px);
+      overflow:hidden;
+    }
+
+    .site-nav-toggle{
+      display:none;
+      width:100%;
+      border:none;
+      background:transparent;
+      padding:14px 18px;
+      font:inherit;
+      font-weight:700;
+      color:var(--azul-escuro);
+      cursor:pointer;
+      text-align:left;
+    }
+
+    .site-nav-menu{
+      display:flex;
+      flex-wrap:nowrap;
+      align-items:center;
+      justify-content:center;
+      gap:4px;
+      padding:10px 12px;
+      overflow-x:auto;
+      scrollbar-width:thin;
+    }
+
+    .site-nav-menu a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:12px;
+      color:#0f172a;
+      font-weight:600;
+      font-size:0.95rem;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+
+    .site-nav-menu a:hover,
+    .site-nav-menu a:focus-visible{
+      background:#eef3fb;
+      color:var(--azul-escuro);
+      outline:none;
+    }
+
+    .site-nav-menu a.active{
+      background:#e8eef8;
+      color:var(--azul-escuro);
+      box-shadow:inset 0 0 0 1px rgba(31,60,136,0.08);
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:300px minmax(0, 1fr);
+      gap:28px;
+      align-items:start;
+      margin-bottom:40px;
+    }
+
+    .sidebar{
+      background:rgba(255,255,255,0.9);
+      border:1px solid var(--borda);
+      border-radius:24px;
+      box-shadow:var(--sombra-suave);
+      padding:24px;
+      position:sticky;
+      top:18px;
+      backdrop-filter:blur(10px);
+    }
+
+    .sidebar-head{
+      padding-bottom:18px;
+      margin-bottom:18px;
+      border-bottom:1px solid var(--borda);
+    }
+
+    .sidebar-head h2{
+      font-size:1.08rem;
+      color:var(--azul-escuro);
+      margin-bottom:6px;
+    }
+
+    .sidebar-head p{
+      font-size:0.95rem;
+      color:var(--texto-suave);
+    }
+
+    .sidebar-nav{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:22px;
+    }
+
+    .sidebar-nav a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:13px 15px;
+      border-radius:14px;
+      color:var(--texto);
+      background:#fff;
+      border:1px solid transparent;
+      font-weight:600;
+    }
+
+    .sidebar-nav a:hover{
+      border-color:var(--borda);
+      background:var(--azul-suave);
+      transform:translateX(2px);
+    }
+
+    .sidebar-nav a.active{
+      background:linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
+      color:#fff;
+      box-shadow:0 8px 20px rgba(31, 60, 136, 0.18);
+    }
+
+    .side-card{
+      background:linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      border:1px solid var(--borda);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .side-card h3{
+      font-size:1rem;
+      color:var(--azul-escuro);
+      margin-bottom:8px;
+    }
+
+    .side-card p{
+      font-size:0.94rem;
+      color:var(--texto-suave);
+      margin-bottom:10px;
+    }
+
+    .side-card a{
+      font-weight:700;
+      word-break:break-word;
+    }
+
+    .content{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg, rgba(31,60,136,0.98) 0%, rgba(23,48,109,0.98) 100%);
+      color:#fff;
+      border-radius:28px;
+      padding:38px;
+      display:grid;
+      grid-template-columns:minmax(0, 1.3fr) minmax(260px, 420px);
+      gap:28px;
+      align-items:center;
+      box-shadow:var(--sombra);
+      overflow:hidden;
+      position:relative;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 70%);
+      right:-70px;
+      top:-50px;
+      pointer-events:none;
+    }
+
+    .hero h2{
+      font-size:clamp(1.8rem, 3vw, 2.5rem);
+      line-height:1.12;
+      margin-bottom:14px;
+      letter-spacing:-0.02em;
+    }
+
+    .hero p{
+      font-size:1.03rem;
+      color:rgba(255,255,255,0.92);
+      margin-bottom:12px;
+      max-width:760px;
+    }
+
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .pill{
+      background:rgba(255,255,255,0.13);
+      border:1px solid rgba(255,255,255,0.20);
+      color:#fff;
+      padding:9px 14px;
+      border-radius:999px;
+      font-size:0.92rem;
+      font-weight:600;
+    }
+
+    .hero-media{
+      display:flex;
+      justify-content:center;
+      align-items:center;
+    }
+
+    .hero-media-card{
+      width:100%;
+      max-width:360px;
+      min-height:280px;
+      background:rgba(255,255,255,0.10);
+      border:1px solid rgba(255,255,255,0.18);
+      border-radius:26px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:28px;
+      backdrop-filter:blur(10px);
+      box-shadow:0 12px 28px rgba(0,0,0,0.12);
+    }
+
+    .hero-media-card img{
+      max-width:220px;
+      width:100%;
+      height:auto;
+      object-fit:contain;
+      filter:drop-shadow(0 10px 20px rgba(0,0,0,0.12));
+    }
+
+    .section{
+      background:rgba(255,255,255,0.94);
+      border:1px solid var(--borda);
+      border-radius:24px;
+      padding:28px;
+      box-shadow:var(--sombra-suave);
+    }
+
+    .section h3{
+      font-size:1.35rem;
+      color:var(--azul-escuro);
+      margin-bottom:16px;
+      letter-spacing:-0.01em;
+    }
+
+    .section-intro{
+      font-size:1rem;
+      color:var(--texto-suave);
+      margin-bottom:18px;
+      max-width:860px;
+    }
+
+    .grid-2{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:18px;
+    }
+
+    .card{
+      background:linear-gradient(180deg, #ffffff 0%, #f8fbff 100%);
+      border:1px solid var(--borda);
+      border-radius:20px;
+      padding:24px;
+      box-shadow:0 4px 14px rgba(31,60,136,0.04);
+      height:100%;
+    }
+
+    .card h4{
+      font-size:1.08rem;
+      color:var(--azul-principal);
+      margin-bottom:10px;
+    }
+
+    .card p{
+      color:var(--texto-suave);
+      font-size:0.98rem;
+    }
+
+    .catalogo-box{
+      display:flex;
+      flex-wrap:wrap;
+      justify-content:space-between;
+      align-items:center;
+      gap:20px;
+    }
+
+    .catalogo-box p{
+      flex:1 1 620px;
+      color:var(--texto-suave);
+      font-size:1rem;
+    }
+
+    .button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      background:linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
+      color:#fff;
+      padding:14px 22px;
+      border-radius:14px;
+      font-weight:700;
+      border:none;
+      box-shadow:0 10px 24px rgba(31,60,136,0.18);
+    }
+
+    .button:hover{
+      color:#fff;
+      transform:translateY(-1px);
+      box-shadow:0 14px 28px rgba(31,60,136,0.24);
+    }
+
+    .footer{
+      margin:0 auto 34px;
+    }
+
+    .footer-box{
+      background:#fff;
+      border:1px solid var(--borda);
+      border-radius:20px;
+      padding:18px 22px;
+      color:var(--texto-suave);
+      box-shadow:var(--sombra-suave);
+      text-align:center;
+      font-size:0.96rem;
+    }
+
+    .footer-box strong{
+      color:var(--azul-escuro);
+    }
+
+    .footer-box a{
+      font-weight:700;
+    }
+
+    @media (max-width: 1080px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        position:static;
+      }
+
+      .hero{
+        grid-template-columns:1fr;
+      }
+
+      .header-wrap{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .header-badge{
+        white-space:normal;
+      }
+    }
+
+    @media (max-width: 860px){
+      .site-nav{
+        max-width:100%;
+        margin:0 auto 20px;
+      }
+
+      .site-nav-toggle{
+        display:block;
+      }
+
+      .site-nav-menu{
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        padding-top:0;
+        overflow-x:visible;
+      }
+
+      .site-nav-menu.is-open{
+        display:flex;
+      }
+
+      .site-nav-menu a{
+        width:100%;
+        justify-content:flex-start;
+      }
+    }
+
+    @media (max-width: 720px){
+      .page-shell{
+        width:min(var(--largura), calc(100% - 20px));
+      }
+
+      .brand-block{
+        align-items:flex-start;
+      }
+
+      .logo-box{
+        width:78px;
+        height:78px;
+        border-radius:18px;
+      }
+
+      .hero,
+      .section,
+      .sidebar{
+        padding:22px;
+        border-radius:20px;
+      }
+
+      .grid-2{
+        grid-template-columns:1fr;
+      }
+
+      .hero-media-card{
+        min-height:220px;
+      }
+
+      .pills{
+        gap:8px;
+      }
+
+      .pill{
+        font-size:0.86rem;
+      }
+
+      .site-nav{
+        border-radius:18px;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-wrap">
-      <div class="logo-box"><img src="assets/logo-editora.png" alt="Logo da Editora Revista Inquietações"></div>
-      <div class="brand">
-        <h1>Editora Revista Inquietações</h1>
-        <p>Portal institucional da Editora</p>
+
+  <div class="page-shell">
+
+    <header class="site-header">
+      <div class="header-wrap">
+        <div class="brand-block">
+          <div class="logo-box">
+            <img src="assets/favicon.png" alt="Logo da Editora Revista Inquietações">
+          </div>
+          <div class="brand">
+            <h1>Editora Revista Inquietações</h1>
+            <p>Portal institucional da Editora, vinculado ao projeto acadêmico e cultural da Revista Inquietações.</p>
+          </div>
+        </div>
+
+        <div class="header-badge">Catálogo editorial em formação</div>
       </div>
+    </header>
+
+    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu">
+        Menu
+      </button>
+
+      <div class="site-nav-menu" id="site-nav-menu">
+        <a href="../index.html">Início</a>
+        <a href="../edicao-atual.html">Atual</a>
+        <a href="../conteudos.html">Conteúdos</a>
+        <a href="../evento.html">Evento</a>
+        <a href="index.html" class="active">Editora</a>
+        <a href="../sobre.html">Sobre</a>
+        <a href="../equipe-editorial.html">Equipe Editorial</a>
+        <a href="../noticias.html">Notícias</a>
+        <a href="../politicas-editoriais.html">Políticas</a>
+        <a href="../diretrizes-autores.html">Diretrizes</a>
+        <a href="../submissoes.html">Submissões</a>
+        <a href="../templates.html">Templates</a>
+        <a href="../contato.html">Contato</a>
+      </div>
+    </nav>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-head">
+          <h2>Navegação Institucional</h2>
+          <p>Editora vinculada à Revista Inquietações</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a class="active" href="index.html">Início</a>
+          <a href="livros-publicados.html">Livros Publicados</a>
+          <a href="sobre-a-editora.html">Sobre a Editora</a>
+          <a href="contato.html">Contato da Editora</a>
+        </nav>
+
+        <div class="side-card">
+          <h3>Site oficial da revista</h3>
+          <p>Acesse o portal principal da Revista Inquietações.</p>
+          <a href="../index.html">Revista Inquietações</a>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section class="hero">
+          <div>
+            <h2>Editora Revista Inquietações</h2>
+            <p>
+              A Editora Revista Inquietações nasce lado a lado da Revista Inquietações, ampliando o projeto institucional de circulação do conhecimento nas áreas humanas.
+            </p>
+            <p>
+              Seu propósito é publicar obras que dialoguem com filosofia, educação, ciências sociais, história, crítica cultural, tradução e demais campos das Humanidades.
+            </p>
+
+            <div class="pills">
+              <span class="pill">Editora vinculada ao periódico</span>
+              <span class="pill">Humanidades</span>
+              <span class="pill">Difusão científica e editorial</span>
+            </div>
+          </div>
+
+          <div class="hero-media">
+            <div class="hero-media-card">
+              <img src="assets/favicon.png" alt="Identidade visual da Editora Revista Inquietações">
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>Apresentação institucional</h3>
+          <p class="section-intro">
+            A Editora Revista Inquietações estrutura-se como um espaço editorial voltado à circulação qualificada de obras acadêmicas, ensaísticas e tradutórias, em diálogo com os debates contemporâneos das Humanidades.
+          </p>
+
+          <div class="grid-2">
+            <div class="card">
+              <h4>Missão</h4>
+              <p>
+                Contribuir para a disseminação qualificada do conhecimento por meio da publicação de livros, traduções, ensaios e obras acadêmicas conectadas aos debates contemporâneos das Ciências Humanas.
+              </p>
+            </div>
+
+            <div class="card">
+              <h4>Vínculo institucional</h4>
+              <p>
+                A editora integra o projeto cultural e acadêmico da Revista Inquietações, fortalecendo a circulação de pesquisas, traduções e produções intelectuais em formato editorial.
+              </p>
+            </div>
+          </div>
+        </section>
+
+        <section class="section">
+          <h3>Catálogo em formação</h3>
+          <div class="catalogo-box">
+            <p>
+              O catálogo editorial encontra-se em expansão, com foco inicial em traduções, publicações autorais e obras de interesse acadêmico ligadas à filosofia, à educação, à história e às ciências sociais.
+            </p>
+
+            <a class="button" href="livros-publicados.html">Conhecer livros publicados</a>
+          </div>
+        </section>
+      </main>
     </div>
-  </header>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="sidebar-head">
-        <h2>Navegação Institucional</h2>
-        <p>Editora vinculada à Revista Inquietações</p>
+    <footer class="footer">
+      <div class="footer-box">
+        <strong>Editora Revista Inquietações</strong> — Organização editorial: Diego Vinícius • Instagram:
+        <a href="https://www.instagram.com/iamthed1/" target="_blank" rel="noopener noreferrer">@iamthed1</a>
       </div>
-      <nav class="sidebar-nav">
-        <a class="active" href="index.html">Início</a>
-        <a href="livros-publicados.html">Livros Publicados</a>
-        <a href="sobre-a-editora.html">Sobre a Editora</a>
-        <a href="contato.html">Contato da Editora</a>
-      </nav>
-      <div class="side-card">
-        <h3>Site oficial da revista</h3>
-        <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/" target="_blank">Revista Inquietações</a>
-      </div>
-    </aside>
+    </footer>
 
-    <main class="content">
-      <section class="hero">
-        <div>
-          <h2>Editora Revista Inquietações</h2>
-          <p>A Editora Revista Inquietações nasce lado a lado da Revista Inquietações, ampliando o projeto institucional de circulação do conhecimento nas áreas humanas.</p>
-          <p>Seu propósito é publicar obras que dialoguem com filosofia, educação, ciências sociais, história, crítica cultural, tradução e demais campos das Humanidades.</p>
-          <div class="pills">
-            <span class="pill">Editora vinculada ao periódico</span>
-            <span class="pill">Humanidades</span>
-            <span class="pill">Difusão científica e editorial</span>
-          </div>
-        </div>
-       <div class="hero-media">
-  <img src="assets/logo-editora.png" alt="Banner da Editora Revista Inquietações" style="width:420px;max-width:100%;">
-</div>
-      </section>
-
-      <section class="section">
-        <h3>Apresentação institucional</h3>
-        <div class="grid-2">
-          <div class="card">
-            <h4>Missão</h4>
-            <p>Contribuir para a disseminação qualificada do conhecimento por meio da publicação de livros, traduções, ensaios e obras acadêmicas conectadas aos debates contemporâneos das Ciências Humanas.</p>
-          </div>
-          <div class="card">
-            <h4>Vínculo institucional</h4>
-            <p>A editora integra o projeto cultural e acadêmico da Revista Inquietações, fortalecendo a circulação de pesquisas, traduções e produções intelectuais em formato editorial.</p>
-          </div>
-        </div>
-      </section>
-
-      <section class="section">
-        <h3>Catálogo em formação</h3>
-        <p>O catálogo editorial encontra-se em expansão, com foco inicial em traduções, publicações autorais e obras de interesse acadêmico ligadas à filosofia, à educação, à história e às ciências sociais.</p>
-        <a class="button" href="livros-publicados.html">Conhecer livros publicados</a>
-      </section>
-    </main>
   </div>
 
-  <footer class="footer">
-    <div class="footer-box">
-      <strong>Editora Revista Inquietações</strong> — Organização editorial: Diego Vinícius • Instagram: <a href="https://www.instagram.com/iamthed1/" target="_blank">@iamthed1</a>
-    </div>
-  </footer>
+  <script>
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const navMenu = document.querySelector('.site-nav-menu');
+
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('is-open');
+        const expanded = navMenu.classList.contains('is-open');
+        navToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      });
+    }
+  </script>
+
 </body>
 </html>
