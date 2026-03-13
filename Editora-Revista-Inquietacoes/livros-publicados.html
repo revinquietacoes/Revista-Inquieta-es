@@ -335,42 +335,7 @@
     }
 
     .book-main{
-      display:grid;
-      grid-template-columns:260px minmax(0, 1fr);
-      gap:26px;
       padding:24px;
-      align-items:start;
-    }
-
-    .book-cover-column{
-      display:flex;
-      flex-direction:column;
-      gap:16px;
-    }
-
-    .book-cover-block{
-      background:linear-gradient(180deg, #f9fbff 0%, #eef3fb 100%);
-      border:1px solid var(--borda);
-      border-radius:20px;
-      padding:14px;
-      box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
-    }
-
-    .cover-label{
-      font-size:.84rem;
-      font-weight:700;
-      text-transform:uppercase;
-      letter-spacing:.04em;
-      color:var(--azul-escuro);
-      margin-bottom:10px;
-    }
-
-    .book-cover{
-      width:100%;
-      aspect-ratio:2 / 3;
-      object-fit:cover;
-      border-radius:14px;
-      box-shadow:0 10px 24px rgba(17,24,39,.14);
     }
 
     .book-header{
@@ -408,24 +373,68 @@
 
     .book-description{
       color:var(--texto-suave);
-      margin-bottom:18px;
+      margin-bottom:20px;
+      max-width:920px;
+      font-size:.98rem;
     }
 
-    .edition-grid{
+    .edition-stack{
+      display:flex;
+      flex-direction:column;
+      gap:18px;
+    }
+
+    .edition-row{
       display:grid;
-      grid-template-columns:repeat(2, minmax(0, 1fr));
+      grid-template-columns:190px minmax(0, 1fr);
       gap:16px;
-      margin-bottom:18px;
-    }
-
-    .edition-card{
+      align-items:stretch;
       background:#f8fbff;
       border:1px solid var(--borda);
-      border-radius:18px;
-      padding:18px;
+      border-radius:22px;
+      padding:16px;
     }
 
-    .edition-card h4{
+    .edition-cover-card{
+background:linear-gradient(180deg,#fdfefe 0%,#eef3fb 100%);
+border:1px solid var(--borda);
+border-radius:18px;
+padding:18px;
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+height:100%;
+}
+
+    .cover-label{
+font-size:.75rem;
+margin-bottom:14px;
+letter-spacing:.06em;
+}
+
+    .book-cover{
+width:140px;
+aspect-ratio:9 / 16;
+object-fit:contain;
+object-position:center;
+border-radius:10px;
+box-shadow:0 10px 22px rgba(0,0,0,.15);
+margin:auto;
+}
+
+    .edition-info-card{
+      background:#fff;
+      border:1px solid var(--borda);
+      border-radius:18px;
+      padding:16px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      min-height:100%;
+    }
+
+    .edition-info-card h4{
       font-size:1rem;
       color:var(--azul-escuro);
       margin-bottom:12px;
@@ -433,30 +442,33 @@
 
     .meta-grid{
       display:grid;
-      grid-template-columns:1fr;
-      gap:10px;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:8px;
     }
 
     .meta-item{
-      background:#ffffff;
+      background:#f8fbff;
       border:1px solid rgba(31,60,136,.08);
-      border-radius:14px;
-      padding:10px 12px;
+      border-radius:12px;
+      padding:9px 11px;
       color:var(--texto-suave);
-      font-size:.94rem;
+      font-size:.88rem;
+      line-height:1.45;
     }
 
     .meta-item strong{
       color:var(--azul-escuro);
       display:block;
       margin-bottom:2px;
+      font-size:.87rem;
     }
 
     .book-actions{
       display:flex;
       flex-wrap:wrap;
-      gap:12px;
+      gap:10px;
       align-items:center;
+      margin-top:14px;
     }
 
     .buy-button{
@@ -464,16 +476,17 @@
       align-items:center;
       justify-content:center;
       gap:10px;
-      padding:13px 18px;
-      border-radius:14px;
+      padding:12px 16px;
+      border-radius:13px;
       font-weight:700;
+      font-size:.95rem;
       transition:.25s ease;
-      min-width:210px;
+      min-width:190px;
     }
 
     .buy-button img{
-      width:22px;
-      height:22px;
+      width:20px;
+      height:20px;
       object-fit:contain;
       flex-shrink:0;
     }
@@ -623,21 +636,19 @@
       }
     }
 
-    @media (max-width: 920px){
-      .book-main{
-        grid-template-columns:1fr;
+    @media (max-width: 900px){
+      .edition-row{
+display:grid;
+grid-template-columns:230px minmax(0,1fr);
+gap:18px;
+}
+
+      .book-cover{
+        aspect-ratio:9 / 16;
+        max-height:none;
       }
 
-      .book-cover-column{
-        flex-direction:row;
-        flex-wrap:wrap;
-      }
-
-      .book-cover-block{
-        flex:1 1 240px;
-      }
-
-      .edition-grid{
+      .meta-grid{
         grid-template-columns:1fr;
       }
     }
@@ -705,10 +716,6 @@
         width:100%;
         min-width:0;
       }
-
-      .book-cover-column{
-        flex-direction:column;
-      }
     }
   </style>
 </head>
@@ -771,83 +778,89 @@
         <section class="section">
           <h2>Livros publicados</h2>
           <p class="section-intro">
-            O catálogo editorial reúne traduções, edições comentadas e publicações de interesse acadêmico nas áreas das Humanidades. Cada obra apresenta capas por edição, informações editoriais organizadas e acesso direto às opções de compra em capa comum e Kindle.
+            O catálogo editorial reúne traduções, edições comentadas e publicações de interesse acadêmico nas áreas das Humanidades. Cada edição está organizada com capa e ficha editorial lado a lado, de forma clara, equilibrada e elegante.
           </p>
 
           <div class="book-list">
 
             <article class="book-item">
               <div class="book-main">
-                <div class="book-cover-column">
-                  <div class="book-cover-block">
-                    <div class="cover-label">Capa comum</div>
-                    <img src="https://m.media-amazon.com/images/I/71njPxvZKUL._AC_CR0%2C0%2C0%2C0_SX615_SY462_.jpg" alt="Capa física do livro Cartas da juventude (1850–1866)" class="book-cover">
+                <div class="book-header">
+                  <div class="book-title-group">
+                    <h3>Cartas da juventude (1850–1866)</h3>
+                    <p class="authors">Friedrich Wilhelm Nietzsche</p>
                   </div>
 
-                  <div class="book-cover-block">
-                    <div class="cover-label">Kindle</div>
-                    <img src="https://m.media-amazon.com/images/I/81xpBuyO6jL._AC_CR0%2C0%2C0%2C0_SX615_SY462_.jpg" alt="Capa Kindle do livro Cartas da juventude (1850–1866)" class="book-cover">
-                  </div>
+                  <span class="status-badge">Disponível em capa comum e Kindle</span>
                 </div>
 
-                <div class="book-body">
-                  <div class="book-header">
-                    <div class="book-title-group">
-                      <h3>Cartas da juventude (1850–1866)</h3>
-                      <p class="authors">Friedrich Wilhelm Nietzsche</p>
+                <p class="book-description">
+                  Reunião das correspondências iniciais de Nietzsche, com tradução, organização e comentários de Diego Vinícius Brito dos Santos, em uma edição voltada à formação intelectual do filósofo e ao estudo de sua juventude.
+                </p>
+
+                <div class="edition-stack">
+                  <div class="edition-row">
+                    <div class="edition-cover-card">
+                      <div class="cover-label">Capa comum</div>
+                      <img src="https://m.media-amazon.com/images/I/71njPxvZKUL._AC_CR0%2C0%2C0%2C0_SX615_SY462_.jpg" alt="Capa física do livro Cartas da juventude (1850–1866)" class="book-cover">
                     </div>
 
-                    <span class="status-badge">Disponível em capa comum e Kindle</span>
-                  </div>
-
-                  <p class="book-description">
-                    Reunião das correspondências iniciais de Nietzsche, com tradução, organização e comentários de Diego Vinícius Brito dos Santos, em uma edição voltada à formação intelectual do filósofo e ao estudo de sua juventude.
-                  </p>
-
-                  <div class="edition-grid">
-                    <div class="edition-card">
-                      <h4>Livro físico</h4>
-                      <div class="meta-grid">
-                        <div class="meta-item"><strong>ASIN</strong>B0GRP1Q243</div>
-                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
-                        <div class="meta-item"><strong>Data da publicação</strong>7 março 2026</div>
-                        <div class="meta-item"><strong>Idioma</strong>Português</div>
-                        <div class="meta-item"><strong>Número de páginas</strong>508 páginas</div>
-                        <div class="meta-item"><strong>ISBN-13</strong>979-8251052428</div>
-                        <div class="meta-item"><strong>Peso do produto</strong>848 g</div>
-                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
-                        <div class="meta-item"><strong>Dimensões</strong>15.24 x 2.92 x 22.86 cm</div>
+                    <div class="edition-info-card">
+                      <div>
+                        <h4>Livro físico</h4>
+                        <div class="meta-grid">
+                          <div class="meta-item"><strong>ASIN</strong>B0GRP1Q243</div>
+                          <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                          <div class="meta-item"><strong>Data da publicação</strong>7 março 2026</div>
+                          <div class="meta-item"><strong>Idioma</strong>Português</div>
+                          <div class="meta-item"><strong>Número de páginas</strong>508 páginas</div>
+                          <div class="meta-item"><strong>ISBN-13</strong>979-8251052428</div>
+                          <div class="meta-item"><strong>Peso do produto</strong>848 g</div>
+                          <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                          <div class="meta-item"><strong>Dimensões</strong>15.24 x 2.92 x 22.86 cm</div>
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="edition-card">
-                      <h4>Kindle</h4>
-                      <div class="meta-grid">
-                        <div class="meta-item"><strong>ASIN</strong>B0GRTH81NJ</div>
-                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
-                        <div class="meta-item"><strong>Acessibilidade</strong>Saiba mais</div>
-                        <div class="meta-item"><strong>Data da publicação</strong>9 março 2026</div>
-                        <div class="meta-item"><strong>Idioma</strong>Português</div>
-                        <div class="meta-item"><strong>Tamanho do arquivo</strong>216.0 MB</div>
-                        <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
-                        <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
-                        <div class="meta-item"><strong>ISBN-13</strong>979-8251052428</div>
-                        <div class="meta-item"><strong>Page Flip</strong>Não habilitado</div>
-                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                      <div class="book-actions">
+                        <a class="buy-button buy-physical" href="https://www.amazon.com/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
+                          <img src="assets/amazon-livro-fisico-logo.png" alt="Livro físico">
+                          Comprar capa comum
+                        </a>
                       </div>
                     </div>
                   </div>
 
-                  <div class="book-actions">
-                    <a class="buy-button buy-physical" href="https://www.amazon.com/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
-                      <img src="assets/amazon-livro-fisico-logo.png" alt="Livro físico">
-                      Comprar capa comum
-                    </a>
+                  <div class="edition-row">
+                    <div class="edition-cover-card">
+                      <div class="cover-label">Kindle</div>
+                      <img src="https://m.media-amazon.com/images/I/81xpBuyO6jL._AC_CR0%2C0%2C0%2C0_SX615_SY462_.jpg" alt="Capa Kindle do livro Cartas da juventude (1850–1866)" class="book-cover">
+                    </div>
 
-                    <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRTH81NJ?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
-                      <img src="assets/kindle-logo.png" alt="Kindle">
-                      Comprar Kindle
-                    </a>
+                    <div class="edition-info-card">
+                      <div>
+                        <h4>Kindle</h4>
+                        <div class="meta-grid">
+                          <div class="meta-item"><strong>ASIN</strong>B0GRTH81NJ</div>
+                          <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                          <div class="meta-item"><strong>Acessibilidade</strong>Saiba mais</div>
+                          <div class="meta-item"><strong>Data da publicação</strong>9 março 2026</div>
+                          <div class="meta-item"><strong>Idioma</strong>Português</div>
+                          <div class="meta-item"><strong>Tamanho do arquivo</strong>216.0 MB</div>
+                          <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
+                          <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
+                          <div class="meta-item"><strong>ISBN-13</strong>979-8251052428</div>
+                          <div class="meta-item"><strong>Page Flip</strong>Não habilitado</div>
+                          <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                        </div>
+                      </div>
+
+                      <div class="book-actions">
+                        <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRTH81NJ?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
+                          <img src="assets/kindle-logo.png" alt="Kindle">
+                          Comprar Kindle
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -878,77 +891,83 @@
 
             <article class="book-item">
               <div class="book-main">
-                <div class="book-cover-column">
-                  <div class="book-cover-block">
-                    <div class="cover-label">Capa comum</div>
-                    <img src="https://m.media-amazon.com/images/I/71wY2RmTJ5L._SL1499_.jpg" alt="Capa física do livro O Manifesto do Partido Comunista" class="book-cover">
+                <div class="book-header">
+                  <div class="book-title-group">
+                    <h3>O Manifesto do Partido Comunista</h3>
+                    <p class="authors">Karl Marx &amp; Friedrich Engels</p>
                   </div>
 
-                  <div class="book-cover-block">
-                    <div class="cover-label">Kindle</div>
-                    <img src="https://m.media-amazon.com/images/I/81asowRHFiL._SY466_.jpg" alt="Capa Kindle do livro O Manifesto do Partido Comunista" class="book-cover">
-                  </div>
+                  <span class="status-badge">Disponível em capa comum e Kindle</span>
                 </div>
 
-                <div class="book-body">
-                  <div class="book-header">
-                    <div class="book-title-group">
-                      <h3>O Manifesto do Partido Comunista</h3>
-                      <p class="authors">Karl Marx &amp; Friedrich Engels</p>
+                <p class="book-description">
+                  Publicado originalmente em 1848, o Manifesto do Partido Comunista é um dos textos políticos mais influentes da história moderna. Nesta edição, o texto clássico é apresentado com tradução e notas de Diego Vinícius Brito dos Santos, oferecendo ao leitor uma leitura acessível e contextualizada de uma obra fundamental para a filosofia política e a teoria social.
+                </p>
+
+                <div class="edition-stack">
+                  <div class="edition-row">
+                    <div class="edition-cover-card">
+                      <div class="cover-label">Capa comum</div>
+                      <img src="https://m.media-amazon.com/images/I/71wY2RmTJ5L._SL1499_.jpg" alt="Capa física do livro O Manifesto do Partido Comunista" class="book-cover">
                     </div>
 
-                    <span class="status-badge">Disponível em capa comum e Kindle</span>
-                  </div>
-
-                  <p class="book-description">
-                    Publicado originalmente em 1848, o Manifesto do Partido Comunista é um dos textos políticos mais influentes da história moderna. Nesta edição, o texto clássico é apresentado com tradução e notas de Diego Vinícius Brito dos Santos, oferecendo ao leitor uma leitura acessível e contextualizada de uma obra fundamental para a filosofia política e a teoria social.
-                  </p>
-
-                  <div class="edition-grid">
-                    <div class="edition-card">
-                      <h4>Livro físico</h4>
-                      <div class="meta-grid">
-                        <div class="meta-item"><strong>ASIN</strong>B0GRRLW4V4</div>
-                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
-                        <div class="meta-item"><strong>Data da publicação</strong>8 março 2026</div>
-                        <div class="meta-item"><strong>Idioma</strong>Português</div>
-                        <div class="meta-item"><strong>Número de páginas</strong>69 páginas</div>
-                        <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
-                        <div class="meta-item"><strong>Peso do produto</strong>159 g</div>
-                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
-                        <div class="meta-item"><strong>Dimensões</strong>15.24 x 0.41 x 22.86 cm</div>
+                    <div class="edition-info-card">
+                      <div>
+                        <h4>Livro físico</h4>
+                        <div class="meta-grid">
+                          <div class="meta-item"><strong>ASIN</strong>B0GRRLW4V4</div>
+                          <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                          <div class="meta-item"><strong>Data da publicação</strong>8 março 2026</div>
+                          <div class="meta-item"><strong>Idioma</strong>Português</div>
+                          <div class="meta-item"><strong>Número de páginas</strong>69 páginas</div>
+                          <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
+                          <div class="meta-item"><strong>Peso do produto</strong>159 g</div>
+                          <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                          <div class="meta-item"><strong>Dimensões</strong>15.24 x 0.41 x 22.86 cm</div>
+                        </div>
                       </div>
-                    </div>
 
-                    <div class="edition-card">
-                      <h4>Kindle</h4>
-                      <div class="meta-grid">
-                        <div class="meta-item"><strong>ASIN</strong>B0GRQLPD3J</div>
-                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
-                        <div class="meta-item"><strong>Acessibilidade</strong>Saiba mais</div>
-                        <div class="meta-item"><strong>Data da publicação</strong>8 março 2026</div>
-                        <div class="meta-item"><strong>Edição</strong>1ª</div>
-                        <div class="meta-item"><strong>Idioma</strong>Português</div>
-                        <div class="meta-item"><strong>Tamanho do arquivo</strong>20.9 MB</div>
-                        <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
-                        <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
-                        <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
-                        <div class="meta-item"><strong>Page Flip</strong>Não habilitado</div>
-                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                      <div class="book-actions">
+                        <a class="buy-button buy-physical" href="https://www.amazon.com/-/pt/dp/B0GRRLW4V4/ref=tmm_pap_swatch_0" target="_blank" rel="noopener noreferrer">
+                          <img src="assets/amazon-livro-fisico-logo.png" alt="Livro físico">
+                          Comprar capa comum
+                        </a>
                       </div>
                     </div>
                   </div>
 
-                  <div class="book-actions">
-                    <a class="buy-button buy-physical" href="https://www.amazon.com/-/pt/dp/B0GRRLW4V4/ref=tmm_pap_swatch_0" target="_blank" rel="noopener noreferrer">
-                      <img src="assets/amazon-livro-fisico-logo.png" alt="Livro físico">
-                      Comprar capa comum
-                    </a>
+                  <div class="edition-row">
+                    <div class="edition-cover-card">
+                      <div class="cover-label">Kindle</div>
+                      <img src="https://m.media-amazon.com/images/I/81asowRHFiL._SY466_.jpg" alt="Capa Kindle do livro O Manifesto do Partido Comunista" class="book-cover">
+                    </div>
 
-                    <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRQLPD3J?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
-                      <img src="assets/kindle-logo.png" alt="Kindle">
-                      Comprar Kindle
-                    </a>
+                    <div class="edition-info-card">
+                      <div>
+                        <h4>Kindle</h4>
+                        <div class="meta-grid">
+                          <div class="meta-item"><strong>ASIN</strong>B0GRQLPD3J</div>
+                          <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                          <div class="meta-item"><strong>Acessibilidade</strong>Saiba mais</div>
+                          <div class="meta-item"><strong>Data da publicação</strong>8 março 2026</div>
+                          <div class="meta-item"><strong>Edição</strong>1ª</div>
+                          <div class="meta-item"><strong>Idioma</strong>Português</div>
+                          <div class="meta-item"><strong>Tamanho do arquivo</strong>20.9 MB</div>
+                          <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
+                          <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
+                          <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
+                          <div class="meta-item"><strong>Page Flip</strong>Não habilitado</div>
+                          <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                        </div>
+                      </div>
+
+                      <div class="book-actions">
+                        <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRQLPD3J?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
+                          <img src="assets/kindle-logo.png" alt="Kindle">
+                          Comprar Kindle
+                        </a>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
