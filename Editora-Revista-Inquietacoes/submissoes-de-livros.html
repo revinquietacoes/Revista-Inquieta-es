@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xml:lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <meta name="description" content="Submissão de livros para avaliação editorial na Revista Inquietações Editorial." />
+  <meta name="author" content="Revista Inquietações Editorial" />
+  <meta name="theme-color" content="#1f3c88" />
+
+  <title>Submissões de Livros | Revista Inquietações Editorial</title>
+
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png" />
+  <link rel="icon" type="image/png" sizes="192x192" href="assets/favicon.png" />
+  <link rel="apple-touch-icon" href="assets/favicon.png" />
+  <link rel="shortcut icon" href="assets/favicon.png" />
+
+  <link rel="stylesheet" href="../styles.css" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <style>
+    :root{
+      --azul-principal:#1f3c88;
+      --azul-escuro:#17306d;
+      --azul-claro:#eaf0fb;
+      --azul-suave:#f5f8ff;
+      --texto:#1f2937;
+      --texto-suave:#5b6472;
+      --borda:#d8e0f0;
+      --branco:#ffffff;
+      --alerta:#fff7e8;
+      --sombra:0 10px 30px rgba(23, 48, 109, 0.08);
+      --sombra-suave:0 6px 18px rgba(23, 48, 109, 0.06);
+      --largura:1240px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Inter", Arial, Helvetica, sans-serif;
+      color:var(--texto);
+      background:linear-gradient(180deg, #f6f8fc 0%, #eef3fb 100%);
+      line-height:1.65;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    a{
+      text-decoration:none;
+      color:var(--azul-principal);
+      transition:0.25s ease;
+    }
+
+    a:hover{
+      color:var(--azul-escuro);
+    }
+
+    .page-shell{
+      width:min(var(--largura), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .site-header{
+      background:linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul-principal) 55%, #2b4ea5 100%);
+      color:var(--branco);
+      border:1px solid rgba(255,255,255,0.10);
+      border-radius:28px;
+      box-shadow:var(--sombra);
+      position:relative;
+      overflow:hidden;
+      margin:20px 0 10px;
+    }
+
+    .site-header::before{
+      content:"";
+      position:absolute;
+      inset:auto -120px -120px auto;
+      width:320px;
+      height:320px;
+      background:radial-gradient(circle, rgba(255,255,255,0.16) 0%, rgba(255,255,255,0) 70%);
+      pointer-events:none;
+    }
+
+    .header-wrap{
+      width:min(var(--largura), calc(100% - 32px));
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:28px;
+      padding:34px 0;
+    }
+
+    .brand-block{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      min-width:0;
+    }
+
+    .logo-box{
+      width:92px;
+      height:92px;
+      border-radius:22px;
+      background:rgba(255,255,255,0.14);
+      border:1px solid rgba(255,255,255,0.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+      backdrop-filter:blur(6px);
+      box-shadow:0 8px 24px rgba(0,0,0,0.12);
+      flex-shrink:0;
+    }
+
+    .logo-box img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .brand h1{
+      font-size:clamp(1.8rem, 3vw, 2.7rem);
+      line-height:1.1;
+      margin-bottom:8px;
+      letter-spacing:-0.02em;
+    }
+
+    .brand p{
+      font-size:1rem;
+      color:rgba(255,255,255,0.88);
+      max-width:720px;
+    }
+
+    .header-badge{
+      background:rgba(255,255,255,0.12);
+      border:1px solid rgba(255,255,255,0.18);
+      color:#fff;
+      padding:12px 16px;
+      border-radius:999px;
+      font-size:0.92rem;
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:300px minmax(0, 1fr);
+      gap:28px;
+      align-items:start;
+      margin-bottom:40px;
+    }
+
+    .sidebar{
+      background:rgba(255,255,255,0.9);
+      border:1px solid var(--borda);
+      border-radius:24px;
+      box-shadow:var(--sombra-suave);
+      padding:24px;
+      position:sticky;
+      top:18px;
+      backdrop-filter:blur(10px);
+    }
+
+    .sidebar-head{
+      padding-bottom:18px;
+      margin-bottom:18px;
+      border-bottom:1px solid var(--borda);
+    }
+
+    .sidebar-head h2{
+      font-size:1.08rem;
+      color:var(--azul-escuro);
+      margin-bottom:6px;
+    }
+
+    .sidebar-head p{
+      font-size:0.95rem;
+      color:var(--texto-suave);
+    }
+
+    .sidebar-nav{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:22px;
+    }
+
+    .sidebar-nav a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:13px 15px;
+      border-radius:14px;
+      color:var(--texto);
+      background:#fff;
+      border:1px solid transparent;
+      font-weight:600;
+    }
+
+    .sidebar-nav a:hover{
+      border-color:var(--borda);
+      background:var(--azul-suave);
+      transform:translateX(2px);
+    }
+
+    .sidebar-nav a.active{
+      background:linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
+      color:#fff;
+      box-shadow:0 8px 20px rgba(31, 60, 136, 0.18);
+    }
+
+    .side-card{
+      background:linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      border:1px solid var(--borda);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .side-card h3{
+      font-size:1rem;
+      color:var(--azul-escuro);
+      margin-bottom:8px;
+    }
+
+    .side-card p{
+      font-size:0.94rem;
+      color:var(--texto-suave);
+      margin-bottom:10px;
+    }
+
+    .content{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+
+    .hero{
+      background:linear-gradient(135deg, rgba(31,60,136,0.98) 0%, rgba(23,48,109,0.98) 100%);
+      color:#fff;
+      border-radius:28px;
+      padding:34px;
+      box-shadow:var(--sombra);
+      position:relative;
+      overflow:hidden;
+    }
+
+    .hero::after{
+      content:"";
+      position:absolute;
+      width:240px;
+      height:240px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,0.10) 0%, rgba(255,255,255,0) 70%);
+      right:-70px;
+      top:-50px;
+      pointer-events:none;
+    }
+
+    .hero h2{
+      font-size:clamp(1.8rem, 3vw, 2.5rem);
+      line-height:1.12;
+      margin-bottom:14px;
+      letter-spacing:-0.02em;
+    }
+
+    .hero p{
+      font-size:1rem;
+      color:rgba(255,255,255,0.92);
+      margin-bottom:12px;
+      max-width:850px;
+    }
+
+    .pills{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin-top:18px;
+    }
+
+    .pill{
+      background:rgba(255,255,255,0.13);
+      border:1px solid rgba(255,255,255,0.20);
+      color:#fff;
+      padding:9px 14px;
+      border-radius:999px;
+      font-size:0.92rem;
+      font-weight:600;
+    }
+
+    .notice{
+      background:var(--alerta);
+      border:1px solid #f2dfb6;
+      border-radius:18px;
+      padding:18px 20px;
+      color:#6a4b00;
+    }
+
+    .section{
+      background:rgba(255,255,255,0.94);
+      border:1px solid var(--borda);
+      border-radius:24px;
+      padding:28px;
+      box-shadow:var(--sombra-suave);
+    }
+
+    .section h3{
+      font-size:1.28rem;
+      color:var(--azul-escuro);
+      margin-bottom:10px;
+      letter-spacing:-0.01em;
+    }
+
+    .section-intro{
+      font-size:0.98rem;
+      color:var(--texto-suave);
+      margin-bottom:18px;
+      max-width:860px;
+    }
+
+    .form-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:16px 18px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:8px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    .field label{
+      font-size:0.92rem;
+      font-weight:700;
+      color:var(--azul-escuro);
+    }
+
+    .field input,
+    .field select,
+    .field textarea{
+      width:100%;
+      border:1px solid var(--borda);
+      background:#f9fbff;
+      border-radius:14px;
+      padding:13px 14px;
+      font:inherit;
+      color:var(--texto);
+      outline:none;
+      transition:border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    .field input:focus,
+    .field select:focus,
+    .field textarea:focus{
+      border-color:rgba(31,60,136,0.45);
+      box-shadow:0 0 0 4px rgba(31,60,136,0.08);
+      background:#fff;
+    }
+
+    .field textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+
+    .hint{
+      font-size:0.84rem;
+      color:var(--texto-suave);
+    }
+
+    .check-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:12px;
+    }
+
+    .check-card{
+      display:flex;
+      gap:10px;
+      align-items:flex-start;
+      background:#f9fbff;
+      border:1px solid var(--borda);
+      border-radius:14px;
+      padding:14px;
+    }
+
+    .check-card input{
+      margin-top:3px;
+      accent-color:var(--azul-principal);
+    }
+
+    .upload-grid{
+      display:grid;
+      grid-template-columns:repeat(3, minmax(0, 1fr));
+      gap:16px;
+    }
+
+    .upload-card{
+      border:1px dashed rgba(31,60,136,0.28);
+      background:linear-gradient(180deg, #fbfdff 0%, #f3f7ff 100%);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .upload-card h4{
+      font-size:1rem;
+      color:var(--azul-escuro);
+      margin-bottom:8px;
+    }
+
+    .upload-card p{
+      font-size:0.9rem;
+      color:var(--texto-suave);
+      margin-bottom:12px;
+    }
+
+    .upload-card input[type="file"]{
+      background:#fff;
+      border:1px solid var(--borda);
+      padding:12px;
+      border-radius:12px;
+    }
+
+    .actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      margin-top:22px;
+    }
+
+    .button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      background:linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
+      color:#fff;
+      padding:14px 22px;
+      border-radius:14px;
+      font-weight:700;
+      border:none;
+      box-shadow:0 10px 24px rgba(31,60,136,0.18);
+      cursor:pointer;
+    }
+
+    .button:hover{
+      color:#fff;
+      transform:translateY(-1px);
+      box-shadow:0 14px 28px rgba(31,60,136,0.24);
+    }
+
+    .button.secondary{
+      background:#f5f8ff;
+      color:var(--azul-escuro);
+      border:1px solid var(--borda);
+      box-shadow:none;
+    }
+
+    .button.secondary:hover{
+      background:#eef3ff;
+      color:var(--azul-escuro);
+    }
+
+    .footer{
+      margin:0 auto 34px;
+    }
+
+    .footer-box{
+      background:#fff;
+      border:1px solid var(--borda);
+      border-radius:20px;
+      padding:18px 22px;
+      color:var(--texto-suave);
+      box-shadow:var(--sombra-suave);
+      text-align:center;
+      font-size:0.96rem;
+    }
+
+    .footer-box strong{
+      color:var(--azul-escuro);
+    }
+
+    @media (max-width: 1080px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        position:static;
+      }
+
+      .header-wrap{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .header-badge{
+        white-space:normal;
+      }
+    }
+
+    @media (max-width: 900px){
+      .upload-grid{
+        grid-template-columns:1fr;
+      }
+
+      .check-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 760px){
+      .page-shell{
+        width:min(var(--largura), calc(100% - 20px));
+      }
+
+      .brand-block{
+        align-items:flex-start;
+      }
+
+      .logo-box{
+        width:78px;
+        height:78px;
+        border-radius:18px;
+      }
+
+      .hero,
+      .section,
+      .sidebar{
+        padding:22px;
+        border-radius:20px;
+      }
+
+      .form-grid{
+        grid-template-columns:1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="page-shell">
+
+    <header class="site-header">
+      <div class="header-wrap">
+        <div class="brand-block">
+          <div class="logo-box">
+            <img src="assets/logo-editora.png" alt="Logo da Revista Inquietações Editorial">
+          </div>
+          <div class="brand">
+            <h1>Submissões de Livros</h1>
+            <p>Envio de manuscritos para avaliação editorial de possível publicação pela Revista Inquietações Editorial.</p>
+          </div>
+        </div>
+
+        <div class="header-badge">Avaliação editorial</div>
+      </div>
+    </header>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-head">
+          <h2>Navegação Institucional</h2>
+          <p>Editora da Revista Inquietações</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="index.html">Início</a>
+          <a href="livros-publicados.html">Livros Publicados</a>
+          <a href="sobre-a-editora.html">Sobre a Editora</a>
+          <a class="active" href="submissoes-de-livros.html">Submissões de Livros</a>
+          <a href="contato.html">Contato da Editora</a>
+        </nav>
+
+        <div class="side-card">
+          <h3>Site oficial da revista</h3>
+          <p>Acesse o portal principal da Revista Inquietações.</p>
+          <a href="../index.html">Revista Inquietações</a>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section class="hero">
+          <h2>Submeta seu livro para avaliação editorial</h2>
+          <p>
+            Esta página permite o envio de manuscritos, capas e informações bibliográficas para análise inicial da equipe editorial. O preenchimento completo facilita a triagem, a avaliação técnica e a eventual preparação do livro para circulação editorial e publicação em plataformas compatíveis com o padrão KDP/Amazon.
+          </p>
+          <p>
+            O envio não garante publicação automática. Todo material será submetido à apreciação editorial, verificação de adequação temática, qualidade formal, viabilidade técnica e pertinência institucional.
+          </p>
+
+          <div class="pills">
+            <span class="pill">Livros autorais</span>
+            <span class="pill">Traduções</span>
+            <span class="pill">E-books e impressos</span>
+          </div>
+        </section>
+
+        <div class="notice">
+          <strong>Observação:</strong> os arquivos enviados serão encaminhados para análise editorial.
+        </div>
+
+        <section class="section">
+          <h3>Formulário de submissão editorial</h3>
+          <p class="section-intro">
+            Preencha os campos abaixo com atenção. O envio será registrado e os arquivos submetidos serão associados a uma pasta individual da proposta.
+          </p>
+
+          <form action="processar-submissao-livro.php" method="post" enctype="multipart/form-data">
+
+            <section class="section" style="padding:22px; margin-bottom:18px;">
+              <h3>1. Dados do(a) autor(a) ou responsável</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="nome_autor">Nome completo</label>
+                  <input type="text" id="nome_autor" name="nome_autor" required>
+                </div>
+
+                <div class="field">
+                  <label for="nome_publicacao">Nome para publicação</label>
+                  <input type="text" id="nome_publicacao" name="nome_publicacao">
+                </div>
+
+                <div class="field">
+                  <label for="email">E-mail</label>
+                  <input type="email" id="email" name="email" required>
+                </div>
+
+                <div class="field">
+                  <label for="telefone">Telefone / WhatsApp</label>
+                  <input type="text" id="telefone" name="telefone">
+                </div>
+
+                <div class="field full">
+                  <label for="endereco">Endereço completo</label>
+                  <input type="text" id="endereco" name="endereco">
+                </div>
+
+                <div class="field">
+                  <label for="cidade">Cidade</label>
+                  <input type="text" id="cidade" name="cidade">
+                </div>
+
+                <div class="field">
+                  <label for="estado">Estado</label>
+                  <input type="text" id="estado" name="estado">
+                </div>
+
+                <div class="field">
+                  <label for="pais">País</label>
+                  <input type="text" id="pais" name="pais" value="Brasil">
+                </div>
+
+                <div class="field">
+                  <label for="site_autor">Site / ORCID / currículo / rede autoral</label>
+                  <input type="url" id="site_autor" name="site_autor">
+                </div>
+
+                <div class="field full">
+                  <label for="bio_autor">Biografia do(a) autor(a)</label>
+                  <textarea id="bio_autor" name="bio_autor"></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section class="section" style="padding:22px; margin-bottom:18px;">
+              <h3>2. Dados gerais do livro</h3>
+              <div class="form-grid">
+                <div class="field full">
+                  <label for="titulo">Título do livro</label>
+                  <input type="text" id="titulo" name="titulo" required>
+                </div>
+
+                <div class="field full">
+                  <label for="subtitulo">Subtítulo</label>
+                  <input type="text" id="subtitulo" name="subtitulo">
+                </div>
+
+                <div class="field">
+                  <label for="idioma">Idioma principal</label>
+                  <select id="idioma" name="idioma" required>
+                    <option value="">Selecione</option>
+                    <option>Português</option>
+                    <option>Português e Alemão</option>
+                    <option>Português e Inglês</option>
+                    <option>Inglês</option>
+                    <option>Espanhol</option>
+                    <option>Alemão</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="tipo_obra">Tipo de obra</label>
+                  <select id="tipo_obra" name="tipo_obra" required>
+                    <option value="">Selecione</option>
+                    <option>Livro autoral</option>
+                    <option>Coletânea</option>
+                    <option>Tradução</option>
+                    <option>Edição crítica</option>
+                    <option>Ensaio</option>
+                    <option>Obra acadêmica</option>
+                    <option>Outro</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="categoria">Categoria / área temática</label>
+                  <input type="text" id="categoria" name="categoria">
+                </div>
+
+                <div class="field">
+                  <label for="palavras_chave">Palavras-chave</label>
+                  <input type="text" id="palavras_chave" name="palavras_chave">
+                </div>
+
+                <div class="field">
+                  <label for="faixa_etaria">Faixa etária / público-alvo</label>
+                  <input type="text" id="faixa_etaria" name="faixa_etaria">
+                </div>
+
+                <div class="field">
+                  <label for="edicao">Número da edição</label>
+                  <input type="text" id="edicao" name="edicao">
+                </div>
+
+                <div class="field">
+                  <label for="paginas_estimadas">Número estimado de páginas</label>
+                  <input type="number" id="paginas_estimadas" name="paginas_estimadas" min="1">
+                </div>
+
+                <div class="field">
+                  <label for="isbn_existente">ISBN já existente?</label>
+                  <select id="isbn_existente" name="isbn_existente">
+                    <option value="">Selecione</option>
+                    <option>Não</option>
+                    <option>Sim</option>
+                  </select>
+                </div>
+
+                <div class="field full">
+                  <label for="isbn">ISBN (se houver)</label>
+                  <input type="text" id="isbn" name="isbn">
+                </div>
+
+                <div class="field full">
+                  <label for="descricao">Descrição / sinopse do livro</label>
+                  <textarea id="descricao" name="descricao" required></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section class="section" style="padding:22px; margin-bottom:18px;">
+              <h3>3. Direitos, autoria e originalidade</h3>
+              <div class="check-grid">
+                <label class="check-card">
+                  <input type="checkbox" name="declara_autoria" value="Sim" required>
+                  <span>Declaro ser o(a) autor(a), organizador(a) ou responsável legal pelo envio do manuscrito.</span>
+                </label>
+
+                <label class="check-card">
+                  <input type="checkbox" name="declara_originalidade" value="Sim" required>
+                  <span>Declaro que o material submetido é original ou que possuo autorização para sua publicação.</span>
+                </label>
+
+                <label class="check-card">
+                  <input type="checkbox" name="declara_direitos_imagem" value="Sim">
+                  <span>Declaro possuir autorização para uso de imagens, ilustrações e demais elementos visuais incluídos na obra.</span>
+                </label>
+
+                <label class="check-card">
+                  <input type="checkbox" name="declara_traducao" value="Sim">
+                  <span>Se for tradução, declaro possuir os direitos ou permissões necessárias para tradução e publicação.</span>
+                </label>
+              </div>
+
+              <div class="form-grid" style="margin-top:18px;">
+                <div class="field full">
+                  <label for="detalhes_direitos">Detalhes sobre direitos autorais, licenças ou permissões</label>
+                  <textarea id="detalhes_direitos" name="detalhes_direitos"></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section class="section" style="padding:22px; margin-bottom:18px;">
+              <h3>4. Especificações editoriais e técnicas</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="formato_publicacao">Formato pretendido</label>
+                  <select id="formato_publicacao" name="formato_publicacao">
+                    <option value="">Selecione</option>
+                    <option>E-book</option>
+                    <option>Impresso</option>
+                    <option>E-book e impresso</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="miolo_cor">Cor do miolo</label>
+                  <select id="miolo_cor" name="miolo_cor">
+                    <option value="">Selecione</option>
+                    <option>Preto e branco</option>
+                    <option>Colorido</option>
+                    <option>Não definido</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="acabamento_capa">Acabamento de capa</label>
+                  <select id="acabamento_capa" name="acabamento_capa">
+                    <option value="">Selecione</option>
+                    <option>Fosco</option>
+                    <option>Brilhante</option>
+                    <option>Não definido</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="sangria">O livro possui sangria?</label>
+                  <select id="sangria" name="sangria">
+                    <option value="">Selecione</option>
+                    <option>Sim</option>
+                    <option>Não</option>
+                    <option>Não sei informar</option>
+                  </select>
+                </div>
+
+                <div class="field">
+                  <label for="tamanho_livro">Tamanho / trim size pretendido</label>
+                  <input type="text" id="tamanho_livro" name="tamanho_livro" placeholder="Ex.: 15,24 x 22,86 cm">
+                </div>
+
+                <div class="field">
+                  <label for="acabamento_interno">Elementos internos especiais</label>
+                  <input type="text" id="acabamento_interno" name="acabamento_interno">
+                </div>
+
+                <div class="field full">
+                  <label for="sumario_observacoes">Observações técnicas sobre diagramação e estrutura</label>
+                  <textarea id="sumario_observacoes" name="sumario_observacoes"></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section class="section" style="padding:22px; margin-bottom:18px;">
+              <h3>5. Metadados comerciais e de divulgação</h3>
+              <div class="form-grid">
+                <div class="field">
+                  <label for="preco_sugerido_ebook">Preço sugerido do e-book</label>
+                  <input type="text" id="preco_sugerido_ebook" name="preco_sugerido_ebook">
+                </div>
+
+                <div class="field">
+                  <label for="preco_sugerido_impresso">Preço sugerido do impresso</label>
+                  <input type="text" id="preco_sugerido_impresso" name="preco_sugerido_impresso">
+                </div>
+
+                <div class="field full">
+                  <label for="descricao_amazon">Texto de descrição comercial para loja</label>
+                  <textarea id="descricao_amazon" name="descricao_amazon"></textarea>
+                </div>
+
+                <div class="field full">
+                  <label for="publico_alvo">Público-alvo e posicionamento editorial</label>
+                  <textarea id="publico_alvo" name="publico_alvo"></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section class="section" style="padding:22px; margin-bottom:18px;">
+              <h3>6. Upload de arquivos</h3>
+              <div class="upload-grid">
+                <div class="upload-card">
+                  <h4>Capa frontal</h4>
+                  <p>JPG, JPEG, PNG ou PDF.</p>
+                  <input type="file" name="capa_frontal" accept=".jpg,.jpeg,.png,.pdf,image/*" required>
+                </div>
+
+                <div class="upload-card">
+                  <h4>Capa traseira</h4>
+                  <p>JPG, JPEG, PNG ou PDF.</p>
+                  <input type="file" name="capa_traseira" accept=".jpg,.jpeg,.png,.pdf,image/*" required>
+                </div>
+
+                <div class="upload-card">
+                  <h4>Manuscrito</h4>
+                  <p>DOC, DOCX, PDF ou ODT.</p>
+                  <input type="file" name="manuscrito" accept=".doc,.docx,.pdf,.odt" required>
+                </div>
+              </div>
+
+              <div class="form-grid" style="margin-top:18px;">
+                <div class="field full">
+                  <label for="observacoes_arquivos">Observações sobre os arquivos enviados</label>
+                  <textarea id="observacoes_arquivos" name="observacoes_arquivos"></textarea>
+                </div>
+              </div>
+            </section>
+
+            <section class="section" style="padding:22px;">
+              <h3>7. Confirmação final</h3>
+              <div class="check-grid">
+                <label class="check-card">
+                  <input type="checkbox" name="aceite_avaliacao" value="Sim" required>
+                  <span>Estou ciente de que o envio será submetido à avaliação editorial e não implica aprovação automática.</span>
+                </label>
+
+                <label class="check-card">
+                  <input type="checkbox" name="aceite_contato" value="Sim" required>
+                  <span>Autorizo o contato da equipe editorial para esclarecimentos, ajustes e encaminhamentos relativos a esta submissão.</span>
+                </label>
+              </div>
+
+              <div class="actions">
+                <button type="submit" class="button">Enviar submissão</button>
+                <button type="reset" class="button secondary">Limpar formulário</button>
+              </div>
+
+              <p class="hint" style="margin-top:14px;">
+                Ao enviar, os dados serão processados pelo backend em PHP, os arquivos serão organizados na pasta da submissão e será gerada uma cópia textual e PDF do formulário.
+              </p>
+            </section>
+
+          </form>
+        </section>
+      </main>
+    </div>
+
+    <footer class="footer">
+      <div class="footer-box">
+        <strong>Revista Inquietações Editorial</strong> — Submissão de livros para avaliação editorial.
+      </div>
+    </footer>
+
+  </div>
+</body>
+</html>
