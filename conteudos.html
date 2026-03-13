@@ -741,132 +741,133 @@
   </div>
 
   <script>
-    const navToggle = document.querySelector('.site-nav-toggle');
-    const navMenu = document.querySelector('.site-nav-menu');
+  const navToggle = document.querySelector('.site-nav-toggle');
+  const navMenu = document.querySelector('.site-nav-menu');
 
-    if (navToggle && navMenu) {
-      navToggle.addEventListener('click', () => {
-        const isOpen = navMenu.classList.toggle('is-open');
-        navToggle.setAttribute('aria-expanded', String(isOpen));
-      });
+  if (navToggle && navMenu) {
+    navToggle.addEventListener('click', () => {
+      const isOpen = navMenu.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', String(isOpen));
+    });
+  }
+
+  const authorProfiles = {
+    "diego vinícius brito dos santos": {
+      lattes: "http://lattes.cnpq.br/4347574894656811",
+      orcid: "https://orcid.org/0000-0002-9064-0663"
+    },
+    "geiza venicia dos santos": {
+      lattes: "http://lattes.cnpq.br/4444946198128059",
+      orcid: "https://orcid.org/0000-0003-2797-8271"
     }
+  };
 
-    const authorProfiles = {
-      "diego vinícius brito dos santos": {
-        lattes: "http://lattes.cnpq.br/4347574894656811",
-        orcid: "https://orcid.org/0000-0002-9064-0663"
-      },
-      "geiza venicia dos santos": {
-        lattes: "http://lattes.cnpq.br/4444946198128059",
-        orcid: "https://orcid.org/0000-0003-2797-8271"
-      }
-    };
-
-    const isbnLinks = {
-      "cartas da juventude (1850–1866) de friedrich nietzsche (alemão-português)": {
-        url: "https://www.amazon.com.br/juventude-1850-1866-Portuguese-Friedrich-Nietzsche/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1",
-        label: "Abrir livro Cartas da juventude (1850–1866) na Amazon"
-      },
-      "o manifesto do partido comunista": {
-        url: "https://www.amazon.com.br/Manifesto-Partido-Comunista-Portuguese/dp/B0GRRLW4V4?ref_=ast_author_dp",
-        label: "Abrir livro O Manifesto do Partido Comunista na Amazon"
-      }
-    };
-
-    function createIconLink(url, className, label) {
-      const link = document.createElement('a');
-      link.href = url;
-      link.target = '_blank';
-      link.rel = 'noopener noreferrer';
-      link.className = 'icon-link-circle ' + className;
-      link.setAttribute('aria-label', label);
-      link.setAttribute('title', label);
-
-      link.addEventListener('click', function(event) {
-        event.stopPropagation();
-      });
-
-      return link;
+  const isbnLinks = {
+    "cartas da juventude (1850–1866) de friedrich nietzsche (alemão-português)": {
+      url: "https://www.amazon.com.br/juventude-1850-1866-Portuguese-Friedrich-Nietzsche/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1",
+      label: "Abrir livro Cartas da juventude (1850–1866) na Amazon"
+    },
+    "o manifesto do partido comunista": {
+      url: "https://www.amazon.com.br/Manifesto-Partido-Comunista-Portuguese/dp/B0GRRLW4V4?ref_=ast_author_dp",
+      label: "Abrir livro O Manifesto do Partido Comunista na Amazon"
     }
+  };
 
-    document.querySelectorAll('.entry-body').forEach((entryBody) => {
-      const metas = entryBody.querySelectorAll('.mini-meta');
-      const h3 = entryBody.querySelector('h3');
+  function createIconLink(url, className, label) {
+    const link = document.createElement('a');
+    link.href = url;
+    link.target = '_blank';
+    link.rel = 'noopener noreferrer';
+    link.className = 'icon-link-circle ' + className;
+    link.setAttribute('aria-label', label);
+    link.setAttribute('title', label);
 
-      let authorMeta = null;
-      let doiMeta = null;
-      let doiAnchor = null;
-      let authorName = '';
-      let workTitle = h3 ? h3.textContent.trim().toLowerCase() : '';
+    link.addEventListener('click', function(event) {
+      event.stopPropagation();
+    });
 
-      metas.forEach((meta) => {
-        const link = meta.querySelector('a[href*="doi.org"], a[href*="dx.doi.org"]');
+    return link;
+  }
 
-        if (link) {
-          doiMeta = meta;
-          doiAnchor = link;
-          return;
-        }
+  document.querySelectorAll('.entry-body').forEach((entryBody) => {
+    const metas = entryBody.querySelectorAll('.mini-meta');
+    const h3 = entryBody.querySelector('h3');
 
-        const txt = meta.textContent.trim();
-        const lower = txt.toLowerCase();
+    let authorMeta = null;
+    let doiMeta = null;
+    let doiAnchor = null;
+    let authorName = '';
+    let workTitle = h3 ? h3.textContent.trim().toLowerCase() : '';
 
-        if (
-          lower.includes('autor:') ||
-          lower.includes('autora:') ||
-          lower.includes('tradutor:') ||
-          lower.includes('tradutora:')
-        ) {
-          authorMeta = meta;
-          authorName = txt
-            .replace(/^\s*(autor|autora|tradutor|tradutora)\s*:\s*/i, '')
-            .trim()
-            .toLowerCase();
-        }
-      });
+    metas.forEach((meta) => {
+      const link = meta.querySelector('a[href*="doi.org"], a[href*="dx.doi.org"]');
 
-      if (!authorMeta) return;
-
-      const row = document.createElement('div');
-      row.className = 'icon-links-row';
-
-      if (doiMeta && doiAnchor) {
-        const doiUrl = doiAnchor.getAttribute('href');
-        const doiText = doiAnchor.textContent.trim();
-        row.appendChild(
-          createIconLink(doiUrl, 'doi-icon', 'Abrir DOI ' + doiText)
-        );
-        doiMeta.remove();
+      if (link) {
+        doiMeta = meta;
+        doiAnchor = link;
+        return;
       }
 
-      const profile = authorProfiles[authorName];
+      const txt = meta.textContent.trim();
+      const lower = txt.toLowerCase();
 
-      if (profile) {
-        if (profile.lattes) {
-          row.appendChild(
-            createIconLink(profile.lattes, 'lattes-icon', 'Abrir currículo Lattes de ' + authorName)
-          );
-        }
-
-        if (profile.orcid) {
-          row.appendChild(
-            createIconLink(profile.orcid, 'orcid-icon', 'Abrir ORCID de ' + authorName)
-          );
-        }
-      }
-
-      const isbn = isbnLinks[workTitle];
-      if (isbn) {
-        row.appendChild(
-          createIconLink(isbn.url, 'isbn-icon', isbn.label)
-        );
-      }
-
-      if (row.children.length > 0) {
-        authorMeta.insertAdjacentElement('afterend', row);
+      if (
+        lower.includes('autor:') ||
+        lower.includes('autora:') ||
+        lower.includes('tradutor:') ||
+        lower.includes('tradutora:')
+      ) {
+        authorMeta = meta;
+        authorName = txt
+          .replace(/^\s*(autor|autora|tradutor|tradutora)\s*:\s*/i, '')
+          .trim()
+          .toLowerCase();
       }
     });
-  </script>
+
+    const insertionTarget = authorMeta || entryBody.querySelector('.mini-meta');
+    if (!insertionTarget) return;
+
+    const row = document.createElement('div');
+    row.className = 'icon-links-row';
+
+    if (doiMeta && doiAnchor) {
+      const doiUrl = doiAnchor.getAttribute('href');
+      const doiText = doiAnchor.textContent.trim();
+      row.appendChild(
+        createIconLink(doiUrl, 'doi-icon', 'Abrir DOI ' + doiText)
+      );
+      doiMeta.remove();
+    }
+
+    const profile = authorProfiles[authorName];
+
+    if (profile) {
+      if (profile.lattes) {
+        row.appendChild(
+          createIconLink(profile.lattes, 'lattes-icon', 'Abrir currículo Lattes de ' + authorName)
+        );
+      }
+
+      if (profile.orcid) {
+        row.appendChild(
+          createIconLink(profile.orcid, 'orcid-icon', 'Abrir ORCID de ' + authorName)
+        );
+      }
+    }
+
+    const isbn = isbnLinks[workTitle];
+    if (isbn) {
+      row.appendChild(
+        createIconLink(isbn.url, 'isbn-icon', isbn.label)
+      );
+    }
+
+    if (row.children.length > 0) {
+      insertionTarget.insertAdjacentElement('afterend', row);
+    }
+  });
+</script>
 
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
