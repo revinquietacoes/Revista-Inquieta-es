@@ -3,7 +3,7 @@
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
          http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
- <responseDate>2026-03-10T00:00:00Z</responseDate>
+  <responseDate>2026-03-10T12:00:00Z</responseDate>
   <request verb="Identify">https://revinquietacoes.github.io/Revista-Inquieta-es/oai/identify.xml</request>
 
   <Identify>
@@ -15,7 +15,15 @@
     <deletedRecord>no</deletedRecord>
     <granularity>YYYY-MM-DD</granularity>
     <description>
-      Revista científica eletrônica dedicada à divulgação de pesquisas, traduções e ensaios nas áreas de Humanidades, Filosofia, Educação e campos afins.
+      <oai-identifier xmlns="http://www.openarchives.org/OAI/2.0/oai-identifier"
+                      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                      xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/oai-identifier
+                      http://www.openarchives.org/OAI/2.0/oai-identifier.xsd">
+        <scheme>oai</scheme>
+        <repositoryIdentifier>revinquietacoes.github.io</repositoryIdentifier>
+        <delimiter>:</delimiter>
+        <sampleIdentifier>oai:revinquietacoes.github.io:artigo-exemplo</sampleIdentifier>
+      </oai-identifier>
     </description>
   </Identify>
 </OAI-PMH>
