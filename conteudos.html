@@ -1,30 +1,3 @@
-Sintaticamente, **sim** — esse bloco está correto em JavaScript:
-
-```javascript
-"geiza venicia dos santos": {
-  lattes: "http://lattes.cnpq.br/4444946198128059",
-  orcid: "https://orcid.org/0000-0003-2797-8271"
-}
-```
-
-O que eu **não consigo confirmar só pelo código** é se esse ORCID é realmente da Geiza, porque ele está igual ao do Diego. Se for mesmo esse, pode manter.
-
-Abaixo está o **código completo** do `conteudos.html`, já com:
-
-* ícone do **DOI**
-* ícone do **Lattes**
-* ícone do **ORCID**
-* puxados automaticamente pelo nome do autor
-* ícones na pasta `assets/`
-* remoção da duplicação do script do GoatCounter
-
-Use estes nomes de arquivos na pasta `assets/`:
-
-* `assets/doi-icon.png`
-* `assets/lattes-icon.png`
-* `assets/orcid-icon.png`
-
-```html
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
@@ -276,9 +249,11 @@ Use estes nomes de arquivos na pasta `assets/`:
     .icon-link-circle.orcid-icon{
       background-image: url("assets/orcid-icon.png");
     }
+
     .icon-link-circle.isbn-icon{
-  background-image: url("assets/isbn.png");
+      background-image: url("assets/isbn.png");
     }
+
     @media (max-width: 700px) {
       .catalog-section {
         padding: 18px;
@@ -623,17 +598,6 @@ Use estes nomes de arquivos na pasta `assets/`:
                 <div class="entry-body">
                   <h3>Cartas da juventude (1850–1866) de Friedrich Nietzsche (alemão-português)</h3>
                   <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
-                  <div class="icon-links-row">
-
-                  <a href="https://www.amazon.com.br/juventude-1850-1866-Portuguese-Friedrich-Nietzsche/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1"
-                   target="_blank"
-                  rel="noopener noreferrer"
-                  class="icon-link-circle isbn-icon"
-                  aria-label="Abrir livro Cartas da juventude (1850–1866) na Amazon"
-                  title="Abrir livro Cartas da juventude (1850–1866)">
-                  </a>
-
-                 </div>
                 </div>
               </a>
             </article>
@@ -647,17 +611,6 @@ Use estes nomes de arquivos na pasta `assets/`:
                 <div class="entry-body">
                   <h3>O Manifesto do Partido Comunista</h3>
                   <p class="mini-meta">Tradutor: Diego Vinícius Brito dos Santos</p>
-                  <div class="icon-links-row">
-
-                  <a href="https://www.amazon.com.br/Manifesto-Partido-Comunista-Portuguese/dp/B0GRRLW4V4?ref_=ast_author_dp"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  class="icon-link-circle isbn-icon"
-                  aria-label="Abrir livro O Manifesto do Partido Comunista na Amazon"
-                  title="Abrir livro O Manifesto do Partido Comunista">
-                  </a>
-
-                 </div>
                 </div>
               </a>
             </article>
@@ -809,6 +762,17 @@ Use estes nomes de arquivos na pasta `assets/`:
       }
     };
 
+    const isbnLinks = {
+      "cartas da juventude (1850–1866) de friedrich nietzsche (alemão-português)": {
+        url: "https://www.amazon.com.br/juventude-1850-1866-Portuguese-Friedrich-Nietzsche/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1",
+        label: "Abrir livro Cartas da juventude (1850–1866) na Amazon"
+      },
+      "o manifesto do partido comunista": {
+        url: "https://www.amazon.com.br/Manifesto-Partido-Comunista-Portuguese/dp/B0GRRLW4V4?ref_=ast_author_dp",
+        label: "Abrir livro O Manifesto do Partido Comunista na Amazon"
+      }
+    };
+
     function createIconLink(url, className, label) {
       const link = document.createElement('a');
       link.href = url;
@@ -827,10 +791,13 @@ Use estes nomes de arquivos na pasta `assets/`:
 
     document.querySelectorAll('.entry-body').forEach((entryBody) => {
       const metas = entryBody.querySelectorAll('.mini-meta');
+      const h3 = entryBody.querySelector('h3');
+
       let authorMeta = null;
       let doiMeta = null;
       let doiAnchor = null;
       let authorName = '';
+      let workTitle = h3 ? h3.textContent.trim().toLowerCase() : '';
 
       metas.forEach((meta) => {
         const link = meta.querySelector('a[href*="doi.org"], a[href*="dx.doi.org"]');
@@ -888,6 +855,13 @@ Use estes nomes de arquivos na pasta `assets/`:
         }
       }
 
+      const isbn = isbnLinks[workTitle];
+      if (isbn) {
+        row.appendChild(
+          createIconLink(isbn.url, 'isbn-icon', isbn.label)
+        );
+      }
+
       if (row.children.length > 0) {
         authorMeta.insertAdjacentElement('afterend', row);
       }
@@ -898,4 +872,3 @@ Use estes nomes de arquivos na pasta `assets/`:
           async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
-```
