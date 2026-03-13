@@ -55,6 +55,58 @@
 }
 </script>
 
+<style>
+.indexers-grid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:12px;
+margin-top:14px;
+}
+
+.indexer-link{
+display:flex;
+align-items:center;
+justify-content:center;
+padding:14px;
+background:#ffffff;
+border:1px solid rgba(31,60,136,0.12);
+border-radius:16px;
+text-decoration:none;
+transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+min-height:90px;
+}
+
+.indexer-link:hover,
+.indexer-link:focus-visible{
+transform:translateY(-2px);
+box-shadow:0 10px 24px rgba(31,60,136,0.12);
+border-color:rgba(31,60,136,0.28);
+outline:none;
+}
+
+.indexer-link img{
+max-width:100%;
+max-height:48px;
+width:auto;
+height:auto;
+display:block;
+object-fit:contain;
+}
+
+.indexer-caption{
+margin-top:12px;
+font-size:0.95rem;
+line-height:1.5;
+color:#44506b;
+}
+
+@media (max-width: 640px){
+.indexers-grid{
+grid-template-columns:1fr;
+}
+}
+</style>
+
 </head>
 
 <body class="journal-home">
@@ -300,6 +352,43 @@ Instagram, e-mail e canais institucionais.
 <div><strong>Status:</strong> Primeira edição</div>
 
 </div>
+
+</section>
+
+<section class="sidebar-block journal-data">
+
+<h2>Indexadores</h2>
+
+<div class="indexers-grid">
+
+<a
+class="indexer-link"
+href="https://zenodo.org/communities/revista-inqueta-acoes"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Acessar a página da Revista Inquietações no Zenodo"
+title="Zenodo"
+>
+<img src="assets/zenodo-logo.png" alt="Logo do Zenodo" />
+</a>
+
+<a
+class="indexer-link"
+href="https://journalseeker.researchbib.com/view/issn/3086-4119"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Acessar a página da Revista Inquietações no ResearchBib"
+title="ResearchBib"
+>
+<img src="assets/researchbib-logo.png" alt="Logo do ResearchBib" />
+</a>
+
+</div>
+
+<p class="indexer-caption">
+A revista também está presente em plataformas de preservação e indexação acadêmica.
+Clique nas logos para acessar os registros externos.
+</p>
 
 </section>
 
