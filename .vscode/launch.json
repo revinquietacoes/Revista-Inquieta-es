@@ -7,8 +7,8 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Open minicursos.html",
-            "file": "c:\\Users\\diego\\Documents\\GitHub\\Revista-Inquieta-es\\minicursos.html"
+            "name": "Open evento.html",
+            "file": "c:\\Users\\diego\\Documents\\GitHub\\Revista-Inquieta-es\\index.html"
         }
     ]
 }

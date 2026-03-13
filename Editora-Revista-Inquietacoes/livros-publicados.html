@@ -1,229 +1,1014 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xml:lang="pt-BR">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Livros Publicados | Editora Revista Inquietações</title>
-  <link rel="stylesheet" href="styles.css">
+  <title>Livros Publicados | Revista Inquietações Editorial</title>
+
+  <link rel="stylesheet" href="../styles.css">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --azul-principal:#1f3c88;
+      --azul-escuro:#17306d;
+      --azul-claro:#eaf0fb;
+      --azul-suave:#f6f8fd;
+      --texto:#1f2937;
+      --texto-suave:#5b6472;
+      --borda:#d8e0f0;
+      --branco:#ffffff;
+      --sombra:0 10px 30px rgba(23,48,109,.08);
+      --sombra-suave:0 6px 18px rgba(23,48,109,.06);
+      --largura:1240px;
+    }
+
+    *{
+      margin:0;
+      padding:0;
+      box-sizing:border-box;
+    }
+
+    html{
+      scroll-behavior:smooth;
+    }
+
+    body{
+      font-family:"Inter", Arial, Helvetica, sans-serif;
+      color:var(--texto);
+      background:linear-gradient(180deg,#f6f8fc 0%,#eef3fb 100%);
+      line-height:1.65;
+    }
+
+    img{
+      max-width:100%;
+      display:block;
+    }
+
+    a{
+      text-decoration:none;
+      color:var(--azul-principal);
+      transition:.25s ease;
+    }
+
+    a:hover{
+      color:var(--azul-escuro);
+    }
+
+    .page-shell{
+      width:min(var(--largura), calc(100% - 32px));
+      margin:0 auto;
+    }
+
+    .site-header{
+      background:linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul-principal) 55%, #2b4ea5 100%);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:28px;
+      box-shadow:var(--sombra);
+      position:relative;
+      overflow:hidden;
+      margin:20px 0 10px;
+    }
+
+    .site-header::before{
+      content:"";
+      position:absolute;
+      inset:auto -120px -120px auto;
+      width:320px;
+      height:320px;
+      background:radial-gradient(circle, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 70%);
+      pointer-events:none;
+    }
+
+    .header-wrap{
+      width:min(var(--largura), calc(100% - 32px));
+      margin:0 auto;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:28px;
+      padding:34px 0;
+    }
+
+    .brand-block{
+      display:flex;
+      align-items:center;
+      gap:22px;
+      min-width:0;
+    }
+
+    .logo-box{
+      width:92px;
+      height:92px;
+      border-radius:22px;
+      background:rgba(255,255,255,.14);
+      border:1px solid rgba(255,255,255,.18);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:14px;
+      backdrop-filter:blur(6px);
+      box-shadow:0 8px 24px rgba(0,0,0,.12);
+      flex-shrink:0;
+    }
+
+    .logo-box img{
+      width:100%;
+      height:100%;
+      object-fit:contain;
+    }
+
+    .brand h1{
+      font-size:clamp(1.8rem, 3vw, 2.7rem);
+      line-height:1.1;
+      margin-bottom:8px;
+      letter-spacing:-.02em;
+    }
+
+    .brand p{
+      font-size:1rem;
+      color:rgba(255,255,255,.88);
+      max-width:720px;
+    }
+
+    .header-badge{
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
+      padding:12px 16px;
+      border-radius:999px;
+      font-size:.92rem;
+      font-weight:600;
+      white-space:nowrap;
+    }
+
+    .site-nav{
+      margin:0 auto 24px;
+      max-width:980px;
+      background:rgba(255,255,255,.96);
+      border:1px solid rgba(31,60,136,.10);
+      border-radius:18px;
+      box-shadow:0 8px 18px rgba(31,60,136,.08);
+      backdrop-filter:blur(8px);
+      overflow:hidden;
+    }
+
+    .site-nav-toggle{
+      display:none;
+      width:100%;
+      border:none;
+      background:transparent;
+      padding:14px 18px;
+      font:inherit;
+      font-weight:700;
+      color:var(--azul-escuro);
+      cursor:pointer;
+      text-align:left;
+    }
+
+    .site-nav-menu{
+      display:flex;
+      flex-wrap:nowrap;
+      align-items:center;
+      justify-content:center;
+      gap:6px;
+      padding:10px 12px;
+      overflow-x:auto;
+      scrollbar-width:thin;
+    }
+
+    .site-nav-menu a{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:10px 14px;
+      border-radius:12px;
+      color:#0f172a;
+      font-weight:600;
+      font-size:.95rem;
+      white-space:nowrap;
+      flex:0 0 auto;
+    }
+
+    .site-nav-menu a:hover,
+    .site-nav-menu a:focus-visible{
+      background:#eef3fb;
+      color:var(--azul-escuro);
+      outline:none;
+    }
+
+    .site-nav-menu a.active{
+      background:#e8eef8;
+      color:var(--azul-escuro);
+      box-shadow:inset 0 0 0 1px rgba(31,60,136,.08);
+    }
+
+    .layout{
+      display:grid;
+      grid-template-columns:290px minmax(0, 1fr);
+      gap:28px;
+      align-items:start;
+      margin-bottom:40px;
+    }
+
+    .sidebar{
+      background:rgba(255,255,255,.92);
+      border:1px solid var(--borda);
+      border-radius:24px;
+      box-shadow:var(--sombra-suave);
+      padding:24px;
+      position:sticky;
+      top:18px;
+      backdrop-filter:blur(10px);
+    }
+
+    .sidebar-head{
+      padding-bottom:18px;
+      margin-bottom:18px;
+      border-bottom:1px solid var(--borda);
+    }
+
+    .sidebar-head h2{
+      font-size:1.08rem;
+      color:var(--azul-escuro);
+      margin-bottom:6px;
+    }
+
+    .sidebar-head p{
+      font-size:.95rem;
+      color:var(--texto-suave);
+    }
+
+    .sidebar-nav{
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+      margin-bottom:22px;
+    }
+
+    .sidebar-nav a{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      padding:13px 15px;
+      border-radius:14px;
+      color:var(--texto);
+      background:#fff;
+      border:1px solid transparent;
+      font-weight:600;
+    }
+
+    .sidebar-nav a:hover{
+      border-color:var(--borda);
+      background:var(--azul-suave);
+      transform:translateX(2px);
+    }
+
+    .sidebar-nav a.active{
+      background:linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
+      color:#fff;
+      box-shadow:0 8px 20px rgba(31,60,136,.18);
+    }
+
+    .side-card{
+      background:linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      border:1px solid var(--borda);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .side-card h3{
+      font-size:1rem;
+      color:var(--azul-escuro);
+      margin-bottom:8px;
+    }
+
+    .side-card p{
+      font-size:.94rem;
+      color:var(--texto-suave);
+      margin-bottom:10px;
+    }
+
+    .content{
+      display:flex;
+      flex-direction:column;
+      gap:24px;
+    }
+
+    .section{
+      background:rgba(255,255,255,.95);
+      border:1px solid var(--borda);
+      border-radius:26px;
+      padding:30px;
+      box-shadow:var(--sombra-suave);
+    }
+
+    .section h2{
+      font-size:1.65rem;
+      color:var(--azul-escuro);
+      margin-bottom:10px;
+      letter-spacing:-.01em;
+    }
+
+    .section-intro{
+      color:var(--texto-suave);
+      max-width:860px;
+      margin-bottom:26px;
+    }
+
+    .book-list{
+      display:flex;
+      flex-direction:column;
+      gap:22px;
+    }
+
+    .book-item{
+      border:1px solid var(--borda);
+      border-radius:24px;
+      background:linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
+      box-shadow:0 8px 20px rgba(31,60,136,.05);
+      overflow:hidden;
+    }
+
+    .book-main{
+      display:grid;
+      grid-template-columns:260px minmax(0, 1fr);
+      gap:26px;
+      padding:24px;
+      align-items:start;
+    }
+
+    .book-cover-column{
+      display:flex;
+      flex-direction:column;
+      gap:16px;
+    }
+
+    .book-cover-block{
+      background:linear-gradient(180deg, #f9fbff 0%, #eef3fb 100%);
+      border:1px solid var(--borda);
+      border-radius:20px;
+      padding:14px;
+      box-shadow:inset 0 1px 0 rgba(255,255,255,.7);
+    }
+
+    .cover-label{
+      font-size:.84rem;
+      font-weight:700;
+      text-transform:uppercase;
+      letter-spacing:.04em;
+      color:var(--azul-escuro);
+      margin-bottom:10px;
+    }
+
+    .book-cover{
+      width:100%;
+      aspect-ratio:2 / 3;
+      object-fit:cover;
+      border-radius:14px;
+      box-shadow:0 10px 24px rgba(17,24,39,.14);
+    }
+
+    .book-header{
+      display:flex;
+      flex-wrap:wrap;
+      align-items:flex-start;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:14px;
+    }
+
+    .book-title-group h3{
+      font-size:1.5rem;
+      line-height:1.15;
+      color:var(--azul-escuro);
+      margin-bottom:6px;
+      letter-spacing:-.02em;
+    }
+
+    .book-title-group .authors{
+      font-weight:700;
+      color:var(--texto);
+    }
+
+    .status-badge{
+      background:#eef4ff;
+      color:var(--azul-escuro);
+      border:1px solid rgba(31,60,136,.10);
+      border-radius:999px;
+      padding:8px 12px;
+      font-size:.88rem;
+      font-weight:700;
+      white-space:nowrap;
+    }
+
+    .book-description{
+      color:var(--texto-suave);
+      margin-bottom:18px;
+    }
+
+    .edition-grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0, 1fr));
+      gap:16px;
+      margin-bottom:18px;
+    }
+
+    .edition-card{
+      background:#f8fbff;
+      border:1px solid var(--borda);
+      border-radius:18px;
+      padding:18px;
+    }
+
+    .edition-card h4{
+      font-size:1rem;
+      color:var(--azul-escuro);
+      margin-bottom:12px;
+    }
+
+    .meta-grid{
+      display:grid;
+      grid-template-columns:1fr;
+      gap:10px;
+    }
+
+    .meta-item{
+      background:#ffffff;
+      border:1px solid rgba(31,60,136,.08);
+      border-radius:14px;
+      padding:10px 12px;
+      color:var(--texto-suave);
+      font-size:.94rem;
+    }
+
+    .meta-item strong{
+      color:var(--azul-escuro);
+      display:block;
+      margin-bottom:2px;
+    }
+
+    .book-actions{
+      display:flex;
+      flex-wrap:wrap;
+      gap:12px;
+      align-items:center;
+    }
+
+    .buy-button{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      padding:13px 18px;
+      border-radius:14px;
+      font-weight:700;
+      transition:.25s ease;
+      min-width:210px;
+    }
+
+    .buy-button img{
+      width:22px;
+      height:22px;
+      object-fit:contain;
+      flex-shrink:0;
+    }
+
+    .buy-physical{
+      background:linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
+      color:#fff;
+      box-shadow:0 10px 24px rgba(31,60,136,.18);
+    }
+
+    .buy-physical:hover{
+      color:#fff;
+      transform:translateY(-1px);
+    }
+
+    .buy-kindle{
+      background:#fff7e8;
+      color:#7a4b00;
+      border:1px solid #f1d9a8;
+      box-shadow:0 8px 18px rgba(122,75,0,.08);
+    }
+
+    .buy-kindle:hover{
+      color:#6a3f00;
+      background:#fff1d4;
+      transform:translateY(-1px);
+    }
+
+    .expandable{
+      border-top:1px solid var(--borda);
+      background:linear-gradient(180deg, #fbfcff 0%, #f7faff 100%);
+    }
+
+    .expandable summary{
+      list-style:none;
+      cursor:pointer;
+      padding:18px 24px;
+      font-weight:700;
+      color:var(--azul-escuro);
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+
+    .expandable summary::-webkit-details-marker{
+      display:none;
+    }
+
+    .expandable summary::after{
+      content:"+";
+      width:28px;
+      height:28px;
+      border-radius:50%;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      background:#eaf0fb;
+      color:var(--azul-escuro);
+      font-size:1.1rem;
+      flex-shrink:0;
+    }
+
+    .expandable[open] summary::after{
+      content:"–";
+    }
+
+    .expandable-content{
+      padding:0 24px 24px;
+    }
+
+    .person-grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+      gap:16px;
+      margin-top:4px;
+    }
+
+    .person-card{
+      display:flex;
+      align-items:flex-start;
+      gap:14px;
+      background:#fff;
+      border:1px solid var(--borda);
+      border-radius:18px;
+      padding:16px;
+      box-shadow:0 4px 14px rgba(31,60,136,.04);
+    }
+
+    .person-card img{
+      width:72px;
+      height:72px;
+      border-radius:16px;
+      object-fit:cover;
+      flex-shrink:0;
+      border:1px solid var(--borda);
+      background:#f3f6fc;
+    }
+
+    .person-card h4{
+      font-size:1rem;
+      color:var(--azul-escuro);
+      margin-bottom:6px;
+    }
+
+    .person-card p{
+      color:var(--texto-suave);
+      font-size:.95rem;
+      line-height:1.6;
+    }
+
+    .footer{
+      margin:0 auto 34px;
+    }
+
+    .footer-box{
+      background:#fff;
+      border:1px solid var(--borda);
+      border-radius:20px;
+      padding:18px 22px;
+      color:var(--texto-suave);
+      box-shadow:var(--sombra-suave);
+      text-align:center;
+      font-size:.96rem;
+    }
+
+    .footer-box strong{
+      color:var(--azul-escuro);
+    }
+
+    @media (max-width: 1080px){
+      .layout{
+        grid-template-columns:1fr;
+      }
+
+      .sidebar{
+        position:static;
+      }
+
+      .header-wrap{
+        flex-direction:column;
+        align-items:flex-start;
+      }
+
+      .header-badge{
+        white-space:normal;
+      }
+    }
+
+    @media (max-width: 920px){
+      .book-main{
+        grid-template-columns:1fr;
+      }
+
+      .book-cover-column{
+        flex-direction:row;
+        flex-wrap:wrap;
+      }
+
+      .book-cover-block{
+        flex:1 1 240px;
+      }
+
+      .edition-grid{
+        grid-template-columns:1fr;
+      }
+    }
+
+    @media (max-width: 860px){
+      .site-nav{
+        max-width:100%;
+        margin:0 auto 20px;
+      }
+
+      .site-nav-toggle{
+        display:block;
+      }
+
+      .site-nav-menu{
+        display:none;
+        flex-direction:column;
+        align-items:stretch;
+        padding-top:0;
+        overflow-x:visible;
+      }
+
+      .site-nav-menu.is-open{
+        display:flex;
+      }
+
+      .site-nav-menu a{
+        width:100%;
+        justify-content:flex-start;
+      }
+    }
+
+    @media (max-width: 720px){
+      .page-shell{
+        width:min(var(--largura), calc(100% - 20px));
+      }
+
+      .logo-box{
+        width:78px;
+        height:78px;
+        border-radius:18px;
+      }
+
+      .section,
+      .sidebar{
+        padding:22px;
+        border-radius:20px;
+      }
+
+      .person-card{
+        flex-direction:column;
+      }
+
+      .person-card img{
+        width:84px;
+        height:84px;
+      }
+
+      .book-actions{
+        flex-direction:column;
+        align-items:stretch;
+      }
+
+      .buy-button{
+        width:100%;
+        min-width:0;
+      }
+
+      .book-cover-column{
+        flex-direction:column;
+      }
+    }
+  </style>
 </head>
 <body>
-  <header class="site-header">
-    <div class="header-wrap">
-      <div class="logo-box">
-        <img src="assets/logo-editora.png" alt="Logo da Editora Revista Inquietações">
+  <div class="page-shell">
+
+    <header class="site-header">
+      <div class="header-wrap">
+        <div class="brand-block">
+          <div class="logo-box">
+            <img src="assets/logo-editora.png" alt="Logo da Revista Inquietações Editorial">
+          </div>
+          <div class="brand">
+            <h1>Revista Inquietações Editorial</h1>
+            <p>Página institucional dos livros publicados pela editora da Revista Inquietações.</p>
+          </div>
+        </div>
+
+        <div class="header-badge">Catálogo editorial</div>
       </div>
-      <div class="brand">
-        <h1>Editora Revista Inquietações</h1>
-        <p>Livros Publicados</p>
+    </header>
+
+    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
+      <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-nav-menu">
+        Menu
+      </button>
+
+      <div class="site-nav-menu" id="site-nav-menu">
+        <a href="../index.html">Revista</a>
+        <a href="../conteudos.html">Conteúdos</a>
+        <a href="../submissoes.html">Submissões</a>
+        <a href="../politicas-editoriais.html">Políticas</a>
+        <a href="../contato.html">Contato</a>
+        <a href="index.html">Editorial</a>
       </div>
+    </nav>
+
+    <div class="layout">
+      <aside class="sidebar">
+        <div class="sidebar-head">
+          <h2>Navegação Institucional</h2>
+          <p>Editora da Revista Inquietações</p>
+        </div>
+
+        <nav class="sidebar-nav">
+          <a href="index.html">Início</a>
+          <a class="active" href="livros-publicados.html">Livros Publicados</a>
+          <a href="sobre-a-editora.html">Sobre a Editora</a>
+          <a href="contato.html">Contato da Editora</a>
+        </nav>
+
+        <div class="side-card">
+          <h3>Site oficial da revista</h3>
+          <p>Acesse o portal principal da Revista Inquietações.</p>
+          <a href="../index.html">Revista Inquietações</a>
+        </div>
+      </aside>
+
+      <main class="content">
+        <section class="section">
+          <h2>Livros publicados</h2>
+          <p class="section-intro">
+            O catálogo editorial reúne traduções, edições comentadas e publicações de interesse acadêmico nas áreas das Humanidades. Cada obra apresenta capas por edição, informações editoriais organizadas e acesso direto às opções de compra em capa comum e Kindle.
+          </p>
+
+          <div class="book-list">
+
+            <article class="book-item">
+              <div class="book-main">
+                <div class="book-cover-column">
+                  <div class="book-cover-block">
+                    <div class="cover-label">Capa comum</div>
+                    <img src="https://m.media-amazon.com/images/I/71njPxvZKUL._AC_CR0%2C0%2C0%2C0_SX615_SY462_.jpg" alt="Capa física do livro Cartas da juventude (1850–1866)" class="book-cover">
+                  </div>
+
+                  <div class="book-cover-block">
+                    <div class="cover-label">Kindle</div>
+                    <img src="https://m.media-amazon.com/images/I/81xpBuyO6jL._AC_CR0%2C0%2C0%2C0_SX615_SY462_.jpg" alt="Capa Kindle do livro Cartas da juventude (1850–1866)" class="book-cover">
+                  </div>
+                </div>
+
+                <div class="book-body">
+                  <div class="book-header">
+                    <div class="book-title-group">
+                      <h3>Cartas da juventude (1850–1866)</h3>
+                      <p class="authors">Friedrich Wilhelm Nietzsche</p>
+                    </div>
+
+                    <span class="status-badge">Disponível em capa comum e Kindle</span>
+                  </div>
+
+                  <p class="book-description">
+                    Reunião das correspondências iniciais de Nietzsche, com tradução, organização e comentários de Diego Vinícius Brito dos Santos, em uma edição voltada à formação intelectual do filósofo e ao estudo de sua juventude.
+                  </p>
+
+                  <div class="edition-grid">
+                    <div class="edition-card">
+                      <h4>Livro físico</h4>
+                      <div class="meta-grid">
+                        <div class="meta-item"><strong>ASIN</strong>B0GRP1Q243</div>
+                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                        <div class="meta-item"><strong>Data da publicação</strong>7 março 2026</div>
+                        <div class="meta-item"><strong>Idioma</strong>Português</div>
+                        <div class="meta-item"><strong>Número de páginas</strong>508 páginas</div>
+                        <div class="meta-item"><strong>ISBN-13</strong>979-8251052428</div>
+                        <div class="meta-item"><strong>Peso do produto</strong>848 g</div>
+                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                        <div class="meta-item"><strong>Dimensões</strong>15.24 x 2.92 x 22.86 cm</div>
+                      </div>
+                    </div>
+
+                    <div class="edition-card">
+                      <h4>Kindle</h4>
+                      <div class="meta-grid">
+                        <div class="meta-item"><strong>ASIN</strong>B0GRTH81NJ</div>
+                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                        <div class="meta-item"><strong>Acessibilidade</strong>Saiba mais</div>
+                        <div class="meta-item"><strong>Data da publicação</strong>9 março 2026</div>
+                        <div class="meta-item"><strong>Idioma</strong>Português</div>
+                        <div class="meta-item"><strong>Tamanho do arquivo</strong>216.0 MB</div>
+                        <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>ISBN-13</strong>979-8251052428</div>
+                        <div class="meta-item"><strong>Page Flip</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="book-actions">
+                    <a class="buy-button buy-physical" href="https://www.amazon.com/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
+                      <img src="assets/amazon-livro-fisico-logo.png" alt="Livro físico">
+                      Comprar capa comum
+                    </a>
+
+                    <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRTH81NJ?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
+                      <img src="assets/kindle-logo.png" alt="Kindle">
+                      Comprar Kindle
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <details class="expandable">
+                <summary>Mais informações sobre a obra</summary>
+                <div class="expandable-content">
+                  <div class="person-grid">
+                    <div class="person-card">
+                      <img src="assets/nietzsche.png" alt="Friedrich Wilhelm Nietzsche">
+                      <div>
+                        <h4>Sobre o autor</h4>
+                        <p>Friedrich Wilhelm Nietzsche foi filósofo, filólogo e escritor alemão, reconhecido como um dos pensadores mais influentes da modernidade. Sua obra marcou profundamente a filosofia, a crítica cultural e a história das ideias.</p>
+                      </div>
+                    </div>
+
+                    <div class="person-card">
+                      <img src="assets/diego.png" alt="Diego Vinícius Brito dos Santos">
+                      <div>
+                        <h4>Sobre o tradutor e organizador</h4>
+                        <p>Diego Vinícius Brito dos Santos realiza a tradução, a organização e a contextualização das correspondências de juventude de Nietzsche, aproximando o público de língua portuguesa de documentos fundamentais para compreender a formação intelectual do filósofo.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </article>
+
+            <article class="book-item">
+              <div class="book-main">
+                <div class="book-cover-column">
+                  <div class="book-cover-block">
+                    <div class="cover-label">Capa comum</div>
+                    <img src="https://m.media-amazon.com/images/I/71wY2RmTJ5L._SL1499_.jpg" alt="Capa física do livro O Manifesto do Partido Comunista" class="book-cover">
+                  </div>
+
+                  <div class="book-cover-block">
+                    <div class="cover-label">Kindle</div>
+                    <img src="https://m.media-amazon.com/images/I/81asowRHFiL._SY466_.jpg" alt="Capa Kindle do livro O Manifesto do Partido Comunista" class="book-cover">
+                  </div>
+                </div>
+
+                <div class="book-body">
+                  <div class="book-header">
+                    <div class="book-title-group">
+                      <h3>O Manifesto do Partido Comunista</h3>
+                      <p class="authors">Karl Marx &amp; Friedrich Engels</p>
+                    </div>
+
+                    <span class="status-badge">Disponível em capa comum e Kindle</span>
+                  </div>
+
+                  <p class="book-description">
+                    Publicado originalmente em 1848, o Manifesto do Partido Comunista é um dos textos políticos mais influentes da história moderna. Nesta edição, o texto clássico é apresentado com tradução e notas de Diego Vinícius Brito dos Santos, oferecendo ao leitor uma leitura acessível e contextualizada de uma obra fundamental para a filosofia política e a teoria social.
+                  </p>
+
+                  <div class="edition-grid">
+                    <div class="edition-card">
+                      <h4>Livro físico</h4>
+                      <div class="meta-grid">
+                        <div class="meta-item"><strong>ASIN</strong>B0GRRLW4V4</div>
+                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                        <div class="meta-item"><strong>Data da publicação</strong>8 março 2026</div>
+                        <div class="meta-item"><strong>Idioma</strong>Português</div>
+                        <div class="meta-item"><strong>Número de páginas</strong>69 páginas</div>
+                        <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
+                        <div class="meta-item"><strong>Peso do produto</strong>159 g</div>
+                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                        <div class="meta-item"><strong>Dimensões</strong>15.24 x 0.41 x 22.86 cm</div>
+                      </div>
+                    </div>
+
+                    <div class="edition-card">
+                      <h4>Kindle</h4>
+                      <div class="meta-grid">
+                        <div class="meta-item"><strong>ASIN</strong>B0GRQLPD3J</div>
+                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                        <div class="meta-item"><strong>Acessibilidade</strong>Saiba mais</div>
+                        <div class="meta-item"><strong>Data da publicação</strong>8 março 2026</div>
+                        <div class="meta-item"><strong>Edição</strong>1ª</div>
+                        <div class="meta-item"><strong>Idioma</strong>Português</div>
+                        <div class="meta-item"><strong>Tamanho do arquivo</strong>20.9 MB</div>
+                        <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
+                        <div class="meta-item"><strong>Page Flip</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="book-actions">
+                    <a class="buy-button buy-physical" href="https://www.amazon.com/-/pt/dp/B0GRRLW4V4/ref=tmm_pap_swatch_0" target="_blank" rel="noopener noreferrer">
+                      <img src="assets/amazon-livro-fisico-logo.png" alt="Livro físico">
+                      Comprar capa comum
+                    </a>
+
+                    <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRQLPD3J?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
+                      <img src="assets/kindle-logo.png" alt="Kindle">
+                      Comprar Kindle
+                    </a>
+                  </div>
+                </div>
+              </div>
+
+              <details class="expandable">
+                <summary>Mais informações sobre a obra</summary>
+                <div class="expandable-content">
+                  <div class="person-grid">
+                    <div class="person-card">
+                      <img src="assets/marx.png" alt="Karl Marx">
+                      <div>
+                        <h4>Karl Marx</h4>
+                        <p>Karl Marx foi filósofo, economista e teórico social alemão. Seu pensamento influenciou profundamente a crítica da sociedade capitalista, a teoria política moderna e os estudos sobre trabalho, classe social e economia.</p>
+                      </div>
+                    </div>
+
+                    <div class="person-card">
+                      <img src="assets/engels.png" alt="Friedrich Engels">
+                      <div>
+                        <h4>Friedrich Engels</h4>
+                        <p>Friedrich Engels foi filósofo, escritor e pensador político alemão. Parceiro intelectual de Karl Marx, colaborou decisivamente na elaboração e na difusão internacional das ideias que marcariam a história do pensamento social moderno.</p>
+                      </div>
+                    </div>
+
+                    <div class="person-card">
+                      <img src="assets/diego.png" alt="Diego Vinícius Brito dos Santos">
+                      <div>
+                        <h4>Sobre o tradutor</h4>
+                        <p>Diego Vinícius Brito dos Santos assina a tradução e as notas desta edição, buscando apresentar o texto clássico de Marx e Engels de forma fiel ao original e acessível ao leitor contemporâneo.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </details>
+            </article>
+
+          </div>
+        </section>
+      </main>
     </div>
-  </header>
 
-  <div class="layout">
-    <aside class="sidebar">
-      <div class="sidebar-head">
-        <h2>Navegação Institucional</h2>
-        <p>Editora vinculada à Revista Inquietações</p>
+    <footer class="footer">
+      <div class="footer-box">
+        <strong>Revista Inquietações Editorial</strong> — Página institucional dos livros publicados.
       </div>
-      <nav class="sidebar-nav">
-        <a href="index.html">Início</a>
-        <a class="active" href="livros-publicados.html">Livros Publicados</a>
-        <a href="sobre-a-editora.html">Sobre a Editora</a>
-        <a href="contato.html">Contato da Editora</a>
-      </nav>
-      <div class="side-card">
-        <h3>Site oficial da revista</h3>
-        <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/" target="_blank">Revista Inquietações</a>
-      </div>
-    </aside>
+    </footer>
 
-    <main class="content">
-      <section class="section">
-        <h3>Livros publicados</h3>
-
-        <article class="book-entry">
-          <div class="book-card">
-            <img src="assets/livro-nietzsche.png" alt="Capa do livro de Nietzsche" class="book-cover">
-
-            <div class="book-info">
-              <h3>Cartas da juventude (1850–1866)</h3>
-              <p><strong>Friedrich Wilhelm Nietzsche</strong></p>
-              <p>
-                Reunião das correspondências iniciais de Nietzsche, com tradução, organização e comentários de Diego Vinícius Brito dos Santos, em uma edição voltada à formação intelectual do filósofo e ao estudo de sua juventude.
-              </p>
-
-              <div class="meta-list">
-                <div class="meta-item"><strong>Autor:</strong> Friedrich Wilhelm Nietzsche</div>
-                <div class="meta-item"><strong>Tradutor:</strong> Diego Vinícius Brito dos Santos</div>
-                <div class="meta-item"><strong>Editora:</strong> Editora Revista Inquietações</div>
-                <div class="meta-item"><strong>Idioma:</strong> Bilíngue Português-Alemão</div>
-                <div class="meta-item"><strong>Páginas:</strong> 508</div>
-                <div class="meta-item"><strong>ISBN-13:</strong> 979-8251052428</div>
-              </div>
-
-              <div class="book-actions">
-                <a class="amazon-buy-button" href="https://www.amazon.com/dp/B0GRP1Q243" target="_blank">
-                  <img src="assets/amazon-logo.png" alt="Amazon">
-                  Comprar na Amazon
-                </a>
-                <a class="btn-leitura" href="#reader-nietzsche">Ler na página</a>
-              </div>
-            </div>
-          </div>
-
-          <div class="info-block">
-            <div class="bio">
-              <img src="assets/nietzsche.png" alt="Nietzsche">
-              <div>
-                <h4>Sobre o autor</h4>
-                <p>Friedrich Wilhelm Nietzsche foi filósofo, filólogo e escritor alemão, reconhecido como um dos pensadores mais influentes da modernidade. Sua obra marcou profundamente a filosofia, a crítica cultural e a história das ideias.</p>
-              </div>
-            </div>
-
-            <div class="bio" style="margin-top:18px;">
-              <img src="assets/diego.png" alt="Diego Vinícius Brito dos Santos">
-              <div>
-                <h4>Sobre o tradutor</h4>
-                <p>Diego Vinícius Brito dos Santos realiza a tradução, organização e contextualização das correspondências de juventude de Nietzsche, aproximando o público de língua portuguesa de documentos fundamentais para compreender a formação intelectual do filósofo.</p>
-              </div>
-            </div>
-          </div>
-
-          <div class="pdf-reader" id="reader-nietzsche">
-            <div class="pdf-reader-top">
-              <div>
-                <strong>Leitura digital na página</strong>
-                <span>Cartas da juventude (1850–1866)</span>
-              </div>
-              <button class="btn-fullscreen" type="button" onclick="abrirTelaCheia('pdf-nietzsche')">Tela cheia</button>
-            </div>
-
-            <div class="pdf-frame-wrap">
-              <iframe
-                id="pdf-nietzsche"
-                class="pdf-frame"
-                src="assets/nietzsche-tradução.pdf#toolbar=0&navpanes=0&scrollbar=1"
-                title="Leitor do livro de Nietzsche"
-                loading="lazy">
-              </iframe>
-            </div>
-
-            <div class="pdf-reader-footer">Leitura digital integrada ao site.</div>
-          </div>
-        </article>
-
-        <hr class="book-divider">
-
-        <article class="book-entry">
-          <div class="book-card">
-            <img src="assets/capa.karlmarx.png" alt="Capa do livro O Manifesto do Partido Comunista" class="book-cover">
-
-            <div class="book-info">
-              <h3>O Manifesto do Partido Comunista</h3>
-              <p><strong>Karl Marx &amp; Friedrich Engels</strong></p>
-              <p>
-                Publicado originalmente em 1848, o Manifesto do Partido Comunista é um dos textos políticos mais influentes da história moderna. Nesta edição, o texto clássico é apresentado com tradução e notas de <strong>Diego Vinícius Brito dos Santos</strong>, oferecendo ao leitor uma leitura acessível e contextualizada de uma obra fundamental para a filosofia política e a teoria social.
-              </p>
-
-              <div class="meta-list">
-                <div class="meta-item"><strong>Autores:</strong> Karl Marx &amp; Friedrich Engels</div>
-                <div class="meta-item"><strong>Tradução e notas:</strong> Diego Vinícius Brito dos Santos</div>
-                <div class="meta-item"><strong>Editora:</strong> Editora Revista Inquietações</div>
-                <div class="meta-item"><strong>Formato:</strong> E-book e edição física</div>
-                <div class="meta-item"><strong>ISBN:</strong> 9798251190175</div>
-                <div class="meta-item"><strong>Status:</strong> Disponível</div>
-              </div>
-
-              <div class="book-actions">
-                <a class="amazon-buy-button"
-                   href="https://www.amazon.com.br/dp/B0GRQLPD3J"
-                   target="_blank">
-                  <img src="assets/amazon-logo.png" alt="Amazon">
-                  Comprar na Amazon
-                </a>
-
-                <a class="btn-leitura" href="#reader-manifesto">
-                  Ler na página
-                </a>
-              </div>
-            </div>
-          </div>
-
-          <div class="info-block">
-            <h4>Sobre os autores</h4>
-
-            <div class="author-list">
-              <div class="author-card">
-                <img src="assets/marx.png" alt="Karl Marx">
-                <div>
-                  <h4>Karl Marx</h4>
-                  <p>Karl Marx foi filósofo, economista e teórico social alemão. Seu pensamento influenciou profundamente a crítica da sociedade capitalista, a teoria política moderna e os estudos sobre trabalho, classe social e economia.</p>
-                </div>
-              </div>
-
-              <div class="author-card">
-                <img src="assets/engels.png" alt="Friedrich Engels">
-                <div>
-                  <h4>Friedrich Engels</h4>
-                  <p>Friedrich Engels foi filósofo, escritor e pensador político alemão. Parceiro intelectual de Karl Marx, colaborou decisivamente na elaboração e na difusão internacional das ideias que marcariam a história do pensamento social moderno.</p>
-                </div>
-              </div>
-
-              <div class="author-card">
-                <img src="assets/diego.png" alt="Diego Vinícius Brito dos Santos">
-                <div>
-                  <h4>Diego Vinícius Brito dos Santos</h4>
-                  <p>Diego Vinícius Brito dos Santos assina a tradução e as notas desta edição, buscando apresentar o texto clássico de Marx e Engels de forma fiel ao original e acessível ao leitor contemporâneo.</p>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          <div class="pdf-reader" id="reader-manifesto">
-            <div class="pdf-reader-top">
-              <div>
-                <strong>Leitura digital na página</strong>
-                <span>O Manifesto do Partido Comunista</span>
-              </div>
-              <button class="btn-fullscreen" type="button" onclick="abrirTelaCheia('pdf-manifesto')">Tela cheia</button>
-            </div>
-
-            <div class="pdf-frame-wrap">
-              <iframe
-                id="pdf-manifesto"
-                class="pdf-frame"
-                src="assets/manifesto-marx-engels.pdf#toolbar=0&navpanes=0&scrollbar=1"
-                title="Leitor do Manifesto do Partido Comunista"
-                loading="lazy">
-              </iframe>
-            </div>
-
-            <div class="pdf-reader-footer">Leitura digital integrada ao site.</div>
-          </div>
-        </article>
-      </section>
-    </main>
   </div>
 
-  <footer class="footer">
-    <div class="footer-box">
-      <strong>Editora Revista Inquietações</strong> — Portal institucional da Editora.
-    </div>
-  </footer>
-
   <script>
-  function abrirTelaCheia(id){
-    const el = document.getElementById(id);
-    if (!el) return;
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const navMenu = document.querySelector('.site-nav-menu');
 
-    if (el.requestFullscreen) {
-      el.requestFullscreen();
-    } else if (el.webkitRequestFullscreen) {
-      el.webkitRequestFullscreen();
-    } else if (el.msRequestFullscreen) {
-      el.msRequestFullscreen();
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle('is-open');
+        const expanded = navMenu.classList.contains('is-open');
+        navToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
+      });
     }
-  }
   </script>
 </body>
 </html>
