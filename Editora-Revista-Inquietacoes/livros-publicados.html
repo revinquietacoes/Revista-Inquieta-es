@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Livros Publicados | Editora Revista Inquietações</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="site-header">
+    <div class="header-wrap">
+      <div class="logo-box">
+        <img src="assets/logo-editora.png" alt="Logo da Editora Revista Inquietações">
+      </div>
+      <div class="brand">
+        <h1>Editora Revista Inquietações</h1>
+        <p>Livros Publicados</p>
+      </div>
+    </div>
+  </header>
+
+  <div class="layout">
+    <aside class="sidebar">
+      <div class="sidebar-head">
+        <h2>Navegação Institucional</h2>
+        <p>Editora vinculada à Revista Inquietações</p>
+      </div>
+      <nav class="sidebar-nav">
+        <a href="index.html">Início</a>
+        <a class="active" href="livros-publicados.html">Livros Publicados</a>
+        <a href="sobre-a-editora.html">Sobre a Editora</a>
+        <a href="contato.html">Contato da Editora</a>
+      </nav>
+      <div class="side-card">
+        <h3>Site oficial da revista</h3>
+        <a href="https://revinquietacoes.github.io/Revista-Inquieta-es/" target="_blank">Revista Inquietações</a>
+      </div>
+    </aside>
+
+    <main class="content">
+      <section class="section">
+        <h3>Livros publicados</h3>
+
+        <article class="book-entry">
+          <div class="book-card">
+            <img src="assets/livro-nietzsche.png" alt="Capa do livro de Nietzsche" class="book-cover">
+
+            <div class="book-info">
+              <h3>Cartas da juventude (1850–1866)</h3>
+              <p><strong>Friedrich Wilhelm Nietzsche</strong></p>
+              <p>
+                Reunião das correspondências iniciais de Nietzsche, com tradução, organização e comentários de Diego Vinícius Brito dos Santos, em uma edição voltada à formação intelectual do filósofo e ao estudo de sua juventude.
+              </p>
+
+              <div class="meta-list">
+                <div class="meta-item"><strong>Autor:</strong> Friedrich Wilhelm Nietzsche</div>
+                <div class="meta-item"><strong>Tradutor:</strong> Diego Vinícius Brito dos Santos</div>
+                <div class="meta-item"><strong>Editora:</strong> Editora Revista Inquietações</div>
+                <div class="meta-item"><strong>Idioma:</strong> Bilíngue Português-Alemão</div>
+                <div class="meta-item"><strong>Páginas:</strong> 508</div>
+                <div class="meta-item"><strong>ISBN-13:</strong> 979-8251052428</div>
+              </div>
+
+              <div class="book-actions">
+                <a class="amazon-buy-button" href="https://www.amazon.com/dp/B0GRP1Q243" target="_blank">
+                  <img src="assets/amazon-logo.png" alt="Amazon">
+                  Comprar na Amazon
+                </a>
+                <a class="btn-leitura" href="#reader-nietzsche">Ler na página</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-block">
+            <div class="bio">
+              <img src="assets/nietzsche.png" alt="Nietzsche">
+              <div>
+                <h4>Sobre o autor</h4>
+                <p>Friedrich Wilhelm Nietzsche foi filósofo, filólogo e escritor alemão, reconhecido como um dos pensadores mais influentes da modernidade. Sua obra marcou profundamente a filosofia, a crítica cultural e a história das ideias.</p>
+              </div>
+            </div>
+
+            <div class="bio" style="margin-top:18px;">
+              <img src="assets/diego.png" alt="Diego Vinícius Brito dos Santos">
+              <div>
+                <h4>Sobre o tradutor</h4>
+                <p>Diego Vinícius Brito dos Santos realiza a tradução, organização e contextualização das correspondências de juventude de Nietzsche, aproximando o público de língua portuguesa de documentos fundamentais para compreender a formação intelectual do filósofo.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdf-reader" id="reader-nietzsche">
+            <div class="pdf-reader-top">
+              <div>
+                <strong>Leitura digital na página</strong>
+                <span>Cartas da juventude (1850–1866)</span>
+              </div>
+              <button class="btn-fullscreen" type="button" onclick="abrirTelaCheia('pdf-nietzsche')">Tela cheia</button>
+            </div>
+
+            <div class="pdf-frame-wrap">
+              <iframe
+                id="pdf-nietzsche"
+                class="pdf-frame"
+                src="assets/nietzsche-tradução.pdf#toolbar=0&navpanes=0&scrollbar=1"
+                title="Leitor do livro de Nietzsche"
+                loading="lazy">
+              </iframe>
+            </div>
+
+            <div class="pdf-reader-footer">Leitura digital integrada ao site.</div>
+          </div>
+        </article>
+
+        <hr class="book-divider">
+
+        <article class="book-entry">
+          <div class="book-card">
+            <img src="assets/capa.karlmarx.png" alt="Capa do livro O Manifesto do Partido Comunista" class="book-cover">
+
+            <div class="book-info">
+              <h3>O Manifesto do Partido Comunista</h3>
+              <p><strong>Karl Marx &amp; Friedrich Engels</strong></p>
+              <p>
+                Publicado originalmente em 1848, o Manifesto do Partido Comunista é um dos textos políticos mais influentes da história moderna. Nesta edição, o texto clássico é apresentado com tradução e notas de <strong>Diego Vinícius Brito dos Santos</strong>, oferecendo ao leitor uma leitura acessível e contextualizada de uma obra fundamental para a filosofia política e a teoria social.
+              </p>
+
+              <div class="meta-list">
+                <div class="meta-item"><strong>Autores:</strong> Karl Marx &amp; Friedrich Engels</div>
+                <div class="meta-item"><strong>Tradução e notas:</strong> Diego Vinícius Brito dos Santos</div>
+                <div class="meta-item"><strong>Editora:</strong> Editora Revista Inquietações</div>
+                <div class="meta-item"><strong>Formato:</strong> E-book e edição física</div>
+                <div class="meta-item"><strong>ISBN:</strong> 9798251190175</div>
+                <div class="meta-item"><strong>Status:</strong> Disponível</div>
+              </div>
+
+              <div class="book-actions">
+                <a class="amazon-buy-button"
+                   href="https://www.amazon.com.br/dp/B0GRQLPD3J"
+                   target="_blank">
+                  <img src="assets/amazon-logo.png" alt="Amazon">
+                  Comprar na Amazon
+                </a>
+
+                <a class="btn-leitura" href="#reader-manifesto">
+                  Ler na página
+                </a>
+              </div>
+            </div>
+          </div>
+
+          <div class="info-block">
+            <h4>Sobre os autores</h4>
+
+            <div class="author-list">
+              <div class="author-card">
+                <img src="assets/marx.png" alt="Karl Marx">
+                <div>
+                  <h4>Karl Marx</h4>
+                  <p>Karl Marx foi filósofo, economista e teórico social alemão. Seu pensamento influenciou profundamente a crítica da sociedade capitalista, a teoria política moderna e os estudos sobre trabalho, classe social e economia.</p>
+                </div>
+              </div>
+
+              <div class="author-card">
+                <img src="assets/engels.png" alt="Friedrich Engels">
+                <div>
+                  <h4>Friedrich Engels</h4>
+                  <p>Friedrich Engels foi filósofo, escritor e pensador político alemão. Parceiro intelectual de Karl Marx, colaborou decisivamente na elaboração e na difusão internacional das ideias que marcariam a história do pensamento social moderno.</p>
+                </div>
+              </div>
+
+              <div class="author-card">
+                <img src="assets/diego.png" alt="Diego Vinícius Brito dos Santos">
+                <div>
+                  <h4>Diego Vinícius Brito dos Santos</h4>
+                  <p>Diego Vinícius Brito dos Santos assina a tradução e as notas desta edição, buscando apresentar o texto clássico de Marx e Engels de forma fiel ao original e acessível ao leitor contemporâneo.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="pdf-reader" id="reader-manifesto">
+            <div class="pdf-reader-top">
+              <div>
+                <strong>Leitura digital na página</strong>
+                <span>O Manifesto do Partido Comunista</span>
+              </div>
+              <button class="btn-fullscreen" type="button" onclick="abrirTelaCheia('pdf-manifesto')">Tela cheia</button>
+            </div>
+
+            <div class="pdf-frame-wrap">
+              <iframe
+                id="pdf-manifesto"
+                class="pdf-frame"
+                src="assets/manifesto-marx-engels.pdf#toolbar=0&navpanes=0&scrollbar=1"
+                title="Leitor do Manifesto do Partido Comunista"
+                loading="lazy">
+              </iframe>
+            </div>
+
+            <div class="pdf-reader-footer">Leitura digital integrada ao site.</div>
+          </div>
+        </article>
+      </section>
+    </main>
+  </div>
+
+  <footer class="footer">
+    <div class="footer-box">
+      <strong>Editora Revista Inquietações</strong> — Portal institucional da Editora.
+    </div>
+  </footer>
+
+  <script>
+  function abrirTelaCheia(id){
+    const el = document.getElementById(id);
+    if (!el) return;
+
+    if (el.requestFullscreen) {
+      el.requestFullscreen();
+    } else if (el.webkitRequestFullscreen) {
+      el.webkitRequestFullscreen();
+    } else if (el.msRequestFullscreen) {
+      el.msRequestFullscreen();
+    }
+  }
+  </script>
+</body>
+</html>
