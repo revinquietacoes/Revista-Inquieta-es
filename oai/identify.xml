@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<OAI-PMH xmlns="http://www.openarchives.org/OAI/2.0/"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
+         http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
+ <responseDate>2026-03-10T00:00:00Z</responseDate>
+  <request verb="Identify">https://revinquietacoes.github.io/Revista-Inquieta-es/oai/identify.xml</request>
+
+  <Identify>
+    <repositoryName>Revista Inquietações</repositoryName>
+    <baseURL>https://revinquietacoes.github.io/Revista-Inquieta-es/oai/</baseURL>
+    <protocolVersion>2.0</protocolVersion>
+    <adminEmail>rev.inquietacoes@gmail.com</adminEmail>
+    <earliestDatestamp>2026-01-01</earliestDatestamp>
+    <deletedRecord>no</deletedRecord>
+    <granularity>YYYY-MM-DD</granularity>
+    <description>
+      Revista científica eletrônica dedicada à divulgação de pesquisas, traduções e ensaios nas áreas de Humanidades, Filosofia, Educação e campos afins.
+    </description>
+  </Identify>
+</OAI-PMH>
