@@ -9,21 +9,32 @@
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
 
   <style>
     :root{
       --azul-principal:#1f3c88;
-      --azul-escuro:#17306d;
+      --azul-escuro:#142b63;
+      --azul-medio:#2d4fa5;
       --azul-claro:#eaf0fb;
       --azul-suave:#f6f8fd;
-      --texto:#1f2937;
-      --texto-suave:#5b6472;
-      --borda:#d8e0f0;
+      --fundo:#f3f6fb;
       --branco:#ffffff;
-      --sombra:0 10px 30px rgba(23,48,109,.08);
-      --sombra-suave:0 6px 18px rgba(23,48,109,.06);
-      --largura:1240px;
+      --texto:#1e293b;
+      --texto-suave:#64748b;
+      --borda:#d9e2f0;
+      --borda-forte:#c8d5ea;
+      --kindle:#8a5a00;
+      --kindle-bg:#fff5df;
+      --kindle-borda:#efd19a;
+      --sombra:0 18px 45px rgba(20,43,99,.10);
+      --sombra-media:0 10px 28px rgba(20,43,99,.08);
+      --sombra-suave:0 6px 18px rgba(20,43,99,.06);
+      --raio-xl:30px;
+      --raio-lg:24px;
+      --raio-md:18px;
+      --raio-sm:14px;
+      --largura:1280px;
     }
 
     *{
@@ -39,7 +50,10 @@
     body{
       font-family:"Inter", Arial, Helvetica, sans-serif;
       color:var(--texto);
-      background:linear-gradient(180deg,#f6f8fc 0%,#eef3fb 100%);
+      background:
+        radial-gradient(circle at top left, rgba(31,60,136,.06), transparent 28%),
+        radial-gradient(circle at top right, rgba(31,60,136,.05), transparent 24%),
+        linear-gradient(180deg, #f8faff 0%, #f2f6fc 100%);
       line-height:1.65;
     }
 
@@ -49,8 +63,8 @@
     }
 
     a{
-      text-decoration:none;
       color:var(--azul-principal);
+      text-decoration:none;
       transition:.25s ease;
     }
 
@@ -64,34 +78,48 @@
     }
 
     .site-header{
-      background:linear-gradient(135deg, var(--azul-escuro) 0%, var(--azul-principal) 55%, #2b4ea5 100%);
-      color:#fff;
-      border:1px solid rgba(255,255,255,.10);
-      border-radius:28px;
-      box-shadow:var(--sombra);
       position:relative;
       overflow:hidden;
-      margin:20px 0 10px;
+      margin:20px 0 18px;
+      border-radius:32px;
+      background:linear-gradient(135deg, #102452 0%, #1f3c88 48%, #3257b4 100%);
+      color:#fff;
+      box-shadow:var(--sombra);
+      border:1px solid rgba(255,255,255,.10);
     }
 
     .site-header::before{
       content:"";
       position:absolute;
-      inset:auto -120px -120px auto;
-      width:320px;
-      height:320px;
+      inset:-80px auto auto -80px;
+      width:280px;
+      height:280px;
+      border-radius:50%;
       background:radial-gradient(circle, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 70%);
       pointer-events:none;
     }
 
+    .site-header::after{
+      content:"";
+      position:absolute;
+      inset:auto -110px -120px auto;
+      width:360px;
+      height:360px;
+      border-radius:50%;
+      background:radial-gradient(circle, rgba(255,255,255,.14) 0%, rgba(255,255,255,0) 72%);
+      pointer-events:none;
+    }
+
     .header-wrap{
-      width:min(var(--largura), calc(100% - 32px));
+      width:min(var(--largura), calc(100% - 40px));
       margin:0 auto;
+      padding:40px 0;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:28px;
-      padding:34px 0;
+      position:relative;
+      z-index:1;
     }
 
     .brand-block{
@@ -102,18 +130,18 @@
     }
 
     .logo-box{
-      width:92px;
-      height:92px;
-      border-radius:22px;
+      width:96px;
+      height:96px;
+      border-radius:24px;
       background:rgba(255,255,255,.14);
       border:1px solid rgba(255,255,255,.18);
+      padding:15px;
       display:flex;
       align-items:center;
       justify-content:center;
-      padding:14px;
-      backdrop-filter:blur(6px);
-      box-shadow:0 8px 24px rgba(0,0,0,.12);
       flex-shrink:0;
+      backdrop-filter:blur(8px);
+      box-shadow:0 12px 26px rgba(0,0,0,.12);
     }
 
     .logo-box img{
@@ -123,106 +151,52 @@
     }
 
     .brand h1{
-      font-size:clamp(1.8rem, 3vw, 2.7rem);
-      line-height:1.1;
-      margin-bottom:8px;
+      font-family:"Cormorant Garamond", serif;
+      font-size:clamp(2.2rem, 4vw, 3.2rem);
+      line-height:1;
+      margin-bottom:10px;
       letter-spacing:-.02em;
+      font-weight:700;
     }
 
     .brand p{
-      font-size:1rem;
-      color:rgba(255,255,255,.88);
-      max-width:720px;
+      max-width:760px;
+      color:rgba(255,255,255,.90);
+      font-size:1.02rem;
     }
 
     .header-badge{
-      background:rgba(255,255,255,.12);
-      border:1px solid rgba(255,255,255,.18);
-      color:#fff;
-      padding:12px 16px;
-      border-radius:999px;
-      font-size:.92rem;
-      font-weight:600;
-      white-space:nowrap;
-    }
-
-    .site-nav{
-      margin:0 auto 24px;
-      max-width:980px;
-      background:rgba(255,255,255,.96);
-      border:1px solid rgba(31,60,136,.10);
-      border-radius:18px;
-      box-shadow:0 8px 18px rgba(31,60,136,.08);
-      backdrop-filter:blur(8px);
-      overflow:hidden;
-    }
-
-    .site-nav-toggle{
-      display:none;
-      width:100%;
-      border:none;
-      background:transparent;
-      padding:14px 18px;
-      font:inherit;
-      font-weight:700;
-      color:var(--azul-escuro);
-      cursor:pointer;
-      text-align:left;
-    }
-
-    .site-nav-menu{
-      display:flex;
-      flex-wrap:nowrap;
-      align-items:center;
-      justify-content:center;
-      gap:6px;
-      padding:10px 12px;
-      overflow-x:auto;
-      scrollbar-width:thin;
-    }
-
-    .site-nav-menu a{
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      padding:10px 14px;
-      border-radius:12px;
-      color:#0f172a;
-      font-weight:600;
-      font-size:.95rem;
+      padding:13px 18px;
+      border-radius:999px;
+      background:rgba(255,255,255,.12);
+      border:1px solid rgba(255,255,255,.18);
+      color:#fff;
+      font-size:.93rem;
+      font-weight:700;
+      letter-spacing:.02em;
       white-space:nowrap;
-      flex:0 0 auto;
-    }
-
-    .site-nav-menu a:hover,
-    .site-nav-menu a:focus-visible{
-      background:#eef3fb;
-      color:var(--azul-escuro);
-      outline:none;
-    }
-
-    .site-nav-menu a.active{
-      background:#e8eef8;
-      color:var(--azul-escuro);
-      box-shadow:inset 0 0 0 1px rgba(31,60,136,.08);
+      backdrop-filter:blur(8px);
     }
 
     .layout{
       display:grid;
-      grid-template-columns:290px minmax(0, 1fr);
-      gap:28px;
+      grid-template-columns:300px minmax(0, 1fr);
+      gap:30px;
       align-items:start;
-      margin-bottom:40px;
+      margin-bottom:42px;
     }
 
     .sidebar{
-      background:rgba(255,255,255,.92);
-      border:1px solid var(--borda);
-      border-radius:24px;
-      box-shadow:var(--sombra-suave);
-      padding:24px;
       position:sticky;
       top:18px;
+      background:rgba(255,255,255,.94);
+      border:1px solid var(--borda);
+      border-radius:28px;
+      padding:24px;
+      box-shadow:var(--sombra-suave);
       backdrop-filter:blur(10px);
     }
 
@@ -239,8 +213,8 @@
     }
 
     .sidebar-head p{
-      font-size:.95rem;
       color:var(--texto-suave);
+      font-size:.95rem;
     }
 
     .sidebar-nav{
@@ -254,30 +228,31 @@
       display:flex;
       align-items:center;
       justify-content:space-between;
+      gap:12px;
       padding:13px 15px;
-      border-radius:14px;
-      color:var(--texto);
+      border-radius:15px;
       background:#fff;
+      color:var(--texto);
       border:1px solid transparent;
-      font-weight:600;
+      font-weight:700;
     }
 
     .sidebar-nav a:hover{
-      border-color:var(--borda);
       background:var(--azul-suave);
+      border-color:var(--borda);
       transform:translateX(2px);
     }
 
     .sidebar-nav a.active{
       background:linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
       color:#fff;
-      box-shadow:0 8px 20px rgba(31,60,136,.18);
+      box-shadow:0 10px 22px rgba(31,60,136,.18);
     }
 
     .side-card{
-      background:linear-gradient(180deg, #f8fbff 0%, #eef4ff 100%);
+      background:linear-gradient(180deg, #fbfdff 0%, #eff4ff 100%);
       border:1px solid var(--borda);
-      border-radius:18px;
+      border-radius:20px;
       padding:18px;
     }
 
@@ -288,9 +263,13 @@
     }
 
     .side-card p{
-      font-size:.94rem;
       color:var(--texto-suave);
+      font-size:.94rem;
       margin-bottom:10px;
+    }
+
+    .side-card a{
+      font-weight:700;
     }
 
     .content{
@@ -300,42 +279,76 @@
     }
 
     .section{
-      background:rgba(255,255,255,.95);
+      background:rgba(255,255,255,.96);
       border:1px solid var(--borda);
-      border-radius:26px;
-      padding:30px;
+      border-radius:30px;
+      padding:34px;
       box-shadow:var(--sombra-suave);
     }
 
+    .section-top{
+      display:flex;
+      align-items:flex-end;
+      justify-content:space-between;
+      gap:20px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
     .section h2{
-      font-size:1.65rem;
+      font-family:"Cormorant Garamond", serif;
+      font-size:2.25rem;
       color:var(--azul-escuro);
-      margin-bottom:10px;
-      letter-spacing:-.01em;
+      line-height:1;
+      letter-spacing:-.02em;
+      margin-bottom:8px;
     }
 
     .section-intro{
       color:var(--texto-suave);
-      max-width:860px;
-      margin-bottom:26px;
+      max-width:900px;
+      font-size:1rem;
+    }
+
+    .catalog-note{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:10px 14px;
+      border-radius:999px;
+      background:#f3f7ff;
+      border:1px solid var(--borda);
+      color:var(--azul-escuro);
+      font-size:.9rem;
+      font-weight:700;
+      white-space:nowrap;
     }
 
     .book-list{
       display:flex;
       flex-direction:column;
-      gap:22px;
+      gap:26px;
+      margin-top:12px;
     }
 
     .book-item{
+      position:relative;
       border:1px solid var(--borda);
-      border-radius:24px;
-      background:linear-gradient(180deg, #ffffff 0%, #fbfcff 100%);
-      box-shadow:0 8px 20px rgba(31,60,136,.05);
+      border-radius:28px;
       overflow:hidden;
+      background:linear-gradient(180deg, #ffffff 0%, #fbfdff 100%);
+      box-shadow:var(--sombra-media);
+    }
+
+    .book-item::before{
+      content:"";
+      display:block;
+      height:6px;
+      background:linear-gradient(90deg, var(--azul-escuro), var(--azul-principal), #6b8fe6);
     }
 
     .book-main{
-      padding:24px;
+      padding:28px;
     }
 
     .book-header{
@@ -347,128 +360,166 @@
       margin-bottom:14px;
     }
 
-    .book-title-group h3{
-      font-size:1.5rem;
-      line-height:1.15;
-      color:var(--azul-escuro);
-      margin-bottom:6px;
-      letter-spacing:-.02em;
+    .book-title-group{
+      min-width:0;
     }
 
-    .book-title-group .authors{
-      font-weight:700;
+    .book-title-group h3{
+      font-family:"Cormorant Garamond", serif;
+      font-size:2rem;
+      line-height:1.02;
+      color:var(--azul-escuro);
+      letter-spacing:-.02em;
+      margin-bottom:8px;
+    }
+
+    .authors{
       color:var(--texto);
+      font-weight:800;
+      font-size:1rem;
     }
 
     .status-badge{
-      background:#eef4ff;
-      color:var(--azul-escuro);
-      border:1px solid rgba(31,60,136,.10);
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:9px 13px;
       border-radius:999px;
-      padding:8px 12px;
-      font-size:.88rem;
-      font-weight:700;
+      background:var(--kindle-bg);
+      border:1px solid var(--kindle-borda);
+      color:var(--kindle);
+      font-size:.86rem;
+      font-weight:800;
       white-space:nowrap;
     }
 
     .book-description{
       color:var(--texto-suave);
-      margin-bottom:20px;
       max-width:920px;
-      font-size:.98rem;
-    }
-
-    .edition-stack{
-      display:flex;
-      flex-direction:column;
-      gap:18px;
+      margin-bottom:22px;
+      font-size:1rem;
     }
 
     .edition-row{
       display:grid;
-      grid-template-columns:190px minmax(0, 1fr);
-      gap:16px;
+      grid-template-columns:260px minmax(0, 1fr);
+      gap:20px;
       align-items:stretch;
-      background:#f8fbff;
+      padding:20px;
+      border-radius:24px;
+      background:linear-gradient(180deg, #f9fbff 0%, #f4f8ff 100%);
       border:1px solid var(--borda);
-      border-radius:22px;
-      padding:16px;
     }
 
     .edition-cover-card{
-background:linear-gradient(180deg,#fdfefe 0%,#eef3fb 100%);
-border:1px solid var(--borda);
-border-radius:18px;
-padding:18px;
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-height:100%;
-}
-
-    .cover-label{
-font-size:.75rem;
-margin-bottom:14px;
-letter-spacing:.06em;
-}
-
-    .book-cover{
-width:140px;
-aspect-ratio:9 / 16;
-object-fit:contain;
-object-position:center;
-border-radius:10px;
-box-shadow:0 10px 22px rgba(0,0,0,.15);
-margin:auto;
-}
-
-    .edition-info-card{
-      background:#fff;
-      border:1px solid var(--borda);
-      border-radius:18px;
-      padding:16px;
       display:flex;
       flex-direction:column;
-      justify-content:space-between;
+      justify-content:center;
+      align-items:center;
+      background:
+        linear-gradient(180deg, rgba(255,255,255,.92) 0%, rgba(239,244,255,.92) 100%);
+      border:1px solid var(--borda);
+      border-radius:22px;
+      padding:20px;
       min-height:100%;
     }
 
+    .cover-label{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      margin-bottom:14px;
+      padding:7px 12px;
+      border-radius:999px;
+      background:var(--kindle-bg);
+      border:1px solid var(--kindle-borda);
+      color:var(--kindle);
+      font-size:.76rem;
+      font-weight:800;
+      letter-spacing:.08em;
+      text-transform:uppercase;
+    }
+
+    .book-cover{
+      width:170px;
+      aspect-ratio:10 / 16;
+      object-fit:cover;
+      object-position:center;
+      border-radius:14px;
+      box-shadow:0 14px 32px rgba(15,23,42,.18);
+      background:#fff;
+    }
+
+    .edition-info-card{
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:18px;
+      background:#fff;
+      border:1px solid var(--borda);
+      border-radius:22px;
+      padding:20px;
+    }
+
+    .edition-topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-bottom:4px;
+    }
+
     .edition-info-card h4{
-      font-size:1rem;
       color:var(--azul-escuro);
-      margin-bottom:12px;
+      font-size:1.14rem;
+      margin:0;
+    }
+
+    .edition-mini-badge{
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      padding:7px 10px;
+      border-radius:999px;
+      background:#eef4ff;
+      border:1px solid rgba(31,60,136,.10);
+      color:var(--azul-escuro);
+      font-size:.8rem;
+      font-weight:800;
     }
 
     .meta-grid{
       display:grid;
       grid-template-columns:repeat(2, minmax(0, 1fr));
-      gap:8px;
+      gap:10px;
     }
 
     .meta-item{
       background:#f8fbff;
       border:1px solid rgba(31,60,136,.08);
-      border-radius:12px;
-      padding:9px 11px;
+      border-radius:14px;
+      padding:11px 12px;
       color:var(--texto-suave);
-      font-size:.88rem;
+      font-size:.9rem;
       line-height:1.45;
+      min-height:72px;
     }
 
     .meta-item strong{
-      color:var(--azul-escuro);
       display:block;
-      margin-bottom:2px;
-      font-size:.87rem;
+      margin-bottom:4px;
+      color:var(--azul-escuro);
+      font-size:.84rem;
+      letter-spacing:.01em;
     }
 
     .book-actions{
       display:flex;
       flex-wrap:wrap;
-      gap:10px;
+      gap:12px;
       align-items:center;
-      margin-top:14px;
+      padding-top:6px;
     }
 
     .buy-button{
@@ -476,12 +527,12 @@ margin:auto;
       align-items:center;
       justify-content:center;
       gap:10px;
-      padding:12px 16px;
-      border-radius:13px;
-      font-weight:700;
+      min-width:220px;
+      padding:13px 18px;
+      border-radius:14px;
+      font-weight:800;
       font-size:.95rem;
       transition:.25s ease;
-      min-width:190px;
     }
 
     .buy-button img{
@@ -491,45 +542,39 @@ margin:auto;
       flex-shrink:0;
     }
 
-    .buy-physical{
-      background:linear-gradient(135deg, var(--azul-principal), var(--azul-escuro));
-      color:#fff;
-      box-shadow:0 10px 24px rgba(31,60,136,.18);
-    }
-
-    .buy-physical:hover{
-      color:#fff;
-      transform:translateY(-1px);
-    }
-
     .buy-kindle{
-      background:#fff7e8;
-      color:#7a4b00;
-      border:1px solid #f1d9a8;
-      box-shadow:0 8px 18px rgba(122,75,0,.08);
+      background:linear-gradient(135deg, #fff4da, #ffeab9);
+      color:#6f4700;
+      border:1px solid #efcf8f;
+      box-shadow:0 10px 20px rgba(138,90,0,.10);
     }
 
     .buy-kindle:hover{
-      color:#6a3f00;
-      background:#fff1d4;
+      color:#5c3a00;
       transform:translateY(-1px);
+      background:linear-gradient(135deg, #ffefcb, #ffe39e);
+    }
+
+    .book-note{
+      color:var(--texto-suave);
+      font-size:.9rem;
     }
 
     .expandable{
       border-top:1px solid var(--borda);
-      background:linear-gradient(180deg, #fbfcff 0%, #f7faff 100%);
+      background:linear-gradient(180deg, #fbfdff 0%, #f7faff 100%);
     }
 
     .expandable summary{
       list-style:none;
       cursor:pointer;
-      padding:18px 24px;
-      font-weight:700;
-      color:var(--azul-escuro);
+      padding:20px 24px;
       display:flex;
       align-items:center;
       justify-content:space-between;
       gap:16px;
+      font-weight:800;
+      color:var(--azul-escuro);
     }
 
     .expandable summary::-webkit-details-marker{
@@ -538,14 +583,14 @@ margin:auto;
 
     .expandable summary::after{
       content:"+";
-      width:28px;
-      height:28px;
+      width:30px;
+      height:30px;
       border-radius:50%;
+      background:#eaf0fb;
+      color:var(--azul-escuro);
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      background:#eaf0fb;
-      color:var(--azul-escuro);
       font-size:1.1rem;
       flex-shrink:0;
     }
@@ -560,35 +605,34 @@ margin:auto;
 
     .person-grid{
       display:grid;
-      grid-template-columns:repeat(auto-fit, minmax(240px, 1fr));
+      grid-template-columns:repeat(auto-fit, minmax(260px, 1fr));
       gap:16px;
-      margin-top:4px;
     }
 
     .person-card{
       display:flex;
       align-items:flex-start;
-      gap:14px;
-      background:#fff;
+      gap:15px;
+      padding:18px;
+      border-radius:20px;
       border:1px solid var(--borda);
-      border-radius:18px;
-      padding:16px;
-      box-shadow:0 4px 14px rgba(31,60,136,.04);
+      background:#fff;
+      box-shadow:0 5px 14px rgba(20,43,99,.04);
     }
 
     .person-card img{
-      width:72px;
-      height:72px;
-      border-radius:16px;
+      width:76px;
+      height:76px;
+      border-radius:18px;
       object-fit:cover;
       flex-shrink:0;
       border:1px solid var(--borda);
-      background:#f3f6fc;
+      background:#f4f7fc;
     }
 
     .person-card h4{
-      font-size:1rem;
       color:var(--azul-escuro);
+      font-size:1rem;
       margin-bottom:6px;
     }
 
@@ -603,13 +647,13 @@ margin:auto;
     }
 
     .footer-box{
+      text-align:center;
       background:#fff;
       border:1px solid var(--borda);
-      border-radius:20px;
-      padding:18px 22px;
-      color:var(--texto-suave);
+      border-radius:22px;
+      padding:20px 24px;
       box-shadow:var(--sombra-suave);
-      text-align:center;
+      color:var(--texto-suave);
       font-size:.96rem;
     }
 
@@ -636,48 +680,21 @@ margin:auto;
       }
     }
 
-    @media (max-width: 900px){
+    @media (max-width: 860px){
       .edition-row{
-display:grid;
-grid-template-columns:230px minmax(0,1fr);
-gap:18px;
-}
+        grid-template-columns:1fr;
+      }
+
+      .edition-cover-card{
+        padding:22px;
+      }
 
       .book-cover{
-        aspect-ratio:9 / 16;
-        max-height:none;
+        width:180px;
       }
 
       .meta-grid{
         grid-template-columns:1fr;
-      }
-    }
-
-    @media (max-width: 860px){
-      .site-nav{
-        max-width:100%;
-        margin:0 auto 20px;
-      }
-
-      .site-nav-toggle{
-        display:block;
-      }
-
-      .site-nav-menu{
-        display:none;
-        flex-direction:column;
-        align-items:stretch;
-        padding-top:0;
-        overflow-x:visible;
-      }
-
-      .site-nav-menu.is-open{
-        display:flex;
-      }
-
-      .site-nav-menu a{
-        width:100%;
-        justify-content:flex-start;
       }
     }
 
@@ -686,16 +703,28 @@ gap:18px;
         width:min(var(--largura), calc(100% - 20px));
       }
 
+      .site-header{
+        border-radius:24px;
+      }
+
       .logo-box{
-        width:78px;
-        height:78px;
-        border-radius:18px;
+        width:82px;
+        height:82px;
+        border-radius:20px;
       }
 
       .section,
       .sidebar{
         padding:22px;
-        border-radius:20px;
+        border-radius:22px;
+      }
+
+      .book-main{
+        padding:22px;
+      }
+
+      .book-title-group h3{
+        font-size:1.7rem;
       }
 
       .person-card{
@@ -730,20 +759,18 @@ gap:18px;
           </div>
           <div class="brand">
             <h1>Revista Inquietações Editorial</h1>
-            <p>Página institucional dos livros publicados pela editora da Revista Inquietações.</p>
+            <p>Catálogo institucional das publicações da editora, com apresentação visual refinada, informações bibliográficas essenciais e acesso direto às edições digitais em Kindle.</p>
           </div>
         </div>
 
-        <div class="header-badge">Catálogo editorial</div>
+        <div class="header-badge">Catálogo editorial digital</div>
       </div>
     </header>
-
-    
 
     <div class="layout">
       <aside class="sidebar">
         <div class="sidebar-head">
-          <h2>Navegação Institucional</h2>
+          <h2>Navegação institucional</h2>
           <p>Editora da Revista Inquietações</p>
         </div>
 
@@ -757,17 +784,22 @@ gap:18px;
 
         <div class="side-card">
           <h3>Site oficial da revista</h3>
-          <p>Acesse o portal principal da Revista Inquietações.</p>
+          <p>Acesse o portal principal da Revista Inquietações e conheça também as demais frentes editoriais e acadêmicas.</p>
           <a href="../index.html">Revista Inquietações</a>
         </div>
       </aside>
 
       <main class="content">
         <section class="section">
-          <h2>Livros publicados</h2>
-          <p class="section-intro">
-            O catálogo editorial reúne traduções, edições comentadas e publicações de interesse acadêmico nas áreas das Humanidades. Cada edição está organizada com capa e ficha editorial lado a lado, de forma clara, equilibrada e elegante.
-          </p>
+          <div class="section-top">
+            <div>
+              <h2>Livros publicados</h2>
+              <p class="section-intro">
+                O catálogo editorial reúne traduções, edições comentadas e publicações de interesse acadêmico nas Humanidades. Nesta página, as obras são apresentadas em formato digital Kindle, com capa em destaque, ficha bibliográfica organizada e informações autorais complementares.
+              </p>
+            </div>
+            <div class="catalog-note">Edições digitais disponíveis</div>
+          </div>
 
           <div class="book-list">
 
@@ -779,73 +811,47 @@ gap:18px;
                     <p class="authors">Friedrich Wilhelm Nietzsche</p>
                   </div>
 
-                  <span class="status-badge">Disponível em capa comum e Kindle</span>
+                  <span class="status-badge">Disponível em Kindle</span>
                 </div>
 
                 <p class="book-description">
-                  Reunião das correspondências iniciais de Nietzsche, com tradução, organização e comentários de Diego Vinícius Brito dos Santos, em uma edição voltada à formação intelectual do filósofo e ao estudo de sua juventude.
+                  Reunião das correspondências iniciais de Nietzsche, com tradução, organização e comentários de Diego Vinícius Brito dos Santos, em uma edição dedicada ao estudo da formação intelectual do filósofo e à compreensão de seu período de juventude.
                 </p>
 
-                <div class="edition-stack">
-                  <div class="edition-row">
-                    <div class="edition-cover-card">
-                      <img src="https://m.media-amazon.com/images/I/71njPxvZKUL._AC_CR0%2C0%2C0%2C0_SX615_SY462_.jpg" alt="Capa física do livro Cartas da juventude (1850–1866)" class="book-cover">
-                    </div>
-
-                    <div class="edition-info-card">
-                      <div>
-                        <h4>Livro físico</h4>
-                        <div class="meta-grid">
-                          <div class="meta-item"><strong>ASIN</strong>B0GRP1Q243</div>
-                          <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
-                          <div class="meta-item"><strong>Data da publicação</strong>7 março 2026</div>
-                          <div class="meta-item"><strong>Idioma</strong>Português</div>
-                          <div class="meta-item"><strong>Número de páginas</strong>508 páginas</div>
-                          <div class="meta-item"><strong>ISBN-13</strong>979-8251052428</div>
-                          <div class="meta-item"><strong>Peso do produto</strong>848 g</div>
-                          <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
-                          <div class="meta-item"><strong>Dimensões</strong>15.24 x 2.92 x 22.86 cm</div>
-                        </div>
-                      </div>
-
-                      <div class="book-actions">
-                        <a class="buy-button buy-physical" href="https://www.amazon.com/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
-                          <img src="assets/amazon-livro-fisico-logo.png" alt="Livro físico">
-                          Comprar capa comum
-                        </a>
-                      </div>
-                    </div>
+                <div class="edition-row">
+                  <div class="edition-cover-card">
+                    <span class="cover-label">Edição Kindle</span>
+                    <img src="https://m.media-amazon.com/images/I/81xpBuyO6jL._AC_CR0%2C0%2C0%2C0_SX615_SY462_.jpg" alt="Capa Kindle do livro Cartas da juventude (1850–1866)" class="book-cover">
                   </div>
 
-                  <div class="edition-row">
-                    <div class="edition-cover-card">
-                      <img src="https://m.media-amazon.com/images/I/81xpBuyO6jL._AC_CR0%2C0%2C0%2C0_SX615_SY462_.jpg" alt="Capa Kindle do livro Cartas da juventude (1850–1866)" class="book-cover">
+                  <div class="edition-info-card">
+                    <div>
+                      <div class="edition-topbar">
+                        <h4>Ficha da edição digital</h4>
+                        <span class="edition-mini-badge">Kindle</span>
+                      </div>
+
+                      <div class="meta-grid">
+                        <div class="meta-item"><strong>ASIN</strong>B0GRTH81NJ</div>
+                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                        <div class="meta-item"><strong>Data da publicação</strong>9 março 2026</div>
+                        <div class="meta-item"><strong>Idioma</strong>Português</div>
+                        <div class="meta-item"><strong>Tamanho do arquivo</strong>216.0 MB</div>
+                        <div class="meta-item"><strong>ISBN-13</strong>979-8251052428</div>
+                        <div class="meta-item"><strong>Páginas da edição impressa de referência</strong>508 páginas</div>
+                        <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
+                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                        </div>
                     </div>
 
-                    <div class="edition-info-card">
-                      <div>
-                        <h4>Kindle</h4>
-                        <div class="meta-grid">
-                          <div class="meta-item"><strong>ASIN</strong>B0GRTH81NJ</div>
-                          <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
-                          <div class="meta-item"><strong>Acessibilidade</strong>Saiba mais</div>
-                          <div class="meta-item"><strong>Data da publicação</strong>9 março 2026</div>
-                          <div class="meta-item"><strong>Idioma</strong>Português</div>
-                          <div class="meta-item"><strong>Tamanho do arquivo</strong>216.0 MB</div>
-                          <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
-                          <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
-                          <div class="meta-item"><strong>ISBN-13</strong>979-8251052428</div>
-                          <div class="meta-item"><strong>Page Flip</strong>Não habilitado</div>
-                          <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
-                        </div>
-                      </div>
-
-                      <div class="book-actions">
-                        <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRTH81NJ?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
-                          <img src="assets/kindle-logo.png" alt="Kindle">
-                          Comprar Kindle
-                        </a>
-                      </div>
+                    <div class="book-actions">
+                      <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRTH81NJ?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/kindle-logo.png" alt="Kindle">
+                        Comprar edição Kindle
+                      </a>
+                      <span class="book-note">Disponível exclusivamente em formato digital nesta página do catálogo.</span>
                     </div>
                   </div>
                 </div>
@@ -867,7 +873,7 @@ gap:18px;
                       <img src="assets/diego.png" alt="Diego Vinícius Brito dos Santos">
                       <div>
                         <h4>Sobre o tradutor e organizador</h4>
-                        <p>Diego Vinícius Brito dos Santos realiza a tradução, a organização e a contextualização das correspondências de juventude de Nietzsche, aproximando o público de língua portuguesa de documentos fundamentais para compreender a formação intelectual do filósofo.</p>
+                        <p>Diego Vinícius Brito dos Santos assina a tradução, a organização e a contextualização das correspondências de juventude de Nietzsche, aproximando o público de língua portuguesa de documentos decisivos para o estudo de sua formação intelectual.</p>
                       </div>
                     </div>
                   </div>
@@ -883,74 +889,48 @@ gap:18px;
                     <p class="authors">Karl Marx &amp; Friedrich Engels</p>
                   </div>
 
-                  <span class="status-badge">Disponível em capa comum e Kindle</span>
+                  <span class="status-badge">Disponível em Kindle</span>
                 </div>
 
                 <p class="book-description">
-                  Publicado originalmente em 1848, o Manifesto do Partido Comunista é um dos textos políticos mais influentes da história moderna. Nesta edição, o texto clássico é apresentado com tradução e notas de Diego Vinícius Brito dos Santos, oferecendo ao leitor uma leitura acessível e contextualizada de uma obra fundamental para a filosofia política e a teoria social.
+                  Publicado originalmente em 1848, <em>O Manifesto do Partido Comunista</em> é um dos textos políticos mais influentes da história moderna. Nesta edição, o clássico recebe tradução e notas de Diego Vinícius Brito dos Santos, oferecendo uma leitura acessível, rigorosa e contextualizada de uma obra fundamental para a filosofia política e a teoria social.
                 </p>
 
-                <div class="edition-stack">
-                  <div class="edition-row">
-                    <div class="edition-cover-card">
-                      <img src="https://m.media-amazon.com/images/I/71wY2RmTJ5L._SL1499_.jpg" alt="Capa física do livro O Manifesto do Partido Comunista" class="book-cover">
-                    </div>
-
-                    <div class="edition-info-card">
-                      <div>
-                        <h4>Livro físico</h4>
-                        <div class="meta-grid">
-                          <div class="meta-item"><strong>ASIN</strong>B0GRRLW4V4</div>
-                          <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
-                          <div class="meta-item"><strong>Data da publicação</strong>8 março 2026</div>
-                          <div class="meta-item"><strong>Idioma</strong>Português</div>
-                          <div class="meta-item"><strong>Número de páginas</strong>69 páginas</div>
-                          <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
-                          <div class="meta-item"><strong>Peso do produto</strong>159 g</div>
-                          <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
-                          <div class="meta-item"><strong>Dimensões</strong>15.24 x 0.41 x 22.86 cm</div>
-                        </div>
-                      </div>
-
-                      <div class="book-actions">
-                        <a class="buy-button buy-physical" href="https://www.amazon.com/-/pt/dp/B0GRRLW4V4/ref=tmm_pap_swatch_0" target="_blank" rel="noopener noreferrer">
-                          <img src="assets/amazon-livro-fisico-logo.png" alt="Livro físico">
-                          Comprar capa comum
-                        </a>
-                      </div>
-                    </div>
+                <div class="edition-row">
+                  <div class="edition-cover-card">
+                    <span class="cover-label">Edição Kindle</span>
+                    <img src="https://m.media-amazon.com/images/I/81asowRHFiL._SY466_.jpg" alt="Capa Kindle do livro O Manifesto do Partido Comunista" class="book-cover">
                   </div>
 
-                  <div class="edition-row">
-                    <div class="edition-cover-card">
-                      <img src="https://m.media-amazon.com/images/I/81asowRHFiL._SY466_.jpg" alt="Capa Kindle do livro O Manifesto do Partido Comunista" class="book-cover">
+                  <div class="edition-info-card">
+                    <div>
+                      <div class="edition-topbar">
+                        <h4>Ficha da edição digital</h4>
+                        <span class="edition-mini-badge">Kindle</span>
+                      </div>
+
+                      <div class="meta-grid">
+                        <div class="meta-item"><strong>ASIN</strong>B0GRQLPD3J</div>
+                        <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
+                        <div class="meta-item"><strong>Data da publicação</strong>8 março 2026</div>
+                        <div class="meta-item"><strong>Edição</strong>1ª</div>
+                        <div class="meta-item"><strong>Idioma</strong>Português</div>
+                        <div class="meta-item"><strong>Tamanho do arquivo</strong>20.9 MB</div>
+                        <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
+                        <div class="meta-item"><strong>Páginas da edição impressa de referência</strong>69 páginas</div>
+                        <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>Page Flip</strong>Não habilitado</div>
+                        <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
+                      </div>
                     </div>
 
-                    <div class="edition-info-card">
-                      <div>
-                        <h4>Kindle</h4>
-                        <div class="meta-grid">
-                          <div class="meta-item"><strong>ASIN</strong>B0GRQLPD3J</div>
-                          <div class="meta-item"><strong>Editora</strong>Revista Inquietações Editorial</div>
-                          <div class="meta-item"><strong>Acessibilidade</strong>Saiba mais</div>
-                          <div class="meta-item"><strong>Data da publicação</strong>8 março 2026</div>
-                          <div class="meta-item"><strong>Edição</strong>1ª</div>
-                          <div class="meta-item"><strong>Idioma</strong>Português</div>
-                          <div class="meta-item"><strong>Tamanho do arquivo</strong>20.9 MB</div>
-                          <div class="meta-item"><strong>Configuração de fonte</strong>Não habilitado</div>
-                          <div class="meta-item"><strong>Dicas de vocabulário</strong>Não habilitado</div>
-                          <div class="meta-item"><strong>ISBN-13</strong>979-8251190175</div>
-                          <div class="meta-item"><strong>Page Flip</strong>Não habilitado</div>
-                          <div class="meta-item"><strong>Idade de leitura</strong>14 - 18 anos</div>
-                        </div>
-                      </div>
-
-                      <div class="book-actions">
-                        <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRQLPD3J?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
-                          <img src="assets/kindle-logo.png" alt="Kindle">
-                          Comprar Kindle
-                        </a>
-                      </div>
+                    <div class="book-actions">
+                      <a class="buy-button buy-kindle" href="https://www.amazon.com/dp/B0GRQLPD3J?ref_=ast_author_dp&th=1&psc=1" target="_blank" rel="noopener noreferrer">
+                        <img src="assets/kindle-logo.png" alt="Kindle">
+                        Comprar edição Kindle
+                      </a>
+                      <span class="book-note">O ISBN apresentado corresponde à edição física vinculada à publicação.</span>
                     </div>
                   </div>
                 </div>
@@ -980,7 +960,7 @@ gap:18px;
                       <img src="assets/diego.png" alt="Diego Vinícius Brito dos Santos">
                       <div>
                         <h4>Sobre o tradutor</h4>
-                        <p>Diego Vinícius Brito dos Santos assina a tradução e as notas desta edição, buscando apresentar o texto clássico de Marx e Engels de forma fiel ao original e acessível ao leitor contemporâneo.</p>
+                        <p>Diego Vinícius Brito dos Santos assina a tradução e as notas desta edição, buscando apresentar o texto clássico de Marx e Engels com fidelidade conceitual, clareza expositiva e mediação editorial voltada ao leitor contemporâneo.</p>
                       </div>
                     </div>
                   </div>
@@ -995,23 +975,10 @@ gap:18px;
 
     <footer class="footer">
       <div class="footer-box">
-        <strong>Revista Inquietações Editorial</strong> — Página institucional dos livros publicados.
+        <strong>Revista Inquietações Editorial</strong> — Página institucional dos livros publicados em formato digital.
       </div>
     </footer>
 
   </div>
-
-  <script>
-    const navToggle = document.querySelector('.site-nav-toggle');
-    const navMenu = document.querySelector('.site-nav-menu');
-
-    if (navToggle && navMenu) {
-      navToggle.addEventListener('click', () => {
-        navMenu.classList.toggle('is-open');
-        const expanded = navMenu.classList.contains('is-open');
-        navToggle.setAttribute('aria-expanded', expanded ? 'true' : 'false');
-      });
-    }
-  </script>
 </body>
 </html>
