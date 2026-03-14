@@ -1,9 +1,7 @@
-
 <!DOCTYPE html>
 <html lang="pt-BR">
 
 <head>
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
@@ -92,48 +90,6 @@ color:#53657e;
 line-height:1.65;
 }
 
-.clean-grid{
-display:grid;
-gap:12px;
-}
-
-.clean-item{
-position:relative;
-border:1px solid var(--line);
-border-radius:18px;
-background:#fcfdff;
-box-shadow:var(--shadow-soft);
-padding:16px 18px 16px 52px;
-overflow:hidden;
-}
-
-.clean-item::before{
-content:"•";
-position:absolute;
-left:18px;
-top:14px;
-width:22px;
-height:22px;
-border-radius:999px;
-display:flex;
-align-items:center;
-justify-content:center;
-background:#e8f0fa;
-color:var(--brand);
-font-weight:700;
-line-height:1;
-}
-
-.clean-item strong{
-color:var(--brand);
-}
-
-.clean-item p{
-margin:0;
-color:#53657e;
-line-height:1.7;
-}
-
 .note-box{
 padding:18px 20px;
 border-radius:18px;
@@ -218,83 +174,6 @@ line-height:1.7;
 margin-bottom:0;
 }
 
-.footer-academic{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:10px;
-text-align:center;
-}
-
-.footer-academic-main{
-font-size:1rem;
-color:#23344d;
-line-height:1.7;
-}
-
-.footer-academic-main strong{
-color:var(--brand);
-}
-
-.footer-license-block{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-gap:8px;
-padding-top:8px;
-}
-
-.footer-license-block img{
-width:84px;
-height:auto;
-display:block;
-object-fit:contain;
-opacity:.98;
-}
-
-.footer-license-caption{
-font-size:.92rem;
-color:#5b6d84;
-line-height:1.6;
-max-width:520px;
-}
-
-@media (max-width:860px){
-.form-panel-head{
-padding:16px 18px;
-}
-
-.form-embed-wrap{
-min-height:1080px;
-}
-
-.form-embed{
-height:1080px;
-}
-}
-
-@media (max-width:560px){
-.footer-license-block img{
-width:74px;
-}
-
-.footer-academic-main{
-font-size:.96rem;
-}
-
-.footer-license-caption{
-font-size:.88rem;
-}
-
-.form-embed-wrap{
-min-height:1180px;
-}
-
-.form-embed{
-height:1180px;
-}
 .expandable-list{
 display:grid;
 gap:14px;
@@ -373,6 +252,63 @@ content:"Recolher";
 content:"Expandir";
 }
 
+.footer-academic{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:10px;
+text-align:center;
+}
+
+.footer-academic-main{
+font-size:1rem;
+color:#23344d;
+line-height:1.7;
+}
+
+.footer-academic-main strong{
+color:var(--brand);
+}
+
+.footer-license-block{
+display:flex;
+flex-direction:column;
+align-items:center;
+justify-content:center;
+gap:8px;
+padding-top:8px;
+}
+
+.footer-license-block img{
+width:84px;
+height:auto;
+display:block;
+object-fit:contain;
+opacity:.98;
+}
+
+.footer-license-caption{
+font-size:.92rem;
+color:#5b6d84;
+line-height:1.6;
+max-width:520px;
+}
+
+@media (max-width:860px){
+.form-panel-head{
+padding:16px 18px;
+}
+
+.form-embed-wrap{
+min-height:1080px;
+}
+
+.form-embed{
+height:1080px;
+}
+}
+
 @media (max-width:700px){
 .expandable-head{
 flex-direction:column;
@@ -383,8 +319,29 @@ align-items:flex-start;
 align-self:flex-start;
 }
 }
-</style>
 
+@media (max-width:560px){
+.footer-license-block img{
+width:74px;
+}
+
+.footer-academic-main{
+font-size:.96rem;
+}
+
+.footer-license-caption{
+font-size:.88rem;
+}
+
+.form-embed-wrap{
+min-height:1180px;
+}
+
+.form-embed{
+height:1180px;
+}
+}
+</style>
 </head>
 
 <body>
@@ -404,11 +361,9 @@ align-self:flex-start;
 </div>
 
 <header class="masthead">
-
 <div class="masthead-inner">
 
 <div>
-
 <p class="kicker">Portal científico</p>
 
 <h1>Submissões</h1>
@@ -420,7 +375,6 @@ e outros materiais compatíveis com a linha editorial do periódico, por meio do
 </p>
 
 <div class="masthead-meta">
-
 <div class="masthead-card">
 <strong>Submissão</strong>
 Fluxo contínuo
@@ -440,9 +394,7 @@ Formulário oficial
 <strong>Etapa</strong>
 Envio direto
 </div>
-
 </div>
-
 </div>
 
 <div class="banner-card">
@@ -450,15 +402,12 @@ Envio direto
 </div>
 
 </div>
-
 </header>
 
 <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
-
 <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
 
 <div class="site-nav-menu">
-
 <a href="index.html">Início</a>
 <a href="edicao-atual.html">Atual</a>
 <a href="conteudos.html">Conteúdos</a>
@@ -472,9 +421,7 @@ Envio direto
 <a href="submissoes.html" class="active">Submissões</a>
 <a href="templates.html">Templates</a>
 <a href="contato.html">Contato</a>
-
 </div>
-
 </nav>
 
 <div class="portal-grid sidebar-compact">
@@ -482,7 +429,6 @@ Envio direto
 <aside class="sidebar" id="barra-lateral">
 
 <section class="sidebar-block">
-
 <h2>Navegação da página</h2>
 
 <div class="side-nav-card">
@@ -491,15 +437,12 @@ Envio direto
 <a class="side-nav-link" href="#formulario">Formulário de submissão</a>
 <a class="side-nav-link" href="#duvidas">Informações úteis</a>
 </div>
-
 </section>
 
 <section class="sidebar-block">
-
 <h2>Contato institucional</h2>
 
 <div class="data-list">
-
 <div>
 <strong>Instagram:</strong>
 <a href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer">
@@ -513,9 +456,7 @@ Envio direto
 rev.inquietacoes@gmail.com
 </a>
 </div>
-
 </div>
-
 </section>
 
 </aside>
@@ -523,14 +464,12 @@ rev.inquietacoes@gmail.com
 <main class="content" id="conteudo-principal">
 
 <section class="panel" id="visao-geral">
-
 <div class="panel-head">
 <h2>Envio de trabalhos</h2>
 <p>Canal oficial de submissão para autores e autoras.</p>
 </div>
 
 <div class="panel-body">
-
 <div class="submission-highlight">
 <p>
 A Revista Inquietações recebe trabalhos em <strong>fluxo contínuo</strong>, por meio de formulário oficial de submissão.
@@ -547,20 +486,16 @@ do material às normas e à linha editorial da revista.
 <a class="btn secondary" href="diretrizes-autores.html">Ler diretrizes</a>
 </div>
 </div>
-
 </div>
-
 </section>
 
 <section class="panel" id="antes-de-enviar" style="margin-top:20px;">
-
 <div class="panel-head">
 <h2>Antes de enviar o manuscrito</h2>
 <p>Conferências básicas recomendadas antes da submissão.</p>
 </div>
 
 <div class="panel-body">
-
 <div class="info-grid">
 
 <div class="info-box">
@@ -584,13 +519,10 @@ do material às normas e à linha editorial da revista.
 </div>
 
 </div>
-
 </div>
-
 </section>
 
 <section class="panel" id="formulario" style="margin-top:20px;">
-
 <div class="panel-head">
 <h2>Formulário oficial de submissão</h2>
 <p>Painel incorporado para envio direto de trabalhos.</p>
@@ -635,6 +567,7 @@ allowfullscreen>
 <p>
 Se o painel acima não aparecer corretamente, clique no botão abaixo para acessar o formulário oficial diretamente:
 </p>
+
 <div class="cta-row">
 <a class="btn" href="https://script.google.com/macros/s/AKfycby-CmFNwlTFUxGQBNTQGvTxrBH8haGKEhYrsQGlAkx8nuCZrfyMWpy-YAgi-y5ZhI-hTQ/exec" target="_blank" rel="noopener noreferrer">
 Ir para submissões
@@ -645,11 +578,9 @@ Ir para submissões
 </div>
 
 </div>
-
 </section>
 
 <section class="panel" id="duvidas" style="margin-top:20px;">
-
 <div class="panel-head">
 <h2>Informações úteis</h2>
 <p>Esclarecimentos importantes sobre o envio, a conferência do material e o encaminhamento editorial da submissão.</p>
@@ -657,19 +588,19 @@ Ir para submissões
 
 <div class="panel-body">
 
-<div class="accordion-stack">
+<div class="expandable-list">
 
-<details class="accordion-card" open>
-<summary>
-<div class="accordion-title-wrap">
+<div class="expandable-item is-open">
+<div class="expandable-head">
+<div class="expandable-title">
 <h3>Canal oficial de envio</h3>
 <p>Como a submissão deve ser realizada no portal da revista.</p>
 </div>
-<span class="accordion-icon">+</span>
-</summary>
+<button class="expand-toggle" type="button" aria-expanded="true"></button>
+</div>
 
-<div class="accordion-body">
-<div class="note-box">
+<div class="expandable-body">
+<div class="note-box" style="margin-bottom:0;">
 <p>
 Toda submissão deve ser realizada exclusivamente pelo <strong>formulário oficial</strong>
 disponibilizado nesta página. Esse procedimento permite à equipe editorial receber
@@ -683,19 +614,19 @@ solicitadas sejam conferidas antes do envio final.
 </p>
 </div>
 </div>
-</details>
+</div>
 
-<details class="accordion-card">
-<summary>
-<div class="accordion-title-wrap">
+<div class="expandable-item">
+<div class="expandable-head">
+<div class="expandable-title">
 <h3>Diretrizes e preparação do manuscrito</h3>
 <p>O que o(a) autor(a) deve verificar antes de submeter o trabalho.</p>
 </div>
-<span class="accordion-icon">+</span>
-</summary>
+<button class="expand-toggle" type="button" aria-expanded="false"></button>
+</div>
 
-<div class="accordion-body">
-<div class="note-box">
+<div class="expandable-body">
+<div class="note-box" style="margin-bottom:0;">
 <p>
 As normas de preparação do manuscrito permanecem disponíveis em página própria de
 <strong>diretrizes para autores</strong>. Antes da submissão, recomenda-se verificar a
@@ -710,19 +641,19 @@ no processo editorial.
 </p>
 </div>
 </div>
-</details>
+</div>
 
-<details class="accordion-card">
-<summary>
-<div class="accordion-title-wrap">
+<div class="expandable-item">
+<div class="expandable-head">
+<div class="expandable-title">
 <h3>Etapas após o envio</h3>
 <p>Como o material submetido é tratado pela equipe editorial.</p>
 </div>
-<span class="accordion-icon">+</span>
-</summary>
+<button class="expand-toggle" type="button" aria-expanded="false"></button>
+</div>
 
-<div class="accordion-body">
-<div class="note-box">
+<div class="expandable-body">
+<div class="note-box" style="margin-bottom:0;">
 <p>
 Após o envio, o material passa por uma <strong>triagem editorial inicial</strong>, na qual
 são observados aspectos como pertinência temática, completude das informações,
@@ -736,19 +667,19 @@ acadêmica, conforme os critérios da revista.
 </p>
 </div>
 </div>
-</details>
+</div>
 
-<details class="accordion-card">
-<summary>
-<div class="accordion-title-wrap">
+<div class="expandable-item">
+<div class="expandable-head">
+<div class="expandable-title">
 <h3>Dúvidas técnicas e contato</h3>
 <p>Como proceder em caso de dificuldade com o formulário ou com o envio.</p>
 </div>
-<span class="accordion-icon">+</span>
-</summary>
+<button class="expand-toggle" type="button" aria-expanded="false"></button>
+</div>
 
-<div class="accordion-body">
-<div class="note-box">
+<div class="expandable-body">
+<div class="note-box" style="margin-bottom:0;">
 <p>
 Se houver dificuldade técnica no preenchimento do formulário, instabilidade na página,
 ou necessidade de esclarecimento adicional sobre a submissão, o(a) autor(a) poderá
@@ -761,7 +692,7 @@ encontrado, para que a equipe editorial possa orientar o procedimento mais adequ
 </p>
 </div>
 </div>
-</details>
+</div>
 
 </div>
 
@@ -771,7 +702,6 @@ encontrado, para que a equipe editorial possa orientar o procedimento mais adequ
 </div>
 
 </div>
-
 </section>
 
 </main>
@@ -815,6 +745,16 @@ const isOpen=navMenu.classList.toggle("is-open")
 navToggle.setAttribute("aria-expanded", String(isOpen))
 }
 }
+
+const expandableButtons=document.querySelectorAll(".expand-toggle")
+
+expandableButtons.forEach(button=>{
+button.addEventListener("click", ()=>{
+const item=button.closest(".expandable-item")
+const isOpen=item.classList.toggle("is-open")
+button.setAttribute("aria-expanded", String(isOpen))
+})
+})
 </script>
 
 <script
