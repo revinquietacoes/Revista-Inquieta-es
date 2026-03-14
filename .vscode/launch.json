@@ -7,8 +7,8 @@
         {
             "type": "chrome",
             "request": "launch",
-            "name": "Open evento.html",
-            "file": "c:\\Users\\diego\\Documents\\GitHub\\Revista-Inquieta-es\\index.html"
+            "name": "Open index.html",
+            "file": ""D:\GitHub\Revista-Inquieta-es\index.html""
         }
     ]
 }
