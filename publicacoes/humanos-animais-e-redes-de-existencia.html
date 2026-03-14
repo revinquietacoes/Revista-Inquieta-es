@@ -55,49 +55,67 @@
 <meta name="citation_keywords" content="filosofia contemporânea" />
 
 <style>
-.author-grid{
+.author-inline-wrap{
 display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:18px;
+gap:16px;
 margin-top:18px;
+max-width:920px;
 }
 
-.author-card{
+.author-inline{
 display:flex;
-gap:14px;
-align-items:flex-start;
-padding:16px;
-background:#fff;
-border:1px solid rgba(15,35,63,0.10);
-border-radius:18px;
-box-shadow:0 10px 24px rgba(16,35,63,0.08);
+align-items:center;
+gap:16px;
 }
 
-.author-card img{
+.author-inline img{
 width:88px;
 height:88px;
 object-fit:cover;
 border-radius:50%;
-border:2px solid rgba(0,0,0,0.08);
-box-shadow:0 6px 18px rgba(16,35,63,0.10);
+border:2px solid rgba(255,255,255,0.22);
+box-shadow:0 6px 18px rgba(0,0,0,0.18);
 background:#fff;
 flex-shrink:0;
 }
 
-.author-card p{
-margin:4px 0;
+.author-inline-text p{
+margin:0 0 6px;
+color:#f7f9fc;
+}
+
+.author-inline-text p:last-child{
+margin-bottom:0;
+}
+
+.author-inline-text strong{
+color:#ffffff;
+}
+
+.author-inline-text .mini-meta{
+color:rgba(255,255,255,0.92);
+font-size:1rem;
 }
 
 .author-links{
-margin-top:8px;
 display:flex;
 flex-wrap:wrap;
-gap:8px 12px;
+gap:10px 14px;
+margin-top:4px;
 }
 
 .author-links a{
-font-size:.94rem;
+color:#ffffff;
 text-decoration:none;
+font-weight:600;
+font-size:.95rem;
+border-bottom:1px solid transparent;
+transition:border-color .18s ease, opacity .18s ease;
+}
+
+.author-links a:hover{
+opacity:.9;
+border-bottom-color:rgba(255,255,255,0.7);
 }
 
 .keywords-line{
@@ -132,6 +150,21 @@ box-shadow:0 10px 24px rgba(16,35,63,0.08);
 .about-author h3{
 margin-bottom:10px;
 }
+
+@media (max-width: 700px){
+.author-inline{
+align-items:flex-start;
+}
+
+.author-inline img{
+width:78px;
+height:78px;
+}
+
+.author-inline-text .mini-meta{
+font-size:.95rem;
+}
+}
 </style>
 
 </head>
@@ -152,12 +185,12 @@ margin-bottom:10px;
 <p class="kicker">Portal científico • Revista Inquietações</p>
 <h1>Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno</h1>
 
-<div class="author-grid">
+<div class="author-inline-wrap">
 
-<div class="author-card">
+<div class="author-inline">
 <img src="../arquivos/autor-diego-vinicius.png" alt="Foto do autor Diego Vinícius Brito dos Santos" />
-<div>
-<p><strong>Diego Vinícius Brito dos Santos</strong></p>
+<div class="author-inline-text">
+<p><strong>Autor:</strong> Diego Vinícius Brito dos Santos</p>
 <p class="mini-meta">Revista Inquietações • Ensaios • v.1, n.1 (2026)</p>
 <div class="author-links">
 <a href="https://orcid.org/0000-0002-9064-0663" target="_blank" rel="noopener noreferrer">ORCID</a>
@@ -166,10 +199,10 @@ margin-bottom:10px;
 </div>
 </div>
 
-<div class="author-card">
+<div class="author-inline">
 <img src="../corpo%20editorial/taisa.jpeg" alt="Foto da autora Taisa Maria Brito dos Santos" />
-<div>
-<p><strong>Taisa Maria Brito dos Santos</strong></p>
+<div class="author-inline-text">
+<p><strong>Autora:</strong> Taisa Maria Brito dos Santos</p>
 <p class="mini-meta">Revista Inquietações • Ensaios • v.1, n.1 (2026)</p>
 <div class="author-links">
 <a href="https://orcid.org/0000-0002-8766-5683" target="_blank" rel="noopener noreferrer">ORCID</a>
