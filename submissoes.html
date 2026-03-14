@@ -295,6 +295,93 @@ min-height:1180px;
 .form-embed{
 height:1180px;
 }
+.expandable-list{
+display:grid;
+gap:14px;
+}
+
+.expandable-item{
+border:1px solid var(--line);
+border-radius:18px;
+background:#fff;
+box-shadow:var(--shadow-soft);
+overflow:hidden;
+}
+
+.expandable-head{
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:16px;
+padding:18px 20px;
+}
+
+.expandable-title{
+display:grid;
+gap:4px;
+}
+
+.expandable-title h3{
+margin:0;
+color:var(--brand);
+font-size:1.03rem;
+}
+
+.expandable-title p{
+margin:0;
+color:#5a6d85;
+font-size:.95rem;
+line-height:1.55;
+}
+
+.expand-toggle{
+appearance:none;
+border:1px solid #d7e2ef;
+background:#f8fbff;
+color:var(--brand);
+border-radius:999px;
+padding:10px 16px;
+font:inherit;
+font-weight:600;
+cursor:pointer;
+transition:background .18s ease, transform .18s ease, border-color .18s ease;
+white-space:nowrap;
+}
+
+.expand-toggle:hover{
+background:#eef5fc;
+transform:translateY(-1px);
+border-color:#c7d8ea;
+}
+
+.expandable-body{
+display:none;
+padding:0 20px 20px;
+border-top:1px solid rgba(18,45,82,0.06);
+background:#fff;
+}
+
+.expandable-item.is-open .expandable-body{
+display:block;
+}
+
+.expandable-item.is-open .expand-toggle::after{
+content:"Recolher";
+}
+
+.expand-toggle::after{
+content:"Expandir";
+}
+
+@media (max-width:700px){
+.expandable-head{
+flex-direction:column;
+align-items:flex-start;
+}
+
+.expand-toggle{
+align-self:flex-start;
+}
 }
 </style>
 
