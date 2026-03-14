@@ -4,7 +4,7 @@
   <!-- Página principal -->
   <url>
     <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-03-14</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
@@ -127,6 +127,196 @@
     <lastmod>2026-03-10</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.93</priority>
+  </url>
+
+  <!-- Homenagens HTML -->
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-albert-einstein.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-castro-alves.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-carolina-maria-de-jesus.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-karl-marx.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-lucy-hobbs-taylor.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-marielle-franco-anderson-gomes.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.92</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-maurice-merleau-ponty.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-stephen-hawking.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-antoine-henri-becquerel.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-georg-simmel.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-tzvetan-todorov.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.88</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-friedrich-eduard-beneke.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-francisco-i-da-austria.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-horace-walpole.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-josefa-ortiz-de-dominguez.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-salvador-puig-antich.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-samuel-thomas-von-sommerring.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-alfred-korzybski.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-georg-cantor.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-heinrich-georg-bronn.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.84</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-marguerite-duras.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.86</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-milly-witkop-rocker.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.84</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-nur-misuari.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.84</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-peter-abrahams.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.84</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-raimundo-antonio-de-bulhao-pato.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.84</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-roger-caillois.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.84</priority>
+  </url>
+
+  <url>
+    <loc>https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/homenagem-emile-auguste-chartier.html</loc>
+    <lastmod>2026-03-14</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.84</priority>
   </url>
 
   <!-- PDFs principais -->
