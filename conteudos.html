@@ -313,23 +313,20 @@
         Menu
       </button>
       <div class="site-nav-menu">
-
-<a href="index.html">Início</a>
-<a href="edicao-atual.html">Atual</a>
-<a href="conteudos.html" class="active">Conteúdos</a>
-<a href="evento.html">Evento</a>
+        <a href="index.html">Início</a>
+        <a href="edicao-atual.html">Atual</a>
+        <a href="conteudos.html" class="active">Conteúdos</a>
+        <a href="evento.html">Evento</a>
         <a href="Editora-Revista-Inquietacoes/index.html">Editora</a>
-
-<a href="sobre.html">Sobre</a>
-<a href="equipe-editorial.html">Equipe Editorial</a>
-<a href="noticias.html">Notícias</a>
-<a href="politicas-editoriais.html">Políticas</a>
-<a href="diretrizes-autores.html">Diretrizes</a>
-<a href="submissoes.html">Submissões</a>
-<a href="templates.html">Templates</a>
-<a href="contato.html">Contato</a>
-
-</div>
+        <a href="sobre.html">Sobre</a>
+        <a href="equipe-editorial.html">Equipe Editorial</a>
+        <a href="noticias.html">Notícias</a>
+        <a href="politicas-editoriais.html">Políticas</a>
+        <a href="diretrizes-autores.html">Diretrizes</a>
+        <a href="submissoes.html">Submissões</a>
+        <a href="templates.html">Templates</a>
+        <a href="contato.html">Contato</a>
+      </div>
     </nav>
 
     <div class="portal-grid sidebar-compact">
@@ -503,6 +500,55 @@
                 </div>
               </a>
             </article>
+
+            <article class="entry-card">
+              <a href="publicacoes/humanos-animais-e-redes-de-existencia.html" class="entry-link">
+                <div class="entry-banner">
+                  <span class="badge">Ensaio</span>
+                  <p class="entry-banner-title">Humanos, animais e redes de existência</p>
+                </div>
+                <div class="entry-body">
+                  <h3>Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno</h3>
+                  <p class="mini-meta">Autores: Diego Vinícius Brito dos Santos; Taisa Maria Brito dos Santos</p>
+                  <div class="icon-links-row">
+                    <a class="icon-link-circle doi-icon"
+                       href="https://dx.doi.org/10.5281/zenodo.19012745"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Abrir DOI 10.5281/zenodo.19012745"
+                       title="Abrir DOI 10.5281/zenodo.19012745"></a>
+
+                    <a class="icon-link-circle lattes-icon"
+                       href="http://lattes.cnpq.br/4347574894656811"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Abrir currículo Lattes de Diego Vinícius Brito dos Santos"
+                       title="Abrir currículo Lattes de Diego Vinícius Brito dos Santos"></a>
+
+                    <a class="icon-link-circle orcid-icon"
+                       href="https://orcid.org/0000-0002-9064-0663"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Abrir ORCID de Diego Vinícius Brito dos Santos"
+                       title="Abrir ORCID de Diego Vinícius Brito dos Santos"></a>
+
+                    <a class="icon-link-circle lattes-icon"
+                       href="http://lattes.cnpq.br/6216572061896584"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Abrir currículo Lattes de Taisa Maria Brito dos Santos"
+                       title="Abrir currículo Lattes de Taisa Maria Brito dos Santos"></a>
+
+                    <a class="icon-link-circle orcid-icon"
+                       href="https://orcid.org/0000-0002-8766-5683"
+                       target="_blank"
+                       rel="noopener noreferrer"
+                       aria-label="Abrir ORCID de Taisa Maria Brito dos Santos"
+                       title="Abrir ORCID de Taisa Maria Brito dos Santos"></a>
+                  </div>
+                </div>
+              </a>
+            </article>
           </div>
         </section>
 
@@ -593,7 +639,6 @@
               </a>
             </article>
 
-            
             <article class="entry-card">
               <a href="publicacoes/traducao-a-mulher-georg-groddeck.html" class="entry-link">
                 <div class="entry-banner">
@@ -685,8 +730,6 @@
           </div>
         </section>
 
-       
-
       </main>
     </div>
 
@@ -701,133 +744,140 @@
   </div>
 
   <script>
-  const navToggle = document.querySelector('.site-nav-toggle');
-  const navMenu = document.querySelector('.site-nav-menu');
+    const navToggle = document.querySelector('.site-nav-toggle');
+    const navMenu = document.querySelector('.site-nav-menu');
 
-  if (navToggle && navMenu) {
-    navToggle.addEventListener('click', () => {
-      const isOpen = navMenu.classList.toggle('is-open');
-      navToggle.setAttribute('aria-expanded', String(isOpen));
-    });
-  }
-
-  const authorProfiles = {
-    "diego vinícius brito dos santos": {
-      lattes: "http://lattes.cnpq.br/4347574894656811",
-      orcid: "https://orcid.org/0000-0002-9064-0663"
-    },
-    "geiza venicia dos santos": {
-      lattes: "http://lattes.cnpq.br/4444946198128059",
-      orcid: "https://orcid.org/0000-0003-2797-8271"
+    if (navToggle && navMenu) {
+      navToggle.addEventListener('click', () => {
+        const isOpen = navMenu.classList.toggle('is-open');
+        navToggle.setAttribute('aria-expanded', String(isOpen));
+      });
     }
-  };
 
-  const isbnLinks = {
-    "cartas da juventude (1850–1866) de friedrich nietzsche (alemão-português)": {
-      url: "https://www.amazon.com.br/juventude-1850-1866-Portuguese-Friedrich-Nietzsche/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1",
-      label: "Abrir livro Cartas da juventude (1850–1866) na Amazon"
-    },
-    "o manifesto do partido comunista": {
-      url: "https://www.amazon.com.br/Manifesto-Partido-Comunista-Portuguese/dp/B0GRRLW4V4?ref_=ast_author_dp",
-      label: "Abrir livro O Manifesto do Partido Comunista na Amazon"
-    }
-  };
-
-  function createIconLink(url, className, label) {
-    const link = document.createElement('a');
-    link.href = url;
-    link.target = '_blank';
-    link.rel = 'noopener noreferrer';
-    link.className = 'icon-link-circle ' + className;
-    link.setAttribute('aria-label', label);
-    link.setAttribute('title', label);
-
-    link.addEventListener('click', function(event) {
-      event.stopPropagation();
-    });
-
-    return link;
-  }
-
-  document.querySelectorAll('.entry-body').forEach((entryBody) => {
-    const metas = entryBody.querySelectorAll('.mini-meta');
-    const h3 = entryBody.querySelector('h3');
-
-    let authorMeta = null;
-    let doiMeta = null;
-    let doiAnchor = null;
-    let authorName = '';
-    let workTitle = h3 ? h3.textContent.trim().toLowerCase() : '';
-
-    metas.forEach((meta) => {
-      const link = meta.querySelector('a[href*="doi.org"], a[href*="dx.doi.org"]');
-
-      if (link) {
-        doiMeta = meta;
-        doiAnchor = link;
-        return;
+    const authorProfiles = {
+      "diego vinícius brito dos santos": {
+        lattes: "http://lattes.cnpq.br/4347574894656811",
+        orcid: "https://orcid.org/0000-0002-9064-0663"
+      },
+      "geiza venicia dos santos": {
+        lattes: "http://lattes.cnpq.br/4444946198128059",
+        orcid: "https://orcid.org/0000-0003-2797-8271"
+      },
+      "taisa maria brito dos santos": {
+        lattes: "http://lattes.cnpq.br/6216572061896584",
+        orcid: "https://orcid.org/0000-0002-8766-5683"
       }
+    };
 
-      const txt = meta.textContent.trim();
-      const lower = txt.toLowerCase();
-
-      if (
-        lower.includes('autor:') ||
-        lower.includes('autora:') ||
-        lower.includes('tradutor:') ||
-        lower.includes('tradutora:')
-      ) {
-        authorMeta = meta;
-        authorName = txt
-          .replace(/^\s*(autor|autora|tradutor|tradutora)\s*:\s*/i, '')
-          .trim()
-          .toLowerCase();
+    const isbnLinks = {
+      "cartas da juventude (1850–1866) de friedrich nietzsche (alemão-português)": {
+        url: "https://www.amazon.com.br/juventude-1850-1866-Portuguese-Friedrich-Nietzsche/dp/B0GRP1Q243?ref_=ast_author_dp&th=1&psc=1",
+        label: "Abrir livro Cartas da juventude (1850–1866) na Amazon"
+      },
+      "o manifesto do partido comunista": {
+        url: "https://www.amazon.com.br/Manifesto-Partido-Comunista-Portuguese/dp/B0GRRLW4V4?ref_=ast_author_dp",
+        label: "Abrir livro O Manifesto do Partido Comunista na Amazon"
       }
-    });
+    };
 
-    const insertionTarget = authorMeta || entryBody.querySelector('.mini-meta');
-    if (!insertionTarget) return;
+    function createIconLink(url, className, label) {
+      const link = document.createElement('a');
+      link.href = url;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      link.className = 'icon-link-circle ' + className;
+      link.setAttribute('aria-label', label);
+      link.setAttribute('title', label);
 
-    const row = document.createElement('div');
-    row.className = 'icon-links-row';
+      link.addEventListener('click', function(event) {
+        event.stopPropagation();
+      });
 
-    if (doiMeta && doiAnchor) {
-      const doiUrl = doiAnchor.getAttribute('href');
-      const doiText = doiAnchor.textContent.trim();
-      row.appendChild(
-        createIconLink(doiUrl, 'doi-icon', 'Abrir DOI ' + doiText)
-      );
-      doiMeta.remove();
+      return link;
     }
 
-    const profile = authorProfiles[authorName];
+    document.querySelectorAll('.entry-body').forEach((entryBody) => {
+      if (entryBody.querySelector('.icon-links-row')) return;
 
-    if (profile) {
-      if (profile.lattes) {
+      const metas = entryBody.querySelectorAll('.mini-meta');
+      const h3 = entryBody.querySelector('h3');
+
+      let authorMeta = null;
+      let doiMeta = null;
+      let doiAnchor = null;
+      let authorName = '';
+      let workTitle = h3 ? h3.textContent.trim().toLowerCase() : '';
+
+      metas.forEach((meta) => {
+        const link = meta.querySelector('a[href*="doi.org"], a[href*="dx.doi.org"]');
+
+        if (link) {
+          doiMeta = meta;
+          doiAnchor = link;
+          return;
+        }
+
+        const txt = meta.textContent.trim();
+        const lower = txt.toLowerCase();
+
+        if (
+          lower.includes('autor:') ||
+          lower.includes('autora:') ||
+          lower.includes('autores:') ||
+          lower.includes('tradutor:') ||
+          lower.includes('tradutora:')
+        ) {
+          authorMeta = meta;
+          authorName = txt
+            .replace(/^\s*(autor|autora|autores|tradutor|tradutora)\s*:\s*/i, '')
+            .trim()
+            .toLowerCase();
+        }
+      });
+
+      const insertionTarget = authorMeta || entryBody.querySelector('.mini-meta');
+      if (!insertionTarget) return;
+
+      const row = document.createElement('div');
+      row.className = 'icon-links-row';
+
+      if (doiMeta && doiAnchor) {
+        const doiUrl = doiAnchor.getAttribute('href');
+        const doiText = doiAnchor.textContent.trim();
         row.appendChild(
-          createIconLink(profile.lattes, 'lattes-icon', 'Abrir currículo Lattes de ' + authorName)
+          createIconLink(doiUrl, 'doi-icon', 'Abrir DOI ' + doiText)
+        );
+        doiMeta.remove();
+      }
+
+      const profile = authorProfiles[authorName];
+
+      if (profile) {
+        if (profile.lattes) {
+          row.appendChild(
+            createIconLink(profile.lattes, 'lattes-icon', 'Abrir currículo Lattes de ' + authorName)
+          );
+        }
+
+        if (profile.orcid) {
+          row.appendChild(
+            createIconLink(profile.orcid, 'orcid-icon', 'Abrir ORCID de ' + authorName)
+          );
+        }
+      }
+
+      const isbn = isbnLinks[workTitle];
+      if (isbn) {
+        row.appendChild(
+          createIconLink(isbn.url, 'isbn-icon', isbn.label)
         );
       }
 
-      if (profile.orcid) {
-        row.appendChild(
-          createIconLink(profile.orcid, 'orcid-icon', 'Abrir ORCID de ' + authorName)
-        );
+      if (row.children.length > 0) {
+        insertionTarget.insertAdjacentElement('afterend', row);
       }
-    }
-
-    const isbn = isbnLinks[workTitle];
-    if (isbn) {
-      row.appendChild(
-        createIconLink(isbn.url, 'isbn-icon', isbn.label)
-      );
-    }
-
-    if (row.children.length > 0) {
-      insertionTarget.insertAdjacentElement('afterend', row);
-    }
-  });
-</script>
+    });
+  </script>
 
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>

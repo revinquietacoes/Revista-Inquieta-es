@@ -8,7 +8,7 @@
          http://www.openarchives.org/OAI/2.0/oai_dc/
          http://www.openarchives.org/OAI/2.0/oai_dc.xsd">
 
-<responseDate>2026-03-10T00:00:00Z</responseDate>
+  <responseDate>2026-03-14T00:00:00Z</responseDate>
   <request verb="ListRecords" metadataPrefix="oai_dc">https://revinquietacoes.github.io/Revista-Inquieta-es/oai/listrecords.xml</request>
 
   <ListRecords>
@@ -169,6 +169,36 @@
           <dc:source>Revista Inquietações, v. 1, n. 1, 2026</dc:source>
           <dc:language>pt-BR</dc:language>
           <dc:rights>Acesso aberto</dc:rights>
+        </oai_dc:dc>
+      </metadata>
+    </record>
+
+    <record>
+      <header>
+        <identifier>oai:revinquietacoes.github.io:v1n1-ensaio-02</identifier>
+        <datestamp>2026-03-13</datestamp>
+        <setSpec>essays</setSpec>
+      </header>
+      <metadata>
+        <oai_dc:dc>
+          <dc:title>Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno</dc:title>
+          <dc:creator>Diego Vinícius Brito dos Santos</dc:creator>
+          <dc:creator>Taisa Maria Brito dos Santos</dc:creator>
+          <dc:subject>Humanismo</dc:subject>
+          <dc:subject>Antropocentrismo</dc:subject>
+          <dc:subject>Virada animal</dc:subject>
+          <dc:subject>Relações humano-animal</dc:subject>
+          <dc:subject>Filosofia contemporânea</dc:subject>
+          <dc:description>Ensaio acadêmico que analisa criticamente a distinção entre humanos e animais na tradição filosófica ocidental, discutindo a virada animal nas ciências humanas e a formulação de um humanismo relacional na era do Antropoceno.</dc:description>
+          <dc:publisher>Revista Inquietações</dc:publisher>
+          <dc:date>2026-03-13</dc:date>
+          <dc:type>Text</dc:type>
+          <dc:format>application/pdf</dc:format>
+          <dc:identifier>https://revinquietacoes.github.io/Revista-Inquieta-es/arquivos/Ensaio+Taisa+Diego+geografia+filosofia+antropologia.pdf</dc:identifier>
+          <dc:identifier>https://doi.org/10.5281/zenodo.19012745</dc:identifier>
+          <dc:source>Revista Inquietações, v. 1, n. 1, p. 8-27, 2026</dc:source>
+          <dc:language>pt-BR</dc:language>
+          <dc:rights>Creative Commons Attribution 4.0 International (CC BY 4.0)</dc:rights>
         </oai_dc:dc>
       </metadata>
     </record>
@@ -419,72 +449,34 @@
       </metadata>
     </record>
 
-<record>
-  <header>
-    <identifier>oai:revinquietacoes.github.io:v1n1-resenha-03</identifier>
-    <datestamp>2026-01-01</datestamp>
-    <setSpec>reviews</setSpec>
-  </header>
+    <record>
+      <header>
+        <identifier>oai:revinquietacoes.github.io:v1n1-resenha-03</identifier>
+        <datestamp>2026-01-01</datestamp>
+        <setSpec>reviews</setSpec>
+      </header>
+      <metadata>
+        <oai_dc:dc>
+          <dc:title>Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt</dc:title>
+          <dc:creator>Diego Vinícius Brito dos Santos</dc:creator>
+          <dc:subject>Resenha</dc:subject>
+          <dc:subject>Democracia</dc:subject>
+          <dc:subject>Erosão democrática</dc:subject>
+          <dc:subject>Levitsky</dc:subject>
+          <dc:subject>Ziblatt</dc:subject>
+          <dc:description>Resenha crítica da obra "How Democracies Die", de Steven Levitsky e Daniel Ziblatt, analisando os processos contemporâneos de erosão institucional das democracias.</dc:description>
+          <dc:publisher>Revista Inquietações</dc:publisher>
+          <dc:date>2026-01-01</dc:date>
+          <dc:type>Text</dc:type>
+          <dc:format>application/pdf</dc:format>
+          <dc:identifier>https://revinquietacoes.github.io/Revista-Inquieta-es/arquivos/resenha-como-as-democracias-morrem-Steven-Levitsky.pdf</dc:identifier>
+          <dc:identifier>https://doi.org/10.5281/zenodo.18945739</dc:identifier>
+          <dc:source>Revista Inquietações, v. 1, n. 1, 2026</dc:source>
+          <dc:language>pt-BR</dc:language>
+          <dc:rights>Acesso aberto</dc:rights>
+        </oai_dc:dc>
+      </metadata>
+    </record>
 
-  <metadata>
-    <oai_dc:dc>
-
-      <dc:title>
-      Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt
-      </dc:title>
-
-      <dc:creator>
-      Diego Vinícius Brito dos Santos
-      </dc:creator>
-
-      <dc:subject>Resenha</dc:subject>
-      <dc:subject>Democracia</dc:subject>
-      <dc:subject>Erosão democrática</dc:subject>
-      <dc:subject>Levitsky</dc:subject>
-      <dc:subject>Ziblatt</dc:subject>
-
-      <dc:description>
-      Resenha crítica da obra "How Democracies Die", de Steven Levitsky e Daniel Ziblatt,
-      analisando os processos contemporâneos de erosão institucional das democracias.
-      </dc:description>
-
-      <dc:publisher>
-      Revista Inquietações
-      </dc:publisher>
-
-      <dc:date>
-      2026-01-01
-      </dc:date>
-
-      <dc:type>Text</dc:type>
-
-      <dc:format>
-      application/pdf
-      </dc:format>
-
-      <dc:identifier>
-      https://revinquietacoes.github.io/Revista-Inquieta-es/arquivos/resenha-como-as-democracias-morrem-Steven-Levitsky.pdf
-      </dc:identifier>
-
-      <dc:identifier>
-      https://doi.org/10.5281/zenodo.18945739
-      </dc:identifier>
-
-      <dc:source>
-      Revista Inquietações, v. 1, n. 1, 2026
-      </dc:source>
-
-      <dc:language>
-      pt-BR
-      </dc:language>
-
-      <dc:rights>
-      Acesso aberto
-      </dc:rights>
-
-    </oai_dc:dc>
-  </metadata>
-
-</record>
   </ListRecords>
 </OAI-PMH>
