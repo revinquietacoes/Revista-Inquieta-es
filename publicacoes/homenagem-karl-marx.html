@@ -89,32 +89,155 @@ margin-top:18px;
 min-width:160px;
 }
 
-.homenagem-portrait-card{
-background:rgba(255,255,255,0.06);
-border:1px solid rgba(255,255,255,0.10);
-border-radius:28px;
-padding:18px;
-box-shadow:0 18px 34px rgba(0,0,0,0.16);
-backdrop-filter:blur(4px);
-}
-
-.homenagem-portrait{
-width:100%;
-aspect-ratio:1/1.08;
-object-fit:cover;
-border-radius:22px;
-display:block;
-background:#f4f4f4;
-}
-
-.homenagem-logo{
-margin-top:14px;
+.masthead-marx{
+position:relative;
+overflow:hidden;
+background-image:
+linear-gradient(90deg, rgba(7,18,42,0.88) 0%, rgba(10,26,58,0.78) 42%, rgba(12,30,64,0.58) 100%),
+url("../arquivos/marx-fundo.png");
+background-size:cover;
+background-position:center center;
+background-repeat:no-repeat;
+min-height:520px;
 display:flex;
-justify-content:center;
-padding:14px;
-border-radius:18px;
-background:rgba(255,255,255,0.92);
-border:1px solid rgba(0,0,0,0.05);
+align-items:center;
+}
+
+.masthead-marx .masthead-overlay{
+position:absolute;
+inset:0;
+background:
+linear-gradient(180deg, rgba(6,18,40,0.16) 0%, rgba(6,18,40,0.30) 100%);
+pointer-events:none;
+}
+
+.masthead-marx .masthead-inner{
+position:relative;
+z-index:1;
+width:100%;
+}
+
+.masthead-marx .masthead-copy{
+max-width:760px;
+}
+
+.masthead-marx .kicker,
+.masthead-marx h1,
+.masthead-marx .hero-text{
+color:#ffffff;
+text-shadow:0 2px 10px rgba(0,0,0,0.28);
+}
+
+.masthead-marx .hero-text{
+max-width:720px;
+color:rgba(255,255,255,0.94);
+}
+
+.masthead-marx .homenagem-kicker{
+display:inline-flex;
+align-items:center;
+gap:8px;
+padding:8px 14px;
+border-radius:999px;
+background:rgba(255,255,255,0.12);
+border:1px solid rgba(255,255,255,0.18);
+font-size:.92rem;
+color:#ffffff;
+margin-bottom:14px;
+backdrop-filter:blur(5px);
+}
+
+.masthead-marx .homenagem-meta{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+margin-top:18px;
+}
+
+.masthead-marx .masthead-card{
+background:rgba(255,255,255,0.10);
+border:1px solid rgba(255,255,255,0.14);
+color:#ffffff;
+backdrop-filter:blur(5px);
+box-shadow:0 10px 24px rgba(0,0,0,0.14);
+min-width:160px;
+}
+
+.masthead-marx .masthead-card strong{
+color:#ffffff;
+}
+
+.masthead-marx .btn{
+background:#ffffff;
+color:#17345f;
+border:1px solid rgba(255,255,255,0.35);
+box-shadow:0 10px 20px rgba(0,0,0,0.14);
+}
+
+.masthead-marx .btn:hover,
+.masthead-marx .btn:focus-visible{
+background:#f5f7fb;
+text-decoration:none;
+}
+
+.masthead-marx .btn.secondary{
+background:rgba(255,255,255,0.12);
+color:#ffffff;
+border:1px solid rgba(255,255,255,0.22);
+backdrop-filter:blur(5px);
+}
+
+.masthead-marx .btn.secondary:hover,
+.masthead-marx .btn.secondary:focus-visible{
+background:rgba(255,255,255,0.18);
+}
+
+.homenagem-brand-floating{
+display:flex;
+justify-content:flex-end;
+align-items:flex-end;
+min-height:100%;
+}
+
+.homenagem-brand-floating img{
+width:min(220px, 42vw);
+height:auto;
+display:block;
+object-fit:contain;
+filter:
+drop-shadow(0 12px 22px rgba(0,0,0,0.18))
+drop-shadow(0 2px 8px rgba(255,255,255,0.08));
+opacity:.96;
+}
+
+@media (max-width: 900px){
+.masthead-marx{
+min-height:480px;
+background-position:center top;
+}
+
+.homenagem-brand-floating{
+justify-content:flex-start;
+margin-top:10px;
+}
+
+.homenagem-brand-floating img{
+width:min(180px, 44vw);
+}
+}
+
+@media (max-width: 700px){
+.masthead-marx{
+min-height:440px;
+}
+
+.masthead-marx .hero-text{
+font-size:1rem;
+}
+
+.masthead-marx .masthead-card{
+min-width:unset;
+}
 }
 
 .homenagem-logo img{
@@ -257,7 +380,44 @@ grid-template-columns:1fr;
 <div class="pill">Memória intelectual • 14 de março de 1883</div>
 </div>
 
-<header class="masthead masthead-ojs" role="banner">
+<header class="masthead masthead-ojs masthead-marx" role="banner">
+  <div class="masthead-overlay"></div>
+
+  <div class="masthead-inner masthead-inner-ojs homenagem-hero">
+
+    <div class="masthead-copy">
+      <p class="kicker">Portal científico • acesso aberto</p>
+
+      <div class="homenagem-kicker">Homenagem póstuma • Karl Marx</div>
+
+      <h1>Karl Marx</h1>
+
+      <p class="hero-text">
+        Filósofo, economista, sociólogo, historiador, jornalista e teórico político, Karl Marx permanece como uma das vozes mais decisivas da tradição do pensamento crítico moderno.
+      </p>
+
+      <div class="homenagem-meta">
+        <div class="masthead-card"><strong>Nascimento</strong>5 de maio de 1818</div>
+        <div class="masthead-card"><strong>Falecimento</strong>14 de março de 1883</div>
+        <div class="masthead-card"><strong>Legado</strong>Filosofia, teoria social e crítica do capitalismo</div>
+      </div>
+
+      <div class="cta-row">
+        <a class="btn" href="https://pt.wikipedia.org/wiki/Karl_Marx" target="_blank" rel="noopener noreferrer">
+          Conhecer Karl Marx
+        </a>
+        <a class="btn secondary" href="../conteudos.html">
+          Voltar aos conteúdos
+        </a>
+      </div>
+    </div>
+
+    <div class="homenagem-brand-floating" aria-hidden="true">
+      <img src="../Editora-Revista-Inquietacoes/assets/logo-editora.png" alt="Logo da Revista Inquietações" />
+    </div>
+
+  </div>
+</header>
 <div class="masthead-inner masthead-inner-ojs homenagem-hero">
 
 <div class="masthead-copy">
@@ -285,14 +445,7 @@ Conhecer Karl Marx
 Voltar aos conteúdos
 </a>
 </div>
-</div>
 
-<div class="homenagem-portrait-card">
-<img class="homenagem-portrait" src="../arquivos/marx.png" alt="Retrato de Karl Marx" />
-<div class="homenagem-logo">
-<img src="../Editora-Revista-Inquietacoes/assets/logo-editora.png" alt="Logo da Revista Inquietações" />
-</div>
-</div>
 
 </div>
 </header>
@@ -370,12 +523,6 @@ Recordar Karl Marx é também recordar que o pensamento crítico continua sendo 
 
 <div class="panel-body memorial-grid">
 
-<div class="memorial-callout">
-<blockquote>
-“Os filósofos apenas interpretaram o mundo de diferentes maneiras; a questão, porém, é transformá-lo.”
-</blockquote>
-<cite>Karl Marx</cite>
-</div>
 
 <div class="memorial-facts">
 <div class="memorial-fact">
