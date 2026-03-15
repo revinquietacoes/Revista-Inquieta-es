@@ -1,0 +1,1281 @@
+<!DOCTYPE html>
+<html lang="pt-BR" xml:lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+<meta name="description" content="Página de homenagens da Revista Inquietações, com busca livre por texto e organização em cards mensais expansíveis." />
+<meta name="author" content="Revista Inquietações" />
+<meta name="theme-color" content="#1f3c88" />
+
+<title>Homenagens | Revista Inquietações</title>
+
+<link rel="canonical" href="https://revinquietacoes.github.io/Revista-Inquieta-es/homenagens.html" />
+
+<link rel="icon" type="image/png" sizes="32x32" href="assets/favicon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="assets/favicon.png" />
+<link rel="apple-touch-icon" href="assets/favicon.png" />
+<link rel="shortcut icon" href="assets/favicon.png" />
+
+<meta property="og:locale" content="pt_BR" />
+<meta property="og:type" content="website" />
+<meta property="og:site_name" content="Revista Inquietações" />
+<meta property="og:title" content="Homenagens | Revista Inquietações" />
+<meta property="og:description" content="Página dedicada às homenagens publicadas pela Revista Inquietações, organizada por meses, datas e memória histórica." />
+<meta property="og:url" content="https://revinquietacoes.github.io/Revista-Inquieta-es/homenagens.html" />
+<meta property="og:image" content="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" />
+<meta property="og:image:alt" content="Logotipo da Revista Inquietações" />
+
+<meta name="twitter:card" content="summary" />
+<meta name="twitter:title" content="Homenagens | Revista Inquietações" />
+<meta name="twitter:description" content="Página dedicada às homenagens publicadas pela Revista Inquietações, organizada por meses, datas e memória histórica." />
+<meta name="twitter:image" content="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" />
+
+<link rel="stylesheet" href="styles.css" />
+
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+<style>
+.indexers-grid{
+display:grid;
+grid-template-columns:repeat(2,minmax(0,1fr));
+gap:10px;
+margin-top:14px;
+}
+
+.indexer-link{
+display:flex;
+align-items:center;
+justify-content:center;
+padding:10px;
+background:#ffffff;
+border:1px solid rgba(31,60,136,0.12);
+border-radius:16px;
+text-decoration:none;
+transition:transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+min-height:72px;
+}
+
+.indexer-link:hover,
+.indexer-link:focus-visible{
+transform:translateY(-2px);
+box-shadow:0 10px 24px rgba(31,60,136,0.12);
+border-color:rgba(31,60,136,0.28);
+outline:none;
+}
+
+.indexer-link img{
+max-width:100%;
+max-height:30px;
+width:auto;
+height:auto;
+display:block;
+object-fit:contain;
+}
+
+.indexer-caption{
+margin-top:12px;
+font-size:0.95rem;
+line-height:1.5;
+color:#44506b;
+}
+
+.homenagens-hero{
+display:grid;
+grid-template-columns:1.2fr .8fr;
+gap:24px;
+align-items:stretch;
+}
+
+.homenagens-hero-card{
+background:linear-gradient(135deg,#f7faff 0%,#eef4ff 100%);
+border:1px solid rgba(31,60,136,0.10);
+border-radius:22px;
+padding:26px;
+box-shadow:0 14px 34px rgba(31,60,136,0.08);
+}
+
+.homenagens-hero-card h2{
+margin:0 0 12px;
+font-size:1.9rem;
+color:#17316e;
+}
+
+.homenagens-hero-card p{
+margin:0 0 14px;
+line-height:1.75;
+color:#33415c;
+}
+
+.homenagens-meta{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:12px;
+margin-top:18px;
+}
+
+.homenagens-meta .meta-box{
+background:#fff;
+border:1px solid rgba(31,60,136,0.10);
+border-radius:16px;
+padding:14px 16px;
+color:#2d3c5b;
+}
+
+.homenagens-meta .meta-box strong{
+display:block;
+margin-bottom:5px;
+color:#17316e;
+font-size:0.95rem;
+}
+
+.homenagens-spotlight{
+background:#ffffff;
+border:1px solid rgba(31,60,136,0.10);
+border-radius:22px;
+padding:24px;
+box-shadow:0 14px 34px rgba(31,60,136,0.08);
+display:flex;
+flex-direction:column;
+justify-content:center;
+}
+
+.homenagens-spotlight .spotlight-label{
+display:inline-flex;
+align-self:flex-start;
+padding:6px 12px;
+border-radius:999px;
+background:#1f3c88;
+color:#fff;
+font-size:0.84rem;
+font-weight:600;
+letter-spacing:.02em;
+margin-bottom:14px;
+}
+
+.homenagens-spotlight h3{
+margin:0 0 10px;
+font-size:1.25rem;
+color:#17316e;
+}
+
+.homenagens-spotlight p{
+margin:0;
+line-height:1.7;
+color:#44506b;
+}
+
+.panel-soft{
+background:linear-gradient(180deg,#fcfdff 0%,#f7faff 100%);
+}
+
+.homenagem-nota{
+margin:0;
+line-height:1.7;
+color:#46546f;
+}
+
+.homenagens-info-grid{
+display:grid;
+grid-template-columns:repeat(3,minmax(0,1fr));
+gap:18px;
+}
+
+.homenagens-info-card{
+background:#fff;
+border:1px solid rgba(31,60,136,0.10);
+border-radius:18px;
+padding:20px;
+box-shadow:0 10px 22px rgba(31,60,136,0.05);
+}
+
+.homenagens-info-card h3{
+margin:0 0 10px;
+font-size:1.08rem;
+color:#17316e;
+}
+
+.homenagens-info-card p{
+margin:0;
+line-height:1.7;
+color:#44506b;
+}
+
+.homenagens-search-box{
+margin:18px 0 24px;
+padding:20px;
+background:linear-gradient(180deg,#f8fbff 0%,#f1f6ff 100%);
+border:1px solid rgba(31,60,136,0.10);
+border-radius:18px;
+box-shadow:0 10px 24px rgba(31,60,136,0.05);
+}
+
+.search-label{
+display:block;
+margin-bottom:10px;
+font-weight:700;
+color:#17316e;
+font-size:1rem;
+}
+
+.search-field-wrap{
+display:flex;
+gap:12px;
+flex-wrap:wrap;
+}
+
+.search-field{
+flex:1 1 280px;
+min-height:48px;
+padding:12px 14px;
+border:1px solid rgba(31,60,136,0.16);
+border-radius:14px;
+background:#fff;
+font:inherit;
+color:#24324d;
+outline:none;
+transition:border-color .18s ease, box-shadow .18s ease;
+}
+
+.search-field:focus{
+border-color:rgba(31,60,136,0.35);
+box-shadow:0 0 0 4px rgba(31,60,136,0.08);
+}
+
+.search-clear-btn{
+border:none;
+border-radius:14px;
+padding:12px 16px;
+background:#1f3c88;
+color:#fff;
+font:inherit;
+font-weight:600;
+cursor:pointer;
+transition:transform .18s ease, opacity .18s ease;
+}
+
+.search-clear-btn:hover,
+.search-clear-btn:focus-visible{
+transform:translateY(-1px);
+opacity:.95;
+outline:none;
+}
+
+.search-feedback{
+margin:12px 0 0;
+font-size:.95rem;
+color:#52627d;
+}
+
+.homenagens-meses-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(290px,1fr));
+gap:20px;
+margin-top:18px;
+}
+
+.mes-card{
+border:1px solid rgba(31,60,136,0.10);
+border-radius:22px;
+overflow:hidden;
+box-shadow:0 12px 28px rgba(31,60,136,0.06);
+transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+align-self:start;
+background:#ffffff;
+}
+
+.mes-card:hover{
+transform:translateY(-2px);
+box-shadow:0 16px 34px rgba(31,60,136,0.10);
+border-color:rgba(31,60,136,0.20);
+}
+
+.mes-card summary{
+list-style:none;
+cursor:pointer;
+padding:18px 20px;
+display:flex;
+align-items:center;
+justify-content:space-between;
+gap:12px;
+font-weight:700;
+font-size:1.06rem;
+color:#17316e;
+border-bottom:1px solid rgba(31,60,136,0.08);
+}
+
+.mes-card summary::-webkit-details-marker{
+display:none;
+}
+
+.mes-card summary::after{
+content:"+";
+font-size:1.15rem;
+font-weight:700;
+color:#1f3c88;
+margin-left:auto;
+}
+
+.mes-card[open] > summary::after{
+content:"–";
+}
+
+.mes-card summary span{
+display:inline-flex;
+align-items:center;
+justify-content:center;
+padding:5px 10px;
+border-radius:999px;
+background:rgba(255,255,255,0.78);
+border:1px solid rgba(31,60,136,0.10);
+font-size:0.82rem;
+font-weight:600;
+color:#52627d;
+margin-left:auto;
+margin-right:12px;
+backdrop-filter:blur(3px);
+}
+
+.mes-card-body{
+padding:18px;
+display:grid;
+gap:14px;
+}
+
+.dia-card{
+background:rgba(255,255,255,0.78);
+border:1px solid rgba(31,60,136,0.08);
+border-radius:16px;
+padding:16px;
+box-shadow:0 6px 16px rgba(31,60,136,0.04);
+backdrop-filter:blur(2px);
+}
+
+.dia-card h3{
+margin:0 0 10px;
+font-size:1rem;
+color:#17316e;
+padding-bottom:8px;
+border-bottom:1px solid rgba(31,60,136,0.08);
+}
+
+.dia-card-destaque{
+background:linear-gradient(180deg,#fffdf8 0%,#fff8eb 100%);
+border-color:rgba(173,122,27,0.18);
+}
+
+.homenagem-lista{
+margin:0;
+padding-left:18px;
+display:grid;
+gap:8px;
+}
+
+.homenagem-lista li{
+color:#34425d;
+line-height:1.65;
+}
+
+.homenagem-lista a{
+color:#1f3c88;
+text-decoration:none;
+font-weight:600;
+}
+
+.homenagem-lista a:hover,
+.homenagem-lista a:focus-visible{
+text-decoration:underline;
+outline:none;
+}
+
+.mes-card.is-hidden,
+.dia-card.is-hidden,
+.homenagem-lista li.is-hidden{
+display:none !important;
+}
+
+/* Cores mensais suaves e harmônicas */
+.mes-janeiro{
+background:linear-gradient(180deg,#f8fbff 0%,#eef5ff 100%);
+}
+.mes-janeiro summary{
+background:linear-gradient(180deg,#eef5ff 0%,#e3efff 100%);
+}
+
+.mes-fevereiro{
+background:linear-gradient(180deg,#fffaf5 0%,#fff1e6 100%);
+}
+.mes-fevereiro summary{
+background:linear-gradient(180deg,#fff2e8 0%,#ffe8d8 100%);
+}
+
+.mes-marco{
+background:linear-gradient(180deg,#f8fcf7 0%,#edf8ea 100%);
+}
+.mes-marco summary{
+background:linear-gradient(180deg,#eef8ea 0%,#e1f0dc 100%);
+}
+
+.mes-abril{
+background:linear-gradient(180deg,#fcf8ff 0%,#f3ebff 100%);
+}
+.mes-abril summary{
+background:linear-gradient(180deg,#f5eeff 0%,#ebddff 100%);
+}
+
+.mes-maio{
+background:linear-gradient(180deg,#fffdf7 0%,#fff7df 100%);
+}
+.mes-maio summary{
+background:linear-gradient(180deg,#fff8e5 0%,#fff0c9 100%);
+}
+
+.mes-junho{
+background:linear-gradient(180deg,#f7fcfc 0%,#e8f6f6 100%);
+}
+.mes-junho summary{
+background:linear-gradient(180deg,#ebf8f8 0%,#dceeee 100%);
+}
+
+.mes-julho{
+background:linear-gradient(180deg,#fff8fa 0%,#ffeef3 100%);
+}
+.mes-julho summary{
+background:linear-gradient(180deg,#fff0f4 0%,#ffdfe8 100%);
+}
+
+.mes-agosto{
+background:linear-gradient(180deg,#f9f8ff 0%,#eeedff 100%);
+}
+.mes-agosto summary{
+background:linear-gradient(180deg,#f0efff 0%,#e1e0ff 100%);
+}
+
+.mes-setembro{
+background:linear-gradient(180deg,#f8fcf9 0%,#eaf6ec 100%);
+}
+.mes-setembro summary{
+background:linear-gradient(180deg,#edf8ef 0%,#deefdf 100%);
+}
+
+.mes-outubro{
+background:linear-gradient(180deg,#fffaf7 0%,#fff0ea 100%);
+}
+.mes-outubro summary{
+background:linear-gradient(180deg,#fff2ec 0%,#ffe4d9 100%);
+}
+
+.mes-novembro{
+background:linear-gradient(180deg,#f9fbff 0%,#edf2fa 100%);
+}
+.mes-novembro summary{
+background:linear-gradient(180deg,#eff4fb 0%,#e1e8f4 100%);
+}
+
+.mes-dezembro{
+background:linear-gradient(180deg,#fcfbf7 0%,#f4f0e3 100%);
+}
+.mes-dezembro summary{
+background:linear-gradient(180deg,#f6f2e7 0%,#ece5cf 100%);
+}
+
+@media (max-width: 980px){
+.homenagens-hero{
+grid-template-columns:1fr;
+}
+
+.homenagens-meta,
+.homenagens-info-grid{
+grid-template-columns:1fr;
+}
+}
+
+@media (max-width: 640px){
+.indexers-grid{
+grid-template-columns:1fr;
+}
+
+.homenagens-hero-card,
+.homenagens-spotlight{
+padding:20px;
+}
+
+.homenagens-meses-grid{
+grid-template-columns:1fr;
+}
+
+.mes-card summary{
+padding:16px;
+font-size:1rem;
+}
+
+.mes-card-body{
+padding:16px;
+}
+}
+</style>
+</head>
+
+<body class="journal-home">
+
+<div class="site-shell ojs-shell">
+
+<nav class="skip-links" aria-label="Ir para os links de conteúdo">
+<a href="#conteudo-principal">Ir para o conteúdo principal</a>
+<a href="#navegacao-principal">Ir para a navegação</a>
+<a href="#barra-lateral">Ir para a barra lateral</a>
+<a href="#rodape">Ir para o rodapé</a>
+</nav>
+
+<div class="topbar topbar-ojs">
+<div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
+<div class="pill">Homenagens • memória, reconhecimento e legado</div>
+</div>
+
+<header class="masthead masthead-ojs" role="banner">
+<div class="masthead-inner masthead-inner-ojs">
+
+<div class="masthead-copy">
+<p class="kicker">Seção especial • memória intelectual, histórica e humana</p>
+<h1>Homenagens</h1>
+<p class="hero-text">
+Espaço editorial dedicado à memória de intelectuais, escritores(as), cientistas,
+pensadores(as), artistas e figuras históricas cujas trajetórias continuam a
+interpelar o presente. A seção reúne textos de homenagem organizados por datas
+de nascimento, falecimento e marcos de memória histórica.
+</p>
+
+<div class="masthead-meta">
+<div class="masthead-card"><strong>Seção</strong>Memória e homenagem</div>
+<div class="masthead-card"><strong>Organização</strong>Por meses e datas</div>
+<div class="masthead-card"><strong>Abrangência</strong>História, ciência e cultura</div>
+<div class="masthead-card"><strong>Vinculação</strong>Revista Inquietações</div>
+</div>
+</div>
+
+<div class="banner-card banner-card-ojs">
+<img src="logo-revista.png" alt="Logo da Revista Inquietações" />
+</div>
+
+</div>
+</header>
+
+<nav class="site-nav site-nav-ojs" id="navegacao-principal" aria-label="Navegação principal">
+<button class="site-nav-toggle" type="button">Menu</button>
+
+<div class="site-nav-menu">
+<a href="index.html">Início</a>
+<a href="edicao-atual.html">Atual</a>
+<a href="conteudos.html">Conteúdos</a>
+<a href="homenagens.html" class="active">Homenagens</a>
+<a href="evento.html">Evento</a>
+<a href="Editora-Revista-Inquietacoes/index.html">Editora</a>
+<a href="sobre.html">Sobre</a>
+<a href="equipe-editorial.html">Equipe Editorial</a>
+<a href="noticias.html">Notícias</a>
+<a href="politicas-editoriais.html">Políticas</a>
+<a href="diretrizes-autores.html">Diretrizes</a>
+<a href="submissoes.html">Submissões</a>
+<a href="templates.html">Templates</a>
+<a href="contato.html">Contato</a>
+</div>
+</nav>
+
+<div class="portal-grid portal-grid-ojs">
+
+<main class="content" id="conteudo-principal" role="main">
+
+<section class="panel panel-soft">
+<div class="panel-body">
+<div class="homenagens-hero">
+
+<div class="homenagens-hero-card">
+<h2>Memória editorial e reconhecimento</h2>
+<p>
+A página de homenagens da <strong>Revista Inquietações</strong> foi concebida como um
+espaço de preservação simbólica, reflexão e reconhecimento. Nela, a revista
+sinaliza datas relevantes ligadas ao nascimento, ao falecimento e à memória
+histórica de personalidades que contribuíram, de diferentes modos, para a
+produção do conhecimento, para a cultura, para a crítica social e para a
+compreensão do humano.
+</p>
+<p>
+Mais do que registrar efemérides, a seção busca reafirmar a importância da
+lembrança como gesto editorial e ético, mantendo vivo o diálogo com vozes,
+trajetórias e legados que permanecem significativos no presente.
+</p>
+
+<div class="homenagens-meta">
+<div class="meta-box">
+<strong>Critério</strong>
+Nascimento, falecimento e memória histórica
+</div>
+<div class="meta-box">
+<strong>Formato</strong>
+Textos de homenagem vinculados às publicações
+</div>
+<div class="meta-box">
+<strong>Finalidade</strong>
+Preservar legados e estimular reflexão crítica
+</div>
+</div>
+</div>
+
+<div class="homenagens-spotlight">
+<span class="spotlight-label">Destaque da seção</span>
+<h3>Uma página para recordar e contextualizar</h3>
+<p>
+As homenagens publicadas pela revista estão reunidas em ordem cronológica
+anual, facilitando a consulta por mês e por data. Cada entrada conduz o leitor
+ao respectivo texto publicado, permitindo uma experiência organizada, memorial
+e editorialmente consistente.
+</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="panel">
+<div class="panel-head">
+<h2>Sobre esta página</h2>
+<p>Organização temática e editorial da seção de homenagens.</p>
+</div>
+
+<div class="panel-body">
+<div class="homenagens-info-grid">
+
+<div class="homenagens-info-card">
+<h3>Memória histórica</h3>
+<p>
+Inclui acontecimentos ou datas de forte significado social, político,
+intelectual e humano, compreendidos como marcos que devem permanecer em
+circulação crítica.
+</p>
+</div>
+
+<div class="homenagens-info-card">
+<h3>Nascimentos e falecimentos</h3>
+<p>
+Os registros contemplam datas associadas ao nascimento ou ao falecimento de
+figuras homenageadas, permitindo uma leitura anual contínua da memória
+intelectual e cultural.
+</p>
+</div>
+
+<div class="homenagens-info-card">
+<h3>Acesso às publicações</h3>
+<p>
+Cada nome listado nesta página funciona como porta de entrada para o respectivo
+texto já publicado na revista, reunindo a seção em uma navegação clara e
+consultável.
+</p>
+</div>
+
+</div>
+</div>
+</section>
+
+<section class="panel">
+<div class="panel-head">
+<h2>Arquivo de homenagens</h2>
+<p>
+Relação organizada por meses e datas comemorativas, com busca livre e acesso
+direto às publicações da seção.
+</p>
+</div>
+
+<div class="panel-body">
+<p class="homenagem-nota">
+As homenagens estão organizadas em cards mensais expansíveis. O campo de busca
+pesquisa automaticamente nomes, datas, assuntos e quaisquer novos conteúdos que
+forem inseridos nos cards.
+</p>
+
+<div class="homenagens-search-box" role="search" aria-label="Buscar homenagens">
+<label class="search-label" for="busca-homenagens">Buscar por nome, assunto ou data</label>
+<div class="search-field-wrap">
+<input
+type="search"
+id="busca-homenagens"
+class="search-field"
+placeholder="Ex.: Einstein, falecimento, 14 de março"
+autocomplete="off"
+/>
+<button type="button" class="search-clear-btn" id="limpar-busca">Limpar</button>
+</div>
+<p class="search-feedback" id="resultado-busca">
+Digite um termo para localizar homenagens por nome, data ou assunto.
+</p>
+</div>
+
+<div class="homenagens-meses-grid" id="grade-homenagens">
+
+<details class="mes-card mes-janeiro" open>
+<summary>Janeiro <span>4 registros</span></summary>
+<div class="mes-card-body">
+
+<article class="dia-card">
+<h3>06 de janeiro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-georg-cantor.html">Georg Cantor</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>08 de janeiro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-stephen-hawking.html">Stephen Hawking</a> — nascimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>18 de janeiro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-peter-abrahams.html">Peter Abrahams</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>28 de janeiro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-samuel-thomas-von-sommerring.html">Samuel Thomas von Sömmerring</a> — nascimento</li>
+</ul>
+</article>
+
+</div>
+</details>
+
+<details class="mes-card mes-fevereiro">
+<summary>Fevereiro <span>4 registros</span></summary>
+<div class="mes-card-body">
+
+<article class="dia-card">
+<h3>07 de fevereiro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-tzvetan-todorov.html">Tzvetan Todorov</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>12 de fevereiro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-francisco-i-da-austria.html">Francisco I da Áustria</a> — nascimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>13 de fevereiro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-carolina-maria-de-jesus.html">Carolina Maria de Jesus</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>17 de fevereiro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-friedrich-eduard-beneke.html">Friedrich Eduard Beneke</a> — nascimento</li>
+</ul>
+</article>
+
+</div>
+</details>
+
+<details class="mes-card mes-marco">
+<summary>Março <span>4 datas</span></summary>
+<div class="mes-card-body">
+
+<article class="dia-card">
+<h3>01 de março</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-georg-simmel.html">Georg Simmel</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-tzvetan-todorov.html">Tzvetan Todorov</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-friedrich-eduard-beneke.html">Friedrich Eduard Beneke</a> — falecimento</li>
+<li><a href="publicacoes/homenagem-alfred-korzybski.html">Alfred Korzybski</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>02 de março</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-francisco-i-da-austria.html">Francisco I da Áustria</a> — falecimento</li>
+<li><a href="publicacoes/homenagem-horace-walpole.html">Horace Walpole</a> — falecimento</li>
+<li><a href="publicacoes/homenagem-josefa-ortiz-de-dominguez.html">Josefa Ortiz de Domínguez</a> — falecimento</li>
+<li><a href="publicacoes/homenagem-salvador-puig-antich.html">Salvador Puig Antich</a> — falecimento</li>
+<li><a href="publicacoes/homenagem-samuel-thomas-von-sommerring.html">Samuel Thomas von Sömmerring</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>03 de março</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-georg-cantor.html">Georg Cantor</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-heinrich-georg-bronn.html">Heinrich Georg Bronn</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-marguerite-duras.html">Marguerite Duras</a> — falecimento</li>
+<li><a href="publicacoes/homenagem-milly-witkop-rocker.html">Milly Witkop Rocker</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-nur-misuari.html">Nur Misuari</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-peter-abrahams.html">Peter Abrahams</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-raimundo-antonio-de-bulhao-pato.html">Raimundo António de Bulhão Pato</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-roger-caillois.html">Roger Caillois</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-emile-auguste-chartier.html">Émile-Auguste Chartier</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-lucy-hobbs-taylor.html">Lucy Hobbs Taylor</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card dia-card-destaque">
+<h3>14 de março</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-albert-einstein.html">Albert Einstein</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-castro-alves.html">Antônio de Castro Alves</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-carolina-maria-de-jesus.html">Carolina Maria de Jesus</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-karl-marx.html">Karl Marx</a> — falecimento</li>
+<li><a href="publicacoes/homenagem-lucy-hobbs-taylor.html">Lucy Hobbs Taylor</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-marielle-franco-anderson-gomes.html">Marielle Franco e Anderson Gomes</a> — memória histórica</li>
+<li><a href="publicacoes/homenagem-maurice-merleau-ponty.html">Maurice Merleau-Ponty</a> — nascimento</li>
+<li><a href="publicacoes/homenagem-stephen-hawking.html">Stephen Hawking</a> — falecimento</li>
+</ul>
+</article>
+
+</div>
+</details>
+
+<details class="mes-card mes-abril">
+<summary>Abril <span>3 registros</span></summary>
+<div class="mes-card-body">
+
+<article class="dia-card">
+<h3>04 de abril</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-marguerite-duras.html">Marguerite Duras</a> — nascimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>18 de abril</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-albert-einstein.html">Albert Einstein</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>19 de abril</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-josefa-ortiz-de-dominguez.html">Josefa Ortiz de Domínguez</a> — nascimento</li>
+</ul>
+</article>
+
+</div>
+</details>
+
+<details class="mes-card mes-maio">
+<summary>Maio <span>3 registros</span></summary>
+<div class="mes-card-body">
+
+<article class="dia-card">
+<h3>03 de maio</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-maurice-merleau-ponty.html">Maurice Merleau-Ponty</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>05 de maio</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-karl-marx.html">Karl Marx</a> — nascimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>30 de maio</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-salvador-puig-antich.html">Salvador Puig Antich</a> — nascimento</li>
+</ul>
+</article>
+
+</div>
+</details>
+
+<details class="mes-card mes-junho">
+<summary>Junho <span>1 registro</span></summary>
+<div class="mes-card-body">
+<article class="dia-card">
+<h3>02 de junho</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-emile-auguste-chartier.html">Émile-Auguste Chartier</a> — falecimento</li>
+</ul>
+</article>
+</div>
+</details>
+
+<details class="mes-card mes-julho">
+<summary>Julho <span>3 registros</span></summary>
+<div class="mes-card-body">
+
+<article class="dia-card">
+<h3>03 de julho</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-alfred-korzybski.html">Alfred Korzybski</a> — nascimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>05 de julho</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-heinrich-georg-bronn.html">Heinrich Georg Bronn</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>06 de julho</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-castro-alves.html">Antônio de Castro Alves</a> — falecimento</li>
+</ul>
+</article>
+
+</div>
+</details>
+
+<details class="mes-card mes-agosto">
+<summary>Agosto <span>2 registros</span></summary>
+<div class="mes-card-body">
+
+<article class="dia-card">
+<h3>24 de agosto</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-raimundo-antonio-de-bulhao-pato.html">Raimundo António de Bulhão Pato</a> — falecimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>25 de agosto</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-antoine-henri-becquerel.html">Antoine-Henri Becquerel</a> — falecimento</li>
+</ul>
+</article>
+
+</div>
+</details>
+
+<details class="mes-card mes-setembro">
+<summary>Setembro <span>2 registros</span></summary>
+<div class="mes-card-body">
+
+<article class="dia-card">
+<h3>24 de setembro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-horace-walpole.html">Horace Walpole</a> — nascimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>28 de setembro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-georg-simmel.html">Georg Simmel</a> — falecimento</li>
+</ul>
+</article>
+
+</div>
+</details>
+
+<details class="mes-card mes-outubro">
+<summary>Outubro <span>1 registro</span></summary>
+<div class="mes-card-body">
+<article class="dia-card">
+<h3>03 de outubro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-lucy-hobbs-taylor.html">Lucy Hobbs Taylor</a> — falecimento</li>
+</ul>
+</article>
+</div>
+</details>
+
+<details class="mes-card mes-novembro">
+<summary>Novembro <span>1 registro</span></summary>
+<div class="mes-card-body">
+<article class="dia-card">
+<h3>23 de novembro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-milly-witkop-rocker.html">Milly Witkop Rocker</a> — falecimento</li>
+</ul>
+</article>
+</div>
+</details>
+
+<details class="mes-card mes-dezembro">
+<summary>Dezembro <span>2 registros</span></summary>
+<div class="mes-card-body">
+
+<article class="dia-card">
+<h3>15 de dezembro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-antoine-henri-becquerel.html">Antoine-Henri Becquerel</a> — nascimento</li>
+</ul>
+</article>
+
+<article class="dia-card">
+<h3>21 de dezembro</h3>
+<ul class="homenagem-lista">
+<li><a href="publicacoes/homenagem-roger-caillois.html">Roger Caillois</a> — falecimento</li>
+</ul>
+</article>
+
+</div>
+</details>
+
+</div>
+</div>
+</section>
+
+</main>
+
+<aside class="sidebar sidebar-ojs" id="barra-lateral">
+
+<section class="sidebar-block journal-data">
+<h2>Dados da seção</h2>
+<div class="data-list">
+<div><strong>Seção:</strong> Homenagens</div>
+<div><strong>Vinculação:</strong> Revista Inquietações</div>
+<div><strong>Organização:</strong> Por meses e datas</div>
+<div><strong>Abrangência:</strong> Memória histórica e intelectual</div>
+<div><strong>Acesso:</strong> Livre e aberto</div>
+</div>
+</section>
+
+<section class="sidebar-block journal-data">
+<h2>Indexadores</h2>
+
+<div class="indexers-grid">
+
+<a
+class="indexer-link"
+href="https://zenodo.org/communities/revista-inqueta-acoes"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Acessar a página da Revista Inquietações no Zenodo"
+title="Zenodo"
+>
+<img src="assets/zenodo-logo.png" alt="Logo do Zenodo" />
+</a>
+
+<a
+class="indexer-link"
+href="https://journalseeker.researchbib.com/view/issn/3086-4119"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Acessar a página da Revista Inquietações no ResearchBib"
+title="ResearchBib"
+>
+<img src="assets/researchbib-logo.png" alt="Logo do ResearchBib" />
+</a>
+
+<a
+class="indexer-link"
+href="https://osf.io/sk2b6/"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Acessar a página da Revista Inquietações no Open Science Framework"
+title="Open Science Framework"
+>
+<img src="assets/osf-logo.png" alt="Logo do Open Science Framework" />
+</a>
+
+<a
+class="indexer-link"
+href="https://portal.issn.org/resource/ISSN/3086-4119"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Acessar o registro da Revista Inquietações na ROAD"
+title="ROAD"
+>
+<img src="assets/road-logo.png" alt="Logo da ROAD" />
+</a>
+
+<a
+class="indexer-link"
+href="https://independent.academia.edu/RevistaInquieta%C3%A7%C3%B5es"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Acessar o perfil da Revista Inquietações no Academia.edu"
+title="Academia.edu"
+>
+<img src="assets/academia-logo.png" alt="Logo do Academia.edu" />
+</a>
+
+<a
+class="indexer-link"
+href="https://scholar.google.com/citations?hl=pt-BR&user=OXGBloMAAAAJ"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Acessar o perfil da Revista Inquietações no Google Acadêmico"
+title="Google Acadêmico"
+>
+<img src="assets/google-academico-logo.png" alt="Logo do Google Acadêmico" />
+</a>
+
+<a
+class="indexer-link"
+href="https://archive.org/details/@revista_inquieta_es"
+target="_blank"
+rel="noopener noreferrer"
+aria-label="Acessar a página da Revista Inquietações no Internet Archive"
+title="Internet Archive"
+>
+<img src="assets/archive-logo.png" alt="Logo do Internet Archive" />
+</a>
+
+</div>
+
+<p class="indexer-caption">
+A revista também está presente em plataformas de preservação, indexação e difusão acadêmica.
+Clique nas logos para acessar os registros externos.
+</p>
+</section>
+
+</aside>
+
+</div>
+
+<footer class="footer footer-ojs" id="rodape">
+<p><strong>Revista Inquietações</strong> — periódico científico em acesso aberto.</p>
+<p>
+Organização editorial: Diego Vinícius Brito dos Santos •
+<a href="https://www.instagram.com/iamthed1/" target="_blank" rel="noopener noreferrer">@iamthed1</a>
+</p>
+</footer>
+
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+  const input = document.getElementById('busca-homenagens');
+  const clearBtn = document.getElementById('limpar-busca');
+  const feedback = document.getElementById('resultado-busca');
+  const monthCards = Array.from(document.querySelectorAll('.mes-card'));
+
+  function normalizeText(text) {
+    return (text || '')
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .replace(/\s+/g, ' ')
+      .trim();
+  }
+
+  function updateCounterLabel(monthCard) {
+    const badge = monthCard.querySelector('summary span');
+    if (!badge) return;
+
+    const visibleItems = monthCard.querySelectorAll('.homenagem-lista li:not(.is-hidden)').length;
+    const visibleDays = monthCard.querySelectorAll('.dia-card:not(.is-hidden)').length;
+
+    if (input.value.trim() === '') {
+      if (visibleDays === 1) {
+        badge.textContent = '1 registro';
+      } else if (visibleDays > 1) {
+        badge.textContent = visibleDays + ' registros';
+      } else {
+        badge.textContent = '0 registro';
+      }
+    } else {
+      if (visibleItems === 1) {
+        badge.textContent = '1 resultado';
+      } else {
+        badge.textContent = visibleItems + ' resultados';
+      }
+    }
+  }
+
+  function updateSearch() {
+    const term = normalizeText(input.value);
+    let visibleMonths = 0;
+    let visibleDays = 0;
+    let visibleItems = 0;
+
+    monthCards.forEach((monthCard) => {
+      const dayCards = Array.from(monthCard.querySelectorAll('.dia-card'));
+      let monthHasVisibleContent = false;
+
+      dayCards.forEach((dayCard) => {
+        const items = Array.from(dayCard.querySelectorAll('li'));
+        let dayHasVisibleItem = false;
+
+        items.forEach((item) => {
+          const itemText = normalizeText(item.textContent);
+          const match = term === '' || itemText.includes(term);
+
+          item.classList.toggle('is-hidden', !match);
+
+          if (match) {
+            dayHasVisibleItem = true;
+            visibleItems++;
+          }
+        });
+
+        const dayText = normalizeText(dayCard.textContent);
+        const dayMatch = term !== '' && dayText.includes(term);
+
+        if (dayMatch) {
+          items.forEach((item) => item.classList.remove('is-hidden'));
+          dayHasVisibleItem = items.length > 0;
+        }
+
+        dayCard.classList.toggle('is-hidden', !dayHasVisibleItem);
+
+        if (dayHasVisibleItem) {
+          monthHasVisibleContent = true;
+          visibleDays++;
+        }
+      });
+
+      const monthText = normalizeText(monthCard.textContent);
+      const monthMatch = term !== '' && monthText.includes(term);
+
+      if (monthMatch) {
+        monthCard.classList.remove('is-hidden');
+        monthCard.open = true;
+
+        dayCards.forEach((dayCard) => {
+          dayCard.classList.remove('is-hidden');
+          dayCard.querySelectorAll('li').forEach((item) => item.classList.remove('is-hidden'));
+        });
+
+        monthHasVisibleContent = true;
+      }
+
+      monthCard.classList.toggle('is-hidden', !monthHasVisibleContent);
+
+      if (monthHasVisibleContent) {
+        visibleMonths++;
+        if (term !== '') {
+          monthCard.open = true;
+        }
+      }
+
+      updateCounterLabel(monthCard);
+    });
+
+    if (term === '') {
+      feedback.textContent = 'Digite um termo para localizar homenagens por nome, data ou assunto.';
+    } else if (visibleItems > 0) {
+      feedback.textContent = 'Busca por "' + input.value + '" — ' + visibleItems + ' homenagem(ns) encontrada(s) em ' + visibleDays + ' data(s) e ' + visibleMonths + ' mês(es).';
+    } else {
+      feedback.textContent = 'Nenhum resultado encontrado para "' + input.value + '".';
+    }
+  }
+
+  input.addEventListener('input', updateSearch);
+
+  clearBtn.addEventListener('click', function () {
+    input.value = '';
+    updateSearch();
+    input.focus();
+  });
+
+  updateSearch();
+});
+</script>
+
+</body>
+</html>
