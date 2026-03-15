@@ -515,6 +515,25 @@ font-size:1rem;
 padding:16px;
 }
 }
+.site-nav-menu{
+display:flex;
+flex-wrap:nowrap;
+align-items:center;
+justify-content:center;
+gap:5px;
+overflow-x:auto;
+scrollbar-width:none;
+}
+
+.site-nav-menu::-webkit-scrollbar{
+display:none;
+}
+
+.site-nav-menu a{
+font-size:0.88rem;
+padding:8px 8px;
+white-space:nowrap;
+}
 </style>
 </head>
 
@@ -569,7 +588,6 @@ de nascimento, falecimento e marcos de memória histórica.
 <a href="index.html">Início</a>
 <a href="edicao-atual.html">Atual</a>
 <a href="conteudos.html">Conteúdos</a>
-<a href="homenagens.html" class="active">Homenagens</a>
 <a href="evento.html">Evento</a>
 <a href="Editora-Revista-Inquietacoes/index.html">Editora</a>
 <a href="sobre.html">Sobre</a>
@@ -580,6 +598,7 @@ de nascimento, falecimento e marcos de memória histórica.
 <a href="submissoes.html">Submissões</a>
 <a href="templates.html">Templates</a>
 <a href="contato.html">Contato</a>
+<a href="homenagens.html" class="active">Homenagens</a>
 </div>
 </nav>
 
@@ -587,56 +606,6 @@ de nascimento, falecimento e marcos de memória histórica.
 
 <main class="content" id="conteudo-principal" role="main">
 
-<section class="panel panel-soft">
-<div class="panel-body">
-<div class="homenagens-hero">
-
-<div class="homenagens-hero-card">
-<h2>Memória editorial e reconhecimento</h2>
-<p>
-A página de homenagens da <strong>Revista Inquietações</strong> foi concebida como um
-espaço de preservação simbólica, reflexão e reconhecimento. Nela, a revista
-sinaliza datas relevantes ligadas ao nascimento, ao falecimento e à memória
-histórica de personalidades que contribuíram, de diferentes modos, para a
-produção do conhecimento, para a cultura, para a crítica social e para a
-compreensão do humano.
-</p>
-<p>
-Mais do que registrar efemérides, a seção busca reafirmar a importância da
-lembrança como gesto editorial e ético, mantendo vivo o diálogo com vozes,
-trajetórias e legados que permanecem significativos no presente.
-</p>
-
-<div class="homenagens-meta">
-<div class="meta-box">
-<strong>Critério</strong>
-Nascimento, falecimento e memória histórica
-</div>
-<div class="meta-box">
-<strong>Formato</strong>
-Textos de homenagem vinculados às publicações
-</div>
-<div class="meta-box">
-<strong>Finalidade</strong>
-Preservar legados e estimular reflexão crítica
-</div>
-</div>
-</div>
-
-<div class="homenagens-spotlight">
-<span class="spotlight-label">Destaque da seção</span>
-<h3>Uma página para recordar e contextualizar</h3>
-<p>
-As homenagens publicadas pela revista estão reunidas em ordem cronológica
-anual, facilitando a consulta por mês e por data. Cada entrada conduz o leitor
-ao respectivo texto publicado, permitindo uma experiência organizada, memorial
-e editorialmente consistente.
-</p>
-</div>
-
-</div>
-</div>
-</section>
 
 <section class="panel">
 <div class="panel-head">
