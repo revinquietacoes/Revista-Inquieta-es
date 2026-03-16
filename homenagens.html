@@ -182,7 +182,7 @@
     <input class="search-input" id="busca-homenagens" type="search" autocomplete="off" placeholder="Ex.: Einstein, 14 de março, 1879, 14 de março de 2018"/>
     <button class="search-button" id="limpar-busca" type="button">Limpar</button>
   </div>
-  <p class="search-help" id="resultado-busca">Digite um nome ou uma data para localizar homenagens. As sugestões abaixo levam diretamente à página correspondente.</p>
+  <p class="search-help" id="resultado-busca">Digite um nome ou uma data para localizar homenagens.</p>
   <div class="search-suggestions" id="lista-sugestoes" aria-live="polite"></div>
 </div>
 <div class="catalog-wrap" id="catalogo-homenagens">
@@ -2392,7 +2392,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (!term) {
-      feedback.textContent = 'Digite um nome ou uma data para localizar homenagens. As sugestões abaixo levam diretamente à página correspondente.';
+      feedback.textContent = 'Digite um nome ou uma data para localizar homenagens'.
     } else if (visibleCount === 1) {
       feedback.textContent = '1 homenagem encontrada para “' + input.value + '”.';
     } else if (visibleCount > 1) {
