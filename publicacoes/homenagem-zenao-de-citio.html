@@ -351,39 +351,41 @@ if (navToggle && navMenu) {
     const data = getPageData();
     const plainTitle = data.title;
     const safeTitle = '<strong>' + escapeHtml(plainTitle) + '</strong>';
+    const publicationInfoHtml = escapeHtml(data.journal) + ', fluxo contínuo, ' + escapeHtml(data.issue) + ', ' + escapeHtml(data.year);
+    const publicationInfoText = data.journal + ', fluxo contínuo, ' + data.issue + ', ' + data.year;
     let html = '';
     let text = '';
     const accessLabel = 'Acesso em';
 
     switch (style) {
       case 'mla':
-        html = escapeHtml(data.authorDisplay) + ' ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + ', ' + escapeHtml(data.year) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
-        text = data.authorDisplay + ' ' + plainTitle + '. ' + data.journal + ', ' + data.issue + ', ' + data.year + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        html = escapeHtml(data.authorDisplay) + ' ' + safeTitle + '. ' + publicationInfoHtml + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorDisplay + ' ' + plainTitle + '. ' + publicationInfoText + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
         break;
       case 'apa':
-        html = escapeHtml(data.authorReference) + ' (' + escapeHtml(data.year) + '). ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
-        text = data.authorReference + ' (' + data.year + '). ' + plainTitle + '. ' + data.journal + ', ' + data.issue + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        html = escapeHtml(data.authorReference) + ' (' + escapeHtml(data.year) + '). ' + safeTitle + '. ' + publicationInfoHtml + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' (' + data.year + '). ' + plainTitle + '. ' + publicationInfoText + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
         break;
       case 'chicago':
-        html = escapeHtml(data.authorDisplay) + ' ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + ', ' + escapeHtml(data.year) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
-        text = data.authorDisplay + ' ' + plainTitle + '. ' + data.journal + ', ' + data.issue + ', ' + data.year + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        html = escapeHtml(data.authorDisplay) + ' ' + safeTitle + '. ' + publicationInfoHtml + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorDisplay + ' ' + plainTitle + '. ' + publicationInfoText + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
         break;
       case 'harvard':
-        html = escapeHtml(data.authorReference) + ' ' + escapeHtml(data.year) + '. ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
-        text = data.authorReference + ' ' + data.year + '. ' + plainTitle + '. ' + data.journal + ', ' + data.issue + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        html = escapeHtml(data.authorReference) + ' ' + escapeHtml(data.year) + '. ' + safeTitle + '. ' + publicationInfoHtml + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' ' + data.year + '. ' + plainTitle + '. ' + publicationInfoText + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
         break;
       case 'vancouver':
-        html = escapeHtml(data.authorReference) + ' ' + safeTitle + '. ' + escapeHtml(data.journal) + '. ' + escapeHtml(data.year) + ';' + escapeHtml(data.issue) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
-        text = data.authorReference + ' ' + plainTitle + '. ' + data.journal + '. ' + data.year + ';' + data.issue + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        html = escapeHtml(data.authorReference) + ' ' + safeTitle + '. ' + publicationInfoHtml + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' ' + plainTitle + '. ' + publicationInfoText + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
         break;
       case 'ieee':
-        html = escapeHtml(data.authorReference) + ' “' + safeTitle + '." ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + ', ' + escapeHtml(data.year) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
-        text = data.authorReference + ' “' + plainTitle + '." ' + data.journal + ', ' + data.issue + ', ' + data.year + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        html = escapeHtml(data.authorReference) + ' “' + safeTitle + '." ' + publicationInfoHtml + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' “' + plainTitle + '." ' + publicationInfoText + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
         break;
       case 'abnt':
       default:
-        html = escapeHtml(data.authorReference) + ' ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
-        text = data.authorReference + ' ' + plainTitle + '. ' + data.journal + ', ' + data.issue + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        html = escapeHtml(data.authorReference) + ' ' + safeTitle + '. ' + publicationInfoHtml + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' ' + plainTitle + '. ' + publicationInfoText + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
         break;
     }
 
