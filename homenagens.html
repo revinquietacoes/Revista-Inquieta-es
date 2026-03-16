@@ -2372,7 +2372,7 @@ document.addEventListener('DOMContentLoaded', function () {
     let visibleCount = 0;
 
     items.forEach(item => {
-      const haystack = item.getAttribute('data-search') || '';
+      const haystack = normalizeText(item.getAttribute('data-search') || '');
       const match = !term || haystack.includes(term);
       item.classList.toggle('hidden-by-search', !match);
       if (match) visibleCount += 1;
@@ -2391,7 +2391,7 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
     if (!term) {
-      feedback.textContent = 'Digite um nome ou uma data para localizar homenagens'.
+      feedback.textContent = 'Digite um nome ou uma data para localizar homenagens.';
     } else if (visibleCount === 1) {
       feedback.textContent = '1 homenagem encontrada para “' + input.value + '”.';
     } else if (visibleCount > 1) {
