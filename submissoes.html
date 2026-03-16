@@ -23,19 +23,21 @@
 .side-nav-card{display:grid;gap:10px;}
 .side-nav-link{display:block;text-decoration:none;padding:11px 14px;border-radius:12px;background:#f8fbff;border:1px solid #dbe6f2;color:var(--brand);font-weight:500;transition:background .18s ease, transform .18s ease;}
 .side-nav-link:hover{background:#eef5fc;transform:translateY(-1px);}
-.submission-highlight{padding:20px 22px;border-radius:20px;border:1px solid #dbe6f2;background:linear-gradient(180deg,#f8fbff 0%, #ffffff 100%);}
-.submission-highlight p{margin:0 0 12px;color:#4f6178;line-height:1.75;}
+.hero-note{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;background:#eef4ff;border:1px solid #dbe6f2;color:var(--brand);font-weight:600;font-size:.92rem;margin-bottom:14px;}
+.submission-highlight{padding:24px;border-radius:24px;border:1px solid #dbe6f2;background:linear-gradient(180deg,#f8fbff 0%, #ffffff 100%);box-shadow:var(--shadow-soft);}
+.submission-highlight p{margin:0 0 12px;color:#4f6178;line-height:1.8;}
 .submission-highlight p:last-child{margin-bottom:0;}
+.submission-highlight .cta-row{margin-top:16px;}
 .info-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:14px;}
-.info-box{position:relative;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft);padding:16px;overflow:hidden;}
+.info-box{position:relative;border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft);padding:18px;overflow:hidden;}
 .info-box::before{content:"";position:absolute;top:0;left:0;right:0;height:5px;background:#cfdced;}
 .info-box h4{margin:0 0 8px;color:var(--brand);font-size:1rem;}
-.info-box p{margin:0;color:#53657e;line-height:1.65;}
+.info-box p{margin:0;color:#53657e;line-height:1.7;}
 .note-box{padding:18px 20px;border-radius:18px;border:1px solid #dbe6f2;background:#f8fbff;margin-bottom:18px;}
-.note-box p{margin:0 0 10px;line-height:1.7;}
+.note-box p{margin:0 0 10px;line-height:1.72;}
 .note-box p:last-child{margin-bottom:0;}
-.form-panel{border:1px solid var(--line);border-radius:22px;background:#fff;box-shadow:0 18px 34px rgba(16,35,63,0.08);overflow:hidden;}
-.form-panel-head{padding:18px 22px;background:#fbfcfe;border-bottom:1px solid rgba(18,45,82,0.08);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.form-panel{border:1px solid var(--line);border-radius:24px;background:#fff;box-shadow:0 18px 34px rgba(16,35,63,0.08);overflow:hidden;}
+.form-panel-head{padding:18px 22px;background:linear-gradient(180deg,#fbfcfe 0%,#f6f9fc 100%);border-bottom:1px solid rgba(18,45,82,0.08);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
 .form-panel-head h3{margin:0;color:var(--brand);font-size:1.08rem;}
 .form-panel-head p{margin:4px 0 0;color:#5a6d85;font-size:.95rem;}
 .form-panel-body{padding:0;background:#fff;}
@@ -45,7 +47,7 @@
 .fallback-box p{margin:0 0 12px;color:#53657e;line-height:1.7;}
 .fallback-box p:last-child{margin-bottom:0;}
 .expandable-list{display:grid;gap:14px;}
-.expandable-item{border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft);overflow:hidden;}
+.expandable-item{border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow-soft);overflow:hidden;}
 .expandable-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;}
 .expandable-title{display:grid;gap:4px;}
 .expandable-title h3{margin:0;color:var(--brand);font-size:1.03rem;}
@@ -68,12 +70,18 @@
 .quick-card p{margin:0;color:#556780;line-height:1.65;}
 .quick-card .cta-row{margin-top:4px;}
 .embed-tip{font-size:.92rem;color:#5d6f87;}
-@media (max-width:860px){.form-panel-head{padding:16px 18px;}.form-embed-wrap{min-height:1080px;}.form-embed{height:1080px;}}
-@media (max-width:700px){.expandable-head{flex-direction:column;align-items:flex-start;}.expand-toggle{align-self:flex-start;}}
-@media (max-width:560px){.footer-license-block img{width:74px;}.footer-academic-main{font-size:.96rem;}.footer-license-caption{font-size:.88rem;}.form-embed-wrap{min-height:1180px;}.form-embed{height:1180px;}}
+.mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px;}
+.mode-card{border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft);padding:18px;display:grid;gap:8px;}
+.mode-card strong{color:var(--brand);font-size:1rem;}
+.mode-card span{color:#596b84;line-height:1.65;}
+.journal-callout{padding:20px 22px;border-radius:20px;border:1px solid #dbe6f2;background:linear-gradient(180deg,#fbfdff 0%,#f7fbff 100%);}
+.journal-callout p{margin:0;color:#51627b;line-height:1.78;}
 .site-nav-menu{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:5px;overflow-x:auto;scrollbar-width:none;}
 .site-nav-menu::-webkit-scrollbar{display:none;}
 .site-nav-menu a{font-size:0.88rem;padding:8px 8px;white-space:nowrap;}
+@media (max-width:860px){.form-panel-head{padding:16px 18px;}.form-embed-wrap{min-height:1080px;}.form-embed{height:1080px;}}
+@media (max-width:700px){.expandable-head{flex-direction:column;align-items:flex-start;}.expand-toggle{align-self:flex-start;}}
+@media (max-width:560px){.footer-license-block img{width:74px;}.footer-academic-main{font-size:.96rem;}.footer-license-caption{font-size:.88rem;}.form-embed-wrap{min-height:1180px;}.form-embed{height:1180px;}}
 </style>
 </head>
 <body>
@@ -94,7 +102,7 @@
 <p class="kicker">Portal científico</p>
 <h1>Submissões</h1>
 <p class="hero-text">
-Esta página reúne o canal oficial de envio para a Revista Inquietações. O(a) autor(a) pode submeter trabalhos acadêmicos, homenagens e outros materiais diretamente pelo formulário oficial, tanto em nova aba quanto no próprio portal, por meio de painel expansível.
+Esta página reúne o canal oficial de envio da Revista Inquietações. O formulário único recebe trabalhos acadêmicos, homenagens e registros editoriais correlatos, preservando um fluxo mais claro, unificado e compatível com a organização do periódico.
 </p>
 <div class="masthead-meta">
 <div class="masthead-card"><strong>Submissão</strong>Fluxo contínuo</div>
@@ -155,20 +163,35 @@ Esta página reúne o canal oficial de envio para a Revista Inquietações. O(a)
 <main class="content" id="conteudo-principal">
 <section class="panel" id="visao-geral">
 <div class="panel-head">
-<h2>Envio de materiais</h2>
-<p>Canal oficial de submissão para autores, autoras e colaboradores(as).</p>
+<h2>Canal oficial de envio</h2>
+<p>Submissões organizadas em ambiente único, com leitura clara e navegação compatível com o portal do periódico.</p>
 </div>
 <div class="panel-body">
 <div class="submission-highlight">
+<div class="hero-note">Submissão acadêmica • homenagem • registro editorial</div>
 <p>
-A Revista Inquietações passa a centralizar o envio de <strong>materiais acadêmicos</strong>, <strong>homenagens</strong> e demais registros editoriais em um único formulário oficial. O acesso pode ser feito diretamente nesta página, por expansão do painel incorporado, ou em nova aba, conforme a preferência do(a) usuário(a).
+A Revista Inquietações centraliza nesta página o envio de <strong>manuscritos</strong>, <strong>homenagens</strong> e outras modalidades previstas no formulário institucional. O objetivo é oferecer um ambiente mais claro para autores, autoras e colaboradores(as), reduzindo dispersões e fortalecendo a unidade editorial do periódico.
 </p>
 <p>
-Esse formato reduz dispersões, simplifica o preenchimento e oferece uma rota mais clara para submissões em fluxo contínuo.
+O formulário pode ser aberto em nova guia ou preenchido sem sair do portal, por meio do painel expansível logo abaixo. Assim, o(a) autor(a) pode consultar diretrizes, templates e orientações do próprio site enquanto organiza a submissão.
 </p>
 <div class="cta-row">
-<a class="btn" href="#painel-unificado">Abrir painel de submissão</a>
+<a class="btn" href="#painel-unificado">Ir ao painel de submissão</a>
 <a class="btn secondary" href="https://script.google.com/macros/s/AKfycbzu38zajurMRRA9md-S2otmDvzmt6WlcbZAbi9dCEBKcuZDU7VpBXNYdSORtVXPFEoK/exec" target="_blank" rel="noopener noreferrer">Abrir em nova aba</a>
+</div>
+</div>
+<div class="mode-grid">
+<div class="mode-card">
+<strong>Preenchimento no portal</strong>
+<span>Abra o formulário dentro da própria página ao clicar em <em>Expandir</em> no painel oficial.</span>
+</div>
+<div class="mode-card">
+<strong>Abertura externa</strong>
+<span>Use a nova guia quando desejar mais espaço de leitura ou preenchimento contínuo.</span>
+</div>
+<div class="mode-card">
+<strong>Fluxo editorial integrado</strong>
+<span>Os envios são organizados em ambiente único para facilitar triagem e encaminhamento inicial.</span>
 </div>
 </div>
 </div>
@@ -176,54 +199,59 @@ Esse formato reduz dispersões, simplifica o preenchimento e oferece uma rota ma
 <section class="panel" id="antes-de-enviar" style="margin-top:20px;">
 <div class="panel-head">
 <h2>Antes de enviar</h2>
-<p>Conferências básicas recomendadas antes da submissão.</p>
+<p>Conferências essenciais recomendadas antes da submissão.</p>
 </div>
 <div class="panel-body">
 <div class="info-grid">
 <div class="info-box">
-<h4>Escolha da modalidade</h4>
-<p>Selecione corretamente se o envio é de trabalho acadêmico, homenagem ou outro material previsto no formulário.</p>
+<h4>Modalidade correta</h4>
+<p>Selecione adequadamente o tipo de envio, distinguindo manuscrito acadêmico, homenagem ou registro editorial correspondente.</p>
 </div>
 <div class="info-box">
-<h4>Leitura das diretrizes</h4>
-<p>Confirme a adequação do texto às normas editoriais, à linha temática da revista e à modalidade submetida.</p>
+<h4>Adequação às diretrizes</h4>
+<p>Verifique a compatibilidade do texto com as normas da revista, a proposta temática e a forma editorial esperada.</p>
 </div>
 <div class="info-box">
 <h4>Arquivo revisado</h4>
-<p>Revise ortografia, dados autorais, referências e estrutura geral antes de concluir o envio.</p>
+<p>Revise ortografia, referências, autoria, resumo, palavras-chave e dados complementares antes da submissão final.</p>
 </div>
 <div class="info-box">
 <h4>Dados completos</h4>
-<p>Tenha em mãos as informações necessárias para preencher todos os campos obrigatórios com clareza.</p>
+<p>Tenha em mãos todas as informações exigidas pelo formulário para evitar lacunas e retrabalho no preenchimento.</p>
 </div>
+</div>
+<div class="journal-callout" style="margin-top:18px;">
+<p>
+A submissão bem preparada favorece a triagem editorial inicial e contribui para um fluxo mais consistente entre o envio, a verificação preliminar e as etapas subsequentes do periódico.
+</p>
 </div>
 </div>
 </section>
 <section class="panel" id="painel-unificado" style="margin-top:20px;">
 <div class="panel-head">
 <h2>Painel oficial de submissão</h2>
-<p>Formulário único para materiais, homenagens e demais envios previstos pela revista.</p>
+<p>Formulário único para materiais acadêmicos, homenagens e demais envios previstos pela revista.</p>
 </div>
 <div class="panel-body">
 <div class="note-box">
 <p>
-O formulário oficial abaixo é o principal canal de envio da Revista Inquietações. Ele pode ser aberto diretamente em uma nova guia ou acessado sem sair desta página, por meio do painel expansível.
+O formulário abaixo constitui o <strong>canal oficial de submissão</strong> da Revista Inquietações. Ele pode ser acessado diretamente em nova aba ou incorporado nesta página para preenchimento sem saída do portal.
 </p>
 <p>
-No modo incorporado, clique em <strong>Expandir</strong> para carregar o formulário dentro do card. Caso o navegador bloqueie o conteúdo, utilize a abertura em nova aba.
+No modo interno, clique em <strong>Expandir</strong> para carregar o formulário no interior do card. Caso o navegador limite a incorporação, utilize a abertura externa.
 </p>
 </div>
 <div class="quick-actions">
 <div class="quick-card">
-<h3>Submeter sem sair da revista</h3>
-<p>Abra o formulário dentro do próprio portal por meio do painel expansível abaixo.</p>
-<p class="embed-tip">Ideal para quem deseja consultar esta página durante o preenchimento.</p>
+<h3>Submeter no próprio portal</h3>
+<p>Abra o formulário integrado sem sair da página de submissões e mantenha acesso imediato às informações do periódico.</p>
+<p class="embed-tip">Indicado para quem deseja consultar diretrizes e orientações durante o preenchimento.</p>
 </div>
 <div class="quick-card">
-<h3>Abrir o formulário em nova guia</h3>
-<p>Use a abertura externa para preencher com mais espaço e navegação direta.</p>
+<h3>Abrir em nova guia</h3>
+<p>Use a versão externa para um preenchimento mais amplo e com foco exclusivo no formulário oficial.</p>
 <div class="cta-row">
-<a class="btn secondary" href="https://script.google.com/macros/s/AKfycbzu38zajurMRRA9md-S2otmDvzmt6WlcbZAbi9dCEBKcuZDU7VpBXNYdSORtVXPFEoK/exec" target="_blank" rel="noopener noreferrer">Abrir em nova aba</a>
+<a class="btn secondary" href="https://script.google.com/macros/s/AKfycbzu38zajurMRRA9md-S2otmDvzmt6WlcbZAbi9dCEBKcuZDU7VpBXNYdSORtVXPFEoK/exec" target="_blank" rel="noopener noreferrer">Abrir formulário</a>
 </div>
 </div>
 </div>
@@ -241,7 +269,7 @@ No modo incorporado, clique em <strong>Expandir</strong> para carregar o formul�
 <div class="form-panel-head">
 <div>
 <h3>Submissão integrada</h3>
-<p>Materiais acadêmicos, homenagens e envios correlatos em um único ambiente.</p>
+<p>Materiais acadêmicos, homenagens e envios correlatos em ambiente único.</p>
 </div>
 <div class="cta-row">
 <a class="btn secondary" href="https://script.google.com/macros/s/AKfycbzu38zajurMRRA9md-S2otmDvzmt6WlcbZAbi9dCEBKcuZDU7VpBXNYdSORtVXPFEoK/exec" target="_blank" rel="noopener noreferrer">Abrir em nova aba</a>
@@ -277,7 +305,7 @@ Se o painel incorporado não carregar corretamente, utilize o acesso direto abai
 <section class="panel" id="duvidas" style="margin-top:20px;">
 <div class="panel-head">
 <h2>Informações úteis</h2>
-<p>Esclarecimentos sobre envio, conferência do material e encaminhamento editorial.</p>
+<p>Orientações sobre envio, conferência do material e encaminhamento editorial inicial.</p>
 </div>
 <div class="panel-body">
 <div class="expandable-list">
@@ -292,10 +320,10 @@ Se o painel incorporado não carregar corretamente, utilize o acesso direto abai
 <div class="expandable-body">
 <div class="note-box" style="margin-bottom:0;">
 <p>
-Toda submissão deve ser realizada exclusivamente pelo <strong>formulário oficial</strong> disponibilizado nesta página. O ambiente foi reorganizado para centralizar os envios e facilitar a triagem editorial.
+Toda submissão deve ser encaminhada exclusivamente pelo <strong>formulário oficial</strong> disponibilizado nesta página. A centralização do envio favorece uma triagem mais organizada e reduz ambiguidades no fluxo editorial.
 </p>
 <p>
-Recomenda-se preencher o formulário com atenção e revisar todos os dados antes do envio final.
+Recomenda-se revisar com atenção todos os campos preenchidos antes da conclusão do envio.
 </p>
 </div>
 </div>
@@ -304,17 +332,17 @@ Recomenda-se preencher o formulário com atenção e revisar todos os dados ante
 <div class="expandable-head">
 <div class="expandable-title">
 <h3>Diretrizes e preparação do manuscrito</h3>
-<p>O que o(a) autor(a) deve verificar antes de submeter o trabalho.</p>
+<p>Aspectos fundamentais que o(a) autor(a) deve revisar antes da submissão.</p>
 </div>
 <button class="expand-toggle" type="button" aria-expanded="false"></button>
 </div>
 <div class="expandable-body">
 <div class="note-box" style="margin-bottom:0;">
 <p>
-As normas de preparação do manuscrito permanecem disponíveis na página de <strong>diretrizes para autores</strong>. Antes da submissão, confira a modalidade do texto, a adequação temática e os elementos formais básicos.
+As normas de preparação do texto permanecem disponíveis na página de <strong>diretrizes para autores</strong>. Antes do envio, é importante conferir modalidade, extensão, estrutura, adequação temática e regularidade formal do material.
 </p>
 <p>
-Também é aconselhável revisar título, autoria, resumo, palavras-chave, referências e qualidade geral da redação.
+Também é aconselhável revisar título, autoria, resumo, palavras-chave, referências e a qualidade geral da redação.
 </p>
 </div>
 </div>
@@ -330,10 +358,10 @@ Também é aconselhável revisar título, autoria, resumo, palavras-chave, refer
 <div class="expandable-body">
 <div class="note-box" style="margin-bottom:0;">
 <p>
-Após o envio, o material passa por uma <strong>triagem editorial inicial</strong>, na qual são observados aspectos como pertinência temática, completude das informações e conformidade mínima com a proposta do periódico.
+Após o envio, o material passa por uma <strong>triagem editorial inicial</strong>, na qual são observados elementos como pertinência temática, completude das informações e conformidade mínima com a proposta do periódico.
 </p>
 <p>
-Quando pertinente, o trabalho segue para as etapas subsequentes do fluxo editorial, de acordo com os critérios internos da revista.
+Quando cabível, o texto segue para as etapas subsequentes do fluxo editorial, segundo os critérios internos da revista.
 </p>
 </div>
 </div>
@@ -342,17 +370,17 @@ Quando pertinente, o trabalho segue para as etapas subsequentes do fluxo editori
 <div class="expandable-head">
 <div class="expandable-title">
 <h3>Dúvidas técnicas e contato</h3>
-<p>Como proceder em caso de dificuldade com o formulário ou com o envio.</p>
+<p>Como proceder em caso de instabilidade ou necessidade de orientação adicional.</p>
 </div>
 <button class="expand-toggle" type="button" aria-expanded="false"></button>
 </div>
 <div class="expandable-body">
 <div class="note-box" style="margin-bottom:0;">
 <p>
-Se houver dificuldade técnica no preenchimento do formulário, instabilidade na incorporação ou necessidade de esclarecimento adicional, utilize os canais institucionais da Revista Inquietações.
+Se houver dificuldade técnica no carregamento do formulário, no envio de dados ou na incorporação do painel, utilize os canais institucionais da Revista Inquietações.
 </p>
 <p>
-Sempre que possível, descreva com clareza o problema encontrado para facilitar a orientação da equipe editorial.
+Sempre que possível, descreva com clareza o problema encontrado, indicando etapa, navegador ou comportamento observado, para facilitar o retorno da equipe editorial.
 </p>
 </div>
 </div>
