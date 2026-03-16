@@ -32,15 +32,58 @@
 :root{
   --men-bg:#f6f9ff;
   --men-border:#d7e3fb;
+
   --women-bg:#fff7fb;
   --women-border:#f0d7e5;
+
   --ac-bg:#fffaf1;
   --ac-border:#ead9b5;
+
   --memory-bg:#f8f6ff;
   --memory-border:#ddd7f7;
+
+  --persona-bg:#fff1f1;
+  --persona-border:#cf4b4b;
+  --persona-soft:#ffe3e3;
+  --persona-title:#8f1f1f;
+  --persona-tag-bg:#b71c1c;
+  --persona-tag-text:#ffffff;
+
   --panel-bg:#ffffff;
   --panel-line:rgba(31,60,136,.10);
   --soft-shadow:0 14px 34px rgba(31,60,136,.07);
+}
+
+.legend-dot.persona{
+  background:var(--persona-border);
+}
+
+.tribute-persona{
+  background:linear-gradient(180deg,var(--persona-bg) 0%, #ffffff 100%);
+  border:1px solid var(--persona-border);
+}
+
+.tribute-persona > summary{
+  background:linear-gradient(180deg,var(--persona-soft) 0%, #fff7f7 100%);
+}
+
+.tribute-persona .tribute-name{
+  color:var(--persona-title);
+}
+
+.tribute-persona .tribute-tag{
+  background:var(--persona-tag-bg);
+  color:var(--persona-tag-text);
+  border-color:var(--persona-tag-bg);
+}
+
+.tribute-persona .tribute-link{
+  border-color:var(--persona-border);
+  color:var(--persona-title);
+}
+
+.tribute-persona .tribute-link:hover{
+  background:var(--persona-soft);
 }
 .site-nav-menu{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:5px;overflow-x:auto;scrollbar-width:none;}
 .site-nav-menu::-webkit-scrollbar{display:none;}
@@ -62,6 +105,7 @@
 .legend-dot.women{background:#f1bfd8;}
 .legend-dot.ac{background:#e2c78b;}
 .legend-dot.memory{background:#c8bef4;}
+.legend-dot.persona{background:#cf4b4b;}
 .search-panel{position:relative;margin-top:24px;background:linear-gradient(180deg,#f8fbff 0%,#f2f6ff 100%);border:1px solid var(--panel-line);border-radius:22px;padding:22px;box-shadow:0 10px 24px rgba(31,60,136,.05);}
 .search-panel label{display:block;margin-bottom:10px;font-weight:700;color:#17316e;font-size:1rem;}
 .search-row{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
@@ -105,10 +149,10 @@
 .tribute-mulher{background:linear-gradient(180deg,var(--women-bg) 0%,#ffffff 100%);border-color:var(--women-border);}
 .tribute-ac{background:linear-gradient(180deg,var(--ac-bg) 0%,#ffffff 100%);border-color:var(--ac-border);}
 .tribute-memoria{background:linear-gradient(180deg,var(--memory-bg) 0%,#ffffff 100%);border-color:var(--memory-border);}
+.tribute-persona{background:linear-gradient(180deg,var(--persona-bg) 0%,#ffffff 100%);border-color:var(--persona-border);}
 .hidden-by-search{display:none !important;}
 @media (max-width: 980px){.homenagens-hero{grid-template-columns:1fr;}.hero-stats{grid-template-columns:1fr 1fr;}.tribute-meta-grid{grid-template-columns:1fr;}}
 @media (max-width: 700px){.hero-card,.legend-card,.search-panel{padding:20px;}.search-suggestions{left:12px;right:12px;}.tribute-item > summary{grid-template-columns:56px minmax(0,1fr);}.tribute-tag{grid-column:2;justify-self:start;}.tribute-avatar{width:56px;height:56px;}.tribute-name{font-size:1.35rem;}.hero-stats{grid-template-columns:1fr;}}
-
 .portal-grid.portal-grid-ojs{grid-template-columns:minmax(0,1fr) !important;}
 .portal-grid.portal-grid-ojs > .content{grid-column:1 / -1;max-width:none !important;width:100%;min-width:0;}
 .portal-grid.portal-grid-ojs > .sidebar,
@@ -185,25 +229,52 @@
   <div class="search-suggestions" id="lista-sugestoes" aria-live="polite"></div>
 </div>
 <div class="catalog-wrap" id="catalogo-homenagens">
-<details class="catalog-section" data-section="Persona non grata"><summary><span>Persona non grata</span></summary><div class="catalog-list"><details class="tribute-item tribute-persona" data-name="Jair Messias Bolsonaro" data-date="Brasil contemporâneo • registro crítico editorial • 2026" data-search="jair messias bolsonaro persona non grata direitos humanos ciencias humanas brasil contemporaneo" open>
-<summary>
-  <img class="tribute-avatar" src="arquivos/personae non gratae/2026/Bolsonario.png" alt="Imagem de referência de Jair Messias Bolsonaro" loading="lazy" onerror="this.onerror=null;this.src='assets/favicon.png';">
-  <div class="tribute-main">
-    <span class="tribute-name">Jair Messias Bolsonaro</span>
-    <span class="tribute-date">Brasil contemporâneo • registro crítico editorial • 2026</span>
+<details class="catalog-section" data-section="Persona non grata">
+  <summary><span>Persona non grata</span></summary>
+  <div class="catalog-list">
+
+    <details class="tribute-item tribute-persona" data-name="Donald Trump" data-date="Estados Unidos contemporâneos • registro crítico editorial • 2026" data-search="donald trump persona non grata direitos humanos ciencias humanas estados unidos contemporaneos guerra tarifas genero soberania democracia" open>
+      <summary>
+        <img class="tribute-avatar" src="arquivos/personae non gratae/2026/Donald Trump.png" alt="Imagem de referência de Donald Trump" loading="lazy" onerror="this.onerror=null;this.src='assets/favicon.png';">
+        <div class="tribute-main">
+          <span class="tribute-name">Donald Trump</span>
+          <span class="tribute-date">Estados Unidos contemporâneos • registro crítico editorial • 2026</span>
+        </div>
+        <span class="tribute-tag">Persona non grata</span>
+      </summary>
+      <div class="tribute-body">
+        <div class="tribute-meta-grid">
+          <div><strong>Nome</strong><span>Donald Trump</span></div>
+          <div><strong>Referência</strong><span>Estados Unidos contemporâneos • registro crítico editorial • 2026</span></div>
+          <div><strong>Motivo editorial</strong><span>Registro crítico referente a práticas, declarações e medidas públicas associadas a ataques a direitos humanos, tensões democráticas, hostilidade a grupos vulnerabilizados e impactos humanos, sociais e internacionais amplamente debatidos.</span></div>
+          <div><strong>Categoria</strong><span>Persona non grata</span></div>
+        </div>
+        <a class="tribute-link" href="publicacoes/persona-non-grata-donald-trump.html">Abrir página</a>
+      </div>
+    </details>
+
+    <details class="tribute-item tribute-persona" data-name="Jair Messias Bolsonaro" data-date="Brasil contemporâneo • registro crítico editorial • 2026" data-search="jair messias bolsonaro persona non grata direitos humanos ciencias humanas brasil contemporaneo">
+      <summary>
+<img class="tribute-avatar" src="arquivos/personae non gratae/2026/Bolsonaro.png" alt="Imagem de referência de Jair Messias Bolsonaro" loading="lazy">
+        <div class="tribute-main">
+          <span class="tribute-name">Jair Messias Bolsonaro</span>
+          <span class="tribute-date">Brasil contemporâneo • registro crítico editorial • 2026</span>
+        </div>
+        <span class="tribute-tag">Persona non grata</span>
+      </summary>
+      <div class="tribute-body">
+        <div class="tribute-meta-grid">
+          <div><strong>Nome</strong><span>Jair Messias Bolsonaro</span></div>
+          <div><strong>Referência</strong><span>Brasil contemporâneo • registro crítico editorial • 2026</span></div>
+          <div><strong>Motivo editorial</strong><span>Registro crítico referente a declarações, práticas e posicionamentos públicos associados a ataques às ciências humanas, à dignidade humana, aos direitos humanos e à vida democrática.</span></div>
+          <div><strong>Categoria</strong><span>Persona non grata</span></div>
+        </div>
+        <a class="tribute-link" href="publicacoes/persona-non-grata-jair-bolsonaro.html">Abrir página</a>
+      </div>
+    </details>
+
   </div>
-  <span class="tribute-tag">Persona non grata</span>
-</summary>
-<div class="tribute-body">
-  <div class="tribute-meta-grid">
-    <div><strong>Nome</strong><span>Jair Messias Bolsonaro</span></div>
-    <div><strong>Referência</strong><span>Brasil contemporâneo • registro crítico editorial • 2026</span></div>
-    <div><strong>Motivo editorial</strong><span>Registro crítico referente a declarações, práticas e posicionamentos públicos associados a ataques às ciências humanas, à dignidade humana, aos direitos humanos e à vida democrática.</span></div>
-    <div><strong>Categoria</strong><span>Persona non grata</span></div>
-  </div>
-  <a class="tribute-link" href="publicacoes/persona-non-grata-jair-bolsonaro.html">Abrir página</a>
-</div>
-</details></div></details>
+</details>
 <details class="catalog-section" data-section="Antes de Cristo (a.C.)"><summary><span>Antes de Cristo (a.C.)</span></summary><div class="catalog-list"><details class="tribute-item tribute-ac" data-name="Protágoras" data-date="Nascimento: 490 a.C. • Falecimento: 415 a.C." data-search="protagoras 490 a.c. 415 a.c.">
 <summary>
   <img class="tribute-avatar" src="arquivos/homenagens/icones/Prot%C3%A1goras.png" alt="Imagem de referência de Protágoras" loading="lazy" onerror="this.onerror=null;this.src='assets/favicon.png';">
@@ -2349,8 +2420,848 @@ document.addEventListener('DOMContentLoaded', function () {
   const suggestions = document.getElementById('lista-sugestoes');
   const sections = Array.from(document.querySelectorAll('.catalog-section'));
   const items = Array.from(document.querySelectorAll('.tribute-item'));
-  const searchData = [{"name": "Michel Onfray", "href": "publicacoes/homenagem-michel-onfray.html", "date": "1 de janeiro de 1959", "type": "homem", "search": "Michel Onfray 1 de janeiro de 1959"}, {"name": "Tyler Burge", "href": "publicacoes/homenagem-tyler-burge.html", "date": "1 de janeiro de 1946", "type": "homem", "search": "Tyler Burge 1 de janeiro de 1946"}, {"name": "Isaac Newton", "href": "publicacoes/homenagem-isaac-newton.html", "date": "Nascimento: 4 de janeiro de 1643 • Falecimento: 31 de março de 1727", "type": "homem", "search": "Isaac Newton 4 de janeiro de 1643 31 de março de 1727"}, {"name": "Stephen Hawking", "href": "publicacoes/homenagem-stephen-hawking.html", "date": "Nascimento: 8 de janeiro de 1942 • Falecimento: 14 de março de 2018", "type": "homem", "search": "Stephen Hawking 8 de janeiro de 1942 14 de março de 2018"}, {"name": "Simone de Beauvoir", "href": "publicacoes/homenagem-simone-de-beauvoir.html", "date": "Nascimento: 9 de janeiro de 1908 • Falecimento: 14 de abril de 1986", "type": "mulher", "search": "Simone de Beauvoir 9 de janeiro de 1908 14 de abril de 1986"}, {"name": "William James", "href": "publicacoes/homenagem-william-james.html", "date": "Nascimento: 11 de janeiro de 1842 • Falecimento: 26 de agosto de 1910", "type": "homem", "search": "William James 11 de janeiro de 1842 26 de agosto de 1910"}, {"name": "Pierre-Joseph Proudhon", "href": "publicacoes/homenagem-pierre-joseph-proudhon.html", "date": "Nascimento: 15 de janeiro de 1809 • Falecimento: 19 de janeiro de 1865", "type": "homem", "search": "Pierre-Joseph Proudhon 15 de janeiro de 1809 19 de janeiro de 1865"}, {"name": "Francis Bacon", "href": "publicacoes/homenagem-francis-bacon.html", "date": "Nascimento: 22 de janeiro de 1561 • Falecimento: 9 de abril de 1626", "type": "homem", "search": "Francis Bacon 22 de janeiro de 1561 9 de abril de 1626"}, {"name": "Pierre Gassendi", "href": "publicacoes/homenagem-pierre-gassendi.html", "date": "Nascimento: 22 de janeiro de 1592 • Falecimento: 24 de outubro de 1655", "type": "homem", "search": "Pierre Gassendi 22 de janeiro de 1592 24 de outubro de 1655"}, {"name": "Samuel Thomas von Sömmerring", "href": "publicacoes/homenagem-samuel-thomas-von-sommerring.html", "date": "Nascimento: 28 de janeiro de 1755 • Falecimento: 2 de março de 1830", "type": "homem", "search": "Samuel Thomas von Sömmerring 28 de janeiro de 1755 2 de março de 1830"}, {"name": "Ayn Rand", "href": "publicacoes/homenagem-ayn-rand.html", "date": "Nascimento: 2 de fevereiro de 1905 • Falecimento: 6 de março de 1982", "type": "mulher", "search": "Ayn Rand 2 de fevereiro de 1905 6 de março de 1982"}, {"name": "Francisco I da Áustria", "href": "publicacoes/homenagem-francisco-i-da-austria.html", "date": "Nascimento: 12 de fevereiro de 1768 • Falecimento: 2 de março de 1835", "type": "homem", "search": "Francisco I da Áustria 12 de fevereiro de 1768 2 de março de 1835"}, {"name": "Alfred North Whitehead", "href": "publicacoes/homenagem-alfred-north-whitehead.html", "date": "Nascimento: 15 de fevereiro de 1861 • Falecimento: 30 de dezembro de 1947", "type": "homem", "search": "Alfred North Whitehead 15 de fevereiro de 1861 30 de dezembro de 1947"}, {"name": "Galileu Galilei", "href": "publicacoes/homenagem-galileu-galilei.html", "date": "Nascimento: 15 de fevereiro de 1564 • Falecimento: 8 de janeiro de 1642", "type": "homem", "search": "Galileu Galilei 15 de fevereiro de 1564 8 de janeiro de 1642"}, {"name": "Friedrich Eduard Beneke", "href": "publicacoes/homenagem-friedrich-eduard-beneke.html", "date": "Nascimento: 17 de fevereiro de 1798 • Falecimento: 1 de março de 1854", "type": "homem", "search": "Friedrich Eduard Beneke 17 de fevereiro de 1798 1 de março de 1854"}, {"name": "Giordano Bruno", "href": "publicacoes/homenagem-giordano-bruno.html", "date": "Nascimento: 1548 • Falecimento: 17 de fevereiro de 1600", "type": "homem", "search": "Giordano Bruno 1548 17 de fevereiro de 1600"}, {"name": "Nicolau Copérnico", "href": "publicacoes/homenagem-nicolau-copernico.html", "date": "Nascimento: 19 de fevereiro de 1473 • Falecimento: 24 de maio de 1543", "type": "homem", "search": "Nicolau Copérnico 19 de fevereiro de 1473 24 de maio de 1543"}, {"name": "Arthur Schopenhauer", "href": "publicacoes/homenagem-arthur-schopenhauer.html", "date": "Nascimento: 22 de fevereiro de 1788 • Falecimento: 21 de setembro de 1860", "type": "homem", "search": "Arthur Schopenhauer 22 de fevereiro de 1788 21 de setembro de 1860"}, {"name": "Frank Plumpton Ramsey", "href": "publicacoes/homenagem-frank-plumpton-ramsey.html", "date": "Nascimento: 22 de fevereiro de 1903 • Falecimento: 19 de janeiro de 1930", "type": "homem", "search": "Frank Plumpton Ramsey 22 de fevereiro de 1903 19 de janeiro de 1930"}, {"name": "Karl Jaspers", "href": "publicacoes/homenagem-karl-jaspers.html", "date": "Nascimento: 23 de fevereiro de 1883 • Falecimento: 26 de fevereiro de 1969", "type": "homem", "search": "Karl Jaspers 23 de fevereiro de 1883 26 de fevereiro de 1969"}, {"name": "Claude-Adrien Helvétius", "href": "publicacoes/homenagem-claude-adrien-helvetius.html", "date": "Nascimento: 26 de fevereiro de 1715 • Falecimento: 26 de dezembro de 1771", "type": "homem", "search": "Claude-Adrien Helvétius 26 de fevereiro de 1715 26 de dezembro de 1771"}, {"name": "Georg Simmel", "href": "publicacoes/homenagem-georg-simmel.html", "date": "Nascimento: 1 de março de 1858 • Falecimento: 28 de setembro de 1918", "type": "homem", "search": "Georg Simmel 1 de março de 1858 28 de setembro de 1918"}, {"name": "Tzvetan Todorov", "href": "publicacoes/homenagem-tzvetan-todorov.html", "date": "Nascimento: 1 de março de 1939 • Falecimento: 7 de fevereiro de 2017", "type": "homem", "search": "Tzvetan Todorov 1 de março de 1939 7 de fevereiro de 2017"}, {"name": "Émile-Auguste Chartier", "href": "publicacoes/homenagem-emile-auguste-chartier.html", "date": "Nascimento: 3 de março de 1868 • Falecimento: 2 de junho de 1951", "type": "homem", "search": "Émile-Auguste Chartier 3 de março de 1868 2 de junho de 1951"}, {"name": "Georg Cantor", "href": "publicacoes/homenagem-georg-cantor.html", "date": "Nascimento: 3 de março de 1845 • Falecimento: 6 de janeiro de 1918", "type": "homem", "search": "Georg Cantor 3 de março de 1845 6 de janeiro de 1918"}, {"name": "Heinrich Georg Bronn", "href": "publicacoes/homenagem-heinrich-georg-bronn.html", "date": "Nascimento: 3 de março de 1800 • Falecimento: 5 de julho de 1862", "type": "homem", "search": "Heinrich Georg Bronn 3 de março de 1800 5 de julho de 1862"}, {"name": "Milly Witkop Rocker", "href": "publicacoes/homenagem-milly-witkop-rocker.html", "date": "Nascimento: 3 de março de 1877 • Falecimento: 23 de novembro de 1955", "type": "mulher", "search": "Milly Witkop Rocker 3 de março de 1877 23 de novembro de 1955"}, {"name": "Nur Misuari", "href": "publicacoes/homenagem-nur-misuari.html", "date": "Nascimento: 3 de março de 1939 • Falecimento: —", "type": "homem", "search": "Nur Misuari 3 de março de 1939 —"}, {"name": "Peter Abrahams", "href": "publicacoes/homenagem-peter-abrahams.html", "date": "Nascimento: 3 de março de 1919 • Falecimento: 18 de janeiro de 2017", "type": "homem", "search": "Peter Abrahams 3 de março de 1919 18 de janeiro de 2017"}, {"name": "Raimundo António de Bulhão Pato", "href": "publicacoes/homenagem-raimundo-antonio-de-bulhao-pato.html", "date": "Nascimento: 3 de março de 1828 • Falecimento: 24 de agosto de 1912", "type": "homem", "search": "Raimundo António de Bulhão Pato 3 de março de 1828 24 de agosto de 1912"}, {"name": "Roger Caillois", "href": "publicacoes/homenagem-roger-caillois.html", "date": "Nascimento: 3 de março de 1913 • Falecimento: 21 de dezembro de 1978", "type": "homem", "search": "Roger Caillois 3 de março de 1913 21 de dezembro de 1978"}, {"name": "Cyrano de Bergerac", "href": "publicacoes/homenagem-cyrano-de-bergerac.html", "date": "Nascimento: 6 de março de 1619 • Falecimento: 28 de julho de 1655", "type": "homem", "search": "Cyrano de Bergerac 6 de março de 1619 28 de julho de 1655"}, {"name": "John McDowell", "href": "publicacoes/homenagem-john-mcdowell.html", "date": "Nascimento: 7 de março de 1942 • Falecimento: —", "type": "homem", "search": "John McDowell 7 de março de 1942 —"}, {"name": "Hipátia", "href": "publicacoes/homenagem-hipatia.html", "date": "Nascimento: c. 355 • Falecimento: 8 de março de 415", "type": "mulher", "search": "Hipátia c. 355 8 de março de 415"}, {"name": "George Berkeley", "href": "publicacoes/homenagem-george-berkeley.html", "date": "Nascimento: 12 de março de 1685 • Falecimento: 14 de janeiro de 1753", "type": "homem", "search": "George Berkeley 12 de março de 1685 14 de janeiro de 1753"}, {"name": "Robert Brandom", "href": "publicacoes/homenagem-robert-brandom.html", "date": "13 de março de 1950", "type": "homem", "search": "Robert Brandom 13 de março de 1950"}, {"name": "Albert Einstein", "href": "publicacoes/homenagem-albert-einstein.html", "date": "Nascimento: 14 de março de 1879 • Falecimento: 18 de abril de 1955", "type": "homem", "search": "Albert Einstein 14 de março de 1879 18 de abril de 1955"}, {"name": "Antônio de Castro Alves", "href": "publicacoes/homenagem-castro-alves.html", "date": "Nascimento: 14 de março de 1847 • Falecimento: 6 de julho de 1871", "type": "homem", "search": "Antônio de Castro Alves 14 de março de 1847 6 de julho de 1871"}, {"name": "Carolina Maria de Jesus", "href": "publicacoes/homenagem-carolina-maria-de-jesus.html", "date": "Nascimento: 14 de março de 1914 • Falecimento: 13 de fevereiro de 1977", "type": "mulher", "search": "Carolina Maria de Jesus 14 de março de 1914 13 de fevereiro de 1977"}, {"name": "Lucy Hobbs Taylor", "href": "publicacoes/homenagem-lucy-hobbs-taylor.html", "date": "Nascimento: 14 de março de 1833 • Falecimento: 3 de outubro de 1910", "type": "mulher", "search": "Lucy Hobbs Taylor 14 de março de 1833 3 de outubro de 1910"}, {"name": "Maurice Merleau-Ponty", "href": "publicacoes/homenagem-maurice-merleau-ponty.html", "date": "Nascimento: 14 de março de 1908 • Falecimento: 3 de maio de 1961", "type": "homem", "search": "Maurice Merleau-Ponty 14 de março de 1908 3 de maio de 1961"}, {"name": "René Descartes", "href": "publicacoes/homenagem-rene-descartes.html", "date": "Nascimento: 31 de março de 1596 • Falecimento: 11 de fevereiro de 1650", "type": "homem", "search": "René Descartes 31 de março de 1596 11 de fevereiro de 1650"}, {"name": "Marguerite Duras", "href": "publicacoes/homenagem-marguerite-duras.html", "date": "Nascimento: 4 de abril de 1914 • Falecimento: 3 de março de 1996", "type": "mulher", "search": "Marguerite Duras 4 de abril de 1914 3 de março de 1996"}, {"name": "Thomas Hobbes", "href": "publicacoes/homenagem-thomas-hobbes.html", "date": "Nascimento: 5 de abril de 1588 • Falecimento: 4 de dezembro de 1679", "type": "homem", "search": "Thomas Hobbes 5 de abril de 1588 4 de dezembro de 1679"}, {"name": "Moritz Schlick", "href": "publicacoes/homenagem-moritz-schlick.html", "date": "Nascimento: 14 de abril de 1882 • Falecimento: 22 de junho de 1936", "type": "homem", "search": "Moritz Schlick 14 de abril de 1882 22 de junho de 1936"}, {"name": "Pedro Abelardo", "href": "publicacoes/homenagem-pedro-abelardo.html", "date": "Nascimento: ca. 1079 • Falecimento: 21 de abril de 1142", "type": "homem", "search": "Pedro Abelardo ca. 1079 21 de abril de 1142"}, {"name": "Immanuel Kant", "href": "publicacoes/homenagem-immanuel-kant.html", "date": "Nascimento: 22 de abril de 1724 • Falecimento: 12 de fevereiro de 1804", "type": "homem", "search": "Immanuel Kant 22 de abril de 1724 12 de fevereiro de 1804"}, {"name": "Ludwig Wittgenstein", "href": "publicacoes/homenagem-ludwig-wittgenstein.html", "date": "Nascimento: 26 de abril de 1889 • Falecimento: 29 de abril de 1951", "type": "homem", "search": "Ludwig Wittgenstein 26 de abril de 1889 29 de abril de 1951"}, {"name": "Kurt Gödel", "href": "publicacoes/homenagem-kurt-godel.html", "date": "Nascimento: 28 de abril de 1906 • Falecimento: 14 de janeiro de 1978", "type": "homem", "search": "Kurt Gödel 28 de abril de 1906 14 de janeiro de 1978"}, {"name": "Nicolau Maquiavel", "href": "publicacoes/homenagem-nicolau-maquiavel.html", "date": "Nascimento: 03 de maio de 1469 • Falecimento: 21 de junho de 1527", "type": "homem", "search": "Nicolau Maquiavel 03 de maio de 1469 21 de junho de 1527"}, {"name": "Karl Marx", "href": "publicacoes/homenagem-karl-marx.html", "date": "Nascimento: 5 de maio de 1818 • Falecimento: 14 de março de 1883", "type": "homem", "search": "Karl Marx 5 de maio de 1818 14 de março de 1883"}, {"name": "Søren Kierkegaard", "href": "publicacoes/homenagem-sren-kierkegaard.html", "date": "Nascimento: 5 de maio de 1813 • Falecimento: 11 de novembro de 1855", "type": "homem", "search": "Søren Kierkegaard 5 de maio de 1813 11 de novembro de 1855"}, {"name": "David Hume", "href": "publicacoes/homenagem-david-hume.html", "date": "Nascimento: 7 de maio de 1711 • Falecimento: 25 de agosto de 1776", "type": "homem", "search": "David Hume 7 de maio de 1711 25 de agosto de 1776"}, {"name": "Maria Gaetana Agnesi", "href": "publicacoes/homenagem-maria-gaetana-agnesi.html", "date": "Nascimento: 16 de maio de 1718 • Falecimento: 9 de janeiro de 1799", "type": "mulher", "search": "Maria Gaetana Agnesi 16 de maio de 1718 9 de janeiro de 1799"}, {"name": "Bertrand Russell", "href": "publicacoes/homenagem-bertrand-russell.html", "date": "Nascimento: 18 de maio de 1872 • Falecimento: 2 de fevereiro de 1970", "type": "homem", "search": "Bertrand Russell 18 de maio de 1872 2 de fevereiro de 1970"}, {"name": "Rudolf Carnap", "href": "publicacoes/homenagem-rudolf-carnap.html", "date": "Nascimento: 18 de maio de 1891 • Falecimento: 14 de setembro de 1970", "type": "homem", "search": "Rudolf Carnap 18 de maio de 1891 14 de setembro de 1970"}, {"name": "John Stuart Mill", "href": "publicacoes/homenagem-john-stuart-mill.html", "date": "Nascimento: 20 de maio de 1806 • Falecimento: 8 de maio de 1873", "type": "homem", "search": "John Stuart Mill 20 de maio de 1806 8 de maio de 1873"}, {"name": "Salvador Puig Antich", "href": "publicacoes/homenagem-salvador-puig-antich.html", "date": "Nascimento: 30 de maio de 1948 • Falecimento: 2 de março de 1974", "type": "homem", "search": "Salvador Puig Antich 30 de maio de 1948 2 de março de 1974"}, {"name": "Jean Meslier", "href": "publicacoes/homenagem-jean-meslier.html", "date": "Nascimento: 15 de junho de 1664 • Falecimento: 17 de junho de 1729", "type": "homem", "search": "Jean Meslier 15 de junho de 1664 17 de junho de 1729"}, {"name": "Jürgen Habermas", "href": "publicacoes/homenagem-jurgen-habermas.html", "date": "Nascimento: 18 de junho de 1929 • Falecimento: 14 de março de 2026", "type": "homem", "search": "Jürgen Habermas 18 de junho de 1929 14 de março de 2026"}, {"name": "Jean-Paul Sartre", "href": "publicacoes/homenagem-jean-paul-sartre.html", "date": "Nascimento: 21 de junho de 1905 • Falecimento: 15 de abril de 1980", "type": "homem", "search": "Jean-Paul Sartre 21 de junho de 1905 15 de abril de 1980"}, {"name": "Jean-Jacques Rousseau", "href": "publicacoes/homenagem-jean-jacques-rousseau.html", "date": "Nascimento: 28 de junho de 1712 • Falecimento: 2 de julho de 1778", "type": "homem", "search": "Jean-Jacques Rousseau 28 de junho de 1712 2 de julho de 1778"}, {"name": "Gottfried Wilhelm Leibniz", "href": "publicacoes/homenagem-gottfried-leibniz.html", "date": "Nascimento: 1 de julho de 1646 • Falecimento: 14 de novembro de 1716", "type": "homem", "search": "Gottfried Wilhelm Leibniz 1 de julho de 1646 14 de novembro de 1716"}, {"name": "Alfred Korzybski", "href": "publicacoes/homenagem-alfred-korzybski.html", "date": "Nascimento: 3 de julho de 1879 • Falecimento: 1 de março de 1950", "type": "homem", "search": "Alfred Korzybski 3 de julho de 1879 1 de março de 1950"}, {"name": "Frida Kahlo", "href": "publicacoes/homenagem-frida-kahlo.html", "date": "Nascimento: 6 de julho de 1907 • Falecimento: 13 de julho de 1954", "type": "mulher", "search": "Frida Kahlo 6 de julho de 1907 13 de julho de 1954"}, {"name": "Erasmo de Roterdão", "href": "publicacoes/homenagem-erasmo-de-roterdao.html", "date": "Nascimento: c. 1466 ou 1469 • Falecimento: 12 de julho de 1536", "type": "homem", "search": "Erasmo de Roterdão c. 1466 ou 1469 12 de julho de 1536"}, {"name": "Jacques Derrida", "href": "publicacoes/homenagem-jacques-derrida.html", "date": "Nascimento: 15 de julho de 1930 • Falecimento: 9 de outubro de 2004", "type": "homem", "search": "Jacques Derrida 15 de julho de 1930 9 de outubro de 2004"}, {"name": "Thomas Kuhn", "href": "publicacoes/homenagem-thomas-kuhn.html", "date": "Nascimento: 18 de julho de 1922 • Falecimento: 17 de junho de 1996", "type": "homem", "search": "Thomas Kuhn 18 de julho de 1922 17 de junho de 1996"}, {"name": "Marielle Franco e Anderson Gomes", "href": "publicacoes/homenagem-marielle-franco-anderson-gomes.html", "date": "Nascimento: Marielle Franco: 27 de julho de 1979 • Anderson Gomes: 1977 • Falecimento: 14 de março de 2018", "type": "memoria", "search": "Marielle Franco e Anderson Gomes Marielle Franco: 27 de julho de 1979 • Anderson Gomes: 1977 14 de março de 2018"}, {"name": "Ludwig Feuerbach", "href": "publicacoes/homenagem-ludwig-feuerbach.html", "date": "Nascimento: 28 de julho de 1804 • Falecimento: 13 de setembro de 1872", "type": "homem", "search": "Ludwig Feuerbach 28 de julho de 1804 13 de setembro de 1872"}, {"name": "Hilary Putnam", "href": "publicacoes/homenagem-hilary-putnam.html", "date": "Nascimento: 31 de julho de 1926 • Falecimento: 13 de março de 2016", "type": "homem", "search": "Hilary Putnam 31 de julho de 1926 13 de março de 2016"}, {"name": "Lorenzo Valla", "href": "publicacoes/homenagem-lorenzo-valla.html", "date": "Nascimento: 1407 • Falecimento: 1 de agosto de 1457", "type": "homem", "search": "Lorenzo Valla 1407 1 de agosto de 1457"}, {"name": "Paulo Coelho", "href": "publicacoes/homenagem-paulo-coelho.html", "date": "24 de agosto de 1947", "type": "homem", "search": "Paulo Coelho 24 de agosto de 1947"}, {"name": "Georg Wilhelm Friedrich Hegel", "href": "publicacoes/homenagem-georg-wilhelm-friedrich-hegel.html", "date": "Nascimento: 27 de agosto de 1770 • Falecimento: 14 de novembro de 1831", "type": "homem", "search": "Georg Wilhelm Friedrich Hegel 27 de agosto de 1770 14 de novembro de 1831"}, {"name": "John Locke", "href": "publicacoes/homenagem-john-locke.html", "date": "Nascimento: 29 de agosto de 1632 • Falecimento: 28 de outubro de 1704", "type": "homem", "search": "John Locke 29 de agosto de 1632 28 de outubro de 1704"}, {"name": "Josefa Ortiz de Domínguez", "href": "publicacoes/homenagem-josefa-ortiz-de-dominguez.html", "date": "Nascimento: 8 de setembro de 1768 • Falecimento: 2 de março de 1829", "type": "mulher", "search": "Josefa Ortiz de Domínguez 8 de setembro de 1768 2 de março de 1829"}, {"name": "Pietro Pomponazzi", "href": "publicacoes/homenagem-pietro-pomponazzi.html", "date": "Nascimento: 16 de setembro de 1462 • Falecimento: 18 de maio de 1525", "type": "homem", "search": "Pietro Pomponazzi 16 de setembro de 1462 18 de maio de 1525"}, {"name": "David Benjamin Kaplan", "href": "publicacoes/homenagem-david-kaplan.html", "date": "Nascimento: 17 de setembro de 1933 • Falecimento: —", "type": "homem", "search": "David Benjamin Kaplan 17 de setembro de 1933 —"}, {"name": "Horace Walpole", "href": "publicacoes/homenagem-horace-walpole.html", "date": "Nascimento: 24 de setembro de 1717 • Falecimento: 2 de março de 1797", "type": "homem", "search": "Horace Walpole 24 de setembro de 1717 2 de março de 1797"}, {"name": "Martin Heidegger", "href": "publicacoes/homenagem-martin-heidegger.html", "date": "Nascimento: 26 de setembro de 1889 • Falecimento: 26 de maio de 1976", "type": "homem", "search": "Martin Heidegger 26 de setembro de 1889 26 de maio de 1976"}, {"name": "Hannah Arendt", "href": "publicacoes/homenagem-hannah-arendt.html", "date": "Nascimento: 14 de outubro de 1906 • Falecimento: 4 de dezembro de 1975", "type": "mulher", "search": "Hannah Arendt 14 de outubro de 1906 4 de dezembro de 1975"}, {"name": "Friedrich Nietzsche", "href": "publicacoes/homenagem-friedrich-nietzsche.html", "date": "Nascimento: 15 de outubro de 1844 • Falecimento: 25 de agosto de 1900", "type": "homem", "search": "Friedrich Nietzsche 15 de outubro de 1844 25 de agosto de 1900"}, {"name": "Michel Foucault", "href": "publicacoes/homenagem-michel-foucault.html", "date": "Nascimento: 15 de outubro de 1926 • Falecimento: 25 de junho de 1984", "type": "homem", "search": "Michel Foucault 15 de outubro de 1926 25 de junho de 1984"}, {"name": "Henri Bergson", "href": "publicacoes/homenagem-henri-bergson.html", "date": "Nascimento: 18 de outubro de 1859 • Falecimento: 4 de janeiro de 1941", "type": "homem", "search": "Henri Bergson 18 de outubro de 1859 4 de janeiro de 1941"}, {"name": "Albert Camus", "href": "publicacoes/homenagem-albert-camus.html", "date": "Nascimento: 7 de novembro de 1913 • Falecimento: 4 de janeiro de 1960", "type": "homem", "search": "Albert Camus 7 de novembro de 1913 4 de janeiro de 1960"}, {"name": "Gottlob Frege", "href": "publicacoes/homenagem-gottlob-frege.html", "date": "Nascimento: 8 de novembro de 1848 • Falecimento: 26 de julho de 1925", "type": "homem", "search": "Gottlob Frege 8 de novembro de 1848 26 de julho de 1925"}, {"name": "Agostinho de Hipona", "href": "publicacoes/homenagem-agostinho-de-hipona.html", "date": "Nascimento: 13 de novembro de 354 • Falecimento: 28 de agosto de 430", "type": "homem", "search": "Agostinho de Hipona 13 de novembro de 354 28 de agosto de 430"}, {"name": "Saul Kripke", "href": "publicacoes/homenagem-saul-kripke.html", "date": "Nascimento: 13 de novembro de 1940 • Falecimento: 15 de setembro de 2022", "type": "homem", "search": "Saul Kripke 13 de novembro de 1940 15 de setembro de 2022"}, {"name": "Justiniano I", "href": "publicacoes/homenagem-justiniano-i.html", "date": "Nascimento: c. 482 • Falecimento: 14 de novembro de 565", "type": "homem", "search": "Justiniano I c. 482 14 de novembro de 565"}, {"name": "Pierre Charron", "href": "publicacoes/homenagem-pierre-charron.html", "date": "Nascimento: 1541 • Falecimento: 16 de novembro de 1603", "type": "homem", "search": "Pierre Charron 1541 16 de novembro de 1603"}, {"name": "Peter Frederick Strawson", "href": "publicacoes/homenagem-peter-frederick-strawson.html", "date": "Nascimento: 23 de novembro de 1919 • Falecimento: 13 de fevereiro de 2006", "type": "homem", "search": "Peter Frederick Strawson 23 de novembro de 1919 13 de fevereiro de 2006"}, {"name": "Baruch Espinoza", "href": "publicacoes/homenagem-baruch-espinoza.html", "date": "Nascimento: 24 de novembro de 1632 • Falecimento: 21 de fevereiro de 1677", "type": "homem", "search": "Baruch Espinoza 24 de novembro de 1632 21 de fevereiro de 1677"}, {"name": "Friedrich Engels", "href": "publicacoes/homenagem-friedrich-engels.html", "date": "Nascimento: 28 de novembro de 1820 • Falecimento: 5 de agosto de 1895", "type": "homem", "search": "Friedrich Engels 28 de novembro de 1820 5 de agosto de 1895"}, {"name": "Homenagem ao Barão d’Holbach", "href": "publicacoes/homenagem-barao-d-holbach.html", "date": "Nascimento: 8 de dezembro de 1723 • Falecimento: 21 de janeiro de 1789", "type": "homem", "search": "Homenagem ao Barão d’Holbach 8 de dezembro de 1723 21 de janeiro de 1789"}, {"name": "Antoine-Henri Becquerel", "href": "publicacoes/homenagem-antoine-henri-becquerel.html", "date": "Nascimento: 15 de dezembro de 1852 • Falecimento: 25 de agosto de 1908", "type": "homem", "search": "Antoine-Henri Becquerel 15 de dezembro de 1852 25 de agosto de 1908"}, {"name": "Johannes Kepler", "href": "publicacoes/homenagem-johannes-kepler.html", "date": "Nascimento: 27 de dezembro de 1571 • Falecimento: 15 de novembro de 1630", "type": "homem", "search": "Johannes Kepler 27 de dezembro de 1571 15 de novembro de 1630"}, {"name": "Protágoras", "href": "publicacoes/homenagem-protagoras.html", "date": "Nascimento: 490 a.C. • Falecimento: 415 a.C.", "type": "ac", "search": "Protágoras 490 a.C. 415 a.C."}, {"name": "Demócrito", "href": "publicacoes/homenagem-democrito.html", "date": "Nascimento: c. 460 a.C. • Falecimento: c. 370 a.C.", "type": "ac", "search": "Demócrito c. 460 a.C. c. 370 a.C."}, {"name": "Antístenes", "href": "publicacoes/homenagem-antistenes.html", "date": "Nascimento: c. 445 a.C. • Falecimento: c. 365 a.C.", "type": "ac", "search": "Antístenes c. 445 a.C. c. 365 a.C."}, {"name": "Antístenes", "href": "publicacoes/homenagem-aristoteles.html", "date": "Nascimento: c. 445 a.C. • Falecimento: c. 365 a.C.", "type": "ac", "search": "Antístenes c. 445 a.C. c. 365 a.C."}, {"name": "Aristipo de Cirene", "href": "publicacoes/homenagem-aristipo-de-cirene.html", "date": "Nascimento: c. 435 a.C. • Falecimento: c. 356 a.C.", "type": "ac", "search": "Aristipo de Cirene c. 435 a.C. c. 356 a.C."}, {"name": "Platão", "href": "publicacoes/homenagem-platao.html", "date": "Nascimento: c. 428 a.C. • Falecimento: c. 348 a.C.", "type": "ac", "search": "Platão c. 428 a.C. c. 348 a.C."}, {"name": "Diógenes de Sinope", "href": "publicacoes/homenagem-diogenes-de-sinope.html", "date": "Nascimento: c. 404 ou 412 a.C. • Falecimento: c. 323 ou 324/321 a.C.", "type": "ac", "search": "Diógenes de Sinope c. 404 ou 412 a.C. c. 323 ou 324/321 a.C."}, {"name": "Pirro de Élis", "href": "publicacoes/homenagem-pirro-de-elis.html", "date": "Nascimento: 360 a.C. • Falecimento: 270 a.C.", "type": "ac", "search": "Pirro de Élis 360 a.C. 270 a.C."}, {"name": "Epicuro de Samos", "href": "publicacoes/homenagem-epicuro-de-samos.html", "date": "Nascimento: 341 a.C. • Falecimento: 270 a.C.", "type": "ac", "search": "Epicuro de Samos 341 a.C. 270 a.C."}, {"name": "Zenão de Cítio", "href": "publicacoes/homenagem-zenao-de-citio.html", "date": "Nascimento: 333 a.C. • Falecimento: 263 a.C.", "type": "ac", "search": "Zenão de Cítio 333 a.C. 263 a.C."}, {"name": "Aristarco de Samos", "href": "publicacoes/homenagem-aristarco-de-samos.html", "date": "Nascimento: c. 310 a.C. • Falecimento: c. 230 a.C.", "type": "ac", "search": "Aristarco de Samos c. 310 a.C. c. 230 a.C."}, {"name": "Lucrécio", "href": "publicacoes/homenagem-lucrecio.html", "date": "Nascimento: c. 99 a.C. • Falecimento: c. 55 a.C.", "type": "ac", "search": "Lucrécio c. 99 a.C. c. 55 a.C."}, {"name": "Sócrates", "href": "publicacoes/homenagem-socrates.html", "date": "Nascimento: ca. 469 • Falecimento: 399 a.C.", "type": "ac", "search": "Sócrates ca. 469 399 a.C."}, {"name": "Leucipo", "href": "publicacoes/homenagem-leucipo.html", "date": "Nascimento: século V a.C. • Falecimento: século V a.C.", "type": "ac", "search": "Leucipo século V a.C. século V a.C."}, {"name": "Sexto Empírico", "href": "publicacoes/homenagem-sexto-empirico.html", "date": "Nascimento: c. 160 d.C. (estimado) • Falecimento: c. 210 d.C. (estimado)", "type": "homem", "search": "Sexto Empírico c. 160 d.C. (estimado) c. 210 d.C. (estimado)"}, {"name": "Orígenes", "href": "publicacoes/homenagem-origenes.html", "date": "Nascimento: c. 185 • Falecimento: 253", "type": "homem", "search": "Orígenes c. 185 253"}, {"name": "Plotino", "href": "publicacoes/homenagem-plotino.html", "date": "Nascimento: c. 204 • Falecimento: 270", "type": "homem", "search": "Plotino c. 204 270"}, {"name": "Pitágoras", "href": "publicacoes/homenagem-pitagoras.html", "date": "Nascimento: ca. 571 • Falecimento: ca. 500", "type": "homem", "search": "Pitágoras ca. 571 ca. 500"}, {"name": "Tales de Mileto", "href": "publicacoes/homenagem-tales-de-mileto.html", "date": "Nascimento: c. 624 • Falecimento: c. 548", "type": "homem", "search": "Tales de Mileto c. 624 c. 548"}, {"name": "Alquindi", "href": "publicacoes/homenagem-alquindi.html", "date": "Nascimento: c. 801 • Falecimento: c. 873", "type": "homem", "search": "Alquindi c. 801 c. 873"}, {"name": "Avicena", "href": "publicacoes/homenagem-avicena.html", "date": "Nascimento: 980 • Falecimento: 1037", "type": "homem", "search": "Avicena 980 1037"}, {"name": "Tomás de Aquino", "href": "publicacoes/homenagem-tomas-de-aquino.html", "date": "1225", "type": "homem", "search": "Tomás de Aquino 1225"}, {"name": "Diógenes Laércio", "href": "publicacoes/homenagem-diogenes-laercio.html", "date": "Nascimento: c. século II d.C. • Falecimento: c. século III d.C.", "type": "homem", "search": "Diógenes Laércio c. século II d.C. c. século III d.C."}];
-
+  const searchData = [
+  {
+    "name": "Michel Onfray",
+    "href": "publicacoes/homenagem-michel-onfray.html",
+    "date": "1 de janeiro de 1959",
+    "type": "homem",
+    "search": "Michel Onfray 1 de janeiro de 1959"
+  },
+  {
+    "name": "Tyler Burge",
+    "href": "publicacoes/homenagem-tyler-burge.html",
+    "date": "1 de janeiro de 1946",
+    "type": "homem",
+    "search": "Tyler Burge 1 de janeiro de 1946"
+  },
+  {
+    "name": "Isaac Newton",
+    "href": "publicacoes/homenagem-isaac-newton.html",
+    "date": "Nascimento: 4 de janeiro de 1643 • Falecimento: 31 de março de 1727",
+    "type": "homem",
+    "search": "Isaac Newton 4 de janeiro de 1643 31 de março de 1727"
+  },
+  {
+    "name": "Stephen Hawking",
+    "href": "publicacoes/homenagem-stephen-hawking.html",
+    "date": "Nascimento: 8 de janeiro de 1942 • Falecimento: 14 de março de 2018",
+    "type": "homem",
+    "search": "Stephen Hawking 8 de janeiro de 1942 14 de março de 2018"
+  },
+  {
+    "name": "Simone de Beauvoir",
+    "href": "publicacoes/homenagem-simone-de-beauvoir.html",
+    "date": "Nascimento: 9 de janeiro de 1908 • Falecimento: 14 de abril de 1986",
+    "type": "mulher",
+    "search": "Simone de Beauvoir 9 de janeiro de 1908 14 de abril de 1986"
+  },
+  {
+    "name": "William James",
+    "href": "publicacoes/homenagem-william-james.html",
+    "date": "Nascimento: 11 de janeiro de 1842 • Falecimento: 26 de agosto de 1910",
+    "type": "homem",
+    "search": "William James 11 de janeiro de 1842 26 de agosto de 1910"
+  },
+  {
+    "name": "Pierre-Joseph Proudhon",
+    "href": "publicacoes/homenagem-pierre-joseph-proudhon.html",
+    "date": "Nascimento: 15 de janeiro de 1809 • Falecimento: 19 de janeiro de 1865",
+    "type": "homem",
+    "search": "Pierre-Joseph Proudhon 15 de janeiro de 1809 19 de janeiro de 1865"
+  },
+  {
+    "name": "Francis Bacon",
+    "href": "publicacoes/homenagem-francis-bacon.html",
+    "date": "Nascimento: 22 de janeiro de 1561 • Falecimento: 9 de abril de 1626",
+    "type": "homem",
+    "search": "Francis Bacon 22 de janeiro de 1561 9 de abril de 1626"
+  },
+  {
+    "name": "Pierre Gassendi",
+    "href": "publicacoes/homenagem-pierre-gassendi.html",
+    "date": "Nascimento: 22 de janeiro de 1592 • Falecimento: 24 de outubro de 1655",
+    "type": "homem",
+    "search": "Pierre Gassendi 22 de janeiro de 1592 24 de outubro de 1655"
+  },
+  {
+    "name": "Samuel Thomas von Sömmerring",
+    "href": "publicacoes/homenagem-samuel-thomas-von-sommerring.html",
+    "date": "Nascimento: 28 de janeiro de 1755 • Falecimento: 2 de março de 1830",
+    "type": "homem",
+    "search": "Samuel Thomas von Sömmerring 28 de janeiro de 1755 2 de março de 1830"
+  },
+  {
+    "name": "Ayn Rand",
+    "href": "publicacoes/homenagem-ayn-rand.html",
+    "date": "Nascimento: 2 de fevereiro de 1905 • Falecimento: 6 de março de 1982",
+    "type": "mulher",
+    "search": "Ayn Rand 2 de fevereiro de 1905 6 de março de 1982"
+  },
+  {
+    "name": "Francisco I da Áustria",
+    "href": "publicacoes/homenagem-francisco-i-da-austria.html",
+    "date": "Nascimento: 12 de fevereiro de 1768 • Falecimento: 2 de março de 1835",
+    "type": "homem",
+    "search": "Francisco I da Áustria 12 de fevereiro de 1768 2 de março de 1835"
+  },
+  {
+    "name": "Alfred North Whitehead",
+    "href": "publicacoes/homenagem-alfred-north-whitehead.html",
+    "date": "Nascimento: 15 de fevereiro de 1861 • Falecimento: 30 de dezembro de 1947",
+    "type": "homem",
+    "search": "Alfred North Whitehead 15 de fevereiro de 1861 30 de dezembro de 1947"
+  },
+  {
+    "name": "Galileu Galilei",
+    "href": "publicacoes/homenagem-galileu-galilei.html",
+    "date": "Nascimento: 15 de fevereiro de 1564 • Falecimento: 8 de janeiro de 1642",
+    "type": "homem",
+    "search": "Galileu Galilei 15 de fevereiro de 1564 8 de janeiro de 1642"
+  },
+  {
+    "name": "Friedrich Eduard Beneke",
+    "href": "publicacoes/homenagem-friedrich-eduard-beneke.html",
+    "date": "Nascimento: 17 de fevereiro de 1798 • Falecimento: 1 de março de 1854",
+    "type": "homem",
+    "search": "Friedrich Eduard Beneke 17 de fevereiro de 1798 1 de março de 1854"
+  },
+  {
+    "name": "Giordano Bruno",
+    "href": "publicacoes/homenagem-giordano-bruno.html",
+    "date": "Nascimento: 1548 • Falecimento: 17 de fevereiro de 1600",
+    "type": "homem",
+    "search": "Giordano Bruno 1548 17 de fevereiro de 1600"
+  },
+  {
+    "name": "Nicolau Copérnico",
+    "href": "publicacoes/homenagem-nicolau-copernico.html",
+    "date": "Nascimento: 19 de fevereiro de 1473 • Falecimento: 24 de maio de 1543",
+    "type": "homem",
+    "search": "Nicolau Copérnico 19 de fevereiro de 1473 24 de maio de 1543"
+  },
+  {
+    "name": "Arthur Schopenhauer",
+    "href": "publicacoes/homenagem-arthur-schopenhauer.html",
+    "date": "Nascimento: 22 de fevereiro de 1788 • Falecimento: 21 de setembro de 1860",
+    "type": "homem",
+    "search": "Arthur Schopenhauer 22 de fevereiro de 1788 21 de setembro de 1860"
+  },
+  {
+    "name": "Frank Plumpton Ramsey",
+    "href": "publicacoes/homenagem-frank-plumpton-ramsey.html",
+    "date": "Nascimento: 22 de fevereiro de 1903 • Falecimento: 19 de janeiro de 1930",
+    "type": "homem",
+    "search": "Frank Plumpton Ramsey 22 de fevereiro de 1903 19 de janeiro de 1930"
+  },
+  {
+    "name": "Karl Jaspers",
+    "href": "publicacoes/homenagem-karl-jaspers.html",
+    "date": "Nascimento: 23 de fevereiro de 1883 • Falecimento: 26 de fevereiro de 1969",
+    "type": "homem",
+    "search": "Karl Jaspers 23 de fevereiro de 1883 26 de fevereiro de 1969"
+  },
+  {
+    "name": "Claude-Adrien Helvétius",
+    "href": "publicacoes/homenagem-claude-adrien-helvetius.html",
+    "date": "Nascimento: 26 de fevereiro de 1715 • Falecimento: 26 de dezembro de 1771",
+    "type": "homem",
+    "search": "Claude-Adrien Helvétius 26 de fevereiro de 1715 26 de dezembro de 1771"
+  },
+  {
+    "name": "Georg Simmel",
+    "href": "publicacoes/homenagem-georg-simmel.html",
+    "date": "Nascimento: 1 de março de 1858 • Falecimento: 28 de setembro de 1918",
+    "type": "homem",
+    "search": "Georg Simmel 1 de março de 1858 28 de setembro de 1918"
+  },
+  {
+    "name": "Tzvetan Todorov",
+    "href": "publicacoes/homenagem-tzvetan-todorov.html",
+    "date": "Nascimento: 1 de março de 1939 • Falecimento: 7 de fevereiro de 2017",
+    "type": "homem",
+    "search": "Tzvetan Todorov 1 de março de 1939 7 de fevereiro de 2017"
+  },
+  {
+    "name": "Émile-Auguste Chartier",
+    "href": "publicacoes/homenagem-emile-auguste-chartier.html",
+    "date": "Nascimento: 3 de março de 1868 • Falecimento: 2 de junho de 1951",
+    "type": "homem",
+    "search": "Émile-Auguste Chartier 3 de março de 1868 2 de junho de 1951"
+  },
+  {
+    "name": "Georg Cantor",
+    "href": "publicacoes/homenagem-georg-cantor.html",
+    "date": "Nascimento: 3 de março de 1845 • Falecimento: 6 de janeiro de 1918",
+    "type": "homem",
+    "search": "Georg Cantor 3 de março de 1845 6 de janeiro de 1918"
+  },
+  {
+    "name": "Heinrich Georg Bronn",
+    "href": "publicacoes/homenagem-heinrich-georg-bronn.html",
+    "date": "Nascimento: 3 de março de 1800 • Falecimento: 5 de julho de 1862",
+    "type": "homem",
+    "search": "Heinrich Georg Bronn 3 de março de 1800 5 de julho de 1862"
+  },
+  {
+    "name": "Milly Witkop Rocker",
+    "href": "publicacoes/homenagem-milly-witkop-rocker.html",
+    "date": "Nascimento: 3 de março de 1877 • Falecimento: 23 de novembro de 1955",
+    "type": "mulher",
+    "search": "Milly Witkop Rocker 3 de março de 1877 23 de novembro de 1955"
+  },
+  {
+    "name": "Nur Misuari",
+    "href": "publicacoes/homenagem-nur-misuari.html",
+    "date": "Nascimento: 3 de março de 1939 • Falecimento: —",
+    "type": "homem",
+    "search": "Nur Misuari 3 de março de 1939 —"
+  },
+  {
+    "name": "Peter Abrahams",
+    "href": "publicacoes/homenagem-peter-abrahams.html",
+    "date": "Nascimento: 3 de março de 1919 • Falecimento: 18 de janeiro de 2017",
+    "type": "homem",
+    "search": "Peter Abrahams 3 de março de 1919 18 de janeiro de 2017"
+  },
+  {
+    "name": "Raimundo António de Bulhão Pato",
+    "href": "publicacoes/homenagem-raimundo-antonio-de-bulhao-pato.html",
+    "date": "Nascimento: 3 de março de 1828 • Falecimento: 24 de agosto de 1912",
+    "type": "homem",
+    "search": "Raimundo António de Bulhão Pato 3 de março de 1828 24 de agosto de 1912"
+  },
+  {
+    "name": "Roger Caillois",
+    "href": "publicacoes/homenagem-roger-caillois.html",
+    "date": "Nascimento: 3 de março de 1913 • Falecimento: 21 de dezembro de 1978",
+    "type": "homem",
+    "search": "Roger Caillois 3 de março de 1913 21 de dezembro de 1978"
+  },
+  {
+    "name": "Cyrano de Bergerac",
+    "href": "publicacoes/homenagem-cyrano-de-bergerac.html",
+    "date": "Nascimento: 6 de março de 1619 • Falecimento: 28 de julho de 1655",
+    "type": "homem",
+    "search": "Cyrano de Bergerac 6 de março de 1619 28 de julho de 1655"
+  },
+  {
+    "name": "John McDowell",
+    "href": "publicacoes/homenagem-john-mcdowell.html",
+    "date": "Nascimento: 7 de março de 1942 • Falecimento: —",
+    "type": "homem",
+    "search": "John McDowell 7 de março de 1942 —"
+  },
+  {
+    "name": "Hipátia",
+    "href": "publicacoes/homenagem-hipatia.html",
+    "date": "Nascimento: c. 355 • Falecimento: 8 de março de 415",
+    "type": "mulher",
+    "search": "Hipátia c. 355 8 de março de 415"
+  },
+  {
+    "name": "George Berkeley",
+    "href": "publicacoes/homenagem-george-berkeley.html",
+    "date": "Nascimento: 12 de março de 1685 • Falecimento: 14 de janeiro de 1753",
+    "type": "homem",
+    "search": "George Berkeley 12 de março de 1685 14 de janeiro de 1753"
+  },
+  {
+    "name": "Robert Brandom",
+    "href": "publicacoes/homenagem-robert-brandom.html",
+    "date": "13 de março de 1950",
+    "type": "homem",
+    "search": "Robert Brandom 13 de março de 1950"
+  },
+  {
+    "name": "Albert Einstein",
+    "href": "publicacoes/homenagem-albert-einstein.html",
+    "date": "Nascimento: 14 de março de 1879 • Falecimento: 18 de abril de 1955",
+    "type": "homem",
+    "search": "Albert Einstein 14 de março de 1879 18 de abril de 1955"
+  },
+  {
+    "name": "Antônio de Castro Alves",
+    "href": "publicacoes/homenagem-castro-alves.html",
+    "date": "Nascimento: 14 de março de 1847 • Falecimento: 6 de julho de 1871",
+    "type": "homem",
+    "search": "Antônio de Castro Alves 14 de março de 1847 6 de julho de 1871"
+  },
+  {
+    "name": "Carolina Maria de Jesus",
+    "href": "publicacoes/homenagem-carolina-maria-de-jesus.html",
+    "date": "Nascimento: 14 de março de 1914 • Falecimento: 13 de fevereiro de 1977",
+    "type": "mulher",
+    "search": "Carolina Maria de Jesus 14 de março de 1914 13 de fevereiro de 1977"
+  },
+  {
+    "name": "Lucy Hobbs Taylor",
+    "href": "publicacoes/homenagem-lucy-hobbs-taylor.html",
+    "date": "Nascimento: 14 de março de 1833 • Falecimento: 3 de outubro de 1910",
+    "type": "mulher",
+    "search": "Lucy Hobbs Taylor 14 de março de 1833 3 de outubro de 1910"
+  },
+  {
+    "name": "Maurice Merleau-Ponty",
+    "href": "publicacoes/homenagem-maurice-merleau-ponty.html",
+    "date": "Nascimento: 14 de março de 1908 • Falecimento: 3 de maio de 1961",
+    "type": "homem",
+    "search": "Maurice Merleau-Ponty 14 de março de 1908 3 de maio de 1961"
+  },
+  {
+    "name": "René Descartes",
+    "href": "publicacoes/homenagem-rene-descartes.html",
+    "date": "Nascimento: 31 de março de 1596 • Falecimento: 11 de fevereiro de 1650",
+    "type": "homem",
+    "search": "René Descartes 31 de março de 1596 11 de fevereiro de 1650"
+  },
+  {
+    "name": "Marguerite Duras",
+    "href": "publicacoes/homenagem-marguerite-duras.html",
+    "date": "Nascimento: 4 de abril de 1914 • Falecimento: 3 de março de 1996",
+    "type": "mulher",
+    "search": "Marguerite Duras 4 de abril de 1914 3 de março de 1996"
+  },
+  {
+    "name": "Thomas Hobbes",
+    "href": "publicacoes/homenagem-thomas-hobbes.html",
+    "date": "Nascimento: 5 de abril de 1588 • Falecimento: 4 de dezembro de 1679",
+    "type": "homem",
+    "search": "Thomas Hobbes 5 de abril de 1588 4 de dezembro de 1679"
+  },
+  {
+    "name": "Moritz Schlick",
+    "href": "publicacoes/homenagem-moritz-schlick.html",
+    "date": "Nascimento: 14 de abril de 1882 • Falecimento: 22 de junho de 1936",
+    "type": "homem",
+    "search": "Moritz Schlick 14 de abril de 1882 22 de junho de 1936"
+  },
+  {
+    "name": "Pedro Abelardo",
+    "href": "publicacoes/homenagem-pedro-abelardo.html",
+    "date": "Nascimento: ca. 1079 • Falecimento: 21 de abril de 1142",
+    "type": "homem",
+    "search": "Pedro Abelardo ca. 1079 21 de abril de 1142"
+  },
+  {
+    "name": "Immanuel Kant",
+    "href": "publicacoes/homenagem-immanuel-kant.html",
+    "date": "Nascimento: 22 de abril de 1724 • Falecimento: 12 de fevereiro de 1804",
+    "type": "homem",
+    "search": "Immanuel Kant 22 de abril de 1724 12 de fevereiro de 1804"
+  },
+  {
+    "name": "Ludwig Wittgenstein",
+    "href": "publicacoes/homenagem-ludwig-wittgenstein.html",
+    "date": "Nascimento: 26 de abril de 1889 • Falecimento: 29 de abril de 1951",
+    "type": "homem",
+    "search": "Ludwig Wittgenstein 26 de abril de 1889 29 de abril de 1951"
+  },
+  {
+    "name": "Kurt Gödel",
+    "href": "publicacoes/homenagem-kurt-godel.html",
+    "date": "Nascimento: 28 de abril de 1906 • Falecimento: 14 de janeiro de 1978",
+    "type": "homem",
+    "search": "Kurt Gödel 28 de abril de 1906 14 de janeiro de 1978"
+  },
+  {
+    "name": "Nicolau Maquiavel",
+    "href": "publicacoes/homenagem-nicolau-maquiavel.html",
+    "date": "Nascimento: 03 de maio de 1469 • Falecimento: 21 de junho de 1527",
+    "type": "homem",
+    "search": "Nicolau Maquiavel 03 de maio de 1469 21 de junho de 1527"
+  },
+  {
+    "name": "Karl Marx",
+    "href": "publicacoes/homenagem-karl-marx.html",
+    "date": "Nascimento: 5 de maio de 1818 • Falecimento: 14 de março de 1883",
+    "type": "homem",
+    "search": "Karl Marx 5 de maio de 1818 14 de março de 1883"
+  },
+  {
+    "name": "Søren Kierkegaard",
+    "href": "publicacoes/homenagem-sren-kierkegaard.html",
+    "date": "Nascimento: 5 de maio de 1813 • Falecimento: 11 de novembro de 1855",
+    "type": "homem",
+    "search": "Søren Kierkegaard 5 de maio de 1813 11 de novembro de 1855"
+  },
+  {
+    "name": "David Hume",
+    "href": "publicacoes/homenagem-david-hume.html",
+    "date": "Nascimento: 7 de maio de 1711 • Falecimento: 25 de agosto de 1776",
+    "type": "homem",
+    "search": "David Hume 7 de maio de 1711 25 de agosto de 1776"
+  },
+  {
+    "name": "Maria Gaetana Agnesi",
+    "href": "publicacoes/homenagem-maria-gaetana-agnesi.html",
+    "date": "Nascimento: 16 de maio de 1718 • Falecimento: 9 de janeiro de 1799",
+    "type": "mulher",
+    "search": "Maria Gaetana Agnesi 16 de maio de 1718 9 de janeiro de 1799"
+  },
+  {
+    "name": "Bertrand Russell",
+    "href": "publicacoes/homenagem-bertrand-russell.html",
+    "date": "Nascimento: 18 de maio de 1872 • Falecimento: 2 de fevereiro de 1970",
+    "type": "homem",
+    "search": "Bertrand Russell 18 de maio de 1872 2 de fevereiro de 1970"
+  },
+  {
+    "name": "Rudolf Carnap",
+    "href": "publicacoes/homenagem-rudolf-carnap.html",
+    "date": "Nascimento: 18 de maio de 1891 • Falecimento: 14 de setembro de 1970",
+    "type": "homem",
+    "search": "Rudolf Carnap 18 de maio de 1891 14 de setembro de 1970"
+  },
+  {
+    "name": "John Stuart Mill",
+    "href": "publicacoes/homenagem-john-stuart-mill.html",
+    "date": "Nascimento: 20 de maio de 1806 • Falecimento: 8 de maio de 1873",
+    "type": "homem",
+    "search": "John Stuart Mill 20 de maio de 1806 8 de maio de 1873"
+  },
+  {
+    "name": "Salvador Puig Antich",
+    "href": "publicacoes/homenagem-salvador-puig-antich.html",
+    "date": "Nascimento: 30 de maio de 1948 • Falecimento: 2 de março de 1974",
+    "type": "homem",
+    "search": "Salvador Puig Antich 30 de maio de 1948 2 de março de 1974"
+  },
+  {
+    "name": "Jean Meslier",
+    "href": "publicacoes/homenagem-jean-meslier.html",
+    "date": "Nascimento: 15 de junho de 1664 • Falecimento: 17 de junho de 1729",
+    "type": "homem",
+    "search": "Jean Meslier 15 de junho de 1664 17 de junho de 1729"
+  },
+  {
+    "name": "Jürgen Habermas",
+    "href": "publicacoes/homenagem-jurgen-habermas.html",
+    "date": "Nascimento: 18 de junho de 1929 • Falecimento: 14 de março de 2026",
+    "type": "homem",
+    "search": "Jürgen Habermas 18 de junho de 1929 14 de março de 2026"
+  },
+  {
+    "name": "Jean-Paul Sartre",
+    "href": "publicacoes/homenagem-jean-paul-sartre.html",
+    "date": "Nascimento: 21 de junho de 1905 • Falecimento: 15 de abril de 1980",
+    "type": "homem",
+    "search": "Jean-Paul Sartre 21 de junho de 1905 15 de abril de 1980"
+  },
+  {
+    "name": "Jean-Jacques Rousseau",
+    "href": "publicacoes/homenagem-jean-jacques-rousseau.html",
+    "date": "Nascimento: 28 de junho de 1712 • Falecimento: 2 de julho de 1778",
+    "type": "homem",
+    "search": "Jean-Jacques Rousseau 28 de junho de 1712 2 de julho de 1778"
+  },
+  {
+    "name": "Gottfried Wilhelm Leibniz",
+    "href": "publicacoes/homenagem-gottfried-leibniz.html",
+    "date": "Nascimento: 1 de julho de 1646 • Falecimento: 14 de novembro de 1716",
+    "type": "homem",
+    "search": "Gottfried Wilhelm Leibniz 1 de julho de 1646 14 de novembro de 1716"
+  },
+  {
+    "name": "Alfred Korzybski",
+    "href": "publicacoes/homenagem-alfred-korzybski.html",
+    "date": "Nascimento: 3 de julho de 1879 • Falecimento: 1 de março de 1950",
+    "type": "homem",
+    "search": "Alfred Korzybski 3 de julho de 1879 1 de março de 1950"
+  },
+  {
+    "name": "Frida Kahlo",
+    "href": "publicacoes/homenagem-frida-kahlo.html",
+    "date": "Nascimento: 6 de julho de 1907 • Falecimento: 13 de julho de 1954",
+    "type": "mulher",
+    "search": "Frida Kahlo 6 de julho de 1907 13 de julho de 1954"
+  },
+  {
+    "name": "Erasmo de Roterdão",
+    "href": "publicacoes/homenagem-erasmo-de-roterdao.html",
+    "date": "Nascimento: c. 1466 ou 1469 • Falecimento: 12 de julho de 1536",
+    "type": "homem",
+    "search": "Erasmo de Roterdão c. 1466 ou 1469 12 de julho de 1536"
+  },
+  {
+    "name": "Jacques Derrida",
+    "href": "publicacoes/homenagem-jacques-derrida.html",
+    "date": "Nascimento: 15 de julho de 1930 • Falecimento: 9 de outubro de 2004",
+    "type": "homem",
+    "search": "Jacques Derrida 15 de julho de 1930 9 de outubro de 2004"
+  },
+  {
+    "name": "Thomas Kuhn",
+    "href": "publicacoes/homenagem-thomas-kuhn.html",
+    "date": "Nascimento: 18 de julho de 1922 • Falecimento: 17 de junho de 1996",
+    "type": "homem",
+    "search": "Thomas Kuhn 18 de julho de 1922 17 de junho de 1996"
+  },
+  {
+    "name": "Marielle Franco e Anderson Gomes",
+    "href": "publicacoes/homenagem-marielle-franco-anderson-gomes.html",
+    "date": "Nascimento: Marielle Franco: 27 de julho de 1979 • Anderson Gomes: 1977 • Falecimento: 14 de março de 2018",
+    "type": "memoria",
+    "search": "Marielle Franco e Anderson Gomes Marielle Franco: 27 de julho de 1979 • Anderson Gomes: 1977 14 de março de 2018"
+  },
+  {
+    "name": "Ludwig Feuerbach",
+    "href": "publicacoes/homenagem-ludwig-feuerbach.html",
+    "date": "Nascimento: 28 de julho de 1804 • Falecimento: 13 de setembro de 1872",
+    "type": "homem",
+    "search": "Ludwig Feuerbach 28 de julho de 1804 13 de setembro de 1872"
+  },
+  {
+    "name": "Hilary Putnam",
+    "href": "publicacoes/homenagem-hilary-putnam.html",
+    "date": "Nascimento: 31 de julho de 1926 • Falecimento: 13 de março de 2016",
+    "type": "homem",
+    "search": "Hilary Putnam 31 de julho de 1926 13 de março de 2016"
+  },
+  {
+    "name": "Lorenzo Valla",
+    "href": "publicacoes/homenagem-lorenzo-valla.html",
+    "date": "Nascimento: 1407 • Falecimento: 1 de agosto de 1457",
+    "type": "homem",
+    "search": "Lorenzo Valla 1407 1 de agosto de 1457"
+  },
+  {
+    "name": "Paulo Coelho",
+    "href": "publicacoes/homenagem-paulo-coelho.html",
+    "date": "24 de agosto de 1947",
+    "type": "homem",
+    "search": "Paulo Coelho 24 de agosto de 1947"
+  },
+  {
+    "name": "Georg Wilhelm Friedrich Hegel",
+    "href": "publicacoes/homenagem-georg-wilhelm-friedrich-hegel.html",
+    "date": "Nascimento: 27 de agosto de 1770 • Falecimento: 14 de novembro de 1831",
+    "type": "homem",
+    "search": "Georg Wilhelm Friedrich Hegel 27 de agosto de 1770 14 de novembro de 1831"
+  },
+  {
+    "name": "John Locke",
+    "href": "publicacoes/homenagem-john-locke.html",
+    "date": "Nascimento: 29 de agosto de 1632 • Falecimento: 28 de outubro de 1704",
+    "type": "homem",
+    "search": "John Locke 29 de agosto de 1632 28 de outubro de 1704"
+  },
+  {
+    "name": "Josefa Ortiz de Domínguez",
+    "href": "publicacoes/homenagem-josefa-ortiz-de-dominguez.html",
+    "date": "Nascimento: 8 de setembro de 1768 • Falecimento: 2 de março de 1829",
+    "type": "mulher",
+    "search": "Josefa Ortiz de Domínguez 8 de setembro de 1768 2 de março de 1829"
+  },
+  {
+    "name": "Pietro Pomponazzi",
+    "href": "publicacoes/homenagem-pietro-pomponazzi.html",
+    "date": "Nascimento: 16 de setembro de 1462 • Falecimento: 18 de maio de 1525",
+    "type": "homem",
+    "search": "Pietro Pomponazzi 16 de setembro de 1462 18 de maio de 1525"
+  },
+  {
+    "name": "David Benjamin Kaplan",
+    "href": "publicacoes/homenagem-david-kaplan.html",
+    "date": "Nascimento: 17 de setembro de 1933 • Falecimento: —",
+    "type": "homem",
+    "search": "David Benjamin Kaplan 17 de setembro de 1933 —"
+  },
+  {
+    "name": "Horace Walpole",
+    "href": "publicacoes/homenagem-horace-walpole.html",
+    "date": "Nascimento: 24 de setembro de 1717 • Falecimento: 2 de março de 1797",
+    "type": "homem",
+    "search": "Horace Walpole 24 de setembro de 1717 2 de março de 1797"
+  },
+  {
+    "name": "Martin Heidegger",
+    "href": "publicacoes/homenagem-martin-heidegger.html",
+    "date": "Nascimento: 26 de setembro de 1889 • Falecimento: 26 de maio de 1976",
+    "type": "homem",
+    "search": "Martin Heidegger 26 de setembro de 1889 26 de maio de 1976"
+  },
+  {
+    "name": "Hannah Arendt",
+    "href": "publicacoes/homenagem-hannah-arendt.html",
+    "date": "Nascimento: 14 de outubro de 1906 • Falecimento: 4 de dezembro de 1975",
+    "type": "mulher",
+    "search": "Hannah Arendt 14 de outubro de 1906 4 de dezembro de 1975"
+  },
+  {
+    "name": "Friedrich Nietzsche",
+    "href": "publicacoes/homenagem-friedrich-nietzsche.html",
+    "date": "Nascimento: 15 de outubro de 1844 • Falecimento: 25 de agosto de 1900",
+    "type": "homem",
+    "search": "Friedrich Nietzsche 15 de outubro de 1844 25 de agosto de 1900"
+  },
+  {
+    "name": "Michel Foucault",
+    "href": "publicacoes/homenagem-michel-foucault.html",
+    "date": "Nascimento: 15 de outubro de 1926 • Falecimento: 25 de junho de 1984",
+    "type": "homem",
+    "search": "Michel Foucault 15 de outubro de 1926 25 de junho de 1984"
+  },
+  {
+    "name": "Henri Bergson",
+    "href": "publicacoes/homenagem-henri-bergson.html",
+    "date": "Nascimento: 18 de outubro de 1859 • Falecimento: 4 de janeiro de 1941",
+    "type": "homem",
+    "search": "Henri Bergson 18 de outubro de 1859 4 de janeiro de 1941"
+  },
+  {
+    "name": "Albert Camus",
+    "href": "publicacoes/homenagem-albert-camus.html",
+    "date": "Nascimento: 7 de novembro de 1913 • Falecimento: 4 de janeiro de 1960",
+    "type": "homem",
+    "search": "Albert Camus 7 de novembro de 1913 4 de janeiro de 1960"
+  },
+  {
+    "name": "Gottlob Frege",
+    "href": "publicacoes/homenagem-gottlob-frege.html",
+    "date": "Nascimento: 8 de novembro de 1848 • Falecimento: 26 de julho de 1925",
+    "type": "homem",
+    "search": "Gottlob Frege 8 de novembro de 1848 26 de julho de 1925"
+  },
+  {
+    "name": "Agostinho de Hipona",
+    "href": "publicacoes/homenagem-agostinho-de-hipona.html",
+    "date": "Nascimento: 13 de novembro de 354 • Falecimento: 28 de agosto de 430",
+    "type": "homem",
+    "search": "Agostinho de Hipona 13 de novembro de 354 28 de agosto de 430"
+  },
+  {
+    "name": "Saul Kripke",
+    "href": "publicacoes/homenagem-saul-kripke.html",
+    "date": "Nascimento: 13 de novembro de 1940 • Falecimento: 15 de setembro de 2022",
+    "type": "homem",
+    "search": "Saul Kripke 13 de novembro de 1940 15 de setembro de 2022"
+  },
+  {
+    "name": "Justiniano I",
+    "href": "publicacoes/homenagem-justiniano-i.html",
+    "date": "Nascimento: c. 482 • Falecimento: 14 de novembro de 565",
+    "type": "homem",
+    "search": "Justiniano I c. 482 14 de novembro de 565"
+  },
+  {
+    "name": "Pierre Charron",
+    "href": "publicacoes/homenagem-pierre-charron.html",
+    "date": "Nascimento: 1541 • Falecimento: 16 de novembro de 1603",
+    "type": "homem",
+    "search": "Pierre Charron 1541 16 de novembro de 1603"
+  },
+  {
+    "name": "Peter Frederick Strawson",
+    "href": "publicacoes/homenagem-peter-frederick-strawson.html",
+    "date": "Nascimento: 23 de novembro de 1919 • Falecimento: 13 de fevereiro de 2006",
+    "type": "homem",
+    "search": "Peter Frederick Strawson 23 de novembro de 1919 13 de fevereiro de 2006"
+  },
+  {
+    "name": "Baruch Espinoza",
+    "href": "publicacoes/homenagem-baruch-espinoza.html",
+    "date": "Nascimento: 24 de novembro de 1632 • Falecimento: 21 de fevereiro de 1677",
+    "type": "homem",
+    "search": "Baruch Espinoza 24 de novembro de 1632 21 de fevereiro de 1677"
+  },
+  {
+    "name": "Friedrich Engels",
+    "href": "publicacoes/homenagem-friedrich-engels.html",
+    "date": "Nascimento: 28 de novembro de 1820 • Falecimento: 5 de agosto de 1895",
+    "type": "homem",
+    "search": "Friedrich Engels 28 de novembro de 1820 5 de agosto de 1895"
+  },
+  {
+    "name": "Homenagem ao Barão d’Holbach",
+    "href": "publicacoes/homenagem-barao-d-holbach.html",
+    "date": "Nascimento: 8 de dezembro de 1723 • Falecimento: 21 de janeiro de 1789",
+    "type": "homem",
+    "search": "Homenagem ao Barão d’Holbach 8 de dezembro de 1723 21 de janeiro de 1789"
+  },
+  {
+    "name": "Antoine-Henri Becquerel",
+    "href": "publicacoes/homenagem-antoine-henri-becquerel.html",
+    "date": "Nascimento: 15 de dezembro de 1852 • Falecimento: 25 de agosto de 1908",
+    "type": "homem",
+    "search": "Antoine-Henri Becquerel 15 de dezembro de 1852 25 de agosto de 1908"
+  },
+  {
+    "name": "Johannes Kepler",
+    "href": "publicacoes/homenagem-johannes-kepler.html",
+    "date": "Nascimento: 27 de dezembro de 1571 • Falecimento: 15 de novembro de 1630",
+    "type": "homem",
+    "search": "Johannes Kepler 27 de dezembro de 1571 15 de novembro de 1630"
+  },
+  {
+    "name": "Protágoras",
+    "href": "publicacoes/homenagem-protagoras.html",
+    "date": "Nascimento: 490 a.C. • Falecimento: 415 a.C.",
+    "type": "ac",
+    "search": "Protágoras 490 a.C. 415 a.C."
+  },
+  {
+    "name": "Demócrito",
+    "href": "publicacoes/homenagem-democrito.html",
+    "date": "Nascimento: c. 460 a.C. • Falecimento: c. 370 a.C.",
+    "type": "ac",
+    "search": "Demócrito c. 460 a.C. c. 370 a.C."
+  },
+  {
+    "name": "Antístenes",
+    "href": "publicacoes/homenagem-antistenes.html",
+    "date": "Nascimento: c. 445 a.C. • Falecimento: c. 365 a.C.",
+    "type": "ac",
+    "search": "Antístenes c. 445 a.C. c. 365 a.C."
+  },
+  {
+    "name": "Aristipo de Cirene",
+    "href": "publicacoes/homenagem-aristipo-de-cirene.html",
+    "date": "Nascimento: c. 435 a.C. • Falecimento: c. 356 a.C.",
+    "type": "ac",
+    "search": "Aristipo de Cirene c. 435 a.C. c. 356 a.C."
+  },
+  {
+    "name": "Platão",
+    "href": "publicacoes/homenagem-platao.html",
+    "date": "Nascimento: c. 428 a.C. • Falecimento: c. 348 a.C.",
+    "type": "ac",
+    "search": "Platão c. 428 a.C. c. 348 a.C."
+  },
+  {
+    "name": "Diógenes de Sinope",
+    "href": "publicacoes/homenagem-diogenes-de-sinope.html",
+    "date": "Nascimento: c. 404 ou 412 a.C. • Falecimento: c. 323 ou 324/321 a.C.",
+    "type": "ac",
+    "search": "Diógenes de Sinope c. 404 ou 412 a.C. c. 323 ou 324/321 a.C."
+  },
+  {
+    "name": "Pirro de Élis",
+    "href": "publicacoes/homenagem-pirro-de-elis.html",
+    "date": "Nascimento: 360 a.C. • Falecimento: 270 a.C.",
+    "type": "ac",
+    "search": "Pirro de Élis 360 a.C. 270 a.C."
+  },
+  {
+    "name": "Epicuro de Samos",
+    "href": "publicacoes/homenagem-epicuro-de-samos.html",
+    "date": "Nascimento: 341 a.C. • Falecimento: 270 a.C.",
+    "type": "ac",
+    "search": "Epicuro de Samos 341 a.C. 270 a.C."
+  },
+  {
+    "name": "Zenão de Cítio",
+    "href": "publicacoes/homenagem-zenao-de-citio.html",
+    "date": "Nascimento: 333 a.C. • Falecimento: 263 a.C.",
+    "type": "ac",
+    "search": "Zenão de Cítio 333 a.C. 263 a.C."
+  },
+  {
+    "name": "Aristarco de Samos",
+    "href": "publicacoes/homenagem-aristarco-de-samos.html",
+    "date": "Nascimento: c. 310 a.C. • Falecimento: c. 230 a.C.",
+    "type": "ac",
+    "search": "Aristarco de Samos c. 310 a.C. c. 230 a.C."
+  },
+  {
+    "name": "Lucrécio",
+    "href": "publicacoes/homenagem-lucrecio.html",
+    "date": "Nascimento: c. 99 a.C. • Falecimento: c. 55 a.C.",
+    "type": "ac",
+    "search": "Lucrécio c. 99 a.C. c. 55 a.C."
+  },
+  {
+    "name": "Sócrates",
+    "href": "publicacoes/homenagem-socrates.html",
+    "date": "Nascimento: ca. 469 • Falecimento: 399 a.C.",
+    "type": "ac",
+    "search": "Sócrates ca. 469 399 a.C."
+  },
+  {
+    "name": "Leucipo",
+    "href": "publicacoes/homenagem-leucipo.html",
+    "date": "Nascimento: século V a.C. • Falecimento: século V a.C.",
+    "type": "ac",
+    "search": "Leucipo século V a.C. século V a.C."
+  },
+  {
+    "name": "Sexto Empírico",
+    "href": "publicacoes/homenagem-sexto-empirico.html",
+    "date": "Nascimento: c. 160 d.C. (estimado) • Falecimento: c. 210 d.C. (estimado)",
+    "type": "homem",
+    "search": "Sexto Empírico c. 160 d.C. (estimado) c. 210 d.C. (estimado)"
+  },
+  {
+    "name": "Orígenes",
+    "href": "publicacoes/homenagem-origenes.html",
+    "date": "Nascimento: c. 185 • Falecimento: 253",
+    "type": "homem",
+    "search": "Orígenes c. 185 253"
+  },
+  {
+    "name": "Plotino",
+    "href": "publicacoes/homenagem-plotino.html",
+    "date": "Nascimento: c. 204 • Falecimento: 270",
+    "type": "homem",
+    "search": "Plotino c. 204 270"
+  },
+  {
+    "name": "Pitágoras",
+    "href": "publicacoes/homenagem-pitagoras.html",
+    "date": "Nascimento: ca. 571 • Falecimento: ca. 500",
+    "type": "homem",
+    "search": "Pitágoras ca. 571 ca. 500"
+  },
+  {
+    "name": "Tales de Mileto",
+    "href": "publicacoes/homenagem-tales-de-mileto.html",
+    "date": "Nascimento: c. 624 • Falecimento: c. 548",
+    "type": "homem",
+    "search": "Tales de Mileto c. 624 c. 548"
+  },
+  {
+    "name": "Alquindi",
+    "href": "publicacoes/homenagem-alquindi.html",
+    "date": "Nascimento: c. 801 • Falecimento: c. 873",
+    "type": "homem",
+    "search": "Alquindi c. 801 c. 873"
+  },
+  {
+    "name": "Avicena",
+    "href": "publicacoes/homenagem-avicena.html",
+    "date": "Nascimento: 980 • Falecimento: 1037",
+    "type": "homem",
+    "search": "Avicena 980 1037"
+  },
+  {
+    "name": "Tomás de Aquino",
+    "href": "publicacoes/homenagem-tomas-de-aquino.html",
+    "date": "1225",
+    "type": "homem",
+    "search": "Tomás de Aquino 1225"
+  },
+  {
+    "name": "Diógenes Laércio",
+    "href": "publicacoes/homenagem-diogenes-laercio.html",
+    "date": "Nascimento: c. século II d.C. • Falecimento: c. século III d.C.",
+    "type": "homem",
+    "search": "Diógenes Laércio c. século II d.C. c. século III d.C."
+  },
+  {
+    "name": "Donald Trump",
+    "href": "publicacoes/persona-non-grata-donald-trump.html",
+    "date": "Estados Unidos contemporâneos • registro crítico editorial • 2026",
+    "type": "persona",
+    "search": "donald trump persona non grata direitos humanos ciencias humanas estados unidos contemporaneos guerra tarifas genero soberania democracia"
+  },
+  {
+    "name": "Jair Messias Bolsonaro",
+    "href": "publicacoes/persona-non-grata-jair-bolsonaro.html",
+    "date": "Brasil contemporâneo • registro crítico editorial • 2026",
+    "type": "persona",
+    "search": "jair messias bolsonaro persona non grata direitos humanos ciencias humanas brasil contemporaneo"
+  }
+];
   function normalizeText(text) {
     return (text || '')
       .toLowerCase()
@@ -2385,6 +3296,7 @@ document.addEventListener('DOMContentLoaded', function () {
     suggestions.appendChild(fragment);
     suggestions.classList.add('is-visible');
   }
+  
 
   function updateSearch() {
     const term = normalizeText(input.value);
