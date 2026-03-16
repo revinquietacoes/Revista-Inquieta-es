@@ -306,6 +306,108 @@ font-size:1rem;
 min-width:unset;
 }
 }
+
+
+.citation-generator{
+margin-top:24px;
+border:1px solid rgba(31,60,136,0.10);
+border-radius:22px;
+overflow:hidden;
+box-shadow:0 10px 24px rgba(31,60,136,0.06);
+background:linear-gradient(180deg,#fcfdff 0%,#f5f8ff 100%);
+}
+
+.citation-generator .panel-head{
+background:linear-gradient(180deg,#eef4ff 0%,#e6efff 100%);
+}
+
+.citation-generator-controls{
+display:flex;
+flex-wrap:wrap;
+gap:12px;
+align-items:end;
+margin-bottom:18px;
+}
+
+.citation-field{
+display:grid;
+gap:8px;
+min-width:220px;
+flex:1 1 240px;
+}
+
+.citation-field label{
+font-weight:700;
+color:#17316e;
+font-size:.96rem;
+}
+
+.citation-select{
+min-height:48px;
+padding:12px 14px;
+border:1px solid rgba(31,60,136,0.16);
+border-radius:14px;
+background:#fff;
+font:inherit;
+color:#24324d;
+outline:none;
+transition:border-color .18s ease, box-shadow .18s ease;
+}
+
+.citation-select:focus{
+border-color:rgba(31,60,136,0.34);
+box-shadow:0 0 0 4px rgba(31,60,136,0.08);
+}
+
+.citation-actions{
+display:flex;
+flex-wrap:wrap;
+gap:10px;
+}
+
+.citation-preview{
+padding:18px 20px;
+border-radius:18px;
+background:#fff;
+border:1px solid rgba(31,60,136,0.10);
+box-shadow:0 8px 22px rgba(16,35,63,0.05);
+line-height:1.8;
+color:#34425d;
+word-break:break-word;
+}
+
+.citation-preview strong{
+color:#102c63;
+}
+
+.citation-help{
+margin:0 0 12px;
+line-height:1.7;
+color:#4f6078;
+}
+
+.citation-feedback{
+margin-top:12px;
+font-size:.95rem;
+color:#52627d;
+}
+
+@media (max-width: 640px){
+.citation-generator-controls{
+flex-direction:column;
+align-items:stretch;
+}
+
+.citation-actions{
+width:100%;
+}
+
+.citation-actions .btn{
+flex:1 1 auto;
+justify-content:center;
+}
+}
+
 </style>
 </head>
 
@@ -434,6 +536,38 @@ fundamentos do cinismo, defesa da virtude como bem supremo, crítica aos prazere
 </div>
 </section>
 
+
+<section class="panel citation-generator" aria-labelledby="citation-heading">
+<div class="panel-head">
+<h2 id="citation-heading">Elaborador de referência bibliográfica automática</h2>
+<p>Gere automaticamente a referência desta homenagem para uso em trabalhos acadêmicos, com link da página e data de acesso preenchida no momento da consulta.</p>
+</div>
+<div class="panel-body">
+<p class="citation-help">Selecione o estilo desejado e clique para gerar a referência. A data de acesso é preenchida automaticamente conforme o dia da visita.</p>
+<div class="citation-generator-controls">
+<div class="citation-field">
+<label for="citation-style">Estilo de referência</label>
+<select id="citation-style" class="citation-select" aria-label="Escolher estilo de referência bibliográfica">
+<option value="abnt" selected>ABNT</option>
+<option value="mla">MLA</option>
+<option value="apa">APA</option>
+<option value="chicago">Chicago</option>
+<option value="harvard">Harvard</option>
+<option value="vancouver">Vancouver</option>
+<option value="ieee">IEEE</option>
+</select>
+</div>
+<div class="citation-actions">
+<button type="button" class="btn" id="citation-generate">Gerar referência</button>
+<button type="button" class="btn secondary" id="citation-copy">Copiar referência</button>
+</div>
+</div>
+<div class="citation-preview" id="citation-preview" data-author-reference="VINÍCIUS, Diego." data-author-display="Diego Vinícius Brito dos Santos." data-journal="Revista Inquietações" data-issue="v. 1, n. 1" data-year="2026" aria-live="polite"></div>
+<p class="citation-feedback" id="citation-feedback">A referência será exibida aqui.</p>
+</div>
+</section>
+
+
 </main>
 
 <aside class="sidebar sidebar-ojs">
@@ -476,6 +610,7 @@ Organização editorial: Diego Vinícius Brito dos Santos •
 
 </div>
 
+
 <script>
 const navToggle = document.querySelector('.site-nav-toggle');
 const navMenu = document.querySelector('.site-nav-menu');
@@ -485,7 +620,133 @@ if (navToggle && navMenu) {
     navMenu.classList.toggle('is-open');
   });
 }
+
+(function () {
+  const preview = document.getElementById('citation-preview');
+  const styleSelect = document.getElementById('citation-style');
+  const generateBtn = document.getElementById('citation-generate');
+  const copyBtn = document.getElementById('citation-copy');
+  const feedback = document.getElementById('citation-feedback');
+
+  if (!preview || !styleSelect || !generateBtn || !copyBtn || !feedback) {
+    return;
+  }
+
+  const months = ['jan.', 'fev.', 'mar.', 'abr.', 'maio', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
+
+  function getAccessDate() {
+    const now = new Date();
+    const day = String(now.getDate()).padStart(2, '0');
+    const month = months[now.getMonth()] || '';
+    const year = now.getFullYear();
+    return day + ' ' + month + ' ' + year;
+  }
+
+  function escapeHtml(text) {
+    return String(text || '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;')
+      .replace(/'/g, '&#39;');
+  }
+
+  function getPageData() {
+    const ogTitle = document.querySelector('meta[property="og:title"]');
+    const pageTitle = (ogTitle && ogTitle.content) || document.title.replace(/\s*\|.*$/, '').trim();
+    const canonical = document.querySelector('link[rel="canonical"]');
+    const pageUrl = canonical ? canonical.href : window.location.href;
+
+    return {
+      title: pageTitle,
+      url: pageUrl,
+      authorReference: preview.dataset.authorReference || 'VINÍCIUS, Diego.',
+      authorDisplay: preview.dataset.authorDisplay || 'Diego Vinícius Brito dos Santos.',
+      journal: preview.dataset.journal || 'Revista Inquietações',
+      issue: preview.dataset.issue || 'v. 1, n. 1',
+      year: preview.dataset.year || '2026',
+      accessDate: getAccessDate()
+    };
+  }
+
+  function buildCitation(style) {
+    const data = getPageData();
+    const plainTitle = data.title;
+    const safeTitle = '<strong>' + escapeHtml(plainTitle) + '</strong>';
+    let html = '';
+    let text = '';
+    const accessLabel = 'Acesso em';
+
+    switch (style) {
+      case 'mla':
+        html = escapeHtml(data.authorDisplay) + ' ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + ', ' + escapeHtml(data.year) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorDisplay + ' ' + plainTitle + '. ' + data.journal + ', ' + data.issue + ', ' + data.year + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        break;
+      case 'apa':
+        html = escapeHtml(data.authorReference) + ' (' + escapeHtml(data.year) + '). ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' (' + data.year + '). ' + plainTitle + '. ' + data.journal + ', ' + data.issue + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        break;
+      case 'chicago':
+        html = escapeHtml(data.authorDisplay) + ' ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + ', ' + escapeHtml(data.year) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorDisplay + ' ' + plainTitle + '. ' + data.journal + ', ' + data.issue + ', ' + data.year + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        break;
+      case 'harvard':
+        html = escapeHtml(data.authorReference) + ' ' + escapeHtml(data.year) + '. ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' ' + data.year + '. ' + plainTitle + '. ' + data.journal + ', ' + data.issue + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        break;
+      case 'vancouver':
+        html = escapeHtml(data.authorReference) + ' ' + safeTitle + '. ' + escapeHtml(data.journal) + '. ' + escapeHtml(data.year) + ';' + escapeHtml(data.issue) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' ' + plainTitle + '. ' + data.journal + '. ' + data.year + ';' + data.issue + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        break;
+      case 'ieee':
+        html = escapeHtml(data.authorReference) + ' “' + safeTitle + '." ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + ', ' + escapeHtml(data.year) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' “' + plainTitle + '." ' + data.journal + ', ' + data.issue + ', ' + data.year + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        break;
+      case 'abnt':
+      default:
+        html = escapeHtml(data.authorReference) + ' ' + safeTitle + '. ' + escapeHtml(data.journal) + ', ' + escapeHtml(data.issue) + '. Disponível em: ' + '<a href="' + escapeHtml(data.url) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(data.url) + '</a>' + '. ' + accessLabel + ': ' + escapeHtml(data.accessDate) + '.';
+        text = data.authorReference + ' ' + plainTitle + '. ' + data.journal + ', ' + data.issue + '. Disponível em: ' + data.url + '. ' + accessLabel + ': ' + data.accessDate + '.';
+        break;
+    }
+
+    return { html: html, text: text, label: styleSelect.options[styleSelect.selectedIndex].text };
+  }
+
+  function renderCitation() {
+    const result = buildCitation(styleSelect.value);
+    preview.innerHTML = result.html;
+    preview.dataset.citationText = result.text;
+    feedback.textContent = 'Referência gerada em ' + result.label + '.';
+  }
+
+  async function copyCitation() {
+    if (!preview.dataset.citationText) {
+      renderCitation();
+    }
+    const citationText = preview.dataset.citationText || '';
+
+    try {
+      await navigator.clipboard.writeText(citationText);
+      feedback.textContent = 'Referência copiada para a área de transferência.';
+    } catch (error) {
+      const temp = document.createElement('textarea');
+      temp.value = citationText;
+      document.body.appendChild(temp);
+      temp.select();
+      document.execCommand('copy');
+      document.body.removeChild(temp);
+      feedback.textContent = 'Referência copiada para a área de transferência.';
+    }
+  }
+
+  generateBtn.addEventListener('click', renderCitation);
+  copyBtn.addEventListener('click', copyCitation);
+  styleSelect.addEventListener('change', renderCitation);
+
+  renderCitation();
+})();
 </script>
+
 
 </body>
 </html>
