@@ -3,24 +3,24 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="Conteúdos publicados da Revista Inquietações. Sumário editorial da edição com organização por seções e acesso direto às páginas HTML de cada trabalho." />
+  <meta name="description" content="Conteúdos publicados da Revista Inquietações. Sumário editorial da edição com organização por seções, acesso direto às páginas HTML de cada trabalho e espaço para dossiês temáticos." />
   <meta name="author" content="Revista Inquietações" />
   <title>Conteúdos Publicados | Revista Inquietações</title>
   <link rel="stylesheet" href="styles.css" />
 
   <link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48" type="image/png">
-<link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
+  <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
 
-<script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "Organization",
-  "name": "Revista Inquietações",
-  "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/conteudos.html",
-  "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
-}
-</script>
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "Organization",
+    "name": "Revista Inquietações",
+    "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/conteudos.html",
+    "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
+  }
+  </script>
 
   <style>
     .issue-shell{
@@ -196,6 +196,9 @@
     .badge-traducao{background:#fdf0f2;color:#8d4152;border-color:#f2d2da;}
     .badge-fotografia{background:#f3f6ea;color:#5f6b2b;border-color:#e3e8cf;}
     .badge-relato{background:#eef4ff;color:#294d84;border-color:#d8e3f7;}
+    .badge-dossie{background:linear-gradient(135deg,#c96b2c 0%, #a54d1c 100%);color:#fff;border-color:#b85d25;}
+    .badge-dossie-artigo{background:#fff1e7;color:#9a4d19;border-color:#edc9b1;}
+    .badge-dossie-ensaio{background:#fff5ef;color:#8b4720;border-color:#efcfbd;}
 
     .pages-chip{
       display:inline-flex;
@@ -325,9 +328,105 @@
       line-height:1.72;
     }
 
+    .dossier-panel{
+      border:1px solid rgba(165,77,28,.18);
+      border-radius:24px;
+      overflow:hidden;
+      background:#fffaf6;
+      box-shadow:0 10px 26px rgba(112,62,21,.06);
+    }
+
+    .dossier-header{
+      padding:22px 22px 18px;
+      background:linear-gradient(135deg,#cf7640 0%, #b85c24 52%, #914116 100%);
+      color:#fff;
+    }
+
+    .dossier-header h3{
+      margin:0 0 8px;
+      font-size:1.22rem;
+      line-height:1.35;
+      color:#fff;
+    }
+
+    .dossier-header p{
+      margin:0;
+      line-height:1.68;
+      color:rgba(255,255,255,.94);
+    }
+
+    .dossier-meta{
+      display:grid;
+      grid-template-columns:repeat(3,minmax(0,1fr));
+      gap:12px;
+      padding:18px 22px 0;
+    }
+
+    .dossier-meta-card{
+      background:#fff;
+      border:1px solid rgba(165,77,28,.14);
+      border-radius:18px;
+      padding:14px 15px;
+    }
+
+    .dossier-meta-card strong{
+      display:block;
+      margin-bottom:4px;
+      color:#9a4d19;
+      font-size:.92rem;
+    }
+
+    .dossier-body{
+      padding:18px 22px 22px;
+    }
+
+    .dossier-status{
+      margin:0 0 16px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:linear-gradient(180deg,#fff4eb 0%, #fff9f5 100%);
+      border:1px solid rgba(165,77,28,.14);
+      color:#70451f;
+      line-height:1.72;
+    }
+
+    .dossier-subsection{
+      margin-top:18px;
+      padding-top:18px;
+      border-top:1px dashed rgba(165,77,28,.18);
+    }
+
+    .dossier-subsection:first-of-type{
+      margin-top:10px;
+      padding-top:0;
+      border-top:none;
+    }
+
+    .dossier-subsection h4{
+      margin:0 0 8px;
+      font-size:1.04rem;
+      color:#8f4619;
+    }
+
+    .dossier-subsection p{
+      margin:0;
+      color:#5d5d5d;
+      line-height:1.68;
+    }
+
+    .dossier-empty{
+      margin-top:12px;
+      padding:14px 16px;
+      border-radius:15px;
+      border:1px dashed rgba(165,77,28,.26);
+      background:#fff;
+      color:#7a532f;
+    }
+
     @media (max-width: 920px){
       .issue-intro{grid-template-columns:1fr;}
       .issue-meta{grid-template-columns:1fr;}
+      .dossier-meta{grid-template-columns:1fr;}
     }
 
     @media (max-width: 680px){
@@ -336,6 +435,9 @@
       .toc-section h2{font-size:1.52rem;}
       .article-item{padding:16px;}
       .article-title{font-size:1.04rem;}
+      .dossier-header,
+      .dossier-body{padding-left:16px;padding-right:16px;}
+      .dossier-meta{padding-left:16px;padding-right:16px;}
     }
 
     .site-nav-menu{
@@ -373,7 +475,7 @@
           <h1>Conteúdos Publicados</h1>
           <p class="hero-text">
             Sumário editorial da primeira edição da Revista Inquietações, com organização por seções,
-            paginação interna e acesso direto às páginas HTML de cada trabalho publicado.
+            paginação interna, acesso direto às páginas HTML e espaço institucional para dossiês temáticos.
           </p>
           <div class="masthead-meta">
             <div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
@@ -423,6 +525,7 @@
             <a class="side-nav-link" href="#traducoes">Traduções</a>
             <a class="side-nav-link" href="#fotografia-tematica">Fotografia temática</a>
             <a class="side-nav-link" href="#relatos-experiencia">Relatos de experiência</a>
+            <a class="side-nav-link" href="#dossies-tematicos">Dossiês temáticos</a>
           </div>
         </section>
       </aside>
@@ -435,6 +538,7 @@
               <p>
                 Abaixo, os conteúdos da edição estão organizados por seção, em formato de sumário editorial.
                 Cada item apresenta autoria, paginação da seção e acesso direto ao conteúdo em HTML.
+                Os dossiês temáticos, quando abertos, poderão coexistir com o fluxo contínuo da revista ao longo da edição.
               </p>
               <div class="issue-meta">
                 <div class="issue-meta-card"><strong>Publicado em</strong>2026</div>
@@ -449,7 +553,6 @@
           </section>
 
           <div class="toc-wrap">
-            
 
             <section class="toc-section" id="capa-edicao">
               <div class="toc-section-head">
@@ -795,6 +898,83 @@
                 </li>
               </ul>
             </section>
+
+            <section class="toc-section" id="dossies-tematicos">
+              <div class="toc-section-head">
+                <div>
+                  <h2>Dossiês temáticos</h2>
+                  <p class="toc-section-note">
+                    Seção destinada a dossiês temáticos organizados pelos(as) editores(as) adjuntos(as),
+                    com chamadas específicas, datas próprias de abertura e fechamento e organização interna por artigos e ensaios.
+                  </p>
+                </div>
+                <span class="section-count">Em construção</span>
+              </div>
+
+              <div class="dossier-panel">
+                <div class="dossier-header">
+                  <div class="article-topline" style="margin-bottom:8px;">
+                    <span class="section-badge badge-dossie">Dossiê temático</span>
+                  </div>
+                  <h3>Dossiê temático — seção em construção</h3>
+                  <p>
+                    Esta seção acolherá dossiês temáticos vinculados à edição corrente da revista.
+                    Embora a Revista Inquietações opere em fluxo contínuo, cada dossiê terá cronograma próprio
+                    e poderá ser aberto, encerrado e sucedido por novos dossiês ao longo do mesmo volume e número.
+                  </p>
+                </div>
+
+                <div class="dossier-meta">
+                  <div class="dossier-meta-card">
+                    <strong>Editor(a) adjunto(a) responsável</strong>
+                    A definir
+                  </div>
+                  <div class="dossier-meta-card">
+                    <strong>Data de abertura</strong>
+                    A ser divulgada
+                  </div>
+                  <div class="dossier-meta-card">
+                    <strong>Data de fechamento</strong>
+                    A ser divulgada
+                  </div>
+                </div>
+
+                <div class="dossier-body">
+                  <p class="dossier-status">
+                    No momento, não há dossiê temático aberto nesta edição.
+                    Quando houver chamada ativa, este espaço apresentará o título do dossiê,
+                    o(a) editor(a) adjunto(a) responsável, o período de submissão e os trabalhos publicados.
+                  </p>
+
+                  <div class="dossier-subsection">
+                    <div class="article-topline">
+                      <span class="section-badge badge-dossie-artigo">Artigos</span>
+                    </div>
+                    <p>
+                      Os dossiês temáticos poderão receber artigos vinculados ao tema proposto em chamada específica.
+                    </p>
+                    <div class="dossier-empty">Nenhum artigo de dossiê publicado no momento.</div>
+                  </div>
+
+                  <div class="dossier-subsection">
+                    <div class="article-topline">
+                      <span class="section-badge badge-dossie-ensaio">Ensaios</span>
+                    </div>
+                    <p>
+                      Os dossiês temáticos também poderão acolher ensaios, conforme as diretrizes e a proposta editorial de cada chamada.
+                    </p>
+                    <div class="dossier-empty">Nenhum ensaio de dossiê publicado no momento.</div>
+                  </div>
+                </div>
+              </div>
+
+              <p class="catalog-note" style="margin-top:18px;">
+                <strong>Organização editorial dos dossiês:</strong> cada edição da revista poderá reunir mais de um dossiê temático
+                ao longo do ano editorial. Assim, em uma mesma edição em fluxo contínuo, poderão coexistir, sucessivamente,
+                <em>dossiê 1</em>, <em>dossiê 2</em>, <em>dossiê 3</em> e assim por diante, cada qual com seu próprio período de abertura e fechamento.
+              </p>
+            </section>
+
           </div>
         </div>
       </main>
