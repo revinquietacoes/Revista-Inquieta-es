@@ -449,7 +449,7 @@
           botao.disabled = true;
           botao.textContent = 'Enviando...';
 
-          const resposta = await fetch('/.netlify/functions/cadastrar-usuario', {
+          const resposta = await fetch('/.netlify/functions/cadastro', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(payload)
