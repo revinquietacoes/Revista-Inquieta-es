@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Submissões | Revista Inquietações</title>
+  <meta name="description" content="Página de submissões da Revista Inquietações.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <style>
+    :root{
+      --brand:#143b77;
+      --brand-2:#2758a5;
+      --gold:#c6a247;
+      --bg:#09101d;
+      --card:rgba(255,255,255,.11);
+      --card-line:rgba(255,255,255,.16);
+      --text:#f7f8fb;
+      --muted:#d8deea;
+      --ok:#8fe3a8;
+      --err:#ffb0b0;
+      --shadow:0 18px 50px rgba(0,0,0,.28);
+      --input:rgba(255,255,255,.08);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Inter, system-ui, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(198,162,71,.14), transparent 28%),
+        radial-gradient(circle at right, rgba(39,88,165,.18), transparent 28%),
+        linear-gradient(135deg, #04070d 0%, #09101d 45%, #10284c 100%);
+      min-height:100vh;
+    }
+
+    .shell{
+      width:min(1160px, 94vw);
+      margin:0 auto;
+      padding:28px 0 36px;
+    }
+
+    .topbar{
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+      gap:14px;
+      flex-wrap:wrap;
+      margin-bottom:18px;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand img{
+      width:72px;
+      height:72px;
+      object-fit:contain;
+    }
+
+    .brand h1{
+      margin:0;
+      font-family:Georgia, "Times New Roman", serif;
+      font-size:2rem;
+    }
+
+    .brand p{
+      margin:4px 0 0;
+      color:var(--muted);
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      border-radius:999px;
+      min-height:42px;
+      padding:10px 18px;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform .18s ease, opacity .18s ease;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, #1d4d9a, #143b77);
+      color:#fff;
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.16);
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .hero, .card{
+      background:var(--card);
+      border:1px solid var(--card-line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+    }
+
+    .hero{
+      margin-bottom:18px;
+    }
+
+    .hero h2, .card h3{
+      margin:0 0 10px;
+      font-family:Georgia, "Times New Roman", serif;
+    }
+
+    .hero p, .card p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+    }
+
+    form{
+      margin-top:18px;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(2, minmax(0,1fr));
+      gap:16px;
+    }
+
+    .field{
+      display:flex;
+      flex-direction:column;
+      gap:7px;
+    }
+
+    .field.full{
+      grid-column:1 / -1;
+    }
+
+    label{
+      font-weight:700;
+      font-size:.92rem;
+    }
+
+    input, select, textarea{
+      width:100%;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.14);
+      background:var(--input);
+      color:#fff;
+      padding:12px 14px;
+      font-size:.96rem;
+      outline:none;
+    }
+
+    textarea{
+      min-height:140px;
+      resize:vertical;
+    }
+
+    input:focus, select:focus, textarea:focus{
+      border-color:rgba(198,162,71,.7);
+      background:rgba(255,255,255,.12);
+    }
+
+    select option{
+      color:#111;
+    }
+
+    .note{
+      margin-top:14px;
+      padding:14px 16px;
+      border-radius:16px;
+      background:rgba(255,255,255,.06);
+      border:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+      line-height:1.6;
+    }
+
+    .form-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+      margin-top:18px;
+    }
+
+    .msg{
+      min-height:20px;
+      margin-top:12px;
+      font-size:.92rem;
+    }
+
+    .msg.ok{color:var(--ok)}
+    .msg.err{color:var(--err)}
+
+    @media (max-width: 860px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand">
+        <img src="../logo-revista.png" alt="Logo da Revista Inquietações">
+        <div>
+          <h1>Submissões</h1>
+          <p>Ambiente de envio de manuscritos e materiais complementares</p>
+        </div>
+      </div>
+
+      <div style="display:flex; gap:10px; flex-wrap:wrap">
+        <a class="btn btn-secondary" href="painel-autor.html">Voltar ao painel</a>
+        <a class="btn btn-secondary" href="../index.html">Portal da revista</a>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h2>Envio de trabalhos</h2>
+      <p>
+        Esta página reúne os campos iniciais para submissão de manuscritos à Revista Inquietações.
+        O processo editorial pode envolver triagem inicial, encaminhamento para avaliação e decisão em até 60 dias.
+      </p>
+    </section>
+
+    <section class="card">
+      <h3>Formulário de submissão</h3>
+
+      <form id="form-submissao">
+        <div class="grid">
+          <div class="field full">
+            <label for="titulo">Título do trabalho</label>
+            <input type="text" id="titulo" name="titulo" placeholder="Digite o título do manuscrito" required>
+          </div>
+
+          <div class="field">
+            <label for="secao">Seção</label>
+            <select id="secao" name="secao" required>
+              <option value="artigo">Artigo</option>
+              <option value="ensaio">Ensaio</option>
+              <option value="resenha">Resenha</option>
+              <option value="traducao">Tradução</option>
+              <option value="relato">Relato de experiência</option>
+              <option value="fotografia">Fotografia temática</option>
+              <option value="resumo_expandido">Resumo expandido</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="idioma">Idioma</label>
+            <select id="idioma" name="idioma" required>
+              <option value="pt-BR">Português</option>
+              <option value="es">Espanhol</option>
+              <option value="en">Inglês</option>
+              <option value="fr">Francês</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+
+          <div class="field full">
+            <label for="resumo">Resumo / apresentação do material</label>
+            <textarea id="resumo" name="resumo" placeholder="Apresente brevemente o trabalho enviado" required></textarea>
+          </div>
+
+          <div class="field full">
+            <label for="palavras_chave">Palavras-chave</label>
+            <input type="text" id="palavras_chave" name="palavras_chave" placeholder="Ex.: educação, filosofia, humanidades">
+          </div>
+
+          <div class="field full">
+            <label for="arquivo_principal">Arquivo principal</label>
+            <input type="file" id="arquivo_principal" name="arquivo_principal" accept=".pdf,.doc,.docx,.odt,image/*" required>
+          </div>
+
+          <div class="field full">
+            <label for="arquivos_complementares">Arquivos complementares</label>
+            <input type="file" id="arquivos_complementares" name="arquivos_complementares" accept=".pdf,.doc,.docx,.odt,image/*" multiple>
+          </div>
+        </div>
+
+        <div class="note">
+          Para trabalhos com imagens, a revista aceita envio direto de arquivos de imagem. Quando houver mais de uma imagem, recomenda-se também o envio em formato editável (DOC/DOCX/ODT), para facilitar edição e diagramação.
+        </div>
+
+        <div class="form-actions">
+          <button class="btn btn-primary" type="submit" id="btn-enviar">Enviar submissão</button>
+        </div>
+
+        <div class="msg" id="msg-submissao"></div>
+      </form>
+    </section>
+  </div>
+
+  <script>
+    const usuario = JSON.parse(localStorage.getItem('usuario_logado') || 'null');
+    if (!usuario) {
+      window.location.href = 'login.html';
+    }
+    if (usuario && usuario.perfil !== 'autor') {
+      window.location.href = usuario.perfil === 'parecerista' ? 'painel-parecerista.html' : 'painel-editor.html';
+    }
+
+    const form = document.getElementById('form-submissao');
+    const msg = document.getElementById('msg-submissao');
+    const btn = document.getElementById('btn-enviar');
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = '';
+      msg.className = 'msg';
+
+      try {
+        btn.disabled = true;
+        btn.textContent = 'Enviando...';
+
+        const dados = new FormData(form);
+        dados.append('usuario_id', usuario.id);
+
+        const resposta = await fetch('/.netlify/functions/submissao', {
+          method: 'POST',
+          body: dados
+        });
+
+        const texto = await resposta.text();
+        let resultado = {};
+
+        try {
+          resultado = texto ? JSON.parse(texto) : {};
+        } catch {
+          throw new Error(`Resposta inválida da função: ${texto || 'vazia'}`);
+        }
+
+        if (!resposta.ok) {
+          throw new Error(resultado.erro || resultado.detalhe || 'Não foi possível enviar a submissão.');
+        }
+
+        msg.textContent = 'Submissão registrada com sucesso.';
+        msg.classList.add('ok');
+        form.reset();
+
+      } catch (erro) {
+        msg.textContent = erro.message || 'Erro ao enviar submissão.';
+        msg.classList.add('err');
+      } finally {
+        btn.disabled = false;
+        btn.textContent = 'Enviar submissão';
+      }
+    });
+  </script>
+</body>
+</html>

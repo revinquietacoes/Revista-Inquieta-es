@@ -17,14 +17,13 @@
       --muted:#d8deea;
       --shadow:0 18px 50px rgba(0,0,0,.28);
       --input:rgba(255,255,255,.08);
+      --ok:#8fe3a8;
+      --err:#ffb0b0;
     }
 
-    *{
-      box-sizing:border-box;
-    }
+    *{ box-sizing:border-box; }
 
-    html,
-    body{
+    html, body{
       width:100%;
       height:100%;
       overflow:hidden;
@@ -103,7 +102,7 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease;
     }
 
     .btn-primary{
@@ -118,9 +117,8 @@
       border:1px solid rgba(255,255,255,.16);
     }
 
-    .btn:hover{
-      transform:translateY(-2px);
-    }
+    .btn:hover{ transform:translateY(-2px); }
+    .btn:disabled{ opacity:.7; cursor:not-allowed; transform:none; }
 
     .stack{
       display:grid;
@@ -167,9 +165,7 @@
       max-width:520px;
     }
 
-    .section-body{
-      padding:18px;
-    }
+    .section-body{ padding:18px; }
 
     .grid{
       display:grid;
@@ -183,9 +179,7 @@
       gap:6px;
     }
 
-    .field.full{
-      grid-column:1 / -1;
-    }
+    .field.full{ grid-column:1 / -1; }
 
     label{
       font-weight:700;
@@ -193,8 +187,7 @@
       font-size:.88rem;
     }
 
-    input,
-    select{
+    input, select{
       width:100%;
       min-height:46px;
       border-radius:13px;
@@ -207,16 +200,11 @@
       transition:border-color .2s ease, background .2s ease, transform .2s ease;
     }
 
-    select option{
-      color:#111;
-    }
+    select option{ color:#111; }
 
-    input::placeholder{
-      color:rgba(255,255,255,.54);
-    }
+    input::placeholder{ color:rgba(255,255,255,.54); }
 
-    input:focus,
-    select:focus{
+    input:focus, select:focus{
       border-color:rgba(198,162,71,.7);
       background:rgba(255,255,255,.12);
       transform:translateY(-1px);
@@ -249,23 +237,21 @@
       white-space:nowrap;
     }
 
+    .form-message{
+      min-height:20px;
+      margin-top:12px;
+      font-size:.85rem;
+      line-height:1.45;
+    }
+
+    .form-message.ok{ color:var(--ok); }
+    .form-message.err{ color:var(--err); }
+
     @media (max-width: 1180px){
-      html,
-      body{
-        overflow:auto;
-      }
-
-      body{
-        padding:18px 14px;
-      }
-
-      .shell{
-        height:auto;
-      }
-
-      .stack{
-        grid-template-columns:1fr;
-      }
+      html, body{ overflow:auto; }
+      body{ padding:18px 14px; }
+      .shell{ height:auto; }
+      .stack{ grid-template-columns:1fr; }
     }
   </style>
 </head>
@@ -295,31 +281,31 @@
           <span class="badge">Perfil autor(a)</span>
         </div>
         <div class="section-body">
-          <form>
+          <form id="form-autor">
             <div class="grid">
               <div class="field full">
                 <label for="autor-nome">Nome</label>
-                <input type="text" id="autor-nome" name="autor_nome" placeholder="Digite o nome completo">
+                <input type="text" id="autor-nome" name="nome" placeholder="Digite o nome completo" required>
               </div>
               <div class="field">
                 <label for="autor-email">E-mail</label>
-                <input type="email" id="autor-email" name="autor_email" placeholder="Digite o e-mail">
+                <input type="email" id="autor-email" name="email" placeholder="Digite o e-mail" required>
               </div>
               <div class="field">
                 <label for="autor-senha">Senha de usuário</label>
-                <input type="password" id="autor-senha" name="autor_senha" placeholder="Crie uma senha">
+                <input type="password" id="autor-senha" name="senha" placeholder="Crie uma senha" required>
               </div>
               <div class="field">
                 <label for="autor-orcid">ORCID (se tiver)</label>
-                <input type="url" id="autor-orcid" name="autor_orcid" placeholder="https://orcid.org/...">
+                <input type="url" id="autor-orcid" name="orcid" placeholder="https://orcid.org/...">
               </div>
               <div class="field">
                 <label for="autor-lattes">Lattes (se tiver)</label>
-                <input type="url" id="autor-lattes" name="autor_lattes" placeholder="http://lattes.cnpq.br/...">
+                <input type="url" id="autor-lattes" name="lattes" placeholder="http://lattes.cnpq.br/...">
               </div>
               <div class="field">
                 <label for="autor-origem">Origem</label>
-                <select id="autor-origem" name="autor_origem">
+                <select id="autor-origem" name="origem">
                   <option value="Brazil">Brazil</option>
                   <option value="Argentina">Argentina</option>
                   <option value="Chile">Chile</option>
@@ -331,12 +317,13 @@
               </div>
               <div class="field">
                 <label for="autor-telefone">Telefone de contato</label>
-                <input type="tel" id="autor-telefone" name="autor_telefone" placeholder="(00) 00000-0000">
+                <input type="tel" id="autor-telefone" name="telefone" placeholder="(00) 00000-0000">
               </div>
             </div>
             <div class="form-actions">
               <button class="btn btn-primary" type="submit">Cadastrar autor(a)</button>
             </div>
+            <div class="form-message" id="msg-autor"></div>
           </form>
         </div>
       </section>
@@ -350,31 +337,31 @@
           <span class="badge">Perfil editorial</span>
         </div>
         <div class="section-body">
-          <form>
+          <form id="form-editora">
             <div class="grid">
               <div class="field full">
                 <label for="editora-nome">Nome</label>
-                <input type="text" id="editora-nome" name="editora_nome" placeholder="Digite o nome completo">
+                <input type="text" id="editora-nome" name="nome" placeholder="Digite o nome completo" required>
               </div>
               <div class="field">
                 <label for="editora-email">E-mail</label>
-                <input type="email" id="editora-email" name="editora_email" placeholder="Digite o e-mail">
+                <input type="email" id="editora-email" name="email" placeholder="Digite o e-mail" required>
               </div>
               <div class="field">
                 <label for="editora-senha">Senha de usuário</label>
-                <input type="password" id="editora-senha" name="editora_senha" placeholder="Crie uma senha">
+                <input type="password" id="editora-senha" name="senha" placeholder="Crie uma senha" required>
               </div>
               <div class="field">
                 <label for="editora-orcid">ORCID (se tiver)</label>
-                <input type="url" id="editora-orcid" name="editora_orcid" placeholder="https://orcid.org/...">
+                <input type="url" id="editora-orcid" name="orcid" placeholder="https://orcid.org/...">
               </div>
               <div class="field">
                 <label for="editora-lattes">Lattes (se tiver)</label>
-                <input type="url" id="editora-lattes" name="editora_lattes" placeholder="http://lattes.cnpq.br/...">
+                <input type="url" id="editora-lattes" name="lattes" placeholder="http://lattes.cnpq.br/...">
               </div>
               <div class="field">
                 <label for="editora-origem">Origem</label>
-                <select id="editora-origem" name="editora_origem">
+                <select id="editora-origem" name="origem">
                   <option value="Brazil">Brazil</option>
                   <option value="Argentina">Argentina</option>
                   <option value="Chile">Chile</option>
@@ -386,12 +373,13 @@
               </div>
               <div class="field">
                 <label for="editora-telefone">Telefone de contato</label>
-                <input type="tel" id="editora-telefone" name="editora_telefone" placeholder="(00) 00000-0000">
+                <input type="tel" id="editora-telefone" name="telefone" placeholder="(00) 00000-0000">
               </div>
             </div>
             <div class="form-actions">
               <button class="btn btn-primary" type="submit">Cadastrar editor(a) adjunto(a)</button>
             </div>
+            <div class="form-message" id="msg-editora"></div>
           </form>
         </div>
       </section>
@@ -400,32 +388,107 @@
         <div class="section-head">
           <div>
             <h2 id="cadastro-parecerista">Cadastro como parecerista</h2>
-            <p>Destinado ao registro de pareceristas vinculados ao processo de avaliação da revista.</p>
+            <p>Destinado ao registro de pareceristas.</p>
           </div>
           <span class="badge">Perfil parecerista</span>
         </div>
         <div class="section-body">
-          <form>
+          <form id="form-parecerista">
             <div class="grid">
               <div class="field full">
+                <label for="parecerista-nome">Nome</label>
+                <input type="text" id="parecerista-nome" name="nome" placeholder="Digite o nome completo" required>
+              </div>
+              <div class="field full">
                 <label for="parecerista-email">E-mail</label>
-                <input type="email" id="parecerista-email" name="parecerista_email" placeholder="Digite o e-mail">
+                <input type="email" id="parecerista-email" name="email" placeholder="Digite o e-mail" required>
               </div>
               <div class="field full">
                 <label for="parecerista-senha">Senha de usuário</label>
-                <input type="password" id="parecerista-senha" name="parecerista_senha" placeholder="Crie uma senha">
+                <input type="password" id="parecerista-senha" name="senha" placeholder="Crie uma senha" required>
               </div>
             </div>
-            <p class="mini-note">
-              Caso seja necessário ampliar os campos de cadastro do parecerista, a página poderá receber posteriormente informações acadêmicas complementares, áreas de interesse e vínculo institucional.
-            </p>
+            
             <div class="form-actions">
               <button class="btn btn-primary" type="submit">Cadastrar parecerista</button>
             </div>
+            <div class="form-message" id="msg-parecerista"></div>
           </form>
         </div>
       </section>
     </main>
   </div>
+
+  <script>
+  async function integrarFormulario(formId, perfil, msgId) {
+    const form = document.getElementById(formId);
+    const msg = document.getElementById(msgId);
+
+    if (!form || !msg) return;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = '';
+      msg.className = 'form-message';
+
+      const botao = form.querySelector('button[type="submit"]');
+      const dados = new FormData(form);
+
+      const payload = {
+        nome: dados.get('nome') || '',
+        email: dados.get('email') || '',
+        senha: dados.get('senha') || '',
+        perfil: perfil,
+        orcid: dados.get('orcid') || '',
+        lattes: dados.get('lattes') || '',
+        origem: dados.get('origem') || '',
+        telefone: dados.get('telefone') || ''
+      };
+
+      try {
+        botao.disabled = true;
+        botao.textContent = 'Enviando...';
+
+        const resposta = await fetch('/.netlify/functions/cadastro', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const texto = await resposta.text();
+        let resultado = {};
+
+        try {
+          resultado = texto ? JSON.parse(texto) : {};
+        } catch {
+          throw new Error(`Resposta inválida da função: ${texto || 'vazia'}`);
+        }
+
+        if (!resposta.ok) {
+          throw new Error(resultado.erro || resultado.detalhe || 'Não foi possível concluir o cadastro.');
+        }
+
+        msg.textContent = 'Cadastro realizado com sucesso. Você já pode acessar a página de login.';
+        msg.classList.add('ok');
+        form.reset();
+
+      } catch (erro) {
+        msg.textContent = erro.message || 'Erro ao cadastrar.';
+        msg.classList.add('err');
+      } finally {
+        botao.disabled = false;
+        botao.textContent =
+          perfil === 'autor' ? 'Cadastrar autor(a)' :
+          perfil === 'editor_adjunto' ? 'Cadastrar editor(a) adjunto(a)' :
+          'Cadastrar parecerista';
+      }
+    });
+  }
+
+  integrarFormulario('form-autor', 'autor', 'msg-autor');
+  integrarFormulario('form-editora', 'editor_adjunto', 'msg-editora');
+  integrarFormulario('form-parecerista', 'parecerista', 'msg-parecerista');
+</script>
 </body>
 </html>
+<linha de teste>

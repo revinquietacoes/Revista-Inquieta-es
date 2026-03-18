@@ -17,11 +17,11 @@
       --muted:#d8deea;
       --shadow:0 18px 50px rgba(0,0,0,.28);
       --input:rgba(255,255,255,.08);
+      --ok:#8fe3a8;
+      --err:#ffb0b0;
     }
 
-    *{
-      box-sizing:border-box;
-    }
+    *{ box-sizing:border-box; }
 
     html,
     body{
@@ -204,7 +204,7 @@
       display:inline-flex;
       align-items:center;
       justify-content:center;
-      transition:transform .2s ease, box-shadow .2s ease, background .2s ease;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease;
     }
 
     .btn-primary{
@@ -225,6 +225,12 @@
       transform:translateY(-2px);
     }
 
+    .btn:disabled{
+      opacity:.75;
+      cursor:not-allowed;
+      transform:none;
+    }
+
     .sub-link{
       margin-top:16px;
       color:var(--muted);
@@ -235,6 +241,16 @@
     .sub-link a{
       color:#ffe29a;
     }
+
+    .form-message{
+      min-height:20px;
+      margin-top:12px;
+      font-size:.9rem;
+      line-height:1.45;
+    }
+
+    .form-message.ok{ color:var(--ok); }
+    .form-message.err{ color:var(--err); }
 
     @media (max-width: 980px){
       html,
@@ -305,7 +321,7 @@
         solicitando a recuperação da senha.
       </p>
 
-      <form>
+      <form id="form-login">
         <div class="field">
           <label for="email">E-mail</label>
           <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
@@ -317,9 +333,11 @@
         </div>
 
         <div class="actions">
-          <button class="btn btn-primary" type="submit">Entrar</button>
+          <button class="btn btn-primary" id="btn-login" type="submit">Entrar</button>
           <a class="btn btn-secondary" href="../Revista-Inquieta-es/index.html">Voltar à revista</a>
         </div>
+
+        <div class="form-message" id="msg-login"></div>
       </form>
 
       <p class="sub-link">
@@ -327,5 +345,66 @@
       </p>
     </section>
   </main>
+
+  <script>
+    const formLogin = document.getElementById('form-login');
+    const msgLogin = document.getElementById('msg-login');
+    const btnLogin = document.getElementById('btn-login');
+
+    formLogin.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      msgLogin.textContent = '';
+      msgLogin.className = 'form-message';
+
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+
+      try {
+        btnLogin.disabled = true;
+        btnLogin.textContent = 'Entrando...';
+
+        const resposta = await fetch('/.netlify/functions/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, senha })
+        });
+
+        const resultado = await resposta.json();
+
+        if (!resposta.ok) {
+          throw new Error(resultado.erro || 'Não foi possível realizar o login.');
+        }
+
+        localStorage.setItem('usuario_logado', JSON.stringify(resultado.usuario));
+
+        msgLogin.textContent = 'Login realizado com sucesso. Redirecionando...';
+        msgLogin.classList.add('ok');
+
+        const perfil = resultado.usuario?.perfil;
+
+        setTimeout(() => {
+          if (perfil === 'autor') {
+            window.location.href = 'painel-autor.html';
+          } else if (perfil === 'parecerista') {
+            window.location.href = 'painel-parecerista.html';
+          } else if (perfil === 'editor' || perfil === 'editor_adjunto') {
+            window.location.href = 'painel-editor.html';
+          } else {
+            window.location.href = '../Revista-Inquieta-es/index.html';
+          }
+        }, 900);
+
+      } catch (erro) {
+        msgLogin.textContent = erro.message || 'Erro ao realizar login.';
+        msgLogin.classList.add('err');
+      } finally {
+        btnLogin.disabled = false;
+        btnLogin.textContent = 'Entrar';
+      }
+    });
+  </script>
 </body>
 </html>

@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do Autor | Revista Inquietações</title>
+  <meta name="description" content="Painel do autor da Revista Inquietações.">
+  <link rel="icon" type="image/png" href="../assets/favicon.png">
+  <style>
+    :root{
+      --brand:#143b77;
+      --brand-2:#2758a5;
+      --gold:#c6a247;
+      --bg:#09101d;
+      --card:rgba(255,255,255,.10);
+      --card-line:rgba(255,255,255,.16);
+      --text:#f7f8fb;
+      --muted:#d8deea;
+      --ok:#8fe3a8;
+      --warn:#ffd98f;
+      --shadow:0 18px 50px rgba(0,0,0,.28);
+    }
+
+    *{box-sizing:border-box}
+
+    body{
+      margin:0;
+      font-family:Inter, system-ui, sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(198,162,71,.14), transparent 28%),
+        radial-gradient(circle at right, rgba(39,88,165,.18), transparent 28%),
+        linear-gradient(135deg, #04070d 0%, #09101d 45%, #10284c 100%);
+      min-height:100vh;
+    }
+
+    .shell{
+      width:min(1240px, 94vw);
+      margin:0 auto;
+      padding:26px 0 34px;
+    }
+
+    .topbar{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+      margin-bottom:18px;
+      flex-wrap:wrap;
+    }
+
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+    }
+
+    .brand img{
+      width:64px;
+      height:64px;
+      object-fit:contain;
+      filter:drop-shadow(0 10px 18px rgba(0,0,0,.28));
+    }
+
+    .brand h1{
+      margin:0;
+      font-family:Georgia, "Times New Roman", serif;
+      font-size:2rem;
+      line-height:1.1;
+    }
+
+    .brand p{
+      margin:4px 0 0;
+      color:var(--muted);
+    }
+
+    .top-actions{
+      display:flex;
+      gap:10px;
+      flex-wrap:wrap;
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      border-radius:999px;
+      min-height:42px;
+      padding:10px 18px;
+      font-weight:700;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform .18s ease, opacity .18s ease;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, #1d4d9a, #143b77);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(20,59,119,.32);
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.16);
+    }
+
+    .btn:hover{transform:translateY(-2px)}
+
+    .hero{
+      background:var(--card);
+      border:1px solid var(--card-line);
+      border-radius:24px;
+      box-shadow:var(--shadow);
+      padding:22px;
+      margin-bottom:18px;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+    }
+
+    .hero h2{
+      margin:0 0 8px;
+      font-family:Georgia, "Times New Roman", serif;
+      font-size:1.6rem;
+    }
+
+    .hero p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.65;
+    }
+
+    .grid{
+      display:grid;
+      grid-template-columns:1.1fr .9fr;
+      gap:18px;
+    }
+
+    .card{
+      background:var(--card);
+      border:1px solid var(--card-line);
+      border-radius:22px;
+      box-shadow:var(--shadow);
+      padding:20px;
+      backdrop-filter:blur(14px);
+      -webkit-backdrop-filter:blur(14px);
+    }
+
+    .card h3{
+      margin:0 0 14px;
+      font-family:Georgia, "Times New Roman", serif;
+      font-size:1.34rem;
+    }
+
+    .welcome strong{
+      color:#fff;
+    }
+
+    .status-list{
+      display:grid;
+      gap:12px;
+    }
+
+    .status-item{
+      border:1px solid rgba(255,255,255,.10);
+      border-radius:16px;
+      padding:14px;
+      background:rgba(255,255,255,.05);
+    }
+
+    .status-item h4{
+      margin:0 0 6px;
+      font-size:1rem;
+    }
+
+    .status-item p{
+      margin:0;
+      color:var(--muted);
+      line-height:1.55;
+    }
+
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 10px;
+      border-radius:999px;
+      font-size:.82rem;
+      font-weight:700;
+      margin-top:10px;
+    }
+
+    .badge-ok{background:rgba(143,227,168,.14); color:var(--ok); border:1px solid rgba(143,227,168,.24)}
+    .badge-warn{background:rgba(255,217,143,.12); color:var(--warn); border:1px solid rgba(255,217,143,.22)}
+
+    .mini{
+      color:var(--muted);
+      line-height:1.6;
+      margin:0;
+    }
+
+    @media (max-width: 920px){
+      .grid{grid-template-columns:1fr}
+    }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <div class="topbar">
+      <div class="brand">
+        <img src="../logo-revista.png" alt="Logo da Revista Inquietações">
+        <div>
+          <h1>Painel do Autor</h1>
+          <p>Acompanhamento editorial e submissões</p>
+        </div>
+      </div>
+
+      <div class="top-actions">
+        <a class="btn btn-primary" href="submissoes.html">Nova submissão</a>
+        <a class="btn btn-secondary" href="../index.html">Voltar ao portal</a>
+        <button class="btn btn-secondary" id="btn-sair" type="button">Sair</button>
+      </div>
+    </div>
+
+    <section class="hero">
+      <h2 id="titulo-boas-vindas">Bem-vindo(a)</h2>
+      <p id="texto-boas-vindas" class="welcome"></p>
+    </section>
+
+    <div class="grid">
+      <section class="card">
+        <h3>Fluxo editorial</h3>
+        <div class="status-list">
+          <div class="status-item">
+            <h4>Submissão</h4>
+            <p>Envio do manuscrito, arquivos complementares e dados autorais.</p>
+            <span class="badge badge-ok">Fluxo contínuo</span>
+          </div>
+
+          <div class="status-item">
+            <h4>Avaliação</h4>
+            <p>Os manuscritos podem ser analisados editorialmente e encaminhados para parecer em até 60 dias.</p>
+            <span class="badge badge-warn">Prazo editorial: até 60 dias</span>
+          </div>
+
+          <div class="status-item">
+            <h4>Decisão editorial</h4>
+            <p>O autor poderá receber aceite, solicitação de ajustes, reformulação ou recusa justificada.</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <h3>Ações rápidas</h3>
+        <p class="mini">Use este painel para iniciar novas submissões, acompanhar o processo editorial e consultar futuras devolutivas da equipe da revista.</p>
+        <div style="height:14px"></div>
+        <a class="btn btn-primary" href="submissoes.html">Ir para submissões</a>
+      </section>
+    </div>
+  </div>
+
+  <script>
+    const usuario = JSON.parse(localStorage.getItem('usuario_logado') || 'null');
+
+    if (!usuario) {
+      window.location.href = 'login.html';
+    }
+
+    if (usuario && usuario.perfil !== 'autor') {
+      if (usuario.perfil === 'parecerista') {
+        window.location.href = 'painel-parecerista.html';
+      } else {
+        window.location.href = 'painel-editor.html';
+      }
+    }
+
+    document.getElementById('titulo-boas-vindas').textContent = `Bem-vindo(a), ${usuario.nome}`;
+    document.getElementById('texto-boas-vindas').innerHTML =
+      `Seu acesso foi identificado como <strong>autor(a)</strong>. A partir daqui, será possível submeter trabalhos, acompanhar o andamento editorial e consultar futuras decisões da revista.`;
+
+    document.getElementById('btn-sair').addEventListener('click', () => {
+      localStorage.removeItem('usuario_logado');
+      window.location.href = 'login.html';
+    });
+  </script>
+</body>
+</html>
