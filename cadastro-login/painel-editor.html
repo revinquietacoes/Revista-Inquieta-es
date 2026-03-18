@@ -133,14 +133,23 @@ select option{color:#111}
     </section>
   </div>
   <script>
-    const usuario = JSON.parse(localStorage.getItem('usuario_logado') || 'null');
-    if (!usuario) window.location.href = 'login.html';
-    if (usuario && usuario.perfil !== 'editor_adjunto') {
-      window.location.href = usuario.perfil === 'autor' ? 'painel-autor.html' : (usuario.perfil === 'parecerista' ? 'painel-parecerista.html' : 'painel-editor-chefe.html');
+  const usuario = JSON.parse(localStorage.getItem('usuario_logado') || 'null');
+
+  if (!usuario) {
+    window.location.href = 'login.html';
+  }
+
+  if (usuario.perfil !== 'editor_adjunto') {
+    if (usuario.perfil === 'editor_chefe') {
+      window.location.href = 'painel-editor-chefe.html';
+    } else if (usuario.perfil === 'autor') {
+      window.location.href = 'painel-autor.html';
+    } else if (usuario.perfil === 'parecerista') {
+      window.location.href = 'painel-parecerista.html';
+    } else {
+      window.location.href = 'login.html';
     }
-    document.getElementById('titulo-editor').textContent = `Bem-vindo(a), ${usuario.nome}`;
-    document.getElementById('texto-editor').textContent = 'Seu perfil é de editor(a) adjunto(a). Este painel foi pensado para centralizar dossiês temáticos, submissões vinculadas e acompanhamento editorial setorial, preservando a decisão final ao(à) editor(a)-chefe.';
-    document.getElementById('btn-sair').addEventListener('click', () => { localStorage.removeItem('usuario_logado'); window.location.href = 'login.html'; });
-  </script>
+  }
+</script>
 </body>
 </html>

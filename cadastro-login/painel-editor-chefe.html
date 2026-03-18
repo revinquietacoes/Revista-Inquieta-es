@@ -184,105 +184,145 @@ select option{color:#111}
   </div>
 
   <script>
-    const usuario = JSON.parse(localStorage.getItem('usuario_logado') || 'null');
-    if (!usuario) window.location.href = 'login.html';
-    if (usuario && usuario.perfil !== 'editor') {
-      window.location.href = usuario.perfil === 'autor' ? 'painel-autor.html' : (usuario.perfil === 'parecerista' ? 'painel-parecerista.html' : 'painel-editor.html');
+  const usuario = JSON.parse(localStorage.getItem('usuario_logado') || 'null');
+
+  if (!usuario) {
+    window.location.href = 'login.html';
+  }
+
+  if (usuario && usuario.perfil !== 'editor_chefe') {
+    if (usuario.perfil === 'autor') {
+      window.location.href = 'painel-autor.html';
+    } else if (usuario.perfil === 'parecerista') {
+      window.location.href = 'painel-parecerista.html';
+    } else if (usuario.perfil === 'editor_adjunto') {
+      window.location.href = 'painel-editor.html';
+    } else {
+      window.location.href = 'login.html';
     }
-    document.getElementById('titulo-editor-chefe').textContent = `Bem-vindo(a), ${usuario.nome}`;
-    document.getElementById('texto-editor-chefe').textContent = 'Este painel foi desenhado para a editoria-chefe da Revista Inquietações, com acesso integral às seções da revista, aos dossiês temáticos, aos usuários do sistema e às decisões editoriais finais.';
+  }
 
-    const usuarios = [
-      {id:1,nome:'Profa. Ana Luísa Antunes',perfil:'Editor(a) adjunto(a)',email:'ana@example.com',instituicao:'Universidade Federal',orcid:'0000-0000-1111-2222',contribuicoes:'3 dossiês acompanhados',submissoes:0,avaliacoes:0,cor:'#bdd4ff'},
-      {id:2,nome:'Dr. Pedro Nogueira',perfil:'Parecerista',email:'pedro@example.com',instituicao:'Instituto de Humanidades',orcid:'0000-0000-3333-4444',contribuicoes:'7 pareceres registrados',submissoes:0,avaliacoes:7,cor:'#b9f0ca'},
-      {id:3,nome:'Maria Helena Costa',perfil:'Autora',email:'maria@example.com',instituicao:'Universidade Estadual',orcid:'0000-0000-5555-6666',contribuicoes:'4 submissões registradas',submissoes:4,avaliacoes:0,cor:'#ffe7b2'}
-    ];
-    const submissoes = [
-      {id:101,titulo:'Educação e reconhecimento no espaço escolar',tipo:'Artigo',status:'Submissão ativa',resumo:'Trabalho recém-submetido e ainda não analisado pela editoria.',palavras:'educação; reconhecimento; escola',prazo:'—',alocacao:'Não iniciada'},
-      {id:102,titulo:'Arquivos vivos e memória social',tipo:'Ensaio',status:'Não alocada',resumo:'Submissão aprovada para encaminhamento a parecer, aguardando designação de avaliador(a).',palavras:'memória; arquivos; política',prazo:'—',alocacao:'Aguardando parecerista'},
-      {id:103,titulo:'Filosofia, corpo e adoecimento moral',tipo:'Artigo',status:'Alocada sem aceite',resumo:'Parecerista designado(a), mas a tarefa ainda não foi aceita em painel próprio.',palavras:'filosofia; corpo; moral',prazo:'—',alocacao:'Parecerista convidado(a)'},
-      {id:104,titulo:'Tradução comentada de texto clássico',tipo:'Tradução',status:'Em avaliação',resumo:'Trabalho aceito por parecerista e com prazo de avaliação em andamento.',palavras:'tradução; comentário; teoria',prazo:'Faltam 4 dias',alocacao:'Em andamento'}
-    ];
-    const mensagens = [
-      {de:'Editor(a)-chefe',para:'Parecerista designado(a)',quando:'há 2 dias',texto:'Solicita-se o envio do parecer do trabalho em avaliação. Caso seja necessário mais tempo, informe à editoria responsável.'},
-      {de:'Editor(a)-chefe',para:'Autor(a) do manuscrito X',quando:'há 5 dias',texto:'Sua submissão foi recebida e encontra-se em triagem editorial inicial.'}
-    ];
+  document.getElementById('titulo-editor-chefe').textContent = `Bem-vindo(a), ${usuario.nome}`;
+  document.getElementById('texto-editor-chefe').textContent = 'Este painel foi desenhado para a editoria-chefe da Revista Inquietações, com acesso integral às seções da revista, aos dossiês temáticos, aos usuários do sistema e às decisões editoriais finais.';
 
-    const listaUsuarios = document.getElementById('lista-usuarios');
-    const detalheUsuario = document.getElementById('detalhe-usuario');
-    usuarios.forEach(u => {
-      const item = document.createElement('button');
-      item.type = 'button';
-      item.className = 'user-item';
-      item.style.textAlign = 'left';
-      item.innerHTML = `<div class="user-head"><div><div class="user-name">${u.nome}</div><div class="user-meta">${u.perfil} • ${u.instituicao}</div></div><span class="badge badge-blue">Expandir</span></div>`;
-      item.addEventListener('click', () => {
-        detalheUsuario.className = 'detail-card is-open';
-        detalheUsuario.innerHTML = `
-          <h3>${u.nome}</h3>
-          <p>${u.perfil} • ${u.email}</p>
-          <div class="detail-grid" style="margin-top:12px">
-            <div class="metric-box"><span class="helper">Instituição</span><strong>${u.instituicao}</strong></div>
-            <div class="metric-box"><span class="helper">ORCID</span><strong>${u.orcid}</strong></div>
-            <div class="metric-box"><span class="helper">Registro de contribuições</span><strong>${u.contribuicoes}</strong></div>
-            <div class="metric-box"><span class="helper">Submissões</span><strong>${u.submissoes}</strong></div>
-            <div class="metric-box"><span class="helper">Avaliações</span><strong>${u.avaliacoes}</strong></div>
-            <div class="metric-box"><span class="helper">Ação editorial</span><strong>Editar contagem</strong></div>
-          </div>
-          <div class="actions-row"><button class="btn btn-secondary" type="button">Atualizar contribuições</button></div>`;
-      });
-      listaUsuarios.appendChild(item);
+  const usuarios = [
+    {id:1,nome:'Profa. Ana Luísa Antunes',perfil:'Editor(a) adjunto(a)',email:'ana@example.com',instituicao:'Universidade Federal',orcid:'0000-0000-1111-2222',contribuicoes:'3 dossiês acompanhados',submissoes:0,avaliacoes:0,cor:'#bdd4ff'},
+    {id:2,nome:'Dr. Pedro Nogueira',perfil:'Parecerista',email:'pedro@example.com',instituicao:'Instituto de Humanidades',orcid:'0000-0000-3333-4444',contribuicoes:'7 pareceres registrados',submissoes:0,avaliacoes:7,cor:'#b9f0ca'},
+    {id:3,nome:'Maria Helena Costa',perfil:'Autora',email:'maria@example.com',instituicao:'Universidade Estadual',orcid:'0000-0000-5555-6666',contribuicoes:'4 submissões registradas',submissoes:4,avaliacoes:0,cor:'#ffe7b2'}
+  ];
+
+  const submissoes = [
+    {id:101,titulo:'Educação e reconhecimento no espaço escolar',tipo:'Artigo',status:'Submissão ativa',resumo:'Trabalho recém-submetido e ainda não analisado pela editoria.',palavras:'educação; reconhecimento; escola',prazo:'—',alocacao:'Não iniciada'},
+    {id:102,titulo:'Arquivos vivos e memória social',tipo:'Ensaio',status:'Não alocada',resumo:'Submissão aprovada para encaminhamento a parecer, aguardando designação de avaliador(a).',palavras:'memória; arquivos; política',prazo:'—',alocacao:'Aguardando parecerista'},
+    {id:103,titulo:'Filosofia, corpo e adoecimento moral',tipo:'Artigo',status:'Alocada sem aceite',resumo:'Parecerista designado(a), mas a tarefa ainda não foi aceita em painel próprio.',palavras:'filosofia; corpo; moral',prazo:'—',alocacao:'Parecerista convidado(a)'},
+    {id:104,titulo:'Tradução comentada de texto clássico',tipo:'Tradução',status:'Em avaliação',resumo:'Trabalho aceito por parecerista e com prazo de avaliação em andamento.',palavras:'tradução; comentário; teoria',prazo:'Faltam 4 dias',alocacao:'Em andamento'}
+  ];
+
+  const mensagens = [
+    {de:'Editor(a)-chefe',para:'Parecerista designado(a)',quando:'há 2 dias',texto:'Solicita-se o envio do parecer do trabalho em avaliação. Caso seja necessário mais tempo, informe à editoria responsável.'},
+    {de:'Editor(a)-chefe',para:'Autor(a) do manuscrito X',quando:'há 5 dias',texto:'Sua submissão foi recebida e encontra-se em triagem editorial inicial.'}
+  ];
+
+  const listaUsuarios = document.getElementById('lista-usuarios');
+  const detalheUsuario = document.getElementById('detalhe-usuario');
+
+  usuarios.forEach(u => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'user-item';
+    item.style.textAlign = 'left';
+    item.innerHTML = `<div class="user-head"><div><div class="user-name">${u.nome}</div><div class="user-meta">${u.perfil} • ${u.instituicao}</div></div><span class="badge badge-blue">Expandir</span></div>`;
+
+    item.addEventListener('click', () => {
+      detalheUsuario.className = 'detail-card is-open';
+      detalheUsuario.innerHTML = `
+        <h3>${u.nome}</h3>
+        <p>${u.perfil} • ${u.email}</p>
+        <div class="detail-grid" style="margin-top:12px">
+          <div class="metric-box"><span class="helper">Instituição</span><strong>${u.instituicao}</strong></div>
+          <div class="metric-box"><span class="helper">ORCID</span><strong>${u.orcid}</strong></div>
+          <div class="metric-box"><span class="helper">Registro de contribuições</span><strong>${u.contribuicoes}</strong></div>
+          <div class="metric-box"><span class="helper">Submissões</span><strong>${u.submissoes}</strong></div>
+          <div class="metric-box"><span class="helper">Avaliações</span><strong>${u.avaliacoes}</strong></div>
+          <div class="metric-box"><span class="helper">Ação editorial</span><strong>Editar contagem</strong></div>
+        </div>
+        <div class="actions-row"><button class="btn btn-secondary" type="button">Atualizar contribuições</button></div>`;
     });
 
-    const listaSubmissoes = document.getElementById('lista-submissoes');
-    const detalheSubmissao = document.getElementById('detalhe-submissao');
-    submissoes.forEach(s => {
-      const item = document.createElement('button');
-      item.type = 'button';
-      item.className = 'submission-item';
-      item.style.textAlign = 'left';
-      const badgeClass = s.status === 'Em avaliação' ? 'badge-green' : (s.status === 'Não alocada' ? 'badge-gold' : 'badge-blue');
-      item.innerHTML = `<div class="submission-head"><div><div class="submission-name">${s.titulo}</div><div class="submission-meta">${s.tipo} • ${s.status}</div></div><span class="badge ${badgeClass}">${s.status}</span></div>`;
-      item.addEventListener('click', () => {
-        detalheSubmissao.className = 'detail-card is-open';
-        detalheSubmissao.innerHTML = `
-          <h3>${s.titulo}</h3>
-          <p>${s.tipo} • ${s.status}</p>
-          <div class="note" style="margin-top:12px">${s.resumo}</div>
-          <div class="small-metrics">
-            <div class="metric-box"><span class="helper">Palavras-chave</span><strong>${s.palavras}</strong></div>
-            <div class="metric-box"><span class="helper">Situação de alocação</span><strong>${s.alocacao}</strong></div>
-            <div class="metric-box"><span class="helper">Prazo</span><strong>${s.prazo}</strong></div>
-          </div>
-          <div class="actions-row">
-            <button class="btn btn-primary" type="button">Designar parecerista</button>
-            <button class="btn btn-secondary" type="button">Enviar lembrete</button>
-            <button class="btn btn-soft" type="button">Prorrogar +5 dias</button>
-          </div>`;
-      });
-      listaSubmissoes.appendChild(item);
+    listaUsuarios.appendChild(item);
+  });
+
+  const listaSubmissoes = document.getElementById('lista-submissoes');
+  const detalheSubmissao = document.getElementById('detalhe-submissao');
+
+  submissoes.forEach(s => {
+    const item = document.createElement('button');
+    item.type = 'button';
+    item.className = 'submission-item';
+    item.style.textAlign = 'left';
+
+    const badgeClass =
+      s.status === 'Em avaliação'
+        ? 'badge-green'
+        : (s.status === 'Não alocada' ? 'badge-gold' : 'badge-blue');
+
+    item.innerHTML = `<div class="submission-head"><div><div class="submission-name">${s.titulo}</div><div class="submission-meta">${s.tipo} • ${s.status}</div></div><span class="badge ${badgeClass}">${s.status}</span></div>`;
+
+    item.addEventListener('click', () => {
+      detalheSubmissao.className = 'detail-card is-open';
+      detalheSubmissao.innerHTML = `
+        <h3>${s.titulo}</h3>
+        <p>${s.tipo} • ${s.status}</p>
+        <div class="note" style="margin-top:12px">${s.resumo}</div>
+        <div class="small-metrics">
+          <div class="metric-box"><span class="helper">Palavras-chave</span><strong>${s.palavras}</strong></div>
+          <div class="metric-box"><span class="helper">Situação de alocação</span><strong>${s.alocacao}</strong></div>
+          <div class="metric-box"><span class="helper">Prazo</span><strong>${s.prazo}</strong></div>
+        </div>
+        <div class="actions-row">
+          <button class="btn btn-primary" type="button">Designar parecerista</button>
+          <button class="btn btn-secondary" type="button">Enviar lembrete</button>
+          <button class="btn btn-soft" type="button">Prorrogar +5 dias</button>
+        </div>`;
     });
 
-    const chatBody = document.getElementById('chat-body');
-    function renderMensagens(){
-      chatBody.innerHTML = '';
-      mensagens.forEach(m => {
-        const el = document.createElement('div');
-        el.className = 'message-item';
-        el.innerHTML = `<small>${m.de} → ${m.para} • ${m.quando}</small><div>${m.texto}</div>`;
-        chatBody.appendChild(el);
-      });
-    }
+    listaSubmissoes.appendChild(item);
+  });
+
+  const chatBody = document.getElementById('chat-body');
+
+  function renderMensagens() {
+    chatBody.innerHTML = '';
+    mensagens.forEach(m => {
+      const el = document.createElement('div');
+      el.className = 'message-item';
+      el.innerHTML = `<small>${m.de} → ${m.para} • ${m.quando}</small><div>${m.texto}</div>`;
+      chatBody.appendChild(el);
+    });
+  }
+
+  renderMensagens();
+
+  document.getElementById('btn-chat').addEventListener('click', () => {
+    const destino = document.getElementById('chat-destino').value;
+    const texto = document.getElementById('chat-msg').value.trim();
+    if (!texto) return;
+
+    mensagens.unshift({
+      de: 'Editor(a)-chefe',
+      para: destino,
+      quando: 'agora',
+      texto
+    });
+
+    document.getElementById('chat-msg').value = '';
     renderMensagens();
-    document.getElementById('btn-chat').addEventListener('click', ()=>{
-      const destino = document.getElementById('chat-destino').value;
-      const texto = document.getElementById('chat-msg').value.trim();
-      if(!texto) return;
-      mensagens.unshift({de:'Editor(a)-chefe', para:destino, quando:'agora', texto});
-      document.getElementById('chat-msg').value='';
-      renderMensagens();
-    });
-    document.getElementById('btn-sair').addEventListener('click', ()=>{ localStorage.removeItem('usuario_logado'); window.location.href='login.html'; });
-  </script>
+  });
+
+  document.getElementById('btn-sair').addEventListener('click', () => {
+    localStorage.removeItem('usuario_logado');
+    window.location.href = 'login.html';
+  });
+</script>
 </body>
 </html>
