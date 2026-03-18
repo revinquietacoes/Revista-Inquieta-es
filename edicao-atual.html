@@ -100,6 +100,87 @@ padding:8px 8px;
 white-space:nowrap;
 }
   </style>
+
+<style>
+.revista-top-access-bar{
+  width:min(1180px, calc(100% - 36px));
+  margin:18px auto 10px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+}
+.revista-top-access-actions{
+  display:flex;
+  align-items:center;
+  gap:12px;
+}
+.revista-top-access-actions.compact{
+  gap:8px;
+}
+.revista-top-access-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-width:132px;
+  height:46px;
+  padding:0 18px;
+  border-radius:999px;
+  background:#1f3c88;
+  color:#fff;
+  text-decoration:none;
+  font-weight:700;
+  font-size:.95rem;
+  line-height:1;
+  box-shadow:0 8px 18px rgba(31,60,136,.14);
+  transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
+.revista-top-access-btn.secondary{
+  background:#2c55a5;
+}
+.revista-top-access-btn:hover,
+.revista-top-access-btn:focus-visible{
+  transform:translateY(-1px);
+  box-shadow:0 10px 20px rgba(31,60,136,.18);
+  opacity:.97;
+  text-decoration:none;
+  outline:none;
+}
+.revista-top-access-bar.inside-card{
+  width:100%;
+  margin:12px 0 18px;
+  justify-content:flex-start;
+}
+.revista-pill-actions{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  flex-wrap:nowrap;
+}
+.revista-pill-actions .revista-top-access-btn{
+  min-width:118px;
+  height:40px;
+  padding:0 16px;
+  font-size:.92rem;
+}
+@media (max-width:760px){
+  .revista-top-access-bar{
+    width:calc(100% - 24px);
+    margin:14px auto 8px;
+    justify-content:center;
+  }
+  .revista-top-access-actions{
+    gap:10px;
+  }
+  .revista-top-access-btn{
+    min-width:122px;
+    height:44px;
+    padding:0 16px;
+    font-size:.92rem;
+  }
+}
+</style>
+
 </head>
 <body>
   <div class="site-shell">
@@ -112,7 +193,10 @@ white-space:nowrap;
 
     <div class="topbar">
       <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-      <div class="pill">Fluxo contínuo • v. 1, n. 1 (2026)</div>
+      <div class="pill"><div class="revista-pill-actions">
+  <a href="cadastro-login/cadastro.html" class="revista-top-access-btn">Cadastrar-se</a>
+  <a href="cadastro-login/login.html" class="revista-top-access-btn secondary">Entrar</a>
+</div></div>
     </div>
 
     <header class="masthead">

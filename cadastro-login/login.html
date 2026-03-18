@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Acesso ao sistema editorial da Revista Inquietações.">
+  <title>Login | Revista Inquietações</title>
+  <style>
+    :root{
+      --brand:#143b77;
+      --brand-2:#2758a5;
+      --gold:#c6a247;
+      --bg:#09101d;
+      --card:rgba(255,255,255,.12);
+      --card-line:rgba(255,255,255,.18);
+      --text:#f7f8fb;
+      --muted:#d8deea;
+      --shadow:0 18px 50px rgba(0,0,0,.28);
+      --input:rgba(255,255,255,.08);
+      --ok:#8fe3a8;
+      --err:#ffb0b0;
+    }
+
+    *{ box-sizing:border-box; }
+
+    html,
+    body{
+      width:100%;
+      height:100%;
+      overflow:hidden;
+    }
+
+    body{
+      margin:0;
+      font-family:Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      color:var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(198,162,71,.16), transparent 32%),
+        radial-gradient(circle at right, rgba(39,88,165,.20), transparent 28%),
+        linear-gradient(135deg, #04070d 0%, #09101d 45%, #10284c 100%);
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0;
+    }
+
+    .page{
+      width:min(1180px, 94vw);
+      height:90vh;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:34px;
+      align-items:center;
+    }
+
+    .brand-panel{
+      height:100%;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:0 8px 0 6px;
+    }
+
+    .brand-copy{
+      max-width:640px;
+      text-align:center;
+      margin:0 auto;
+    }
+
+    .brand-mark{
+      width:min(100%, 430px);
+      max-height:240px;
+      object-fit:contain;
+      display:block;
+      margin:0 auto 26px;
+      filter:drop-shadow(0 10px 22px rgba(0,0,0,.28));
+    }
+
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:10px;
+      padding:8px 14px;
+      border:1px solid rgba(198,162,71,.34);
+      border-radius:999px;
+      color:#f8e8b5;
+      background:rgba(198,162,71,.08);
+      font-size:.92rem;
+      letter-spacing:.02em;
+      margin-bottom:20px;
+    }
+
+    h1{
+      margin:0 0 18px;
+      font-family:Georgia, "Times New Roman", serif;
+      font-size:clamp(2.15rem, 4vw, 4.05rem);
+      line-height:1.06;
+      letter-spacing:-.02em;
+      text-wrap:balance;
+    }
+
+    .brand-copy p{
+      margin:0 auto;
+      max-width:620px;
+      color:var(--muted);
+      font-size:1.05rem;
+      line-height:1.72;
+    }
+
+    .card{
+      width:100%;
+      max-width:450px;
+      margin-left:auto;
+      background:rgba(255,255,255,.13);
+      border:1px solid var(--card-line);
+      backdrop-filter:blur(18px);
+      -webkit-backdrop-filter:blur(18px);
+      border-radius:28px;
+      box-shadow:var(--shadow);
+      padding:28px 26px;
+    }
+
+    .card h2{
+      margin:0 0 8px;
+      font-size:2rem;
+      font-family:Georgia, "Times New Roman", serif;
+      line-height:1.1;
+    }
+
+    .card .intro{
+      margin:0 0 18px;
+      color:var(--muted);
+      line-height:1.6;
+      font-size:.98rem;
+    }
+
+    .support-note{
+      margin:0 0 18px;
+      padding:13px 14px;
+      border-radius:16px;
+      background:rgba(255,255,255,.08);
+      border:1px solid rgba(255,255,255,.08);
+      color:#edf2fb;
+      font-size:.96rem;
+      line-height:1.65;
+    }
+
+    .support-note a{
+      color:#ffe29a;
+    }
+
+    .field{
+      margin-bottom:16px;
+    }
+
+    label{
+      display:block;
+      margin-bottom:8px;
+      font-weight:700;
+      color:#ffffff;
+      font-size:.97rem;
+    }
+
+    input{
+      width:100%;
+      height:54px;
+      border-radius:15px;
+      border:1px solid rgba(255,255,255,.14);
+      background:var(--input);
+      color:#fff;
+      padding:0 16px;
+      font-size:1rem;
+      outline:none;
+      transition:border-color .2s ease, background .2s ease, transform .2s ease;
+    }
+
+    input::placeholder{
+      color:rgba(255,255,255,.54);
+    }
+
+    input:focus{
+      border-color:rgba(198,162,71,.7);
+      background:rgba(255,255,255,.12);
+      transform:translateY(-1px);
+    }
+
+    .actions{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:22px;
+    }
+
+    .btn{
+      appearance:none;
+      border:none;
+      border-radius:999px;
+      height:52px;
+      padding:0 22px;
+      font-weight:800;
+      font-size:.98rem;
+      cursor:pointer;
+      text-decoration:none;
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      transition:transform .2s ease, box-shadow .2s ease, background .2s ease, opacity .2s ease;
+    }
+
+    .btn-primary{
+      background:linear-gradient(135deg, #1d4d9a, #143b77);
+      color:#fff;
+      box-shadow:0 12px 24px rgba(20,59,119,.32);
+      min-width:145px;
+    }
+
+    .btn-secondary{
+      background:rgba(255,255,255,.08);
+      color:#fff;
+      border:1px solid rgba(255,255,255,.16);
+      min-width:170px;
+    }
+
+    .btn:hover{
+      transform:translateY(-2px);
+    }
+
+    .btn:disabled{
+      opacity:.75;
+      cursor:not-allowed;
+      transform:none;
+    }
+
+    .sub-link{
+      margin-top:16px;
+      color:var(--muted);
+      font-size:.96rem;
+      line-height:1.6;
+    }
+
+    .sub-link a{
+      color:#ffe29a;
+    }
+
+    .form-message{
+      min-height:20px;
+      margin-top:12px;
+      font-size:.9rem;
+      line-height:1.45;
+    }
+
+    .form-message.ok{ color:var(--ok); }
+    .form-message.err{ color:var(--err); }
+
+    @media (max-width: 980px){
+      html,
+      body{
+        overflow:auto;
+      }
+
+      body{
+        padding:22px 16px;
+      }
+
+      .page{
+        height:auto;
+        min-height:auto;
+        grid-template-columns:1fr;
+        gap:26px;
+      }
+
+      .brand-panel{
+        padding:0;
+      }
+
+      .brand-mark{
+        width:min(100%, 320px);
+        max-height:180px;
+        margin-bottom:18px;
+      }
+
+      h1{
+        font-size:clamp(2rem, 7vw, 3.2rem);
+      }
+
+      .brand-copy p{
+        font-size:1rem;
+      }
+
+      .card{
+        max-width:100%;
+        margin:0 auto;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="page">
+    <section class="brand-panel" aria-label="Apresentação da Revista Inquietações">
+      <div class="brand-copy">
+        <img src="logo-revista.png" alt="Logo da Revista Inquietações" class="brand-mark">
+
+        <span class="eyebrow">Sistema editorial da Revista Inquietações</span>
+
+        <h1>Acesso ao ambiente de submissões e acompanhamento editorial</h1>
+
+        <p>
+          Entre com seu e-mail e sua senha de usuário para acompanhar submissões,
+          avaliações, devolutivas e registros editoriais vinculados ao periódico.
+        </p>
+      </div>
+    </section>
+
+    <section class="card" aria-labelledby="titulo-login">
+      <h2 id="titulo-login">Login</h2>
+      <p class="intro">Preencha os campos abaixo para acessar sua área no sistema.</p>
+
+      <p class="support-note">
+        Caso a senha tenha sido esquecida, entre em contato com o suporte pelo e-mail
+        <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
+        solicitando a recuperação da senha.
+      </p>
+
+      <form id="form-login">
+        <div class="field">
+          <label for="email">E-mail</label>
+          <input type="email" id="email" name="email" placeholder="Digite seu e-mail" required>
+        </div>
+
+        <div class="field">
+          <label for="senha">Senha de usuário</label>
+          <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+        </div>
+
+        <div class="actions">
+          <button class="btn btn-primary" id="btn-login" type="submit">Entrar</button>
+          <a class="btn btn-secondary" href="../Revista-Inquieta-es/index.html">Voltar à revista</a>
+        </div>
+
+        <div class="form-message" id="msg-login"></div>
+      </form>
+
+      <p class="sub-link">
+        Ainda não possui cadastro? <a href="cadastro.html">Acessar página de cadastro</a>.
+      </p>
+    </section>
+  </main>
+
+  <script>
+    const formLogin = document.getElementById('form-login');
+    const msgLogin = document.getElementById('msg-login');
+    const btnLogin = document.getElementById('btn-login');
+
+    formLogin.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      msgLogin.textContent = '';
+      msgLogin.className = 'form-message';
+
+      const email = document.getElementById('email').value.trim();
+      const senha = document.getElementById('senha').value;
+
+      try {
+        btnLogin.disabled = true;
+        btnLogin.textContent = 'Entrando...';
+
+        const resposta = await fetch('/.netlify/functions/login', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({ email, senha })
+        });
+
+        const resultado = await resposta.json();
+
+        if (!resposta.ok) {
+          throw new Error(resultado.erro || 'Não foi possível realizar o login.');
+        }
+
+        localStorage.setItem('usuario_logado', JSON.stringify(resultado.usuario));
+
+        msgLogin.textContent = 'Login realizado com sucesso. Redirecionando...';
+        msgLogin.classList.add('ok');
+
+        const perfil = resultado.usuario?.perfil;
+
+        setTimeout(() => {
+          if (perfil === 'autor') {
+            window.location.href = 'painel-autor.html';
+          } else if (perfil === 'parecerista') {
+            window.location.href = 'painel-parecerista.html';
+          } else if (perfil === 'editor' || perfil === 'editor_adjunto') {
+            window.location.href = 'painel-editor.html';
+          } else {
+            window.location.href = '../Revista-Inquieta-es/index.html';
+          }
+        }, 900);
+
+      } catch (erro) {
+        msgLogin.textContent = erro.message || 'Erro ao realizar login.';
+        msgLogin.classList.add('err');
+      } finally {
+        btnLogin.disabled = false;
+        btnLogin.textContent = 'Entrar';
+      }
+    });
+  </script>
+</body>
+</html>

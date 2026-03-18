@@ -124,6 +124,43 @@ font-size:0.88rem;
 padding:8px 8px;
 white-space:nowrap;
 }
+.topbar{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  flex-wrap:wrap;
+}
+
+.acesso-pill{
+  display:flex;
+  align-items:center;
+  gap:8px;
+  padding:6px 8px;
+}
+
+.topbar-btn{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  padding:6px 14px;
+  border-radius:999px;
+  background:#1f3c88;
+  color:#fff;
+  text-decoration:none;
+  font-size:.85rem;
+  font-weight:600;
+  transition:all .15s ease;
+}
+
+.topbar-btn.secondary{
+  background:#2c55a5;
+}
+
+.topbar-btn:hover{
+  transform:translateY(-1px);
+  opacity:.95;
+}
 </style>
 
 </head>
@@ -139,9 +176,13 @@ white-space:nowrap;
 <a href="#rodape">Ir para o rodapé</a>
 </nav>
 
-<div class="topbar topbar-ojs">
-<div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-<div class="pill">Fluxo contínuo • v. 1, n. 1 (2026)</div>
+<div class="topbar">
+  <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
+
+  <div class="pill acesso-pill">
+    <a href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a>
+    <a href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a>
+  </div>
 </div>
 
 <header class="masthead masthead-ojs" role="banner">

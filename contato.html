@@ -47,6 +47,8 @@ transition:transform .18s ease, box-shadow .18s ease;
 overflow:hidden;
 }
 
+.topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; } .acesso-pill{ display:flex; align-items:center; gap:8px; padding:6px 8px; } .topbar-btn{ display:inline-flex; align-items:center; justify-content:center; padding:6px 14px; border-radius:999px; background:#1f3c88; color:#fff; text-decoration:none; font-size:.85rem; font-weight:600; transition:all .15s ease; } .topbar-btn.secondary{ background:#2c55a5; } .topbar-btn:hover{ transform:translateY(-1px); opacity:.95; }
+
 .contact-card::before{
 content:"";
 position:absolute;
@@ -144,10 +146,12 @@ white-space:nowrap;
 
 
 <div class="topbar">
+  <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
 
-<div class="pill">Revista Inquietações • Ciências Humanas</div>
-<div class="pill">Contato institucional</div>
-
+  <div class="pill acesso-pill">
+    <a href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a>
+    <a href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a>
+  </div>
 </div>
 
 

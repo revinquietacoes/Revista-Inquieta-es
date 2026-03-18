@@ -71,6 +71,7 @@
 .quick-card .cta-row{margin-top:4px;}
 .embed-tip{font-size:.92rem;color:#5d6f87;}
 .mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px;}
+.topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; } .acesso-pill{ display:flex; align-items:center; gap:8px; padding:6px 8px; } .topbar-btn{ display:inline-flex; align-items:center; justify-content:center; padding:6px 14px; border-radius:999px; background:#1f3c88; color:#fff; text-decoration:none; font-size:.85rem; font-weight:600; transition:all .15s ease; } .topbar-btn.secondary{ background:#2c55a5; } .topbar-btn:hover{ transform:translateY(-1px); opacity:.95; }
 .mode-card{border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft);padding:18px;display:grid;gap:8px;}
 .mode-card strong{color:var(--brand);font-size:1rem;}
 .mode-card span{color:#596b84;line-height:1.65;}
@@ -93,8 +94,12 @@
 <a href="#rodape">Ir para rodapé</a>
 </nav>
 <div class="topbar">
-<div class="pill">Revista Inquietações • Ciências Humanas</div>
-<div class="pill">Submissões em fluxo contínuo</div>
+  <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
+
+  <div class="pill acesso-pill">
+    <a href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a>
+    <a href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a>
+  </div>
 </div>
 <header class="masthead">
 <div class="masthead-inner">
