@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel do(a) Autor(a) | Revista Inquietações</title>
-  <meta name="description" content="Painel do(a) autor(a) da Revista Inquietações.">
+  <title>Solicitação de Certificados | Revista Inquietações</title>
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <style>
   
@@ -98,85 +97,51 @@ select option{color:#111}
 .helper{font-size:.9rem;color:var(--soft)}
 @media (max-width:1100px){.grid-2,.grid-3,.grid-4,.detail-grid,.form-grid{grid-template-columns:1fr}}
 
+  body{min-height:100vh}
   </style>
 </head>
 <body>
   <div class="shell">
     <div class="topbar">
       <div class="brand">
-        <div class="avatar-wrap">
-          <img class="avatar-img" src="../assets/avatares/avatar-padrao.svg" alt="Avatar padrão do(a) usuário(a)" id="avatar-autor">
-          <img src="../logo-revista.png" alt="Logo da Revista Inquietações" class="brand-mark">
-        </div>
+        <img src="../logo-revista.png" alt="Logo da Revista Inquietações" class="brand-mark">
         <div>
-          <h1>Painel do(a) Autor(a)</h1>
-          <p>Acompanhamento editorial, submissões e solicitações institucionais</p>
+          <h1>Solicitação de Certificados</h1>
+          <p>Evento de lançamento da Revista Inquietações</p>
         </div>
       </div>
-      <div class="actions-row">
-        <a class="btn btn-primary" href="submissoes.html">Nova submissão</a>
-        <a class="btn btn-secondary" href="solicitacao-certificados.html">Solicitar certificados</a>
-        <a class="btn btn-secondary" href="../index.html">Voltar ao portal</a>
-        <button class="btn btn-secondary" id="btn-sair" type="button">Sair</button>
-      </div>
+      <div class="actions-row"><a class="btn btn-secondary" href="painel-autor.html">Voltar ao painel</a></div>
     </div>
-
-    <section class="hero">
-      <h2 id="titulo-boas-vindas">Bem-vindo(a)</h2>
-      <p id="texto-boas-vindas"></p>
-    </section>
-
-    <section class="section-block">
-      <div class="floating-grid">
-        <div class="floating-note color-blue">
-          <strong>Nova submissão</strong>
-          <p class="tiny">Envie trabalhos para seções regulares e para dossiês temáticos abertos.</p>
-          <div class="actions-row"><a class="btn btn-primary" href="submissoes.html">Submeter trabalho</a></div>
+    <section class="form-card" style="padding:22px">
+      <h3>Solicitação de certificados</h3>
+      <p>Este formulário destina-se à solicitação de certificados relacionados ao Evento de Lançamento da Revista Inquietações. Ele contempla certificação de participação em minicursos, participação geral no evento e participação em comunicações orais.</p>
+      <p class="tiny" style="margin-top:8px">Após o envio, os dados serão registrados em planilha, organizados em pasta no Google Drive e acompanhados de um PDF-resumo da solicitação.</p>
+      <form style="margin-top:18px">
+        <div class="section-divider" style="margin-top:0;padding-top:0;border-top:none"><h3>1. Identificação</h3></div>
+        <div class="form-grid">
+          <div class="field"><label>Nome completo *</label><input required></div>
+          <div class="field"><label>E-mail *</label><input type="email" required></div>
         </div>
-        <div class="floating-note color-green">
-          <strong>Fluxo editorial</strong>
-          <p class="tiny">Submissão, triagem editorial, avaliação, devolutiva, ajustes e decisão final.</p>
+        <div class="section-divider"><h3>2. Tipo de certificado solicitado</h3></div>
+        <div class="field full">
+          <label style="display:flex;gap:10px;align-items:center"><input type="checkbox" style="width:18px;height:18px;min-height:auto"> Certificado de minicurso</label>
+          <label style="display:flex;gap:10px;align-items:center;margin-top:8px"><input type="checkbox" style="width:18px;height:18px;min-height:auto"> Certificado de participação geral no evento</label>
+          <label style="display:flex;gap:10px;align-items:center;margin-top:8px"><input type="checkbox" style="width:18px;height:18px;min-height:auto"> Certificado de participação em comunicações orais</label>
         </div>
-        <div class="floating-note color-purple">
-          <strong>Solicitação de certificados</strong>
-          <p class="tiny">Acesse a página própria para solicitar certificados do evento da revista.</p>
-          <div class="actions-row"><a class="btn btn-secondary" href="solicitacao-certificados.html">Abrir solicitação</a></div>
+        <div class="section-divider"><h3>3. Informações sobre minicurso</h3></div>
+        <div class="form-grid">
+          <div class="field full"><label>Selecione o(s) minicurso(s)</label><select><option>Minicurso: O Ser Social e o Preconceito: uma leitura comentada</option><option>Minicurso: O Manifesto Comunista: o texto que mudou o mundo</option><option>Minicurso: Leitura e comentário do livro O Livro d’Isso, de Georg Groddeck</option><option>Minicurso: Como escrever um resumo expandido?</option><option>Minicurso: Algoritmos do Passado: inteligência artificial, história e ética</option><option>Minicurso: Nietzsche e os valores modernos: um estudo sobre o adoecimento moral do homem</option></select></div>
+          <div class="field full"><label>Deseja autorizar a Revista Inquietações a publicar seu texto na edição atual e nos anais do evento? *</label><select required><option>Sim</option><option>Não</option></select></div>
+          <div class="field full"><label>Resumo expandido sobre o minicurso</label><textarea></textarea></div>
         </div>
-        <div class="floating-note color-gold">
-          <strong>Criar iD ORCID</strong>
-          <p class="tiny">Recomendado para fortalecer sua identificação acadêmica e autoral.</p>
-          <div class="actions-row"><a class="btn btn-soft" href="https://orcid.org/register" target="_blank" rel="noopener noreferrer">Criar iD ORCID</a></div>
+        <div class="section-divider"><h3>4. Participação em comunicações orais</h3></div>
+        <div class="form-grid">
+          <div class="field full"><label>Título da comunicação oral</label><input></div>
+          <div class="field full"><label>Autor(a/es/as) da comunicação</label><input></div>
         </div>
-      </div>
-    </section>
-
-    <section class="section-block">
-      <div class="section-header">
-        <h2 class="section-title">Acompanhamento inicial</h2>
-        <span class="pill">Painel em estruturação</span>
-      </div>
-      <div class="grid-2">
-        <section class="glass-card" style="padding:20px">
-          <h3>Submissões do(a) autor(a)</h3>
-          <p>Este espaço poderá listar o histórico das submissões, seus respectivos status editoriais e as mensagens recebidas da equipe da revista.</p>
-        </section>
-        <section class="glass-card" style="padding:20px">
-          <h3>Foto de perfil</h3>
-          <p>Por padrão, o sistema utiliza um avatar institucional. Quando houver envio de imagem autorizada, a foto poderá substituir o avatar padrão e ser publicada juntamente com o material, conforme consentimento do(a) autor(a).</p>
-        </section>
-      </div>
+        <div class="actions-row"><button class="btn btn-primary" type="submit">Enviar solicitação</button><button class="btn btn-secondary" type="reset">Limpar formulário</button></div>
+      </form>
     </section>
   </div>
-
-  <script>
-    const usuario = JSON.parse(localStorage.getItem('usuario_logado') || 'null');
-    if (!usuario) window.location.href = 'login.html';
-    if (usuario && usuario.perfil !== 'autor') {
-      window.location.href = usuario.perfil === 'parecerista' ? 'painel-parecerista.html' : (usuario.perfil === 'editor' ? 'painel-editor-chefe.html' : 'painel-editor.html');
-    }
-    document.getElementById('titulo-boas-vindas').textContent = `Bem-vindo(a), ${usuario.nome}`;
-    document.getElementById('texto-boas-vindas').textContent = 'Aqui você poderá submeter trabalhos, acompanhar o processo editorial, consultar devolutivas da revista e solicitar certificados relacionados ao evento da Revista Inquietações.';
-    document.getElementById('btn-sair').addEventListener('click', () => { localStorage.removeItem('usuario_logado'); window.location.href = 'login.html'; });
-  </script>
 </body>
 </html>

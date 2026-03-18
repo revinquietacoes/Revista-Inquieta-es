@@ -102,83 +102,35 @@ white-space:nowrap;
   </style>
 
 <style>
-.revista-top-access-bar{
-  width:min(1180px, calc(100% - 36px));
-  margin:18px auto 10px;
-  display:flex;
-  justify-content:flex-end;
-  align-items:center;
-}
-.revista-top-access-actions{
-  display:flex;
-  align-items:center;
-  gap:12px;
-}
-.revista-top-access-actions.compact{
-  gap:8px;
-}
-.revista-top-access-btn{
-  display:inline-flex;
-  align-items:center;
-  justify-content:center;
-  min-width:132px;
-  height:46px;
-  padding:0 18px;
-  border-radius:999px;
-  background:#1f3c88;
-  color:#fff;
-  text-decoration:none;
-  font-weight:700;
-  font-size:.95rem;
-  line-height:1;
-  box-shadow:0 8px 18px rgba(31,60,136,.14);
-  transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease;
-}
-.revista-top-access-btn.secondary{
-  background:#2c55a5;
-}
-.revista-top-access-btn:hover,
-.revista-top-access-btn:focus-visible{
-  transform:translateY(-1px);
-  box-shadow:0 10px 20px rgba(31,60,136,.18);
-  opacity:.97;
-  text-decoration:none;
-  outline:none;
-}
-.revista-top-access-bar.inside-card{
-  width:100%;
-  margin:12px 0 18px;
-  justify-content:flex-start;
-}
-.revista-pill-actions{
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  gap:8px;
-  flex-wrap:nowrap;
-}
-.revista-pill-actions .revista-top-access-btn{
-  min-width:118px;
-  height:40px;
-  padding:0 16px;
-  font-size:.92rem;
-}
-@media (max-width:760px){
-  .revista-top-access-bar{
-    width:calc(100% - 24px);
-    margin:14px auto 8px;
-    justify-content:center;
-  }
-  .revista-top-access-actions{
-    gap:10px;
-  }
-  .revista-top-access-btn{
-    min-width:122px;
-    height:44px;
-    padding:0 16px;
-    font-size:.92rem;
-  }
-}
+.system-access-band{margin:18px auto 0;max-width:1180px;padding:0 24px;}
+.system-access-card{display:flex;align-items:center;justify-content:space-between;gap:18px;flex-wrap:wrap;padding:18px 22px;border-radius:22px;background:linear-gradient(180deg,#f7fbff 0%,#ffffff 100%);border:1px solid #dbe6f2;box-shadow:0 16px 30px rgba(16,35,63,.08);}
+.system-access-copy{display:grid;gap:6px;max-width:680px;}
+.system-access-kicker{display:inline-flex;align-items:center;gap:8px;padding:6px 10px;border-radius:999px;background:#eef4ff;border:1px solid #dbe6f2;color:var(--brand);font-size:.82rem;font-weight:700;letter-spacing:.02em;width:max-content;}
+.system-access-copy h2{margin:0;font-size:1.15rem;color:var(--brand);font-family:"Cormorant Garamond", Georgia, serif;}
+.system-access-copy p{margin:0;color:#53657e;line-height:1.7;}
+.system-access-actions{display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.system-access-btn{appearance:none;border:0;border-radius:999px;padding:12px 18px;font:inherit;font-weight:700;cursor:pointer;text-decoration:none;transition:transform .18s ease, box-shadow .18s ease, background .18s ease;}
+.system-access-btn:hover,.system-access-btn:focus-visible{transform:translateY(-2px);outline:none;}
+.system-access-btn.primary{background:var(--brand);color:#fff;box-shadow:0 12px 24px rgba(31,60,136,.18);}
+.system-access-btn.secondary{background:#eef4ff;color:var(--brand);border:1px solid #d6e3f5;}
+.system-access-modal{position:fixed;inset:0;display:none;align-items:center;justify-content:center;padding:20px;background:rgba(10,20,40,.48);z-index:9999;}
+.system-access-modal.is-open{display:flex;}
+.system-access-dialog{width:min(100%,520px);background:#fff;border-radius:24px;border:1px solid #dbe6f2;box-shadow:0 28px 56px rgba(10,20,40,.24);overflow:hidden;}
+.system-access-head{padding:18px 22px;border-bottom:1px solid rgba(18,45,82,.08);display:flex;align-items:center;justify-content:space-between;gap:12px;background:linear-gradient(180deg,#fbfdff 0%,#f5f9ff 100%);}
+.system-access-head h3{margin:0;color:var(--brand);font-size:1.18rem;font-family:"Cormorant Garamond", Georgia, serif;}
+.system-access-close{appearance:none;border:1px solid #dbe6f2;background:#fff;color:var(--brand);width:40px;height:40px;border-radius:999px;font-size:1.1rem;cursor:pointer;}
+.system-access-body{padding:20px 22px 24px;display:grid;gap:18px;}
+.system-access-body p{margin:0;color:#53657e;line-height:1.65;}
+.system-access-form{display:grid;gap:12px;}
+.system-access-form label{display:grid;gap:6px;font-weight:600;color:#29405e;font-size:.95rem;}
+.system-access-form input,.system-access-form select{width:100%;padding:12px 14px;border-radius:14px;border:1px solid #dbe6f2;background:#fff;font:inherit;color:#22344d;}
+.system-access-form input:focus,.system-access-form select:focus{outline:none;border-color:#9db8e4;box-shadow:0 0 0 4px rgba(31,60,136,.08);}
+.system-access-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}
+.system-access-message{min-height:20px;font-size:.92rem;color:#53657e;}
+.system-access-message.is-error{color:#9f2f2f;}
+.system-access-message.is-success{color:#21643a;}
+.system-access-note{font-size:.88rem;color:#617089;line-height:1.6;}
+@media (max-width:760px){.system-access-band{padding:0 18px;}.system-access-card{padding:16px 18px;}.system-access-dialog{width:min(100%,94vw);}.system-access-grid{grid-template-columns:1fr;}}
 </style>
 
 </head>
@@ -193,10 +145,7 @@ white-space:nowrap;
 
     <div class="topbar">
       <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-      <div class="pill"><div class="revista-pill-actions">
-  <a href="cadastro-login/cadastro.html" class="revista-top-access-btn">Cadastrar-se</a>
-  <a href="cadastro-login/login.html" class="revista-top-access-btn secondary">Entrar</a>
-</div></div>
+      <div class="pill acesso-pill"> <a href="#" onclick="abrirCadastro()">Cadastro</a> <span>•</span> <a href="#" onclick="abrirLogin()">Login</a> </div>
     </div>
 
     <header class="masthead">
@@ -244,6 +193,73 @@ white-space:nowrap;
 
 </div>
     </nav>
+
+
+<section class="system-access-band" aria-label="Acesso ao sistema editorial">
+  <div class="system-access-card">
+    <div class="system-access-copy">
+      <span class="system-access-kicker">Sistema editorial</span>
+      <h2>Acesse, cadastre-se e acompanhe o fluxo editorial</h2>
+      <p>Autores podem realizar cadastro e submissões. Pareceristas e membros editoriais podem entrar para acompanhar avaliações, arquivos e devolutivas.</p>
+    </div>
+    <div class="system-access-actions">
+      <button type="button" class="system-access-btn primary" data-open-system-modal="cadastro">Cadastrar-se</button>
+      <button type="button" class="system-access-btn secondary" data-open-system-modal="login">Entrar</button>
+    </div>
+  </div>
+</section>
+
+<div class="system-access-modal" id="system-access-modal" aria-hidden="true">
+  <div class="system-access-dialog" role="dialog" aria-modal="true" aria-labelledby="system-access-title">
+    <div class="system-access-head">
+      <h3 id="system-access-title">Acesso ao sistema editorial</h3>
+      <button type="button" class="system-access-close" data-close-system-modal aria-label="Fechar">×</button>
+    </div>
+    <div class="system-access-body">
+      <div id="system-access-login-view" hidden>
+        <p>Entre para acompanhar submissões, pareceres e atividades editoriais da Revista Inquietações.</p>
+        <form class="system-access-form" id="system-login-form">
+          <label>E-mail
+            <input type="email" name="email" autocomplete="email" required>
+          </label>
+          <label>Senha
+            <input type="password" name="senha" autocomplete="current-password" required>
+          </label>
+          <button type="submit" class="system-access-btn primary">Entrar no sistema</button>
+          <div class="system-access-message" id="system-login-message" aria-live="polite"></div>
+        </form>
+      </div>
+      <div id="system-access-cadastro-view" hidden>
+        <p>Crie seu cadastro para submeter trabalhos ou solicitar acesso como parecerista. Editores e editores adjuntos devem ser habilitados pela administração.</p>
+        <form class="system-access-form" id="system-cadastro-form">
+          <div class="system-access-grid">
+            <label>Nome completo
+              <input type="text" name="nome" autocomplete="name" required>
+            </label>
+            <label>E-mail
+              <input type="email" name="email" autocomplete="email" required>
+            </label>
+          </div>
+          <div class="system-access-grid">
+            <label>Perfil
+              <select name="perfil" required>
+                <option value="autor">Autor</option>
+                <option value="parecerista">Parecerista</option>
+              </select>
+            </label>
+            <label>Senha
+              <input type="password" name="senha" autocomplete="new-password" minlength="6" required>
+            </label>
+          </div>
+          <div class="system-access-note">Ao concluir o cadastro, o sistema enviará os dados para as funções configuradas na Netlify.</div>
+          <button type="submit" class="system-access-btn primary">Criar cadastro</button>
+          <div class="system-access-message" id="system-cadastro-message" aria-live="polite"></div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
 
     
 
@@ -450,5 +466,98 @@ white-space:nowrap;
 
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count"
           async src="//gc.zgo.at/count.js"></script>
+
+<script>
+(function(){
+  const modal=document.getElementById('system-access-modal');
+  if(!modal)return;
+  const title=document.getElementById('system-access-title');
+  const loginView=document.getElementById('system-access-login-view');
+  const cadastroView=document.getElementById('system-access-cadastro-view');
+  const loginMessage=document.getElementById('system-login-message');
+  const cadastroMessage=document.getElementById('system-cadastro-message');
+  function setMode(mode){
+    const isCadastro=mode==='cadastro';
+    cadastroView.hidden=!isCadastro;
+    loginView.hidden=isCadastro;
+    title.textContent=isCadastro?'Cadastro no sistema editorial':'Login no sistema editorial';
+    if(loginMessage)loginMessage.textContent='';
+    if(cadastroMessage)cadastroMessage.textContent='';
+  }
+  function openModal(mode){
+    setMode(mode||'login');
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden','false');
+    const firstField=modal.querySelector((mode==='cadastro'?'#system-cadastro-form':'#system-login-form')+' input');
+    if(firstField) setTimeout(()=>firstField.focus(),30);
+  }
+  function closeModal(){
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden','true');
+  }
+  document.querySelectorAll('[data-open-system-modal]').forEach(btn=>{
+    btn.addEventListener('click',()=>openModal(btn.getAttribute('data-open-system-modal')));
+  });
+  modal.querySelectorAll('[data-close-system-modal]').forEach(btn=>btn.addEventListener('click',closeModal));
+  modal.addEventListener('click',e=>{ if(e.target===modal) closeModal(); });
+  document.addEventListener('keydown',e=>{ if(e.key==='Escape' && modal.classList.contains('is-open')) closeModal(); });
+  const cadastroForm=document.getElementById('system-cadastro-form');
+  if(cadastroForm){
+    cadastroForm.addEventListener('submit', async function(e){
+      e.preventDefault();
+      cadastroMessage.className='system-access-message';
+      cadastroMessage.textContent='Enviando cadastro...';
+      const payload=Object.fromEntries(new FormData(cadastroForm).entries());
+      try{
+        const res=await fetch('/.netlify/functions/cadastro',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(payload)
+        });
+        const data=await res.json().catch(()=>({}));
+        if(res.ok && (data.sucesso!==false)){
+          cadastroMessage.classList.add('is-success');
+          cadastroMessage.textContent='Cadastro enviado com sucesso.';
+          cadastroForm.reset();
+        }else{
+          cadastroMessage.classList.add('is-error');
+          cadastroMessage.textContent=data.erro || 'Não foi possível concluir o cadastro agora.';
+        }
+      }catch(err){
+        cadastroMessage.classList.add('is-error');
+        cadastroMessage.textContent='Erro de conexão ao enviar cadastro.';
+      }
+    });
+  }
+  const loginForm=document.getElementById('system-login-form');
+  if(loginForm){
+    loginForm.addEventListener('submit', async function(e){
+      e.preventDefault();
+      loginMessage.className='system-access-message';
+      loginMessage.textContent='Validando acesso...';
+      const payload=Object.fromEntries(new FormData(loginForm).entries());
+      try{
+        const res=await fetch('/.netlify/functions/login',{
+          method:'POST',
+          headers:{'Content-Type':'application/json'},
+          body:JSON.stringify(payload)
+        });
+        const data=await res.json().catch(()=>({}));
+        if(res.ok && data.sucesso){
+          loginMessage.classList.add('is-success');
+          loginMessage.textContent='Login realizado com sucesso.';
+        }else{
+          loginMessage.classList.add('is-error');
+          loginMessage.textContent=data.erro || 'Não foi possível entrar no sistema.';
+        }
+      }catch(err){
+        loginMessage.classList.add('is-error');
+        loginMessage.textContent='Erro de conexão ao validar login.';
+      }
+    });
+  }
+})();
+</script>
+
 </body>
 </html>

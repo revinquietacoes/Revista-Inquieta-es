@@ -3,8 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel do(a) Autor(a) | Revista Inquietações</title>
-  <meta name="description" content="Painel do(a) autor(a) da Revista Inquietações.">
+  <title>Formulário de Parecer | Revista Inquietações</title>
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <style>
   
@@ -98,85 +97,59 @@ select option{color:#111}
 .helper{font-size:.9rem;color:var(--soft)}
 @media (max-width:1100px){.grid-2,.grid-3,.grid-4,.detail-grid,.form-grid{grid-template-columns:1fr}}
 
+  body{min-height:100vh}
+  .section-divider{margin-top:18px;padding-top:18px;border-top:1px solid rgba(255,255,255,.08)}
   </style>
 </head>
 <body>
   <div class="shell">
     <div class="topbar">
       <div class="brand">
-        <div class="avatar-wrap">
-          <img class="avatar-img" src="../assets/avatares/avatar-padrao.svg" alt="Avatar padrão do(a) usuário(a)" id="avatar-autor">
-          <img src="../logo-revista.png" alt="Logo da Revista Inquietações" class="brand-mark">
-        </div>
+        <img src="../logo-revista.png" alt="Logo da Revista Inquietações" class="brand-mark">
         <div>
-          <h1>Painel do(a) Autor(a)</h1>
-          <p>Acompanhamento editorial, submissões e solicitações institucionais</p>
+          <h1>Formulário de Parecer</h1>
+          <p>Uso interno da equipe editorial da Revista Inquietações</p>
         </div>
       </div>
-      <div class="actions-row">
-        <a class="btn btn-primary" href="submissoes.html">Nova submissão</a>
-        <a class="btn btn-secondary" href="solicitacao-certificados.html">Solicitar certificados</a>
-        <a class="btn btn-secondary" href="../index.html">Voltar ao portal</a>
-        <button class="btn btn-secondary" id="btn-sair" type="button">Sair</button>
-      </div>
+      <div class="actions-row"><a class="btn btn-secondary" href="painel-parecerista.html">Voltar ao painel</a></div>
     </div>
-
-    <section class="hero">
-      <h2 id="titulo-boas-vindas">Bem-vindo(a)</h2>
-      <p id="texto-boas-vindas"></p>
-    </section>
-
-    <section class="section-block">
-      <div class="floating-grid">
-        <div class="floating-note color-blue">
-          <strong>Nova submissão</strong>
-          <p class="tiny">Envie trabalhos para seções regulares e para dossiês temáticos abertos.</p>
-          <div class="actions-row"><a class="btn btn-primary" href="submissoes.html">Submeter trabalho</a></div>
+    <section class="form-card" style="padding:22px">
+      <h3>Registro de parecer</h3>
+      <p>Este parecer será registrado para uso interno da equipe editorial da Revista Inquietações.</p>
+      <form id="form-parecer" style="margin-top:18px">
+        <div class="section-divider" style="margin-top:0;padding-top:0;border-top:none"><h3>1. Identificação do(a) parecerista</h3></div>
+        <div class="form-grid">
+          <div class="field"><label>Nome completo do(a) parecerista *</label><input required></div>
+          <div class="field"><label>E-mail do(a) parecerista *</label><input type="email" required></div>
+          <div class="field full"><label>Possui vínculo acadêmico ou institucional? *</label><select required><option value="">Selecione</option><option>Sim</option><option>Não</option></select></div>
         </div>
-        <div class="floating-note color-green">
-          <strong>Fluxo editorial</strong>
-          <p class="tiny">Submissão, triagem editorial, avaliação, devolutiva, ajustes e decisão final.</p>
+        <div class="section-divider"><h3>2. Identificação do trabalho avaliado</h3></div>
+        <div class="form-grid">
+          <div class="field full"><label>Título do trabalho avaliado *</label><input required></div>
+          <div class="field full"><label>Tipo de submissão *</label><select required><option value="">Selecione</option><option>Artigo científico</option><option>Ensaio teórico</option><option>Tradução comentada</option><option>Resenha crítica</option><option>Relato de experiência</option><option>Fotografia temática</option><option>Outro</option></select></div>
         </div>
-        <div class="floating-note color-purple">
-          <strong>Solicitação de certificados</strong>
-          <p class="tiny">Acesse a página própria para solicitar certificados do evento da revista.</p>
-          <div class="actions-row"><a class="btn btn-secondary" href="solicitacao-certificados.html">Abrir solicitação</a></div>
+        <div class="section-divider"><h3>3. Critérios de avaliação</h3></div>
+        <div class="form-grid">
+          <div class="field"><label>Relevância acadêmica do trabalho *</label><select required><option>Muito alta</option><option>Alta</option><option>Moderada</option><option>Baixa</option></select></div>
+          <div class="field"><label>Clareza e organização do texto *</label><select required><option>Excelente</option><option>Boa</option><option>Regular</option><option>Insuficiente</option></select></div>
+          <div class="field"><label>Consistência teórica ou argumentativa *</label><select required><option>Muito consistente</option><option>Consistente</option><option>Parcialmente consistente</option><option>Frágil</option></select></div>
+          <div class="field"><label>Adequação metodológica (quando aplicável) *</label><select required><option>Adequada</option><option>Parcialmente adequada</option><option>Insuficiente</option><option>Não se aplica</option></select></div>
+          <div class="field"><label>Qualidade geral da redação acadêmica *</label><select required><option>Excelente</option><option>Boa</option><option>Regular</option><option>Necessita revisão substancial</option></select></div>
+          <div class="field"><label>O trabalho apresenta contribuição relevante para a área? *</label><select required><option>Sim, claramente</option><option>Sim, parcialmente</option><option>Pouco</option><option>Não</option></select></div>
         </div>
-        <div class="floating-note color-gold">
-          <strong>Criar iD ORCID</strong>
-          <p class="tiny">Recomendado para fortalecer sua identificação acadêmica e autoral.</p>
-          <div class="actions-row"><a class="btn btn-soft" href="https://orcid.org/register" target="_blank" rel="noopener noreferrer">Criar iD ORCID</a></div>
+        <div class="section-divider"><h3>4. Parecer descritivo</h3></div>
+        <div class="form-grid">
+          <div class="field full"><label>Registre observações, sugestões de correção ou recomendações de melhoria.</label><textarea></textarea></div>
+          <div class="field full"><label>Devolutiva (.doc) com sugestões de correção ou melhoria (se houver)</label><input type="file" accept=".doc,.docx,.odt"></div>
         </div>
-      </div>
-    </section>
-
-    <section class="section-block">
-      <div class="section-header">
-        <h2 class="section-title">Acompanhamento inicial</h2>
-        <span class="pill">Painel em estruturação</span>
-      </div>
-      <div class="grid-2">
-        <section class="glass-card" style="padding:20px">
-          <h3>Submissões do(a) autor(a)</h3>
-          <p>Este espaço poderá listar o histórico das submissões, seus respectivos status editoriais e as mensagens recebidas da equipe da revista.</p>
-        </section>
-        <section class="glass-card" style="padding:20px">
-          <h3>Foto de perfil</h3>
-          <p>Por padrão, o sistema utiliza um avatar institucional. Quando houver envio de imagem autorizada, a foto poderá substituir o avatar padrão e ser publicada juntamente com o material, conforme consentimento do(a) autor(a).</p>
-        </section>
-      </div>
+        <div class="section-divider"><h3>5. Encaminhamento final</h3></div>
+        <div class="form-grid">
+          <div class="field"><label>Parecer final *</label><select required><option>Aceitar para publicação</option><option>Aceitar com ajustes</option><option>Devolver para revisão e nova avaliação</option><option>Recusar</option></select></div>
+          <div class="field"><label>Tempo de avaliação *</label><select required><option>1 dia</option><option>2 dias</option><option>3 dias</option><option>Outro</option></select></div>
+        </div>
+        <div class="actions-row"><button class="btn btn-primary" type="submit">Enviar parecer</button><button class="btn btn-secondary" type="reset">Limpar formulário</button></div>
+      </form>
     </section>
   </div>
-
-  <script>
-    const usuario = JSON.parse(localStorage.getItem('usuario_logado') || 'null');
-    if (!usuario) window.location.href = 'login.html';
-    if (usuario && usuario.perfil !== 'autor') {
-      window.location.href = usuario.perfil === 'parecerista' ? 'painel-parecerista.html' : (usuario.perfil === 'editor' ? 'painel-editor-chefe.html' : 'painel-editor.html');
-    }
-    document.getElementById('titulo-boas-vindas').textContent = `Bem-vindo(a), ${usuario.nome}`;
-    document.getElementById('texto-boas-vindas').textContent = 'Aqui você poderá submeter trabalhos, acompanhar o processo editorial, consultar devolutivas da revista e solicitar certificados relacionados ao evento da Revista Inquietações.';
-    document.getElementById('btn-sair').addEventListener('click', () => { localStorage.removeItem('usuario_logado'); window.location.href = 'login.html'; });
-  </script>
 </body>
 </html>
