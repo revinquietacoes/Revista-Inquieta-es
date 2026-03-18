@@ -16,11 +16,21 @@ export default async (req) => {
     }
 
     const body = await req.json()
-    const { email, senha } = body
 
-    if (!email || !senha) {
+    const {
+      nome,
+      email,
+      senha,
+      perfil,
+      orcid,
+      lattes,
+      origem,
+      telefone
+    } = body
+
+    if (!nome || !email || !senha || !perfil) {
       return new Response(
-        JSON.stringify({ erro: 'Informe e-mail e senha.' }),
+        JSON.stringify({ erro: 'Preencha os campos obrigatórios.' }),
         {
           status: 400,
           headers: { 'Content-Type': 'application/json' }
@@ -28,55 +38,64 @@ export default async (req) => {
       )
     }
 
-    const usuarios = await sql`
-      SELECT * FROM usuarios
-      WHERE email = ${email}
-      LIMIT 1
+    const perfisPermitidos = ['autor', 'parecerista', 'editor_adjunto']
+
+    if (!perfisPermitidos.includes(perfil)) {
+      return new Response(
+        JSON.stringify({ erro: 'Perfil inválido.' }),
+        {
+          status: 400,
+          headers: { 'Content-Type': 'application/json' }
+        }
+      )
+    }
+
+    const existente = await sql`
+      SELECT id FROM usuarios WHERE email = ${email} LIMIT 1
     `
 
-    if (usuarios.length === 0) {
+    if (existente.length > 0) {
       return new Response(
-        JSON.stringify({ erro: 'Usuário não encontrado.' }),
+        JSON.stringify({ erro: 'Já existe um usuário com este e-mail.' }),
         {
-          status: 404,
+          status: 409,
           headers: { 'Content-Type': 'application/json' }
         }
       )
     }
 
-    const usuario = usuarios[0]
+    const senhaHash = await bcrypt.hash(senha, 10)
 
-    if (usuario.status && usuario.status !== 'ativo') {
-      return new Response(
-        JSON.stringify({ erro: 'Usuário inativo ou pendente.' }),
-        {
-          status: 403,
-          headers: { 'Content-Type': 'application/json' }
-        }
+    const resultado = await sql`
+      INSERT INTO usuarios (
+        nome,
+        email,
+        senha_hash,
+        perfil,
+        orcid,
+        lattes,
+        origem,
+        telefone,
+        status
       )
-    }
-
-    const senhaOk = await bcrypt.compare(senha, usuario.senha_hash)
-
-    if (!senhaOk) {
-      return new Response(
-        JSON.stringify({ erro: 'Senha inválida.' }),
-        {
-          status: 401,
-          headers: { 'Content-Type': 'application/json' }
-        }
+      VALUES (
+        ${nome},
+        ${email},
+        ${senhaHash},
+        ${perfil},
+        ${orcid || null},
+        ${lattes || null},
+        ${origem || null},
+        ${telefone || null},
+        'ativo'
       )
-    }
+      RETURNING id, nome, email, perfil
+    `
 
     return new Response(
       JSON.stringify({
         sucesso: true,
-        usuario: {
-          id: usuario.id,
-          nome: usuario.nome,
-          email: usuario.email,
-          perfil: usuario.perfil
-        }
+        usuario: resultado[0]
       }),
       {
         status: 200,
@@ -87,7 +106,7 @@ export default async (req) => {
   } catch (erro) {
     return new Response(
       JSON.stringify({
-        erro: 'Erro ao realizar login.',
+        erro: 'Erro ao cadastrar usuário.',
         detalhe: erro.message
       }),
       {
