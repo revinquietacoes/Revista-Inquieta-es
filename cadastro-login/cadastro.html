@@ -420,67 +420,74 @@
   </div>
 
   <script>
-    async function integrarFormulario(formId, perfil, msgId) {
-      const form = document.getElementById(formId);
-      const msg = document.getElementById(msgId);
+  async function integrarFormulario(formId, perfil, msgId) {
+    const form = document.getElementById(formId);
+    const msg = document.getElementById(msgId);
 
-      if (!form || !msg) return;
+    if (!form || !msg) return;
 
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-        msg.textContent = '';
-        msg.className = 'form-message';
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      msg.textContent = '';
+      msg.className = 'form-message';
 
-        const botao = form.querySelector('button[type="submit"]');
-        const dados = new FormData(form);
+      const botao = form.querySelector('button[type="submit"]');
+      const dados = new FormData(form);
 
-        const payload = {
-          nome: dados.get('nome') || '',
-          email: dados.get('email') || '',
-          senha: dados.get('senha') || '',
-          perfil: perfil,
-          orcid: dados.get('orcid') || '',
-          lattes: dados.get('lattes') || '',
-          origem: dados.get('origem') || '',
-          telefone: dados.get('telefone') || ''
-        };
+      const payload = {
+        nome: dados.get('nome') || '',
+        email: dados.get('email') || '',
+        senha: dados.get('senha') || '',
+        perfil: perfil,
+        orcid: dados.get('orcid') || '',
+        lattes: dados.get('lattes') || '',
+        origem: dados.get('origem') || '',
+        telefone: dados.get('telefone') || ''
+      };
+
+      try {
+        botao.disabled = true;
+        botao.textContent = 'Enviando...';
+
+        const resposta = await fetch('/.netlify/functions/cadastro', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload)
+        });
+
+        const texto = await resposta.text();
+        let resultado = {};
 
         try {
-          botao.disabled = true;
-          botao.textContent = 'Enviando...';
-
-          const resposta = await fetch('/.netlify/functions/cadastro', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify(payload)
-          });
-
-          const resultado = await resposta.json();
-
-          if (!resposta.ok) {
-            throw new Error(resultado.erro || 'Não foi possível concluir o cadastro.');
-          }
-
-          msg.textContent = 'Cadastro realizado com sucesso. Você já pode acessar a página de login.';
-          msg.classList.add('ok');
-          form.reset();
-
-        } catch (erro) {
-          msg.textContent = erro.message || 'Erro ao cadastrar.';
-          msg.classList.add('err');
-        } finally {
-          botao.disabled = false;
-          botao.textContent =
-            perfil === 'autor' ? 'Cadastrar autor(a)' :
-            perfil === 'editor_adjunto' ? 'Cadastrar editor(a) adjunto(a)' :
-            'Cadastrar parecerista';
+          resultado = texto ? JSON.parse(texto) : {};
+        } catch {
+          throw new Error(`Resposta inválida da função: ${texto || 'vazia'}`);
         }
-      });
-    }
 
-    integrarFormulario('form-autor', 'autor', 'msg-autor');
-    integrarFormulario('form-editora', 'editor_adjunto', 'msg-editora');
-    integrarFormulario('form-parecerista', 'parecerista', 'msg-parecerista');
-  </script>
+        if (!resposta.ok) {
+          throw new Error(resultado.erro || resultado.detalhe || 'Não foi possível concluir o cadastro.');
+        }
+
+        msg.textContent = 'Cadastro realizado com sucesso. Você já pode acessar a página de login.';
+        msg.classList.add('ok');
+        form.reset();
+
+      } catch (erro) {
+        msg.textContent = erro.message || 'Erro ao cadastrar.';
+        msg.classList.add('err');
+      } finally {
+        botao.disabled = false;
+        botao.textContent =
+          perfil === 'autor' ? 'Cadastrar autor(a)' :
+          perfil === 'editor_adjunto' ? 'Cadastrar editor(a) adjunto(a)' :
+          'Cadastrar parecerista';
+      }
+    });
+  }
+
+  integrarFormulario('form-autor', 'autor', 'msg-autor');
+  integrarFormulario('form-editora', 'editor_adjunto', 'msg-editora');
+  integrarFormulario('form-parecerista', 'parecerista', 'msg-parecerista');
+</script>
 </body>
 </html>
