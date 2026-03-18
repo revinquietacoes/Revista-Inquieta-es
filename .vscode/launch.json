@@ -2,10 +2,10 @@
   "version": "0.2.0",
   "configurations": [
     {
-      "type": "chrome",
+      "type": "msedge",
       "request": "launch",
-      "name": "Open index.html",
-      "file": "D:\\GitHub\\Revista-Inquieta-es\\index.html"
+      "name": "Abrir index.html",
+      "file": "${workspaceFolder}/index.html"
     }
   ]
 }
