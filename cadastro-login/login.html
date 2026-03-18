@@ -186,14 +186,20 @@ select option{color:#111}
         const perfil = resultado.usuario?.perfil;
         setTimeout(() => {
           if (perfil === 'autor') {
-            window.location.href = 'painel-autor.html';
-          } else if (perfil === 'parecerista') {
-            window.location.href = 'painel-parecerista.html';
-          } else if (perfil === 'editor_adjunto') {
-            window.location.href = 'painel-editor.html';
-          } else if (perfil === 'editor_chefe') {window.location.href = 'painel-editor-chefe.html';} else {
-            window.location.href = '../index.html';
-          }
+  window.location.href = 'painel-autor.html';
+
+} else if (perfil === 'parecerista') {
+  window.location.href = 'painel-parecerista.html';
+
+} else if (perfil === 'editor_adjunto') {
+  window.location.href = 'painel-editor.html';
+
+} else if (perfil === 'editor_chefe') {
+  window.location.href = 'painel-editor-chefe.html';
+
+} else {
+  alert('Perfil desconhecido.');
+}
         }, 800);
       } catch (erro) {
         msgLogin.textContent = erro.message || 'Erro ao realizar login.';
