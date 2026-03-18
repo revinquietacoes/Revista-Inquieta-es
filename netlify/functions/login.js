@@ -6,111 +6,41 @@ const sql = neon(process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL)
 export default async (req) => {
   try {
     if (req.method !== 'POST') {
-      return new Response(
-        JSON.stringify({ erro: 'Método não permitido.' }),
-        {
-          status: 405,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
+      return new Response(JSON.stringify({ erro: 'Método não permitido.' }), { status: 405, headers: { 'Content-Type': 'application/json' } })
     }
 
-    const body = await req.json()
-    const { email, senha } = body
-
+    const { email, senha } = await req.json()
     if (!email || !senha) {
-      return new Response(
-        JSON.stringify({ erro: 'Informe e-mail e senha.' }),
-        {
-          status: 400,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
+      return new Response(JSON.stringify({ erro: 'Informe e-mail e senha.' }), { status: 400, headers: { 'Content-Type': 'application/json' } })
     }
 
-    const usuarios = await sql`
-      SELECT
-        id,
-        nome,
-        email,
-        senha_hash,
-        perfil,
-        status,
-        instituicao,
-        orcid,
-        foto_perfil_url,
-        consentimento_foto_publica,
-        receber_noticias_email
+    const rows = await sql`
+      SELECT id, nome, email, senha_hash, perfil, status, instituicao, orcid, lattes, origem, telefone,
+             foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, receber_noticias_email
       FROM usuarios
       WHERE email = ${email}
       LIMIT 1
     `
 
-    if (usuarios.length === 0) {
-      return new Response(
-        JSON.stringify({ erro: 'Usuário não encontrado.' }),
-        {
-          status: 404,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
+    if (!rows.length) {
+      return new Response(JSON.stringify({ erro: 'Usuário não encontrado.' }), { status: 404, headers: { 'Content-Type': 'application/json' } })
     }
 
-    const usuario = usuarios[0]
-
+    const usuario = rows[0]
+    if (usuario.status === 'pendente') {
+      return new Response(JSON.stringify({ erro: 'Cadastro pendente de autorização da editoria-chefe.' }), { status: 403, headers: { 'Content-Type': 'application/json' } })
+    }
     if (usuario.status !== 'ativo') {
-      return new Response(
-        JSON.stringify({ erro: 'Usuário inativo ou pendente.' }),
-        {
-          status: 403,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
+      return new Response(JSON.stringify({ erro: 'Usuário inativo.' }), { status: 403, headers: { 'Content-Type': 'application/json' } })
     }
 
-    const senhaOk = await bcrypt.compare(senha, usuario.senha_hash)
-
-    if (!senhaOk) {
-      return new Response(
-        JSON.stringify({ erro: 'Senha inválida.' }),
-        {
-          status: 401,
-          headers: { 'Content-Type': 'application/json' }
-        }
-      )
+    const senhaValida = await bcrypt.compare(senha, usuario.senha_hash)
+    if (!senhaValida) {
+      return new Response(JSON.stringify({ erro: 'Senha inválida.' }), { status: 401, headers: { 'Content-Type': 'application/json' } })
     }
 
-    return new Response(
-      JSON.stringify({
-        sucesso: true,
-        usuario: {
-          id: usuario.id,
-          nome: usuario.nome,
-          email: usuario.email,
-          perfil: usuario.perfil,
-          instituicao: usuario.instituicao,
-          orcid: usuario.orcid,
-          foto_perfil_url: usuario.foto_perfil_url,
-          consentimento_foto_publica: usuario.consentimento_foto_publica,
-          receber_noticias_email: usuario.receber_noticias_email
-        }
-      }),
-      {
-        status: 200,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    )
-
+    return new Response(JSON.stringify({ sucesso: true, usuario }), { status: 200, headers: { 'Content-Type': 'application/json' } })
   } catch (erro) {
-    return new Response(
-      JSON.stringify({
-        erro: 'Erro ao realizar login.',
-        detalhe: erro.message
-      }),
-      {
-        status: 500,
-        headers: { 'Content-Type': 'application/json' }
-      }
-    )
+    return new Response(JSON.stringify({ erro: 'Erro ao realizar login.', detalhe: erro.message }), { status: 500, headers: { 'Content-Type': 'application/json' } })
   }
 }
