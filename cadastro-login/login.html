@@ -191,9 +191,7 @@ select option{color:#111}
             window.location.href = 'painel-parecerista.html';
           } else if (perfil === 'editor_adjunto') {
             window.location.href = 'painel-editor.html';
-          } else if (perfil === 'editor') {
-            window.location.href = 'painel-editor-chefe.html';
-          } else {
+          } else if (perfil === 'editor_chefe') {window.location.href = 'painel-editor-chefe.html';} else {
             window.location.href = '../index.html';
           }
         }, 800);

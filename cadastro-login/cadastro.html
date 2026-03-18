@@ -7,7 +7,6 @@
   <title>Cadastro | Revista Inquietações</title>
   <link rel="icon" type="image/png" href="../assets/favicon.png">
   <style>
-  
 :root{
   --brand:#143b77;
   --brand-2:#2758a5;
@@ -25,96 +24,208 @@
   --err:#ffb0b0;
 }
 *{box-sizing:border-box}
-html,body{margin:0;padding:0;font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--text);background:
-  radial-gradient(circle at top left, rgba(198,162,71,.14), transparent 28%),
-  radial-gradient(circle at right, rgba(39,88,165,.18), transparent 28%),
-  linear-gradient(135deg,#04070d 0%,#09101d 45%,#10284c 100%);
-  min-height:100vh;}
+html,body{
+  margin:0;
+  padding:0;
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  color:var(--text);
+  background:
+    radial-gradient(circle at top left, rgba(198,162,71,.14), transparent 28%),
+    radial-gradient(circle at right, rgba(39,88,165,.18), transparent 28%),
+    linear-gradient(135deg,#04070d 0%,#09101d 45%,#10284c 100%);
+  min-height:100vh;
+  overflow:auto;
+}
 a{color:inherit}
-.shell{width:min(1320px,94vw);margin:0 auto;padding:26px 0 34px}
-.topbar{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;margin-bottom:18px}
-.brand{display:flex;align-items:center;gap:16px}
-.brand-mark{width:70px;height:70px;object-fit:contain;filter:drop-shadow(0 10px 18px rgba(0,0,0,.22))}
-.brand h1{margin:0;font-family:Georgia,"Times New Roman",serif;font-size:2rem;line-height:1.08}
-.brand p{margin:5px 0 0;color:var(--muted);line-height:1.5}
-.avatar-wrap{display:flex;align-items:center;gap:12px}
-.avatar-img{width:64px;height:64px;border-radius:50%;object-fit:cover;border:2px solid rgba(255,255,255,.18);background:rgba(255,255,255,.06)}
-.btn{appearance:none;border:none;border-radius:999px;min-height:42px;padding:10px 18px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;justify-content:center;transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease}
+.btn{
+  appearance:none;
+  border:none;
+  border-radius:999px;
+  min-height:42px;
+  padding:10px 18px;
+  font-weight:700;
+  cursor:pointer;
+  text-decoration:none;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  transition:transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+}
 .btn:hover{transform:translateY(-2px)}
-.btn-primary{background:linear-gradient(135deg,#1d4d9a,#143b77);color:#fff;box-shadow:0 12px 24px rgba(20,59,119,.28)}
-.btn-secondary{background:rgba(255,255,255,.08);color:#fff;border:1px solid rgba(255,255,255,.16)}
-.btn-soft{background:rgba(198,162,71,.12);color:#ffe7a8;border:1px solid rgba(198,162,71,.22)}
-.hero,.section-note,.glass-card,.floating-note,.list-card,.detail-card,.chat-card,.form-card{background:var(--card);border:1px solid var(--card-line);border-radius:24px;box-shadow:var(--shadow);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px)}
-.hero{padding:22px;margin-bottom:18px}
-.hero h2,.glass-card h3,.section-title,.detail-card h3,.chat-card h3,.form-card h3{margin:0 0 10px;font-family:Georgia,"Times New Roman",serif}
-.hero p,.glass-card p,.detail-card p,.chat-card p,.form-card p,.tiny,.meta-line{margin:0;color:var(--muted);line-height:1.65}
-.grid-2{display:grid;grid-template-columns:1.15fr .85fr;gap:18px}
-.grid-3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
-.grid-4{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:16px}
-.floating-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-.floating-note{padding:18px;transition:transform .18s ease, box-shadow .18s ease;border-radius:22px;position:relative;overflow:hidden}
-.floating-note::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:linear-gradient(90deg,var(--brand),var(--gold));opacity:.9}
-.floating-note:hover{transform:translateY(-6px) scale(1.02)}
-.color-blue::before{background:linear-gradient(90deg,#2a63c5,#7aa7ff)}
-.color-gold::before{background:linear-gradient(90deg,#b88728,#e2c061)}
-.color-green::before{background:linear-gradient(90deg,#2b8961,#84d6b2)}
-.color-red::before{background:linear-gradient(90deg,#9b4b4b,#e08e8e)}
-.color-purple::before{background:linear-gradient(90deg,#6a4b9b,#b69ce0)}
-.pill{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:.82rem;color:var(--soft)}
-.section-block{margin-top:18px}
-.section-header{display:flex;justify-content:space-between;align-items:flex-end;gap:14px;flex-wrap:wrap;margin-bottom:12px}
-.section-title{font-size:1.5rem}
-.list-card{padding:16px}
-.user-list,.submission-list,.message-list{display:grid;gap:12px}
-.user-item,.submission-item,.message-item{padding:14px;border:1px solid rgba(255,255,255,.10);border-radius:18px;background:rgba(255,255,255,.05);transition:transform .18s ease, border-color .18s ease}
-.user-item:hover,.submission-item:hover{transform:translateY(-3px);border-color:rgba(255,255,255,.18)}
-.user-head,.submission-head{display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap}
-.user-name,.submission-name{font-weight:700;font-size:1rem}
-.user-meta,.submission-meta{font-size:.9rem;color:var(--soft);line-height:1.55}
-.detail-card{padding:18px;display:none}
-.detail-card.is-open{display:block}
-.detail-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px}
-.metric-box{padding:14px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.10)}
-.metric-box strong{display:block;font-size:1.2rem;margin-top:4px}
-.form-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
-.field{display:flex;flex-direction:column;gap:7px}
-.field.full{grid-column:1 / -1}
-label{font-weight:700;font-size:.92rem}
-input,select,textarea{width:100%;border-radius:14px;border:1px solid rgba(255,255,255,.14);background:var(--input);color:#fff;padding:12px 14px;font-size:.96rem;outline:none}
-input:focus,select:focus,textarea:focus{border-color:rgba(198,162,71,.7);background:rgba(255,255,255,.12)}
-textarea{min-height:130px;resize:vertical}
-select option{color:#111}
-.note{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--muted);line-height:1.6}
-.chat-body{display:grid;gap:12px;max-height:300px;overflow:auto;padding-right:4px}
-.message-item small{display:block;color:var(--soft);margin-bottom:6px}
-.badge{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;font-size:.82rem;font-weight:700}
+.btn-primary{
+  background:linear-gradient(135deg,#1d4d9a,#143b77);
+  color:#fff;
+  box-shadow:0 12px 24px rgba(20,59,119,.28);
+}
+.btn-secondary{
+  background:rgba(255,255,255,.08);
+  color:#fff;
+  border:1px solid rgba(255,255,255,.16);
+}
+.glass-card{
+  background:var(--card);
+  border:1px solid var(--card-line);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+  backdrop-filter:blur(14px);
+  -webkit-backdrop-filter:blur(14px);
+}
+.badge{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 10px;
+  border-radius:999px;
+  font-size:.82rem;
+  font-weight:700;
+}
 .badge-blue{background:rgba(122,167,255,.12);color:#bdd4ff;border:1px solid rgba(122,167,255,.22)}
 .badge-green{background:rgba(143,227,168,.12);color:#b9f0ca;border:1px solid rgba(143,227,168,.22)}
 .badge-gold{background:rgba(255,217,143,.12);color:#ffe7b2;border:1px solid rgba(255,217,143,.22)}
-.badge-red{background:rgba(255,176,176,.12);color:#ffd0d0;border:1px solid rgba(255,176,176,.22)}
-.actions-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
-.muted-link{color:#ffe7a8;text-decoration:none}
-.muted-link:hover{text-decoration:underline}
-.helper{font-size:.9rem;color:var(--soft)}
-@media (max-width:1100px){.grid-2,.grid-3,.grid-4,.detail-grid,.form-grid{grid-template-columns:1fr}}
+.actions-row{
+  display:flex;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-top:14px;
+}
+.form-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:14px;
+}
+.field{
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+.field.full{grid-column:1 / -1}
+label{
+  font-weight:700;
+  font-size:.92rem;
+}
+input,select,textarea{
+  width:100%;
+  border-radius:14px;
+  border:1px solid rgba(255,255,255,.14);
+  background:var(--input);
+  color:#fff;
+  padding:12px 14px;
+  font-size:.96rem;
+  outline:none;
+}
+input:focus,select:focus,textarea:focus{
+  border-color:rgba(198,162,71,.7);
+  background:rgba(255,255,255,.12);
+}
+select option{color:#111}
+.note{
+  padding:14px 16px;
+  border-radius:16px;
+  background:rgba(255,255,255,.06);
+  border:1px solid rgba(255,255,255,.08);
+  color:var(--muted);
+  line-height:1.6;
+}
+.form-message{
+  min-height:20px;
+  margin-top:12px;
+  font-size:.85rem;
+  line-height:1.45;
+}
+.form-message.ok{color:var(--ok)}
+.form-message.err{color:var(--err)}
+.checkbox-line{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  margin-top:12px;
+  padding:10px 12px;
+  border-radius:14px;
+  background:rgba(255,255,255,.04);
+  border:1px solid rgba(255,255,255,.08);
+}
+.checkbox-line input{
+  width:18px;
+  height:18px;
+  min-height:auto;
+  margin-top:3px;
+}
+.shell{
+  width:min(1220px,96vw);
+  min-height:100vh;
+  display:grid;
+  grid-template-rows:auto 1fr;
+  gap:16px;
+  padding:20px 0 28px;
+  margin:0 auto;
+}
+.hero{
+  text-align:center;
+  max-width:760px;
+  margin:0 auto;
+}
+.hero-logo{
+  width:min(100%,340px);
+  max-height:130px;
+  object-fit:contain;
+  display:block;
+  margin:0 auto 10px;
+  filter:drop-shadow(0 10px 22px rgba(0,0,0,.28));
+}
+.hero h1{
+  margin:8px 0 8px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:clamp(1.8rem,2.6vw,2.9rem);
+  line-height:1.08;
+}
+.hero p{
+  max-width:760px;
+  margin:0 auto;
+  color:var(--muted);
+  font-size:.95rem;
+  line-height:1.6;
+}
+.stack{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:18px;
+  align-items:start;
+  min-height:0;
+  max-width:980px;
+  margin:0 auto;
+}
+.section-card{
+  padding:0;
+  overflow:hidden;
+  height:auto;
+}
+.section-head{
+  padding:16px 18px;
+  border-bottom:1px solid rgba(255,255,255,.10);
+  display:flex;
+  justify-content:space-between;
+  gap:12px;
+  align-items:flex-start;
+  flex-wrap:wrap;
+  background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02));
+}
+.section-head h2{
+  margin:0 0 4px;
+  font-family:Georgia,"Times New Roman",serif;
+  font-size:1.2rem;
+  line-height:1.2;
+}
+.section-head p{
+  margin:0;
+  color:var(--muted);
+  line-height:1.45;
+  font-size:.86rem;
+  max-width:620px;
+}
+.section-body{padding:18px}
 
-  html,body{overflow:hidden}
-  .shell{width:min(1220px,96vw);height:92vh;display:grid;grid-template-rows:auto 1fr;gap:16px}
-  .hero{text-align:center;max-width:760px;margin:0 auto}
-  .hero-logo{width:min(100%,340px);max-height:130px;object-fit:contain;display:block;margin:0 auto 10px;filter:drop-shadow(0 10px 22px rgba(0,0,0,.28))}
-  .hero h1{margin:8px 0 8px;font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.8rem,2.6vw,2.9rem);line-height:1.08}
-  .hero p{max-width:760px;margin:0 auto;color:var(--muted);font-size:.95rem;line-height:1.6}
-  .stack{display:grid;grid-template-columns:1.05fr 1.05fr .85fr;gap:16px;align-items:start;min-height:0}
-  .section-card{padding:0;overflow:hidden;height:100%}
-  .section-head{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.10);display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;background:linear-gradient(180deg, rgba(255,255,255,.06), rgba(255,255,255,.02))}
-  .section-head h2{margin:0 0 4px;font-family:Georgia,"Times New Roman",serif;font-size:1.2rem;line-height:1.2}
-  .section-head p{margin:0;color:var(--muted);line-height:1.45;font-size:.86rem;max-width:520px}
-  .section-body{padding:18px}
-  .form-message{min-height:20px;margin-top:12px;font-size:.85rem;line-height:1.45}
-  .form-message.ok{color:var(--ok)} .form-message.err{color:var(--err)}
-  .checkbox-line{display:flex;gap:10px;align-items:flex-start;margin-top:12px;padding:10px 12px;border-radius:14px;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
-  .checkbox-line input{width:18px;height:18px;min-height:auto;margin-top:3px}
-  @media (max-width:1180px){html,body{overflow:auto}.shell{height:auto;padding:20px 0}.stack{grid-template-columns:1fr}}
+@media (max-width:760px){
+  .form-grid{grid-template-columns:1fr}
+}
   </style>
 </head>
 <body>
@@ -132,6 +243,7 @@ select option{color:#111}
         <a class="btn btn-secondary" href="../index.html">Voltar à revista</a>
       </div>
     </header>
+
     <main class="stack">
       <section class="glass-card section-card" aria-labelledby="cadastro-autor">
         <div class="section-head">
@@ -147,8 +259,8 @@ select option{color:#111}
               <div class="field full"><label for="autor-nome">Nome</label><input type="text" id="autor-nome" name="nome" placeholder="Digite o nome completo" required></div>
               <div class="field"><label for="autor-email">E-mail</label><input type="email" id="autor-email" name="email" placeholder="Digite o e-mail" required></div>
               <div class="field"><label for="autor-senha">Senha de usuário</label><input type="password" id="autor-senha" name="senha" placeholder="Crie uma senha" required></div>
-              <div class="field"><label for="autor-orcid">ORCID (se tiver)</label><input type="url" id="autor-orcid" name="orcid" placeholder="https://orcid.org/..." ></div>
-              <div class="field"><label for="autor-lattes">Lattes (se tiver)</label><input type="url" id="autor-lattes" name="lattes" placeholder="http://lattes.cnpq.br/..." ></div>
+              <div class="field"><label for="autor-orcid">ORCID (se tiver)</label><input type="url" id="autor-orcid" name="orcid" placeholder="https://orcid.org/..."></div>
+              <div class="field"><label for="autor-lattes">Lattes (se tiver)</label><input type="url" id="autor-lattes" name="lattes" placeholder="http://lattes.cnpq.br/..."></div>
               <div class="field"><label for="autor-origem">Origem</label><select id="autor-origem" name="origem"><option value="Brasil">Brasil</option><option value="Argentina">Argentina</option><option value="Chile">Chile</option><option value="Colômbia">Colômbia</option><option value="México">México</option><option value="Portugal">Portugal</option><option value="Outro">Outro</option></select></div>
               <div class="field"><label for="autor-telefone">Telefone de contato</label><input type="tel" id="autor-telefone" name="telefone" placeholder="(00) 00000-0000"></div>
               <div class="field full checkbox-line"><input type="checkbox" id="autor-news" name="receber_noticias" value="sim"><label for="autor-news">Autorizo a Revista Inquietações a enviar, por e-mail, notícias sobre a revista, publicações e chamadas para dossiês temáticos.</label></div>
@@ -173,8 +285,8 @@ select option{color:#111}
               <div class="field full"><label for="editora-nome">Nome</label><input type="text" id="editora-nome" name="nome" placeholder="Digite o nome completo" required></div>
               <div class="field"><label for="editora-email">E-mail</label><input type="email" id="editora-email" name="email" placeholder="Digite o e-mail" required></div>
               <div class="field"><label for="editora-senha">Senha de usuário</label><input type="password" id="editora-senha" name="senha" placeholder="Crie uma senha" required></div>
-              <div class="field"><label for="editora-orcid">ORCID (se tiver)</label><input type="url" id="editora-orcid" name="orcid" placeholder="https://orcid.org/..." ></div>
-              <div class="field"><label for="editora-lattes">Lattes (se tiver)</label><input type="url" id="editora-lattes" name="lattes" placeholder="http://lattes.cnpq.br/..." ></div>
+              <div class="field"><label for="editora-orcid">ORCID (se tiver)</label><input type="url" id="editora-orcid" name="orcid" placeholder="https://orcid.org/..."></div>
+              <div class="field"><label for="editora-lattes">Lattes (se tiver)</label><input type="url" id="editora-lattes" name="lattes" placeholder="http://lattes.cnpq.br/..."></div>
               <div class="field"><label for="editora-origem">Origem</label><select id="editora-origem" name="origem"><option value="Brasil">Brasil</option><option value="Argentina">Argentina</option><option value="Chile">Chile</option><option value="Colômbia">Colômbia</option><option value="México">México</option><option value="Portugal">Portugal</option><option value="Outro">Outro</option></select></div>
               <div class="field"><label for="editora-telefone">Telefone de contato</label><input type="tel" id="editora-telefone" name="telefone" placeholder="(00) 00000-0000"></div>
               <div class="field full checkbox-line"><input type="checkbox" id="editora-news" name="receber_noticias" value="sim"><label for="editora-news">Autorizo a Revista Inquietações a enviar, por e-mail, notícias sobre a revista, publicações e chamadas para dossiês temáticos.</label></div>
@@ -214,12 +326,15 @@ select option{color:#111}
     const form = document.getElementById(formId);
     const msg = document.getElementById(msgId);
     if (!form || !msg) return;
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       msg.textContent = '';
       msg.className = 'form-message';
+
       const botao = form.querySelector('button[type="submit"]');
       const dados = new FormData(form);
+
       const payload = {
         nome: dados.get('nome') || '',
         email: dados.get('email') || '',
@@ -231,22 +346,34 @@ select option{color:#111}
         telefone: dados.get('telefone') || '',
         receber_noticias: dados.get('receber_noticias') === 'sim'
       };
+
       try {
         botao.disabled = true;
         botao.textContent = 'Enviando...';
+
         const resposta = await fetch('/.netlify/functions/cadastro', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify(payload)
         });
+
         const texto = await resposta.text();
         let resultado = {};
-        try { resultado = texto ? JSON.parse(texto) : {}; }
-        catch { throw new Error(`Resposta inválida da função: ${texto || 'vazia'}`); }
-        if (!resposta.ok) throw new Error(resultado.erro || resultado.detalhe || 'Não foi possível concluir o cadastro.');
+
+        try {
+          resultado = texto ? JSON.parse(texto) : {};
+        } catch {
+          throw new Error(`Resposta inválida da função: ${texto || 'vazia'}`);
+        }
+
+        if (!resposta.ok) {
+          throw new Error(resultado.erro || resultado.detalhe || 'Não foi possível concluir o cadastro.');
+        }
+
         msg.textContent = 'Cadastro realizado com sucesso. Você já pode acessar a página de login.';
         msg.classList.add('ok');
         form.reset();
+
       } catch (erro) {
         msg.textContent = erro.message || 'Erro ao cadastrar.';
         msg.classList.add('err');
@@ -259,6 +386,7 @@ select option{color:#111}
       }
     });
   }
+
   integrarFormulario('form-autor', 'autor', 'msg-autor');
   integrarFormulario('form-editora', 'editor_adjunto', 'msg-editora');
   integrarFormulario('form-parecerista', 'parecerista', 'msg-parecerista');

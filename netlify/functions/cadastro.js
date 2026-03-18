@@ -22,15 +22,19 @@ export default async (req) => {
       email,
       senha,
       perfil,
+      instituicao,
       orcid,
       lattes,
       origem,
-      telefone
+      telefone,
+      foto_perfil_url,
+      consentimento_foto_publica,
+      receber_noticias_email
     } = body
 
     if (!nome || !email || !senha || !perfil) {
       return new Response(
-        JSON.stringify({ erro: 'Preencha os campos obrigatórios.' }),
+        JSON.stringify({ erro: 'Preencha nome, e-mail, senha e perfil.' }),
         {
           status: 400,
           headers: { 'Content-Type': 'application/json' }
@@ -38,7 +42,12 @@ export default async (req) => {
       )
     }
 
-    const perfisPermitidos = ['autor', 'parecerista', 'editor_adjunto']
+    const perfisPermitidos = [
+      'autor',
+      'parecerista',
+      'editor_adjunto',
+      'editor_chefe'
+    ]
 
     if (!perfisPermitidos.includes(perfil)) {
       return new Response(
@@ -51,7 +60,10 @@ export default async (req) => {
     }
 
     const existente = await sql`
-      SELECT id FROM usuarios WHERE email = ${email} LIMIT 1
+      SELECT id
+      FROM usuarios
+      WHERE email = ${email}
+      LIMIT 1
     `
 
     if (existente.length > 0) {
@@ -72,10 +84,15 @@ export default async (req) => {
         email,
         senha_hash,
         perfil,
+        instituicao,
         orcid,
         lattes,
         origem,
         telefone,
+        foto_perfil_url,
+        foto_perfil_aprovada,
+        consentimento_foto_publica,
+        receber_noticias_email,
         status
       )
       VALUES (
@@ -83,13 +100,27 @@ export default async (req) => {
         ${email},
         ${senhaHash},
         ${perfil},
+        ${instituicao || null},
         ${orcid || null},
         ${lattes || null},
         ${origem || null},
         ${telefone || null},
+        ${foto_perfil_url || 'assets/avatares/avatar-padrao.png'},
+        ${false},
+        ${Boolean(consentimento_foto_publica)},
+        ${Boolean(receber_noticias_email)},
         'ativo'
       )
-      RETURNING id, nome, email, perfil
+      RETURNING
+        id,
+        nome,
+        email,
+        perfil,
+        instituicao,
+        orcid,
+        receber_noticias_email,
+        foto_perfil_url,
+        consentimento_foto_publica
     `
 
     return new Response(

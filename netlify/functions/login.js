@@ -29,7 +29,19 @@ export default async (req) => {
     }
 
     const usuarios = await sql`
-      SELECT * FROM usuarios
+      SELECT
+        id,
+        nome,
+        email,
+        senha_hash,
+        perfil,
+        status,
+        instituicao,
+        orcid,
+        foto_perfil_url,
+        consentimento_foto_publica,
+        receber_noticias_email
+      FROM usuarios
       WHERE email = ${email}
       LIMIT 1
     `
@@ -46,7 +58,7 @@ export default async (req) => {
 
     const usuario = usuarios[0]
 
-    if (usuario.status && usuario.status !== 'ativo') {
+    if (usuario.status !== 'ativo') {
       return new Response(
         JSON.stringify({ erro: 'Usuário inativo ou pendente.' }),
         {
@@ -75,7 +87,12 @@ export default async (req) => {
           id: usuario.id,
           nome: usuario.nome,
           email: usuario.email,
-          perfil: usuario.perfil
+          perfil: usuario.perfil,
+          instituicao: usuario.instituicao,
+          orcid: usuario.orcid,
+          foto_perfil_url: usuario.foto_perfil_url,
+          consentimento_foto_publica: usuario.consentimento_foto_publica,
+          receber_noticias_email: usuario.receber_noticias_email
         }
       }),
       {
