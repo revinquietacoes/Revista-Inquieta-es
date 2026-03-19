@@ -130,6 +130,11 @@ white-space:nowrap;
 .system-access-message.is-error{color:#9f2f2f;}
 .system-access-message.is-success{color:#21643a;}
 .system-access-note{font-size:.88rem;color:#617089;line-height:1.6;}
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.acesso-pill{display:flex;align-items:center;gap:8px;padding:6px 8px;}
+.topbar-btn{display:inline-flex;align-items:center;justify-content:center;padding:6px 14px;border-radius:999px;background:#1f3c88;color:#fff;text-decoration:none;font-size:.85rem;font-weight:600;transition:all .15s ease;}
+.topbar-btn.secondary{background:#2c55a5;}
+.topbar-btn:hover{transform:translateY(-1px);opacity:.95;}
 @media (max-width:760px){.system-access-band{padding:0 18px;}.system-access-card{padding:16px 18px;}.system-access-dialog{width:min(100%,94vw);}.system-access-grid{grid-template-columns:1fr;}}
 </style>
 
@@ -144,9 +149,13 @@ white-space:nowrap;
     </nav>
 
     <div class="topbar">
-      <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-      <div class="pill acesso-pill"> <a href="#" onclick="abrirCadastro()">Cadastro</a> <span>•</span> <a href="#" onclick="abrirLogin()">Login</a> </div>
-    </div>
+  <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
+
+  <div class="pill acesso-pill">
+    <a href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a>
+    <a href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a>
+  </div>
+</div>
 
     <header class="masthead">
       <div class="masthead-inner">
