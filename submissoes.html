@@ -36,16 +36,6 @@
 .note-box{padding:18px 20px;border-radius:18px;border:1px solid #dbe6f2;background:#f8fbff;margin-bottom:18px;}
 .note-box p{margin:0 0 10px;line-height:1.72;}
 .note-box p:last-child{margin-bottom:0;}
-.form-panel{border:1px solid var(--line);border-radius:24px;background:#fff;box-shadow:0 18px 34px rgba(16,35,63,0.08);overflow:hidden;}
-.form-panel-head{padding:18px 22px;background:linear-gradient(180deg,#fbfcfe 0%,#f6f9fc 100%);border-bottom:1px solid rgba(18,45,82,0.08);display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;}
-.form-panel-head h3{margin:0;color:var(--brand);font-size:1.08rem;}
-.form-panel-head p{margin:4px 0 0;color:#5a6d85;font-size:.95rem;}
-.form-panel-body{padding:0;background:#fff;}
-.form-embed-wrap{position:relative;width:100%;min-height:980px;background:#f7fafc;}
-.form-embed{display:block;width:100%;height:980px;border:0;background:#fff;}
-.fallback-box{padding:18px 20px;border-top:1px solid rgba(18,45,82,0.08);background:#fcfdff;}
-.fallback-box p{margin:0 0 12px;color:#53657e;line-height:1.7;}
-.fallback-box p:last-child{margin-bottom:0;}
 .expandable-list{display:grid;gap:14px;}
 .expandable-item{border:1px solid var(--line);border-radius:20px;background:#fff;box-shadow:var(--shadow-soft);overflow:hidden;}
 .expandable-head{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 20px;}
@@ -69,9 +59,12 @@
 .quick-card h3{margin:0;color:var(--brand);font-size:1rem;}
 .quick-card p{margin:0;color:#556780;line-height:1.65;}
 .quick-card .cta-row{margin-top:4px;}
-.embed-tip{font-size:.92rem;color:#5d6f87;}
 .mode-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;margin-top:18px;}
-.topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; } .acesso-pill{ display:flex; align-items:center; gap:8px; padding:6px 8px; } .topbar-btn{ display:inline-flex; align-items:center; justify-content:center; padding:6px 14px; border-radius:999px; background:#1f3c88; color:#fff; text-decoration:none; font-size:.85rem; font-weight:600; transition:all .15s ease; } .topbar-btn.secondary{ background:#2c55a5; } .topbar-btn:hover{ transform:translateY(-1px); opacity:.95; }
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;}
+.acesso-pill{display:flex;align-items:center;gap:8px;padding:6px 8px;}
+.topbar-btn{display:inline-flex;align-items:center;justify-content:center;padding:6px 14px;border-radius:999px;background:#1f3c88;color:#fff;text-decoration:none;font-size:.85rem;font-weight:600;transition:all .15s ease;}
+.topbar-btn.secondary{background:#2c55a5;}
+.topbar-btn:hover{transform:translateY(-1px);opacity:.95;}
 .mode-card{border:1px solid var(--line);border-radius:18px;background:#fff;box-shadow:var(--shadow-soft);padding:18px;display:grid;gap:8px;}
 .mode-card strong{color:var(--brand);font-size:1rem;}
 .mode-card span{color:#596b84;line-height:1.65;}
@@ -80,9 +73,8 @@
 .site-nav-menu{display:flex;flex-wrap:nowrap;align-items:center;justify-content:center;gap:5px;overflow-x:auto;scrollbar-width:none;}
 .site-nav-menu::-webkit-scrollbar{display:none;}
 .site-nav-menu a{font-size:0.88rem;padding:8px 8px;white-space:nowrap;}
-@media (max-width:860px){.form-panel-head{padding:16px 18px;}.form-embed-wrap{min-height:1080px;}.form-embed{height:1080px;}}
 @media (max-width:700px){.expandable-head{flex-direction:column;align-items:flex-start;}.expand-toggle{align-self:flex-start;}}
-@media (max-width:560px){.footer-license-block img{width:74px;}.footer-academic-main{font-size:.96rem;}.footer-license-caption{font-size:.88rem;}.form-embed-wrap{min-height:1180px;}.form-embed{height:1180px;}}
+@media (max-width:560px){.footer-license-block img{width:74px;}.footer-academic-main{font-size:.96rem;}.footer-license-caption{font-size:.88rem;}}
 </style>
 </head>
 <body>
@@ -93,27 +85,28 @@
 <a href="#barra-lateral">Ir para barra lateral</a>
 <a href="#rodape">Ir para rodapé</a>
 </nav>
+
 <div class="topbar">
   <div class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-
   <div class="pill acesso-pill">
-    <a class='topbar-btn' href='/cadastro-login/cadastro'>Cadastrar-se</a>
-    <a class='topbar-btn secondary' href='/cadastro-login/login'>Entrar</a>
+    <a class="topbar-btn" href="/cadastro-login/cadastro.html">Cadastrar-se</a>
+    <a class="topbar-btn secondary" href="/cadastro-login/login.html">Entrar</a>
   </div>
 </div>
+
 <header class="masthead">
 <div class="masthead-inner">
 <div>
 <p class="kicker">Portal científico</p>
 <h1>Submissões</h1>
 <p class="hero-text">
-Esta página reúne o canal oficial de envio da Revista Inquietações. O formulário único recebe trabalhos acadêmicos, homenagens e registros editoriais correlatos, preservando um fluxo mais claro, unificado e compatível com a organização do periódico.
+Esta página reúne o canal oficial de envio da Revista Inquietações. Para submeter um trabalho, é necessário acessar o sistema editorial da revista. Se você já estiver logado(a), o acesso segue diretamente para seu painel.
 </p>
 <div class="masthead-meta">
 <div class="masthead-card"><strong>Submissão</strong>Fluxo contínuo</div>
 <div class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
-<div class="masthead-card"><strong>Canal</strong>Formulário oficial</div>
-<div class="masthead-card"><strong>Modo</strong>No portal ou em nova aba</div>
+<div class="masthead-card"><strong>Canal</strong>Sistema editorial</div>
+<div class="masthead-card"><strong>Acesso</strong>Mediante login</div>
 </div>
 </div>
 <div class="banner-card">
@@ -121,25 +114,27 @@ Esta página reúne o canal oficial de envio da Revista Inquietações. O formul
 </div>
 </div>
 </header>
+
 <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
 <button class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
 <div class="site-nav-menu">
-<a href='/'>Início</a>
-<a href='/edicao-atual'>Atual</a>
-<a href='/conteudos'>Conteúdos</a>
-<a href='/evento'>Evento</a>
-<a href='/editora-revista-inquietacoes/'>Editora</a>
-<a href='/sobre'>Sobre</a>
-<a href='/equipe-editorial'>Equipe Editorial</a>
-<a href='/noticias'>Notícias</a>
-<a href='/politicas-editoriais'>Políticas</a>
-<a href='/diretrizes-autores'>Diretrizes</a>
-<a class='active' href='/submissoes'>Submissões</a>
-<a href='/templates'>Templates</a>
-<a href='/contato'>Contato</a>
-<a href='/homenagens'>Homenagens</a>
+<a href="/">Início</a>
+<a href="/edicao-atual">Atual</a>
+<a href="/conteudos">Conteúdos</a>
+<a href="/evento">Evento</a>
+<a href="/editora-revista-inquietacoes/">Editora</a>
+<a href="/sobre">Sobre</a>
+<a href="/equipe-editorial">Equipe Editorial</a>
+<a href="/noticias">Notícias</a>
+<a href="/politicas-editoriais">Políticas</a>
+<a href="/diretrizes-autores">Diretrizes</a>
+<a class="active" href="/submissoes">Submissões</a>
+<a href="/templates">Templates</a>
+<a href="/contato">Contato</a>
+<a href="/homenagens">Homenagens</a>
 </div>
 </nav>
+
 <div class="portal-grid sidebar-compact">
 <aside class="sidebar" id="barra-lateral">
 <section class="sidebar-block">
@@ -147,10 +142,11 @@ Esta página reúne o canal oficial de envio da Revista Inquietações. O formul
 <div class="side-nav-card">
 <a class="side-nav-link" href="#visao-geral">Visão geral</a>
 <a class="side-nav-link" href="#antes-de-enviar">Antes de enviar</a>
-<a class="side-nav-link" href="#painel-unificado">Painel de submissão</a>
+<a class="side-nav-link" href="#acesso-submissao">Acesso à submissão</a>
 <a class="side-nav-link" href="#duvidas">Informações úteis</a>
 </div>
 </section>
+
 <section class="sidebar-block">
 <h2>Contato institucional</h2>
 <div class="data-list">
@@ -165,42 +161,45 @@ Esta página reúne o canal oficial de envio da Revista Inquietações. O formul
 </div>
 </section>
 </aside>
+
 <main class="content" id="conteudo-principal">
 <section class="panel" id="visao-geral">
 <div class="panel-head">
 <h2>Canal oficial de envio</h2>
-<p>Submissões organizadas em ambiente único, com leitura clara e navegação compatível com o portal do periódico.</p>
+<p>Submissões organizadas no sistema editorial da revista, com acesso por login e encaminhamento por perfil.</p>
 </div>
 <div class="panel-body">
 <div class="submission-highlight">
 <div class="hero-note">Submissão acadêmica • homenagem • registro editorial</div>
 <p>
-A Revista Inquietações centraliza nesta página o envio de <strong>manuscritos</strong>, <strong>homenagens</strong> e outras modalidades previstas no formulário institucional. O objetivo é oferecer um ambiente mais claro para autores, autoras e colaboradores(as), reduzindo dispersões e fortalecendo a unidade editorial do periódico.
+A Revista Inquietações centraliza o envio de manuscritos, homenagens e registros editoriais em seu sistema interno. Esse procedimento organiza melhor o fluxo de submissão, a triagem editorial e o acompanhamento por autores(as), pareceristas e equipe editorial.
 </p>
 <p>
-O formulário pode ser aberto em nova guia ou preenchido sem sair do portal, por meio do painel expansível logo abaixo. Assim, o(a) autor(a) pode consultar diretrizes, templates e orientações do próprio site enquanto organiza a submissão.
+Aqui você pode acessar sua conta, criar cadastro ou seguir diretamente para o painel correspondente ao seu perfil, caso já esteja com login ativo no navegador.
 </p>
 <div class="cta-row">
-<a class="btn" href="#painel-unificado">Ir ao painel de submissão</a>
-<a class="btn secondary" href="https://script.google.com/macros/s/AKfycbzu38zajurMRRA9md-S2otmDvzmt6WlcbZAbi9dCEBKcuZDU7VpBXNYdSORtVXPFEoK/exec" target="_blank" rel="noopener noreferrer">Abrir em nova aba</a>
+<a class="btn" href="#" onclick="irParaSubmissao()">Submeter trabalho</a>
+<a class="btn secondary" href="#" onclick="irParaSubmissao()">Entrar para submeter</a>
 </div>
 </div>
+
 <div class="mode-grid">
 <div class="mode-card">
-<strong>Preenchimento no portal</strong>
-<span>Abra o formulário dentro da própria página ao clicar em <em>Expandir</em> no painel oficial.</span>
+<strong>Acesso por login</strong>
+<span>O envio de trabalhos ocorre no ambiente restrito da revista, com identificação do(a) usuário(a).</span>
 </div>
 <div class="mode-card">
-<strong>Abertura externa</strong>
-<span>Use a nova guia quando desejar mais espaço de leitura ou preenchimento contínuo.</span>
+<strong>Redirecionamento automático</strong>
+<span>Se você já estiver logado(a), o sistema abre diretamente o painel correspondente ao seu perfil.</span>
 </div>
 <div class="mode-card">
 <strong>Fluxo editorial integrado</strong>
-<span>Os envios são organizados em ambiente único para facilitar triagem e encaminhamento inicial.</span>
+<span>O sistema organiza submissões, avaliações, dossiês temáticos e decisões editoriais em um único ambiente.</span>
 </div>
 </div>
 </div>
 </section>
+
 <section class="panel" id="antes-de-enviar" style="margin-top:20px;">
 <div class="panel-head">
 <h2>Antes de enviar</h2>
@@ -222,9 +221,10 @@ O formulário pode ser aberto em nova guia ou preenchido sem sair do portal, por
 </div>
 <div class="info-box">
 <h4>Dados completos</h4>
-<p>Tenha em mãos todas as informações exigidas pelo formulário para evitar lacunas e retrabalho no preenchimento.</p>
+<p>Tenha em mãos todas as informações exigidas pelo sistema para evitar lacunas e retrabalho no preenchimento.</p>
 </div>
 </div>
+
 <div class="journal-callout" style="margin-top:18px;">
 <p>
 A submissão bem preparada favorece a triagem editorial inicial e contribui para um fluxo mais consistente entre o envio, a verificação preliminar e as etapas subsequentes do periódico.
@@ -232,81 +232,46 @@ A submissão bem preparada favorece a triagem editorial inicial e contribui para
 </div>
 </div>
 </section>
-<section class="panel" id="painel-unificado" style="margin-top:20px;">
+
+<section class="panel" id="acesso-submissao" style="margin-top:20px;">
 <div class="panel-head">
-<h2>Painel oficial de submissão</h2>
-<p>Formulário único para materiais acadêmicos, homenagens e demais envios previstos pela revista.</p>
+<h2>Acesso à submissão</h2>
+<p>Entrada no sistema editorial da revista.</p>
 </div>
 <div class="panel-body">
 <div class="note-box">
 <p>
-O formulário abaixo constitui o <strong>canal oficial de submissão</strong> da Revista Inquietações. Ele pode ser acessado diretamente em nova aba ou incorporado nesta página para preenchimento sem saída do portal.
+Para realizar uma submissão, é necessário acessar o sistema interno da Revista Inquietações.
 </p>
 <p>
-No modo interno, clique em <strong>Expandir</strong> para carregar o formulário no interior do card. Caso o navegador limite a incorporação, utilize a abertura externa.
+Aqui você pode entrar com sua conta ou criar cadastro para iniciar o envio do seu trabalho acadêmico, acompanhar avaliações e interagir com a equipe editorial.
 </p>
+<div class="cta-row">
+<a class="btn" href="#" onclick="irParaSubmissao()">Acessar sistema de submissão</a>
+<a class="btn secondary" href="/cadastro-login/cadastro.html">Criar conta</a>
 </div>
+</div>
+
 <div class="quick-actions">
 <div class="quick-card">
-<h3>Submeter no próprio portal</h3>
-<p>Abra o formulário integrado sem sair da página de submissões e mantenha acesso imediato às informações do periódico.</p>
-<p class="embed-tip">Indicado para quem deseja consultar diretrizes e orientações durante o preenchimento.</p>
+<h3>Usuário(a) já cadastrado(a)</h3>
+<p>Entre no sistema e siga diretamente para o painel correspondente ao seu perfil.</p>
+<div class="cta-row">
+<a class="btn secondary" href="#" onclick="irParaSubmissao()">Ir ao conteúdo</a>
 </div>
+</div>
+
 <div class="quick-card">
-<h3>Abrir em nova guia</h3>
-<p>Use a versão externa para um preenchimento mais amplo e com foco exclusivo no formulário oficial.</p>
+<h3>Novo cadastro</h3>
+<p>Crie sua conta para iniciar a submissão de trabalhos e acompanhar o fluxo editorial do periódico.</p>
 <div class="cta-row">
-<a class="btn secondary" href="https://script.google.com/macros/s/AKfycbzu38zajurMRRA9md-S2otmDvzmt6WlcbZAbi9dCEBKcuZDU7VpBXNYdSORtVXPFEoK/exec" target="_blank" rel="noopener noreferrer">Abrir formulário</a>
-</div>
-</div>
-</div>
-<div class="expandable-list" style="margin-top:18px;">
-<div class="expandable-item" id="card-formulario-principal">
-<div class="expandable-head">
-<div class="expandable-title">
-<h3>Formulário oficial de submissão</h3>
-<p>Ao clicar em expandir, o formulário será exibido dentro desta página.</p>
-</div>
-<button class="expand-toggle" type="button" aria-expanded="false" data-embed-target="embed-submissao"></button>
-</div>
-<div class="expandable-body">
-<div class="form-panel">
-<div class="form-panel-head">
-<div>
-<h3>Submissão integrada</h3>
-<p>Materiais acadêmicos, homenagens e envios correlatos em ambiente único.</p>
-</div>
-<div class="cta-row">
-<a class="btn secondary" href="https://script.google.com/macros/s/AKfycbzu38zajurMRRA9md-S2otmDvzmt6WlcbZAbi9dCEBKcuZDU7VpBXNYdSORtVXPFEoK/exec" target="_blank" rel="noopener noreferrer">Abrir em nova aba</a>
-</div>
-</div>
-<div class="form-panel-body">
-<div class="form-embed-wrap">
-<iframe
-id="embed-submissao"
-class="form-embed"
-data-src="https://script.google.com/macros/s/AKfycbzu38zajurMRRA9md-S2otmDvzmt6WlcbZAbi9dCEBKcuZDU7VpBXNYdSORtVXPFEoK/exec"
-title="Formulário oficial de submissão da Revista Inquietações"
-loading="lazy"
-referrerpolicy="no-referrer-when-downgrade"
-allowfullscreen>
-</iframe>
-</div>
-<div class="fallback-box">
-<p>
-Se o painel incorporado não carregar corretamente, utilize o acesso direto abaixo:
-</p>
-<div class="cta-row">
-<a class="btn" href="https://script.google.com/macros/s/AKfycbzu38zajurMRRA9md-S2otmDvzmt6WlcbZAbi9dCEBKcuZDU7VpBXNYdSORtVXPFEoK/exec" target="_blank" rel="noopener noreferrer">Ir para o formulário</a>
-</div>
-</div>
-</div>
-</div>
+<a class="btn secondary" href="/cadastro-login/cadastro.html">Abrir cadastro</a>
 </div>
 </div>
 </div>
 </div>
 </section>
+
 <section class="panel" id="duvidas" style="margin-top:20px;">
 <div class="panel-head">
 <h2>Informações úteis</h2>
@@ -325,7 +290,7 @@ Se o painel incorporado não carregar corretamente, utilize o acesso direto abai
 <div class="expandable-body">
 <div class="note-box" style="margin-bottom:0;">
 <p>
-Toda submissão deve ser encaminhada exclusivamente pelo <strong>formulário oficial</strong> disponibilizado nesta página. A centralização do envio favorece uma triagem mais organizada e reduz ambiguidades no fluxo editorial.
+Toda submissão é encaminhada exclusivamente pelo sistema editorial da revista. A centralização do envio favorece uma triagem mais organizada e reduz ambiguidades no fluxo editorial.
 </p>
 <p>
 Recomenda-se revisar com atenção todos os campos preenchidos antes da conclusão do envio.
@@ -333,6 +298,7 @@ Recomenda-se revisar com atenção todos os campos preenchidos antes da conclus�
 </div>
 </div>
 </div>
+
 <div class="expandable-item">
 <div class="expandable-head">
 <div class="expandable-title">
@@ -344,7 +310,7 @@ Recomenda-se revisar com atenção todos os campos preenchidos antes da conclus�
 <div class="expandable-body">
 <div class="note-box" style="margin-bottom:0;">
 <p>
-As normas de preparação do texto permanecem disponíveis na página de <strong>diretrizes para autores</strong>. Antes do envio, é importante conferir modalidade, extensão, estrutura, adequação temática e regularidade formal do material.
+As normas de preparação do texto permanecem disponíveis na página de diretrizes para autores. Antes do envio, é importante conferir modalidade, extensão, estrutura, adequação temática e regularidade formal do material.
 </p>
 <p>
 Também é aconselhável revisar título, autoria, resumo, palavras-chave, referências e a qualidade geral da redação.
@@ -352,6 +318,7 @@ Também é aconselhável revisar título, autoria, resumo, palavras-chave, refer
 </div>
 </div>
 </div>
+
 <div class="expandable-item">
 <div class="expandable-head">
 <div class="expandable-title">
@@ -363,7 +330,7 @@ Também é aconselhável revisar título, autoria, resumo, palavras-chave, refer
 <div class="expandable-body">
 <div class="note-box" style="margin-bottom:0;">
 <p>
-Após o envio, o material passa por uma <strong>triagem editorial inicial</strong>, na qual são observados elementos como pertinência temática, completude das informações e conformidade mínima com a proposta do periódico.
+Após o envio, o material passa por uma triagem editorial inicial, na qual são observados elementos como pertinência temática, completude das informações e conformidade mínima com a proposta do periódico.
 </p>
 <p>
 Quando cabível, o texto segue para as etapas subsequentes do fluxo editorial, segundo os critérios internos da revista.
@@ -371,6 +338,7 @@ Quando cabível, o texto segue para as etapas subsequentes do fluxo editorial, s
 </div>
 </div>
 </div>
+
 <div class="expandable-item">
 <div class="expandable-head">
 <div class="expandable-title">
@@ -382,7 +350,7 @@ Quando cabível, o texto segue para as etapas subsequentes do fluxo editorial, s
 <div class="expandable-body">
 <div class="note-box" style="margin-bottom:0;">
 <p>
-Se houver dificuldade técnica no carregamento do formulário, no envio de dados ou na incorporação do painel, utilize os canais institucionais da Revista Inquietações.
+Se houver dificuldade técnica no acesso ao sistema, no login ou no envio de dados, utilize os canais institucionais da Revista Inquietações.
 </p>
 <p>
 Sempre que possível, descreva com clareza o problema encontrado, indicando etapa, navegador ou comportamento observado, para facilitar o retorno da equipe editorial.
@@ -391,14 +359,16 @@ Sempre que possível, descreva com clareza o problema encontrado, indicando etap
 </div>
 </div>
 </div>
+
 <div class="cta-row" style="margin-top:18px;">
-<a class='btn secondary' href='/diretrizes-autores'>Consultar diretrizes</a>
-<a class='btn secondary' href='/templates'>Ver templates</a>
+<a class="btn secondary" href="/diretrizes-autores">Consultar diretrizes</a>
+<a class="btn secondary" href="/templates">Ver templates</a>
 </div>
 </div>
 </section>
 </main>
 </div>
+
 <footer class="footer" id="rodape">
 <div class="footer-academic">
 <div class="footer-academic-main">
@@ -412,14 +382,15 @@ Este portal adota licenciamento aberto, favorecendo a circulação, a leitura e 
 </div>
 </div>
 <div class="footer-meta">
-<a href='/sobre'>Sobre</a>
-<a href='/politicas-editoriais'>Políticas</a>
-<a href='/submissoes'>Submissões</a>
-
+<a href="/sobre">Sobre</a>
+<a href="/politicas-editoriais">Políticas</a>
+<a href="/submissoes">Submissões</a>
 <a href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer">Código de Conduta</a>
-<a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div>
+<a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a>
+</div>
 </footer>
 </div>
+
 <script>
 const navToggle=document.querySelector('.site-nav-toggle');
 const navMenu=document.querySelector('.site-nav-menu');
@@ -429,22 +400,37 @@ if(navToggle && navMenu){
     navToggle.setAttribute('aria-expanded', String(isOpen));
   };
 }
+
 const expandableButtons=document.querySelectorAll('.expand-toggle');
 expandableButtons.forEach(button=>{
   button.addEventListener('click', ()=>{
     const item=button.closest('.expandable-item');
     const isOpen=item.classList.toggle('is-open');
     button.setAttribute('aria-expanded', String(isOpen));
-    const targetId=button.getAttribute('data-embed-target');
-    if(isOpen && targetId){
-      const iframe=document.getElementById(targetId);
-      if(iframe && !iframe.getAttribute('src')){
-        iframe.setAttribute('src', iframe.getAttribute('data-src'));
-      }
-    }
   });
 });
+
+function irParaSubmissao() {
+  const usuario = JSON.parse(localStorage.getItem('usuario_logado') || 'null');
+
+  if (usuario && usuario.perfil) {
+    if (usuario.perfil === 'autor') {
+      window.location.href = '/cadastro-login/painel-autor.html';
+    } else if (usuario.perfil === 'parecerista') {
+      window.location.href = '/cadastro-login/painel-parecerista.html';
+    } else if (usuario.perfil === 'editor_adjunto') {
+      window.location.href = '/cadastro-login/painel-editor.html';
+    } else if (usuario.perfil === 'editor_chefe') {
+      window.location.href = '/cadastro-login/painel-editor-chefe.html';
+    } else {
+      window.location.href = '/cadastro-login/login.html';
+    }
+  } else {
+    window.location.href = '/cadastro-login/login.html';
+  }
+}
 </script>
+
 <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
