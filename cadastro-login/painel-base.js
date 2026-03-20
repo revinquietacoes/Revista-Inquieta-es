@@ -28,6 +28,10 @@ function userChipHtml(user, subtitle=''){
 function formatRole(role) {
   return { autor:'Autor(a)', parecerista:'Parecerista', editor_adjunto:'Editor(a) adjunto(a)', editor_chefe:'Editor(a)-chefe' }[role] || 'Usuário(a)';
 }
+function currentUserHeaders(){
+  const user = getLoggedUser();
+  return user?.id ? { 'x-user-id': String(user.id) } : {};
+}
 async function apiData(action, extra = {}) {
   const user = getLoggedUser();
   const res = await fetch(API_DATA, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ action, userId:user?.id, ...extra }) });
@@ -49,16 +53,18 @@ function requireRole(allowed) {
   }
   applyUserIdentity(user); return user;
 }
-function footerHtml(){return `<div>Revista Inquietações — periódico científico em acesso aberto.</div><div>Organização editorial: Diego Vinícius Brito dos Santos • @iamthed1</div><div><a href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank">Código de Conduta</a></div><div>Este site é desenvolvido com apoio de <a href="https://www.netlify.com" target="_blank">Netlify</a></div>`;}
+function footerHtml(){return `<div>Revista Inquietações — periódico científico em acesso aberto.</div><div>Organização editorial: Diego Vinícius Brito dos Santos • @iamthed1</div><div><a href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank">Código de Conduta</a></div><div><a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div>`;}
 function bindLogout(){document.querySelectorAll('[data-action="logout"]').forEach(btn=>btn.addEventListener('click',()=>{localStorage.removeItem('usuario_logado');window.location.href='login.html';}));}
 function injectCommonButtons(){
   const user=getLoggedUser(); if(!user) return; const row=document.querySelector('.topbar .actions-row'); if(!row) return;
   const links=[];
-  links.push(['perfil.html','Perfil']); links.push(['certificados.html','Certificados']);
+  links.push(['perfil.html','Perfil']);
+  links.push(['certificados.html','Certificados']);
+  if (user.perfil==='autor') links.push(['inscricoes-eventos.html','Inscrições']);
   if (['autor','parecerista','editor_adjunto','editor_chefe'].includes(user.perfil)) links.push(['chat-interno.html','Chat']);
   if (['editor_adjunto','editor_chefe'].includes(user.perfil)) links.push(['usuarios-online.html','Quem está online']);
   for(const [href,label] of links){ if(!row.querySelector(`[href="${href}"]`)){ const a=document.createElement('a'); a.className='btn btn-soft'; a.href=href; a.textContent=label; row.insertBefore(a,row.lastElementChild); } }
 }
 async function pingPresence(){ try{ await apiAction('presence_ping'); }catch(e){} }
 document.addEventListener('DOMContentLoaded',()=>{ bindLogout(); injectCommonButtons(); const foot=document.querySelector('.page-footer'); if(foot) foot.innerHTML=footerHtml(); pingPresence(); setInterval(pingPresence, 60000); });
-window.AppPanel={getLoggedUser,setLoggedUser,apiData,apiAction,requireRole,applyUserIdentity,formatRole,resolveAsset,userChipHtml,photoAllowed};
+window.AppPanel={getLoggedUser,setLoggedUser,apiData,apiAction,requireRole,applyUserIdentity,formatRole,resolveAsset,userChipHtml,photoAllowed,currentUserHeaders};

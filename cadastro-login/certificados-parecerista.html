@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificados do parecerista | Revista Inquietações</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<script src="painel-base.js" defer></script>
+</head>
+<body>
+<div class="page-shell" id="page-shell-certificados-parecerista">
+<header class="topbar" id="topbar-certificados-parecerista"><div class="brand-wrap" id="brand-wrap-certificados-parecerista"><div class="avatar-box" id="avatar-box-certificados-parecerista"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy" id="brand-copy-certificados-parecerista"><h1 id="titulo-certificados-parecerista">Certificados do parecerista</h1><p id="descricao-certificados-parecerista">Área específica para certificados vinculados a pareceres realizados e outras contribuições do avaliador.</p></div></div><div class="actions-row" id="acoes-topo-certificados-parecerista"><a class="btn btn-secondary" id="btn-voltar-parecerista" href="painel-parecerista.html">Voltar ao painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header>
+<section class="panel" id="painel-certificados-parecerista"><div class="panel-head" id="head-certificados-parecerista"><h2 id="titulo-painel-certificados-parecerista">Acesso privado</h2><p class="helper" id="subtitulo-painel-certificados-parecerista">Aqui aparecem apenas os certificados do tipo <strong>parecer</strong> ou <strong>parecerista</strong>.</p></div><div class="cert-list" id="lista-certificados-parecerista"></div></section>
+<footer class="page-footer" id="rodape-certificados-parecerista"></footer>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',async()=>{
+  const user=AppPanel.requireRole(['parecerista']);
+  if(!user)return;
+  const lista=document.getElementById('lista-certificados-parecerista');
+  try{
+    const [resParecer,resParecerista]=await Promise.all([
+      fetch('/.netlify/functions/list-my-certificates?type=parecer',{ headers:{ ...AppPanel.currentUserHeaders() } }),
+      fetch('/.netlify/functions/list-my-certificates?type=parecerista',{ headers:{ ...AppPanel.currentUserHeaders() } })
+    ]);
+    const dataParecer=await resParecer.json();
+    const dataParecerista=await resParecerista.json();
+    const all=[...(Array.isArray(dataParecer)?dataParecer:[]),...(Array.isArray(dataParecerista)?dataParecerista:[])];
+    if((!resParecer.ok && !resParecerista.ok) || !all.length){
+      const msg = (!resParecer.ok && dataParecer.error) || (!resParecerista.ok && dataParecerista.error) || 'Nenhum certificado de parecerista foi disponibilizado até o momento.';
+      lista.innerHTML=`<div class="empty-state" id="estado-vazio-certificados-parecerista">${msg}</div>`;
+      return;
+    }
+    const seen=new Set();
+    lista.innerHTML=all.filter(item=>!seen.has(item.id) && seen.add(item.id)).map(item=>`<article class="cert-card" id="certificado-parecerista-${item.id}"><h3 id="certificado-parecerista-titulo-${item.id}">${item.title}</h3><p id="certificado-parecerista-tipo-${item.id}"><strong>Tipo:</strong> ${item.certificate_type||'Parecer'}</p><p id="certificado-parecerista-data-${item.id}"><strong>Enviado em:</strong> ${item.created_at ? new Date(item.created_at).toLocaleString('pt-BR') : '—'}</p><div class="actions-row" id="certificado-parecerista-actions-${item.id}"><a class="btn btn-primary" href="/.netlify/functions/get-my-certificate?id=${item.id}" target="_blank" rel="noopener noreferrer">Abrir certificado</a></div></article>`).join('');
+  }catch(err){lista.innerHTML=`<div class="empty-state" id="estado-erro-certificados-parecerista">${err.message}</div>`;}
+});
+</script>
+</body>
+</html>

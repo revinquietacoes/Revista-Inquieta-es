@@ -48,3 +48,13 @@ label{font-weight:700;font-size:.92rem} input,select,textarea{width:100%;border-
 .online-dot{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:8px}.online-yes{background:#8fe3a8}.online-no{background:#ffb0b0}
 .file-pill{display:inline-flex;align-items:center;gap:8px;padding:8px 12px;border-radius:999px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);font-size:.9rem}
 .toolbar-spread{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap}
+
+
+.panel-stack{display:grid;gap:18px}
+.cert-list{display:grid;gap:14px}
+.cert-card{padding:18px;border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.09)}
+.cert-card p{margin:6px 0;color:var(--muted);line-height:1.65}
+.form-message.ok{color:var(--ok)}
+.form-message.err{color:var(--err)}
+.user-select-button.is-selected{border-color:rgba(143,227,168,.45);background:rgba(143,227,168,.08)}
+.small-note{font-size:.92rem;color:var(--muted)}

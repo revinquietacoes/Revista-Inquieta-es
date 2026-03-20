@@ -1,1 +1,41 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Certificados</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Certificados</h1><p>Aqui você abre a pasta de certificados correspondente ao seu perfil.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="javascript:history.back()">Voltar</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><section class="panel"><div class="panel-head"><h2>Meu acesso</h2></div><div class="note">Aqui você abre a pasta institucional de certificados.</div><div class="actions-row" id="wrap-cert"></div></section><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',async()=>{const u=AppPanel.requireRole(['autor','parecerista','editor_adjunto','editor_chefe']);if(!u)return;const data=await AppPanel.apiData('certificates');document.getElementById('wrap-cert').innerHTML=`<a class="btn btn-primary" href="${data.link}" target="_blank">Abrir certificados</a>`;})</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Meus certificados | Revista Inquietações</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<script src="painel-base.js" defer></script>
+</head>
+<body>
+<div class="page-shell" id="page-shell-certificados">
+<header class="topbar" id="topbar-certificados"><div class="brand-wrap" id="brand-wrap-certificados"><div class="avatar-box" id="avatar-box-certificados"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy" id="brand-copy-certificados"><h1 id="titulo-certificados">Meus certificados</h1><p id="descricao-certificados">Área privada com certificados vinculados ao seu usuário, armazenados nas bolhas do Netlify.</p></div></div><div class="actions-row" id="acoes-topo-certificados"><a class="btn btn-secondary" id="btn-voltar-certificados" href="painel-autor.html">Voltar ao painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header>
+<div class="panel-stack" id="stack-certificados">
+<section class="panel" id="painel-certificados-disponiveis"><div class="panel-head" id="head-certificados-disponiveis"><h2 id="titulo-certificados-disponiveis">Documentos disponíveis</h2><p class="helper" id="subtitulo-certificados-disponiveis">A listagem é carregada pela function <code>list-my-certificates</code>.</p></div><div class="cert-list" id="lista-certificados"></div></section>
+<section class="panel" id="painel-certificados-ajuda"><div class="panel-head"><h2 id="titulo-ajuda-certificados">Orientações</h2></div><div class="note" id="nota-certificados-ajuda">Os certificados ficam vinculados ao seu <strong>ID de usuário</strong>. Quando o editor-chefe envia um novo arquivo, ele aparece automaticamente aqui. Ao clicar em abrir, a function confere se o documento pertence ao usuário autenticado antes de liberar o PDF.</div></section>
+</div>
+<footer class="page-footer" id="rodape-certificados"></footer>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded',async()=>{
+  const user=AppPanel.getLoggedUser();
+  if(!user){ window.location.href='login.html'; return; }
+  AppPanel.applyUserIdentity(user);
+  const backMap={autor:'painel-autor.html',parecerista:'painel-parecerista.html',editor_adjunto:'painel-editor.html',editor_chefe:'painel-editor-chefe.html'};
+  document.getElementById('btn-voltar-certificados').href=backMap[user.perfil]||'../index.html';
+  const lista=document.getElementById('lista-certificados');
+  try{
+    const res=await fetch('/.netlify/functions/list-my-certificates',{ headers:{ ...AppPanel.currentUserHeaders() } });
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.error||'Não foi possível carregar seus certificados.');
+    if(!Array.isArray(data) || !data.length){
+      lista.innerHTML='<div class="empty-state" id="estado-vazio-certificados">Nenhum certificado foi disponibilizado até o momento.</div>';
+      return;
+    }
+    lista.innerHTML=data.map(item=>`<article class="cert-card" id="certificado-${item.id}"><h3 id="certificado-titulo-${item.id}">${item.title}</h3><p id="certificado-tipo-${item.id}"><strong>Tipo:</strong> ${item.certificate_type||'Certificado'}</p><p id="certificado-data-${item.id}"><strong>Enviado em:</strong> ${item.created_at ? new Date(item.created_at).toLocaleString('pt-BR') : '—'}</p><div class="actions-row" id="certificado-actions-${item.id}"><a class="btn btn-primary" id="certificado-abrir-${item.id}" href="/.netlify/functions/get-my-certificate?id=${item.id}" target="_blank" rel="noopener noreferrer">Abrir certificado</a></div></article>`).join('');
+  }catch(err){lista.innerHTML=`<div class="empty-state" id="estado-erro-certificados">${err.message}</div>`;}
+});
+</script>
+</body>
+</html>
