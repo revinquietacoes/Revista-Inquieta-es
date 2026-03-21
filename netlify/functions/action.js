@@ -136,10 +136,11 @@ export default async (req) => {
     if (action === 'submit_review') {
       if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
       const { designacaoId, submissaoId, relevanciaAcademica, clarezaOrganizacao, consistenciaTeorica, adequacaoMetodologica, qualidadeRedacao, contribuicaoRelevanteArea, comentarioAutor, comentarioEditor, parecerFinal, tempoAvaliacao, devolutivaUrl } = body
-      if (!designacaoId || !submissaoId) return json({ erro: 'Identificação da avaliação não encontrada.' }, 400)
+      if (!designacaoId) return json({ erro: 'Identificação da avaliação não encontrada.' }, 400)
       const designacao = await getDesignacaoById(Number(designacaoId))
       if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
-      if (Number(designacao.submissao_id) !== Number(submissaoId)) return json({ erro: 'A submissão informada não corresponde à designação.' }, 400)
+      const submissaoFinalId = Number(designacao.submissao_id)
+      if (submissaoId && Number(submissaoId) !== submissaoFinalId) return json({ erro: 'A submissão informada não corresponde à designação.' }, 400)
       if (Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode enviar parecer para esta designação.' }, 403)
       if (designacao.status === 'recusado') return json({ erro: 'Não é possível enviar parecer para uma tarefa recusada.' }, 409)
       const exists = await sql`SELECT id FROM avaliacoes WHERE designacao_id = ${designacao.id} LIMIT 1`
@@ -160,7 +161,7 @@ export default async (req) => {
               atualizado_em = CURRENT_TIMESTAMP
           WHERE id = ${exists[0].id}`
       } else {
-        await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, designacao_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, devolutiva_doc_url, parecer_final, tempo_avaliacao) VALUES (${submissaoId}, ${user.id}, ${designacaoId}, ${relevanciaAcademica}, ${clarezaOrganizacao}, ${consistenciaTeorica}, ${adequacaoMetodologica}, ${qualidadeRedacao}, ${contribuicaoRelevanteArea}, ${comentarioAutor || null}, ${comentarioEditor || null}, ${devolutivaUrl || null}, ${parecerFinal}, ${tempoAvaliacao})`
+        await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, designacao_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, devolutiva_doc_url, parecer_final, tempo_avaliacao) VALUES (${submissaoFinalId}, ${user.id}, ${designacao.id}, ${relevanciaAcademica}, ${clarezaOrganizacao}, ${consistenciaTeorica}, ${adequacaoMetodologica}, ${qualidadeRedacao}, ${contribuicaoRelevanteArea}, ${comentarioAutor || null}, ${comentarioEditor || null}, ${devolutivaUrl || null}, ${parecerFinal}, ${tempoAvaliacao})`
       }
       await sql`UPDATE designacoes_avaliacao SET status = 'concluido', atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
       await refreshSubmissionStatus(designacao.submissao_id)
