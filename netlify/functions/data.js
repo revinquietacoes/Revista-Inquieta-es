@@ -8,9 +8,72 @@ function normalizeReviewBucket(status) {
   return 'outros'
 }
 
+async function getEditorialQueue() {
+  const rows = await sql`
+    SELECT * FROM vw_fila_decisao_editorial
+  `
+  return { items: rows }
+}
+
+async function decidirParecer(payload) {
+  const { designacaoId, decisao, observacao, editorId } = payload
+
+  await sql`
+    SELECT registrar_decisao_editorial_parecer(
+      ${Number(designacaoId)},
+      ${Number(editorId)},
+      ${decisao},
+      ${observacao || ''}
+    )
+  `
+
+  return { ok: true }
+}
+
+async function updateDesignacaoStatus(payload, user) {
+  const { designacaoId, status } = payload
+  const id = Number(designacaoId)
+
+  if (!id || !status) {
+    return { erro: 'Designação ou status não informados.', code: 400 }
+  }
+
+  if (!canAccess(user, ['parecerista', 'editor_adjunto', 'editor_chefe'])) {
+    return { erro: 'Acesso negado.', code: 403 }
+  }
+
+  if (user.perfil === 'parecerista') {
+    const rows = await sql`
+      UPDATE designacoes_avaliacao
+      SET status = ${status},
+          atualizado_em = CURRENT_TIMESTAMP
+      WHERE id = ${id}
+        AND parecerista_id = ${user.id}
+      RETURNING id, status
+    `
+    if (!rows.length) {
+      return { erro: 'Designação não encontrada.', code: 404 }
+    }
+    return { ok: true, item: rows[0] }
+  }
+
+  const rows = await sql`
+    UPDATE designacoes_avaliacao
+    SET status = ${status},
+        atualizado_em = CURRENT_TIMESTAMP
+    WHERE id = ${id}
+    RETURNING id, status
+  `
+  if (!rows.length) {
+    return { erro: 'Designação não encontrada.', code: 404 }
+  }
+  return { ok: true, item: rows[0] }
+}
+
 export default async (req) => {
   try {
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
+
     const body = await parseJson(req)
     const { action, userId, targetUserId, pareceristaId } = body
     const user = await getUserById(Number(userId))
@@ -188,6 +251,7 @@ export default async (req) => {
         nao_aceitos: 0,
         aceitos: 0
       }
+
       const avaliacoes = rows.map((row) => {
         const bucket = normalizeReviewBucket(row.designacao_status)
         if (bucket === 'em_avaliacao') resumo.em_avaliacao += 1
@@ -202,7 +266,31 @@ export default async (req) => {
           prazo_parecer_formatado: row.prazo_parecer ? new Date(row.prazo_parecer).toLocaleDateString('pt-BR') : ''
         }
       })
+
       return json({ sucesso: true, usuario: user, parecerista: reviewer, resumo, avaliacoes })
+    }
+
+    if (action === 'editorial_review_queue') {
+      if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) {
+        return json({ erro: 'Acesso negado.' }, 403)
+      }
+      return json({ sucesso: true, ...(await getEditorialQueue()) })
+    }
+
+    if (action === 'editorial_review_decision') {
+      if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) {
+        return json({ erro: 'Acesso negado.' }, 403)
+      }
+      return json({
+        sucesso: true,
+        ...(await decidirParecer({ ...body, editorId: user.id }))
+      })
+    }
+
+    if (action === 'update_designacao_status') {
+      const result = await updateDesignacaoStatus(body, user)
+      if (result?.erro) return json({ erro: result.erro }, result.code || 400)
+      return json({ sucesso: true, ...result })
     }
 
     if (action === 'public_dossiers') {
@@ -250,35 +338,6 @@ export default async (req) => {
         ORDER BY m.criado_em ASC
         LIMIT 300`
       return json({ sucesso: true, mensagens: messages })
-    }
-
-
-    if (action === 'reviewer_review_history') {
-      if (!canAccess(user, ['editor_chefe','editor_adjunto','editor'])) return json({ erro: 'Acesso negado.' }, 403)
-      const reviewerId = Number(body?.pareceristaId || body?.targetUserId || body?.id || targetUserId)
-      if (!reviewerId) return json({ erro: 'Parecerista não informado.' }, 400)
-      const reviewerRows = await sql`
-        SELECT id, nome, email
-        FROM usuarios
-        WHERE id = ${reviewerId}
-        LIMIT 1`
-      if (!reviewerRows.length) return json({ erro: 'Parecerista não encontrado.' }, 404)
-      const items = await sql`
-        SELECT d.id AS "designacaoId", d.submissao_id AS "submissaoId", d.status AS "designacaoStatus",
-               TO_CHAR(d.prazo_parecer, 'DD/MM/YYYY') AS "prazoParecer",
-               d.criado_em AS "criadoEm", d.atualizado_em AS "atualizadoEm", d.updated_at AS "updatedAt",
-               s.titulo, COALESCE(s.tipo_submissao, s.secao) AS "tipoSubmissao",
-               u.nome AS "autorNome",
-               a.parecer_final AS "parecerFinal", a.tempo_avaliacao AS "tempoAvaliacao",
-               a.comentario_autor AS "comentarioAutor", a.comentario_editor AS "comentarioEditor",
-               a.devolutiva_url AS "devolutivaUrl", a.devolutiva_doc_url AS "devolutivaDocUrl"
-        FROM designacoes_avaliacao d
-        LEFT JOIN submissoes s ON s.id = d.submissao_id
-        LEFT JOIN usuarios u ON u.id = s.autor_id
-        LEFT JOIN avaliacoes_v2 a ON a.designacao_id = d.id
-        WHERE d.parecerista_id = ${reviewerId}
-        ORDER BY COALESCE(a.atualizado_em, a.updated_at, d.atualizado_em, d.updated_at, d.criado_em) DESC`
-      return json({ sucesso: true, reviewer: reviewerRows[0], items })
     }
 
     if (action === 'certificates') {
