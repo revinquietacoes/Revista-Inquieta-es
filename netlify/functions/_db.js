@@ -98,7 +98,8 @@ async function getUserById(id, withPassword = false) {
     selectParts.push(selectExpr(cols, 'senha_hash'))
   }
 
-  const rows = await sql(`SELECT ${selectParts.join(', ')} FROM usuarios WHERE id = ${userId} LIMIT 1`)
+  const query = `SELECT ${selectParts.join(', ')} FROM usuarios WHERE id = $1 LIMIT 1`
+  const rows = await sql.query(query, [userId])
   const user = rows?.[0] || null
   if (user?.perfil) user.perfil = normalizeRole(user.perfil)
   return user
