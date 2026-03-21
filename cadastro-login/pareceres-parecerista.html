@@ -166,7 +166,7 @@ a{text-decoration:none;}
 
 <script>
 document.addEventListener('DOMContentLoaded',async()=>{
-  const user=AppPanel.requireRole(['editor_chefe','editor_adjunto']);
+  const user=AppPanel.requireRole(['editor_chefe','editor_adjunto','editor']);
   if(!user)return;
 
   const params=new URLSearchParams(window.location.search);

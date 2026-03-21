@@ -32,5 +32,10 @@ export async function getUserById(id, withPassword = false) {
 }
 
 export function canAccess(user, allowed) {
-  return !!user && allowed.includes(user.perfil)
+  if (!user || !user.perfil) return false
+
+  const perfil = String(user.perfil).toLowerCase().trim()
+  const allowedNormalized = allowed.map(r => r.toLowerCase())
+
+  return allowedNormalized.includes(perfil)
 }

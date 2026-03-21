@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Status das submissões | Editor-chefe</title>
+<link rel="icon" href="./assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<script src="painel-base.js" defer></script>
+<style>
+.status-grid{display:grid;gap:16px;}
+.status-card{padding:18px;border-radius:22px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);}
+.status-top{display:flex;justify-content:space-between;gap:14px;flex-wrap:wrap;align-items:flex-start;margin-bottom:12px;}
+.status-top h3{margin:0;font-family:Georgia,"Times New Roman",serif;}
+.status-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin:12px 0;}
+.status-meta .metric-box{min-height:100%;}
+.status-actions{display:grid;gap:12px;margin-top:14px;}
+.status-actions textarea{min-height:90px;}
+.status-actions .actions-row{justify-content:flex-start;}
+.status-filter{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin-bottom:16px;}
+</style>
+</head>
+<body>
+<div class="page-shell">
+<header class="topbar">
+  <div class="brand-wrap">
+    <div class="avatar-box">
+      <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+      <img class="logo-inline" src="./logo-revista.png" alt="Logo da Revista Inquietações">
+    </div>
+    <div class="brand-copy">
+      <h1>Status das submissões</h1>
+      <p>Aqui o(a) editor(a)-chefe atualiza manualmente o status editorial visível aos autores em “Minhas submissões”.</p>
+    </div>
+  </div>
+  <div class="actions-row">
+    <a class="btn btn-secondary" href="painel-editor-chefe.html">Voltar ao painel</a>
+    <button class="btn btn-soft" data-action="logout">Sair</button>
+  </div>
+</header>
+
+<section class="panel">
+  <div class="panel-head">
+    <div>
+      <h2>Alteração manual de status</h2>
+      <p class="helper">Status disponíveis: submetido, em avaliação, rejeitado, aceito com correções, correções necessárias e aceito.</p>
+    </div>
+  </div>
+
+  <div class="status-filter">
+    <input id="filtro-busca" type="search" placeholder="Buscar por título ou autor">
+    <select id="filtro-status">
+      <option value="">Todos os status</option>
+      <option value="submetido">Submetido</option>
+      <option value="em_avaliacao">Em avaliação</option>
+      <option value="rejeitado">Rejeitado</option>
+      <option value="aceito_com_correcoes">Aceito com correções</option>
+      <option value="correcoes_necessarias">Correções necessárias</option>
+      <option value="aceito">Aceito</option>
+    </select>
+  </div>
+
+  <div id="msg-box" class="form-message"></div>
+  <div id="lista-submissoes" class="status-grid"></div>
+</section>
+
+<footer class="page-footer"></footer>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded',async()=>{const user=AppPanel.requireRole(['editor_chefe']);if(!user)return;const lista=document.getElementById('lista-submissoes');const msg=document.getElementById('msg-box');const filtroBusca=document.getElementById('filtro-busca');const filtroStatus=document.getElementById('filtro-status');let raw=[];function labelStatus(v){return{submetido:'Submetido',em_avaliacao:'Em avaliação',rejeitado:'Rejeitado',aceito_com_correcoes:'Aceito com correções',correcoes_necessarias:'Correções necessárias',aceito:'Aceito'}[v]||v||'—';}function badgeClass(v){return v==='aceito'?'badge badge-green':v==='rejeitado'?'badge badge-blue':v==='aceito_com_correcoes' || v==='correcoes_necessarias'?'badge badge-gold':'badge badge-blue';}function render(){const q=(filtroBusca.value||'').toLowerCase().trim();const s=filtroStatus.value;const items=raw.filter(item=>{const byText=!q||String(item.titulo||'').toLowerCase().includes(q)||String(item.autor_nome||'').toLowerCase().includes(q);const byStatus=!s||item.status===s;return byText&&byStatus;});lista.innerHTML=items.map(item=>`<article class="status-card"><div class="status-top"><div><h3>${AppPanel.escapeHtml(item.titulo||'Sem título')}</h3><div class="helper">Autor(a): ${AppPanel.escapeHtml(item.autor_nome||'—')} • Dossiê: ${AppPanel.escapeHtml(item.dossie_titulo||'—')}</div></div><span class="${badgeClass(item.status)}">${AppPanel.escapeHtml(labelStatus(item.status))}</span></div><div class="status-meta"><div class="metric-box"><span class="helper">Submissão</span><strong>#${AppPanel.escapeHtml(String(item.id))}</strong></div><div class="metric-box"><span class="helper">Seção</span><strong>${AppPanel.escapeHtml(item.secao||'—')}</strong></div><div class="metric-box"><span class="helper">Data de submissão</span><strong>${item.data_submissao?new Date(item.data_submissao).toLocaleDateString('pt-BR'):'—'}</strong></div><div class="metric-box"><span class="helper">Última atualização</span><strong>${item.status_atualizado_em?new Date(item.status_atualizado_em).toLocaleString('pt-BR'):'—'}</strong></div></div><div class="status-actions"><select id="status-${item.id}"><option value="submetido"${item.status==='submetido'?' selected':''}>Submetido</option><option value="em_avaliacao"${item.status==='em_avaliacao'?' selected':''}>Em avaliação</option><option value="rejeitado"${item.status==='rejeitado'?' selected':''}>Rejeitado</option><option value="aceito_com_correcoes"${item.status==='aceito_com_correcoes'?' selected':''}>Aceito com correções</option><option value="correcoes_necessarias"${item.status==='correcoes_necessarias'?' selected':''}>Correções necessárias</option><option value="aceito"${item.status==='aceito'?' selected':''}>Aceito</option></select><textarea id="obs-${item.id}" placeholder="Observação interna sobre a mudança de status (opcional)"></textarea><div class="actions-row"><button class="btn btn-primary" data-save="${item.id}">Salvar status</button></div></div></article>`).join('')||'<div class="empty-state">Nenhuma submissão encontrada para o filtro aplicado.</div>';document.querySelectorAll('[data-save]').forEach(btn=>btn.addEventListener('click',async()=>{const id=Number(btn.getAttribute('data-save'));const status=document.getElementById(`status-${id}`).value;const observacao=document.getElementById(`obs-${id}`).value;btn.disabled=true;try{await AppPanel.apiData('chief_update_submission_status',{submissaoId:id,status,observacao});msg.className='form-message ok';msg.textContent='Status atualizado com sucesso.';await load();}catch(err){msg.className='form-message err';msg.textContent=err.message||'Não foi possível atualizar o status.';}finally{btn.disabled=false;}}));}async function load(){const data=await AppPanel.apiData('chief_submission_status_queue');raw=Array.isArray(data.items)?data.items:[];render();}filtroBusca.addEventListener('input',render);filtroStatus.addEventListener('change',render);try{await load();}catch(err){msg.className='form-message err';msg.textContent=err.message||'Não foi possível carregar as submissões.';}});  
+</script>
+</body>
+</html>

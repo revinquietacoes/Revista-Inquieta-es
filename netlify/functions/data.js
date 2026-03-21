@@ -8,132 +8,16 @@ function normalizeReviewBucket(status) {
   return 'outros'
 }
 
+const CHIEF_ALLOWED_SUBMISSION_STATUSES=['submetido','em_avaliacao','rejeitado','aceito_com_correcoes','correcoes_necessarias','aceito'];
 
-async function getReviewerListForHistory(user) {
-  let rows = []
+async function getChiefSubmissionStatusQueue(){const rows=await sql`SELECT s.id,s.titulo,s.status,s.secao,s.data_submissao,s.status_atualizado_em,s.status_atualizado_por,a.nome AS autor_nome,dt.titulo AS dossie_titulo,u.nome AS atualizado_por_nome FROM submissoes s LEFT JOIN usuarios a ON a.id=s.autor_id LEFT JOIN dossies_tematicos dt ON dt.id=s.dossie_id LEFT JOIN usuarios u ON u.id=s.status_atualizado_por ORDER BY s.data_submissao DESC,s.id DESC`;return{items:rows,statuses:CHIEF_ALLOWED_SUBMISSION_STATUSES};}
+async function updateChiefSubmissionStatus(payload,user){if(!canAccess(user,['editor_chefe']))throw new Error('Acesso negado.');const submissaoId=Number(payload.submissaoId);const novoStatus=String(payload.status||'').trim();const observacao=String(payload.observacao||'').trim()||null;if(!submissaoId||!novoStatus)throw new Error('Submissão ou status não informado.');if(!CHIEF_ALLOWED_SUBMISSION_STATUSES.includes(novoStatus))throw new Error('Status inválido.');const atual=await sql`SELECT id,status FROM submissoes WHERE id=${submissaoId} LIMIT 1`;if(!atual.length)throw new Error('Submissão não encontrada.');await sql`UPDATE submissoes SET status=${novoStatus},status_atualizado_em=CURRENT_TIMESTAMP,status_atualizado_por=${user.id} WHERE id=${submissaoId}`;await sql`INSERT INTO historico_status_submissoes(submissao_id,status_anterior,status_novo,observacao,atualizado_por) VALUES(${submissaoId},${atual[0].status},${novoStatus},${observacao},${user.id})`;return{ok:true,submissaoId,status:novoStatus,statusAnterior:atual[0].status};}
+async function getReviewerListForHistory(user) { let rows = [] if (user.perfil === 'editor_chefe') { rows = await sql` SELECT DISTINCT u.id, u.nome, u.email FROM usuarios u JOIN designacoes_avaliacao da ON da.parecerista_id = u.id WHERE u.perfil = 'parecerista' AND u.status = 'ativo' ORDER BY u.nome ASC` } else if (user.perfil === 'editor' || user.perfil === 'editor_adjunto') { rows = await sql` SELECT DISTINCT u.id, u.nome, u.email FROM usuarios u JOIN designacoes_avaliacao da ON da.parecerista_id = u.id JOIN submissoes s ON s.id = da.submissao_id WHERE u.perfil = 'parecerista' AND u.status = 'ativo' ORDER BY u.nome ASC` } else { throw new Error('Acesso negado.') } return { items: rows } }
+async function getEditorialQueue() { const rows = await sql` SELECT * FROM vw_fila_decisao_editorial ` return { items: rows } }
+async function decidirParecer(payload) { const { designacaoId, decisao, observacao, editorId } = payload await sql` SELECT registrar_decisao_editorial_parecer( ${Number(designacaoId)}, ${Number(editorId)}, ${decisao}, ${observacao || ''} ) ` return { ok: true } }
+async function updateDesignacaoStatus(payload, user) { const { designacaoId, status } = payload const id = Number(designacaoId) if (!id || !status) { return { erro: 'Designação ou status não informados.', code: 400 } } if (!canAccess(user, ['parecerista', 'editor_adjunto', 'editor_chefe'])) { return { erro: 'Acesso negado.', code: 403 } } if (user.perfil === 'parecerista') { const rows = await sql` UPDATE designacoes_avaliacao SET status = ${status}, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${id} AND parecerista_id = ${user.id} RETURNING id, status ` if (!rows.length) { return { erro: 'Designação não encontrada.', code: 404 } } return { ok: true, item: rows[0] } } const rows = await sql` UPDATE designacoes_avaliacao SET status = ${status}, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${id} RETURNING id, status ` if (!rows.length) { return { erro: 'Designação não encontrada.', code: 404 } } return { ok: true, item: rows[0] } }
+async function getReviewerReviewHistory(user, reviewerId) { if (!reviewerId) { throw new Error('Parecerista não informado.') } let allowedReviewer = [] if (user.perfil === 'editor_chefe') { allowedReviewer = await sql` SELECT id, nome, email, instituicao, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica FROM usuarios WHERE id = ${reviewerId} AND perfil = 'parecerista' AND status = 'ativo' LIMIT 1` } else if (user.perfil === 'editor' || user.perfil === 'editor_adjunto') { allowedReviewer = await sql` SELECT id, nome, email, instituicao, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica FROM usuarios WHERE id = ${reviewerId} AND perfil = 'parecerista' AND status = 'ativo' LIMIT 1` } else { throw new Error('Acesso negado.') } const reviewer = allowedReviewer[0] if (!reviewer) { return { parecerista: null, resumo: { total: 0, em_avaliacao: 0, concluidos: 0, nao_aceitos: 0, aceitos: 0 }, avaliacoes: [] } }
 
-  if (user.perfil === 'editor_chefe') {
-    rows = await sql`
-      SELECT DISTINCT u.id, u.nome, u.email
-      FROM usuarios u
-      JOIN designacoes_avaliacao da ON da.parecerista_id = u.id
-      WHERE u.perfil = 'parecerista'
-        AND u.status = 'ativo'
-      ORDER BY u.nome ASC`
-  } else if (user.perfil === 'editor' || user.perfil === 'editor_adjunto') {
-    rows = await sql`
-      SELECT DISTINCT u.id, u.nome, u.email
-      FROM usuarios u
-      JOIN designacoes_avaliacao da ON da.parecerista_id = u.id
-      JOIN submissoes s ON s.id = da.submissao_id
-      WHERE u.perfil = 'parecerista'
-        AND u.status = 'ativo'
-      ORDER BY u.nome ASC`
-  } else {
-    throw new Error('Acesso negado.')
-  }
-
-  return { items: rows }
-}
-
-async function getEditorialQueue() {
-  const rows = await sql`
-    SELECT * FROM vw_fila_decisao_editorial
-  `
-  return { items: rows }
-}
-
-async function decidirParecer(payload) {
-  const { designacaoId, decisao, observacao, editorId } = payload
-
-  await sql`
-    SELECT registrar_decisao_editorial_parecer(
-      ${Number(designacaoId)},
-      ${Number(editorId)},
-      ${decisao},
-      ${observacao || ''}
-    )
-  `
-
-  return { ok: true }
-}
-
-async function updateDesignacaoStatus(payload, user) {
-  const { designacaoId, status } = payload
-  const id = Number(designacaoId)
-
-  if (!id || !status) {
-    return { erro: 'Designação ou status não informados.', code: 400 }
-  }
-
-  if (!canAccess(user, ['parecerista', 'editor_adjunto', 'editor_chefe'])) {
-    return { erro: 'Acesso negado.', code: 403 }
-  }
-
-  if (user.perfil === 'parecerista') {
-    const rows = await sql`
-      UPDATE designacoes_avaliacao
-      SET status = ${status},
-          atualizado_em = CURRENT_TIMESTAMP
-      WHERE id = ${id}
-        AND parecerista_id = ${user.id}
-      RETURNING id, status
-    `
-    if (!rows.length) {
-      return { erro: 'Designação não encontrada.', code: 404 }
-    }
-    return { ok: true, item: rows[0] }
-  }
-
-  const rows = await sql`
-    UPDATE designacoes_avaliacao
-    SET status = ${status},
-        atualizado_em = CURRENT_TIMESTAMP
-    WHERE id = ${id}
-    RETURNING id, status
-  `
-  if (!rows.length) {
-    return { erro: 'Designação não encontrada.', code: 404 }
-  }
-  return { ok: true, item: rows[0] }
-  
-  }
-
-    async function getReviewerReviewHistory(user, reviewerId) {
-  if (!reviewerId) {
-    throw new Error('Parecerista não informado.')
-  }
-
-  let allowedReviewer = []
-
-  if (user.perfil === 'editor_chefe') {
-    allowedReviewer = await sql`
-      SELECT id, nome, email, instituicao, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica
-      FROM usuarios
-      WHERE id = ${reviewerId}
-        AND perfil = 'parecerista'
-        AND status = 'ativo'
-      LIMIT 1`
-  } else if (user.perfil === 'editor' || user.perfil === 'editor_adjunto') {
-    allowedReviewer = await sql`
-      SELECT id, nome, email, instituicao, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica
-      FROM usuarios
-      WHERE id = ${reviewerId}
-        AND perfil = 'parecerista'
-        AND status = 'ativo'
-      LIMIT 1`
-  } else {
-    throw new Error('Acesso negado.')
-  }
-
-  const reviewer = allowedReviewer[0]
-  if (!reviewer) {
-    return {
-      parecerista: null,
-      resumo: { total: 0, em_avaliacao: 0, concluidos: 0, nao_aceitos: 0, aceitos: 0 },
-      avaliacoes: []
-    }
-  }
 
   const rows = await sql`
     SELECT
@@ -190,45 +74,14 @@ async function updateDesignacaoStatus(payload, user) {
 
 export default async (req) => {
   try {
-    if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
-
-    const body = await parseJson(req)
-    const { action, userId, targetUserId, pareceristaId } = body
-    const user = await getUserById(Number(userId))
-    if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
-
+    if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405) const body = await parseJson(req) const { action, userId, targetUserId, pareceristaId } = body const user = await getUserById(Number(userId)) if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
     if (action === 'me') return json({ sucesso: true, usuario: user })
-
-    if (action === 'author_dashboard') {
-      if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403)
-      const submissoes = await sql`
-        SELECT s.id, s.titulo, s.secao, s.status, s.data_submissao, s.prazo_final_avaliacao,
-               dt.titulo AS dossie_titulo, u.nome AS editor_nome
-        FROM submissoes s
-        LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
-        LEFT JOIN usuarios u ON u.id = COALESCE(s.editor_adjunto_id, s.editor_responsavel_id)
-        WHERE s.autor_id = ${user.id}
-        ORDER BY s.data_submissao DESC`
-      return json({ sucesso: true, usuario: user, submissoes })
-    }
-
-    if (action === 'reviewer_dashboard') {
-      if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
-      const avaliacoes = await sql`
-        SELECT da.id, da.status, da.prazo_parecer, da.dias_adicionais,
-               s.id AS submissao_id, s.titulo, s.resumo, s.palavras_chave, s.secao,
-               CASE WHEN da.status IN ('aceito','em_andamento','concluido') THEN af.url_arquivo ELSE NULL END AS url_arquivo,
-               CASE WHEN da.status IN ('aceito','em_andamento','concluido') THEN af.nome_arquivo ELSE NULL END AS nome_arquivo
-        FROM designacoes_avaliacao da
-        JOIN submissoes s ON s.id = da.submissao_id
-        LEFT JOIN arquivos_submissao af ON af.submissao_id = s.id AND af.categoria = 'principal'
-        WHERE da.parecerista_id = ${user.id}
-        ORDER BY da.criado_em DESC`
-      return json({ sucesso: true, usuario: user, avaliacoes })
-    }
-
+    if (action === 'author_dashboard') { if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403) const submissoes = await sql` SELECT s.id, s.titulo, s.secao, s.status, s.data_submissao, s.prazo_final_avaliacao, dt.titulo AS dossie_titulo, u.nome AS editor_nome FROM submissoes s LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id LEFT JOIN usuarios u ON u.id = COALESCE(s.editor_adjunto_id, s.editor_responsavel_id) WHERE s.autor_id = ${user.id} ORDER BY s.data_submissao DESC` return json({ sucesso: true, usuario: user, submissoes }) }
+    if (action === 'chief_submission_status_queue') { if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403); return json({ sucesso: true, ...(await getChiefSubmissionStatusQueue()) }) }
+    if (action === 'chief_update_submission_status') { if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403); return json({ sucesso: true, ...(await updateChiefSubmissionStatus(body, user)) }) }
+    if (action === 'reviewer_dashboard') { if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403) const avaliacoes = await sql` SELECT da.id, da.status, da.prazo_parecer, da.dias_adicionais, s.id AS submissao_id, s.titulo, s.resumo, s.palavras_chave, s.secao, CASE WHEN da.status IN ('aceito','em_andamento','concluido') THEN af.url_arquivo ELSE NULL END AS url_arquivo, CASE WHEN da.status IN ('aceito','em_andamento','concluido') THEN af.nome_arquivo ELSE NULL END AS nome_arquivo FROM designacoes_avaliacao da JOIN submissoes s ON s.id = da.submissao_id LEFT JOIN arquivos_submissao af ON af.submissao_id = s.id AND af.categoria = 'principal' WHERE da.parecerista_id = ${user.id} ORDER BY da.criado_em DESC` return json({ sucesso: true, usuario: user, avaliacoes }) }
     if (action === 'editor_dashboard') {
-  if (!canAccess(user, ['editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+    if (!canAccess(user, ['editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
 
   const dossies = await sql`
     SELECT dt.*, uc.nome AS criado_por_nome
@@ -306,16 +159,33 @@ export default async (req) => {
         ORDER BY m.criado_em DESC
         LIMIT 100`
       return json({ sucesso: true, usuario: user, usuarios, submissoes, dossies, mensagens })
-    }
+   }
 
     if (action === 'reviewer_list_for_history') {
-    if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-    return json({ sucesso: true, ...(await getReviewerListForHistory(user)) })
+  if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+  return json({ sucesso: true, ...(await getReviewerListForHistory(user)) })
+  }
+
+    if (action === 'reviewer_review_history') {
+  if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) {
+    return json({ erro: 'Acesso negado.' }, 403)
+  }
+
+  const reviewerId = Number(pareceristaId || targetUserId || body?.pareceristaId || body?.id)
+  if (!reviewerId) {
+    return json({ erro: 'Parecerista não informado.' }, 400)
+  }
+
+  return json({
+    sucesso: true,
+    usuario: user,
+    ...(await getReviewerReviewHistory(user, reviewerId))
+  })
 }
-  
-    if (action === 'editorial_review_queue') {
-    if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-   return json({ sucesso: true, ...(await getEditorialQueue()) })
+
+if (action === 'editorial_review_queue') {
+  if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+  return json({ sucesso: true, ...(await getEditorialQueue()) })
 }
 
     if (action === 'editorial_review_decision') {
