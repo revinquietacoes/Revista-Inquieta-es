@@ -71,7 +71,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
   try{
     const res=await fetch('/.netlify/functions/get-user-profile',{ headers:{ ...AppPanel.currentUserHeaders() } });
     const data=await res.json();
-    if(!res.ok) throw new Error(data.error||'Não foi possível carregar o perfil do usuário.');
+    if(!res.ok) throw new Error(data.detalhe||data.erro||data.error||'Não foi possível carregar o perfil do usuário.');
     document.getElementById('inscricao-nome').value=data.full_name||user.nome||'';
     document.getElementById('inscricao-email').value=data.email||user.email||'';
     document.getElementById('inscricao-telefone').value=data.phone||user.telefone||'';
@@ -104,7 +104,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
     try{
       const res=await fetch('/.netlify/functions/create-event-registration',{ method:'POST', headers, body:JSON.stringify(payload) });
       const data=await res.json();
-      if(!res.ok) throw new Error(data.error||'Não foi possível registrar a inscrição.');
+      if(!res.ok) throw new Error(data.detalhe||data.erro||data.error||'Não foi possível registrar a inscrição.');
       msg.textContent='Inscrição salva com sucesso.';
       msg.className='form-message ok';
     }catch(err){

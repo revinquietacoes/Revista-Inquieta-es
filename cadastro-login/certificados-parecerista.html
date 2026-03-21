@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
     const dataParecerista=await resParecerista.json();
     const all=[...(Array.isArray(dataParecer)?dataParecer:[]),...(Array.isArray(dataParecerista)?dataParecerista:[])];
     if((!resParecer.ok && !resParecerista.ok) || !all.length){
-      const msg = (!resParecer.ok && dataParecer.erro || dataParecer.detalhe) || (!resParecerista.ok && dataParecerista.erro || dataParecerista.detalhe) || 'Nenhum certificado de parecerista foi disponibilizado até o momento.';
+      const msg = (!resParecer.ok && dataParecer.error) || (!resParecerista.ok && dataParecerista.error) || 'Nenhum certificado de parecerista foi disponibilizado até o momento.';
       lista.innerHTML=`<div class="empty-state" id="estado-vazio-certificados-parecerista">${msg}</div>`;
       return;
     }

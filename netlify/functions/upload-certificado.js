@@ -1,24 +1,8 @@
 const { getStore } = require('@netlify/blobs')
-const { sql, json, getUserById, ensureSupportTables, canAccess } = require('./_db')
+const { sql, json, getUserById, ensureSupportTables, canAccess, getAuthenticatedUserId } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
 const certificatesStore = getStore('certificados-usuarios')
-
-function getHeader(headers, name) {
-  if (!headers) return null
-  if (typeof headers.get === 'function') {
-    return headers.get(name) || headers.get(name.toLowerCase()) || null
-  }
-  return headers[name] || headers[name.toLowerCase()] || null
-}
-
-function getAuthenticatedUserId(req) {
-  return Number(
-    getHeader(req.headers, 'x-user-id') ||
-    getHeader(req.headers, 'X-User-Id') ||
-    0
-  )
-}
 
 function sanitizeFileName(name) {
   return String(name || 'certificado.pdf')
@@ -36,72 +20,75 @@ function mapCategory(tipo) {
   return 'certificado_evento'
 }
 
+async function readPayload(req) {
+  const ctype = String(req.headers.get('content-type') || '')
+  if (ctype.includes('multipart/form-data')) {
+    const form = await req.formData()
+    const arquivo = form.get('arquivo') || form.get('file')
+    return {
+      targetUserId: Number(form.get('target_user_id') || form.get('targetUserId') || 0),
+      certificateType: String(form.get('certificate_type') || form.get('certificateType') || form.get('tipo') || 'evento'),
+      title: String(form.get('title') || form.get('titulo') || ''),
+      description: String(form.get('description') || form.get('descricao') || ''),
+      arquivo
+    }
+  }
+
+  const body = await req.json().catch(() => ({}))
+  return {
+    targetUserId: Number(body.target_user_id || body.targetUserId || 0),
+    certificateType: String(body.certificate_type || body.certificateType || body.tipo || 'evento'),
+    title: String(body.title || body.titulo || ''),
+    description: String(body.description || body.descricao || ''),
+    fileName: body.file_name || body.fileName || null,
+    mimeType: body.mime_type || body.mimeType || 'application/pdf',
+    fileBase64: body.file_base64 || body.fileBase64 || null
+  }
+}
+
 const main = async (req) => {
   try {
-    if (req.method !== 'POST') {
-      return json({ erro: 'Método não permitido.' }, 405)
-    }
-
+    if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
     await ensureSupportTables()
 
     const editorId = getAuthenticatedUserId(req)
-    if (!editorId) {
-      return json({ erro: 'Usuário não autenticado.' }, 401)
-    }
+    if (!editorId) return json({ erro: 'Usuário não autenticado.' }, 401)
 
     const editor = await getUserById(editorId)
-    if (!editor) {
-      return json({ erro: 'Usuário não encontrado.' }, 404)
+    if (!editor) return json({ erro: 'Usuário não encontrado.' }, 404)
+    if (editor.status !== 'ativo') return json({ erro: 'Usuário inativo.' }, 403)
+    if (!canAccess(editor, ['editor_chefe'])) return json({ erro: 'Apenas o editor-chefe pode enviar certificados.' }, 403)
+
+    const payload = await readPayload(req)
+    if (!payload.targetUserId || !payload.certificateType || !payload.title) {
+      return json({ erro: 'Campos obrigatórios: usuário, tipo e título.' }, 400)
     }
 
-    if (editor.status !== 'ativo') {
-      return json({ erro: 'Usuário inativo.' }, 403)
+    const targetUser = await getUserById(payload.targetUserId)
+    if (!targetUser) return json({ erro: 'Usuário destinatário não encontrado.' }, 404)
+    if (targetUser.status !== 'ativo') return json({ erro: 'Usuário destinatário inativo.' }, 403)
+
+    let bytes, mimeType, safeFileName
+    if (payload.arquivo && typeof payload.arquivo !== 'string') {
+      mimeType = payload.arquivo.type || 'application/pdf'
+      if (mimeType !== 'application/pdf') return json({ erro: 'Envie um arquivo PDF.' }, 400)
+      bytes = Buffer.from(await payload.arquivo.arrayBuffer())
+      safeFileName = sanitizeFileName(payload.arquivo.name || `${payload.title}.pdf`)
+    } else if (payload.fileBase64) {
+      try { bytes = Buffer.from(payload.fileBase64, 'base64') } catch { return json({ erro: 'Arquivo em base64 inválido.' }, 400) }
+      mimeType = payload.mimeType || 'application/pdf'
+      safeFileName = sanitizeFileName(payload.fileName || `${payload.title}.pdf`)
+    } else {
+      return json({ erro: 'Selecione um arquivo PDF.' }, 400)
     }
 
-    if (!canAccess(editor, ['editor_chefe'])) {
-      return json({ erro: 'Apenas o editor-chefe pode enviar certificados.' }, 403)
-    }
+    if (!bytes || !bytes.length) return json({ erro: 'Arquivo vazio ou inválido.' }, 400)
 
-    const form = await req.formData()
-    const targetUserId = Number(form.get('target_user_id') || form.get('targetUserId') || 0)
-    const certificateType = String(form.get('certificate_type') || form.get('tipo') || '')
-    const title = String(form.get('title') || form.get('titulo') || '')
-    const description = String(form.get('description') || form.get('descricao') || '')
-    const arquivo = form.get('arquivo') || form.get('file')
-
-    if (!targetUserId || !certificateType || !title || !arquivo || typeof arquivo === 'string') {
-      return json({
-        erro: 'Campos obrigatórios: target_user_id, certificate_type, title e arquivo.'
-      }, 400)
-    }
-
-    const targetUser = await getUserById(targetUserId)
-    if (!targetUser) {
-      return json({ erro: 'Usuário destinatário não encontrado.' }, 404)
-    }
-
-    if (targetUser.status !== 'ativo') {
-      return json({ erro: 'Usuário destinatário inativo.' }, 403)
-    }
-
-    const mimeType = arquivo.type || 'application/pdf'
-    if (mimeType !== 'application/pdf') {
-      return json({ erro: 'Envie um arquivo PDF.' }, 400)
-    }
-
-    const bytes = Buffer.from(await arquivo.arrayBuffer())
-    if (!bytes.length) {
-      return json({ erro: 'Arquivo vazio ou inválido.' }, 400)
-    }
-
-    const safeFileName = sanitizeFileName(arquivo.name || `${title}.pdf`)
-    const timestamp = Date.now()
-    const blobKey = `usuarios/${targetUser.id}/certificados/${certificateType}/${timestamp}-${safeFileName}`
-
+    const blobKey = `usuarios/${targetUser.id}/certificados/${payload.certificateType}/${Date.now()}-${safeFileName}`
     await certificatesStore.set(blobKey, bytes, {
       metadata: {
-        title,
-        tipo: certificateType,
+        title: payload.title,
+        tipo: payload.certificateType,
         target_user_id: String(targetUser.id),
         uploaded_by: String(editorId),
         mime_type: mimeType
@@ -109,39 +96,14 @@ const main = async (req) => {
     })
 
     const inserted = await sql`
-      INSERT INTO certificados_privados (
-        usuario_id,
-        enviado_por_usuario_id,
-        titulo,
-        descricao,
-        tipo,
-        categoria,
-        blob_key,
-        nome_arquivo,
-        mime_type,
-        tamanho_bytes
-      )
-      VALUES (
-        ${targetUser.id},
-        ${editorId},
-        ${title},
-        ${description || null},
-        ${certificateType},
-        ${mapCategory(certificateType)},
-        ${blobKey},
-        ${safeFileName},
-        ${mimeType},
-        ${bytes.length}
-      )
+      INSERT INTO certificados_privados (usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key, nome_arquivo, mime_type, tamanho_bytes)
+      VALUES (${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null}, ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${blobKey}, ${safeFileName}, ${mimeType}, ${bytes.length})
       RETURNING id, criado_em
     `
 
     return json({ sucesso: true, certificado: inserted[0] }, 201)
   } catch (error) {
-    return json({
-      erro: 'Erro interno ao enviar certificado.',
-      detalhe: error.message
-    }, 500)
+    return json({ erro: 'Erro interno ao enviar certificado.', detalhe: error.message }, 500)
   }
 }
 

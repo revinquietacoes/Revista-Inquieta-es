@@ -34,6 +34,20 @@ function normalizeRole(role) {
   return value
 }
 
+
+function getHeader(headers, name) {
+  if (!headers) return null
+  if (typeof headers.get === 'function') {
+    return headers.get(name) || headers.get(name.toLowerCase()) || null
+  }
+  return headers[name] || headers[name.toLowerCase()] || null
+}
+
+function getAuthenticatedUserId(req, fallback = 0) {
+  const value = getHeader(req?.headers, 'x-user-id') || getHeader(req?.headers, 'X-User-Id') || fallback || 0
+  return Number(value || 0)
+}
+
 function canAccess(user, allowed) {
   if (!user || !user.perfil) return false
   const perfil = normalizeRole(user.perfil)
@@ -171,5 +185,7 @@ module.exports = {
   getTableColumns,
   tableExists,
   getUserById,
-  ensureSupportTables
+  ensureSupportTables,
+  getHeader,
+  getAuthenticatedUserId
 }
