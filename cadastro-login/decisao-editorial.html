@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Decisão editorial</title>
+<link rel="stylesheet" href="painel-base.css">
+<script src="painel-base.js" defer></script>
+<style>
+body{
+  background:#0f172a;
+  color:#f8fafc;
+  font-family:Georgia, serif;
+  margin:0;
+}
+.page{
+  max-width:1100px;
+  margin:auto;
+  padding:30px;
+}
+.card{
+  background:#fff;
+  color:#0f172a;
+  border-radius:18px;
+  padding:18px;
+  margin-bottom:16px;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+.btn{
+  padding:10px 14px;
+  border-radius:12px;
+  font-weight:700;
+  cursor:pointer;
+  border:none;
+}
+.btn:disabled{
+  opacity:.6;
+  cursor:not-allowed;
+}
+.btn-aprovar{background:#16a34a;color:#fff;}
+.btn-recusar{background:#dc2626;color:#fff;}
+.btn-rodada{background:#f59e0b;color:#fff;}
+textarea{
+  width:100%;
+  min-height:100px;
+  border-radius:12px;
+  border:1px solid #ccc;
+  padding:10px;
+  box-sizing:border-box;
+}
+.msg-vazia,
+.msg-erro{
+  background:#fff;
+  color:#0f172a;
+  border-radius:18px;
+  padding:18px;
+  box-shadow:0 10px 25px rgba(0,0,0,.2);
+}
+.msg-erro{
+  border-left:6px solid #dc2626;
+}
+</style>
+</head>
+<body>
+<div class="page">
+  <h1>Decisão editorial</h1>
+  <div id="lista"></div>
+</div>
+
+<script>
+function escapeHtml(text) {
+  return String(text ?? '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+async function carregarFila() {
+  const el = document.getElementById('lista');
+  el.innerHTML = '<div class="msg-vazia">Carregando...</div>';
+
+  try {
+    if (!window.AppPanel || typeof AppPanel.apiData !== 'function') {
+      throw new Error('AppPanel.apiData não está disponível.');
+    }
+
+    const data = await AppPanel.apiData('editorial_review_queue');
+    renderLista(data?.items || []);
+  } catch (error) {
+    console.error(error);
+    el.innerHTML = `<div class="msg-erro">Erro ao carregar a fila editorial.</div>`;
+  }
+}
+
+function renderLista(items) {
+  const el = document.getElementById('lista');
+
+  if (!items.length) {
+    el.innerHTML = '<div class="msg-vazia">Nenhuma decisão pendente no momento.</div>';
+    return;
+  }
+
+  el.innerHTML = items.map(i => `
+    <div class="card">
+      <h3>${escapeHtml(i.titulo || 'Sem título')}</h3>
+      <p><strong>Autor:</strong> ${escapeHtml(i.autor_nome || 'Não informado')}</p>
+      <p><strong>Parecerista:</strong> ${escapeHtml(i.parecerista_nome || 'Não informado')}</p>
+
+      <textarea
+        id="obs-${Number(i.designacao_id)}"
+        placeholder="Observação do editor"
+      ></textarea>
+
+      <div style="margin-top:10px;display:flex;gap:8px;flex-wrap:wrap;">
+        <button class="btn btn-aprovar" onclick="decidir(${Number(i.designacao_id)}, ${Number(i.submissao_id)}, 'aprovar', this)">Aprovar</button>
+        <button class="btn btn-recusar" onclick="decidir(${Number(i.designacao_id)}, ${Number(i.submissao_id)}, 'recusar', this)">Recusar</button>
+        <button class="btn btn-rodada" onclick="decidir(${Number(i.designacao_id)}, ${Number(i.submissao_id)}, 'nova_rodada', this)">Nova rodada</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+async function decidir(designacaoId, submissaoId, decisao, botao) {
+  const textarea = document.getElementById(`obs-${designacaoId}`);
+  const obs = textarea ? textarea.value : '';
+
+  try {
+    if (!window.AppPanel || typeof AppPanel.apiAction !== 'function') {
+      throw new Error('AppPanel.apiAction não está disponível.');
+    }
+
+    const card = botao.closest('.card');
+    const botoes = card.querySelectorAll('button');
+    botoes.forEach(btn => btn.disabled = true);
+
+    await AppPanel.apiAction('editorial_review_decision', {
+      designacaoId,
+      submissaoId,
+      decisao,
+      observacao: obs
+    });
+
+    alert('Decisão registrada com sucesso.');
+    await carregarFila();
+  } catch (error) {
+    console.error(error);
+    alert('Erro ao registrar a decisão.');
+    const card = botao.closest('.card');
+    const botoes = card.querySelectorAll('button');
+    botoes.forEach(btn => btn.disabled = false);
+  }
+}
+
+document.addEventListener('DOMContentLoaded', carregarFila);
+</script>
+</body>
+</html>

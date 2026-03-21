@@ -7,7 +7,27 @@ function normalizeReviewBucket(status) {
   if (status === 'em_andamento') return 'em_avaliacao'
   return 'outros'
 }
+async function getEditorialQueue() {
+  const rows = await sql`
+    SELECT * FROM vw_fila_decisao_editorial
+  `
+  return { items: rows }
+}
 
+async function decidirParecer(payload) {
+  const { designacaoId, submissaoId, decisao, observacao, editorId } = payload
+
+  await sql`
+    SELECT registrar_decisao_editorial_parecer(
+      ${designacaoId},
+      ${editorId},
+      ${decisao},
+      ${observacao}
+    )
+  `
+
+  return { ok: true }
+}
 export default async (req) => {
   try {
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
@@ -76,6 +96,26 @@ export default async (req) => {
         ORDER BY u.nome ASC`
       return json({ sucesso: true, usuario: user, dossies, submissoes, pareceristas })
     }
+
+    if (action === 'editorial_review_queue') {
+  if (!canAccess(user, ['editor_chefe', 'editor_adjunto']))
+    return json({ erro: 'Acesso negado.' }, 403)
+
+  return json({ sucesso: true, ...(await getEditorialQueue()) })
+}
+
+if (action === 'editorial_review_decision') {
+  if (!canAccess(user, ['editor_chefe', 'editor_adjunto']))
+    return json({ erro: 'Acesso negado.' }, 403)
+
+  return json({
+    sucesso: true,
+    ...(await decidirParecer({
+      ...body,
+      editorId: user.id
+    }))
+  })
+}
 
     if (action === 'chief_dashboard') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
