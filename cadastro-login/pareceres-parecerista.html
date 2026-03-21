@@ -166,7 +166,7 @@ a{text-decoration:none;}
 
 <script>
 document.addEventListener('DOMContentLoaded',async()=>{
-  const user=AppPanel.requireRole(['editor_chefe','editor']);
+  const user=AppPanel.requireRole(['editor_chefe','editor_adjunto']);
   if(!user)return;
 
   const params=new URLSearchParams(window.location.search);
@@ -189,8 +189,8 @@ document.addEventListener('DOMContentLoaded',async()=>{
   }
 
   function statusKey(item){
-    const d=normalizeText(item.designacaoStatus);
-    const f=normalizeText(item.parecerFinal);
+    const d=normalizeText(item.designacao_status||item.designacaoStatus);
+    const f=normalizeText(item.parecer_final||item.parecerFinal);
     if(d.includes('recus'))return'nao_aceito';
     if(d.includes('nao aceito'))return'nao_aceito';
     if(d.includes('não aceito'))return'nao_aceito';
@@ -276,7 +276,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
     if(filtered.length===0)return;
     const html=filtered.map(item=>{
       const key=statusKey(item);
-      return`<article class="review-item"><div class="review-head"><div class="review-head-main"><h3 class="review-title">${AppPanel.escapeHtml(safe(item.titulo))}</h3><p class="review-subtitle">Submissão #${AppPanel.escapeHtml(String(item.submissaoId||'—'))} • ${AppPanel.escapeHtml(safe(item.tipoSubmissao||'Sem tipo informado'))}</p></div><span class="${statusClass(key)}">${statusLabel(key)}</span></div><div class="meta-grid"><div class="meta-card"><span class="meta-label">Status da designação</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.designacaoStatus||statusLabel(key)))}</span></div><div class="meta-card"><span class="meta-label">Autor(a)</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.autorNome))}</span></div><div class="meta-card"><span class="meta-label">Prazo do parecer</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.prazoParecer))}</span></div><div class="meta-card"><span class="meta-label">Última atualização</span><span class="meta-value">${AppPanel.escapeHtml(formatDate(item.atualizadoEm||item.updatedAt||item.criadoEm))}</span></div><div class="meta-card"><span class="meta-label">Parecer final</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.parecerFinal))}</span></div><div class="meta-card"><span class="meta-label">Tempo de avaliação</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.tempoAvaliacao))}</span></div></div><div class="notes-grid">${noteBox('Comentário ao(à) autor(a)',item.comentarioAutor)}${noteBox('Comentário interno à editoria',item.comentarioEditor)}</div>${fileBox(item.devolutivaUrl||item.devolutivaDocUrl)}</article>`;
+      return`<article class="review-item"><div class="review-head"><div class="review-head-main"><h3 class="review-title">${AppPanel.escapeHtml(safe(item.titulo))}</h3><p class="review-subtitle">Submissão #${AppPanel.escapeHtml(String(item.submissao_id||item.submissaoId||'—'))} • ${AppPanel.escapeHtml(safe(item.secao||item.tipoSubmissao||'Sem tipo informado'))}</p></div><span class="${statusClass(key)}">${statusLabel(key)}</span></div><div class="meta-grid"><div class="meta-card"><span class="meta-label">Status da designação</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.designacao_status||item.designacaoStatus||statusLabel(key)))}</span></div><div class="meta-card"><span class="meta-label">Autor(a)</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.autor_nome||item.autorNome))}</span></div><div class="meta-card"><span class="meta-label">Prazo do parecer</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.prazo_parecer_formatado||item.prazoParecer||item.prazo_parecer))}</span></div><div class="meta-card"><span class="meta-label">Última atualização</span><span class="meta-value">${AppPanel.escapeHtml(formatDate(item.atualizado_em||item.atualizadoEm||item.updatedAt||item.criadoEm||item.criado_em))}</span></div><div class="meta-card"><span class="meta-label">Parecer final</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.parecer_final||item.parecerFinal))}</span></div><div class="meta-card"><span class="meta-label">Tempo de avaliação</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.tempo_avaliacao||item.tempoAvaliacao))}</span></div></div><div class="notes-grid">${noteBox('Comentário ao(à) autor(a)',item.comentario_autor||item.comentarioAutor)}${noteBox('Comentário interno à editoria',item.comentario_editor||item.comentarioEditor)}</div>${fileBox(item.devolutiva_url||item.devolutivaUrl||item.devolutivaDocUrl)}</article>`;
     }).join('');
     reviewList.innerHTML=html;
   }
@@ -328,8 +328,8 @@ document.addEventListener('DOMContentLoaded',async()=>{
 
   try{
     const data=await AppPanel.apiData('reviewer_review_history',{pareceristaId:Number(pareceristaId)});
-    const reviewer=data.reviewer||{};
-    rawItems=Array.isArray(data.items)?data.items:[];
+    const reviewer=data.parecerista||data.reviewer||{};
+    rawItems=Array.isArray(data.avaliacoes)?data.avaliacoes:(Array.isArray(data.items)?data.items:[]);
     document.getElementById('reviewer-name').textContent=reviewer.nome||'Parecerista';
     document.getElementById('reviewer-email').textContent=reviewer.email||' ';
     document.getElementById('page-title').textContent=`Pareceres de ${reviewer.nome||'Parecerista'}`;

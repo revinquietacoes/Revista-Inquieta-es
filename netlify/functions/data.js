@@ -8,6 +8,33 @@ function normalizeReviewBucket(status) {
   return 'outros'
 }
 
+
+async function getReviewerListForHistory(user) {
+  let rows = []
+  if (user.perfil === 'editor_chefe') {
+    rows = await sql`
+      SELECT DISTINCT u.id, u.nome, u.email
+      FROM usuarios u
+      JOIN designacoes_avaliacao da ON da.parecerista_id = u.id
+      WHERE u.perfil = 'parecerista' AND u.status = 'ativo'
+      ORDER BY u.nome ASC`
+  } else {
+    rows = await sql`
+      SELECT DISTINCT u.id, u.nome, u.email
+      FROM usuarios u
+      JOIN designacoes_avaliacao da ON da.parecerista_id = u.id
+      JOIN submissoes s ON s.id = da.submissao_id
+      WHERE u.perfil = 'parecerista'
+        AND u.status = 'ativo'
+        AND (
+          s.editor_adjunto_id = ${user.id}
+          OR s.dossie_id IN (SELECT id FROM dossies_tematicos WHERE editor_responsavel_id = ${user.id})
+        )
+      ORDER BY u.nome ASC`
+  }
+  return { items: rows }
+}
+
 async function getEditorialQueue() {
   const rows = await sql`
     SELECT * FROM vw_fila_decisao_editorial
@@ -186,9 +213,14 @@ export default async (req) => {
       return json({ sucesso: true, usuario: user, usuarios, submissoes, dossies, mensagens })
     }
 
+    if (action === 'reviewer_list_for_history') {
+      if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      return json({ sucesso: true, ...(await getReviewerListForHistory(user)) })
+    }
+
     if (action === 'reviewer_review_history') {
       if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-      const reviewerId = Number(pareceristaId || targetUserId)
+      const reviewerId = Number(pareceristaId || targetUserId || body?.pareceristaId || body?.id)
       if (!reviewerId) return json({ erro: 'Parecerista não informado.' }, 400)
 
       let allowedReviewer = []
