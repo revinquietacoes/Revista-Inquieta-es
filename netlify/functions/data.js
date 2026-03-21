@@ -1,10 +1,18 @@
 import { sql, json, parseJson, getUserById, canAccess } from './_db.js'
 
+function normalizeReviewBucket(status) {
+  if (status === 'concluido') return 'concluidos'
+  if (status === 'recusado') return 'nao_aceitos'
+  if (status === 'aceito') return 'aceitos'
+  if (status === 'em_andamento') return 'em_avaliacao'
+  return 'outros'
+}
+
 export default async (req) => {
   try {
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
     const body = await parseJson(req)
-    const { action, userId, targetUserId } = body
+    const { action, userId, targetUserId, pareceristaId } = body
     const user = await getUserById(Number(userId))
     if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
 
@@ -113,6 +121,88 @@ export default async (req) => {
         ORDER BY m.criado_em DESC
         LIMIT 100`
       return json({ sucesso: true, usuario: user, usuarios, submissoes, dossies, mensagens })
+    }
+
+    if (action === 'reviewer_review_history') {
+      if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      const reviewerId = Number(pareceristaId || targetUserId)
+      if (!reviewerId) return json({ erro: 'Parecerista não informado.' }, 400)
+
+      let allowedReviewer = []
+      if (user.perfil === 'editor_chefe') {
+        allowedReviewer = await sql`
+          SELECT id, nome, email, instituicao, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica
+          FROM usuarios
+          WHERE id = ${reviewerId} AND perfil = 'parecerista' AND status = 'ativo'
+          LIMIT 1`
+      } else {
+        allowedReviewer = await sql`
+          SELECT DISTINCT u.id, u.nome, u.email, u.instituicao, u.foto_perfil_url, u.foto_perfil_aprovada, u.consentimento_foto_publica
+          FROM usuarios u
+          JOIN designacoes_avaliacao da ON da.parecerista_id = u.id
+          JOIN submissoes s ON s.id = da.submissao_id
+          WHERE u.id = ${reviewerId}
+            AND u.perfil = 'parecerista'
+            AND u.status = 'ativo'
+            AND (
+              s.editor_adjunto_id = ${user.id}
+              OR s.dossie_id IN (
+                SELECT id FROM dossies_tematicos WHERE editor_responsavel_id = ${user.id}
+              )
+            )
+          LIMIT 1`
+      }
+      const reviewer = allowedReviewer[0]
+      if (!reviewer) return json({ erro: 'Parecerista não encontrado ou sem vínculo com sua editoria.' }, 404)
+
+      const rows = await sql`
+        SELECT
+          da.id AS designacao_id,
+          da.status AS designacao_status,
+          da.criado_em AS designado_em,
+          da.prazo_parecer,
+          da.dias_adicionais,
+          s.id AS submissao_id,
+          s.titulo,
+          s.secao,
+          s.status AS submissao_status,
+          a.nome AS autor_nome,
+          COALESCE(av2.parecer_final, av.parecer_final) AS parecer_final,
+          COALESCE(av2.tempo_avaliacao, av.tempo_avaliacao) AS tempo_avaliacao,
+          COALESCE(av2.comentario_autor, av.comentario_autor) AS comentario_autor,
+          COALESCE(av2.comentario_editor, av.comentario_editor) AS comentario_editor,
+          COALESCE(av2.devolutiva_doc_url, av2.devolutiva_url, av.devolutiva_doc_url, av.devolutiva_url) AS devolutiva_url,
+          COALESCE(av2.atualizado_em, av.atualizado_em, av.updated_at, da.atualizado_em, da.updated_at, da.criado_em) AS atualizado_em
+        FROM designacoes_avaliacao da
+        JOIN submissoes s ON s.id = da.submissao_id
+        LEFT JOIN usuarios a ON a.id = s.autor_id
+        LEFT JOIN avaliacoes_v2 av2 ON av2.designacao_id = da.id
+        LEFT JOIN avaliacoes av ON av.designacao_id = da.id
+        WHERE da.parecerista_id = ${reviewerId}
+        ORDER BY COALESCE(av2.atualizado_em, av.atualizado_em, av.updated_at, da.atualizado_em, da.updated_at, da.criado_em) DESC NULLS LAST, da.id DESC`
+
+      const resumo = {
+        total: rows.length,
+        em_avaliacao: 0,
+        concluidos: 0,
+        nao_aceitos: 0,
+        aceitos: 0
+      }
+      const avaliacoes = rows.map((row) => {
+        const bucket = normalizeReviewBucket(row.designacao_status)
+        if (bucket === 'em_avaliacao') resumo.em_avaliacao += 1
+        if (bucket === 'concluidos') resumo.concluidos += 1
+        if (bucket === 'nao_aceitos') resumo.nao_aceitos += 1
+        if (bucket === 'aceitos') resumo.aceitos += 1
+        return {
+          ...row,
+          bucket,
+          tem_parecer: !!(row.parecer_final || row.comentario_autor || row.comentario_editor || row.devolutiva_url),
+          atualizado_em_formatado: row.atualizado_em ? new Date(row.atualizado_em).toLocaleString('pt-BR') : '',
+          prazo_parecer_formatado: row.prazo_parecer ? new Date(row.prazo_parecer).toLocaleDateString('pt-BR') : ''
+        }
+      })
+      return json({ sucesso: true, usuario: user, parecerista: reviewer, resumo, avaliacoes })
     }
 
     if (action === 'public_dossiers') {

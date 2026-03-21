@@ -19,6 +19,9 @@
   "homepage": "https://github.com/revinquietacoes/Revista-Inquieta-es#readme",
   "dependencies": {
     "@netlify/neon": "^0.1.2",
-    "bcryptjs": "^3.0.3"
-  }
+    "bcryptjs": "^3.0.3",
+    "pg": "^8.12.0",
+    "@netlify/blobs": "^8.1.0"
+  },
+  "private": true
 }

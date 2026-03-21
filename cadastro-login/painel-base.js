@@ -53,12 +53,12 @@ function currentUserHeaders(){
 async function apiData(action, extra = {}) {
   const user = getLoggedUser();
   const res = await fetch(API_DATA, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ action, userId:user?.id, ...extra }) });
-  const data = await res.json(); if (!res.ok) throw new Error(data.erro || data.detalhe || 'Erro ao carregar dados.'); return data;
+  const data = await res.json(); if (!res.ok) throw new Error(data.detalhe || data.erro || 'Erro ao carregar dados.'); return data;
 }
 async function apiAction(action, extra = {}) {
   const user = getLoggedUser();
   const res = await fetch(API_ACTION, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ action, userId:user?.id, ...extra }) });
-  const data = await res.json(); if (!res.ok) throw new Error(data.erro || data.detalhe || 'Erro ao executar ação.');
+  const data = await res.json(); if (!res.ok) throw new Error(data.detalhe || data.erro || 'Erro ao executar ação.');
   if (data.usuario) setLoggedUser(data.usuario);
   return data;
 }

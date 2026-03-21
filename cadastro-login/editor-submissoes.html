@@ -1,1 +1,127 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Submissões recentes do(a) editor(a)</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Submissões recentes</h1><p>Aqui você acompanha materiais vinculados aos dossiês e pode designar pareceristas.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="painel-editor.html">Voltar ao painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><div class="content-grid"><section class="panel"><div class="panel-head"><h2>Lista de submissões</h2></div><div class="list" id="lista-submissoes"></div></section><aside class="panel detail-card is-open" id="detalhe"><h3>Selecione uma submissão</h3><p class="helper">Aqui você abre o material, visualiza o dossiê e designa pareceristas.</p></aside></div><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',async()=>{const user=AppPanel.requireRole(['editor_adjunto']);if(!user)return;try{const data=await AppPanel.apiData('editor_dashboard');const lista=document.getElementById('lista-submissoes');const detalhe=document.getElementById('detalhe');if(!data.submissoes.length){lista.innerHTML='<div class="empty-state">Aqui você ainda não possui submissões setoriais em acompanhamento.</div>';return;}data.submissoes.forEach(s=>{const btn=document.createElement('button');btn.innerHTML=`<div class="item-title">${s.titulo}</div><div class="item-meta">${s.status} • ${s.secao} • ${s.dossie_titulo||'Fluxo contínuo'}</div>`;btn.addEventListener('click',()=>{detalhe.innerHTML=`<h3>${s.titulo}</h3><div class="detail-grid"><div class="metric-box"><span class="helper">Status</span><strong>${s.status}</strong></div><div class="metric-box"><span class="helper">Seção</span><strong>${s.secao}</strong></div><div class="metric-box"><span class="helper">Dossiê</span><strong>${s.dossie_titulo||'Fluxo contínuo'}</strong></div><div class="metric-box"><span class="helper">Autor(a)</span><strong>${s.autor_nome||'—'}</strong></div></div><form id="form-assign" style="margin-top:14px"><div class="form-grid"><div class="field"><label>Parecerista</label><select name="pareceristaId" id="pareceristaId"></select></div><div class="field"><label>Prazo do parecer</label><input type="date" name="prazoParecer"></div><div class="field full"><label>Mensagem editorial</label><textarea name="mensagemConvite" placeholder="Aqui você solicita o envio do parecer ou registra orientações à avaliação."></textarea></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Designar parecerista</button></div><div class="form-message" id="msg-assign"></div></form>`;const select=detalhe.querySelector('#pareceristaId');data.pareceristas.forEach(p=>{const opt=document.createElement('option');opt.value=p.id;opt.textContent=`${p.nome} • ${p.total_avaliacoes} avaliação(ões)`;select.appendChild(opt)});detalhe.querySelector('#form-assign').addEventListener('submit',async(ev)=>{ev.preventDefault();const fd=new FormData(ev.target);const msg=detalhe.querySelector('#msg-assign');msg.className='form-message';try{await AppPanel.apiAction('assign_reviewer',{submissaoId:s.id,pareceristaId:Number(fd.get('pareceristaId')),prazoParecer:fd.get('prazoParecer'),mensagemConvite:fd.get('mensagemConvite')});msg.textContent='Parecerista designado(a) com sucesso.';msg.classList.add('ok');}catch(err){msg.textContent=err.message;msg.classList.add('err')}})});lista.appendChild(btn)})}catch(err){document.getElementById('lista-submissoes').innerHTML=`<div class="empty-state">${err.message}</div>`}})</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Submissões recentes do(a) editor(a)</title>
+<link rel="icon" href="./assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<script src="painel-base.js" defer></script>
+</head>
+<body>
+<div class="page-shell">
+<header class="topbar">
+  <div class="brand-wrap">
+    <div class="avatar-box">
+      <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+      <img class="logo-inline" src="./logo-revista.png" alt="Logo da Revista Inquietações">
+    </div>
+    <div class="brand-copy">
+      <h1>Submissões recentes</h1>
+      <p>Aqui você acompanha materiais vinculados aos dossiês, designa pareceristas e consulta o histórico por parecerista.</p>
+    </div>
+  </div>
+  <div class="actions-row">
+    <a class="btn btn-secondary" href="painel-editor.html">Voltar ao painel</a>
+    <button class="btn btn-soft" data-action="logout">Sair</button>
+  </div>
+</header>
+
+<div class="content-grid">
+  <section class="panel">
+    <div class="panel-head"><h2>Lista de submissões</h2></div>
+    <div class="list" id="lista-submissoes"></div>
+  </section>
+  <aside class="panel detail-card is-open" id="detalhe">
+    <h3>Selecione uma submissão</h3>
+    <p class="helper">Aqui você abre o material, visualiza o dossiê, designa pareceristas e consulta o histórico do parecerista selecionado.</p>
+  </aside>
+</div>
+<footer class="page-footer"></footer>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', async ()=>{
+  const user = AppPanel.requireRole(['editor_adjunto'])
+  if(!user) return
+  try{
+    const data = await AppPanel.apiData('editor_dashboard')
+    const lista = document.getElementById('lista-submissoes')
+    const detalhe = document.getElementById('detalhe')
+
+    if(!data.submissoes.length){
+      lista.innerHTML = '<div class="empty-state">Aqui você ainda não possui submissões setoriais em acompanhamento.</div>'
+      return
+    }
+
+    function updateReviewerLink(container){
+      const select = container.querySelector('#pareceristaId')
+      const link = container.querySelector('#btn-historico-parecerista')
+      if(!select || !link) return
+      link.href = `pareceres-parecerista.html?pareceristaId=${encodeURIComponent(select.value)}`
+    }
+
+    data.submissoes.forEach((s)=>{
+      const btn = document.createElement('button')
+      btn.innerHTML = `<div class="item-title">${s.titulo}</div><div class="item-meta">${s.status} • ${s.secao} • ${s.dossie_titulo || 'Fluxo contínuo'}</div>`
+      btn.addEventListener('click', ()=>{
+        detalhe.innerHTML = `
+          <h3>${s.titulo}</h3>
+          <div class="detail-grid">
+            <div class="metric-box"><span class="helper">Status</span><strong>${s.status}</strong></div>
+            <div class="metric-box"><span class="helper">Seção</span><strong>${s.secao}</strong></div>
+            <div class="metric-box"><span class="helper">Dossiê</span><strong>${s.dossie_titulo || 'Fluxo contínuo'}</strong></div>
+            <div class="metric-box"><span class="helper">Autor(a)</span><strong>${s.autor_nome || '—'}</strong></div>
+          </div>
+          <form id="form-assign" style="margin-top:14px">
+            <div class="form-grid">
+              <div class="field"><label>Parecerista</label><select name="pareceristaId" id="pareceristaId"></select></div>
+              <div class="field"><label>Prazo do parecer</label><input type="date" name="prazoParecer"></div>
+              <div class="field full"><label>Mensagem editorial</label><textarea name="mensagemConvite" placeholder="Aqui você solicita o envio do parecer ou registra orientações à avaliação."></textarea></div>
+            </div>
+            <div class="actions-row">
+              <button class="btn btn-primary" type="submit">Designar parecerista</button>
+              <a class="btn btn-secondary" id="btn-historico-parecerista" href="pareceres-parecerista.html">Ver histórico do parecerista</a>
+            </div>
+            <div class="form-message" id="msg-assign"></div>
+          </form>`
+
+        const select = detalhe.querySelector('#pareceristaId')
+        data.pareceristas.forEach((p)=>{
+          const opt = document.createElement('option')
+          opt.value = p.id
+          opt.textContent = `${p.nome} • ${p.total_avaliacoes} avaliação(ões)`
+          select.appendChild(opt)
+        })
+        updateReviewerLink(detalhe)
+        select.addEventListener('change', ()=>updateReviewerLink(detalhe))
+
+        detalhe.querySelector('#form-assign').addEventListener('submit', async (ev)=>{
+          ev.preventDefault()
+          const fd = new FormData(ev.target)
+          const msg = detalhe.querySelector('#msg-assign')
+          msg.className = 'form-message'
+          try{
+            await AppPanel.apiAction('assign_reviewer', {
+              submissaoId:s.id,
+              pareceristaId:Number(fd.get('pareceristaId')),
+              prazoParecer:fd.get('prazoParecer'),
+              mensagemConvite:fd.get('mensagemConvite')
+            })
+            msg.textContent = 'Parecerista designado(a) com sucesso.'
+            msg.classList.add('ok')
+            updateReviewerLink(detalhe)
+          }catch(err){
+            msg.textContent = err.message
+            msg.classList.add('err')
+          }
+        })
+      })
+      lista.appendChild(btn)
+    })
+  }catch(err){
+    document.getElementById('lista-submissoes').innerHTML = `<div class="empty-state">${err.message}</div>`
+  }
+})
+</script>
+</body>
+</html>

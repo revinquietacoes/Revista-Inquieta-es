@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pareceres por parecerista</title>
+  <link rel="icon" href="./assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+  <style>
+    .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:14px;margin-top:16px}
+    .summary-card{background:#fff;border:1px solid #dbe6f2;border-radius:16px;padding:16px;box-shadow:var(--shadow-soft,0 8px 24px rgba(15,23,42,.08))}
+    .summary-card strong{display:block;font-size:1.6rem;margin-top:6px}
+    .reviews-list{display:grid;gap:14px;margin-top:18px}
+    .review-card{background:#fff;border:1px solid #dbe6f2;border-radius:18px;padding:18px;box-shadow:var(--shadow-soft,0 8px 24px rgba(15,23,42,.08))}
+    .review-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-start;flex-wrap:wrap}
+    .review-meta{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:12px;margin-top:14px}
+    .review-block{margin-top:14px;padding:14px;border-radius:14px;background:#f8fbff;border:1px solid #e2ebf5}
+    .status-pill{display:inline-flex;align-items:center;padding:6px 10px;border-radius:999px;font-size:.86rem;font-weight:600;background:#eef5fc;border:1px solid #dbe6f2}
+    .toolbar-row{display:flex;gap:12px;align-items:end;flex-wrap:wrap}
+    .toolbar-row .field{flex:1;min-width:260px}
+    .hidden{display:none}
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box">
+        <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+        <img class="logo-inline" src="./logo-revista.png" alt="Logo da Revista Inquietações">
+      </div>
+      <div class="brand-copy">
+        <h1>Pareceres por parecerista</h1>
+        <p>Aqui a editoria consulta o histórico de designações e pareceres vinculados a cada parecerista.</p>
+      </div>
+    </div>
+    <div class="actions-row">
+      <a class="btn btn-secondary" id="btn-voltar" href="painel-editor-chefe.html">Voltar</a>
+      <button class="btn btn-soft" data-action="logout">Sair</button>
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="panel-head"><h2>Consulta de parecerista</h2></div>
+    <div class="toolbar-row">
+      <div class="field">
+        <label for="parecerista-select">Selecione o nome do parecerista</label>
+        <select id="parecerista-select"></select>
+      </div>
+      <div class="actions-row">
+        <button class="btn btn-primary" id="btn-carregar" type="button">Ver pareceres</button>
+      </div>
+    </div>
+    <div class="form-message" id="msg-page"></div>
+  </section>
+
+  <section class="panel hidden" id="painel-parecerista">
+    <div class="panel-head"><h2 id="titulo-parecerista">Histórico do parecerista</h2></div>
+    <div class="note" id="subtitulo-parecerista"></div>
+    <div class="summary-grid" id="summary-grid"></div>
+    <div class="reviews-list" id="reviews-list"></div>
+  </section>
+
+  <footer class="page-footer"></footer>
+</div>
+<script>
+function escapeHtml(value){return String(value ?? '').replace(/[&<>"']/g,(m)=>({ '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;' }[m]))}
+function statusLabel(status){
+  return {
+    em_avaliacao:'Em avaliação',
+    concluidos:'Concluídos',
+    nao_aceitos:'Não aceitos',
+    aceitos:'Aceitos',
+    concluido:'Concluído',
+    recusado:'Não aceito',
+    aceito:'Aceito',
+    em_andamento:'Em avaliação'
+  }[status] || status || '—'
+}
+async function postData(payload){
+  const r = await fetch('/.netlify/functions/data', {
+    method:'POST', headers:{'Content-Type':'application/json'}, body: JSON.stringify(payload)
+  })
+  const data = await r.json().catch(()=>({erro:'Erro ao ler resposta.'}))
+  if(!r.ok || data.erro) throw new Error(data.detalhe || data.erro || 'Erro ao carregar dados.')
+  return data
+}
+function renderResumo(resumo){
+  const items = [
+    ['Total', resumo.total],
+    ['Em avaliação', resumo.em_avaliacao],
+    ['Concluídos', resumo.concluidos],
+    ['Não aceitos', resumo.nao_aceitos],
+    ['Aceitos', resumo.aceitos]
+  ]
+  return items.map(([label,value])=>`<div class="summary-card"><span class="helper">${label}</span><strong>${value ?? 0}</strong></div>`).join('')
+}
+function renderAvaliacao(item){
+  const devolutiva = item.devolutiva_url ? `<a class="file-pill" target="_blank" rel="noopener noreferrer" href="${item.devolutiva_url}">Abrir devolutiva</a>` : 'Sem devolutiva anexada.'
+  const comentarioAutor = item.comentario_autor ? `<div class="review-block"><span class="helper">Comentário ao(à) autor(a)</span><div>${escapeHtml(item.comentario_autor)}</div></div>` : ''
+  const comentarioEditor = item.comentario_editor ? `<div class="review-block"><span class="helper">Comentário interno à editoria</span><div>${escapeHtml(item.comentario_editor)}</div></div>` : ''
+  return `
+    <article class="review-card">
+      <div class="review-head">
+        <div>
+          <h3>${escapeHtml(item.titulo)}</h3>
+          <div class="helper">Submissão #${item.submissao_id} • ${escapeHtml(item.secao || 'Sem seção')}</div>
+        </div>
+        <span class="status-pill">${statusLabel(item.bucket || item.designacao_status)}</span>
+      </div>
+      <div class="review-meta">
+        <div class="metric-box"><span class="helper">Status da designação</span><strong>${statusLabel(item.designacao_status)}</strong></div>
+        <div class="metric-box"><span class="helper">Autor(a)</span><strong>${escapeHtml(item.autor_nome || '—')}</strong></div>
+        <div class="metric-box"><span class="helper">Prazo do parecer</span><strong>${escapeHtml(item.prazo_parecer_formatado || '—')}</strong></div>
+        <div class="metric-box"><span class="helper">Última atualização</span><strong>${escapeHtml(item.atualizado_em_formatado || '—')}</strong></div>
+        <div class="metric-box"><span class="helper">Parecer final</span><strong>${escapeHtml(item.parecer_final || '—')}</strong></div>
+        <div class="metric-box"><span class="helper">Tempo de avaliação</span><strong>${escapeHtml(item.tempo_avaliacao || '—')}</strong></div>
+      </div>
+      ${comentarioAutor}
+      ${comentarioEditor}
+      <div class="review-block"><span class="helper">Arquivo devolutivo</span><div>${devolutiva}</div></div>
+    </article>`
+}
+
+document.addEventListener('DOMContentLoaded', async ()=>{
+  const user = AppPanel.requireRole(['editor_chefe','editor_adjunto'])
+  if(!user) return
+  document.getElementById('btn-voltar').href = user.perfil === 'editor_chefe' ? 'painel-editor-chefe.html' : 'painel-editor.html'
+  const msg = document.getElementById('msg-page')
+  const select = document.getElementById('parecerista-select')
+  const painel = document.getElementById('painel-parecerista')
+  const summaryGrid = document.getElementById('summary-grid')
+  const reviewsList = document.getElementById('reviews-list')
+  const title = document.getElementById('titulo-parecerista')
+  const subtitle = document.getElementById('subtitulo-parecerista')
+  try{
+    const dashboardAction = user.perfil === 'editor_chefe' ? 'chat_recipients' : 'editor_dashboard'
+    const data = await postData({ action: dashboardAction, userId: user.id })
+    const pareceristas = (user.perfil === 'editor_chefe' ? (data.usuarios || []).filter(u=>u.perfil==='parecerista') : (data.pareceristas || []))
+    if(!pareceristas.length){
+      msg.textContent = 'Nenhum parecerista disponível para consulta.'
+      msg.classList.add('err')
+      return
+    }
+    select.innerHTML = pareceristas.map((p)=>`<option value="${p.id}">${escapeHtml(p.nome)}${p.instituicao ? ' • ' + escapeHtml(p.instituicao) : ''}</option>`).join('')
+    const params = new URLSearchParams(location.search)
+    const reviewerId = params.get('pareceristaId') || params.get('reviewerId')
+    if(reviewerId && [...select.options].some(opt=>String(opt.value)===String(reviewerId))) select.value = reviewerId
+
+    async function carregar(){
+      msg.textContent = ''
+      msg.className = 'form-message'
+      try{
+        const payload = await postData({ action:'reviewer_review_history', userId:user.id, pareceristaId:Number(select.value) })
+        title.textContent = `Pareceres de ${payload.parecerista.nome}`
+        subtitle.textContent = payload.parecerista.email || payload.parecerista.instituicao || 'Histórico editorial do parecerista selecionado.'
+        summaryGrid.innerHTML = renderResumo(payload.resumo)
+        reviewsList.innerHTML = payload.avaliacoes.length ? payload.avaliacoes.map(renderAvaliacao).join('') : '<div class="empty-state">Este parecerista ainda não possui registros de designação.</div>'
+        painel.classList.remove('hidden')
+        const url = new URL(location.href)
+        url.searchParams.set('pareceristaId', select.value)
+        history.replaceState(null,'',url.toString())
+      }catch(err){
+        painel.classList.add('hidden')
+        msg.textContent = err.message
+        msg.classList.add('err')
+      }
+    }
+    document.getElementById('btn-carregar').addEventListener('click', carregar)
+    select.addEventListener('change', carregar)
+    carregar()
+  }catch(err){
+    msg.textContent = err.message
+    msg.classList.add('err')
+  }
+})
+</script>
+</body>
+</html>
