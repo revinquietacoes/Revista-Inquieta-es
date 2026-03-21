@@ -26,14 +26,15 @@ document.addEventListener('DOMContentLoaded',async()=>{
   document.getElementById('btn-voltar-certificados').href=backMap[user.perfil]||'../index.html';
   const lista=document.getElementById('lista-certificados');
   try{
-    const res=await fetch('/.netlify/functions/list-my-certificates',{ headers:{ ...AppPanel.currentUserHeaders() } });
+    const res=await fetch(`/.netlify/functions/certificados?action=list&userId=${encodeURIComponent(user.id)}`);
     const data=await res.json();
-    if(!res.ok) throw new Error(data.error||'Não foi possível carregar seus certificados.');
-    if(!Array.isArray(data) || !data.length){
+    if(!res.ok) throw new Error(data.erro||data.error||'Não foi possível carregar seus certificados.');
+    const items = Array.isArray(data.items) ? data.items : [];
+    if(!items.length){
       lista.innerHTML='<div class="empty-state" id="estado-vazio-certificados">Nenhum certificado foi disponibilizado até o momento.</div>';
       return;
     }
-    lista.innerHTML=data.map(item=>`<article class="cert-card" id="certificado-${item.id}"><h3 id="certificado-titulo-${item.id}">${item.title}</h3><p id="certificado-tipo-${item.id}"><strong>Tipo:</strong> ${item.certificate_type||'Certificado'}</p><p id="certificado-data-${item.id}"><strong>Enviado em:</strong> ${item.created_at ? new Date(item.created_at).toLocaleString('pt-BR') : '—'}</p><div class="actions-row" id="certificado-actions-${item.id}"><a class="btn btn-primary" id="certificado-abrir-${item.id}" href="/.netlify/functions/get-my-certificate?id=${item.id}" target="_blank" rel="noopener noreferrer">Abrir certificado</a></div></article>`).join('');
+    lista.innerHTML=items.map(item=>`<article class="cert-card" id="certificado-${item.id}"><h3 id="certificado-titulo-${item.id}">${item.titulo||item.title}</h3><p id="certificado-tipo-${item.id}"><strong>Tipo:</strong> ${item.tipo_label||item.categoria_label||item.tipo||item.certificate_type||'Certificado'}</p><p id="certificado-data-${item.id}"><strong>Enviado em:</strong> ${(item.data_envio_formatada)||((item.criado_em||item.created_at) ? new Date(item.criado_em||item.created_at).toLocaleString('pt-BR') : '—')}</p><div class="actions-row" id="certificado-actions-${item.id}"><a class="btn btn-primary" id="certificado-abrir-${item.id}" href="/.netlify/functions/certificados?action=download&userId=${user.id}&certificateId=${item.id}" target="_blank" rel="noopener noreferrer">Abrir certificado</a></div></article>`).join('');
   }catch(err){lista.innerHTML=`<div class="empty-state" id="estado-erro-certificados">${err.message}</div>`;}
 });
 </script>

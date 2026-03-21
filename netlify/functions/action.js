@@ -177,6 +177,26 @@ async function upsertReviewV2({ designacao, user, body }) {
       atualizado_em = CURRENT_TIMESTAMP`
 }
 
+
+async function updatePresenceState(userId, isOnline) {
+  const cols = await getTableColumns('usuarios')
+  const sets = []
+  if (cols.has('ultimo_acesso_em')) {
+    sets.push(isOnline ? sql`ultimo_acesso_em = CURRENT_TIMESTAMP` : sql`ultimo_acesso_em = (CURRENT_TIMESTAMP - INTERVAL '10 minutes')`)
+  }
+  if (cols.has('online')) {
+    sets.push(sql`online = ${isOnline}`)
+  }
+  if (cols.has('atualizado_em')) {
+    sets.push(sql`atualizado_em = CURRENT_TIMESTAMP`)
+  } else if (cols.has('updated_at')) {
+    sets.push(sql`updated_at = CURRENT_TIMESTAMP`)
+  }
+  if (!sets.length) return
+  const query = sets.reduce((acc, part, idx) => idx === 0 ? sql`UPDATE usuarios SET ${part}` : sql`${acc}, ${part}`)
+  await sql`${query} WHERE id = ${userId}`
+}
+
 async function markDesignacaoStatus(designacaoId, status) {
   const cols = await getTableColumns('designacoes_avaliacao')
   if (cols.has('atualizado_em')) {
@@ -199,17 +219,13 @@ export default async (req) => {
     if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
 
     if (action === 'presence_ping') {
-      await sql`UPDATE usuarios SET ultimo_acesso_em = CURRENT_TIMESTAMP, online = TRUE, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${user.id}`
+      await updatePresenceState(user.id, true)
       const refreshed = await getUserById(user.id)
       return json({ sucesso: true, usuario: refreshed })
     }
 
     if (action === 'presence_leave') {
-      await sql`UPDATE usuarios
-               SET online = FALSE,
-                   ultimo_acesso_em = (CURRENT_TIMESTAMP - INTERVAL '10 minutes'),
-                   atualizado_em = CURRENT_TIMESTAMP
-               WHERE id = ${user.id}`
+      await updatePresenceState(user.id, false)
       const refreshed = await getUserById(user.id)
       return json({ sucesso: true, usuario: refreshed })
     }

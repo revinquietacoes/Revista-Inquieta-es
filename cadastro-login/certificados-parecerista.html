@@ -20,20 +20,15 @@ document.addEventListener('DOMContentLoaded',async()=>{
   if(!user)return;
   const lista=document.getElementById('lista-certificados-parecerista');
   try{
-    const [resParecer,resParecerista]=await Promise.all([
-      fetch('/.netlify/functions/list-my-certificates?type=parecer',{ headers:{ ...AppPanel.currentUserHeaders() } }),
-      fetch('/.netlify/functions/list-my-certificates?type=parecerista',{ headers:{ ...AppPanel.currentUserHeaders() } })
-    ]);
-    const dataParecer=await resParecer.json();
-    const dataParecerista=await resParecerista.json();
-    const all=[...(Array.isArray(dataParecer)?dataParecer:[]),...(Array.isArray(dataParecerista)?dataParecerista:[])];
-    if((!resParecer.ok && !resParecerista.ok) || !all.length){
-      const msg = (!resParecer.ok && dataParecer.error) || (!resParecerista.ok && dataParecerista.error) || 'Nenhum certificado de parecerista foi disponibilizado até o momento.';
-      lista.innerHTML=`<div class="empty-state" id="estado-vazio-certificados-parecerista">${msg}</div>`;
+    const res=await fetch(`/.netlify/functions/certificados?action=list&userId=${encodeURIComponent(user.id)}`);
+    const data=await res.json();
+    if(!res.ok) throw new Error(data.erro||data.error||'Não foi possível carregar os certificados.');
+    const all=(Array.isArray(data.items)?data.items:[]).filter(item=>['parecer','parecerista'].includes(item.tipo));
+    if(!all.length){
+      lista.innerHTML=`<div class="empty-state" id="estado-vazio-certificados-parecerista">Nenhum certificado de parecerista foi disponibilizado até o momento.</div>`;
       return;
     }
-    const seen=new Set();
-    lista.innerHTML=all.filter(item=>!seen.has(item.id) && seen.add(item.id)).map(item=>`<article class="cert-card" id="certificado-parecerista-${item.id}"><h3 id="certificado-parecerista-titulo-${item.id}">${item.title}</h3><p id="certificado-parecerista-tipo-${item.id}"><strong>Tipo:</strong> ${item.certificate_type||'Parecer'}</p><p id="certificado-parecerista-data-${item.id}"><strong>Enviado em:</strong> ${item.created_at ? new Date(item.created_at).toLocaleString('pt-BR') : '—'}</p><div class="actions-row" id="certificado-parecerista-actions-${item.id}"><a class="btn btn-primary" href="/.netlify/functions/get-my-certificate?id=${item.id}" target="_blank" rel="noopener noreferrer">Abrir certificado</a></div></article>`).join('');
+    lista.innerHTML=all.map(item=>`<article class="cert-card" id="certificado-parecerista-${item.id}"><h3 id="certificado-parecerista-titulo-${item.id}">${item.titulo}</h3><p id="certificado-parecerista-tipo-${item.id}"><strong>Tipo:</strong> ${item.tipo_label||item.categoria_label||item.tipo||'Parecer'}</p><p id="certificado-parecerista-data-${item.id}"><strong>Enviado em:</strong> ${item.data_envio_formatada || (item.criado_em ? new Date(item.criado_em).toLocaleString('pt-BR') : '—')}</p><div class="actions-row" id="certificado-parecerista-actions-${item.id}"><a class="btn btn-primary" href="/.netlify/functions/certificados?action=download&userId=${user.id}&certificateId=${item.id}" target="_blank" rel="noopener noreferrer">Abrir certificado</a></div></article>`).join('');
   }catch(err){lista.innerHTML=`<div class="empty-state" id="estado-erro-certificados-parecerista">${err.message}</div>`;}
 });
 </script>

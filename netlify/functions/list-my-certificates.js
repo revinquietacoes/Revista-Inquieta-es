@@ -1,68 +1,25 @@
-import { neon } from '@neondatabase/serverless';
+import { sql, json, getUserById } from './_db.js'
 
-const sql = neon(process.env.DATABASE_URL);
-
-function json(statusCode, data) {
-  return {
-    statusCode,
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify(data),
-  };
-}
-
-function getAuthenticatedUserId(event) {
-  const headerId =
-    event.headers['x-user-id'] ||
-    event.headers['X-User-Id'] ||
-    null;
-
-  const queryId = event.queryStringParameters?.user_id || null;
-
-  return headerId ? Number(headerId) : queryId ? Number(queryId) : null;
-}
-
-export async function handler(event) {
+export default async (req) => {
   try {
-    if (event.httpMethod !== 'GET') {
-      return json(405, { error: 'Método não permitido.' });
-    }
+    if (req.method !== 'GET') return json({ error: 'Método não permitido.' }, 405)
 
-    const userId = getAuthenticatedUserId(event);
-    if (!userId) {
-      return json(401, { error: 'Usuário não autenticado.' });
-    }
+    const url = new URL(req.url)
+    const headerId = req.headers.get('x-user-id') || req.headers.get('X-User-Id')
+    const userId = Number(headerId || url.searchParams.get('user_id') || 0)
+    if (!userId) return json({ error: 'Usuário não autenticado.' }, 401)
 
-    const type = event.queryStringParameters?.type || null;
+    const user = await getUserById(userId)
+    if (!user) return json({ error: 'Usuário não encontrado.' }, 404)
 
-    let rows;
-    if (type) {
-      rows = await sql`
-        SELECT
-          id,
-          certificate_type,
-          title,
-          created_at
-        FROM private_certificates
-        WHERE user_id = ${userId}
-          AND certificate_type = ${type}
-        ORDER BY created_at DESC
-      `;
-    } else {
-      rows = await sql`
-        SELECT
-          id,
-          certificate_type,
-          title,
-          created_at
-        FROM private_certificates
-        WHERE user_id = ${userId}
-        ORDER BY created_at DESC
-      `;
-    }
+    const type = url.searchParams.get('type')
+    const rows = type
+      ? await sql`SELECT id, tipo AS certificate_type, titulo AS title, criado_em AS created_at FROM certificados_privados WHERE usuario_id = ${userId} AND tipo = ${type} ORDER BY criado_em DESC`
+      : await sql`SELECT id, tipo AS certificate_type, titulo AS title, criado_em AS created_at FROM certificados_privados WHERE usuario_id = ${userId} ORDER BY criado_em DESC`
 
-    return json(200, rows);
+    return json(rows)
   } catch (error) {
-    console.error('list-my-certificates error:', error);
-    return json(500, { error: 'Erro interno ao listar certificados.' });
+    console.error('list-my-certificates error:', error)
+    return json({ error: 'Erro interno ao listar certificados.' }, 500)
   }
 }

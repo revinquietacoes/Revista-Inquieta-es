@@ -1,110 +1,51 @@
-import { neon } from '@neondatabase/serverless';
-import { getStore } from '@netlify/blobs';
+import { getStore } from '@netlify/blobs'
+import { sql, getUserById } from './_db.js'
 
-const sql = neon(process.env.DATABASE_URL);
-const certificatesStore = getStore('certificados-privados');
-
-function getAuthenticatedUserId(event) {
-  const headerId =
-    event.headers['x-user-id'] ||
-    event.headers['X-User-Id'] ||
-    null;
-
-  const queryId = event.queryStringParameters?.user_id || null;
-
-  return headerId ? Number(headerId) : queryId ? Number(queryId) : null;
-}
+const certificatesStore = getStore('certificados-usuarios')
 
 function safeDownloadName(name) {
   return String(name || 'certificado')
     .normalize('NFD')
     .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-zA-Z0-9._-]/g, '-')
-    .replace(/-+/g, '-');
+    .replace(/-+/g, '-')
 }
 
-export async function handler(event) {
+export default async (req) => {
   try {
-    if (event.httpMethod !== 'GET') {
-      return {
-        statusCode: 405,
-        body: 'Método não permitido.',
-      };
-    }
+    if (req.method !== 'GET') return new Response('Método não permitido.', { status: 405 })
 
-    const userId = getAuthenticatedUserId(event);
-    if (!userId) {
-      return {
-        statusCode: 401,
-        body: 'Usuário não autenticado.',
-      };
-    }
+    const url = new URL(req.url)
+    const headerId = req.headers.get('x-user-id') || req.headers.get('X-User-Id')
+    const userId = Number(headerId || url.searchParams.get('user_id') || 0)
+    if (!userId) return new Response('Usuário não autenticado.', { status: 401 })
 
-    const certificateId = event.queryStringParameters?.id;
-    if (!certificateId) {
-      return {
-        statusCode: 400,
-        body: 'Parâmetro id é obrigatório.',
-      };
-    }
+    const user = await getUserById(userId)
+    if (!user) return new Response('Usuário não encontrado.', { status: 404 })
 
-    const rows = await sql`
-      SELECT
-        id,
-        user_id,
-        title,
-        blob_key,
-        mime_type
-      FROM private_certificates
-      WHERE id = ${Number(certificateId)}
-      LIMIT 1
-    `;
+    const certificateId = Number(url.searchParams.get('id') || 0)
+    if (!certificateId) return new Response('Parâmetro id é obrigatório.', { status: 400 })
 
-    if (!rows.length) {
-      return {
-        statusCode: 404,
-        body: 'Certificado não encontrado.',
-      };
-    }
+    const rows = await sql`SELECT id, usuario_id, titulo, blob_key, mime_type FROM certificados_privados WHERE id = ${certificateId} LIMIT 1`
+    if (!rows.length) return new Response('Certificado não encontrado.', { status: 404 })
 
-    const cert = rows[0];
+    const cert = rows[0]
+    if (Number(cert.usuario_id) !== Number(userId)) return new Response('Acesso negado.', { status: 403 })
 
-    if (Number(cert.user_id) !== Number(userId)) {
-      return {
-        statusCode: 403,
-        body: 'Acesso negado.',
-      };
-    }
+    const blob = await certificatesStore.get(cert.blob_key, { type: 'arrayBuffer' })
+    if (!blob) return new Response('Arquivo do certificado não encontrado.', { status: 404 })
 
-    const blob = await certificatesStore.get(cert.blob_key, {
-      type: 'arrayBuffer',
-    });
-
-    if (!blob) {
-      return {
-        statusCode: 404,
-        body: 'Arquivo do certificado não encontrado.',
-      };
-    }
-
-    const base64 = Buffer.from(blob).toString('base64');
-    const fileName = `${safeDownloadName(cert.title)}.pdf`;
-
-    return {
-      statusCode: 200,
-      isBase64Encoded: true,
+    const fileName = `${safeDownloadName(cert.titulo)}.pdf`
+    return new Response(blob, {
+      status: 200,
       headers: {
         'Content-Type': cert.mime_type || 'application/pdf',
         'Content-Disposition': `inline; filename="${fileName}"`,
-        'Cache-Control': 'private, no-store',
-      },
-      body: base64,
-    };
+        'Cache-Control': 'private, no-store'
+      }
+    })
   } catch (error) {
-    console.error('get-my-certificate error:', error);
-    return {
-      statusCode: 500,
-      body: 'Erro interno ao obter certificado.',
-    };
+    console.error('get-my-certificate error:', error)
+    return new Response('Erro interno ao obter certificado.', { status: 500 })
   }
 }
