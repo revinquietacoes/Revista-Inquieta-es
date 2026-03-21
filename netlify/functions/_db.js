@@ -101,7 +101,6 @@ async function getUserById(id, withPassword = false) {
   const query = `SELECT ${selectParts.join(', ')} FROM usuarios WHERE id = $1 LIMIT 1`
   const rows = await sql.query(query, [userId])
   const user = rows?.[0] || null
-
   if (user?.perfil) user.perfil = normalizeRole(user.perfil)
   return user
 }

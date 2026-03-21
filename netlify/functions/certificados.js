@@ -1,11 +1,6 @@
 const { getStore } = require('@netlify/blobs')
-const { sql, json, getUserById } = require('./_db')
+const { sql, json, getUserById, ensureSupportTables } = require('./_db')
 const { wrapHttp } = require('./_netlify')
-
-async function ensureTables() {
-  await sql`CREATE TABLE IF NOT EXISTS certificados_privados (id BIGSERIAL PRIMARY KEY, usuario_id BIGINT NOT NULL, enviado_por_usuario_id BIGINT, titulo TEXT NOT NULL, descricao TEXT, tipo TEXT NOT NULL DEFAULT 'evento', categoria TEXT NOT NULL DEFAULT 'certificado_evento', blob_key TEXT NOT NULL, nome_arquivo TEXT NOT NULL, mime_type TEXT NOT NULL DEFAULT 'application/pdf', tamanho_bytes BIGINT, criado_em TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP)`
-  await sql`CREATE INDEX IF NOT EXISTS idx_certificados_privados_usuario_id ON certificados_privados (usuario_id)`
-}
 
 function formatTipo(tipo) {
   return { evento: 'Evento ou curso', parecer: 'Parecer realizado', equipe_editorial: 'Equipe editorial' }[tipo] || 'Documento'
@@ -16,11 +11,12 @@ function formatCategoria(cat) {
 
 const main = async (req) => {
   try {
-    await ensureTables()
+    await ensureSupportTables()
     const store = getStore('certificados-usuarios')
     const url = new URL(req.url)
     const action = url.searchParams.get('action') || (req.method === 'POST' ? 'list' : 'download')
-    const userId = Number(url.searchParams.get('userId') || (req.method === 'POST' ? (await req.json()).userId : 0))
+    const body = req.method === 'POST' ? await req.json().catch(() => ({})) : {}
+    const userId = Number(url.searchParams.get('userId') || body.userId || 0)
     const user = await getUserById(userId)
     if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
 

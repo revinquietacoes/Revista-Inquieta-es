@@ -2,7 +2,11 @@ const { json, getUserById } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
 function getHeader(headers, name) {
-  return headers?.get?.(name) || headers?.get?.(name.toLowerCase()) || headers?.[name] || headers?.[name.toLowerCase()] || null
+  if (!headers) return null
+  if (typeof headers.get === 'function') {
+    return headers.get(name) || headers.get(name.toLowerCase()) || null
+  }
+  return headers[name] || headers[name.toLowerCase()] || null
 }
 
 const main = async (req) => {

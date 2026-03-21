@@ -25,7 +25,6 @@ const main = async (req) => {
     }
 
     const blob = await store.get(key, { type: 'arrayBuffer' })
-
     if (!blob) {
       return new Response('Blob não encontrado.', { status: 404 })
     }

@@ -1,7 +1,6 @@
 const bcrypt = require('bcryptjs')
-const { sql, json, parseJson, getUserById, canAccess, ensureSupportTables } = require('./_db')
-const { wrapHttp } = require('./_netlify')
-
+const { sql, json, parseJson, getUserById, canAccess, ensureSupportTables } = require('./_db.js')
+const { wrapHttp } = require('./_netlify.js')
 async function getDesignacaoById(id) {
   const rows = await sql`
     SELECT da.*, s.status AS submissao_status
