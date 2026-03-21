@@ -1,5 +1,5 @@
 const { getStore } = require('@netlify/blobs')
-const { sql, json, ensureSupportTables, requireAuthenticatedUser, canAccess } = require('./_db')
+const { sql, json, getUserById, ensureSupportTables } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
 const store = getStore('revista-arquivos')
@@ -7,11 +7,27 @@ const store = getStore('revista-arquivos')
 function sanitizarNome(nome = '') {
   return String(nome)
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-zA-Z0-9._-]+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
     .toLowerCase()
+}
+
+function getHeader(headers, name) {
+  if (!headers) return null
+  if (typeof headers.get === 'function') {
+    return headers.get(name) || headers.get(name.toLowerCase()) || null
+  }
+  return headers[name] || headers[name.toLowerCase()] || null
+}
+
+function getAuthenticatedUserId(req) {
+  return Number(
+    getHeader(req.headers, 'x-user-id') ||
+    getHeader(req.headers, 'X-User-Id') ||
+    0
+  )
 }
 
 const main = async (req) => {
@@ -22,23 +38,31 @@ const main = async (req) => {
 
     await ensureSupportTables()
 
-    const auth = await requireAuthenticatedUser(req)
-    if (auth.error) return auth.error
-    const actor = auth.user
+    const authUserId = getAuthenticatedUserId(req)
+    if (!authUserId) {
+      return json({ erro: 'Usuário não autenticado.' }, 401)
+    }
+
+    const usuario = await getUserById(authUserId)
+    if (!usuario) {
+      return json({ erro: 'Usuário não encontrado.' }, 404)
+    }
+
+    if (usuario.status !== 'ativo') {
+      return json({ erro: 'Usuário inativo.' }, 403)
+    }
 
     const form = await req.formData()
     const usuarioId = Number(form.get('usuario_id') || 0)
     const consentimento = String(form.get('consentimento') || 'false') === 'true'
     const arquivo = form.get('arquivo')
 
-    if (!usuarioId || !arquivo || typeof arquivo === 'string') {
-      return json({ erro: 'Dados obrigatórios ausentes.' }, 400)
+    if (!usuarioId || usuarioId !== authUserId) {
+      return json({ erro: 'Usuário inválido para envio da foto.' }, 403)
     }
 
-    const isOwnUpload = Number(actor.id) === usuarioId
-    const canUploadForOthers = canAccess(actor, ['editor_chefe', 'editor_adjunto'])
-    if (!isOwnUpload && !canUploadForOthers) {
-      return json({ erro: 'Sem permissão para atualizar a foto deste usuário.' }, 403)
+    if (!arquivo || typeof arquivo === 'string') {
+      return json({ erro: 'Selecione um arquivo de imagem.' }, 400)
     }
 
     const tipos = ['image/jpeg', 'image/png', 'image/webp']
@@ -62,7 +86,7 @@ const main = async (req) => {
       if (antigo.blob_key) {
         try {
           await store.delete(antigo.blob_key)
-        } catch {}
+        } catch (e) {}
       }
     }
 
@@ -78,7 +102,6 @@ const main = async (req) => {
     await store.set(blobKey, bytes, {
       metadata: {
         usuario_id: String(usuarioId),
-        uploaded_by: String(actor.id),
         categoria: 'foto_perfil',
         nome_original: arquivo.name,
         mime_type: arquivo.type

@@ -1,5 +1,5 @@
 const { getStore } = require('@netlify/blobs')
-const { sql, json, ensureSupportTables, requireAuthenticatedUser, canAccess } = require('./_db')
+const { sql, json, getUserById, ensureSupportTables } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
 const store = getStore('revista-arquivos')
@@ -7,11 +7,27 @@ const store = getStore('revista-arquivos')
 function sanitizarNome(nome = '') {
   return String(nome)
     .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/[̀-ͯ]/g, '')
     .replace(/[^a-zA-Z0-9._-]+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
     .toLowerCase()
+}
+
+function getHeader(headers, name) {
+  if (!headers) return null
+  if (typeof headers.get === 'function') {
+    return headers.get(name) || headers.get(name.toLowerCase()) || null
+  }
+  return headers[name] || headers[name.toLowerCase()] || null
+}
+
+function getAuthenticatedUserId(req) {
+  return Number(
+    getHeader(req.headers, 'x-user-id') ||
+    getHeader(req.headers, 'X-User-Id') ||
+    0
+  )
 }
 
 const main = async (req) => {
@@ -22,9 +38,19 @@ const main = async (req) => {
 
     await ensureSupportTables()
 
-    const auth = await requireAuthenticatedUser(req)
-    if (auth.error) return auth.error
-    const actor = auth.user
+    const authUserId = getAuthenticatedUserId(req)
+    if (!authUserId) {
+      return json({ erro: 'Usuário não autenticado.' }, 401)
+    }
+
+    const usuario = await getUserById(authUserId)
+    if (!usuario) {
+      return json({ erro: 'Usuário não encontrado.' }, 404)
+    }
+
+    if (usuario.status !== 'ativo') {
+      return json({ erro: 'Usuário inativo.' }, 403)
+    }
 
     const form = await req.formData()
     const usuarioId = Number(form.get('usuario_id') || 0)
@@ -36,10 +62,10 @@ const main = async (req) => {
       return json({ erro: 'Dados obrigatórios ausentes.' }, 400)
     }
 
-    const isOwnUpload = Number(actor.id) === usuarioId
-    const canUploadForOthers = canAccess(actor, ['editor_chefe', 'editor_adjunto'])
-    if (!isOwnUpload && !canUploadForOthers) {
-      return json({ erro: 'Sem permissão para enviar arquivos em nome de outro usuário.' }, 403)
+    if (usuario.perfil === 'autor' || usuario.perfil === 'parecerista') {
+      if (usuarioId !== authUserId) {
+        return json({ erro: 'Usuário inválido para envio do arquivo.' }, 403)
+      }
     }
 
     const permitidos = [
@@ -67,11 +93,11 @@ const main = async (req) => {
     await store.set(blobKey, bytes, {
       metadata: {
         usuario_id: String(usuarioId),
-        uploaded_by: String(actor.id),
         submissao_id: submissaoId ? String(submissaoId) : '',
         categoria,
         nome_original: arquivo.name,
-        mime_type: arquivo.type
+        mime_type: arquivo.type,
+        uploaded_by: String(authUserId)
       }
     })
 
@@ -106,27 +132,29 @@ const main = async (req) => {
     `
 
     if (submissaoId && categoria === 'manuscrito') {
-      const check = await sql`SELECT to_regclass('public.arquivos_submissao') AS nome`
-      if (check?.[0]?.nome) {
-        await sql`
-          INSERT INTO arquivos_submissao (
-            submissao_id,
-            nome_arquivo,
-            tipo_arquivo,
-            tamanho_bytes,
-            url_arquivo,
-            categoria
-          )
-          VALUES (
-            ${submissaoId},
-            ${arquivo.name},
-            ${arquivo.type},
-            ${arquivo.size},
-            ${urlAcesso},
-            'principal'
-          )
-        `
-      }
+      try {
+        const check = await sql`SELECT to_regclass('public.arquivos_submissao') AS nome`
+        if (check?.[0]?.nome) {
+          await sql`
+            INSERT INTO arquivos_submissao (
+              submissao_id,
+              nome_arquivo,
+              tipo_arquivo,
+              tamanho_bytes,
+              url_arquivo,
+              categoria
+            )
+            VALUES (
+              ${submissaoId},
+              ${arquivo.name},
+              ${arquivo.type},
+              ${arquivo.size},
+              ${urlAcesso},
+              'principal'
+            )
+          `
+        }
+      } catch (e) {}
     }
 
     if (submissaoId && categoria === 'devolutiva') {
@@ -179,14 +207,18 @@ const main = async (req) => {
             `
           }
         }
-      } catch (e) {
-        console.error('Falha ao registrar devolutiva em arquivos_avaliacao:', e)
-      }
+      } catch (e) {}
     }
 
-    return json({ sucesso: true, arquivo: inserido[0] }, 200)
+    return json({
+      sucesso: true,
+      arquivo: inserido[0]
+    }, 200)
   } catch (erro) {
-    return json({ erro: 'Erro ao enviar arquivo.', detalhe: erro.message }, 500)
+    return json({
+      erro: 'Erro ao enviar arquivo.',
+      detalhe: erro.message
+    }, 500)
   }
 }
 

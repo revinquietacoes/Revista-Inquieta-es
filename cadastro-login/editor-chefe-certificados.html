@@ -23,11 +23,14 @@
 <header class="topbar" id="topbar-gestao-certificados"><div class="brand-wrap" id="brand-wrap-gestao-certificados"><div class="avatar-box" id="avatar-box-gestao-certificados"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy" id="brand-copy-gestao-certificados"><h1 id="titulo-gestao-certificados">Gestão de certificados</h1><p id="descricao-gestao-certificados">Upload privado de certificados para autores inscritos em eventos, pareceristas e membros da equipe editorial.</p></div></div><div class="actions-row" id="acoes-topo-gestao-certificados"><a class="btn btn-secondary" id="btn-voltar-painel-chefe" href="painel-editor-chefe.html">Voltar ao painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header>
 <div class="admin-grid" id="grid-gestao-certificados">
 <section class="panel" id="painel-usuarios-gestao-certificados"><div class="panel-head" id="head-usuarios-gestao-certificados"><h2 id="titulo-usuarios-gestao-certificados">Selecionar usuário</h2><p class="helper" id="subtitulo-usuarios-gestao-certificados">Escolha o usuário que receberá acesso ao certificado.</p></div><div class="user-select-list" id="lista-usuarios-certificados"></div></section>
-<section class="panel" id="painel-upload-gestao-certificados"><div class="panel-head" id="head-upload-gestao-certificados"><h2 id="titulo-upload-gestao-certificados">Enviar certificado</h2><p class="helper" id="subtitulo-upload-gestao-certificados">O arquivo será armazenado nas bolhas e liberado apenas ao usuário selecionado.</p></div><form id="form-upload-certificado"><div class="form-grid" id="grid-form-upload-certificado"><div class="field full"><label for="cert-user-display">Usuário selecionado</label><input id="cert-user-display" readonly placeholder="Selecione um usuário na coluna ao lado."></div><input id="cert-user-id" name="targetUserId" type="hidden"><div class="field"><label for="cert-titulo">Título do certificado</label><input id="cert-titulo" name="titulo" required></div><div class="field"><label for="cert-tipo">Tipo</label><select id="cert-tipo" name="tipo" required><option value="evento">Evento ou curso</option><option value="parecer">Parecer realizado</option><option value="parecerista">Atuação como parecerista</option><option value="equipe_editorial">Equipe editorial</option></select></div><div class="field"><label for="cert-descricao">Descrição breve</label><input id="cert-descricao" name="descricao"></div><div class="field full"><label for="cert-arquivo">Arquivo PDF</label><input id="cert-arquivo" name="arquivo" type="file" accept="application/pdf" required></div></div><div class="actions-row" id="acoes-upload-certificado"><button class="btn btn-primary" id="btn-upload-certificado" type="submit">Enviar certificado</button></div><div class="form-message" id="msg-upload-certificado"></div></form><div class="upload-note" id="nota-upload-certificado"><p id="nota-upload-certificado-1">Esta área envia o PDF para a function <code>upload-certificado</code>, que grava o arquivo nas bolhas e registra o vínculo na Neon.</p><p id="nota-upload-certificado-2">Somente o editor-chefe autenticado poderá concluir o envio.</p></div></section>
+<section class="panel" id="painel-upload-gestao-certificados"><div class="panel-head" id="head-upload-gestao-certificados"><h2 id="titulo-upload-gestao-certificados">Enviar certificado</h2><p class="helper" id="subtitulo-upload-gestao-certificados">O arquivo será armazenado nas bolhas e liberado apenas ao usuário selecionado.</p></div><form id="form-upload-certificado"><div class="form-grid" id="grid-form-upload-certificado"><div class="field full"><label for="cert-user-display">Usuário selecionado</label><input id="cert-user-display" readonly placeholder="Selecione um usuário na coluna ao lado."></div><input id="cert-user-id" name="targetUserId" type="hidden"><div class="field"><label for="cert-titulo">Título do certificado</label><input id="cert-titulo" name="titulo" required></div><div class="field"><label for="cert-tipo">Tipo</label><select id="cert-tipo" name="tipo" required><option value="evento">Evento ou curso</option><option value="parecer">Parecer realizado</option><option value="parecerista">Atuação como parecerista</option><option value="equipe_editorial">Equipe editorial</option></select></div><div class="field"><label for="cert-descricao">Descrição breve</label><input id="cert-descricao" name="descricao"></div><div class="field full"><label for="cert-arquivo">Arquivo PDF</label><input id="cert-arquivo" name="arquivo" type="file" accept="application/pdf" required></div></div><div class="actions-row" id="acoes-upload-certificado"><button class="btn btn-primary" id="btn-upload-certificado" type="submit">Enviar certificado</button></div><div class="form-message" id="msg-upload-certificado"></div></form><div class="upload-note" id="nota-upload-certificado"><p id="nota-upload-certificado-1">Esta área envia o PDF para a function <code>upload-certificado</code>, que envia o PDF em formulário, grava o arquivo nas bolhas e registra o vínculo na Neon.</p><p id="nota-upload-certificado-2">Somente o editor-chefe autenticado poderá concluir o envio.</p></div></section>
 </div>
 <footer class="page-footer" id="rodape-gestao-certificados"></footer>
 </div>
 <script>
+async   return btoa(binary);
+}
+
 document.addEventListener('DOMContentLoaded',async()=>{
   const user=AppPanel.requireRole(['editor_chefe']);
   if(!user)return;
@@ -67,14 +70,14 @@ document.addEventListener('DOMContentLoaded',async()=>{
     const file=document.getElementById('cert-arquivo').files[0];
     if(!file){msg.textContent='Selecione um arquivo PDF.';msg.classList.add('err');return;}
     try{
-      const fd = new FormData();
-      fd.append('target_user_id', String(Number(hidden.value)));
-      fd.append('certificate_type', document.getElementById('cert-tipo').value);
-      fd.append('title', document.getElementById('cert-titulo').value.trim());
-      fd.append('description', document.getElementById('cert-descricao').value.trim());
-      fd.append('arquivo', file);
-      const data = await AppPanel.authedFormFetch('/.netlify/functions/upload-certificado', fd);
-      msg.textContent='Certificado enviado com sucesso.';
+      const envio = new FormData();
+      envio.append('target_user_id', String(hidden.value));
+      envio.append('certificate_type', document.getElementById('cert-tipo').value);
+      envio.append('title', document.getElementById('cert-titulo').value.trim());
+      envio.append('description', document.getElementById('cert-descricao').value.trim());
+      envio.append('arquivo', file);
+      const data = await AppPanel.authedFormFetch('/.netlify/functions/upload-certificado', envio);
+      msg.textContent=data.mensagem||'Certificado enviado com sucesso.';
       msg.classList.add('ok');
       ev.target.reset();
       hidden.value='';

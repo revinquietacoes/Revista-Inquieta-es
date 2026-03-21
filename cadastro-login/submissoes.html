@@ -93,11 +93,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           envio.append('consentimento_publicacao_foto', 'sim');
         }
 
-        const res = await fetch('/.netlify/functions/submissao', { method: 'POST', body: envio });
-        const raw = await res.text();
-        let data = {};
-        try { data = raw ? JSON.parse(raw) : {}; } catch { throw new Error(raw || 'Resposta inválida ao registrar submissão.'); }
-        if (!res.ok) throw new Error(data.erro || data.detalhe || 'Erro ao registrar submissão.');
+        const data = await AppPanel.authedFormFetch('/.netlify/functions/submissao', envio);
         submissaoId = data?.submissao?.id;
       } else {
         const create = await AppPanel.apiAction('create_submission_for_author', payload);

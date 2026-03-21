@@ -50,21 +50,29 @@ function currentUserHeaders(){
   const user = getLoggedUser();
   return user?.id ? { 'x-user-id': String(user.id) } : {};
 }
-
-async function authedFormFetch(url, formData, extra = {}) {
-  const headers = { ...currentUserHeaders(), ...(extra.headers || {}) };
-  const res = await fetch(url, { method: extra.method || 'POST', headers, body: formData });
-  const raw = await res.text();
-  let data = {};
-  try { data = raw ? JSON.parse(raw) : {}; } catch { if (!res.ok) throw new Error(raw || 'Erro ao enviar dados.'); return raw; }
-  if (!res.ok) throw new Error(data.detalhe || data.erro || 'Erro ao enviar dados.');
-  return data;
-}
 async function apiData(action, extra = {}) {
   const user = getLoggedUser();
   const res = await fetch(API_DATA, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ action, userId:user?.id, ...extra }) });
   const data = await res.json(); if (!res.ok) throw new Error(data.detalhe || data.erro || 'Erro ao carregar dados.'); return data;
 }
+
+async function authedFormFetch(url, formData, options = {}) {
+  const headers = { ...currentUserHeaders(), ...(options.headers || {}) };
+  const res = await fetch(url, {
+    method: options.method || 'POST',
+    headers,
+    body: formData
+  });
+  const raw = await res.text();
+  let data = {};
+  try { data = raw ? JSON.parse(raw) : {}; } catch {
+    if (!res.ok) throw new Error(raw || 'Resposta inválida do servidor.');
+    return raw;
+  }
+  if (!res.ok) throw new Error(data.detalhe || data.erro || 'Erro ao enviar dados.');
+  return data;
+}
+
 async function apiAction(action, extra = {}) {
   const user = getLoggedUser();
   const res = await fetch(API_ACTION, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ action, userId:user?.id, ...extra }) });
