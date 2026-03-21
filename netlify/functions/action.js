@@ -11,6 +11,14 @@ async function getDesignacaoById(id) {
   return rows[0] || null
 }
 
+async function getTableColumns(tableName) {
+  const rows = await sql`
+    SELECT column_name
+    FROM information_schema.columns
+    WHERE table_schema = 'public' AND table_name = ${tableName}`
+  return new Set((rows || []).map((row) => row.column_name))
+}
+
 async function refreshSubmissionStatus(submissaoId) {
   if (!submissaoId) return
   const rows = await sql`
@@ -27,6 +35,120 @@ async function refreshSubmissionStatus(submissaoId) {
   else if (statuses.some((status) => ['aceito', 'em_andamento'].includes(status))) nextStatus = 'em_avaliacao'
   else if (statuses.every((status) => status === 'recusado')) nextStatus = 'nao_alocada'
   await sql`UPDATE submissoes SET status = ${nextStatus} WHERE id = ${submissaoId}`
+}
+
+async function findExistingReview(avaliacoesCols, designacaoId, submissaoId, pareceristaId) {
+  if (avaliacoesCols.has('designacao_id')) {
+    const rows = await sql`SELECT id FROM avaliacoes WHERE designacao_id = ${designacaoId} LIMIT 1`
+    return rows[0] || null
+  }
+  const rows = await sql`
+    SELECT id
+    FROM avaliacoes
+    WHERE submissao_id = ${submissaoId} AND parecerista_id = ${pareceristaId}
+    ORDER BY id DESC
+    LIMIT 1`
+  return rows[0] || null
+}
+
+async function upsertReview({ designacao, user, body }) {
+  const avaliacoesCols = await getTableColumns('avaliacoes')
+  const existing = await findExistingReview(avaliacoesCols, designacao.id, Number(designacao.submissao_id), Number(user.id))
+  const docCol = avaliacoesCols.has('devolutiva_doc_url') ? 'devolutiva_doc_url' : (avaliacoesCols.has('devolutiva_url') ? 'devolutiva_url' : null)
+  const tsCol = avaliacoesCols.has('atualizado_em') ? 'atualizado_em' : (avaliacoesCols.has('updated_at') ? 'updated_at' : null)
+
+  const {
+    relevanciaAcademica,
+    clarezaOrganizacao,
+    consistenciaTeorica,
+    adequacaoMetodologica,
+    qualidadeRedacao,
+    contribuicaoRelevanteArea,
+    comentarioAutor,
+    comentarioEditor,
+    parecerFinal,
+    tempoAvaliacao,
+    devolutivaUrl
+  } = body
+
+  if (existing) {
+    const base = {
+      relevanciaAcademica, clarezaOrganizacao, consistenciaTeorica, adequacaoMetodologica,
+      qualidadeRedacao, contribuicaoRelevanteArea, comentarioAutor, comentarioEditor,
+      parecerFinal, tempoAvaliacao, devolutivaUrl, id: existing.id
+    }
+    if (docCol === 'devolutiva_doc_url' && tsCol === 'atualizado_em') {
+      await sql`UPDATE avaliacoes SET relevancia_academica=${base.relevanciaAcademica}, clareza_organizacao=${base.clarezaOrganizacao}, consistencia_teorica=${base.consistenciaTeorica}, adequacao_metodologica=${base.adequacaoMetodologica}, qualidade_redacao=${base.qualidadeRedacao}, contribuicao_relevante_area=${base.contribuicaoRelevanteArea}, comentario_autor=${base.comentarioAutor || null}, comentario_editor=${base.comentarioEditor || null}, devolutiva_doc_url=${base.devolutivaUrl || null}, parecer_final=${base.parecerFinal}, tempo_avaliacao=${base.tempoAvaliacao}, atualizado_em=CURRENT_TIMESTAMP WHERE id=${base.id}`
+      return
+    }
+    if (docCol === 'devolutiva_doc_url' && tsCol === 'updated_at') {
+      await sql`UPDATE avaliacoes SET relevancia_academica=${base.relevanciaAcademica}, clareza_organizacao=${base.clarezaOrganizacao}, consistencia_teorica=${base.consistenciaTeorica}, adequacao_metodologica=${base.adequacaoMetodologica}, qualidade_redacao=${base.qualidadeRedacao}, contribuicao_relevante_area=${base.contribuicaoRelevanteArea}, comentario_autor=${base.comentarioAutor || null}, comentario_editor=${base.comentarioEditor || null}, devolutiva_doc_url=${base.devolutivaUrl || null}, parecer_final=${base.parecerFinal}, tempo_avaliacao=${base.tempoAvaliacao}, updated_at=CURRENT_TIMESTAMP WHERE id=${base.id}`
+      return
+    }
+    if (docCol === 'devolutiva_url' && tsCol === 'atualizado_em') {
+      await sql`UPDATE avaliacoes SET relevancia_academica=${base.relevanciaAcademica}, clareza_organizacao=${base.clarezaOrganizacao}, consistencia_teorica=${base.consistenciaTeorica}, adequacao_metodologica=${base.adequacaoMetodologica}, qualidade_redacao=${base.qualidadeRedacao}, contribuicao_relevante_area=${base.contribuicaoRelevanteArea}, comentario_autor=${base.comentarioAutor || null}, comentario_editor=${base.comentarioEditor || null}, devolutiva_url=${base.devolutivaUrl || null}, parecer_final=${base.parecerFinal}, tempo_avaliacao=${base.tempoAvaliacao}, atualizado_em=CURRENT_TIMESTAMP WHERE id=${base.id}`
+      return
+    }
+    if (docCol === 'devolutiva_url' && tsCol === 'updated_at') {
+      await sql`UPDATE avaliacoes SET relevancia_academica=${base.relevanciaAcademica}, clareza_organizacao=${base.clarezaOrganizacao}, consistencia_teorica=${base.consistenciaTeorica}, adequacao_metodologica=${base.adequacaoMetodologica}, qualidade_redacao=${base.qualidadeRedacao}, contribuicao_relevante_area=${base.contribuicaoRelevanteArea}, comentario_autor=${base.comentarioAutor || null}, comentario_editor=${base.comentarioEditor || null}, devolutiva_url=${base.devolutivaUrl || null}, parecer_final=${base.parecerFinal}, tempo_avaliacao=${base.tempoAvaliacao}, updated_at=CURRENT_TIMESTAMP WHERE id=${base.id}`
+      return
+    }
+    if (docCol === 'devolutiva_doc_url') {
+      await sql`UPDATE avaliacoes SET relevancia_academica=${base.relevanciaAcademica}, clareza_organizacao=${base.clarezaOrganizacao}, consistencia_teorica=${base.consistenciaTeorica}, adequacao_metodologica=${base.adequacaoMetodologica}, qualidade_redacao=${base.qualidadeRedacao}, contribuicao_relevante_area=${base.contribuicaoRelevanteArea}, comentario_autor=${base.comentarioAutor || null}, comentario_editor=${base.comentarioEditor || null}, devolutiva_doc_url=${base.devolutivaUrl || null}, parecer_final=${base.parecerFinal}, tempo_avaliacao=${base.tempoAvaliacao} WHERE id=${base.id}`
+      return
+    }
+    if (docCol === 'devolutiva_url') {
+      await sql`UPDATE avaliacoes SET relevancia_academica=${base.relevanciaAcademica}, clareza_organizacao=${base.clarezaOrganizacao}, consistencia_teorica=${base.consistenciaTeorica}, adequacao_metodologica=${base.adequacaoMetodologica}, qualidade_redacao=${base.qualidadeRedacao}, contribuicao_relevante_area=${base.contribuicaoRelevanteArea}, comentario_autor=${base.comentarioAutor || null}, comentario_editor=${base.comentarioEditor || null}, devolutiva_url=${base.devolutivaUrl || null}, parecer_final=${base.parecerFinal}, tempo_avaliacao=${base.tempoAvaliacao} WHERE id=${base.id}`
+      return
+    }
+    if (tsCol === 'atualizado_em') {
+      await sql`UPDATE avaliacoes SET relevancia_academica=${base.relevanciaAcademica}, clareza_organizacao=${base.clarezaOrganizacao}, consistencia_teorica=${base.consistenciaTeorica}, adequacao_metodologica=${base.adequacaoMetodologica}, qualidade_redacao=${base.qualidadeRedacao}, contribuicao_relevante_area=${base.contribuicaoRelevanteArea}, comentario_autor=${base.comentarioAutor || null}, comentario_editor=${base.comentarioEditor || null}, parecer_final=${base.parecerFinal}, tempo_avaliacao=${base.tempoAvaliacao}, atualizado_em=CURRENT_TIMESTAMP WHERE id=${base.id}`
+      return
+    }
+    if (tsCol === 'updated_at') {
+      await sql`UPDATE avaliacoes SET relevancia_academica=${base.relevanciaAcademica}, clareza_organizacao=${base.clarezaOrganizacao}, consistencia_teorica=${base.consistenciaTeorica}, adequacao_metodologica=${base.adequacaoMetodologica}, qualidade_redacao=${base.qualidadeRedacao}, contribuicao_relevante_area=${base.contribuicaoRelevanteArea}, comentario_autor=${base.comentarioAutor || null}, comentario_editor=${base.comentarioEditor || null}, parecer_final=${base.parecerFinal}, tempo_avaliacao=${base.tempoAvaliacao}, updated_at=CURRENT_TIMESTAMP WHERE id=${base.id}`
+      return
+    }
+    await sql`UPDATE avaliacoes SET relevancia_academica=${base.relevanciaAcademica}, clareza_organizacao=${base.clarezaOrganizacao}, consistencia_teorica=${base.consistenciaTeorica}, adequacao_metodologica=${base.adequacaoMetodologica}, qualidade_redacao=${base.qualidadeRedacao}, contribuicao_relevante_area=${base.contribuicaoRelevanteArea}, comentario_autor=${base.comentarioAutor || null}, comentario_editor=${base.comentarioEditor || null}, parecer_final=${base.parecerFinal}, tempo_avaliacao=${base.tempoAvaliacao} WHERE id=${base.id}`
+    return
+  }
+
+  const common = [Number(designacao.submissao_id), user.id, relevanciaAcademica, clarezaOrganizacao, consistenciaTeorica, adequacaoMetodologica, qualidadeRedacao, contribuicaoRelevanteArea, comentarioAutor || null, comentarioEditor || null, parecerFinal, tempoAvaliacao]
+
+  if (avaliacoesCols.has('designacao_id') && docCol === 'devolutiva_doc_url') {
+    await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, designacao_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, devolutiva_doc_url, parecer_final, tempo_avaliacao) VALUES (${common[0]}, ${common[1]}, ${designacao.id}, ${common[2]}, ${common[3]}, ${common[4]}, ${common[5]}, ${common[6]}, ${common[7]}, ${common[8]}, ${common[9]}, ${devolutivaUrl || null}, ${common[10]}, ${common[11]})`
+    return
+  }
+  if (avaliacoesCols.has('designacao_id') && docCol === 'devolutiva_url') {
+    await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, designacao_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, devolutiva_url, parecer_final, tempo_avaliacao) VALUES (${common[0]}, ${common[1]}, ${designacao.id}, ${common[2]}, ${common[3]}, ${common[4]}, ${common[5]}, ${common[6]}, ${common[7]}, ${common[8]}, ${common[9]}, ${devolutivaUrl || null}, ${common[10]}, ${common[11]})`
+    return
+  }
+  if (avaliacoesCols.has('designacao_id')) {
+    await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, designacao_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, parecer_final, tempo_avaliacao) VALUES (${common[0]}, ${common[1]}, ${designacao.id}, ${common[2]}, ${common[3]}, ${common[4]}, ${common[5]}, ${common[6]}, ${common[7]}, ${common[8]}, ${common[9]}, ${common[10]}, ${common[11]})`
+    return
+  }
+  if (docCol === 'devolutiva_doc_url') {
+    await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, devolutiva_doc_url, parecer_final, tempo_avaliacao) VALUES (${common[0]}, ${common[1]}, ${common[2]}, ${common[3]}, ${common[4]}, ${common[5]}, ${common[6]}, ${common[7]}, ${common[8]}, ${common[9]}, ${devolutivaUrl || null}, ${common[10]}, ${common[11]})`
+    return
+  }
+  if (docCol === 'devolutiva_url') {
+    await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, devolutiva_url, parecer_final, tempo_avaliacao) VALUES (${common[0]}, ${common[1]}, ${common[2]}, ${common[3]}, ${common[4]}, ${common[5]}, ${common[6]}, ${common[7]}, ${common[8]}, ${common[9]}, ${devolutivaUrl || null}, ${common[10]}, ${common[11]})`
+    return
+  }
+  await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, parecer_final, tempo_avaliacao) VALUES (${common[0]}, ${common[1]}, ${common[2]}, ${common[3]}, ${common[4]}, ${common[5]}, ${common[6]}, ${common[7]}, ${common[8]}, ${common[9]}, ${common[10]}, ${common[11]})`
+}
+
+async function markDesignacaoStatus(designacaoId, status) {
+  const cols = await getTableColumns('designacoes_avaliacao')
+  if (cols.has('atualizado_em')) {
+    await sql`UPDATE designacoes_avaliacao SET status = ${status}, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacaoId}`
+    return
+  }
+  if (cols.has('updated_at')) {
+    await sql`UPDATE designacoes_avaliacao SET status = ${status}, updated_at = CURRENT_TIMESTAMP WHERE id = ${designacaoId}`
+    return
+  }
+  await sql`UPDATE designacoes_avaliacao SET status = ${status} WHERE id = ${designacaoId}`
 }
 
 export default async (req) => {
@@ -116,7 +238,14 @@ export default async (req) => {
       if (user.perfil === 'parecerista' && Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode alterar esta designação.' }, 403)
       const statusVal = status || 'aceito'
       if (designacao.status === 'concluido' && statusVal !== 'concluido') return json({ erro: 'Esta designação já foi concluída e não pode mais ser alterada.' }, 409)
-      await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais), atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
+      const cols = await getTableColumns('designacoes_avaliacao')
+      if (cols.has('atualizado_em')) {
+        await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais), atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
+      } else if (cols.has('updated_at')) {
+        await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais), updated_at = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
+      } else {
+        await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais) WHERE id = ${designacao.id}`
+      }
       await refreshSubmissionStatus(designacao.submissao_id)
       return json({ sucesso: true })
     }
@@ -135,7 +264,7 @@ export default async (req) => {
 
     if (action === 'submit_review') {
       if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
-      const { designacaoId, submissaoId, relevanciaAcademica, clarezaOrganizacao, consistenciaTeorica, adequacaoMetodologica, qualidadeRedacao, contribuicaoRelevanteArea, comentarioAutor, comentarioEditor, parecerFinal, tempoAvaliacao, devolutivaUrl } = body
+      const { designacaoId, submissaoId } = body
       if (!designacaoId) return json({ erro: 'Identificação da avaliação não encontrada.' }, 400)
       const designacao = await getDesignacaoById(Number(designacaoId))
       if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
@@ -143,27 +272,8 @@ export default async (req) => {
       if (submissaoId && Number(submissaoId) !== submissaoFinalId) return json({ erro: 'A submissão informada não corresponde à designação.' }, 400)
       if (Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode enviar parecer para esta designação.' }, 403)
       if (designacao.status === 'recusado') return json({ erro: 'Não é possível enviar parecer para uma tarefa recusada.' }, 409)
-      const exists = await sql`SELECT id FROM avaliacoes WHERE designacao_id = ${designacao.id} LIMIT 1`
-      if (exists.length) {
-        await sql`
-          UPDATE avaliacoes
-          SET relevancia_academica = ${relevanciaAcademica},
-              clareza_organizacao = ${clarezaOrganizacao},
-              consistencia_teorica = ${consistenciaTeorica},
-              adequacao_metodologica = ${adequacaoMetodologica},
-              qualidade_redacao = ${qualidadeRedacao},
-              contribuicao_relevante_area = ${contribuicaoRelevanteArea},
-              comentario_autor = ${comentarioAutor || null},
-              comentario_editor = ${comentarioEditor || null},
-              devolutiva_doc_url = ${devolutivaUrl || null},
-              parecer_final = ${parecerFinal},
-              tempo_avaliacao = ${tempoAvaliacao},
-              atualizado_em = CURRENT_TIMESTAMP
-          WHERE id = ${exists[0].id}`
-      } else {
-        await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, designacao_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, devolutiva_doc_url, parecer_final, tempo_avaliacao) VALUES (${submissaoFinalId}, ${user.id}, ${designacao.id}, ${relevanciaAcademica}, ${clarezaOrganizacao}, ${consistenciaTeorica}, ${adequacaoMetodologica}, ${qualidadeRedacao}, ${contribuicaoRelevanteArea}, ${comentarioAutor || null}, ${comentarioEditor || null}, ${devolutivaUrl || null}, ${parecerFinal}, ${tempoAvaliacao})`
-      }
-      await sql`UPDATE designacoes_avaliacao SET status = 'concluido', atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
+      await upsertReview({ designacao, user, body })
+      await markDesignacaoStatus(designacao.id, 'concluido')
       await refreshSubmissionStatus(designacao.submissao_id)
       return json({ sucesso: true })
     }
