@@ -1,4 +1,5 @@
 import { neon } from '@neondatabase/serverless';
+import { wrapHttp } from './_netlify.js'
 
 const sql = neon(process.env.DATABASE_URL);
 
@@ -123,3 +124,5 @@ export async function handler(event) {
     return json(500, { error: 'Erro interno ao criar inscrição.' });
   }
 }
+
+export const handler = wrapHttp(default)

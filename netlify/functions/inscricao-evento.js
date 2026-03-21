@@ -1,4 +1,5 @@
 import { sql, json, parseJson, getUserById, canAccess } from './_db.js'
+import { wrapHttp } from './_netlify.js'
 
 async function ensureTables() {
   await sql`CREATE TABLE IF NOT EXISTS inscricoes_eventos (id BIGSERIAL PRIMARY KEY, usuario_id BIGINT NOT NULL, nome TEXT NOT NULL, email TEXT NOT NULL, telefone TEXT, instituicao TEXT, origem TEXT, orcid TEXT, atividade TEXT NOT NULL, modalidade TEXT, vinculo TEXT, observacoes TEXT, criado_em TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, atualizado_em TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP)`
@@ -25,3 +26,5 @@ export default async (req) => {
     return json({ erro: 'Erro ao registrar inscrição.', detalhe: erro.message }, 500)
   }
 }
+
+export const handler = wrapHttp(default)

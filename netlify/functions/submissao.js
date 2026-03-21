@@ -1,4 +1,5 @@
 import { sql } from './_db.js'
+import { wrapHttp } from './_netlify.js'
 
 export default async (req) => {
   try {
@@ -61,3 +62,5 @@ export default async (req) => {
     })
   }
 }
+
+export const handler = wrapHttp(default)

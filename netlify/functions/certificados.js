@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs'
 import { sql, json, getUserById } from './_db.js'
+import { wrapHttp } from './_netlify.js'
 
 async function ensureTables() {
   await sql`CREATE TABLE IF NOT EXISTS certificados_privados (id BIGSERIAL PRIMARY KEY, usuario_id BIGINT NOT NULL, enviado_por_usuario_id BIGINT, titulo TEXT NOT NULL, descricao TEXT, tipo TEXT NOT NULL DEFAULT 'evento', categoria TEXT NOT NULL DEFAULT 'certificado_evento', blob_key TEXT NOT NULL, nome_arquivo TEXT NOT NULL, mime_type TEXT NOT NULL DEFAULT 'application/pdf', tamanho_bytes BIGINT, criado_em TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP)`
@@ -45,3 +46,5 @@ export default async (req) => {
     return json({ erro: 'Erro ao carregar certificados.', detalhe: erro.message }, 500)
   }
 }
+
+export const handler = wrapHttp(default)

@@ -1,69 +1,23 @@
-import { neon } from '@neondatabase/serverless';
+import { json, getUserById } from './_db.js'
+import { wrapHttp } from './_netlify.js'
 
-const sql = neon(process.env.DATABASE_URL);
-
-function json(statusCode, data) {
-  return {
-    statusCode,
-    headers: { 'Content-Type': 'application/json; charset=utf-8' },
-    body: JSON.stringify(data),
-  };
+function getHeader(headers, name) {
+  return headers?.get?.(name) || headers?.get?.(name.toLowerCase()) || headers?.[name] || headers?.[name.toLowerCase()] || null
 }
 
-// Ajuste esta função se seu login usa cookie/sessão.
-// Por enquanto, lê x-user-id ou ?user_id=
-function getAuthenticatedUserId(event) {
-  const headerId =
-    event.headers['x-user-id'] ||
-    event.headers['X-User-Id'] ||
-    null;
-
-  const queryId = event.queryStringParameters?.user_id || null;
-
-  return headerId ? Number(headerId) : queryId ? Number(queryId) : null;
-}
-
-export async function handler(event) {
+export default async (req) => {
   try {
-    if (event.httpMethod !== 'GET') {
-      return json(405, { error: 'Método não permitido.' });
-    }
+    if (req.method !== 'GET') return json({ erro: 'Método não permitido.' }, 405)
 
-    const userId = getAuthenticatedUserId(event);
+    const url = new URL(req.url)
+    const userId = Number(getHeader(req.headers, 'x-user-id') || getHeader(req.headers, 'X-User-Id') || url.searchParams.get('user_id') || 0)
+    if (!userId) return json({ erro: 'Usuário não autenticado.' }, 401)
 
-    if (!userId) {
-      return json(401, { error: 'Usuário não autenticado.' });
-    }
+    const user = await getUserById(userId)
+    if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
+    if (user.status !== 'ativo') return json({ erro: 'Usuário inativo.' }, 403)
 
-    const rows = await sql`
-      SELECT
-        id,
-        nome,
-        email,
-        instituicao,
-        perfil,
-        status,
-        orcid,
-        lattes,
-        origem,
-        telefone,
-        foto_perfil_url
-      FROM usuarios
-      WHERE id = ${userId}
-      LIMIT 1
-    `;
-
-    if (!rows.length) {
-      return json(404, { error: 'Usuário não encontrado.' });
-    }
-
-    const user = rows[0];
-
-    if (user.status !== 'ativo') {
-      return json(403, { error: 'Usuário inativo.' });
-    }
-
-    return json(200, {
+    return json({
       id: user.id,
       full_name: user.nome,
       email: user.email,
@@ -74,10 +28,12 @@ export async function handler(event) {
       lattes: user.lattes,
       origin: user.origem,
       phone: user.telefone,
-      avatar_url: user.foto_perfil_url,
-    });
+      avatar_url: user.foto_perfil_url
+    })
   } catch (error) {
-    console.error('get-user-profile error:', error);
-    return json(500, { error: 'Erro interno ao buscar perfil.' });
+    console.error('get-user-profile error:', error)
+    return json({ erro: 'Erro interno ao buscar perfil.', detalhe: error.message }, 500)
   }
 }
+
+export const handler = wrapHttp(default)

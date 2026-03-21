@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs'
 import { sql } from './_db.js'
+import { wrapHttp } from './_netlify.js'
 
 const store = getStore('revista-arquivos')
 
@@ -40,3 +41,5 @@ export default async (req) => {
     return new Response(`Erro ao abrir arquivo: ${erro.message}`, { status: 500 })
   }
 }
+
+export const handler = wrapHttp(default)

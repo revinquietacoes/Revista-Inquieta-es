@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs'
-import { sql, json, parseJson, getUserById, canAccess } from './_db.js'
+import { sql, json, parseJson, getUserById, canAccess, ensureSupportTables } from './_db.js'
+import { wrapHttp } from './_netlify.js'
 
 async function getDesignacaoById(id) {
   const rows = await sql`
@@ -177,26 +178,6 @@ async function upsertReviewV2({ designacao, user, body }) {
       atualizado_em = CURRENT_TIMESTAMP`
 }
 
-
-async function updatePresenceState(userId, isOnline) {
-  const cols = await getTableColumns('usuarios')
-  const sets = []
-  if (cols.has('ultimo_acesso_em')) {
-    sets.push(isOnline ? sql`ultimo_acesso_em = CURRENT_TIMESTAMP` : sql`ultimo_acesso_em = (CURRENT_TIMESTAMP - INTERVAL '10 minutes')`)
-  }
-  if (cols.has('online')) {
-    sets.push(sql`online = ${isOnline}`)
-  }
-  if (cols.has('atualizado_em')) {
-    sets.push(sql`atualizado_em = CURRENT_TIMESTAMP`)
-  } else if (cols.has('updated_at')) {
-    sets.push(sql`updated_at = CURRENT_TIMESTAMP`)
-  }
-  if (!sets.length) return
-  const query = sets.reduce((acc, part, idx) => idx === 0 ? sql`UPDATE usuarios SET ${part}` : sql`${acc}, ${part}`)
-  await sql`${query} WHERE id = ${userId}`
-}
-
 async function markDesignacaoStatus(designacaoId, status) {
   const cols = await getTableColumns('designacoes_avaliacao')
   if (cols.has('atualizado_em')) {
@@ -212,6 +193,7 @@ async function markDesignacaoStatus(designacaoId, status) {
 
 export default async (req) => {
   try {
+    await ensureSupportTables()
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
     const body = await parseJson(req)
     const { action, userId } = body
@@ -219,13 +201,17 @@ export default async (req) => {
     if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
 
     if (action === 'presence_ping') {
-      await updatePresenceState(user.id, true)
+      await sql`UPDATE usuarios SET ultimo_acesso_em = CURRENT_TIMESTAMP, online = TRUE, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${user.id}`
       const refreshed = await getUserById(user.id)
       return json({ sucesso: true, usuario: refreshed })
     }
 
     if (action === 'presence_leave') {
-      await updatePresenceState(user.id, false)
+      await sql`UPDATE usuarios
+               SET online = FALSE,
+                   ultimo_acesso_em = (CURRENT_TIMESTAMP - INTERVAL '10 minutes'),
+                   atualizado_em = CURRENT_TIMESTAMP
+               WHERE id = ${user.id}`
       const refreshed = await getUserById(user.id)
       return json({ sucesso: true, usuario: refreshed })
     }
@@ -369,3 +355,5 @@ export default async (req) => {
     return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
   }
 }
+
+export const handler = wrapHttp(default)

@@ -1,4 +1,5 @@
-import { sql, json, parseJson, getUserById, canAccess } from './_db.js'
+import { sql, json, parseJson, getUserById, canAccess, ensureSupportTables } from './_db.js'
+import { wrapHttp } from './_netlify.js'
 
 function normalizeReviewBucket(status) {
   if (status === 'concluido') return 'concluidos'
@@ -74,6 +75,7 @@ async function getReviewerReviewHistory(user, reviewerId) { if (!reviewerId) { t
 
 export default async (req) => {
   try {
+    await ensureSupportTables()
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405) const body = await parseJson(req) const { action, userId, targetUserId, pareceristaId } = body const user = await getUserById(Number(userId)) if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
     if (action === 'me') return json({ sucesso: true, usuario: user })
     if (action === 'author_dashboard') { if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403) const submissoes = await sql` SELECT s.id, s.titulo, s.secao, s.status, s.data_submissao, s.prazo_final_avaliacao, dt.titulo AS dossie_titulo, u.nome AS editor_nome FROM submissoes s LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id LEFT JOIN usuarios u ON u.id = COALESCE(s.editor_adjunto_id, s.editor_responsavel_id) WHERE s.autor_id = ${user.id} ORDER BY s.data_submissao DESC` return json({ sucesso: true, usuario: user, submissoes }) }
@@ -267,3 +269,5 @@ if (action === 'editorial_review_queue') {
     return json({ erro: 'Erro ao carregar dados.', detalhe: erro.message }, 500)
   }
 }
+
+export const handler = wrapHttp(default)

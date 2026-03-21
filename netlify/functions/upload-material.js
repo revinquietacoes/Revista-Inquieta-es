@@ -1,5 +1,6 @@
 import { getStore } from '@netlify/blobs'
 import { sql } from './_db.js'
+import { wrapHttp } from './_netlify.js'
 
 const store = getStore('revista-arquivos')
 
@@ -149,3 +150,5 @@ export default async (req) => {
     })
   }
 }
+
+export const handler = wrapHttp(default)
