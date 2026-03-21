@@ -18,12 +18,14 @@ export async function getUserById(id, withPassword = false) {
     ? sql`SELECT id, nome, email, perfil, instituicao, orcid, lattes, origem, telefone,
            foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica,
            receber_noticias_email, status, criado_em, atualizado_em, senha_hash,
-           ultimo_acesso_em, online
+           ultimo_acesso_em,
+           CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online
     FROM usuarios WHERE id = ${id} LIMIT 1`
     : sql`SELECT id, nome, email, perfil, instituicao, orcid, lattes, origem, telefone,
            foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica,
            receber_noticias_email, status, criado_em, atualizado_em,
-           ultimo_acesso_em, online
+           ultimo_acesso_em,
+           CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online
     FROM usuarios WHERE id = ${id} LIMIT 1`;
   const rows = await fields
   return rows[0] || null

@@ -1,1 +1,89 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Quem está online</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Quem está online</h1><p>Aqui você acompanha a presença recente dos perfis permitidos ao seu painel.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="javascript:history.back()">Voltar</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><section class="panel"><div class="panel-head"><h2>Usuários</h2></div><div class="list" id="lista-online"></div></section><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',async()=>{const u=AppPanel.requireRole(['editor_adjunto','editor_chefe']);if(!u)return;const data=await AppPanel.apiData('online_users');const box=document.getElementById('lista-online');if(!data.usuarios.length){box.innerHTML='<div class="empty-state">Aqui ainda não há usuários disponíveis.</div>';return;}data.usuarios.forEach(p=>{const div=document.createElement('div');div.className='item';div.innerHTML=`${AppPanel.userChipHtml(p,`${AppPanel.formatRole(p.perfil)} • ${p.online?'está online':'está offline'}`)}<div class="actions-row" style="margin-top:10px"><a class="btn btn-soft" href="chat-interno.html">Enviar mensagem</a></div>`;box.appendChild(div)})})</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quem está online</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="avatar-box">
+          <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+          <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+        </div>
+        <div class="brand-copy">
+          <h1>Quem está online</h1>
+          <p>Aqui você acompanha a presença recente dos perfis permitidos ao seu painel.</p>
+        </div>
+      </div>
+      <div class="actions-row">
+        <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+        <button class="btn btn-soft" data-action="logout">Sair</button>
+      </div>
+    </header>
+
+    <section class="panel">
+      <div class="panel-head">
+        <div>
+          <h2>Usuários</h2>
+          <p class="helper">O selo verde indica atividade recente nos últimos 2 minutos.</p>
+        </div>
+      </div>
+      <div class="list" id="lista-online"></div>
+    </section>
+
+    <footer class="page-footer"></footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const u = AppPanel.requireRole(['editor_adjunto','editor_chefe']);
+      if (!u) return;
+      const box = document.getElementById('lista-online');
+      const chatHref = u.perfil === 'editor_chefe' ? 'editor-chefe-chat.html' : 'chat-interno.html';
+
+      async function load() {
+        const data = await AppPanel.apiData('online_users');
+        box.innerHTML = '';
+        if (!data.usuarios.length) {
+          box.innerHTML = '<div class="empty-state">Aqui ainda não há usuários disponíveis.</div>';
+          return;
+        }
+        data.usuarios.forEach(p => {
+          const div = document.createElement('div');
+          div.className = 'item';
+
+          const top = document.createElement('div');
+          top.innerHTML = AppPanel.userChipHtml(p, `${AppPanel.formatRole(p.perfil)} • ${p.online ? 'está online' : 'offline'} • último ping: ${AppPanel.formatLastSeen(p.ultimo_acesso_em)}`);
+          div.appendChild(top.firstElementChild);
+
+          const row = document.createElement('div');
+          row.className = 'actions-row';
+          row.style.marginTop = '10px';
+
+          const a = document.createElement('a');
+          a.className = 'btn btn-soft';
+          a.href = `${chatHref}?target=${encodeURIComponent(p.id)}`;
+          a.textContent = 'Enviar mensagem';
+          row.appendChild(a);
+
+          div.appendChild(row);
+          box.appendChild(div);
+        });
+      }
+
+      try {
+        await load();
+        setInterval(load, 30000);
+      } catch (err) {
+        box.innerHTML = `<div class="empty-state">${AppPanel.escapeHtml(err.message || 'Não foi possível carregar os usuários.')}</div>`;
+      }
+    });
+  </script>
+</body>
+</html>

@@ -58,3 +58,17 @@ label{font-weight:700;font-size:.92rem} input,select,textarea{width:100%;border-
 .form-message.err{color:var(--err)}
 .user-select-button.is-selected{border-color:rgba(143,227,168,.45);background:rgba(143,227,168,.08)}
 .small-note{font-size:.92rem;color:var(--muted)}
+
+.user-row-top{display:flex;align-items:center;gap:10px;justify-content:space-between;flex-wrap:wrap}
+.presence-pill{display:inline-flex;align-items:center;gap:7px;padding:4px 10px;border-radius:999px;font-size:.76rem;font-weight:700;border:1px solid rgba(255,255,255,.12);white-space:nowrap}
+.presence-pill .presence-dot{width:8px;height:8px;border-radius:50%;display:inline-block}
+.presence-pill.is-online{background:rgba(143,227,168,.14);color:#c9f5d5;border-color:rgba(143,227,168,.28)}
+.presence-pill.is-online .presence-dot{background:#8fe3a8;box-shadow:0 0 0 4px rgba(143,227,168,.14)}
+.presence-pill.is-offline{background:rgba(255,176,176,.10);color:#ffd3d3;border-color:rgba(255,176,176,.22)}
+.presence-pill.is-offline .presence-dot{background:#ffb0b0}
+.recipient-status{margin-top:10px;padding:12px 14px;border-radius:16px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);display:grid;gap:6px}
+.recipient-status strong{font-size:.95rem}
+.recipient-status .helper{margin:0}
+.message-item.is-self{border-color:rgba(143,227,168,.22);background:rgba(143,227,168,.06)}
+.chat-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
+.chat-toolbar .helper{margin:0}

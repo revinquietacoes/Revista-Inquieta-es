@@ -1,1 +1,266 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Chat interno</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Chat interno</h1><p>Aqui você seleciona um(a) usuário(a), envia mensagens e anexa arquivos.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="javascript:history.back()">Voltar</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><div class="content-grid"><section class="panel"><div class="panel-head"><h2>Conversa</h2></div><div id="chat-body" class="chat-body"></div></section><aside class="panel"><div class="panel-head"><h2>Nova mensagem</h2></div><form id="form-chat"><div class="form-grid"><div class="field full"><label>Destinatário</label><select id="destinatario" name="destinatarioId" required></select></div><div class="field full"><label>Mensagem</label><textarea name="mensagem" required></textarea></div><div class="field full"><label>Anexo (opcional)</label><input name="arquivo" type="file" accept=".png,.jpg,.jpeg,.webp,.pdf,.doc,.docx"></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Enviar mensagem</button></div><div class="form-message" id="msg-chat"></div></form></aside></div><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',async()=>{const user=AppPanel.requireRole(['autor','parecerista','editor_adjunto','editor_chefe']);if(!user)return;const sel=document.getElementById('destinatario');const chat=document.getElementById('chat-body');const recipients=await AppPanel.apiData('chat_recipients');recipients.usuarios.filter(u=>u.id!==user.id).forEach(u=>{const o=document.createElement('option');o.value=u.id;o.textContent=`${u.nome} • ${AppPanel.formatRole(u.perfil)}${u.online?' • online':' • offline'}`;sel.appendChild(o)});async function load(){if(!sel.value){chat.innerHTML='<div class="empty-state">Selecione um(a) usuário(a) para abrir a conversa.</div>';return;}const data=await AppPanel.apiData('chat_messages',{targetUserId:Number(sel.value)});chat.innerHTML='';if(!data.mensagens.length){chat.innerHTML='<div class="empty-state">Aqui ainda não há mensagens nesta conversa.</div>';return;}data.mensagens.forEach(m=>{const remetente={nome:m.remetente_nome,perfil:m.remetente_perfil,foto_perfil_url:m.remetente_foto,foto_perfil_aprovada:m.remetente_foto_aprovada,consentimento_foto_publica:m.remetente_foto_consent};const div=document.createElement('div');div.className='message-item';div.innerHTML=`${AppPanel.userChipHtml(remetente,AppPanel.formatRole(remetente.perfil))}<small>${new Date(m.criado_em).toLocaleString('pt-BR')}</small><div>${m.mensagem}</div>${m.anexo_url?`<div style="margin-top:8px"><a class="file-pill" href="${m.anexo_url}" target="_blank">📎 ${m.anexo_nome||'Abrir anexo'}</a></div>`:''}`;chat.appendChild(div)});chat.scrollTop=chat.scrollHeight;}sel.addEventListener('change',load);if(sel.options.length) { sel.selectedIndex=0; load(); } document.getElementById('form-chat').addEventListener('submit',async(e)=>{e.preventDefault();const msg=document.getElementById('msg-chat');msg.className='form-message';const fd=new FormData(e.target);let anexoUrl='',anexoNome='',anexoMime='';const arq=fd.get('arquivo');try{if(arq && typeof arq!=='string' && arq.size){const up=new FormData();up.append('usuario_id',user.id);up.append('categoria','outro');up.append('arquivo',arq);const r=await fetch('/.netlify/functions/upload-material',{method:'POST',body:up});const j=await r.json();if(!r.ok) throw new Error(j.erro||j.detalhe);anexoUrl=j.arquivo.url_acesso;anexoNome=arq.name;anexoMime=arq.type;}await AppPanel.apiAction('send_direct_message',{destinatarioId:Number(fd.get('destinatarioId')),mensagem:fd.get('mensagem'),anexoUrl,anexoNome,anexoMime});msg.textContent='Mensagem enviada com sucesso.';msg.classList.add('ok');e.target.reset();sel.dispatchEvent(new Event('change'));}catch(err){msg.textContent=err.message;msg.classList.add('err')}})})</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chat interno</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+</head>
+<body>
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="avatar-box">
+          <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+          <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+        </div>
+        <div class="brand-copy">
+          <h1>Chat interno</h1>
+          <p>Aqui você seleciona um(a) usuário(a), envia mensagens e acompanha o status de presença no chat.</p>
+        </div>
+      </div>
+      <div class="actions-row">
+        <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+        <button class="btn btn-soft" data-action="logout">Sair</button>
+      </div>
+    </header>
+
+    <div class="content-grid">
+      <section class="panel">
+        <div class="panel-head">
+          <div>
+            <h2>Conversa</h2>
+            <p class="helper">O selo verde indica presença recente.</p>
+          </div>
+        </div>
+        <div id="chat-toolbar" class="chat-toolbar" hidden>
+          <div id="chat-with"></div>
+          <p class="helper" id="chat-last-seen"></p>
+        </div>
+        <div id="chat-body" class="chat-body"></div>
+      </section>
+
+      <aside class="panel">
+        <div class="panel-head"><h2>Nova mensagem</h2></div>
+        <form id="form-chat">
+          <div class="form-grid">
+            <div class="field full">
+              <label>Destinatário</label>
+              <select id="destinatario" name="destinatarioId" required></select>
+              <div id="recipient-status" class="recipient-status" hidden></div>
+            </div>
+            <div class="field full">
+              <label>Mensagem</label>
+              <textarea name="mensagem" required></textarea>
+            </div>
+            <div class="field full">
+              <label>Anexo (opcional)</label>
+              <input name="arquivo" type="file" accept=".png,.jpg,.jpeg,.webp,.pdf,.doc,.docx">
+            </div>
+          </div>
+          <div class="actions-row">
+            <button class="btn btn-primary" type="submit">Enviar mensagem</button>
+          </div>
+          <div class="form-message" id="msg-chat"></div>
+        </form>
+      </aside>
+    </div>
+
+    <footer class="page-footer"></footer>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+      const user = AppPanel.requireRole(['autor','parecerista','editor_adjunto','editor_chefe']);
+      if (!user) return;
+
+      const sel = document.getElementById('destinatario');
+      const chat = document.getElementById('chat-body');
+      const msgBox = document.getElementById('msg-chat');
+      const recipientStatus = document.getElementById('recipient-status');
+      const chatToolbar = document.getElementById('chat-toolbar');
+      const chatWith = document.getElementById('chat-with');
+      const chatLastSeen = document.getElementById('chat-last-seen');
+      const params = new URLSearchParams(location.search);
+      const preselectedTarget = params.get('target');
+      let recipientsMap = new Map();
+
+      function setEmpty(texto) {
+        chat.innerHTML = '';
+        const div = document.createElement('div');
+        div.className = 'empty-state';
+        div.textContent = texto;
+        chat.appendChild(div);
+      }
+
+      function appendMessage(m) {
+        const remetente = {
+          nome: m.remetente_nome,
+          perfil: m.remetente_perfil,
+          foto_perfil_url: m.remetente_foto,
+          foto_perfil_aprovada: m.remetente_foto_aprovada,
+          consentimento_foto_publica: m.remetente_foto_consent,
+          online: m.remetente_id === user.id ? true : recipientsMap.get(String(m.remetente_id))?.online
+        };
+
+        const div = document.createElement('div');
+        div.className = 'message-item';
+        if (Number(m.remetente_id) === Number(user.id)) div.classList.add('is-self');
+
+        const head = document.createElement('div');
+        head.innerHTML = AppPanel.userChipHtml(remetente, AppPanel.formatRole(remetente.perfil));
+        div.appendChild(head.firstElementChild);
+
+        const when = document.createElement('small');
+        when.textContent = new Date(m.criado_em).toLocaleString('pt-BR');
+        div.appendChild(when);
+
+        const body = document.createElement('div');
+        body.textContent = m.mensagem || '';
+        div.appendChild(body);
+
+        if (m.anexo_url) {
+          const wrap = document.createElement('div');
+          wrap.style.marginTop = '8px';
+          const link = document.createElement('a');
+          link.className = 'file-pill';
+          link.href = m.anexo_url;
+          link.target = '_blank';
+          link.rel = 'noopener noreferrer';
+          link.textContent = `📎 ${m.anexo_nome || 'Abrir anexo'}`;
+          wrap.appendChild(link);
+          div.appendChild(wrap);
+        }
+
+        chat.appendChild(div);
+      }
+
+      function renderRecipientStatus() {
+        const current = recipientsMap.get(String(sel.value));
+        if (!current) {
+          recipientStatus.hidden = true;
+          chatToolbar.hidden = true;
+          return;
+        }
+        recipientStatus.hidden = false;
+        recipientStatus.innerHTML = `
+          <div>${AppPanel.userChipHtml(current, `${AppPanel.formatRole(current.perfil)} • ${AppPanel.formatPresenceShort(current)}`)}</div>
+          <p class="helper">Última atividade: ${AppPanel.formatLastSeen(current.ultimo_acesso_em)}</p>
+        `;
+        chatToolbar.hidden = false;
+        chatWith.innerHTML = AppPanel.userChipHtml(current, AppPanel.formatRole(current.perfil));
+        chatLastSeen.textContent = current.online ? 'Usuário ativo recentemente no sistema.' : `Última atividade: ${AppPanel.formatLastSeen(current.ultimo_acesso_em)}`;
+      }
+
+      async function loadRecipients() {
+        const previous = sel.value || preselectedTarget || '';
+        const recipients = await AppPanel.apiData('chat_recipients');
+        const options = recipients.usuarios.filter(u => u.id !== user.id);
+        recipientsMap = new Map(options.map(u => [String(u.id), u]));
+        sel.innerHTML = '';
+        if (!options.length) {
+          setEmpty('Aqui ainda não há usuários disponíveis para conversa.');
+          recipientStatus.hidden = true;
+          chatToolbar.hidden = true;
+          return false;
+        }
+        options.forEach(u => {
+          const o = document.createElement('option');
+          o.value = u.id;
+          o.textContent = `${u.nome} • ${AppPanel.formatRole(u.perfil)} • ${u.online ? 'online' : 'offline'}`;
+          sel.appendChild(o);
+        });
+        const target = recipientsMap.has(String(previous)) ? String(previous) : String(options[0].id);
+        sel.value = target;
+        renderRecipientStatus();
+        return true;
+      }
+
+      async function loadMessages() {
+        try {
+          if (!sel.value) {
+            setEmpty('Selecione um(a) usuário(a) para abrir a conversa.');
+            return;
+          }
+          renderRecipientStatus();
+          const data = await AppPanel.apiData('chat_messages', { targetUserId: Number(sel.value) });
+          chat.innerHTML = '';
+          if (!data.mensagens.length) {
+            setEmpty('Aqui ainda não há mensagens nesta conversa.');
+            return;
+          }
+          data.mensagens.forEach(appendMessage);
+          chat.scrollTop = chat.scrollHeight;
+        } catch (err) {
+          setEmpty(err.message || 'Não foi possível carregar a conversa.');
+        }
+      }
+
+      try {
+        const hasRecipients = await loadRecipients();
+        if (!hasRecipients) return;
+        await loadMessages();
+      } catch (err) {
+        setEmpty(err.message || 'Não foi possível carregar os destinatários.');
+        return;
+      }
+
+      sel.addEventListener('change', async () => {
+        renderRecipientStatus();
+        await loadMessages();
+      });
+
+      setInterval(async () => {
+        try {
+          const current = sel.value;
+          const hadRecipients = await loadRecipients();
+          if (!hadRecipients) return;
+          if (current && recipientsMap.has(String(current))) sel.value = String(current);
+          renderRecipientStatus();
+        } catch (err) {}
+      }, 30000);
+
+      document.getElementById('form-chat').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        msgBox.className = 'form-message';
+        msgBox.textContent = '';
+        const fd = new FormData(e.target);
+        let anexoUrl = '', anexoNome = '', anexoMime = '';
+        const arq = fd.get('arquivo');
+        try {
+          if (arq && typeof arq !== 'string' && arq.size) {
+            const up = new FormData();
+            up.append('usuario_id', user.id);
+            up.append('categoria', 'outro');
+            up.append('arquivo', arq);
+            const r = await fetch('/.netlify/functions/upload-material', { method:'POST', body:up });
+            const j = await r.json();
+            if (!r.ok) throw new Error(j.erro || j.detalhe || 'Falha no upload do anexo.');
+            anexoUrl = j.arquivo.url_acesso;
+            anexoNome = arq.name;
+            anexoMime = arq.type;
+          }
+          await AppPanel.apiAction('send_direct_message', {
+            destinatarioId: Number(fd.get('destinatarioId')),
+            mensagem: fd.get('mensagem'),
+            anexoUrl,
+            anexoNome,
+            anexoMime
+          });
+          msgBox.textContent = 'Mensagem enviada com sucesso.';
+          msgBox.classList.add('ok');
+          e.target.reset();
+          sel.value = String(fd.get('destinatarioId'));
+          renderRecipientStatus();
+          await loadMessages();
+        } catch (err) {
+          msgBox.textContent = err.message || 'Erro ao enviar mensagem.';
+          msgBox.classList.add('err');
+        }
+      });
+    });
+  </script>
+</body>
+</html>

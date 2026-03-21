@@ -59,7 +59,9 @@ export default async (req) => {
         ORDER BY s.data_submissao DESC`
       const pareceristas = await sql`
         SELECT u.id, u.nome, u.email, u.instituicao, u.orcid, u.lattes, u.foto_perfil_url, u.foto_perfil_aprovada, u.consentimento_foto_publica,
-               COALESCE(c.total_avaliacoes, 0) AS total_avaliacoes, u.online, u.ultimo_acesso_em
+               COALESCE(c.total_avaliacoes, 0) AS total_avaliacoes,
+               CASE WHEN u.ultimo_acesso_em IS NOT NULL AND u.ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online,
+               u.ultimo_acesso_em
         FROM usuarios u
         LEFT JOIN contribuicoes_usuarios c ON c.usuario_id = u.id
         WHERE u.perfil = 'parecerista' AND u.status = 'ativo'
@@ -77,7 +79,9 @@ export default async (req) => {
                COALESCE(c.total_avaliacoes, 0) AS total_avaliacoes,
                COALESCE(c.total_dossies, 0) AS total_dossies,
                COALESCE(c.total_decisoes_editoriais, 0) AS total_decisoes_editoriais,
-               c.observacoes, u.online, u.ultimo_acesso_em
+               c.observacoes,
+               CASE WHEN u.ultimo_acesso_em IS NOT NULL AND u.ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online,
+               u.ultimo_acesso_em
         FROM usuarios u
         LEFT JOIN contribuicoes_usuarios c ON c.usuario_id = u.id
         ORDER BY u.perfil, u.nome`
@@ -101,7 +105,14 @@ export default async (req) => {
         FROM dossies_tematicos dt
         LEFT JOIN usuarios u ON u.id = dt.editor_responsavel_id
         ORDER BY dt.criado_em DESC`
-      return json({ sucesso: true, usuario: user, usuarios, submissoes, dossies })
+      const mensagens = await sql`
+        SELECT m.*, ur.nome AS remetente_nome, ur.perfil AS remetente_perfil
+        FROM mensagens_internas m
+        LEFT JOIN usuarios ur ON ur.id = m.remetente_id
+        WHERE m.destinatario_id = ${user.id} OR m.remetente_id = ${user.id}
+        ORDER BY m.criado_em DESC
+        LIMIT 100`
+      return json({ sucesso: true, usuario: user, usuarios, submissoes, dossies, mensagens })
     }
 
     if (action === 'public_dossiers') {
@@ -118,22 +129,26 @@ export default async (req) => {
     if (action === 'online_users') {
       if (!canAccess(user, ['editor_adjunto', 'editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       const rows = user.perfil === 'editor_chefe'
-        ? await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, online, ultimo_acesso_em FROM usuarios WHERE status='ativo' ORDER BY perfil,nome`
-        : await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, online, ultimo_acesso_em FROM usuarios WHERE status='ativo' AND perfil IN ('editor_chefe','editor_adjunto','parecerista') ORDER BY perfil,nome`
+        ? await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online, ultimo_acesso_em FROM usuarios WHERE status='ativo' ORDER BY online DESC, ultimo_acesso_em DESC NULLS LAST, perfil, nome`
+        : await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online, ultimo_acesso_em FROM usuarios WHERE status='ativo' AND perfil IN ('editor_chefe','editor_adjunto','parecerista') ORDER BY online DESC, ultimo_acesso_em DESC NULLS LAST, perfil, nome`
       return json({ sucesso: true, usuarios: rows })
     }
 
     if (action === 'chat_recipients') {
       let rows
-      if (user.perfil === 'autor') rows = await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, online FROM usuarios WHERE status='ativo' AND perfil IN ('editor_chefe','editor_adjunto') ORDER BY perfil,nome`
-      else if (user.perfil === 'editor_adjunto') rows = await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, online FROM usuarios WHERE status='ativo' ORDER BY perfil,nome`
-      else rows = await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, online FROM usuarios WHERE status='ativo' ORDER BY perfil,nome`
+      if (user.perfil === 'autor') rows = await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online, ultimo_acesso_em FROM usuarios WHERE status='ativo' AND perfil IN ('editor_chefe','editor_adjunto') ORDER BY online DESC, ultimo_acesso_em DESC NULLS LAST, perfil, nome`
+      else if (user.perfil === 'editor_adjunto') rows = await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online, ultimo_acesso_em FROM usuarios WHERE status='ativo' ORDER BY online DESC, ultimo_acesso_em DESC NULLS LAST, perfil, nome`
+      else rows = await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online, ultimo_acesso_em FROM usuarios WHERE status='ativo' ORDER BY online DESC, ultimo_acesso_em DESC NULLS LAST, perfil, nome`
       return json({ sucesso: true, usuarios: rows })
     }
 
     if (action === 'chat_messages') {
       const targetId = Number(targetUserId)
       if (!targetId) return json({ erro: 'Destinatário não informado.' }, 400)
+      const allowedRecipients = user.perfil === 'autor'
+        ? await sql`SELECT id FROM usuarios WHERE status='ativo' AND perfil IN ('editor_chefe','editor_adjunto') AND id = ${targetId}`
+        : await sql`SELECT id FROM usuarios WHERE status='ativo' AND id = ${targetId}`
+      if (!allowedRecipients.length) return json({ erro: 'Você não pode acessar esta conversa.' }, 403)
       const messages = await sql`
         SELECT m.*, ur.nome AS remetente_nome, ur.perfil AS remetente_perfil, ur.foto_perfil_url AS remetente_foto,
                ur.foto_perfil_aprovada AS remetente_foto_aprovada, ur.consentimento_foto_publica AS remetente_foto_consent,

@@ -1,6 +1,34 @@
 import bcrypt from 'bcryptjs'
 import { sql, json, parseJson, getUserById, canAccess } from './_db.js'
 
+async function getDesignacaoById(id) {
+  const rows = await sql`
+    SELECT da.*, s.status AS submissao_status
+    FROM designacoes_avaliacao da
+    JOIN submissoes s ON s.id = da.submissao_id
+    WHERE da.id = ${id}
+    LIMIT 1`
+  return rows[0] || null
+}
+
+async function refreshSubmissionStatus(submissaoId) {
+  if (!submissaoId) return
+  const rows = await sql`
+    SELECT status
+    FROM designacoes_avaliacao
+    WHERE submissao_id = ${submissaoId}`
+  if (!rows.length) {
+    await sql`UPDATE submissoes SET status = 'nao_alocada' WHERE id = ${submissaoId}`
+    return
+  }
+  const statuses = rows.map((row) => row.status)
+  let nextStatus = 'alocada_sem_aceite'
+  if (statuses.some((status) => status === 'concluido')) nextStatus = 'avaliacao_concluida'
+  else if (statuses.some((status) => ['aceito', 'em_andamento'].includes(status))) nextStatus = 'em_avaliacao'
+  else if (statuses.every((status) => status === 'recusado')) nextStatus = 'nao_alocada'
+  await sql`UPDATE submissoes SET status = ${nextStatus} WHERE id = ${submissaoId}`
+}
+
 export default async (req) => {
   try {
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
@@ -11,6 +39,16 @@ export default async (req) => {
 
     if (action === 'presence_ping') {
       await sql`UPDATE usuarios SET ultimo_acesso_em = CURRENT_TIMESTAMP, online = TRUE, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${user.id}`
+      const refreshed = await getUserById(user.id)
+      return json({ sucesso: true, usuario: refreshed })
+    }
+
+    if (action === 'presence_leave') {
+      await sql`UPDATE usuarios
+               SET online = FALSE,
+                   ultimo_acesso_em = (CURRENT_TIMESTAMP - INTERVAL '10 minutes'),
+                   atualizado_em = CURRENT_TIMESTAMP
+               WHERE id = ${user.id}`
       const refreshed = await getUserById(user.id)
       return json({ sucesso: true, usuario: refreshed })
     }
@@ -57,6 +95,14 @@ export default async (req) => {
       if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { submissaoId, pareceristaId, prazoParecer, mensagemConvite } = body
       if (!submissaoId || !pareceristaId) return json({ erro: 'Informe submissão e parecerista.' }, 400)
+      const existing = await sql`
+        SELECT id, status
+        FROM designacoes_avaliacao
+        WHERE submissao_id = ${submissaoId}
+          AND parecerista_id = ${pareceristaId}
+          AND status <> 'recusado'
+        LIMIT 1`
+      if (existing.length) return json({ erro: 'Este parecerista já possui uma designação ativa para esta submissão.' }, 409)
       await sql`INSERT INTO designacoes_avaliacao (submissao_id, parecerista_id, editor_id, status, prazo_parecer, mensagem_convite) VALUES (${submissaoId}, ${pareceristaId}, ${user.id}, 'convite_enviado', ${prazoParecer || null}, ${mensagemConvite || null})`
       await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_responsavel_id = COALESCE(editor_responsavel_id, ${user.id}), editor_adjunto_id = CASE WHEN ${user.perfil} = 'editor_adjunto' THEN ${user.id} ELSE editor_adjunto_id END WHERE id = ${submissaoId}`
       return json({ sucesso: true })
@@ -65,28 +111,59 @@ export default async (req) => {
     if (action === 'update_designacao_status') {
       if (!canAccess(user, ['parecerista', 'editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { designacaoId, status, diasAdicionais } = body
-      const rows = await sql`SELECT submissao_id FROM designacoes_avaliacao WHERE id = ${designacaoId} LIMIT 1`
+      const designacao = await getDesignacaoById(Number(designacaoId))
+      if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
+      if (user.perfil === 'parecerista' && Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode alterar esta designação.' }, 403)
       const statusVal = status || 'aceito'
-      await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais), atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacaoId}`
-      if (rows[0]) {
-        if (statusVal === 'aceito' || statusVal === 'em_andamento') await sql`UPDATE submissoes SET status = 'em_avaliacao' WHERE id = ${rows[0].submissao_id}`
-        if (statusVal === 'recusado') await sql`UPDATE submissoes SET status = 'nao_alocada' WHERE id = ${rows[0].submissao_id}`
-      }
+      if (designacao.status === 'concluido' && statusVal !== 'concluido') return json({ erro: 'Esta designação já foi concluída e não pode mais ser alterada.' }, 409)
+      await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais), atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
+      await refreshSubmissionStatus(designacao.submissao_id)
       return json({ sucesso: true })
     }
 
     if (action === 'send_direct_message') {
       const { destinatarioId, mensagem, anexoUrl, anexoNome, anexoMime } = body
-      if (!destinatarioId || !mensagem) return json({ erro: 'Informe destinatário e mensagem.' }, 400)
-      await sql`INSERT INTO mensagens_internas (remetente_id, destinatario_id, mensagem, anexo_url, anexo_nome, anexo_mime) VALUES (${user.id}, ${destinatarioId}, ${mensagem}, ${anexoUrl || null}, ${anexoNome || null}, ${anexoMime || null})`
+      const targetId = Number(destinatarioId)
+      const cleanMessage = String(mensagem || '').trim()
+      if (!targetId || !cleanMessage) return json({ erro: 'Informe destinatário e mensagem.' }, 400)
+      if (targetId === Number(user.id)) return json({ erro: 'Não é possível enviar mensagem para si mesmo(a).' }, 400)
+      const targetRows = await sql`SELECT id, status FROM usuarios WHERE id = ${targetId} LIMIT 1`
+      if (!targetRows.length || targetRows[0].status !== 'ativo') return json({ erro: 'Destinatário inválido ou inativo.' }, 404)
+      await sql`INSERT INTO mensagens_internas (remetente_id, destinatario_id, mensagem, anexo_url, anexo_nome, anexo_mime) VALUES (${user.id}, ${targetId}, ${cleanMessage}, ${anexoUrl || null}, ${anexoNome || null}, ${anexoMime || null})`
       return json({ sucesso: true })
     }
 
     if (action === 'submit_review') {
       if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
       const { designacaoId, submissaoId, relevanciaAcademica, clarezaOrganizacao, consistenciaTeorica, adequacaoMetodologica, qualidadeRedacao, contribuicaoRelevanteArea, comentarioAutor, comentarioEditor, parecerFinal, tempoAvaliacao, devolutivaUrl } = body
-      await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, designacao_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, devolutiva_doc_url, parecer_final, tempo_avaliacao) VALUES (${submissaoId}, ${user.id}, ${designacaoId}, ${relevanciaAcademica}, ${clarezaOrganizacao}, ${consistenciaTeorica}, ${adequacaoMetodologica}, ${qualidadeRedacao}, ${contribuicaoRelevanteArea}, ${comentarioAutor || null}, ${comentarioEditor || null}, ${devolutivaUrl || null}, ${parecerFinal}, ${tempoAvaliacao})`
-      await sql`UPDATE designacoes_avaliacao SET status = 'concluido' WHERE id = ${designacaoId}`
+      if (!designacaoId || !submissaoId) return json({ erro: 'Identificação da avaliação não encontrada.' }, 400)
+      const designacao = await getDesignacaoById(Number(designacaoId))
+      if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
+      if (Number(designacao.submissao_id) !== Number(submissaoId)) return json({ erro: 'A submissão informada não corresponde à designação.' }, 400)
+      if (Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode enviar parecer para esta designação.' }, 403)
+      if (designacao.status === 'recusado') return json({ erro: 'Não é possível enviar parecer para uma tarefa recusada.' }, 409)
+      const exists = await sql`SELECT id FROM avaliacoes WHERE designacao_id = ${designacao.id} LIMIT 1`
+      if (exists.length) {
+        await sql`
+          UPDATE avaliacoes
+          SET relevancia_academica = ${relevanciaAcademica},
+              clareza_organizacao = ${clarezaOrganizacao},
+              consistencia_teorica = ${consistenciaTeorica},
+              adequacao_metodologica = ${adequacaoMetodologica},
+              qualidade_redacao = ${qualidadeRedacao},
+              contribuicao_relevante_area = ${contribuicaoRelevanteArea},
+              comentario_autor = ${comentarioAutor || null},
+              comentario_editor = ${comentarioEditor || null},
+              devolutiva_doc_url = ${devolutivaUrl || null},
+              parecer_final = ${parecerFinal},
+              tempo_avaliacao = ${tempoAvaliacao},
+              atualizado_em = CURRENT_TIMESTAMP
+          WHERE id = ${exists[0].id}`
+      } else {
+        await sql`INSERT INTO avaliacoes (submissao_id, parecerista_id, designacao_id, relevancia_academica, clareza_organizacao, consistencia_teorica, adequacao_metodologica, qualidade_redacao, contribuicao_relevante_area, comentario_autor, comentario_editor, devolutiva_doc_url, parecer_final, tempo_avaliacao) VALUES (${submissaoId}, ${user.id}, ${designacaoId}, ${relevanciaAcademica}, ${clarezaOrganizacao}, ${consistenciaTeorica}, ${adequacaoMetodologica}, ${qualidadeRedacao}, ${contribuicaoRelevanteArea}, ${comentarioAutor || null}, ${comentarioEditor || null}, ${devolutivaUrl || null}, ${parecerFinal}, ${tempoAvaliacao})`
+      }
+      await sql`UPDATE designacoes_avaliacao SET status = 'concluido', atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
+      await refreshSubmissionStatus(designacao.submissao_id)
       return json({ sucesso: true })
     }
 
