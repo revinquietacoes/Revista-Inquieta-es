@@ -1,6 +1,7 @@
-const bcrypt = require('bcryptjs')
-const { sql, json, parseJson, getUserById, canAccess, ensureSupportTables } = require('./_db.js')
-const { wrapHttp } = require('./_netlify.js')
+import bcrypt from 'bcryptjs'
+import { sql, json, parseJson, getUserById, canAccess, ensureSupportTables } from './_db.js'
+import { wrapHttp } from './_netlify.js'
+
 async function getDesignacaoById(id) {
   const rows = await sql`
     SELECT da.*, s.status AS submissao_status
@@ -190,7 +191,7 @@ async function markDesignacaoStatus(designacaoId, status) {
   await sql`UPDATE designacoes_avaliacao SET status = ${status} WHERE id = ${designacaoId}`
 }
 
-const main = async (req) => {
+export default async (req) => {
   try {
     await ensureSupportTables()
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
@@ -355,4 +356,4 @@ const main = async (req) => {
   }
 }
 
-exports.handler = wrapHttp(main)
+export const handler = wrapHttp(default)

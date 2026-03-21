@@ -35,7 +35,6 @@ const main = async (req) => {
       avatar_url: user.foto_perfil_url
     })
   } catch (error) {
-    console.error('get-user-profile error:', error)
     return json({ erro: 'Erro interno ao buscar perfil.', detalhe: error.message }, 500)
   }
 }

@@ -42,7 +42,6 @@ const main = async (req) => {
       created_at: item.criado_em
     })))
   } catch (error) {
-    console.error('list-my-certificates error:', error)
     return json({ erro: 'Erro interno ao listar certificados.', detalhe: error.message }, 500)
   }
 }

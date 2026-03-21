@@ -1,10 +1,13 @@
-const { sql, json } = require('./_db')
-const { wrapHttp } = require('./_netlify')
+import { sql } from './_db.js'
+import { wrapHttp } from './_netlify.js'
 
-const main = async (req) => {
+export default async (req) => {
   try {
     if (req.method !== 'POST') {
-      return json({ erro: 'Método não permitido.' }, 405)
+      return new Response(JSON.stringify({ erro: 'Método não permitido.' }), {
+        status: 405,
+        headers: { 'Content-Type': 'application/json' }
+      })
     }
 
     const formData = await req.formData()
@@ -18,13 +21,22 @@ const main = async (req) => {
     const dossieId = dossieRaw ? Number(dossieRaw) : null
 
     if (!usuarioId || !titulo || !secao || !idioma || !resumo) {
-      return json({ erro: 'Preencha os campos obrigatórios da submissão.' }, 400)
+      return new Response(JSON.stringify({ erro: 'Preencha os campos obrigatórios da submissão.' }), {
+        status: 400,
+        headers: { 'Content-Type': 'application/json' }
+      })
     }
 
     const usuarios = await sql`SELECT id, perfil, status FROM usuarios WHERE id = ${usuarioId} LIMIT 1`
-    if (!usuarios.length) return json({ erro: 'Usuário não encontrado.' }, 404)
-    if (usuarios[0].perfil !== 'autor') return json({ erro: 'Apenas autores(as) podem criar submissões.' }, 403)
-    if (usuarios[0].status && usuarios[0].status !== 'ativo') return json({ erro: 'O cadastro do autor não está ativo.' }, 403)
+    if (!usuarios.length) {
+      return new Response(JSON.stringify({ erro: 'Usuário não encontrado.' }), { status: 404, headers: { 'Content-Type': 'application/json' } })
+    }
+    if (usuarios[0].perfil !== 'autor') {
+      return new Response(JSON.stringify({ erro: 'Apenas autores(as) podem criar submissões.' }), { status: 403, headers: { 'Content-Type': 'application/json' } })
+    }
+    if (usuarios[0].status && usuarios[0].status !== 'ativo') {
+      return new Response(JSON.stringify({ erro: 'O cadastro do autor não está ativo.' }), { status: 403, headers: { 'Content-Type': 'application/json' } })
+    }
 
     const prazo = new Date()
     prazo.setDate(prazo.getDate() + 60)
@@ -39,10 +51,16 @@ const main = async (req) => {
       RETURNING id, titulo, status, prazo_final_avaliacao, data_submissao
     `
 
-    return json({ sucesso: true, submissao: rows[0] }, 200)
+    return new Response(JSON.stringify({ sucesso: true, submissao: rows[0] }), {
+      status: 200,
+      headers: { 'Content-Type': 'application/json' }
+    })
   } catch (erro) {
-    return json({ erro: 'Erro ao registrar submissão.', detalhe: erro.message }, 500)
+    return new Response(JSON.stringify({ erro: 'Erro ao registrar submissão.', detalhe: erro.message }), {
+      status: 500,
+      headers: { 'Content-Type': 'application/json' }
+    })
   }
 }
 
-exports.handler = wrapHttp(main)
+export const handler = wrapHttp(default)

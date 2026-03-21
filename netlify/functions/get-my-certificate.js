@@ -21,7 +21,7 @@ function getAuthenticatedUserId(req, url) {
 function safeDownloadName(name) {
   return String(name || 'certificado')
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-zA-Z0-9._-]/g, '-')
     .replace(/-+/g, '-')
 }
@@ -41,7 +41,13 @@ const main = async (req) => {
     const certificateId = Number(url.searchParams.get('id') || 0)
     if (!certificateId) return new Response('Parâmetro id é obrigatório.', { status: 400 })
 
-    const rows = await sql`SELECT id, usuario_id, titulo, blob_key, mime_type, nome_arquivo FROM certificados_privados WHERE id = ${certificateId} LIMIT 1`
+    const rows = await sql`
+      SELECT id, usuario_id, titulo, blob_key, mime_type, nome_arquivo
+      FROM certificados_privados
+      WHERE id = ${certificateId}
+      LIMIT 1
+    `
+
     if (!rows.length) return new Response('Certificado não encontrado.', { status: 404 })
 
     const cert = rows[0]
@@ -60,7 +66,6 @@ const main = async (req) => {
       }
     })
   } catch (error) {
-    console.error('get-my-certificate error:', error)
     return new Response('Erro interno ao obter certificado.', { status: 500 })
   }
 }
