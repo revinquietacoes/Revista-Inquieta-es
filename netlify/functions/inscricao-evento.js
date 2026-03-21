@@ -1,12 +1,12 @@
-import { sql, json, parseJson, getUserById, canAccess } from './_db.js'
-import { wrapHttp } from './_netlify.js'
+const { sql, json, parseJson, getUserById, canAccess } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
 async function ensureTables() {
   await sql`CREATE TABLE IF NOT EXISTS inscricoes_eventos (id BIGSERIAL PRIMARY KEY, usuario_id BIGINT NOT NULL, nome TEXT NOT NULL, email TEXT NOT NULL, telefone TEXT, instituicao TEXT, origem TEXT, orcid TEXT, atividade TEXT NOT NULL, modalidade TEXT, vinculo TEXT, observacoes TEXT, criado_em TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP, atualizado_em TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP)`
   await sql`CREATE INDEX IF NOT EXISTS idx_inscricoes_eventos_usuario_id ON inscricoes_eventos (usuario_id)`
 }
 
-export default async (req) => {
+const main = async (req) => {
   try {
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
     await ensureTables()
@@ -27,4 +27,4 @@ export default async (req) => {
   }
 }
 
-export const handler = wrapHttp(default)
+exports.handler = wrapHttp(main)

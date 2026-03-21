@@ -1,7 +1,7 @@
-import { sql } from './_db.js'
-import { wrapHttp } from './_netlify.js'
+const { sql } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
-export default async (req) => {
+const main = async (req) => {
   try {
     if (req.method !== 'POST') {
       return new Response(JSON.stringify({ erro: 'Método não permitido.' }), {
@@ -63,4 +63,4 @@ export default async (req) => {
   }
 }
 
-export const handler = wrapHttp(default)
+exports.handler = wrapHttp(main)

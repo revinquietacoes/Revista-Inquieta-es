@@ -1,4 +1,4 @@
-import { neon } from '@netlify/neon'
+const { neon } = require('@netlify/neon')
 
 const DB_URL =
   process.env.NETLIFY_DATABASE_URL_UNPOOLED ||
@@ -10,18 +10,17 @@ if (!DB_URL) {
   console.error('Nenhuma URL de banco configurada nas variáveis de ambiente.')
 }
 
-export const sql = neon(DB_URL)
-
+const sql = neon(DB_URL)
 const columnCache = new Map()
 
-export function json(data, status = 200) {
+function json(data, status = 200) {
   return new Response(JSON.stringify(data), {
     status,
     headers: { 'Content-Type': 'application/json; charset=utf-8' }
   })
 }
 
-export async function parseJson(req) {
+async function parseJson(req) {
   try {
     return await req.json()
   } catch {
@@ -29,20 +28,20 @@ export async function parseJson(req) {
   }
 }
 
-export function normalizeRole(role) {
+function normalizeRole(role) {
   const value = String(role || '').toLowerCase().trim()
   if (value === 'editor') return 'editor_adjunto'
   return value
 }
 
-export function canAccess(user, allowed) {
+function canAccess(user, allowed) {
   if (!user || !user.perfil) return false
   const perfil = normalizeRole(user.perfil)
   const allowedNormalized = allowed.map(normalizeRole)
   return allowedNormalized.includes(perfil)
 }
 
-export async function getTableColumns(tableName) {
+async function getTableColumns(tableName) {
   const key = String(tableName || '').trim().toLowerCase()
   if (!key) return new Set()
   if (columnCache.has(key)) return columnCache.get(key)
@@ -58,7 +57,7 @@ export async function getTableColumns(tableName) {
   return cols
 }
 
-export async function tableExists(tableName) {
+async function tableExists(tableName) {
   const rows = await sql`SELECT to_regclass(${`public.${String(tableName || '').trim().toLowerCase()}`}) AS reg`
   return !!rows?.[0]?.reg
 }
@@ -67,7 +66,7 @@ function selectExpr(cols, name, fallback = 'NULL') {
   return cols.has(name) ? name : `${fallback} AS ${name}`
 }
 
-export async function getUserById(id, withPassword = false) {
+async function getUserById(id, withPassword = false) {
   const userId = Number(id)
   if (!userId) return null
 
@@ -99,14 +98,13 @@ export async function getUserById(id, withPassword = false) {
     selectParts.push(selectExpr(cols, 'senha_hash'))
   }
 
-  const query = `SELECT ${selectParts.join(', ')} FROM usuarios WHERE id = $1 LIMIT 1`
-  const rows = await sql(query, [userId])
+  const rows = await sql(`SELECT ${selectParts.join(', ')} FROM usuarios WHERE id = ${userId} LIMIT 1`)
   const user = rows?.[0] || null
   if (user?.perfil) user.perfil = normalizeRole(user.perfil)
   return user
 }
 
-export async function ensureSupportTables() {
+async function ensureSupportTables() {
   await sql`CREATE TABLE IF NOT EXISTS contribuicoes_usuarios (
     usuario_id BIGINT PRIMARY KEY,
     total_submissoes INTEGER NOT NULL DEFAULT 0,
@@ -161,4 +159,16 @@ export async function ensureSupportTables() {
   await sql`CREATE INDEX IF NOT EXISTS idx_certificados_privados_usuario_id ON certificados_privados (usuario_id)`
   await sql`CREATE INDEX IF NOT EXISTS idx_mensagens_internas_conversa ON mensagens_internas (remetente_id, destinatario_id, criado_em DESC)`
   await sql`CREATE INDEX IF NOT EXISTS idx_arquivos_publicacao_submissao_id ON arquivos_publicacao (submissao_id)`
+}
+
+module.exports = {
+  sql,
+  json,
+  parseJson,
+  normalizeRole,
+  canAccess,
+  getTableColumns,
+  tableExists,
+  getUserById,
+  ensureSupportTables
 }

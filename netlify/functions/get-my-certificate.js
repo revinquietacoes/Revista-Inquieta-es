@@ -1,6 +1,6 @@
-import { getStore } from '@netlify/blobs'
-import { sql, getUserById, ensureSupportTables } from './_db.js'
-import { wrapHttp } from './_netlify.js'
+const { getStore } = require('@netlify/blobs')
+const { sql, getUserById, ensureSupportTables } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
 const certificatesStore = getStore('certificados-usuarios')
 
@@ -22,7 +22,7 @@ function safeDownloadName(name) {
     .replace(/-+/g, '-')
 }
 
-export default async (req) => {
+const main = async (req) => {
   try {
     if (req.method !== 'GET') return new Response('Método não permitido.', { status: 405 })
     await ensureSupportTables()
@@ -67,4 +67,4 @@ export default async (req) => {
   }
 }
 
-export const handler = wrapHttp(default)
+exports.handler = wrapHttp(main)

@@ -1,6 +1,6 @@
-import { getStore } from '@netlify/blobs'
-import { sql, json, getUserById } from './_db.js'
-import { wrapHttp } from './_netlify.js'
+const { getStore } = require('@netlify/blobs')
+const { sql, json, getUserById } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
 async function ensureTables() {
   await sql`CREATE TABLE IF NOT EXISTS certificados_privados (id BIGSERIAL PRIMARY KEY, usuario_id BIGINT NOT NULL, enviado_por_usuario_id BIGINT, titulo TEXT NOT NULL, descricao TEXT, tipo TEXT NOT NULL DEFAULT 'evento', categoria TEXT NOT NULL DEFAULT 'certificado_evento', blob_key TEXT NOT NULL, nome_arquivo TEXT NOT NULL, mime_type TEXT NOT NULL DEFAULT 'application/pdf', tamanho_bytes BIGINT, criado_em TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP)`
@@ -14,7 +14,7 @@ function formatCategoria(cat) {
   return { certificado_evento: 'Certificado de evento', certificado_parecer: 'Certificado de parecer', certificado_equipe: 'Certificado de equipe editorial' }[cat] || cat
 }
 
-export default async (req) => {
+const main = async (req) => {
   try {
     await ensureTables()
     const store = getStore('certificados-usuarios')
@@ -47,4 +47,4 @@ export default async (req) => {
   }
 }
 
-export const handler = wrapHttp(default)
+exports.handler = wrapHttp(main)

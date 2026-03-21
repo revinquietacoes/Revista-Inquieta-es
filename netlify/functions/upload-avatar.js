@@ -1,6 +1,6 @@
-import { getStore } from '@netlify/blobs'
-import { sql } from './_db.js'
-import { wrapHttp } from './_netlify.js'
+const { getStore } = require('@netlify/blobs')
+const { sql } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
 const store = getStore('revista-arquivos')
 
@@ -8,7 +8,7 @@ function sanitizarNome(nome = '') {
   return String(nome).normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-zA-Z0-9._-]+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').toLowerCase()
 }
 
-export default async (req) => {
+const main = async (req) => {
   try {
     if (req.method !== 'POST') return new Response(JSON.stringify({ erro: 'Método não permitido.' }), { status: 405, headers: { 'Content-Type': 'application/json' } })
     const form = await req.formData()
@@ -50,4 +50,4 @@ export default async (req) => {
   }
 }
 
-export const handler = wrapHttp(default)
+exports.handler = wrapHttp(main)

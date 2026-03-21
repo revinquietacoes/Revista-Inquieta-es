@@ -1,6 +1,6 @@
-import { getStore } from '@netlify/blobs'
-import { sql, json, getUserById, ensureSupportTables, canAccess } from './_db.js'
-import { wrapHttp } from './_netlify.js'
+const { getStore } = require('@netlify/blobs')
+const { sql, json, getUserById, ensureSupportTables, canAccess } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
 const certificatesStore = getStore('certificados-usuarios')
 
@@ -28,7 +28,7 @@ function mapCategory(tipo) {
   return 'certificado_evento'
 }
 
-export default async (req) => {
+const main = async (req) => {
   try {
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
     await ensureSupportTables()
@@ -86,4 +86,4 @@ export default async (req) => {
   }
 }
 
-export const handler = wrapHttp(default)
+exports.handler = wrapHttp(main)

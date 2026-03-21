@@ -1,11 +1,11 @@
-import { json, getUserById } from './_db.js'
-import { wrapHttp } from './_netlify.js'
+const { json, getUserById } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
 function getHeader(headers, name) {
   return headers?.get?.(name) || headers?.get?.(name.toLowerCase()) || headers?.[name] || headers?.[name.toLowerCase()] || null
 }
 
-export default async (req) => {
+const main = async (req) => {
   try {
     if (req.method !== 'GET') return json({ erro: 'Método não permitido.' }, 405)
 
@@ -36,4 +36,4 @@ export default async (req) => {
   }
 }
 
-export const handler = wrapHttp(default)
+exports.handler = wrapHttp(main)

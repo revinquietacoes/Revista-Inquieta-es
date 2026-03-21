@@ -1,71 +1,55 @@
-import bcrypt from 'bcryptjs'
-import { sql, json, getTableColumns, normalizeRole } from './_db.js'
-import { wrapHttp } from './_netlify.js'
+const bcrypt = require('bcryptjs')
+const { sql, json, getTableColumns, normalizeRole } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
-export default async (req) => {
+const main = async (req) => {
   try {
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
 
-    const body = await req.json()
+    const body = await req.json().catch(() => ({}))
     const {
       nome, email, senha, perfil, instituicao, orcid, lattes,
       origem, telefone, foto_perfil_url, consentimento_foto_publica,
       receber_noticias_email
     } = body
 
-    if (!nome || !email || !senha || !perfil) return json({ erro: 'Preencha nome, e-mail, senha e perfil.' }, 400)
+    if (!nome || !email || !senha || !perfil) {
+      return json({ erro: 'Preencha nome, e-mail, senha e perfil.' }, 400)
+    }
 
     const perfilNormalizado = normalizeRole(perfil)
     const perfisPermitidos = ['autor', 'parecerista', 'editor_adjunto']
-    if (!perfisPermitidos.includes(perfilNormalizado)) return json({ erro: 'Perfil inválido.' }, 400)
+    if (!perfisPermitidos.includes(perfilNormalizado)) {
+      return json({ erro: 'Perfil inválido.' }, 400)
+    }
 
     const existente = await sql`SELECT id FROM usuarios WHERE email = ${email} LIMIT 1`
-    if (existente.length > 0) return json({ erro: 'Já existe um usuário com este e-mail.' }, 409)
+    if (existente.length > 0) {
+      return json({ erro: 'Já existe um usuário com este e-mail.' }, 409)
+    }
 
     const senhaHash = await bcrypt.hash(senha, 10)
     const statusInicial = perfilNormalizado === 'autor' ? 'ativo' : 'pendente'
     const cols = await getTableColumns('usuarios')
 
-    const inserted = await sql(`
-      INSERT INTO usuarios (
-        nome, email, senha_hash, perfil,
-        ${cols.has('instituicao') ? 'instituicao,' : ''}
-        ${cols.has('orcid') ? 'orcid,' : ''}
-        ${cols.has('lattes') ? 'lattes,' : ''}
-        ${cols.has('origem') ? 'origem,' : ''}
-        ${cols.has('telefone') ? 'telefone,' : ''}
-        ${cols.has('foto_perfil_url') ? 'foto_perfil_url,' : ''}
-        ${cols.has('foto_perfil_aprovada') ? 'foto_perfil_aprovada,' : ''}
-        ${cols.has('consentimento_foto_publica') ? 'consentimento_foto_publica,' : ''}
-        ${cols.has('receber_noticias_email') ? 'receber_noticias_email,' : ''}
-        ${cols.has('status') ? 'status' : ''}
-      ) VALUES (
-        $1, $2, $3, $4,
-        ${cols.has('instituicao') ? '$5,' : ''}
-        ${cols.has('orcid') ? '$6,' : ''}
-        ${cols.has('lattes') ? '$7,' : ''}
-        ${cols.has('origem') ? '$8,' : ''}
-        ${cols.has('telefone') ? '$9,' : ''}
-        ${cols.has('foto_perfil_url') ? '$10,' : ''}
-        ${cols.has('foto_perfil_aprovada') ? '$11,' : ''}
-        ${cols.has('consentimento_foto_publica') ? '$12,' : ''}
-        ${cols.has('receber_noticias_email') ? '$13,' : ''}
-        ${cols.has('status') ? '$14' : ''}
-      )
-      RETURNING id, nome, email, perfil, ${cols.has('status') ? 'status' : "'ativo'::text AS status"}
-    `.replace(/,\s*\)/g, ')').replace(/\(\s*,/g, '('), [
-      nome, email, senhaHash, perfilNormalizado,
-      instituicao || null,
-      orcid || null,
-      lattes || null,
-      origem || null,
-      telefone || null,
-      foto_perfil_url || 'assets/avatares/avatar-padrao.png',
-      false,
-      Boolean(consentimento_foto_publica),
-      Boolean(receber_noticias_email),
-      statusInicial
-    ])
+    const campos = ['nome', 'email', 'senha_hash', 'perfil']
+    const valores = [nome, email, senhaHash, perfilNormalizado]
+
+    if (cols.has('instituicao')) { campos.push('instituicao'); valores.push(instituicao || null) }
+    if (cols.has('orcid')) { campos.push('orcid'); valores.push(orcid || null) }
+    if (cols.has('lattes')) { campos.push('lattes'); valores.push(lattes || null) }
+    if (cols.has('origem')) { campos.push('origem'); valores.push(origem || null) }
+    if (cols.has('telefone')) { campos.push('telefone'); valores.push(telefone || null) }
+    if (cols.has('foto_perfil_url')) { campos.push('foto_perfil_url'); valores.push(foto_perfil_url || 'assets/avatares/avatar-padrao.png') }
+    if (cols.has('foto_perfil_aprovada')) { campos.push('foto_perfil_aprovada'); valores.push(false) }
+    if (cols.has('consentimento_foto_publica')) { campos.push('consentimento_foto_publica'); valores.push(Boolean(consentimento_foto_publica)) }
+    if (cols.has('receber_noticias_email')) { campos.push('receber_noticias_email'); valores.push(Boolean(receber_noticias_email)) }
+    if (cols.has('status')) { campos.push('status'); valores.push(statusInicial) }
+
+    const placeholders = valores.map((_, i) => `$${i + 1}`).join(', ')
+    const returning = `id, nome, email, perfil, ${cols.has('status') ? 'status' : "'ativo'::text AS status"}`
+    const query = `INSERT INTO usuarios (${campos.join(', ')}) VALUES (${placeholders}) RETURNING ${returning}`
+    const inserted = await sql(query, valores)
 
     return json({
       sucesso: true,
@@ -79,4 +63,4 @@ export default async (req) => {
   }
 }
 
-export const handler = wrapHttp(default)
+exports.handler = wrapHttp(main)

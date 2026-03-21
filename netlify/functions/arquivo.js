@@ -1,10 +1,10 @@
-import { getStore } from '@netlify/blobs'
-import { sql } from './_db.js'
-import { wrapHttp } from './_netlify.js'
+const { getStore } = require('@netlify/blobs')
+const { sql } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
 const store = getStore('revista-arquivos')
 
-export default async (req) => {
+const main = async (req) => {
   try {
     const url = new URL(req.url)
     const key = url.searchParams.get('key')
@@ -42,4 +42,4 @@ export default async (req) => {
   }
 }
 
-export const handler = wrapHttp(default)
+exports.handler = wrapHttp(main)
