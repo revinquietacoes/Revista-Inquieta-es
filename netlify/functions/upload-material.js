@@ -105,12 +105,30 @@ export default async (req) => {
       RETURNING id, url_acesso, blob_key
     `
 
-    if (submissaoId) {
-      if (categoria === 'manuscrito') {
-        await sql`INSERT INTO arquivos_submissao (submissao_id, nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria) VALUES (${submissaoId}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${urlAcesso}, 'principal')`
-      }
-      if (categoria === 'devolutiva') {
-        await sql`INSERT INTO arquivos_avaliacao (nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria) VALUES (${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${urlAcesso}, 'devolutiva')`
+    if (submissaoId && categoria === 'manuscrito') {
+      await sql`INSERT INTO arquivos_submissao (submissao_id, nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria) VALUES (${submissaoId}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${urlAcesso}, 'principal')`
+    }
+
+    // Para devolutivas de parecer, o vínculo principal já fica salvo em arquivos_publicacao
+    // e, depois, em avaliacoes.devolutiva_doc_url. Evita depender de esquemas opcionais.
+    if (submissaoId && categoria === 'devolutiva') {
+      try {
+        const tableCheck = await sql`SELECT to_regclass('public.arquivos_avaliacao') AS nome`
+        if (tableCheck?.[0]?.nome) {
+          const colCheck = await sql`
+            SELECT column_name
+            FROM information_schema.columns
+            WHERE table_schema = 'public' AND table_name = 'arquivos_avaliacao'`
+          const cols = new Set((colCheck || []).map(r => r.column_name))
+
+          if (cols.has('submissao_id')) {
+            await sql`INSERT INTO arquivos_avaliacao (submissao_id, nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria) VALUES (${submissaoId}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${urlAcesso}, 'devolutiva')`
+          } else {
+            await sql`INSERT INTO arquivos_avaliacao (nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria) VALUES (${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${urlAcesso}, 'devolutiva')`
+          }
+        }
+      } catch (e) {
+        console.error('Falha ao registrar devolutiva em arquivos_avaliacao:', e)
       }
     }
 
