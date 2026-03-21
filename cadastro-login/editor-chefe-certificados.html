@@ -28,15 +28,6 @@
 <footer class="page-footer" id="rodape-gestao-certificados"></footer>
 </div>
 <script>
-async function fileToBase64(file){
-  const buffer=await file.arrayBuffer();
-  let binary='';
-  const bytes=new Uint8Array(buffer);
-  const chunkSize=0x8000;
-  for(let i=0;i<bytes.length;i+=chunkSize){ binary += String.fromCharCode(...bytes.subarray(i,i+chunkSize)); }
-  return btoa(binary);
-}
-
 document.addEventListener('DOMContentLoaded',async()=>{
   const user=AppPanel.requireRole(['editor_chefe']);
   if(!user)return;
@@ -76,22 +67,13 @@ document.addEventListener('DOMContentLoaded',async()=>{
     const file=document.getElementById('cert-arquivo').files[0];
     if(!file){msg.textContent='Selecione um arquivo PDF.';msg.classList.add('err');return;}
     try{
-      const payload={
-        target_user_id:Number(hidden.value),
-        certificate_type:document.getElementById('cert-tipo').value,
-        title:document.getElementById('cert-titulo').value.trim(),
-        description:document.getElementById('cert-descricao').value.trim(),
-        file_name:file.name,
-        mime_type:file.type || 'application/pdf',
-        file_base64:await fileToBase64(file)
-      };
-      const res=await fetch('/.netlify/functions/upload-certificado',{
-        method:'POST',
-        headers:{ 'Content-Type':'application/json', ...AppPanel.currentUserHeaders() },
-        body:JSON.stringify(payload)
-      });
-      const data=await res.json();
-      if(!res.ok) throw new Error(data.error||'Não foi possível enviar o certificado.');
+      const fd = new FormData();
+      fd.append('target_user_id', String(Number(hidden.value)));
+      fd.append('certificate_type', document.getElementById('cert-tipo').value);
+      fd.append('title', document.getElementById('cert-titulo').value.trim());
+      fd.append('description', document.getElementById('cert-descricao').value.trim());
+      fd.append('arquivo', file);
+      const data = await AppPanel.authedFormFetch('/.netlify/functions/upload-certificado', fd);
       msg.textContent='Certificado enviado com sucesso.';
       msg.classList.add('ok');
       ev.target.reset();

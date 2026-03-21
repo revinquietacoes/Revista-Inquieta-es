@@ -235,9 +235,7 @@
             up.append('usuario_id', user.id);
             up.append('categoria', 'outro');
             up.append('arquivo', arq);
-            const r = await fetch('/.netlify/functions/upload-material', { method:'POST', body:up });
-            const j = await r.json();
-            if (!r.ok) throw new Error(j.erro || j.detalhe || 'Falha no upload do anexo.');
+            const j = await AppPanel.authedFormFetch('/.netlify/functions/upload-material', up);
             anexoUrl = j.arquivo.url_acesso;
             anexoNome = arq.name;
             anexoMime = arq.type;

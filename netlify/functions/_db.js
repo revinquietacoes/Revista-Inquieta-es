@@ -28,6 +28,14 @@ async function parseJson(req) {
   }
 }
 
+function getHeader(headers, name) {
+  if (!headers) return null
+  if (typeof headers.get === 'function') {
+    return headers.get(name) || headers.get(name.toLowerCase()) || null
+  }
+  return headers[name] || headers[name.toLowerCase()] || null
+}
+
 function normalizeRole(role) {
   const value = String(role || '').toLowerCase().trim()
   if (value === 'editor') return 'editor_adjunto'
@@ -105,6 +113,32 @@ async function getUserById(id, withPassword = false) {
   return user
 }
 
+function getAuthenticatedUserId(req, url = null) {
+  const headerId = getHeader(req?.headers, 'x-user-id') || getHeader(req?.headers, 'X-User-Id')
+  const queryId = url?.searchParams?.get?.('user_id') || null
+  return Number(headerId || queryId || 0)
+}
+
+async function requireAuthenticatedUser(req, options = {}) {
+  const { allowQuery = false } = options
+  const url = allowQuery ? new URL(req.url) : null
+  const userId = getAuthenticatedUserId(req, url)
+  if (!userId) {
+    return { error: json({ erro: 'Usuário não autenticado.' }, 401) }
+  }
+
+  const user = await getUserById(userId)
+  if (!user) {
+    return { error: json({ erro: 'Usuário não encontrado.' }, 404) }
+  }
+
+  if (user.status && user.status !== 'ativo') {
+    return { error: json({ erro: 'Usuário inativo.' }, 403) }
+  }
+
+  return { user }
+}
+
 async function ensureSupportTables() {
   await sql`CREATE TABLE IF NOT EXISTS contribuicoes_usuarios (
     usuario_id BIGINT PRIMARY KEY,
@@ -166,6 +200,9 @@ module.exports = {
   sql,
   json,
   parseJson,
+  getHeader,
+  getAuthenticatedUserId,
+  requireAuthenticatedUser,
   normalizeRole,
   canAccess,
   getTableColumns,

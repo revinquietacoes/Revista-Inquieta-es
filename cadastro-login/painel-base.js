@@ -50,6 +50,16 @@ function currentUserHeaders(){
   const user = getLoggedUser();
   return user?.id ? { 'x-user-id': String(user.id) } : {};
 }
+
+async function authedFormFetch(url, formData, extra = {}) {
+  const headers = { ...currentUserHeaders(), ...(extra.headers || {}) };
+  const res = await fetch(url, { method: extra.method || 'POST', headers, body: formData });
+  const raw = await res.text();
+  let data = {};
+  try { data = raw ? JSON.parse(raw) : {}; } catch { if (!res.ok) throw new Error(raw || 'Erro ao enviar dados.'); return raw; }
+  if (!res.ok) throw new Error(data.detalhe || data.erro || 'Erro ao enviar dados.');
+  return data;
+}
 async function apiData(action, extra = {}) {
   const user = getLoggedUser();
   const res = await fetch(API_DATA, { method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({ action, userId:user?.id, ...extra }) });
@@ -101,4 +111,4 @@ function injectCommonButtons(){
 }
 async function pingPresence(){ try{ await apiAction('presence_ping'); }catch(e){} }
 document.addEventListener('DOMContentLoaded',()=>{ bindLogout(); injectCommonButtons(); const foot=document.querySelector('.page-footer'); if(foot) foot.innerHTML=footerHtml(); pingPresence(); setInterval(pingPresence, 30000); window.addEventListener('pagehide', ()=>{ notifyPresenceLeave(); }); });
-window.AppPanel={getLoggedUser,setLoggedUser,apiData,apiAction,requireRole,applyUserIdentity,formatRole,resolveAsset,userChipHtml,photoAllowed,currentUserHeaders,escapeHtml,notifyPresenceLeave,presenceBadgeHtml,formatPresenceShort,formatLastSeen};
+window.AppPanel={getLoggedUser,setLoggedUser,apiData,apiAction,authedFormFetch,requireRole,applyUserIdentity,formatRole,resolveAsset,userChipHtml,photoAllowed,currentUserHeaders,escapeHtml,notifyPresenceLeave,presenceBadgeHtml,formatPresenceShort,formatLastSeen};

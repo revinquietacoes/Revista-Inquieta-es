@@ -1,5 +1,5 @@
 const { getStore } = require('@netlify/blobs')
-const { sql, json } = require('./_db')
+const { sql, json, ensureSupportTables, requireAuthenticatedUser, canAccess } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
 const store = getStore('revista-arquivos')
@@ -20,6 +20,12 @@ const main = async (req) => {
       return json({ erro: 'Método não permitido.' }, 405)
     }
 
+    await ensureSupportTables()
+
+    const auth = await requireAuthenticatedUser(req)
+    if (auth.error) return auth.error
+    const actor = auth.user
+
     const form = await req.formData()
     const usuarioId = Number(form.get('usuario_id') || 0)
     const submissaoId = form.get('submissao_id') ? Number(form.get('submissao_id')) : null
@@ -28,6 +34,12 @@ const main = async (req) => {
 
     if (!usuarioId || !arquivo || typeof arquivo === 'string') {
       return json({ erro: 'Dados obrigatórios ausentes.' }, 400)
+    }
+
+    const isOwnUpload = Number(actor.id) === usuarioId
+    const canUploadForOthers = canAccess(actor, ['editor_chefe', 'editor_adjunto'])
+    if (!isOwnUpload && !canUploadForOthers) {
+      return json({ erro: 'Sem permissão para enviar arquivos em nome de outro usuário.' }, 403)
     }
 
     const permitidos = [
@@ -55,6 +67,7 @@ const main = async (req) => {
     await store.set(blobKey, bytes, {
       metadata: {
         usuario_id: String(usuarioId),
+        uploaded_by: String(actor.id),
         submissao_id: submissaoId ? String(submissaoId) : '',
         categoria,
         nome_original: arquivo.name,

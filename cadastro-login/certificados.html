@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
   try{
     const res=await fetch('/.netlify/functions/list-my-certificates',{ headers:{ ...AppPanel.currentUserHeaders() } });
     const data=await res.json();
-    if(!res.ok) throw new Error(data.error||'Não foi possível carregar seus certificados.');
+    if(!res.ok) throw new Error(data.erro||data.detalhe||'Não foi possível carregar seus certificados.');
     if(!Array.isArray(data) || !data.length){
       lista.innerHTML='<div class="empty-state" id="estado-vazio-certificados">Nenhum certificado foi disponibilizado até o momento.</div>';
       return;
