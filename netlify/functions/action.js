@@ -20,6 +20,14 @@ async function getTableColumns(tableName) {
   return new Set((rows || []).map((row) => row.column_name))
 }
 
+
+async function ensureEditorialColumnsCompatibility() {
+  await sql`ALTER TABLE submissoes ADD COLUMN IF NOT EXISTS editor_responsavel_id BIGINT`
+  await sql`ALTER TABLE submissoes ADD COLUMN IF NOT EXISTS editor_adjunto_id BIGINT`
+  await sql`ALTER TABLE dossies_tematicos ADD COLUMN IF NOT EXISTS editor_responsavel_id BIGINT`
+  await sql`ALTER TABLE dossies_tematicos ADD COLUMN IF NOT EXISTS editor_adjunto_id BIGINT`
+}
+
 async function refreshSubmissionStatus(submissaoId) {
   if (!submissaoId) return
   const rows = await sql`
@@ -194,6 +202,7 @@ async function markDesignacaoStatus(designacaoId, status) {
 const main = async (req) => {
   try {
     await ensureSupportTables()
+    await ensureEditorialColumnsCompatibility()
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
     const body = await parseJson(req)
     const { action, userId } = body
@@ -250,7 +259,16 @@ const main = async (req) => {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       const { titulo, descricao, editorResponsavelId, dataAbertura, dataFechamento } = body
       if (!titulo || !descricao || !editorResponsavelId) return json({ erro: 'Preencha título, descrição e editor responsável.' }, 400)
-      await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_responsavel_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+      const dossieCols = await getTableColumns('dossies_tematicos')
+      if (dossieCols.has('editor_responsavel_id') && dossieCols.has('editor_adjunto_id')) {
+        await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_responsavel_id, editor_adjunto_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+      } else if (dossieCols.has('editor_responsavel_id')) {
+        await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_responsavel_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+      } else if (dossieCols.has('editor_adjunto_id')) {
+        await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_adjunto_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+      } else {
+        await sql`INSERT INTO dossies_tematicos (titulo, descricao, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+      }
       return json({ sucesso: true })
     }
 
@@ -267,7 +285,16 @@ const main = async (req) => {
         LIMIT 1`
       if (existing.length) return json({ erro: 'Este parecerista já possui uma designação ativa para esta submissão.' }, 409)
       await sql`INSERT INTO designacoes_avaliacao (submissao_id, parecerista_id, editor_id, status, prazo_parecer, mensagem_convite) VALUES (${submissaoId}, ${pareceristaId}, ${user.id}, 'convite_enviado', ${prazoParecer || null}, ${mensagemConvite || null})`
-      await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_responsavel_id = COALESCE(editor_responsavel_id, ${user.id}), editor_adjunto_id = CASE WHEN ${user.perfil} = 'editor_adjunto' THEN ${user.id} ELSE editor_adjunto_id END WHERE id = ${submissaoId}`
+      const submissaoCols = await getTableColumns('submissoes')
+      if (submissaoCols.has('editor_responsavel_id') && submissaoCols.has('editor_adjunto_id')) {
+        await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_responsavel_id = COALESCE(editor_responsavel_id, ${user.id}), editor_adjunto_id = CASE WHEN ${user.perfil} = 'editor_adjunto' THEN ${user.id} ELSE COALESCE(editor_adjunto_id, editor_responsavel_id, ${user.id}) END WHERE id = ${submissaoId}`
+      } else if (submissaoCols.has('editor_responsavel_id')) {
+        await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_responsavel_id = COALESCE(editor_responsavel_id, ${user.id}) WHERE id = ${submissaoId}`
+      } else if (submissaoCols.has('editor_adjunto_id')) {
+        await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_adjunto_id = CASE WHEN ${user.perfil} = 'editor_adjunto' THEN ${user.id} ELSE COALESCE(editor_adjunto_id, ${user.id}) END WHERE id = ${submissaoId}`
+      } else {
+        await sql`UPDATE submissoes SET status = 'alocada_sem_aceite' WHERE id = ${submissaoId}`
+      }
       return json({ sucesso: true })
     }
 
@@ -346,7 +373,17 @@ const main = async (req) => {
       const { autorId, titulo, secao, idioma, resumo, palavrasChave, dossieId } = body
       if (!titulo || !secao || !resumo) return json({ erro: 'Preencha título, seção e resumo.' }, 400)
       const autorFinal = autorId ? Number(autorId) : user.id
-      const created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.perfil === 'editor_chefe' ? user.id : null}, ${user.perfil === 'editor_adjunto' ? user.id : null}) RETURNING id`
+      const submissaoCols = await getTableColumns('submissoes')
+      let created
+      if (submissaoCols.has('editor_responsavel_id') && submissaoCols.has('editor_adjunto_id')) {
+        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.perfil === 'editor_chefe' ? user.id : null}, ${user.perfil === 'editor_adjunto' ? user.id : null}) RETURNING id`
+      } else if (submissaoCols.has('editor_responsavel_id')) {
+        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
+      } else if (submissaoCols.has('editor_adjunto_id')) {
+        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
+      } else {
+        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido') RETURNING id`
+      }
       return json({ sucesso: true, submissaoId: created[0]?.id })
     }
 

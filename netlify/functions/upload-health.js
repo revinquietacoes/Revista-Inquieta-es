@@ -1,15 +1,16 @@
 const { makeStore } = require('./_blobs')
-const { json, ensureSupportTables, getAuthenticatedUserId, getUserById } = require('./_db')
+const { json, ensureSupportTables } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
-const main = async (req) => {
+const main = async () => {
   try {
     await ensureSupportTables()
 
-    const actorId = getAuthenticatedUserId(req)
-    const actor = actorId ? await getUserById(actorId) : null
+    const siteID = (process.env.NETLIFY_BLOBS_SITE_ID || process.env.SITE_ID || '').trim()
+    const token = (process.env.NETLIFY_BLOBS_TOKEN || '').trim()
 
     const stores = {}
+
     for (const name of ['revista-arquivos', 'certificados-usuarios']) {
       try {
         const store = makeStore(name)
@@ -24,12 +25,13 @@ const main = async (req) => {
 
     return json({
       sucesso: true,
-      actor,
       stores,
-      env: {
-        has_database: !!(process.env.NETLIFY_DATABASE_URL_UNPOOLED || process.env.DATABASE_URL || process.env.NETLIFY_DATABASE_URL),
-        has_site_id: !!(process.env.NETLIFY_BLOBS_SITE_ID || process.env.SITE_ID),
-        has_blob_token: !!process.env.NETLIFY_BLOBS_TOKEN
+      debug: {
+        site_id_present: !!siteID,
+        site_id_value: siteID,
+        token_present: !!token,
+        token_prefix: token ? `${token.slice(0, 4)}...` : null,
+        token_length: token ? token.length : 0
       }
     })
   } catch (e) {
