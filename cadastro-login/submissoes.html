@@ -12,6 +12,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   const autorWrap = document.getElementById('autor-select-wrap');
   const autorSelect = document.getElementById('autorId');
   const submitBtn = form.querySelector('button[type="submit"]');
+      function authHeadersForFormData() {
+        const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
+        delete headers['Content-Type'];
+        delete headers['content-type'];
+        return headers;
+      }
+
 
   function setMessage(text, type='') {
     msg.className = 'form-message';
@@ -93,7 +100,7 @@ document.addEventListener('DOMContentLoaded', async () => {
           envio.append('consentimento_publicacao_foto', 'sim');
         }
 
-        const res = await fetch('/.netlify/functions/submissao', { method: 'POST', headers: AppPanel.currentUserHeaders(), body: envio });
+        const res = await fetch('/.netlify/functions/submissao', { method: 'POST', headers: authHeadersForFormData(), body: envio });
         const raw = await res.text();
         let data = {};
         try { data = raw ? JSON.parse(raw) : {}; } catch { throw new Error(raw || 'Resposta inválida ao registrar submissão.'); }
@@ -115,7 +122,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         up.append('submissao_id', String(submissaoId));
         up.append('categoria', 'manuscrito');
         up.append('arquivo', arquivoPrincipal);
-        const r1 = await fetch('/.netlify/functions/upload-material', { method: 'POST', headers: AppPanel.currentUserHeaders(), body: up });
+        const r1 = await fetch('/.netlify/functions/upload-material', { method: 'POST', headers: authHeadersForFormData(), body: up });
         const raw1 = await r1.text();
         let j1 = {};
         try { j1 = raw1 ? JSON.parse(raw1) : {}; } catch { throw new Error(raw1 || 'Falha ao enviar o arquivo principal.'); }
@@ -128,7 +135,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         up2.append('usuario_id', user.perfil === 'autor' ? String(user.id) : String(payload.autorId || user.id));
         up2.append('arquivo', fotoPerfil);
         up2.append('consentimento', document.getElementById('consentimento-foto').checked ? 'true' : 'false');
-        const r2 = await fetch('/.netlify/functions/upload-avatar', { method: 'POST', headers: AppPanel.currentUserHeaders(), body: up2 });
+        const r2 = await fetch('/.netlify/functions/upload-avatar', { method: 'POST', headers: authHeadersForFormData(), body: up2 });
         const raw2 = await r2.text();
         let j2 = {};
         try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { throw new Error(raw2 || 'Falha ao enviar a foto de perfil.'); }

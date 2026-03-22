@@ -1,1 +1,276 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Perfil</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Perfil</h1><p>Aqui você consulta e edita seus dados cadastrais e sua foto de perfil.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="javascript:history.back()">Voltar</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><div class="content-grid"><section class="panel"><div class="panel-head"><h2>Dados cadastrais</h2></div><form id="form-perfil"><div class="form-grid"><div class="field full"><label>Nome</label><input name="nome" required></div><div class="field"><label>E-mail</label><input name="email" disabled></div><div class="field"><label>Perfil</label><input name="perfil" disabled></div><div class="field"><label>Instituição</label><input name="instituicao"></div><div class="field"><label>ORCID</label><input name="orcid"></div><div class="field full"><label>Lattes</label><input name="lattes"></div><div class="field"><label>Origem</label><input name="origem"></div><div class="field"><label>Telefone</label><input name="telefone"></div><div class="field full checkbox-line"><input type="checkbox" id="receber_noticias_email" name="receber_noticias_email"><label for="receber_noticias_email">Autorizo o envio de notícias e chamadas da revista por e-mail.</label></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Salvar perfil</button></div><div class="form-message" id="msg-perfil"></div></form></section><aside class="panel"><div class="panel-head"><h2>Foto de perfil</h2></div><div class="profile-chip"><img data-avatar-user alt="Foto atual"><div><strong data-user-name></strong><div class="helper" data-user-role></div></div></div><p class="helper">Ao enviar uma nova foto, a imagem anterior deixa de ficar armazenada. A publicação da nova foto depende de aprovação editorial e do seu consentimento.</p><form id="form-avatar"><div class="form-grid"><div class="field full"><label>Nova foto</label><input name="arquivo" type="file" accept=".png,.jpg,.jpeg,.webp" required></div><div class="field full checkbox-line"><input type="checkbox" id="consentimento" name="consentimento" value="true" required><label for="consentimento">Autorizo a publicação da minha foto no portal da revista.</label></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Enviar nova foto</button></div><div class="form-message" id="msg-avatar"></div></form></aside></div><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',async()=>{const user=AppPanel.requireRole(['autor','parecerista','editor_adjunto','editor_chefe']);if(!user)return;const data=await AppPanel.apiData('me');const u=data.usuario;const form=document.getElementById('form-perfil');['nome','email','perfil','instituicao','orcid','lattes','origem','telefone'].forEach(k=>{if(form.elements[k]) form.elements[k].value=u[k]||''});form.elements['perfil'].value=AppPanel.formatRole(u.perfil);form.elements['receber_noticias_email'].checked=!!u.receber_noticias_email;form.addEventListener('submit',async(e)=>{e.preventDefault();const fd=new FormData(form);const payload=Object.fromEntries(fd.entries());payload.receber_noticias_email=form.elements['receber_noticias_email'].checked;const msg=document.getElementById('msg-perfil');msg.className='form-message';try{const res=await AppPanel.apiAction('update_profile',payload);AppPanel.applyUserIdentity(res.usuario);msg.textContent='Perfil atualizado com sucesso.';msg.classList.add('ok');}catch(err){msg.textContent=err.message;msg.classList.add('err')}});document.getElementById('form-avatar').addEventListener('submit',async(e)=>{e.preventDefault();const fd=new FormData(e.target);fd.set('usuario_id',String(u.id));fd.set('consentimento', document.getElementById('consentimento').checked ? 'true':'false');const msg=document.getElementById('msg-avatar');msg.className='form-message';try{const data=await AppPanel.authedFormFetch('/.netlify/functions/upload-avatar',fd);const novo=await AppPanel.apiData('me');AppPanel.setLoggedUser(novo.usuario);AppPanel.applyUserIdentity(novo.usuario);msg.textContent=data.mensagem||'Foto enviada.';msg.classList.add('ok');e.target.reset();}catch(err){msg.textContent=err.message||'Erro ao enviar foto.';msg.classList.add('err')}})})</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Perfil</title>
+
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+</head>
+
+<body>
+
+  <div class="page-shell">
+
+    <!-- HEADER -->
+    <header class="topbar">
+      <div class="brand-wrap">
+
+        <div class="avatar-box">
+          <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+          <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+        </div>
+
+        <div class="brand-copy">
+          <h1>Perfil</h1>
+          <p>Aqui você consulta e edita seus dados cadastrais e sua foto de perfil.</p>
+        </div>
+
+      </div>
+
+      <div class="actions-row">
+        <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+        <button class="btn btn-soft" data-action="logout">Sair</button>
+      </div>
+    </header>
+
+    <!-- CONTEÚDO -->
+    <div class="content-grid">
+
+      <!-- FORM PERFIL -->
+      <section class="panel">
+        <div class="panel-head">
+          <h2>Dados cadastrais</h2>
+        </div>
+
+        <form id="form-perfil">
+          <div class="form-grid">
+
+            <div class="field full">
+              <label>Nome</label>
+              <input name="nome" required>
+            </div>
+
+            <div class="field">
+              <label>E-mail</label>
+              <input name="email" disabled>
+            </div>
+
+            <div class="field">
+              <label>Perfil</label>
+              <input name="perfil" disabled>
+            </div>
+
+            <div class="field">
+              <label>Instituição</label>
+              <input name="instituicao">
+            </div>
+
+            <div class="field">
+              <label>ORCID</label>
+              <input name="orcid">
+            </div>
+
+            <div class="field full">
+              <label>Lattes</label>
+              <input name="lattes">
+            </div>
+
+            <div class="field">
+              <label>Origem</label>
+              <input name="origem">
+            </div>
+
+            <div class="field">
+              <label>Telefone</label>
+              <input name="telefone">
+            </div>
+
+            <div class="field full checkbox-line">
+              <input type="checkbox" id="receber_noticias_email" name="receber_noticias_email">
+              <label for="receber_noticias_email">
+                Autorizo o envio de notícias e chamadas da revista por e-mail.
+              </label>
+            </div>
+
+          </div>
+
+          <div class="actions-row">
+            <button class="btn btn-primary" type="submit">Salvar perfil</button>
+          </div>
+
+          <div class="form-message" id="msg-perfil"></div>
+        </form>
+      </section>
+
+      <!-- FOTO DE PERFIL -->
+      <aside class="panel">
+
+        <div class="panel-head">
+          <h2>Foto de perfil</h2>
+        </div>
+
+        <div class="profile-chip">
+          <img data-avatar-user alt="Foto atual">
+
+          <div>
+            <strong data-user-name></strong>
+            <div class="helper" data-user-role></div>
+          </div>
+        </div>
+
+        <p class="helper">
+          Ao enviar uma nova foto, a imagem anterior deixa de ficar armazenada.
+          A publicação depende de aprovação editorial e consentimento.
+        </p>
+
+        <form id="form-avatar">
+
+          <div class="form-grid">
+
+            <div class="field full">
+              <label>Nova foto</label>
+              <input name="arquivo" type="file" accept=".png,.jpg,.jpeg,.webp" required>
+            </div>
+
+            <div class="field full checkbox-line">
+              <input type="checkbox" id="consentimento" name="consentimento" value="true" required>
+              <label for="consentimento">
+                Autorizo a publicação da minha foto no portal da revista.
+              </label>
+            </div>
+
+          </div>
+
+          <div class="actions-row">
+            <button class="btn btn-primary" type="submit">Enviar nova foto</button>
+          </div>
+
+          <div class="form-message" id="msg-avatar"></div>
+        </form>
+
+      </aside>
+
+    </div>
+
+    <footer class="page-footer"></footer>
+
+  </div>
+
+  <!-- SCRIPT -->
+  <script>
+    document.addEventListener('DOMContentLoaded', async () => {
+
+      const user = AppPanel.requireRole([
+        'autor',
+        'parecerista',
+        'editor_adjunto',
+        'editor_chefe'
+      ])
+
+      if (!user) return
+
+      const data = await AppPanel.apiData('me')
+      const u = data.usuario
+
+      const form = document.getElementById('form-perfil')
+
+      // preencher dados
+      [
+        'nome',
+        'email',
+        'perfil',
+        'instituicao',
+        'orcid',
+        'lattes',
+        'origem',
+        'telefone'
+      ].forEach(k => {
+        if (form.elements[k]) {
+          form.elements[k].value = u[k] || ''
+        }
+      })
+
+      form.elements['perfil'].value = AppPanel.formatRole(u.perfil)
+      form.elements['receber_noticias_email'].checked = !!u.receber_noticias_email
+
+      // salvar perfil
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault()
+
+        const fd = new FormData(form)
+        const payload = Object.fromEntries(fd.entries())
+
+        payload.receber_noticias_email =
+          form.elements['receber_noticias_email'].checked
+
+        const msg = document.getElementById('msg-perfil')
+        msg.className = 'form-message'
+
+        try {
+          const res = await AppPanel.apiAction('update_profile', payload)
+
+          AppPanel.applyUserIdentity(res.usuario)
+
+          msg.textContent = 'Perfil atualizado com sucesso.'
+          msg.classList.add('ok')
+
+        } catch (err) {
+          msg.textContent = err.message
+          msg.classList.add('err')
+        }
+      })
+
+      // upload avatar
+      document.getElementById('form-avatar').addEventListener('submit', async (e) => {
+
+        e.preventDefault()
+
+        const msg = document.getElementById('msg-avatar')
+        msg.className = 'form-message'
+
+        const fd = new FormData(e.target)
+        fd.set('usuario_id', String(u.id))
+        fd.set('consentimento',
+          document.getElementById('consentimento').checked ? 'true' : 'false'
+        )
+
+        try {
+          const res = await fetch('/.netlify/functions/upload-avatar', {
+            method: 'POST',
+            headers: AppPanel.currentUserHeaders(),
+            body: fd
+          })
+
+          const data = await res.json()
+
+          if (!res.ok) {
+            throw new Error(
+              data.detalhe ||
+              data.erro ||
+              'Erro ao enviar foto.'
+            )
+          }
+
+          msg.textContent = data.mensagem || 'Foto enviada.'
+          msg.classList.add('ok')
+
+          e.target.reset()
+
+        } catch (err) {
+          msg.textContent = err.message || 'Erro ao enviar foto.'
+          msg.classList.add('err')
+
+          console.error('upload-avatar:', err)
+        }
+
+      })
+
+    })
+  </script>
+
+</body>
+</html>

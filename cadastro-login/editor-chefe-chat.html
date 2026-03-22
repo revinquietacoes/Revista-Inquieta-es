@@ -86,6 +86,13 @@
       const params = new URLSearchParams(location.search);
       const preselectedTarget = params.get('target');
       let recipientsMap = new Map();
+      function authHeadersForFormData() {
+        const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
+        delete headers['Content-Type'];
+        delete headers['content-type'];
+        return headers;
+      }
+
 
       function setEmpty(texto) {
         chat.innerHTML = '';
