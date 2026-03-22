@@ -74,7 +74,7 @@ document.addEventListener('DOMContentLoaded',async()=>{
       fd.set('description', document.getElementById('cert-descricao').value.trim());
       fd.set('arquivo', file);
       const data=await AppPanel.authedFormFetch('/.netlify/functions/upload-certificado', fd);
-      msg.textContent=data.mensagem||'Certificado enviado com sucesso.';
+      msg.textContent=data.mensagem||data.detalhe||'Certificado enviado com sucesso.';
       msg.classList.add('ok');
       ev.target.reset();
       hidden.value='';

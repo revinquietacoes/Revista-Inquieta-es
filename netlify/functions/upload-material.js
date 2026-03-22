@@ -1,5 +1,5 @@
 const { getStore } = require('@netlify/blobs')
-const { sql, json, ensureSupportTables, getUserById, getAuthenticatedUserId } = require('./_db')
+const { sql, json, ensureSupportTables, getUserById, getAuthenticatedUserId, canAccess } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
 const store = getStore('revista-arquivos')
@@ -7,11 +7,31 @@ const store = getStore('revista-arquivos')
 function sanitizarNome(nome = '') {
   return String(nome)
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-zA-Z0-9._-]+/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
     .toLowerCase()
+}
+
+async function resolveActorAndTarget(req, form) {
+  const actorId = getAuthenticatedUserId(req, form.get('usuario_id'))
+  const targetUserId = Number(form.get('usuario_id') || actorId || 0)
+  if (!actorId || !targetUserId) return { error: json({ erro: 'Usuário inválido para upload.' }, 403) }
+
+  const actor = await getUserById(actorId)
+  if (!actor) return { error: json({ erro: 'Usuário autenticado não encontrado.' }, 404) }
+  if (actor.status && actor.status !== 'ativo') return { error: json({ erro: 'Usuário autenticado inativo.' }, 403) }
+
+  const targetUser = await getUserById(targetUserId)
+  if (!targetUser) return { error: json({ erro: 'Usuário de destino não encontrado.' }, 404) }
+  if (targetUser.status && targetUser.status !== 'ativo') return { error: json({ erro: 'Usuário de destino inativo.' }, 403) }
+
+  const ownUpload = actorId === targetUserId
+  const privileged = canAccess(actor, ['editor_chefe', 'editor_adjunto'])
+  if (!ownUpload && !privileged) return { error: json({ erro: 'Você não pode enviar arquivo para outro usuário.' }, 403) }
+
+  return { actor, targetUser }
 }
 
 const main = async (req) => {
@@ -20,18 +40,15 @@ const main = async (req) => {
     await ensureSupportTables()
 
     const form = await req.formData()
-    const authUserId = getAuthenticatedUserId(req, form.get('usuario_id'))
-    const usuarioId = Number(form.get('usuario_id') || authUserId || 0)
     const submissaoId = form.get('submissao_id') ? Number(form.get('submissao_id')) : null
     const categoria = String(form.get('categoria') || 'outro')
     const arquivo = form.get('arquivo')
 
-    if (!authUserId || !usuarioId || authUserId !== usuarioId) return json({ erro: 'Usuário inválido para upload.' }, 403)
-    if (!arquivo || typeof arquivo === 'string') return json({ erro: 'Dados obrigatórios ausentes.' }, 400)
+    if (!arquivo || typeof arquivo === 'string') return json({ erro: 'Selecione um arquivo válido.' }, 400)
 
-    const usuario = await getUserById(authUserId)
-    if (!usuario) return json({ erro: 'Usuário não encontrado.' }, 404)
-    if (usuario.status !== 'ativo') return json({ erro: 'Usuário inativo.' }, 403)
+    const roleInfo = await resolveActorAndTarget(req, form)
+    if (roleInfo.error) return roleInfo.error
+    const { targetUser } = roleInfo
 
     const permitidos = [
       'application/pdf',
@@ -44,11 +61,12 @@ const main = async (req) => {
     if (!permitidos.includes(arquivo.type)) return json({ erro: 'Tipo de arquivo não permitido.' }, 400)
     if (arquivo.size > 4_500_000) return json({ erro: 'Arquivo acima do limite de 4,5 MB.' }, 400)
 
-    const blobKey = `usuarios/${usuarioId}/${categoria}/${Date.now()}-${sanitizarNome(arquivo.name || 'arquivo')}`
-    const bytes = await arquivo.arrayBuffer()
+    const blobKey = `usuarios/${targetUser.id}/${categoria}/${Date.now()}-${sanitizarNome(arquivo.name || 'arquivo')}`
+    const bytes = Buffer.from(await arquivo.arrayBuffer())
+
     await store.set(blobKey, bytes, {
       metadata: {
-        usuario_id: String(usuarioId),
+        usuario_id: String(targetUser.id),
         submissao_id: submissaoId ? String(submissaoId) : '',
         categoria,
         nome_original: arquivo.name,
@@ -58,8 +76,12 @@ const main = async (req) => {
 
     const urlAcesso = `/.netlify/functions/arquivo?key=${encodeURIComponent(blobKey)}`
     const inserido = await sql`
-      INSERT INTO arquivos_publicacao (usuario_id, submissao_id, categoria, nome_original, mime_type, tamanho_bytes, blob_key, blob_store, url_acesso, publico)
-      VALUES (${usuarioId}, ${submissaoId}, ${categoria}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${blobKey}, 'revista-arquivos', ${urlAcesso}, FALSE)
+      INSERT INTO arquivos_publicacao (
+        usuario_id, submissao_id, categoria, nome_original, mime_type, tamanho_bytes, blob_key, blob_store, url_acesso, publico
+      )
+      VALUES (
+        ${targetUser.id}, ${submissaoId}, ${categoria}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${blobKey}, 'revista-arquivos', ${urlAcesso}, FALSE
+      )
       RETURNING id, url_acesso, blob_key
     `
 
@@ -90,8 +112,9 @@ const main = async (req) => {
       }
     }
 
-    return json({ sucesso: true, arquivo: inserido[0] }, 200)
+    return json({ sucesso: true, arquivo: inserido[0] })
   } catch (erro) {
+    console.error('upload-material erro:', erro)
     return json({ erro: 'Erro ao enviar arquivo.', detalhe: erro.message }, 500)
   }
 }

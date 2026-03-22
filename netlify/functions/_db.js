@@ -34,7 +34,6 @@ function normalizeRole(role) {
   return value
 }
 
-
 function getHeader(headers, name) {
   if (!headers) return null
   if (typeof headers.get === 'function') {
@@ -51,8 +50,7 @@ function getAuthenticatedUserId(req, fallback = 0) {
 function canAccess(user, allowed) {
   if (!user || !user.perfil) return false
   const perfil = normalizeRole(user.perfil)
-  const allowedNormalized = allowed.map(normalizeRole)
-  return allowedNormalized.includes(perfil)
+  return allowed.map(normalizeRole).includes(perfil)
 }
 
 async function getTableColumns(tableName) {
@@ -108,15 +106,23 @@ async function getUserById(id, withPassword = false) {
     `${cols.has('ultimo_acesso_em') ? "CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END" : 'FALSE'} AS online`
   ]
 
-  if (withPassword) {
-    selectParts.push(selectExpr(cols, 'senha_hash'))
-  }
+  if (withPassword) selectParts.push(selectExpr(cols, 'senha_hash'))
 
   const query = `SELECT ${selectParts.join(', ')} FROM usuarios WHERE id = $1 LIMIT 1`
   const rows = await sql.query(query, [userId])
   const user = rows?.[0] || null
   if (user?.perfil) user.perfil = normalizeRole(user.perfil)
   return user
+}
+
+async function requireActor(req, { fallbackUserId = 0, allowedRoles = null } = {}) {
+  const actorId = getAuthenticatedUserId(req, fallbackUserId)
+  if (!actorId) return { error: json({ erro: 'Usuário não autenticado.' }, 401) }
+  const actor = await getUserById(actorId)
+  if (!actor) return { error: json({ erro: 'Usuário não encontrado.' }, 404) }
+  if (actor.status && actor.status !== 'ativo') return { error: json({ erro: 'Usuário inativo.' }, 403) }
+  if (allowedRoles && !canAccess(actor, allowedRoles)) return { error: json({ erro: 'Acesso negado.' }, 403) }
+  return { actor }
 }
 
 async function ensureSupportTables() {
@@ -187,5 +193,6 @@ module.exports = {
   getUserById,
   ensureSupportTables,
   getHeader,
-  getAuthenticatedUserId
+  getAuthenticatedUserId,
+  requireActor
 }
