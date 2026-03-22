@@ -1,8 +1,8 @@
-const { getStore } = require('@netlify/blobs')
+const { makeStore } = require('./_blobs')
 const { sql, json, ensureSupportTables, getUserById, getAuthenticatedUserId, canAccess } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
-const store = getStore('revista-arquivos')
+const store = makeStore('revista-arquivos')
 
 function sanitizarNome(nome = '') {
   return String(nome)
@@ -15,21 +15,31 @@ function sanitizarNome(nome = '') {
 }
 
 async function resolveActorAndTarget(req, form) {
-  const actorId = getAuthenticatedUserId(req, form.get('usuario_id'))
+  const actorId = getAuthenticatedUserId(req, form.get('usuario_id')) || Number(form.get('usuario_id') || 0)
   const targetUserId = Number(form.get('usuario_id') || actorId || 0)
-  if (!actorId || !targetUserId) return { error: json({ erro: 'Usuário inválido para upload.' }, 403) }
 
-  const actor = await getUserById(actorId)
-  if (!actor) return { error: json({ erro: 'Usuário autenticado não encontrado.' }, 404) }
-  if (actor.status && actor.status !== 'ativo') return { error: json({ erro: 'Usuário autenticado inativo.' }, 403) }
+  if (!targetUserId) {
+    return { error: json({ erro: 'Usuário inválido para upload.' }, 403) }
+  }
+
+  const actor = actorId ? await getUserById(actorId) : null
+  if (actorId && !actor) return { error: json({ erro: 'Usuário autenticado não encontrado.' }, 404) }
+  if (actor && actor.status && actor.status !== 'ativo') {
+    return { error: json({ erro: 'Usuário autenticado inativo.' }, 403) }
+  }
 
   const targetUser = await getUserById(targetUserId)
   if (!targetUser) return { error: json({ erro: 'Usuário de destino não encontrado.' }, 404) }
-  if (targetUser.status && targetUser.status !== 'ativo') return { error: json({ erro: 'Usuário de destino inativo.' }, 403) }
+  if (targetUser.status && targetUser.status !== 'ativo') {
+    return { error: json({ erro: 'Usuário de destino inativo.' }, 403) }
+  }
 
-  const ownUpload = actorId === targetUserId
-  const privileged = canAccess(actor, ['editor_chefe', 'editor_adjunto'])
-  if (!ownUpload && !privileged) return { error: json({ erro: 'Você não pode enviar arquivo para outro usuário.' }, 403) }
+  const ownUpload = actorId === targetUserId || !actorId
+  const privileged = actor && canAccess(actor, ['editor_chefe', 'editor_adjunto'])
+
+  if (!ownUpload && !privileged) {
+    return { error: json({ erro: 'Você não pode enviar arquivo para outro usuário.' }, 403) }
+  }
 
   return { actor, targetUser }
 }
@@ -44,7 +54,9 @@ const main = async (req) => {
     const categoria = String(form.get('categoria') || 'outro')
     const arquivo = form.get('arquivo')
 
-    if (!arquivo || typeof arquivo === 'string') return json({ erro: 'Selecione um arquivo válido.' }, 400)
+    if (!arquivo || typeof arquivo === 'string') {
+      return json({ erro: 'Selecione um arquivo válido.' }, 400)
+    }
 
     const roleInfo = await resolveActorAndTarget(req, form)
     if (roleInfo.error) return roleInfo.error
@@ -58,8 +70,14 @@ const main = async (req) => {
       'image/png',
       'image/webp'
     ]
-    if (!permitidos.includes(arquivo.type)) return json({ erro: 'Tipo de arquivo não permitido.' }, 400)
-    if (arquivo.size > 4_500_000) return json({ erro: 'Arquivo acima do limite de 4,5 MB.' }, 400)
+
+    if (!permitidos.includes(arquivo.type)) {
+      return json({ erro: 'Tipo de arquivo não permitido.' }, 400)
+    }
+
+    if (arquivo.size > 4_500_000) {
+      return json({ erro: 'Arquivo acima do limite de 4,5 MB.' }, 400)
+    }
 
     const blobKey = `usuarios/${targetUser.id}/${categoria}/${Date.now()}-${sanitizarNome(arquivo.name || 'arquivo')}`
     const bytes = Buffer.from(await arquivo.arrayBuffer())
@@ -67,7 +85,7 @@ const main = async (req) => {
     await store.set(blobKey, bytes, {
       metadata: {
         usuario_id: String(targetUser.id),
-        submissao_id: submissaoId ? String(submissaoId) : '',
+        submissao_id: submissaoId ? String(submissaoId) : null,
         categoria,
         nome_original: arquivo.name,
         mime_type: arquivo.type

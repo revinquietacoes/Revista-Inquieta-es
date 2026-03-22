@@ -1,13 +1,13 @@
-const { getStore } = require('@netlify/blobs')
+const { makeStore } = require('./_blobs')
 const { sql, json, getUserById, ensureSupportTables, canAccess, getAuthenticatedUserId } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
-const certificatesStore = getStore('certificados-usuarios')
+const certificatesStore = makeStore('certificados-usuarios')
 
 function sanitizeFileName(name) {
   return String(name || 'certificado.pdf')
     .normalize('NFD')
-    .replace(/[̀-ͯ]/g, '')
+    .replace(/[\u0300-\u036f]/g, '')
     .replace(/[^a-zA-Z0-9._-]/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
@@ -57,7 +57,9 @@ const main = async (req) => {
     const editor = await getUserById(editorId)
     if (!editor) return json({ erro: 'Usuário não encontrado.' }, 404)
     if (editor.status !== 'ativo') return json({ erro: 'Usuário inativo.' }, 403)
-    if (!canAccess(editor, ['editor_chefe'])) return json({ erro: 'Apenas o editor-chefe pode enviar certificados.' }, 403)
+    if (!canAccess(editor, ['editor_chefe'])) {
+      return json({ erro: 'Apenas o editor-chefe pode enviar certificados.' }, 403)
+    }
 
     const payload = await readPayload(req)
     if (!payload.targetUserId || !payload.certificateType || !payload.title) {
@@ -69,13 +71,18 @@ const main = async (req) => {
     if (targetUser.status !== 'ativo') return json({ erro: 'Usuário destinatário inativo.' }, 403)
 
     let bytes, mimeType, safeFileName
+
     if (payload.arquivo && typeof payload.arquivo !== 'string') {
       mimeType = payload.arquivo.type || 'application/pdf'
       if (mimeType !== 'application/pdf') return json({ erro: 'Envie um arquivo PDF.' }, 400)
       bytes = Buffer.from(await payload.arquivo.arrayBuffer())
       safeFileName = sanitizeFileName(payload.arquivo.name || `${payload.title}.pdf`)
     } else if (payload.fileBase64) {
-      try { bytes = Buffer.from(payload.fileBase64, 'base64') } catch { return json({ erro: 'Arquivo em base64 inválido.' }, 400) }
+      try {
+        bytes = Buffer.from(payload.fileBase64, 'base64')
+      } catch {
+        return json({ erro: 'Arquivo em base64 inválido.' }, 400)
+      }
       mimeType = payload.mimeType || 'application/pdf'
       safeFileName = sanitizeFileName(payload.fileName || `${payload.title}.pdf`)
     } else {
@@ -85,6 +92,7 @@ const main = async (req) => {
     if (!bytes || !bytes.length) return json({ erro: 'Arquivo vazio ou inválido.' }, 400)
 
     const blobKey = `usuarios/${targetUser.id}/certificados/${payload.certificateType}/${Date.now()}-${safeFileName}`
+
     await certificatesStore.set(blobKey, bytes, {
       metadata: {
         title: payload.title,

@@ -1,4 +1,4 @@
-const { getStore } = require('@netlify/blobs')
+const { makeStore } = require('./_blobs')
 const {
   sql,
   json,
@@ -9,7 +9,7 @@ const {
 } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
-const store = getStore('revista-arquivos')
+const store = makeStore('revista-arquivos')
 
 function sanitizarNome(nome = '') {
   return String(nome)
@@ -22,21 +22,31 @@ function sanitizarNome(nome = '') {
 }
 
 async function resolveActorAndTarget(req, form) {
-  const actorId = getAuthenticatedUserId(req, form.get('usuario_id'))
+  const actorId = getAuthenticatedUserId(req, form.get('usuario_id')) || Number(form.get('usuario_id') || 0)
   const targetUserId = Number(form.get('usuario_id') || actorId || 0)
-  if (!actorId || !targetUserId) return { error: json({ erro: 'Usuário inválido para envio da foto.' }, 403) }
 
-  const actor = await getUserById(actorId)
-  if (!actor) return { error: json({ erro: 'Usuário autenticado não encontrado.' }, 404) }
-  if (actor.status && actor.status !== 'ativo') return { error: json({ erro: 'Usuário autenticado inativo.' }, 403) }
+  if (!targetUserId) {
+    return { error: json({ erro: 'Usuário inválido para envio da foto.' }, 403) }
+  }
+
+  const actor = actorId ? await getUserById(actorId) : null
+  if (actorId && !actor) return { error: json({ erro: 'Usuário autenticado não encontrado.' }, 404) }
+  if (actor && actor.status && actor.status !== 'ativo') {
+    return { error: json({ erro: 'Usuário autenticado inativo.' }, 403) }
+  }
 
   const targetUser = await getUserById(targetUserId)
   if (!targetUser) return { error: json({ erro: 'Usuário de destino não encontrado.' }, 404) }
-  if (targetUser.status && targetUser.status !== 'ativo') return { error: json({ erro: 'Usuário de destino inativo.' }, 403) }
+  if (targetUser.status && targetUser.status !== 'ativo') {
+    return { error: json({ erro: 'Usuário de destino inativo.' }, 403) }
+  }
 
-  const ownUpload = actorId === targetUserId
-  const privileged = canAccess(actor, ['editor_chefe', 'editor_adjunto'])
-  if (!ownUpload && !privileged) return { error: json({ erro: 'Você não pode enviar foto para outro usuário.' }, 403) }
+  const ownUpload = actorId === targetUserId || !actorId
+  const privileged = actor && canAccess(actor, ['editor_chefe', 'editor_adjunto'])
+
+  if (!ownUpload && !privileged) {
+    return { error: json({ erro: 'Você não pode enviar foto para outro usuário.' }, 403) }
+  }
 
   return { actor, targetUser }
 }
@@ -49,7 +59,10 @@ const main = async (req) => {
     const form = await req.formData()
     const consentimento = String(form.get('consentimento') || 'false') === 'true'
     const arquivo = form.get('arquivo')
-    if (!arquivo || typeof arquivo === 'string') return json({ erro: 'Selecione um arquivo de imagem.' }, 400)
+
+    if (!arquivo || typeof arquivo === 'string') {
+      return json({ erro: 'Selecione um arquivo de imagem.' }, 400)
+    }
 
     const roleInfo = await resolveActorAndTarget(req, form)
     if (roleInfo.error) return roleInfo.error
@@ -108,11 +121,19 @@ const main = async (req) => {
 
     for (const antigo of antigos) {
       if (antigo.blob_key && antigo.blob_key !== blobKey) {
-        try { await store.delete(antigo.blob_key) } catch (err) { console.error('Falha ao remover blob antigo:', antigo.blob_key, err) }
+        try {
+          await store.delete(antigo.blob_key)
+        } catch (err) {
+          console.error('Falha ao remover blob antigo:', antigo.blob_key, err)
+        }
       }
     }
 
-    return json({ sucesso: true, foto_perfil_url: urlAcesso, mensagem: 'Foto enviada. A publicação depende de aprovação editorial.' })
+    return json({
+      sucesso: true,
+      foto_perfil_url: urlAcesso,
+      mensagem: 'Foto enviada. A publicação depende de aprovação editorial.'
+    })
   } catch (erro) {
     console.error('upload-avatar erro:', erro)
     return json({ erro: 'Erro ao enviar foto.', detalhe: erro.message }, 500)
