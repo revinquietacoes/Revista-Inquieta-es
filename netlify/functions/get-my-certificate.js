@@ -12,37 +12,31 @@ function safeDownloadName(name) {
 }
 
 function createCertificatesStore() {
-  const hasAutoConfig =
-    process.env.BLOBS_SITE_ID ||
-    process.env.NETLIFY_BLOBS_CONTEXT ||
-    process.env.NETLIFY ||
-    process.env.CONTEXT
-
-  if (hasAutoConfig) {
+  try {
     return getStore('certificados-usuarios')
+  } catch (_) {
+    const siteID =
+      process.env.NETLIFY_SITE_ID ||
+      process.env.SITE_ID ||
+      process.env.BLOBS_SITE_ID
+
+    const token =
+      process.env.NETLIFY_BLOBS_TOKEN ||
+      process.env.BLOBS_TOKEN ||
+      process.env.NETLIFY_AUTH_TOKEN
+
+    if (!siteID || !token) {
+      throw new Error(
+        'Netlify Blobs não configurado. Defina NETLIFY_SITE_ID e NETLIFY_BLOBS_TOKEN.'
+      )
+    }
+
+    return getStore({
+      name: 'certificados-usuarios',
+      siteID,
+      token
+    })
   }
-
-  const siteID =
-    process.env.NETLIFY_SITE_ID ||
-    process.env.SITE_ID ||
-    process.env.BLOBS_SITE_ID
-
-  const token =
-    process.env.NETLIFY_BLOBS_TOKEN ||
-    process.env.BLOBS_TOKEN ||
-    process.env.NETLIFY_AUTH_TOKEN
-
-  if (!siteID || !token) {
-    throw new Error(
-      'Netlify Blobs não configurado. Defina NETLIFY_SITE_ID e NETLIFY_BLOBS_TOKEN nas variáveis de ambiente.'
-    )
-  }
-
-  return getStore({
-    name: 'certificados-usuarios',
-    siteID,
-    token
-  })
 }
 
 const main = async (req) => {
@@ -55,6 +49,7 @@ const main = async (req) => {
 
     const url = new URL(req.url)
     const certificateId = Number(url.searchParams.get('id') || 0)
+    const download = url.searchParams.get('download') === '1'
 
     if (!certificateId) {
       return new Response('Parâmetro id é obrigatório.', { status: 400 })
@@ -73,25 +68,31 @@ const main = async (req) => {
 
     const cert = rows[0]
 
+    console.log('Certificado localizado:', {
+      id: cert.id,
+      titulo: cert.titulo,
+      blob_key: cert.blob_key,
+      mime_type: cert.mime_type,
+      nome_arquivo: cert.nome_arquivo
+    })
+
     if (!cert.blob_key) {
       return new Response('Certificado sem blob_key cadastrado.', { status: 404 })
     }
 
-    let certificatesStore
-    try {
-      certificatesStore = createCertificatesStore()
-    } catch (storeError) {
-      console.error('Erro ao configurar Netlify Blobs:', storeError)
-      return new Response(
-        'Netlify Blobs não está configurado neste ambiente. Configure NETLIFY_SITE_ID e NETLIFY_BLOBS_TOKEN.',
-        { status: 500 }
-      )
-    }
+    const certificatesStore = createCertificatesStore()
 
     const blob = await certificatesStore.get(cert.blob_key, { type: 'arrayBuffer' })
 
     if (!blob) {
-      return new Response('Arquivo do certificado não encontrado.', { status: 404 })
+      return new Response('Arquivo do certificado não encontrado no Blobs.', { status: 404 })
+    }
+
+    const byteLength = blob.byteLength || blob.length || 0
+    console.log('Tamanho do arquivo retornado:', byteLength)
+
+    if (!byteLength) {
+      return new Response('O arquivo do certificado está vazio.', { status: 404 })
     }
 
     const fileName = safeDownloadName(
@@ -102,17 +103,27 @@ const main = async (req) => {
       ? fileName
       : `${fileName}.pdf`
 
+    const contentType =
+      cert.mime_type && String(cert.mime_type).trim()
+        ? cert.mime_type
+        : 'application/pdf'
+
     return new Response(blob, {
       status: 200,
       headers: {
-        'Content-Type': cert.mime_type || 'application/pdf',
-        'Content-Disposition': `inline; filename="${finalFileName}"`,
-        'Cache-Control': 'public, max-age=3600'
+        'Content-Type': contentType,
+        'Content-Length': String(byteLength),
+        'Content-Disposition': `${download ? 'attachment' : 'inline'}; filename="${finalFileName}"`,
+        'Cache-Control': 'public, max-age=3600',
+        'X-Certificate-Id': String(cert.id)
       }
     })
   } catch (error) {
     console.error('Erro interno ao obter certificado:', error)
-    return new Response('Erro interno ao obter certificado.', { status: 500 })
+    return new Response(`Erro interno ao obter certificado: ${error.message}`, {
+      status: 500,
+      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
+    })
   }
 }
 
