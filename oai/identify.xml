@@ -4,11 +4,11 @@
          xsi:schemaLocation="http://www.openarchives.org/OAI/2.0/
          http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
   <responseDate>2026-03-10T12:00:00Z</responseDate>
-  <request verb="Identify">https://revinquietacoes.github.io/Revista-Inquieta-es/oai/identify.xml</request>
+  <request verb="Identify">https://revista-inquietacoes.netlify.app/oai/identify.xml</request>
 
   <Identify>
     <repositoryName>Revista Inquietações</repositoryName>
-    <baseURL>https://revinquietacoes.github.io/Revista-Inquieta-es/oai/</baseURL>
+    <baseURL>https://revista-inquietacoes.netlify.app/oai/</baseURL>
     <protocolVersion>2.0</protocolVersion>
     <adminEmail>rev.inquietacoes@gmail.com</adminEmail>
     <earliestDatestamp>2026-01-01</earliestDatestamp>

@@ -5,7 +5,7 @@
          http://www.openarchives.org/OAI/2.0/OAI-PMH.xsd">
 
   <responseDate>2026-03-10T00:00:00Z</responseDate>
-  <request verb="ListSets">https://revinquietacoes.github.io/Revista-Inquieta-es/oai/sets.xml</request>
+  <request verb="ListSets">https://revista-inquietacoes.netlify.app/oai/sets.xml</request>
 
   <ListSets>
     <set>

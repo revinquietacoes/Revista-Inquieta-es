@@ -1,16 +1,20 @@
 <!DOCTYPE html>
 <html id="pagina-conteudos" lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Conteúdos publicados da Revista Inquietações. Sumário editorial da edição com organização por seções, acesso direto às páginas HTML de cada trabalho e espaço para dossiês temáticos.">
-<meta name="author" content="Revista Inquietações">
-<title>Conteúdos Publicados | Revista Inquietações</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48" type="image/png">
-<link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
-<script type="application/ld+json">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description"
+    content="Conteúdos publicados da Revista Inquietações. Sumário editorial da edição com organização por seções, acesso direto às páginas HTML de cada trabalho e espaço para dossiês temáticos.">
+  <meta name="author" content="Revista Inquietações">
+  <title>Conteúdos Publicados | Revista Inquietações</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48"
+    type="image/png">
+  <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
+    type="image/png">
+  <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
+  <script type="application/ld+json">
   {
     "@context": "https://schema.org",
     "@type": "Organization",
@@ -19,633 +23,1166 @@
     "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
   }
   </script>
-<style>
-    .pill.revista-pill-actions{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
+  <style>
+    .pill.revista-pill-actions {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
     }
 
-    .pill-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:6px 12px;
-      border-radius:999px;
-      background:#1f3c88;
-      color:#fff;
-      text-decoration:none;
-      font-size:.85rem;
-      font-weight:600;
-      line-height:1;
-      transition:transform .15s ease, opacity .15s ease, background .15s ease;
+    .pill-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 12px;
+      border-radius: 999px;
+      background: #1f3c88;
+      color: #fff;
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 600;
+      line-height: 1;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
     }
 
-    .pill-btn.secondary{
-      background:#2c55a5;
+    .pill-btn.secondary {
+      background: #2c55a5;
     }
 
     .pill-btn:hover,
-    .pill-btn:focus-visible{
-      transform:translateY(-1px);
-      opacity:.95;
-      text-decoration:none;
-      outline:none;
+    .pill-btn:focus-visible {
+      transform: translateY(-1px);
+      opacity: .95;
+      text-decoration: none;
+      outline: none;
     }
 
-    .issue-shell{
-      background:#fff;
-      border:1px solid var(--line);
-      border-radius:28px;
-      box-shadow:var(--shadow-soft);
-      overflow:hidden;
+    .issue-shell {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 28px;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
     }
 
-    .issue-intro{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 260px;
-      gap:26px;
-      padding:28px;
-      background:linear-gradient(180deg,#fbfdff 0%,#f4f8fc 100%);
-      border-bottom:1px solid var(--line);
+    .issue-intro {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) 260px;
+      gap: 26px;
+      padding: 28px;
+      background: linear-gradient(180deg, #fbfdff 0%, #f4f8fc 100%);
+      border-bottom: 1px solid var(--line);
     }
 
-    .issue-intro h2{
-      margin:0 0 10px;
-      font-family:"Cormorant Garamond", Georgia, serif;
-      font-size:2.05rem;
-      color:var(--brand);
-      letter-spacing:.01em;
+    .issue-intro h2 {
+      margin: 0 0 10px;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 2.05rem;
+      color: var(--brand);
+      letter-spacing: .01em;
     }
 
-    .issue-intro p{
-      margin:0 0 14px;
-      color:var(--muted);
-      line-height:1.72;
+    .issue-intro p {
+      margin: 0 0 14px;
+      color: var(--muted);
+      line-height: 1.72;
     }
 
-    .issue-meta{
-      display:grid;
-      grid-template-columns:repeat(2,minmax(0,1fr));
-      gap:12px;
-      margin-top:16px;
+    .issue-meta {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 12px;
+      margin-top: 16px;
     }
 
-    .issue-meta-card{
-      padding:14px 16px;
-      border-radius:18px;
-      background:#fff;
-      border:1px solid rgba(31,60,136,.10);
+    .issue-meta-card {
+      padding: 14px 16px;
+      border-radius: 18px;
+      background: #fff;
+      border: 1px solid rgba(31, 60, 136, .10);
     }
 
-    .issue-meta-card strong{
-      display:block;
-      margin-bottom:4px;
-      color:var(--brand);
-      font-size:.92rem;
+    .issue-meta-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: var(--brand);
+      font-size: .92rem;
     }
 
-    .issue-cover{
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      border-radius:24px;
-      background:#fff;
-      border:1px solid rgba(31,60,136,.10);
-      padding:18px;
-      min-height:100%;
+    .issue-cover {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 24px;
+      background: #fff;
+      border: 1px solid rgba(31, 60, 136, .10);
+      padding: 18px;
+      min-height: 100%;
     }
 
-    .issue-cover img{
-      max-width:100%;
-      height:auto;
-      display:block;
+    .issue-cover img {
+      max-width: 100%;
+      height: auto;
+      display: block;
     }
 
-    .toc-wrap{
-      padding:26px 28px 30px;
+    .toc-wrap {
+      padding: 26px 28px 30px;
     }
 
-    .toc-section{
-      padding:18px 0 6px;
-      border-top:1px solid rgba(31,60,136,.10);
+    .toc-section {
+      padding: 18px 0 6px;
+      border-top: 1px solid rgba(31, 60, 136, .10);
     }
 
-    .toc-section:first-of-type{
-      border-top:none;
-      padding-top:0;
+    .toc-section:first-of-type {
+      border-top: none;
+      padding-top: 0;
     }
 
-    .toc-section-head{
-      display:flex;
-      align-items:flex-end;
-      justify-content:space-between;
-      gap:18px;
-      margin-bottom:14px;
-      flex-wrap:wrap;
+    .toc-section-head {
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between;
+      gap: 18px;
+      margin-bottom: 14px;
+      flex-wrap: wrap;
     }
 
-    .toc-section h2{
-      margin:0;
-      font-family:"Cormorant Garamond", Georgia, serif;
-      font-size:1.75rem;
-      color:var(--brand);
-      letter-spacing:.01em;
+    .toc-section h2 {
+      margin: 0;
+      font-family: "Cormorant Garamond", Georgia, serif;
+      font-size: 1.75rem;
+      color: var(--brand);
+      letter-spacing: .01em;
     }
 
-    .toc-section-note{
-      margin:2px 0 0;
-      color:var(--muted);
-      line-height:1.65;
+    .toc-section-note {
+      margin: 2px 0 0;
+      color: var(--muted);
+      line-height: 1.65;
     }
 
-    .revista-top-access-bar{
-      width:min(1180px, calc(100% - 36px));
-      margin:18px auto 10px;
-      display:flex;
-      justify-content:flex-end;
-      align-items:center;
+    .revista-top-access-bar {
+      width: min(1180px, calc(100% - 36px));
+      margin: 18px auto 10px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
     }
 
-    .topbar{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:12px;
-      flex-wrap:wrap;
+    .topbar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      flex-wrap: wrap;
     }
 
-    .acesso-pill{
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 8px;
+    .acesso-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 8px;
     }
 
-    .topbar-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:6px 14px;
-      border-radius:999px;
-      background:#1f3c88;
-      color:#fff;
-      text-decoration:none;
-      font-size:.85rem;
-      font-weight:600;
-      transition:all .15s ease;
+    .topbar-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 14px;
+      border-radius: 999px;
+      background: #1f3c88;
+      color: #fff;
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 600;
+      transition: all .15s ease;
     }
 
-    .topbar-btn.secondary{
-      background:#2c55a5;
+    .topbar-btn.secondary {
+      background: #2c55a5;
     }
 
-    .topbar-btn:hover{
-      transform:translateY(-1px);
-      opacity:.95;
+    .topbar-btn:hover {
+      transform: translateY(-1px);
+      opacity: .95;
     }
 
-    .revista-top-access-actions{
-      display:flex;
-      align-items:center;
-      gap:12px;
-      padding:8px 12px;
-      border-radius:999px;
-      border:1px solid var(--line);
-      background:rgba(255,255,255,.84);
-      box-shadow:var(--shadow-soft);
+    .revista-top-access-actions {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 8px 12px;
+      border-radius: 999px;
+      border: 1px solid var(--line);
+      background: rgba(255, 255, 255, .84);
+      box-shadow: var(--shadow-soft);
     }
 
-    .revista-top-access-actions.compact{
-      gap:8px;
+    .revista-top-access-actions.compact {
+      gap: 8px;
     }
 
-    .revista-top-access-btn{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-width:118px;
-      height:40px;
-      padding:0 16px;
-      border-radius:999px;
-      background:#1f3c88;
-      color:#fff;
-      text-decoration:none;
-      font-size:.92rem;
-      font-weight:700;
-      line-height:1;
-      transition:transform .15s ease, opacity .15s ease, background .15s ease;
+    .revista-top-access-btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 118px;
+      height: 40px;
+      padding: 0 16px;
+      border-radius: 999px;
+      background: #1f3c88;
+      color: #fff;
+      text-decoration: none;
+      font-size: .92rem;
+      font-weight: 700;
+      line-height: 1;
+      transition: transform .15s ease, opacity .15s ease, background .15s ease;
     }
 
-    .revista-top-access-btn.secondary{
-      background:#2c55a5;
+    .revista-top-access-btn.secondary {
+      background: #2c55a5;
     }
 
     .revista-top-access-btn:hover,
-    .revista-top-access-btn:focus-visible{
-      transform:translateY(-1px);
-      opacity:.95;
-      text-decoration:none;
-      outline:none;
+    .revista-top-access-btn:focus-visible {
+      transform: translateY(-1px);
+      opacity: .95;
+      text-decoration: none;
+      outline: none;
     }
 
-    .section-count{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:7px 12px;
-      border-radius:999px;
-      border:1px solid rgba(31,60,136,.10);
-      background:#f6f9fd;
-      color:#50617d;
-      font-size:.92rem;
-      white-space:nowrap;
+    .section-count {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 7px 12px;
+      border-radius: 999px;
+      border: 1px solid rgba(31, 60, 136, .10);
+      background: #f6f9fd;
+      color: #50617d;
+      font-size: .92rem;
+      white-space: nowrap;
     }
 
-    .article-list{
-      list-style:none;
-      margin:0;
-      padding:0;
-      display:grid;
-      gap:14px;
+    .article-list {
+      list-style: none;
+      margin: 0;
+      padding: 0;
+      display: grid;
+      gap: 14px;
     }
 
-    .article-item{
-      border:1px solid rgba(31,60,136,.10);
-      border-radius:22px;
-      background:#fff;
-      padding:18px 20px;
-      box-shadow:0 8px 24px rgba(16,35,63,.05);
-      transition:transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+    .article-item {
+      border: 1px solid rgba(31, 60, 136, .10);
+      border-radius: 22px;
+      background: #fff;
+      padding: 18px 20px;
+      box-shadow: 0 8px 24px rgba(16, 35, 63, .05);
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
     }
 
-    .article-item:hover{
-      transform:translateY(-2px);
-      box-shadow:0 14px 28px rgba(16,35,63,.08);
-      border-color:rgba(31,60,136,.18);
+    .article-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 14px 28px rgba(16, 35, 63, .08);
+      border-color: rgba(31, 60, 136, .18);
     }
 
-    .article-topline{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
-      margin-bottom:10px;
+    .article-topline {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
     }
 
-    .section-badge{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:6px 11px;
-      border-radius:999px;
-      font-size:.8rem;
-      font-weight:700;
-      letter-spacing:.02em;
-      text-transform:uppercase;
-      border:1px solid transparent;
+    .section-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 11px;
+      border-radius: 999px;
+      font-size: .8rem;
+      font-weight: 700;
+      letter-spacing: .02em;
+      text-transform: uppercase;
+      border: 1px solid transparent;
     }
 
-    .badge-capa{background:#f7efe7;color:#7a4d21;border-color:#ecd7c1;}
-    .badge-expediente{background:#eef3fb;color:#264a83;border-color:#d7e2f3;}
-    .badge-mensagem{background:#f7eefb;color:#6d3b86;border-color:#ead6f5;}
-    .badge-artigo{background:#ecf7ef;color:#266243;border-color:#cfe7d8;}
-    .badge-resumo{background:#fff5e7;color:#8a5b1f;border-color:#f1dec0;}
-    .badge-ensaio{background:#f1effc;color:#4f4391;border-color:#ddd8f7;}
-    .badge-resenha{background:#eef8f7;color:#1f6660;border-color:#d3ebe8;}
-    .badge-traducao{background:#fdf0f2;color:#8d4152;border-color:#f2d2da;}
-    .badge-fotografia{background:#f3f6ea;color:#5f6b2b;border-color:#e3e8cf;}
-    .badge-relato{background:#eef4ff;color:#294d84;border-color:#d8e3f7;}
-    .badge-dossie{background:linear-gradient(135deg,#c96b2c 0%, #a54d1c 100%);color:#fff;border-color:#b85d25;}
-    .badge-dossie-artigo{background:#fff1e7;color:#9a4d19;border-color:#edc9b1;}
-    .badge-dossie-ensaio{background:#fff5ef;color:#8b4720;border-color:#efcfbd;}
-    .badge-dossie-resumo-expandido{background:#fff7ec;color:#995a1f;border-color:#efd7b8;}
-
-    .pages-chip{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      padding:6px 11px;
-      border-radius:999px;
-      background:#f8fbff;
-      border:1px solid rgba(31,60,136,.10);
-      color:#4c5f7c;
-      font-size:.84rem;
-      font-weight:600;
+    .badge-capa {
+      background: #f7efe7;
+      color: #7a4d21;
+      border-color: #ecd7c1;
     }
 
-    .article-title{
-      margin:0;
-      font-size:1.14rem;
-      line-height:1.42;
-      color:var(--brand);
+    .badge-expediente {
+      background: #eef3fb;
+      color: #264a83;
+      border-color: #d7e2f3;
     }
 
-    .article-title a{
-      color:inherit;
-      text-decoration:none;
+    .badge-mensagem {
+      background: #f7eefb;
+      color: #6d3b86;
+      border-color: #ead6f5;
     }
 
-    .article-title a:hover{
-      text-decoration:underline;
+    .badge-artigo {
+      background: #ecf7ef;
+      color: #266243;
+      border-color: #cfe7d8;
     }
 
-    .article-subtitle{
-      display:block;
-      margin-top:3px;
-      font-weight:500;
-      color:#43526c;
-      font-size:1rem;
+    .badge-resumo {
+      background: #fff5e7;
+      color: #8a5b1f;
+      border-color: #f1dec0;
     }
 
-    .article-meta{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      gap:14px;
-      margin-top:12px;
-      flex-wrap:wrap;
+    .badge-ensaio {
+      background: #f1effc;
+      color: #4f4391;
+      border-color: #ddd8f7;
     }
 
-    .article-authors{
-      color:#4b5b75;
-      line-height:1.62;
-      flex:1 1 340px;
+    .badge-resenha {
+      background: #eef8f7;
+      color: #1f6660;
+      border-color: #d3ebe8;
     }
 
-    .article-actions{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      flex-wrap:wrap;
+    .badge-traducao {
+      background: #fdf0f2;
+      color: #8d4152;
+      border-color: #f2d2da;
+    }
+
+    .badge-fotografia {
+      background: #f3f6ea;
+      color: #5f6b2b;
+      border-color: #e3e8cf;
+    }
+
+    .badge-relato {
+      background: #eef4ff;
+      color: #294d84;
+      border-color: #d8e3f7;
+    }
+
+    .badge-dossie {
+      background: linear-gradient(135deg, #c96b2c 0%, #a54d1c 100%);
+      color: #fff;
+      border-color: #b85d25;
+    }
+
+    .badge-dossie-artigo {
+      background: #fff1e7;
+      color: #9a4d19;
+      border-color: #edc9b1;
+    }
+
+    .badge-dossie-ensaio {
+      background: #fff5ef;
+      color: #8b4720;
+      border-color: #efcfbd;
+    }
+
+    .badge-dossie-resumo-expandido {
+      background: #fff7ec;
+      color: #995a1f;
+      border-color: #efd7b8;
+    }
+
+    .pages-chip {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      padding: 6px 11px;
+      border-radius: 999px;
+      background: #f8fbff;
+      border: 1px solid rgba(31, 60, 136, .10);
+      color: #4c5f7c;
+      font-size: .84rem;
+      font-weight: 600;
+    }
+
+    .article-title {
+      margin: 0;
+      font-size: 1.14rem;
+      line-height: 1.42;
+      color: var(--brand);
+    }
+
+    .article-title a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    .article-title a:hover {
+      text-decoration: underline;
+    }
+
+    .article-subtitle {
+      display: block;
+      margin-top: 3px;
+      font-weight: 500;
+      color: #43526c;
+      font-size: 1rem;
+    }
+
+    .article-meta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .article-authors {
+      color: #4b5b75;
+      line-height: 1.62;
+      flex: 1 1 340px;
+    }
+
+    .article-actions {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
     }
 
     .access-btn,
-    .doi-link{
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      min-height:42px;
-      padding:10px 16px;
-      border-radius:999px;
-      text-decoration:none;
-      font-weight:600;
-      transition:transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
+    .doi-link {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 42px;
+      padding: 10px 16px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-weight: 600;
+      transition: transform .18s ease, box-shadow .18s ease, background .18s ease, border-color .18s ease;
     }
 
-    .access-btn{
-      background:var(--brand);
-      color:#fff;
-      box-shadow:0 8px 18px rgba(31,60,136,.14);
+    .access-btn {
+      background: var(--brand);
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(31, 60, 136, .14);
     }
 
-    .access-btn:hover{
-      transform:translateY(-1px);
-      text-decoration:none;
-      box-shadow:0 12px 22px rgba(31,60,136,.18);
+    .access-btn:hover {
+      transform: translateY(-1px);
+      text-decoration: none;
+      box-shadow: 0 12px 22px rgba(31, 60, 136, .18);
     }
 
-    .doi-link{
-      background:#f8fbff;
-      color:var(--brand);
-      border:1px solid rgba(31,60,136,.12);
+    .doi-link {
+      background: #f8fbff;
+      color: var(--brand);
+      border: 1px solid rgba(31, 60, 136, .12);
     }
 
-    .doi-link:hover{
-      background:#eef5fc;
-      text-decoration:none;
-      transform:translateY(-1px);
+    .doi-link:hover {
+      background: #eef5fc;
+      text-decoration: none;
+      transform: translateY(-1px);
     }
 
-    .side-nav-card{
-      display:grid;
-      gap:10px;
+    .side-nav-card {
+      display: grid;
+      gap: 10px;
     }
 
-    .side-nav-link{
-      display:block;
-      text-decoration:none;
-      padding:11px 14px;
-      border-radius:12px;
-      background:#f8fbff;
-      border:1px solid #dbe6f2;
-      color:var(--brand);
-      font-weight:500;
-      transition:background .18s ease, transform .18s ease;
+    .side-nav-link {
+      display: block;
+      text-decoration: none;
+      padding: 11px 14px;
+      border-radius: 12px;
+      background: #f8fbff;
+      border: 1px solid #dbe6f2;
+      color: var(--brand);
+      font-weight: 500;
+      transition: background .18s ease, transform .18s ease;
     }
 
-    .side-nav-link:hover{
-      background:#eef5fc;
-      transform:translateY(-1px);
+    .side-nav-link:hover {
+      background: #eef5fc;
+      transform: translateY(-1px);
     }
 
-    .catalog-note{
-      margin:0 0 18px;
-      padding:16px 18px;
-      border-radius:18px;
-      background:#f9fbfe;
-      border:1px solid rgba(31,60,136,.08);
-      color:#4b5b75;
-      line-height:1.72;
+    .catalog-note {
+      margin: 0 0 18px;
+      padding: 16px 18px;
+      border-radius: 18px;
+      background: #f9fbfe;
+      border: 1px solid rgba(31, 60, 136, .08);
+      color: #4b5b75;
+      line-height: 1.72;
     }
 
-    .dossier-panel{
-      border:1px solid rgba(165,77,28,.18);
-      border-radius:24px;
-      overflow:hidden;
-      background:#fffaf6;
-      box-shadow:0 10px 26px rgba(112,62,21,.06);
+    .dossier-panel {
+      border: 1px solid rgba(165, 77, 28, .18);
+      border-radius: 24px;
+      overflow: hidden;
+      background: #fffaf6;
+      box-shadow: 0 10px 26px rgba(112, 62, 21, .06);
     }
 
-    .dossier-header{
-      padding:22px 22px 18px;
-      background:linear-gradient(135deg,#cf7640 0%, #b85c24 52%, #914116 100%);
-      color:#fff;
+    .dossier-header {
+      padding: 22px 22px 18px;
+      background: linear-gradient(135deg, #cf7640 0%, #b85c24 52%, #914116 100%);
+      color: #fff;
     }
 
-    .dossier-header h3{
-      margin:0 0 8px;
-      font-size:1.22rem;
-      line-height:1.35;
-      color:#fff;
+    .dossier-header h3 {
+      margin: 0 0 8px;
+      font-size: 1.22rem;
+      line-height: 1.35;
+      color: #fff;
     }
 
-    .dossier-header p{
-      margin:0;
-      line-height:1.68;
-      color:rgba(255,255,255,.94);
+    .dossier-header p {
+      margin: 0;
+      line-height: 1.68;
+      color: rgba(255, 255, 255, .94);
     }
 
-    .dossier-meta{
-      display:grid;
-      grid-template-columns:repeat(3,minmax(0,1fr));
-      gap:12px;
-      padding:18px 22px 0;
+    .dossier-meta {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 12px;
+      padding: 18px 22px 0;
     }
 
-    .dossier-meta-card{
-      background:#fff;
-      border:1px solid rgba(165,77,28,.14);
-      border-radius:18px;
-      padding:14px 15px;
+    .dossier-meta-card {
+      background: #fff;
+      border: 1px solid rgba(165, 77, 28, .14);
+      border-radius: 18px;
+      padding: 14px 15px;
     }
 
-    .dossier-meta-card strong{
-      display:block;
-      margin-bottom:4px;
-      color:#9a4d19;
-      font-size:.92rem;
+    .dossier-meta-card strong {
+      display: block;
+      margin-bottom: 4px;
+      color: #9a4d19;
+      font-size: .92rem;
     }
 
-    .dossier-body{
-      padding:18px 22px 22px;
+    .dossier-body {
+      padding: 18px 22px 22px;
     }
 
-    .dossier-status{
-      margin:0 0 16px;
-      padding:14px 16px;
-      border-radius:16px;
-      background:linear-gradient(180deg,#fff4eb 0%, #fff9f5 100%);
-      border:1px solid rgba(165,77,28,.14);
-      color:#70451f;
-      line-height:1.72;
+    .dossier-status {
+      margin: 0 0 16px;
+      padding: 14px 16px;
+      border-radius: 16px;
+      background: linear-gradient(180deg, #fff4eb 0%, #fff9f5 100%);
+      border: 1px solid rgba(165, 77, 28, .14);
+      color: #70451f;
+      line-height: 1.72;
     }
 
-    .dossier-subsection{
-      margin-top:18px;
-      padding-top:18px;
-      border-top:1px dashed rgba(165,77,28,.18);
+    .dossier-subsection {
+      margin-top: 18px;
+      padding-top: 18px;
+      border-top: 1px dashed rgba(165, 77, 28, .18);
     }
 
-    .dossier-subsection:first-of-type{
-      margin-top:10px;
-      padding-top:0;
-      border-top:none;
+    .dossier-subsection:first-of-type {
+      margin-top: 10px;
+      padding-top: 0;
+      border-top: none;
     }
 
-    .dossier-subsection h4{
-      margin:0 0 8px;
-      font-size:1.04rem;
-      color:#8f4619;
+    .dossier-subsection h4 {
+      margin: 0 0 8px;
+      font-size: 1.04rem;
+      color: #8f4619;
     }
 
-    .dossier-subsection p{
-      margin:0;
-      color:#5d5d5d;
-      line-height:1.68;
+    .dossier-subsection p {
+      margin: 0;
+      color: #5d5d5d;
+      line-height: 1.68;
     }
 
-    .dossier-empty{
-      margin-top:12px;
-      padding:14px 16px;
-      border-radius:15px;
-      border:1px dashed rgba(165,77,28,.26);
-      background:#fff;
-      color:#7a532f;
+    .dossier-empty {
+      margin-top: 12px;
+      padding: 14px 16px;
+      border-radius: 15px;
+      border: 1px dashed rgba(165, 77, 28, .26);
+      background: #fff;
+      color: #7a532f;
     }
 
-    @media (max-width: 920px){
-      .issue-intro{grid-template-columns:1fr;}
-      .issue-meta{grid-template-columns:1fr;}
-      .dossier-meta{grid-template-columns:1fr;}
+    @media (max-width: 920px) {
+      .issue-intro {
+        grid-template-columns: 1fr;
+      }
+
+      .issue-meta {
+        grid-template-columns: 1fr;
+      }
+
+      .dossier-meta {
+        grid-template-columns: 1fr;
+      }
     }
 
-    @media (max-width: 680px){
+    @media (max-width: 680px) {
+
       .toc-wrap,
-      .issue-intro{padding:20px;}
-      .issue-intro h2{font-size:1.8rem;}
-      .toc-section h2{font-size:1.52rem;}
-      .article-item{padding:16px;}
-      .article-title{font-size:1.04rem;}
+      .issue-intro {
+        padding: 20px;
+      }
+
+      .issue-intro h2 {
+        font-size: 1.8rem;
+      }
+
+      .toc-section h2 {
+        font-size: 1.52rem;
+      }
+
+      .article-item {
+        padding: 16px;
+      }
+
+      .article-title {
+        font-size: 1.04rem;
+      }
+
       .dossier-header,
-      .dossier-body{padding-left:16px;padding-right:16px;}
-      .dossier-meta{padding-left:16px;padding-right:16px;}
+      .dossier-body {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
+
+      .dossier-meta {
+        padding-left: 16px;
+        padding-right: 16px;
+      }
     }
 
-    .site-nav-menu{
-      display:flex;
-      flex-wrap:nowrap;
-      align-items:center;
-      justify-content:center;
-      gap:5px;
-      overflow-x:auto;
-      scrollbar-width:none;
+    .site-nav-menu {
+      display: flex;
+      flex-wrap: nowrap;
+      align-items: center;
+      justify-content: center;
+      gap: 5px;
+      overflow-x: auto;
+      scrollbar-width: none;
     }
 
-    .site-nav-menu::-webkit-scrollbar{display:none;}
-    .site-nav-menu a{font-size:.88rem;padding:8px 8px;white-space:nowrap;}
+    .site-nav-menu::-webkit-scrollbar {
+      display: none;
+    }
+
+    .site-nav-menu a {
+      font-size: .88rem;
+      padding: 8px 8px;
+      white-space: nowrap;
+    }
   </style>
 </head>
+
 <body id="corpo-conteudos">
-<div id="estrutura-do-site" class="site-shell">
-<nav id="links-de-salto" class="skip-links" aria-label="Ir para os links de conteúdo"><a id="link-conteudo-principal" href="#conteudo-principal">Ir para o conteúdo principal</a><a id="link-navegacao-principal" href="#navegacao-principal">Ir para a navegação</a><a id="link-barra-lateral" href="#barra-lateral">Ir para a barra lateral</a><a id="link-rodape" href="#rodape">Ir para o rodapé</a></nav>
-<div id="barra-superior" class="topbar"><div id="div-pill" class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div><div id="div-pill-acesso-pill" class="pill acesso-pill"><a id="link-cadastro" href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a><a id="link-login" href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a></div></div>
-<header id="cabecalho-da-pagina" class="masthead"><div id="div-masthead-inner" class="masthead-inner"><div id="div-1"><h1 id="h1-1">Conteúdos Publicados</h1><p id="p-hero-text" class="hero-text">Sumário editorial da primeira edição da Revista Inquietações, com organização por seções, paginação interna, acesso direto às páginas HTML e espaço institucional para dossiês temáticos.</p><div id="div-masthead-meta" class="masthead-meta"><div id="div-masthead-card" class="masthead-card"><strong>Status editorial</strong>Primeira edição</div><div id="div-masthead-card-2" class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div><div id="div-masthead-card-3" class="masthead-card"><strong>Área</strong>Ciências Humanas</div><div id="div-masthead-card-4" class="masthead-card"><strong>e-ISSN</strong>ISSN 3086-4119</div></div></div><div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="logo-revista.png" alt="Logo da Revista Inquietações"></div></div></header>
-<nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal"><button id="button-site-nav-toggle" class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button><div class="site-nav-menu" id="site-menu"><a id="link-index" href="index.html">Início</a><a id="link-edicao-atual" href="edicao-atual.html">Atual</a><a id="link-conteudos" href="conteudos.html" class="active">Conteúdos</a><a id="link-evento" href="evento.html">Evento</a><a id="link-index-2" href="Editora-Revista-Inquietacoes/index.html">Editora</a><a id="link-sobre" href="sobre.html">Sobre</a><a id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a><a id="link-noticias" href="noticias.html">Notícias</a><a id="link-politicas-editoriais" href="politicas-editoriais.html">Políticas</a><a id="link-diretrizes-autores" href="diretrizes-autores.html">Diretrizes</a><a id="link-submissoes" href="submissoes.html">Submissões</a><a id="link-templates" href="templates.html">Templates</a><a id="link-contato" href="contato.html">Contato</a><a id="link-homenagens" href="homenagens.html">Homenagens</a></div></nav>
-<div id="grade-do-portal" class="portal-grid sidebar-compact">
-<aside class="sidebar" id="barra-lateral"><section id="section-sidebar-block" class="sidebar-block"><h2 id="h2-1">Navegação da página</h2><div id="div-side-nav-card" class="side-nav-card"><a id="link-capa-edicao" class="side-nav-link" href="#capa-edicao">Capa da edição</a><a id="link-mensagem-autores-leitores" class="side-nav-link" href="#mensagem-autores-leitores">Mensagem aos autores e leitores</a><a id="link-artigos" class="side-nav-link" href="#artigos">Artigos</a><a id="link-resumos-expandidos" class="side-nav-link" href="#resumos-expandidos">Resumos expandidos</a><a id="link-ensaios" class="side-nav-link" href="#ensaios">Ensaios</a><a id="link-resenhas" class="side-nav-link" href="#resenhas">Resenhas</a><a id="link-traducoes" class="side-nav-link" href="#traducoes">Traduções</a><a id="link-fotografia-tematica" class="side-nav-link" href="#fotografia-tematica">Fotografia temática</a><a id="link-relatos-experiencia" class="side-nav-link" href="#relatos-experiencia">Relatos de experiência</a><a id="link-dossies-tematicos" class="side-nav-link" href="#dossies-tematicos">Dossiês temáticos</a></div></section></aside>
-<main class="content" id="conteudo-principal">
-<div id="div-issue-shell" class="issue-shell">
-<section id="section-issue-intro" class="issue-intro"><div id="div-2"><h2 id="h2-2">v. 1, n. 1 (2026) • Fluxo contínuo</h2><p id="p-1">Abaixo, os conteúdos da edição estão organizados por seção, em formato de sumário editorial. Cada item apresenta autoria, paginação da seção e acesso direto ao conteúdo em HTML. Os dossiês temáticos, quando abertos, poderão coexistir com o fluxo contínuo da revista ao longo da edição.</p><div id="div-issue-meta" class="issue-meta"><div id="div-issue-meta-card" class="issue-meta-card"><strong>Publicado em</strong>2026</div><div id="div-issue-meta-card-2" class="issue-meta-card"><strong>Modelo editorial</strong>Fluxo contínuo</div><div id="div-issue-meta-card-3" class="issue-meta-card"><strong>Suporte de leitura</strong>Páginas HTML individuais</div><div id="div-issue-meta-card-4" class="issue-meta-card"><strong>Acesso</strong>Livre e aberto</div></div></div><div id="div-issue-cover" class="issue-cover"><img id="imagem-logo-revista-png-2" src="logo-revista.png" alt="Logotipo da Revista Inquietações"></div></section>
-<div id="div-toc-wrap" class="toc-wrap">
-<section class="toc-section" id="capa-edicao"><div id="div-toc-section-head" class="toc-section-head"><div id="div-3"><h2 id="h2-3">Capa da edição</h2><p id="p-toc-section-note" class="toc-section-note">Material de apresentação visual e identificação da edição.</p></div><span class="section-count">1 publicação</span></div><ul id="ul-article-list" class="article-list"><li id="li-article-item" class="article-item"><div id="div-article-topline" class="article-topline"><span class="section-badge badge-capa">Capa</span><span class="pages-chip">p. 1</span></div><h3 id="h3-article-title" class="article-title"><a id="link-capa-da-edicao-v1n1-2026" href="publicacoes/capa-da-edicao-v1n1-2026.html">Capa da edição v. 1, n. 1 (2026)</a></h3><div id="div-article-meta" class="article-meta"><div id="div-article-authors" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions" class="article-actions"><a id="link-capa-da-edicao-v1n1-2026-2" class="access-btn" href="publicacoes/capa-da-edicao-v1n1-2026.html">Acessar conteúdo</a></div></div></li></ul></section>
-<section class="toc-section" id="mensagem-autores-leitores"><div id="div-toc-section-head-2" class="toc-section-head"><div id="div-4"><h2 id="h2-4">Mensagem aos(às) autores(as) e leitores(as)</h2><p id="p-toc-section-note-2" class="toc-section-note">Texto de apresentação e acolhida da edição.</p></div><span class="section-count">1 publicação</span></div><ul id="ul-article-list-2" class="article-list"><li id="li-article-item-2" class="article-item"><div id="div-article-topline-2" class="article-topline"><span class="section-badge badge-mensagem">Mensagem</span><span class="pages-chip">p. 1–7</span></div><h3 id="h3-article-title-2" class="article-title"><a id="link-mensagem-autores-leitores-2" href="publicacoes/mensagem-autores-leitores.html">Mensagem aos(às) autores(as) e leitores(as)</a></h3><div id="div-article-meta-2" class="article-meta"><div id="div-article-authors-2" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-2" class="article-actions"><a id="link-zenodo-18816235" class="doi-link" href="https://doi.org/10.5281/zenodo.18816235" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-mensagem-autores-leitores-3" class="access-btn" href="publicacoes/mensagem-autores-leitores.html">Acessar conteúdo</a></div></div></li></ul></section>
-<section class="toc-section" id="artigos">
-<div id="div-toc-section-head-3" class="toc-section-head"><div id="div-5"><h2 id="h2-5">Artigos</h2><p id="p-toc-section-note-3" class="toc-section-note">Textos acadêmicos publicados na edição v. 1, n. 1 (2026).</p></div><span class="section-count">2 publicações</span></div>
-<ul id="ul-article-list-3" class="article-list">
-<li id="li-article-item-3" class="article-item"><div id="div-article-topline-3" class="article-topline"><span class="section-badge badge-artigo">Artigo</span><span class="pages-chip">p. 1–30</span></div><h3 id="h3-article-title-3" class="article-title"><a id="link-artigo-identidade-genero-disforia-educacao-inclusiva" href="publicacoes/artigo-identidade-genero-disforia-educacao-inclusiva.html">IDENTIDADE DE GÊNERO, DISFORIA E EDUCAÇÃO INCLUSIVA<span class="article-subtitle">Desconstruindo binarismos e respeitando a diversidade</span></a></h3><div id="div-article-meta-3" class="article-meta"><div id="div-article-authors-3" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-3" class="article-actions"><a id="link-zenodo-18825993" class="doi-link" href="https://doi.org/10.5281/zenodo.18825993" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-artigo-identidade-genero-disforia-educacao-inclusiva-2" class="access-btn" href="publicacoes/artigo-identidade-genero-disforia-educacao-inclusiva.html">Acessar conteúdo</a></div></div></li>
-<li id="li-article-item-4" class="article-item"><div id="div-article-topline-4" class="article-topline"><span class="section-badge badge-artigo">Artigo</span><span class="pages-chip">p. 31–42</span></div><h3 id="h3-article-title-4" class="article-title"><a id="link-artigo-algoritmos-do-passado" href="publicacoes/artigo-algoritmos-do-passado.html">Algoritmos do passado<span class="article-subtitle">como a IA está reescrevendo a história</span></a></h3><div id="div-article-meta-4" class="article-meta"><div id="div-article-authors-4" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-4" class="article-actions"><a id="link-zenodo-18836259" class="doi-link" href="https://doi.org/10.5281/zenodo.18836259" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-artigo-algoritmos-do-passado-2" class="access-btn" href="publicacoes/artigo-algoritmos-do-passado.html">Acessar conteúdo</a></div></div></li>
-</ul>
-</section>
-<section class="toc-section" id="resumos-expandidos"><div id="div-toc-section-head-4" class="toc-section-head"><div id="div-6"><h2 id="h2-6">Resumos expandidos</h2><p id="p-toc-section-note-4" class="toc-section-note">Produções em formato de resumo expandido.</p></div><span class="section-count">1 publicação</span></div><ul id="ul-article-list-4" class="article-list"><li id="li-article-item-5" class="article-item"><div id="div-article-topline-5" class="article-topline"><span class="section-badge badge-resumo">Resumo expandido</span><span class="pages-chip">p. 1–5</span></div><h3 id="h3-article-title-5" class="article-title"><a id="link-resumo-paulo-freire-4-0" href="publicacoes/resumo-paulo-freire-4-0.html">Paulo Freire 4.0<span class="article-subtitle">o ChatGPT e a materialização da educação bancária</span></a></h3><div id="div-article-meta-5" class="article-meta"><div id="div-article-authors-5" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-5" class="article-actions"><a id="link-zenodo-18820608" class="doi-link" href="https://doi.org/10.5281/zenodo.18820608" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-resumo-paulo-freire-4-0-2" class="access-btn" href="publicacoes/resumo-paulo-freire-4-0.html">Acessar conteúdo</a></div></div></li></ul></section>
-<section class="toc-section" id="ensaios">
-<div id="div-toc-section-head-5" class="toc-section-head"><div id="div-7"><h2 id="h2-7">Ensaios</h2><p id="p-toc-section-note-5" class="toc-section-note">Seção dedicada a ensaios autorais e reflexivos.</p></div><span class="section-count">2 publicações</span></div>
-<ul id="ul-article-list-5" class="article-list">
-<li id="li-article-item-6" class="article-item"><div id="div-article-topline-6" class="article-topline"><span class="section-badge badge-ensaio">Ensaio</span><span class="pages-chip">p. 1–7</span></div><h3 id="h3-article-title-6" class="article-title"><a id="link-ensaio-maquiavel-e-a-liberdade-do-povo" href="publicacoes/ensaio-maquiavel-e-a-liberdade-do-povo.html">MAQUIAVEL E A LIBERDADE DO POVO</a></h3><div id="div-article-meta-6" class="article-meta"><div id="div-article-authors-6" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-6" class="article-actions"><a id="link-zenodo-18846061" class="doi-link" href="https://doi.org/10.5281/zenodo.18846061" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-ensaio-maquiavel-e-a-liberdade-do-povo-2" class="access-btn" href="publicacoes/ensaio-maquiavel-e-a-liberdade-do-povo.html">Acessar conteúdo</a></div></div></li>
-<li id="li-article-item-7" class="article-item"><div id="div-article-topline-7" class="article-topline"><span class="section-badge badge-ensaio">Ensaio</span><span class="pages-chip">p. 8–27</span></div><h3 id="h3-article-title-7" class="article-title"><a id="link-humanos-animais-e-redes-de-existencia" href="publicacoes/humanos-animais-e-redes-de-existencia.html">Humanos, animais e redes de existência<span class="article-subtitle">repensando o humanismo na era do Antropoceno</span></a></h3><div id="div-article-meta-7" class="article-meta"><div id="div-article-authors-7" class="article-authors">Diego Vinícius Brito dos Santos; Taisa Maria Brito dos Santos</div><div id="div-article-actions-7" class="article-actions"><a id="link-zenodo-19012745" class="doi-link" href="https://doi.org/10.5281/zenodo.19012745" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-humanos-animais-e-redes-de-existencia-2" class="access-btn" href="publicacoes/humanos-animais-e-redes-de-existencia.html">Acessar conteúdo</a></div></div></li>
-</ul>
-</section>
-<section class="toc-section" id="resenhas">
-<div id="div-toc-section-head-6" class="toc-section-head"><div id="div-8"><h2 id="h2-8">Resenhas</h2><p id="p-toc-section-note-6" class="toc-section-note">Resenhas críticas publicadas nesta edição.</p></div><span class="section-count">3 publicações</span></div>
-<ul id="ul-article-list-6" class="article-list">
-<li id="li-article-item-8" class="article-item"><div id="div-article-topline-8" class="article-topline"><span class="section-badge badge-resenha">Resenha</span><span class="pages-chip">p. 1–5</span></div><h3 id="h3-article-title-8" class="article-title"><a id="link-resenha-sergio-buarque-estado-novo" href="publicacoes/resenha-sergio-buarque-estado-novo.html">Revolução inconclusa e autoritarismo no Brasil<span class="article-subtitle">notas sobre Sérgio Buarque de Holanda e o Estado Novo</span></a></h3><div id="div-article-meta-8" class="article-meta"><div id="div-article-authors-8" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-8" class="article-actions"><a id="link-zenodo-18845109" class="doi-link" href="https://doi.org/10.5281/zenodo.18845109" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-resenha-sergio-buarque-estado-novo-2" class="access-btn" href="publicacoes/resenha-sergio-buarque-estado-novo.html">Acessar conteúdo</a></div></div></li>
-<li id="li-article-item-9" class="article-item"><div id="div-article-topline-9" class="article-topline"><span class="section-badge badge-resenha">Resenha</span><span class="pages-chip">p. 6–10</span></div><h3 id="h3-article-title-9" class="article-title"><a id="link-resenha-comissao-nacional-da-verdade" href="publicacoes/resenha-comissao-nacional-da-verdade.html">Memória, justiça e transição democrática<span class="article-subtitle">uma leitura sobre a Comissão Nacional da Verdade</span></a></h3><div id="div-article-meta-9" class="article-meta"><div id="div-article-authors-9" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-9" class="article-actions"><a id="link-zenodo-18845488" class="doi-link" href="https://doi.org/10.5281/zenodo.18845488" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-resenha-comissao-nacional-da-verdade-2" class="access-btn" href="publicacoes/resenha-comissao-nacional-da-verdade.html">Acessar conteúdo</a></div></div></li>
-<li id="li-article-item-10" class="article-item"><div id="div-article-topline-10" class="article-topline"><span class="section-badge badge-resenha">Resenha</span><span class="pages-chip">p. 11–36</span></div><h3 id="h3-article-title-10" class="article-title"><a id="link-resenha-como-as-democracias-morrem-steven-levitsky" href="publicacoes/resenha-como-as-democracias-morrem-Steven-Levitsky.html">Quando as democracias se desgastam<span class="article-subtitle">uma releitura de Levitsky e Ziblatt</span></a></h3><div id="div-article-meta-10" class="article-meta"><div id="div-article-authors-10" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-10" class="article-actions"><a id="link-zenodo-18945739" class="doi-link" href="https://doi.org/10.5281/zenodo.18945739" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-resenha-como-as-democracias-morrem-steven-levitsky-2" class="access-btn" href="publicacoes/resenha-como-as-democracias-morrem-Steven-Levitsky.html">Acessar conteúdo</a></div></div></li>
-</ul>
-</section>
-<section class="toc-section" id="traducoes">
-<div id="div-toc-section-head-7" class="toc-section-head"><div id="div-9"><h2 id="h2-9">Traduções</h2><p id="p-toc-section-note-7" class="toc-section-note">Trabalhos de tradução publicados no âmbito da revista.</p></div><span class="section-count">2 publicações</span></div>
-<ul id="ul-article-list-7" class="article-list">
-<li id="li-article-item-11" class="article-item"><div id="div-article-topline-11" class="article-topline"><span class="section-badge badge-traducao">Tradução</span><span class="pages-chip">p. 1–19</span></div><h3 id="h3-article-title-11" class="article-title"><a id="link-traducao-assistance-to-black-bodies" href="publicacoes/traducao-assistance-to-black-bodies.html">Assistance to black bodies in health establishments<span class="article-subtitle">deconstructing prejudices and promoting an ethics of care</span></a></h3><div id="div-article-meta-11" class="article-meta"><div id="div-article-authors-11" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-11" class="article-actions"><a id="link-zenodo-18841714" class="doi-link" href="https://doi.org/10.5281/zenodo.18841714" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-traducao-assistance-to-black-bodies-2" class="access-btn" href="publicacoes/traducao-assistance-to-black-bodies.html">Acessar conteúdo</a></div></div></li>
-<li id="li-article-item-12" class="article-item"><div id="div-article-topline-12" class="article-topline"><span class="section-badge badge-traducao">Tradução</span><span class="pages-chip">p. 20–46</span></div><h3 id="h3-article-title-12" class="article-title"><a id="link-traducao-a-mulher-georg-groddeck" href="publicacoes/traducao-a-mulher-georg-groddeck.html">A mulher (Die Frau)<span class="article-subtitle">de Georg Groddeck</span></a></h3><div id="div-article-meta-12" class="article-meta"><div id="div-article-authors-12" class="article-authors">Georg Groddeck; tradução de Diego Vinícius Brito dos Santos</div><div id="div-article-actions-12" class="article-actions"><a id="link-zenodo-18916814" class="doi-link" href="https://doi.org/10.5281/zenodo.18916814" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-traducao-a-mulher-georg-groddeck-2" class="access-btn" href="publicacoes/traducao-a-mulher-georg-groddeck.html">Acessar conteúdo</a></div></div></li>
-</ul>
-</section>
-<section class="toc-section" id="fotografia-tematica">
-<div id="div-toc-section-head-8" class="toc-section-head"><div id="div-10"><h2 id="h2-10">Fotografia temática</h2><p id="p-toc-section-note-8" class="toc-section-note">Ensaios fotográficos e registros visuais da edição.</p></div><span class="section-count">2 publicações</span></div>
-<ul id="ul-article-list-8" class="article-list">
-<li id="li-article-item-13" class="article-item"><div id="div-article-topline-13" class="article-topline"><span class="section-badge badge-fotografia">Fotografia temática</span><span class="pages-chip">p. 1–30</span></div><h3 id="h3-article-title-13" class="article-title"><a id="link-fotografia-diego-caico" href="publicacoes/fotografia-diego-caico.html">O Patrimônio Arquitetônico de Caicó – RN<span class="article-subtitle">estudos fotográficos</span></a></h3><div id="div-article-meta-13" class="article-meta"><div id="div-article-authors-13" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-13" class="article-actions"><a id="link-zenodo-18820588" class="doi-link" href="https://doi.org/10.5281/zenodo.18820588" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-fotografia-diego-caico-2" class="access-btn" href="publicacoes/fotografia-diego-caico.html">Acessar conteúdo</a></div></div></li>
-<li id="li-article-item-14" class="article-item"><div id="div-article-topline-14" class="article-topline"><span class="section-badge badge-fotografia">Fotografia temática</span><span class="pages-chip">p. 31–37</span></div><h3 id="h3-article-title-14" class="article-title"><a id="link-fotografia-geiza-caico" href="publicacoes/fotografia-geiza-caico.html">O Patrimônio Arquitetônico de Caicó – RN<span class="article-subtitle">estudos fotográficos</span></a></h3><div id="div-article-meta-14" class="article-meta"><div id="div-article-authors-14" class="article-authors">Geiza Venicia dos Santos</div><div id="div-article-actions-14" class="article-actions"><a id="link-zenodo-18841135" class="doi-link" href="https://doi.org/10.5281/zenodo.18841135" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-fotografia-geiza-caico-2" class="access-btn" href="publicacoes/fotografia-geiza-caico.html">Acessar conteúdo</a></div></div></li>
-</ul>
-</section>
-<section class="toc-section" id="relatos-experiencia"><div id="div-toc-section-head-9" class="toc-section-head"><div id="div-11"><h2 id="h2-11">Relatos de experiência</h2><p id="p-toc-section-note-9" class="toc-section-note">Relatos e registros reflexivos vinculados à prática e à experiência autoral.</p></div><span class="section-count">1 publicação</span></div><ul id="ul-article-list-9" class="article-list"><li id="li-article-item-15" class="article-item"><div id="div-article-topline-15" class="article-topline"><span class="section-badge badge-relato">Relato de experiência</span><span class="pages-chip">p. 1–23</span></div><h3 id="h3-article-title-15" class="article-title"><a id="link-relato-as-cartas-sociais-de-vinicius" href="publicacoes/relato-as-cartas-sociais-de-vinicius.html">As cartas sociais de Vinícius</a></h3><div id="div-article-meta-15" class="article-meta"><div id="div-article-authors-15" class="article-authors">Diego Vinícius Brito dos Santos</div><div id="div-article-actions-15" class="article-actions"><a id="link-zenodo-18844651" class="doi-link" href="https://doi.org/10.5281/zenodo.18844651" target="_blank" rel="noopener noreferrer">DOI</a><a id="link-relato-as-cartas-sociais-de-vinicius-2" class="access-btn" href="publicacoes/relato-as-cartas-sociais-de-vinicius.html">Acessar conteúdo</a></div></div></li></ul></section>
-<section class="toc-section" id="dossies-tematicos">
-<div id="div-toc-section-head-10" class="toc-section-head"><div id="div-12"><h2 id="h2-12">Dossiês temáticos</h2><p id="p-toc-section-note-10" class="toc-section-note">Seção destinada a dossiês temáticos organizados pelos(as) editores(as) adjuntos(as), com chamadas específicas, datas próprias de abertura e fechamento e organização interna por artigos, ensaios e resumos expandidos.</p></div><span class="section-count">Aberto para submissões</span></div>
-<div id="div-dossier-panel" class="dossier-panel">
-<div id="div-dossier-header" class="dossier-header"><div id="div-article-topline-16" class="article-topline" style="margin-bottom:8px;"><span class="section-badge badge-dossie">Dossiê temático</span></div><h3 id="h3-1">Endogenia Acadêmica: Dinâmicas de Poder, Produção do Conhecimento e Desafios à Diversidade Científica</h3><p id="p-2">O dossiê “Endogenia Acadêmica: Dinâmicas de Poder, Produção do Conhecimento e Desafios à Diversidade Científica” propõe reunir contribuições originais que analisem criticamente os mecanismos de concentração e reprodução do capital científico no campo acadêmico, considerando seus impactos sobre a diversidade epistemológica, a inovação e a circulação do conhecimento. A proposta prioriza artigos e ensaios inéditos, com rigor teórico-metodológico, que dialoguem com a literatura nacional e internacional, contribuindo para o avanço do debate nas Ciências Humanas e áreas correlatas. Serão especialmente valorizados trabalhos que apresentem abordagens comparativas, análises empíricas, revisão sistemática da literatura ou proposições teóricas inovadoras. O dossiê incentivará a participação de pesquisadoras e pesquisadores de diferentes instituições, regiões e países, visando reduzir práticas endógenas e ampliar a diversidade institucional e geográfica das publicações. Os manuscritos submetidos serão avaliados por meio de avaliação duplo-cega por pares, assegurando imparcialidade, qualidade científica e conformidade com padrões éticos internacionais.</p></div>
-<div id="div-dossier-meta" class="dossier-meta"><div id="div-dossier-meta-card" class="dossier-meta-card"><strong>Editor(a) adjunto(a) responsável</strong>Taisa Maria Brito dos Santos</div><div id="div-dossier-meta-card-2" class="dossier-meta-card"><strong>Data de abertura</strong>19 de março de 2026</div><div id="div-dossier-meta-card-3" class="dossier-meta-card"><strong>Data de fechamento</strong>01 de junho de 2026</div></div>
-<div id="div-dossier-body" class="dossier-body"><p id="p-dossier-status" class="dossier-status">Endogenia Acadêmica: Dinâmicas de Poder, Produção do Conhecimento e Desafios à Diversidade Científica</p><div id="div-dossier-subsection" class="dossier-subsection"><div id="div-article-topline-17" class="article-topline"><span class="section-badge badge-dossie-artigo">Artigos</span></div><p id="p-3">O dossiê temático recebe artigos vinculados ao tema proposto em chamada específica.</p><div id="div-dossier-empty" class="dossier-empty">Nenhum artigo de dossiê publicado no momento.</div></div><div id="div-dossier-subsection-2" class="dossier-subsection"><div id="div-article-topline-18" class="article-topline"><span class="section-badge badge-dossie-ensaio">Ensaios</span></div><p id="p-4">O dossiê temático recebe ensaios, conforme as diretrizes e a proposta editorial da revista.</p><div id="div-dossier-empty-2" class="dossier-empty">Nenhum ensaio de dossiê publicado no momento.</div></div><div id="div-dossier-subsection-3" class="dossier-subsection"><div id="div-article-topline-19" class="article-topline"><span class="section-badge badge-dossie-resumo-expandido">Resumos expandidos</span></div><p id="p-5">O dossiê temático recebe resumos expandidos, conforme as diretrizes e a proposta editorial da revista.</p><div id="div-dossier-empty-3" class="dossier-empty">Nenhum resumo expandido de dossiê publicado no momento.</div></div></div>
-</div>
-<p id="p-catalog-note" class="catalog-note" style="margin-top:18px;"><strong>Organização editorial dos dossiês:</strong><br>
-  cada edição da revista poderá reunir mais de um dossiê temático ao longo do ano editorial. Assim, em uma mesma edição em fluxo contínuo, poderão coexistir, sucessivamente,<em>dossiê 1</em>,<em>dossiê 2</em>,<em>dossiê 3</em>e assim por diante, cada qual com seu próprio período de abertura e fechamento.</p>
-</section>
-</div>
-</div>
-</main>
-</div>
-<footer class="footer" id="rodape"><p id="p-6"><strong>Revista Inquietações</strong>— Portal institucional do periódico</p><div id="div-footer-meta" class="footer-meta"><a id="link-sobre-2" href="sobre.html">Sobre</a><a id="link-politicas-editoriais-2" href="politicas-editoriais.html">Políticas</a><a id="link-submissoes-2" href="submissoes.html">Submissões</a><a id="link-code-of-conduct-md" href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer">Código de Conduta</a><a id="link-www-netlify-com" href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div></footer>
-</div>
-<script>
+  <div id="estrutura-do-site" class="site-shell">
+    <nav id="links-de-salto" class="skip-links" aria-label="Ir para os links de conteúdo"><a
+        id="link-conteudo-principal" href="#conteudo-principal">Ir para o conteúdo principal</a><a
+        id="link-navegacao-principal" href="#navegacao-principal">Ir para a navegação</a><a id="link-barra-lateral"
+        href="#barra-lateral">Ir para a barra lateral</a><a id="link-rodape" href="#rodape">Ir para o rodapé</a></nav>
+    <div id="barra-superior" class="topbar">
+      <div id="div-pill" class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
+      <div id="div-pill-acesso-pill" class="pill acesso-pill"><a id="link-cadastro" href="cadastro-login/cadastro.html"
+          class="topbar-btn">Cadastrar-se</a><a id="link-login" href="cadastro-login/login.html"
+          class="topbar-btn secondary">Entrar</a></div>
+    </div>
+    <header id="cabecalho-da-pagina" class="masthead">
+      <div id="div-masthead-inner" class="masthead-inner">
+        <div id="div-1">
+          <h1 id="h1-1">Conteúdos Publicados</h1>
+          <p id="p-hero-text" class="hero-text">Sumário editorial da primeira edição da Revista Inquietações, com
+            organização por seções, paginação interna, acesso direto às páginas HTML e espaço institucional para dossiês
+            temáticos.</p>
+          <div id="div-masthead-meta" class="masthead-meta">
+            <div id="div-masthead-card" class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
+            <div id="div-masthead-card-2" class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
+            <div id="div-masthead-card-3" class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
+            <div id="div-masthead-card-4" class="masthead-card"><strong>e-ISSN</strong>ISSN 3086-4119</div>
+          </div>
+        </div>
+        <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="logo-revista.png"
+            alt="Logo da Revista Inquietações"></div>
+      </div>
+    </header>
+    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal"><button id="button-site-nav-toggle"
+        class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+      <div class="site-nav-menu" id="site-menu"><a id="link-index" href="index.html">Início</a><a id="link-edicao-atual"
+          href="edicao-atual.html">Atual</a><a id="link-conteudos" href="conteudos.html" class="active">Conteúdos</a><a
+          id="link-evento" href="evento.html">Evento</a><a id="link-index-2"
+          href="Editora-Revista-Inquietacoes/index.html">Editora</a><a id="link-sobre" href="sobre.html">Sobre</a><a
+          id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a><a id="link-noticias"
+          href="noticias.html">Notícias</a><a id="link-politicas-editoriais"
+          href="politicas-editoriais.html">Políticas</a><a id="link-diretrizes-autores"
+          href="diretrizes-autores.html">Diretrizes</a><a id="link-submissoes" href="submissoes.html">Submissões</a><a
+          id="link-templates" href="templates.html">Templates</a><a id="link-contato" href="contato.html">Contato</a><a
+          id="link-homenagens" href="homenagens.html">Homenagens</a></div>
+    </nav>
+    <div id="grade-do-portal" class="portal-grid sidebar-compact">
+      <aside class="sidebar" id="barra-lateral">
+        <section id="section-sidebar-block" class="sidebar-block">
+          <h2 id="h2-1">Navegação da página</h2>
+          <div id="div-side-nav-card" class="side-nav-card"><a id="link-capa-edicao" class="side-nav-link"
+              href="#capa-edicao">Capa da edição</a><a id="link-mensagem-autores-leitores" class="side-nav-link"
+              href="#mensagem-autores-leitores">Mensagem aos autores e leitores</a><a id="link-artigos"
+              class="side-nav-link" href="#artigos">Artigos</a><a id="link-resumos-expandidos" class="side-nav-link"
+              href="#resumos-expandidos">Resumos expandidos</a><a id="link-ensaios" class="side-nav-link"
+              href="#ensaios">Ensaios</a><a id="link-resenhas" class="side-nav-link" href="#resenhas">Resenhas</a><a
+              id="link-traducoes" class="side-nav-link" href="#traducoes">Traduções</a><a id="link-fotografia-tematica"
+              class="side-nav-link" href="#fotografia-tematica">Fotografia temática</a><a id="link-relatos-experiencia"
+              class="side-nav-link" href="#relatos-experiencia">Relatos de experiência</a><a id="link-dossies-tematicos"
+              class="side-nav-link" href="#dossies-tematicos">Dossiês temáticos</a></div>
+        </section>
+      </aside>
+      <main class="content" id="conteudo-principal">
+        <div id="div-issue-shell" class="issue-shell">
+          <section id="section-issue-intro" class="issue-intro">
+            <div id="div-2">
+              <h2 id="h2-2">v. 1, n. 1 (2026) • Fluxo contínuo</h2>
+              <p id="p-1">Abaixo, os conteúdos da edição estão organizados por seção, em formato de sumário editorial.
+                Cada item apresenta autoria, paginação da seção e acesso direto ao conteúdo em HTML. Os dossiês
+                temáticos, quando abertos, poderão coexistir com o fluxo contínuo da revista ao longo da edição.</p>
+              <div id="div-issue-meta" class="issue-meta">
+                <div id="div-issue-meta-card" class="issue-meta-card"><strong>Publicado em</strong>2026</div>
+                <div id="div-issue-meta-card-2" class="issue-meta-card"><strong>Modelo editorial</strong>Fluxo contínuo
+                </div>
+                <div id="div-issue-meta-card-3" class="issue-meta-card"><strong>Suporte de leitura</strong>Páginas HTML
+                  individuais</div>
+                <div id="div-issue-meta-card-4" class="issue-meta-card"><strong>Acesso</strong>Livre e aberto</div>
+              </div>
+            </div>
+            <div id="div-issue-cover" class="issue-cover"><img id="imagem-logo-revista-png-2" src="logo-revista.png"
+                alt="Logotipo da Revista Inquietações"></div>
+          </section>
+          <div id="div-toc-wrap" class="toc-wrap">
+            <section class="toc-section" id="capa-edicao">
+              <div id="div-toc-section-head" class="toc-section-head">
+                <div id="div-3">
+                  <h2 id="h2-3">Capa da edição</h2>
+                  <p id="p-toc-section-note" class="toc-section-note">Material de apresentação visual e identificação da
+                    edição.</p>
+                </div><span class="section-count">1 publicação</span>
+              </div>
+              <ul id="ul-article-list" class="article-list">
+                <li id="li-article-item" class="article-item">
+                  <div id="div-article-topline" class="article-topline"><span
+                      class="section-badge badge-capa">Capa</span><span class="pages-chip">p. 1</span></div>
+                  <h3 id="h3-article-title" class="article-title"><a id="link-capa-da-edicao-v1n1-2026"
+                      href="publicacoes/capa-da-edicao-v1n1-2026.html">Capa da edição v. 1, n. 1 (2026)</a></h3>
+                  <div id="div-article-meta" class="article-meta">
+                    <div id="div-article-authors" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions" class="article-actions"><a id="link-capa-da-edicao-v1n1-2026-2"
+                        class="access-btn" href="publicacoes/capa-da-edicao-v1n1-2026.html">Acessar conteúdo</a></div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="toc-section" id="mensagem-autores-leitores">
+              <div id="div-toc-section-head-2" class="toc-section-head">
+                <div id="div-4">
+                  <h2 id="h2-4">Mensagem aos(às) autores(as) e leitores(as)</h2>
+                  <p id="p-toc-section-note-2" class="toc-section-note">Texto de apresentação e acolhida da edição.</p>
+                </div><span class="section-count">1 publicação</span>
+              </div>
+              <ul id="ul-article-list-2" class="article-list">
+                <li id="li-article-item-2" class="article-item">
+                  <div id="div-article-topline-2" class="article-topline"><span
+                      class="section-badge badge-mensagem">Mensagem</span><span class="pages-chip">p. 1–7</span></div>
+                  <h3 id="h3-article-title-2" class="article-title"><a id="link-mensagem-autores-leitores-2"
+                      href="publicacoes/mensagem-autores-leitores.html">Mensagem aos(às) autores(as) e leitores(as)</a>
+                  </h3>
+                  <div id="div-article-meta-2" class="article-meta">
+                    <div id="div-article-authors-2" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-2" class="article-actions"><a id="link-zenodo-18816235"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18816235" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-mensagem-autores-leitores-3" class="access-btn"
+                        href="publicacoes/mensagem-autores-leitores.html">Acessar conteúdo</a></div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="toc-section" id="artigos">
+              <div id="div-toc-section-head-3" class="toc-section-head">
+                <div id="div-5">
+                  <h2 id="h2-5">Artigos</h2>
+                  <p id="p-toc-section-note-3" class="toc-section-note">Textos acadêmicos publicados na edição v. 1, n.
+                    1 (2026).</p>
+                </div><span class="section-count">2 publicações</span>
+              </div>
+              <ul id="ul-article-list-3" class="article-list">
+                <li id="li-article-item-3" class="article-item">
+                  <div id="div-article-topline-3" class="article-topline"><span
+                      class="section-badge badge-artigo">Artigo</span><span class="pages-chip">p. 1–30</span></div>
+                  <h3 id="h3-article-title-3" class="article-title"><a
+                      id="link-artigo-identidade-genero-disforia-educacao-inclusiva"
+                      href="publicacoes/artigo-identidade-genero-disforia-educacao-inclusiva.html">IDENTIDADE DE GÊNERO,
+                      DISFORIA E EDUCAÇÃO INCLUSIVA<span class="article-subtitle">Desconstruindo binarismos e
+                        respeitando a diversidade</span></a></h3>
+                  <div id="div-article-meta-3" class="article-meta">
+                    <div id="div-article-authors-3" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-3" class="article-actions"><a id="link-zenodo-18825993"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18825993" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a
+                        id="link-artigo-identidade-genero-disforia-educacao-inclusiva-2" class="access-btn"
+                        href="publicacoes/artigo-identidade-genero-disforia-educacao-inclusiva.html">Acessar
+                        conteúdo</a></div>
+                  </div>
+                </li>
+                <li id="li-article-item-4" class="article-item">
+                  <div id="div-article-topline-4" class="article-topline"><span
+                      class="section-badge badge-artigo">Artigo</span><span class="pages-chip">p. 31–42</span></div>
+                  <h3 id="h3-article-title-4" class="article-title"><a id="link-artigo-algoritmos-do-passado"
+                      href="publicacoes/artigo-algoritmos-do-passado.html">Algoritmos do passado<span
+                        class="article-subtitle">como a IA está reescrevendo a história</span></a></h3>
+                  <div id="div-article-meta-4" class="article-meta">
+                    <div id="div-article-authors-4" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-4" class="article-actions"><a id="link-zenodo-18836259"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18836259" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-artigo-algoritmos-do-passado-2" class="access-btn"
+                        href="publicacoes/artigo-algoritmos-do-passado.html">Acessar conteúdo</a></div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="toc-section" id="resumos-expandidos">
+              <div id="div-toc-section-head-4" class="toc-section-head">
+                <div id="div-6">
+                  <h2 id="h2-6">Resumos expandidos</h2>
+                  <p id="p-toc-section-note-4" class="toc-section-note">Produções em formato de resumo expandido.</p>
+                </div><span class="section-count">1 publicação</span>
+              </div>
+              <ul id="ul-article-list-4" class="article-list">
+                <li id="li-article-item-5" class="article-item">
+                  <div id="div-article-topline-5" class="article-topline"><span
+                      class="section-badge badge-resumo">Resumo expandido</span><span class="pages-chip">p. 1–5</span>
+                  </div>
+                  <h3 id="h3-article-title-5" class="article-title"><a id="link-resumo-paulo-freire-4-0"
+                      href="publicacoes/resumo-paulo-freire-4-0.html">Paulo Freire 4.0<span class="article-subtitle">o
+                        ChatGPT e a materialização da educação bancária</span></a></h3>
+                  <div id="div-article-meta-5" class="article-meta">
+                    <div id="div-article-authors-5" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-5" class="article-actions"><a id="link-zenodo-18820608"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18820608" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-resumo-paulo-freire-4-0-2" class="access-btn"
+                        href="publicacoes/resumo-paulo-freire-4-0.html">Acessar conteúdo</a></div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="toc-section" id="ensaios">
+              <div id="div-toc-section-head-5" class="toc-section-head">
+                <div id="div-7">
+                  <h2 id="h2-7">Ensaios</h2>
+                  <p id="p-toc-section-note-5" class="toc-section-note">Seção dedicada a ensaios autorais e reflexivos.
+                  </p>
+                </div><span class="section-count">2 publicações</span>
+              </div>
+              <ul id="ul-article-list-5" class="article-list">
+                <li id="li-article-item-6" class="article-item">
+                  <div id="div-article-topline-6" class="article-topline"><span
+                      class="section-badge badge-ensaio">Ensaio</span><span class="pages-chip">p. 1–7</span></div>
+                  <h3 id="h3-article-title-6" class="article-title"><a id="link-ensaio-maquiavel-e-a-liberdade-do-povo"
+                      href="publicacoes/ensaio-maquiavel-e-a-liberdade-do-povo.html">MAQUIAVEL E A LIBERDADE DO POVO</a>
+                  </h3>
+                  <div id="div-article-meta-6" class="article-meta">
+                    <div id="div-article-authors-6" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-6" class="article-actions"><a id="link-zenodo-18846061"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18846061" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-ensaio-maquiavel-e-a-liberdade-do-povo-2"
+                        class="access-btn" href="publicacoes/ensaio-maquiavel-e-a-liberdade-do-povo.html">Acessar
+                        conteúdo</a></div>
+                  </div>
+                </li>
+                <li id="li-article-item-7" class="article-item">
+                  <div id="div-article-topline-7" class="article-topline"><span
+                      class="section-badge badge-ensaio">Ensaio</span><span class="pages-chip">p. 8–27</span></div>
+                  <h3 id="h3-article-title-7" class="article-title"><a id="link-humanos-animais-e-redes-de-existencia"
+                      href="publicacoes/humanos-animais-e-redes-de-existencia.html">Humanos, animais e redes de
+                      existência<span class="article-subtitle">repensando o humanismo na era do Antropoceno</span></a>
+                  </h3>
+                  <div id="div-article-meta-7" class="article-meta">
+                    <div id="div-article-authors-7" class="article-authors">Diego Vinícius Brito dos Santos; Taisa Maria
+                      Brito dos Santos</div>
+                    <div id="div-article-actions-7" class="article-actions"><a id="link-zenodo-19012745"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.19012745" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-humanos-animais-e-redes-de-existencia-2"
+                        class="access-btn" href="publicacoes/humanos-animais-e-redes-de-existencia.html">Acessar
+                        conteúdo</a></div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="toc-section" id="resenhas">
+              <div id="div-toc-section-head-6" class="toc-section-head">
+                <div id="div-8">
+                  <h2 id="h2-8">Resenhas</h2>
+                  <p id="p-toc-section-note-6" class="toc-section-note">Resenhas críticas publicadas nesta edição.</p>
+                </div><span class="section-count">3 publicações</span>
+              </div>
+              <ul id="ul-article-list-6" class="article-list">
+                <li id="li-article-item-8" class="article-item">
+                  <div id="div-article-topline-8" class="article-topline"><span
+                      class="section-badge badge-resenha">Resenha</span><span class="pages-chip">p. 1–5</span></div>
+                  <h3 id="h3-article-title-8" class="article-title"><a id="link-resenha-sergio-buarque-estado-novo"
+                      href="publicacoes/resenha-sergio-buarque-estado-novo.html">Revolução inconclusa e autoritarismo no
+                      Brasil<span class="article-subtitle">notas sobre Sérgio Buarque de Holanda e o Estado
+                        Novo</span></a></h3>
+                  <div id="div-article-meta-8" class="article-meta">
+                    <div id="div-article-authors-8" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-8" class="article-actions"><a id="link-zenodo-18845109"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18845109" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-resenha-sergio-buarque-estado-novo-2"
+                        class="access-btn" href="publicacoes/resenha-sergio-buarque-estado-novo.html">Acessar
+                        conteúdo</a></div>
+                  </div>
+                </li>
+                <li id="li-article-item-9" class="article-item">
+                  <div id="div-article-topline-9" class="article-topline"><span
+                      class="section-badge badge-resenha">Resenha</span><span class="pages-chip">p. 6–10</span></div>
+                  <h3 id="h3-article-title-9" class="article-title"><a id="link-resenha-comissao-nacional-da-verdade"
+                      href="publicacoes/resenha-comissao-nacional-da-verdade.html">Memória, justiça e transição
+                      democrática<span class="article-subtitle">uma leitura sobre a Comissão Nacional da
+                        Verdade</span></a></h3>
+                  <div id="div-article-meta-9" class="article-meta">
+                    <div id="div-article-authors-9" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-9" class="article-actions"><a id="link-zenodo-18845488"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18845488" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-resenha-comissao-nacional-da-verdade-2"
+                        class="access-btn" href="publicacoes/resenha-comissao-nacional-da-verdade.html">Acessar
+                        conteúdo</a></div>
+                  </div>
+                </li>
+                <li id="li-article-item-10" class="article-item">
+                  <div id="div-article-topline-10" class="article-topline"><span
+                      class="section-badge badge-resenha">Resenha</span><span class="pages-chip">p. 11–36</span></div>
+                  <h3 id="h3-article-title-10" class="article-title"><a
+                      id="link-resenha-como-as-democracias-morrem-steven-levitsky"
+                      href="publicacoes/resenha-como-as-democracias-morrem-Steven-Levitsky.html">Quando as democracias
+                      se desgastam<span class="article-subtitle">uma releitura de Levitsky e Ziblatt</span></a></h3>
+                  <div id="div-article-meta-10" class="article-meta">
+                    <div id="div-article-authors-10" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-10" class="article-actions"><a id="link-zenodo-18945739"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18945739" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a
+                        id="link-resenha-como-as-democracias-morrem-steven-levitsky-2" class="access-btn"
+                        href="publicacoes/resenha-como-as-democracias-morrem-Steven-Levitsky.html">Acessar conteúdo</a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="toc-section" id="traducoes">
+              <div id="div-toc-section-head-7" class="toc-section-head">
+                <div id="div-9">
+                  <h2 id="h2-9">Traduções</h2>
+                  <p id="p-toc-section-note-7" class="toc-section-note">Trabalhos de tradução publicados no âmbito da
+                    revista.</p>
+                </div><span class="section-count">2 publicações</span>
+              </div>
+              <ul id="ul-article-list-7" class="article-list">
+                <li id="li-article-item-11" class="article-item">
+                  <div id="div-article-topline-11" class="article-topline"><span
+                      class="section-badge badge-traducao">Tradução</span><span class="pages-chip">p. 1–19</span></div>
+                  <h3 id="h3-article-title-11" class="article-title"><a id="link-traducao-assistance-to-black-bodies"
+                      href="publicacoes/traducao-assistance-to-black-bodies.html">Assistance to black bodies in health
+                      establishments<span class="article-subtitle">deconstructing prejudices and promoting an ethics of
+                        care</span></a></h3>
+                  <div id="div-article-meta-11" class="article-meta">
+                    <div id="div-article-authors-11" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-11" class="article-actions"><a id="link-zenodo-18841714"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18841714" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-traducao-assistance-to-black-bodies-2"
+                        class="access-btn" href="publicacoes/traducao-assistance-to-black-bodies.html">Acessar
+                        conteúdo</a></div>
+                  </div>
+                </li>
+                <li id="li-article-item-12" class="article-item">
+                  <div id="div-article-topline-12" class="article-topline"><span
+                      class="section-badge badge-traducao">Tradução</span><span class="pages-chip">p. 20–46</span></div>
+                  <h3 id="h3-article-title-12" class="article-title"><a id="link-traducao-a-mulher-georg-groddeck"
+                      href="publicacoes/traducao-a-mulher-georg-groddeck.html">A mulher (Die Frau)<span
+                        class="article-subtitle">de Georg Groddeck</span></a></h3>
+                  <div id="div-article-meta-12" class="article-meta">
+                    <div id="div-article-authors-12" class="article-authors">Georg Groddeck; tradução de Diego Vinícius
+                      Brito dos Santos</div>
+                    <div id="div-article-actions-12" class="article-actions"><a id="link-zenodo-18916814"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18916814" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-traducao-a-mulher-georg-groddeck-2"
+                        class="access-btn" href="publicacoes/traducao-a-mulher-georg-groddeck.html">Acessar conteúdo</a>
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="toc-section" id="fotografia-tematica">
+              <div id="div-toc-section-head-8" class="toc-section-head">
+                <div id="div-10">
+                  <h2 id="h2-10">Fotografia temática</h2>
+                  <p id="p-toc-section-note-8" class="toc-section-note">Ensaios fotográficos e registros visuais da
+                    edição.</p>
+                </div><span class="section-count">2 publicações</span>
+              </div>
+              <ul id="ul-article-list-8" class="article-list">
+                <li id="li-article-item-13" class="article-item">
+                  <div id="div-article-topline-13" class="article-topline"><span
+                      class="section-badge badge-fotografia">Fotografia temática</span><span class="pages-chip">p.
+                      1–30</span></div>
+                  <h3 id="h3-article-title-13" class="article-title"><a id="link-fotografia-diego-caico"
+                      href="publicacoes/fotografia-diego-caico.html">O Patrimônio Arquitetônico de Caicó – RN<span
+                        class="article-subtitle">estudos fotográficos</span></a></h3>
+                  <div id="div-article-meta-13" class="article-meta">
+                    <div id="div-article-authors-13" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-13" class="article-actions"><a id="link-zenodo-18820588"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18820588" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-fotografia-diego-caico-2" class="access-btn"
+                        href="publicacoes/fotografia-diego-caico.html">Acessar conteúdo</a></div>
+                  </div>
+                </li>
+                <li id="li-article-item-14" class="article-item">
+                  <div id="div-article-topline-14" class="article-topline"><span
+                      class="section-badge badge-fotografia">Fotografia temática</span><span class="pages-chip">p.
+                      31–37</span></div>
+                  <h3 id="h3-article-title-14" class="article-title"><a id="link-fotografia-geiza-caico"
+                      href="publicacoes/fotografia-geiza-caico.html">O Patrimônio Arquitetônico de Caicó – RN<span
+                        class="article-subtitle">estudos fotográficos</span></a></h3>
+                  <div id="div-article-meta-14" class="article-meta">
+                    <div id="div-article-authors-14" class="article-authors">Geiza Venicia dos Santos</div>
+                    <div id="div-article-actions-14" class="article-actions"><a id="link-zenodo-18841135"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18841135" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-fotografia-geiza-caico-2" class="access-btn"
+                        href="publicacoes/fotografia-geiza-caico.html">Acessar conteúdo</a></div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="toc-section" id="relatos-experiencia">
+              <div id="div-toc-section-head-9" class="toc-section-head">
+                <div id="div-11">
+                  <h2 id="h2-11">Relatos de experiência</h2>
+                  <p id="p-toc-section-note-9" class="toc-section-note">Relatos e registros reflexivos vinculados à
+                    prática e à experiência autoral.</p>
+                </div><span class="section-count">1 publicação</span>
+              </div>
+              <ul id="ul-article-list-9" class="article-list">
+                <li id="li-article-item-15" class="article-item">
+                  <div id="div-article-topline-15" class="article-topline"><span
+                      class="section-badge badge-relato">Relato de experiência</span><span class="pages-chip">p.
+                      1–23</span></div>
+                  <h3 id="h3-article-title-15" class="article-title"><a id="link-relato-as-cartas-sociais-de-vinicius"
+                      href="publicacoes/relato-as-cartas-sociais-de-vinicius.html">As cartas sociais de Vinícius</a>
+                  </h3>
+                  <div id="div-article-meta-15" class="article-meta">
+                    <div id="div-article-authors-15" class="article-authors">Diego Vinícius Brito dos Santos</div>
+                    <div id="div-article-actions-15" class="article-actions"><a id="link-zenodo-18844651"
+                        class="doi-link" href="https://doi.org/10.5281/zenodo.18844651" target="_blank"
+                        rel="noopener noreferrer">DOI</a><a id="link-relato-as-cartas-sociais-de-vinicius-2"
+                        class="access-btn" href="publicacoes/relato-as-cartas-sociais-de-vinicius.html">Acessar
+                        conteúdo</a></div>
+                  </div>
+                </li>
+              </ul>
+            </section>
+            <section class="toc-section" id="dossies-tematicos">
+              <div id="div-toc-section-head-10" class="toc-section-head">
+                <div id="div-12">
+                  <h2 id="h2-12">Dossiês temáticos</h2>
+                  <p id="p-toc-section-note-10" class="toc-section-note">Seção destinada a dossiês temáticos organizados
+                    pelos(as) editores(as) adjuntos(as), com chamadas específicas, datas próprias de abertura e
+                    fechamento e organização interna por artigos, ensaios e resumos expandidos.</p>
+                </div><span class="section-count">Aberto para submissões</span>
+              </div>
+              <div id="div-dossier-panel" class="dossier-panel">
+                <div id="div-dossier-header" class="dossier-header">
+                  <div id="div-article-topline-16" class="article-topline" style="margin-bottom:8px;"><span
+                      class="section-badge badge-dossie">Dossiê temático</span></div>
+                  <h3 id="h3-1">Endogenia Acadêmica: Dinâmicas de Poder, Produção do Conhecimento e Desafios à
+                    Diversidade Científica</h3>
+                  <p id="p-2">O dossiê “Endogenia Acadêmica: Dinâmicas de Poder, Produção do Conhecimento e Desafios à
+                    Diversidade Científica” propõe reunir contribuições originais que analisem criticamente os
+                    mecanismos de concentração e reprodução do capital científico no campo acadêmico, considerando seus
+                    impactos sobre a diversidade epistemológica, a inovação e a circulação do conhecimento. A proposta
+                    prioriza artigos e ensaios inéditos, com rigor teórico-metodológico, que dialoguem com a literatura
+                    nacional e internacional, contribuindo para o avanço do debate nas Ciências Humanas e áreas
+                    correlatas. Serão especialmente valorizados trabalhos que apresentem abordagens comparativas,
+                    análises empíricas, revisão sistemática da literatura ou proposições teóricas inovadoras. O dossiê
+                    incentivará a participação de pesquisadoras e pesquisadores de diferentes instituições, regiões e
+                    países, visando reduzir práticas endógenas e ampliar a diversidade institucional e geográfica das
+                    publicações. Os manuscritos submetidos serão avaliados por meio de avaliação duplo-cega por pares,
+                    assegurando imparcialidade, qualidade científica e conformidade com padrões éticos internacionais.
+                  </p>
+                </div>
+                <div id="div-dossier-meta" class="dossier-meta">
+                  <div id="div-dossier-meta-card" class="dossier-meta-card"><strong>Editor(a) adjunto(a)
+                      responsável</strong>Taisa Maria Brito dos Santos</div>
+                  <div id="div-dossier-meta-card-2" class="dossier-meta-card"><strong>Data de abertura</strong>19 de
+                    março de 2026</div>
+                  <div id="div-dossier-meta-card-3" class="dossier-meta-card"><strong>Data de fechamento</strong>01 de
+                    junho de 2026</div>
+                </div>
+                <div id="div-dossier-body" class="dossier-body">
+                  <p id="p-dossier-status" class="dossier-status">Endogenia Acadêmica: Dinâmicas de Poder, Produção do
+                    Conhecimento e Desafios à Diversidade Científica</p>
+                  <div id="div-dossier-subsection" class="dossier-subsection">
+                    <div id="div-article-topline-17" class="article-topline"><span
+                        class="section-badge badge-dossie-artigo">Artigos</span></div>
+                    <p id="p-3">O dossiê temático recebe artigos vinculados ao tema proposto em chamada específica.</p>
+                    <div id="div-dossier-empty" class="dossier-empty">Nenhum artigo de dossiê publicado no momento.
+                    </div>
+                  </div>
+                  <div id="div-dossier-subsection-2" class="dossier-subsection">
+                    <div id="div-article-topline-18" class="article-topline"><span
+                        class="section-badge badge-dossie-ensaio">Ensaios</span></div>
+                    <p id="p-4">O dossiê temático recebe ensaios, conforme as diretrizes e a proposta editorial da
+                      revista.</p>
+                    <div id="div-dossier-empty-2" class="dossier-empty">Nenhum ensaio de dossiê publicado no momento.
+                    </div>
+                  </div>
+                  <div id="div-dossier-subsection-3" class="dossier-subsection">
+                    <div id="div-article-topline-19" class="article-topline"><span
+                        class="section-badge badge-dossie-resumo-expandido">Resumos expandidos</span></div>
+                    <p id="p-5">O dossiê temático recebe resumos expandidos, conforme as diretrizes e a proposta
+                      editorial da revista.</p>
+                    <div id="div-dossier-empty-3" class="dossier-empty">Nenhum resumo expandido de dossiê publicado no
+                      momento.</div>
+                  </div>
+                </div>
+              </div>
+              <p id="p-catalog-note" class="catalog-note" style="margin-top:18px;"><strong>Organização editorial dos
+                  dossiês:</strong><br>
+                cada edição da revista poderá reunir mais de um dossiê temático ao longo do ano editorial. Assim, em uma
+                mesma edição em fluxo contínuo, poderão coexistir, sucessivamente,<em>dossiê 1</em>,<em>dossiê
+                  2</em>,<em>dossiê 3</em>e assim por diante, cada qual com seu próprio período de abertura e
+                fechamento.</p>
+            </section>
+          </div>
+        </div>
+      </main>
+    </div>
+    <footer class="footer" id="rodape">
+      <p id="p-6"><strong>Revista Inquietações</strong>— Portal institucional do periódico</p>
+      <div id="div-footer-meta" class="footer-meta"><a id="link-sobre-2" href="sobre.html">Sobre</a><a
+          id="link-politicas-editoriais-2" href="politicas-editoriais.html">Políticas</a><a id="link-submissoes-2"
+          href="submissoes.html">Submissões</a><a id="link-code-of-conduct-md"
+          href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank"
+          rel="noopener noreferrer">Código de Conduta</a><a id="link-www-netlify-com" href="https://www.netlify.com"
+          target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div>
+    </footer>
+  </div>
+  <script>
     const navToggle = document.querySelector('.site-nav-toggle');
     const navMenu = document.querySelector('.site-nav-menu');
 
@@ -656,6 +1193,7 @@
       });
     }
   </script>
-<script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 </body>
+
 </html>

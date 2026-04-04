@@ -1,34 +1,351 @@
 <!DOCTYPE html>
 <html id="pagina-contato" lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Contato institucional da Revista Inquietações.">
-<meta name="author" content="Revista Inquietações">
-<title>Contato | Revista Inquietações</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48" type="image/png">
-<link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
-<script type="application/ld+json"> { "@context": "https://schema.org", "@type": "Organization", "name": "Revista Inquietações", "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/contato.html", "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" } </script>
-<style> .contact-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:22px; margin-top:12px; } .contact-card{ position:relative; background:#fff; border:1px solid var(--line); border-radius:18px; padding:22px; box-shadow:var(--shadow-soft); transition:transform .18s ease, box-shadow .18s ease; overflow:hidden; } .topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; } .acesso-pill{ display:flex; align-items:center; gap:8px; padding:6px 8px; } .topbar-btn{ display:inline-flex; align-items:center; justify-content:center; padding:6px 14px; border-radius:999px; background:#1f3c88; color:#fff; text-decoration:none; font-size:.85rem; font-weight:600; transition:all .15s ease; } .topbar-btn.secondary{ background:#2c55a5; } .topbar-btn:hover{ transform:translateY(-1px); opacity:.95; } .contact-card::before{ content:""; position:absolute; top:0; left:0; right:0; height:6px; } .contact-card:hover{ transform:translateY(-2px); box-shadow:0 14px 28px rgba(16,35,63,0.08); } .contact-card h3{ margin-top:0; color:var(--brand); } .contact-card p{ margin:6px 0; } .contact-card a{ font-weight:500; } /* cores dos cards */ .contact-card.email{ background:#eef5ff; border-color:#d7e6fb; } .contact-card.email::before{ background:#8cb8f5; } .contact-card.instagram{ background:#fff1f6; border-color:#f3d7e4; } .contact-card.instagram::before{ background:#e7a6c1; } .contact-card.editorial{ background:#eefaf2; border-color:#d7ecdf; } .contact-card.editorial::before{ background:#92c9a3; } .site-nav-menu{ display:flex; flex-wrap:nowrap; align-items:center; justify-content:center; gap:5px; overflow-x:auto; scrollbar-width:none; } .site-nav-menu::-webkit-scrollbar{ display:none; } .site-nav-menu a{ font-size:0.88rem; padding:8px 8px; white-space:nowrap; } .info-links{display:grid;gap:12px;list-style:none;padding:0;margin:0;} .info-links li{margin:0;} .info-links a{display:flex;align-items:center;gap:10px;text-decoration:none;padding:12px 14px;border-radius:14px;background:linear-gradient(135deg,#1f3c88 0%,#315fbe 100%);border:1px solid rgba(31,60,136,.22);color:#fff;font-weight:600;box-shadow:0 10px 24px rgba(31,60,136,.14);transition:transform .18s ease, box-shadow .18s ease, filter .18s ease;} .info-links a::before{content:"";width:8px;height:8px;border-radius:999px;background:rgba(255,255,255,.92);box-shadow:0 0 0 5px rgba(255,255,255,.12);flex:0 0 8px;} .info-links a:hover{transform:translateY(-2px);box-shadow:0 14px 28px rgba(31,60,136,.2);filter:saturate(1.05);} .contact-action{display:inline-flex;align-items:center;justify-content:center;gap:10px;padding:12px 16px;border-radius:14px;text-decoration:none;font-weight:700;border:1px solid transparent;transition:transform .18s ease,box-shadow .18s ease,opacity .18s ease;box-shadow:var(--shadow-soft);margin-top:8px;} .contact-action:hover{transform:translateY(-2px);opacity:.97;} .contact-action.email{background:linear-gradient(135deg,#1f3c88 0%,#315fbe 100%);color:#fff;} .contact-action.instagram{background:linear-gradient(135deg,#d946ef 0%,#f97316 100%);color:#fff;} .contact-action.editor{background:linear-gradient(135deg,#0f766e 0%,#14b8a6 100%);color:#fff;} </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Contato institucional da Revista Inquietações.">
+    <meta name="author" content="Revista Inquietações">
+    <title>Contato | Revista Inquietações</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48"
+        type="image/png">
+    <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
+        type="image/png">
+    <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
+    <script
+        type="application/ld+json"> { "@context": "https://schema.org", "@type": "Organization", "name": "Revista Inquietações", "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/contato.html", "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" } </script>
+    <style>
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+            margin-top: 12px;
+        }
+
+        .contact-card {
+            position: relative;
+            background: #fff;
+            border: 1px solid var(--line);
+            border-radius: 18px;
+            padding: 22px;
+            box-shadow: var(--shadow-soft);
+            transition: transform .18s ease, box-shadow .18s ease;
+            overflow: hidden;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .acesso-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+        }
+
+        .topbar-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: #1f3c88;
+            color: #fff;
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: all .15s ease;
+        }
+
+        .topbar-btn.secondary {
+            background: #2c55a5;
+        }
+
+        .topbar-btn:hover {
+            transform: translateY(-1px);
+            opacity: .95;
+        }
+
+        .contact-card::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 6px;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(16, 35, 63, 0.08);
+        }
+
+        .contact-card h3 {
+            margin-top: 0;
+            color: var(--brand);
+        }
+
+        .contact-card p {
+            margin: 6px 0;
+        }
+
+        .contact-card a {
+            font-weight: 500;
+        }
+
+        /* cores dos cards */
+        .contact-card.email {
+            background: #eef5ff;
+            border-color: #d7e6fb;
+        }
+
+        .contact-card.email::before {
+            background: #8cb8f5;
+        }
+
+        .contact-card.instagram {
+            background: #fff1f6;
+            border-color: #f3d7e4;
+        }
+
+        .contact-card.instagram::before {
+            background: #e7a6c1;
+        }
+
+        .contact-card.editorial {
+            background: #eefaf2;
+            border-color: #d7ecdf;
+        }
+
+        .contact-card.editorial::before {
+            background: #92c9a3;
+        }
+
+        .site-nav-menu {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .site-nav-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .site-nav-menu a {
+            font-size: 0.88rem;
+            padding: 8px 8px;
+            white-space: nowrap;
+        }
+
+        .info-links {
+            display: grid;
+            gap: 12px;
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .info-links li {
+            margin: 0;
+        }
+
+        .info-links a {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            text-decoration: none;
+            padding: 12px 14px;
+            border-radius: 14px;
+            background: linear-gradient(135deg, #1f3c88 0%, #315fbe 100%);
+            border: 1px solid rgba(31, 60, 136, .22);
+            color: #fff;
+            font-weight: 600;
+            box-shadow: 0 10px 24px rgba(31, 60, 136, .14);
+            transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
+        }
+
+        .info-links a::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, .92);
+            box-shadow: 0 0 0 5px rgba(255, 255, 255, .12);
+            flex: 0 0 8px;
+        }
+
+        .info-links a:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(31, 60, 136, .2);
+            filter: saturate(1.05);
+        }
+
+        .contact-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            padding: 12px 16px;
+            border-radius: 14px;
+            text-decoration: none;
+            font-weight: 700;
+            border: 1px solid transparent;
+            transition: transform .18s ease, box-shadow .18s ease, opacity .18s ease;
+            box-shadow: var(--shadow-soft);
+            margin-top: 8px;
+        }
+
+        .contact-action:hover {
+            transform: translateY(-2px);
+            opacity: .97;
+        }
+
+        .contact-action.email {
+            background: linear-gradient(135deg, #1f3c88 0%, #315fbe 100%);
+            color: #fff;
+        }
+
+        .contact-action.instagram {
+            background: linear-gradient(135deg, #d946ef 0%, #f97316 100%);
+            color: #fff;
+        }
+
+        .contact-action.editor {
+            background: linear-gradient(135deg, #0f766e 0%, #14b8a6 100%);
+            color: #fff;
+        }
+    </style>
 </head>
+
 <body id="corpo-contato">
-<div id="estrutura-do-site" class="site-shell">
-<nav id="links-de-salto" class="skip-links"><a id="link-conteudo-principal" href="#conteudo-principal">Ir para conteúdo</a><a id="link-navegacao-principal" href="#navegacao-principal">Ir para navegação</a><a id="link-barra-lateral" href="#barra-lateral">Ir para barra lateral</a></nav>
-<div id="barra-superior" class="topbar"><div id="div-pill" class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div><div id="div-pill-acesso-pill" class="pill acesso-pill"><a id="link-cadastro" href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a><a id="link-login" href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a></div></div>
-<header id="cabecalho-da-pagina" class="masthead"><div id="div-masthead-inner" class="masthead-inner"><div id="div-1"><p id="p-kicker" class="kicker">Portal científico</p><h1 id="h1-1">Contato</h1><p id="p-hero-text" class="hero-text">A página de contato da Revista Inquietações reúne os principais canais institucionais para comunicação com a equipe editorial do periódico.</p><div id="div-masthead-meta" class="masthead-meta"><div id="div-masthead-card" class="masthead-card"><strong>Comunicação</strong>Contato institucional</div><div id="div-masthead-card-2" class="masthead-card"><strong>Canal oficial</strong>E-mail editorial</div><div id="div-masthead-card-3" class="masthead-card"><strong>Redes</strong>Instagram institucional</div></div></div><div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="logo-revista.png" alt="Logo da Revista Inquietações"></div></div></header>
-<nav class="site-nav" id="navegacao-principal"><button id="button-site-nav-toggle" class="site-nav-toggle">Menu</button><div id="div-site-nav-menu" class="site-nav-menu"><a id="link-index" href="index.html">Início</a><a id="link-edicao-atual" href="edicao-atual.html">Atual</a><a id="link-conteudos" href="conteudos.html">Conteúdos</a><a id="link-evento" href="evento.html">Evento</a><a id="link-index-2" href="Editora-Revista-Inquietacoes/index.html">Editora</a><a id="link-sobre" href="sobre.html">Sobre</a><a id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a><a id="link-noticias" href="noticias.html">Notícias</a><a id="link-politicas-editoriais" href="politicas-editoriais.html">Políticas</a><a id="link-diretrizes-autores" href="diretrizes-autores.html">Diretrizes</a><a id="link-submissoes" href="submissoes.html">Submissões</a><a id="link-templates" href="templates.html">Templates</a><a id="link-contato" href="contato.html" class="active">Contato</a><a id="link-homenagens" href="homenagens.html">Homenagens</a></div></nav>
-<div id="grade-do-portal" class="portal-grid sidebar-compact">
-<aside class="sidebar" id="barra-lateral"><section id="section-sidebar-block" class="sidebar-block"><h2 id="h2-1">Informações</h2><ul id="ul-info-links" class="info-links"><li id="li-1"><a id="link-contato-institucional" href="#contato-institucional">Contato institucional</a></li><li id="li-2"><a id="link-redes" href="#redes">Redes sociais</a></li><li id="li-3"><a id="link-editorial" href="#editorial">Comunicação editorial</a></li></ul></section></aside>
-<main class="content" id="conteudo-principal">
-<section class="panel" id="contato-institucional"><div id="div-panel-head" class="panel-head"><h2 id="h2-2">Contato institucional</h2></div><div id="div-panel-body" class="panel-body"><div id="div-contact-grid" class="contact-grid"><div id="div-contact-card-email" class="contact-card email"><h3 id="h3-1">E-mail editorial</h3><p id="p-1">Para informações gerais, submissões ou comunicação institucional com a equipe editorial da Revista Inquietações.</p><p id="p-2"><a id="link-mailto-rev-inquietacoes-gmail-com" class="contact-action email" href="mailto:rev.inquietacoes@gmail.com"><span>Enviar e-mail</span></a></p></div><div id="div-contact-card-instagram" class="contact-card instagram"><h3 id="h3-2">Instagram</h3><p id="p-3">Acompanhe as publicações, eventos, minicursos e atualizações do portal.</p><p id="p-4"><a id="link-revistainquietacoes" class="contact-action instagram" href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer"><span>Abrir Instagram</span></a></p></div><div id="div-contact-card-editorial" class="contact-card editorial"><h3 id="h3-3">Comunicação editorial</h3><p id="p-5">Dúvidas relacionadas a avaliação, políticas editoriais ou diretrizes para autores podem ser encaminhadas diretamente à equipe editorial.</p><p id="p-6"><a id="link-chat-interno" class="contact-action editor" href="https://revista-inquietacoes.netlify.app/cadastro-login/chat-interno" target="_blank" rel="noopener noreferrer"><span>Falar com o editor</span></a></p></div></div></div></section>
-<section class="panel" id="redes"><div id="div-panel-head-2" class="panel-head"><h2 id="h2-3">Redes e comunicação</h2></div><div id="div-panel-body-2" class="panel-body"><p id="p-7">A Revista Inquietações utiliza canais digitais para divulgar chamadas, publicações, atividades formativas e conteúdos acadêmicos.</p><p id="p-8">Siga o perfil oficial no Instagram para acompanhar atualizações do periódico.</p><div id="div-cta-row" class="cta-row"><a id="link-revistainquietacoes-2" class="btn" href="https://www.instagram.com/revistainquietacoes/" target="_blank">Abrir Instagram</a></div></div></section>
-</main>
-</div>
-<footer id="rodape-principal" class="footer"><p id="p-9"><strong>Revista Inquietações</strong>— Portal institucional do periódico</p><div id="div-footer-meta" class="footer-meta"><a id="link-sobre-2" href="sobre.html">Sobre</a><a id="link-politicas-editoriais-2" href="politicas-editoriais.html">Políticas</a><a id="link-submissoes-2" href="submissoes.html">Submissões</a><a id="link-code-of-conduct-md" href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer">Código de Conduta</a><a id="link-www-netlify-com" href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div></footer>
-</div>
-<script> const navToggle=document.querySelector(".site-nav-toggle") const navMenu=document.querySelector(".site-nav-menu") if(navToggle){ navToggle.onclick=()=>{ navMenu.classList.toggle("is-open") } } </script>
-<script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
+    <div id="estrutura-do-site" class="site-shell">
+        <nav id="links-de-salto" class="skip-links"><a id="link-conteudo-principal" href="#conteudo-principal">Ir para
+                conteúdo</a><a id="link-navegacao-principal" href="#navegacao-principal">Ir para navegação</a><a
+                id="link-barra-lateral" href="#barra-lateral">Ir para barra lateral</a></nav>
+        <div id="barra-superior" class="topbar">
+            <div id="div-pill" class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
+            <div id="div-pill-acesso-pill" class="pill acesso-pill"><a id="link-cadastro"
+                    href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a><a id="link-login"
+                    href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a></div>
+        </div>
+        <header id="cabecalho-da-pagina" class="masthead">
+            <div id="div-masthead-inner" class="masthead-inner">
+                <div id="div-1">
+                    <p id="p-kicker" class="kicker">Portal científico</p>
+                    <h1 id="h1-1">Contato</h1>
+                    <p id="p-hero-text" class="hero-text">A página de contato da Revista Inquietações reúne os
+                        principais canais institucionais para comunicação com a equipe editorial do periódico.</p>
+                    <div id="div-masthead-meta" class="masthead-meta">
+                        <div id="div-masthead-card" class="masthead-card"><strong>Comunicação</strong>Contato
+                            institucional</div>
+                        <div id="div-masthead-card-2" class="masthead-card"><strong>Canal oficial</strong>E-mail
+                            editorial</div>
+                        <div id="div-masthead-card-3" class="masthead-card"><strong>Redes</strong>Instagram
+                            institucional</div>
+                    </div>
+                </div>
+                <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="logo-revista.png"
+                        alt="Logo da Revista Inquietações"></div>
+            </div>
+        </header>
+        <nav class="site-nav" id="navegacao-principal"><button id="button-site-nav-toggle"
+                class="site-nav-toggle">Menu</button>
+            <div id="div-site-nav-menu" class="site-nav-menu"><a id="link-index" href="index.html">Início</a><a
+                    id="link-edicao-atual" href="edicao-atual.html">Atual</a><a id="link-conteudos"
+                    href="conteudos.html">Conteúdos</a><a id="link-evento" href="evento.html">Evento</a><a
+                    id="link-index-2" href="Editora-Revista-Inquietacoes/index.html">Editora</a><a id="link-sobre"
+                    href="sobre.html">Sobre</a><a id="link-equipe-editorial" href="equipe-editorial.html">Equipe
+                    Editorial</a><a id="link-noticias" href="noticias.html">Notícias</a><a
+                    id="link-politicas-editoriais" href="politicas-editoriais.html">Políticas</a><a
+                    id="link-diretrizes-autores" href="diretrizes-autores.html">Diretrizes</a><a id="link-submissoes"
+                    href="submissoes.html">Submissões</a><a id="link-templates" href="templates.html">Templates</a><a
+                    id="link-contato" href="contato.html" class="active">Contato</a><a id="link-homenagens"
+                    href="homenagens.html">Homenagens</a></div>
+        </nav>
+        <div id="grade-do-portal" class="portal-grid sidebar-compact">
+            <aside class="sidebar" id="barra-lateral">
+                <section id="section-sidebar-block" class="sidebar-block">
+                    <h2 id="h2-1">Informações</h2>
+                    <ul id="ul-info-links" class="info-links">
+                        <li id="li-1"><a id="link-contato-institucional" href="#contato-institucional">Contato
+                                institucional</a></li>
+                        <li id="li-2"><a id="link-redes" href="#redes">Redes sociais</a></li>
+                        <li id="li-3"><a id="link-editorial" href="#editorial">Comunicação editorial</a></li>
+                    </ul>
+                </section>
+            </aside>
+            <main class="content" id="conteudo-principal">
+                <section class="panel" id="contato-institucional">
+                    <div id="div-panel-head" class="panel-head">
+                        <h2 id="h2-2">Contato institucional</h2>
+                    </div>
+                    <div id="div-panel-body" class="panel-body">
+                        <div id="div-contact-grid" class="contact-grid">
+                            <div id="div-contact-card-email" class="contact-card email">
+                                <h3 id="h3-1">E-mail editorial</h3>
+                                <p id="p-1">Para informações gerais, submissões ou comunicação institucional com a
+                                    equipe editorial da Revista Inquietações.</p>
+                                <p id="p-2"><a id="link-mailto-rev-inquietacoes-gmail-com" class="contact-action email"
+                                        href="mailto:rev.inquietacoes@gmail.com"><span>Enviar e-mail</span></a></p>
+                            </div>
+                            <div id="div-contact-card-instagram" class="contact-card instagram">
+                                <h3 id="h3-2">Instagram</h3>
+                                <p id="p-3">Acompanhe as publicações, eventos, minicursos e atualizações do portal.</p>
+                                <p id="p-4"><a id="link-revistainquietacoes" class="contact-action instagram"
+                                        href="https://www.instagram.com/revistainquietacoes/" target="_blank"
+                                        rel="noopener noreferrer"><span>Abrir Instagram</span></a></p>
+                            </div>
+                            <div id="div-contact-card-editorial" class="contact-card editorial">
+                                <h3 id="h3-3">Comunicação editorial</h3>
+                                <p id="p-5">Dúvidas relacionadas a avaliação, políticas editoriais ou diretrizes para
+                                    autores podem ser encaminhadas diretamente à equipe editorial.</p>
+                                <p id="p-6"><a id="link-chat-interno" class="contact-action editor"
+                                        href="https://revista-inquietacoes.netlify.app/cadastro-login/chat-interno"
+                                        target="_blank" rel="noopener noreferrer"><span>Falar com o editor</span></a>
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+                <section class="panel" id="redes">
+                    <div id="div-panel-head-2" class="panel-head">
+                        <h2 id="h2-3">Redes e comunicação</h2>
+                    </div>
+                    <div id="div-panel-body-2" class="panel-body">
+                        <p id="p-7">A Revista Inquietações utiliza canais digitais para divulgar chamadas, publicações,
+                            atividades formativas e conteúdos acadêmicos.</p>
+                        <p id="p-8">Siga o perfil oficial no Instagram para acompanhar atualizações do periódico.</p>
+                        <div id="div-cta-row" class="cta-row"><a id="link-revistainquietacoes-2" class="btn"
+                                href="https://www.instagram.com/revistainquietacoes/" target="_blank">Abrir
+                                Instagram</a></div>
+                    </div>
+                </section>
+            </main>
+        </div>
+        <footer id="rodape-principal" class="footer">
+            <p id="p-9"><strong>Revista Inquietações</strong>— Portal institucional do periódico</p>
+            <div id="div-footer-meta" class="footer-meta"><a id="link-sobre-2" href="sobre.html">Sobre</a><a
+                    id="link-politicas-editoriais-2" href="politicas-editoriais.html">Políticas</a><a
+                    id="link-submissoes-2" href="submissoes.html">Submissões</a><a id="link-code-of-conduct-md"
+                    href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md"
+                    target="_blank" rel="noopener noreferrer">Código de Conduta</a><a id="link-www-netlify-com"
+                    href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido
+                    com apoio de Netlify</a></div>
+        </footer>
+    </div>
+    <script> const navToggle = document.querySelector(".site-nav-toggle") const navMenu = document.querySelector(".site-nav-menu") if (navToggle) { navToggle.onclick = () => { navMenu.classList.toggle("is-open") } } </script>
+    <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async=""
+        src="//gc.zgo.at/count.js"></script>
 </body>
+
 </html>

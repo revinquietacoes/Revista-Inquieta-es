@@ -7,7 +7,7 @@
  <responseDate>2026-03-10T00:00:00Z</responseDate>
 
   <request verb="ListMetadataFormats">
-    https://revinquietacoes.github.io/Revista-Inquieta-es/oai/metadataformats.xml
+    https://revista-inquietacoes.netlify.app/oai/metadataformats.xml
   </request>
 
   <ListMetadataFormats>
