@@ -1,3 +1,0 @@
-Salvar esta estrutura na raiz do repositório Revista-Inquieta-es.
-As páginas de acesso ficam em cadastro-login/.
-O painel do editor-chefe é cadastro-login/painel-editor-chefe.html.
