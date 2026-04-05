@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
   <style>
-    /* (mesmo estilo do MSN – cores com bom contraste) */
+    /* (mesmo estilo MSN – cores com bom contraste) */
     :root {
       --msn-blue: #1e88e5;
       --msn-dark: #0d2b3e;
@@ -93,7 +93,6 @@
       </div>
       <div class="msn-contact-list" id="contactList"></div>
     </div>
-
     <div class="msn-conversation" id="conversationArea" style="display: none;">
       <div class="msn-conversation-header">
         <div>
@@ -186,14 +185,13 @@
   });
 
   async function selectContact(contactId) {
-    console.log('Selecionando contato com ID:', contactId);
+    console.log('Selecionando contato:', contactId);
     let contact = contacts.find(c => c.id === contactId);
     if (!contact) {
       await loadContacts();
       contact = contacts.find(c => c.id === contactId);
       if (!contact) {
-        console.error('Contato não encontrado:', contactId);
-        alert('Contato não encontrado. Tente novamente.');
+        alert('Contato não encontrado.');
         return;
       }
     }
@@ -206,7 +204,7 @@
       el.classList.remove('active');
       if (el.dataset.id === contactId) el.classList.add('active');
     });
-    loadMessages(contact.id);
+    loadMessages(contactId);
   }
 
   async function loadMessages(contactId) {
@@ -389,7 +387,7 @@
     try {
       if (typeof AppPanel === 'undefined') throw new Error('AppPanel não carregado');
       currentUser = await AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
-      if (!currentUser) throw new Error('Usuário não autenticado ou perfil não autorizado');
+      if (!currentUser) throw new Error('Usuário não autenticado');
       currentUser.id = String(currentUser.id);
       console.log('Usuário logado:', currentUser);
       document.getElementById('myNameHeader').innerText = currentUser.nome;
@@ -398,9 +396,7 @@
       await loadContacts();
       const urlParams = new URLSearchParams(location.search);
       const targetId = urlParams.get('target');
-      if (targetId && contacts.find(c => c.id === targetId)) {
-        selectContact(targetId);
-      }
+      if (targetId && contacts.find(c => c.id === targetId)) selectContact(targetId);
     } catch (err) {
       console.error('Erro na inicialização:', err);
       document.getElementById('contactList').innerHTML = `<div style="padding:16px;text-align:center;color:red;">${err.message}</div>`;
@@ -434,8 +430,7 @@
   document.getElementById('videoCallBtn').addEventListener('click', startVideoCall);
   document.getElementById('clearChatBtn').addEventListener('click', async () => {
     if (!activeContactId) return;
-    const confirmado = confirm('⚠️ Tem certeza? Isso apagará TODAS as mensagens e os arquivos anexados desta conversa (não poderá ser desfeito).');
-    if (!confirmado) return;
+    if (!confirm('⚠️ Tem certeza? Isso apagará TODAS as mensagens e os arquivos anexados desta conversa (não poderá ser desfeito).')) return;
     try {
       await AppPanel.apiAction('clear_chat', { contactId: activeContactId });
       alert('Conversa limpa com sucesso!');

@@ -202,15 +202,15 @@ const main = async (req) => {
   try {
     await ensureSupportTables()
     await ensureEditorialColumnsCompatibility()
-    
+
     if (req.method !== 'POST') {
       return json({ erro: 'Método não permitido.' }, 405)
     }
-    
+
     const body = await parseJson(req)
     const { action, userId } = body
     const user = await getUserById(Number(userId), action === 'delete_submission')
-    
+
     if (!user) {
       return json({ erro: 'Usuário não encontrado.' }, 404)
     }
@@ -235,7 +235,7 @@ const main = async (req) => {
     // Atualização de perfil (inclui avatar e dados)
     if (action === 'update_profile') {
       const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
-      
+
       // Se for atualização de avatar (URL da função)
       if (avatarUrl) {
         await sql`
@@ -247,7 +247,7 @@ const main = async (req) => {
         const refreshed = await getUserById(user.id)
         return json({ sucesso: true, usuario: refreshed })
       }
-      
+
       // Atualização de dados do perfil
       await sql`
         UPDATE usuarios
@@ -347,85 +347,140 @@ const main = async (req) => {
 
     // Enviar mensagem direta
     if (action === 'send_direct_message') {
-      const { destinatarioId, mensagem, anexoUrl, anexoNome, anexoMime } = body
+      const { destinatarioId, mensagem, anexoUrl, anexoPath, anexoNome, anexoMime } = body
       const targetId = Number(destinatarioId)
       const cleanMessage = String(mensagem || '').trim()
       if (!targetId || !cleanMessage) return json({ erro: 'Informe destinatário e mensagem.' }, 400)
       if (targetId === Number(user.id)) return json({ erro: 'Não é possível enviar mensagem para si mesmo(a).' }, 400)
       const targetRows = await sql`SELECT id, status FROM usuarios WHERE id = ${targetId} LIMIT 1`
       if (!targetRows.length || targetRows[0].status !== 'ativo') return json({ erro: 'Destinatário inválido ou inativo.' }, 404)
-      await sql`INSERT INTO mensagens_internas (remetente_id, destinatario_id, mensagem, anexo_url, anexo_nome, anexo_mime) VALUES (${user.id}, ${targetId}, ${cleanMessage}, ${anexoUrl || null}, ${anexoNome || null}, ${anexoMime || null})`
+      await sql`
+    INSERT INTO mensagens_internas (remetente_id, destinatario_id, mensagem, anexo_url, anexo_path, anexo_nome, anexo_mime)
+    VALUES (${user.id}, ${targetId}, ${cleanMessage}, ${anexoUrl || null}, ${anexoPath || null}, ${anexoNome || null}, ${anexoMime || null})
+  `
       return json({ sucesso: true })
     }
+  }
 
     // Submeter avaliação
     if (action === 'submit_review') {
-      if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
-      const { designacaoId, submissaoId } = body
-      if (!designacaoId) return json({ erro: 'Identificação da avaliação não encontrada.' }, 400)
-      const designacao = await getDesignacaoById(Number(designacaoId))
-      if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
-      const submissaoFinalId = Number(designacao.submissao_id)
-      if (submissaoId && Number(submissaoId) !== submissaoFinalId) return json({ erro: 'A submissão informada não corresponde à designação.' }, 400)
-      if (Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode enviar parecer para esta designação.' }, 403)
-      if (designacao.status === 'recusado') return json({ erro: 'Não é possível enviar parecer para uma tarefa recusada.' }, 409)
-      await upsertReviewV2({ designacao, user, body })
-      try {
-        await upsertReview({ designacao, user, body })
-      } catch (legacyError) {
-        console.error('Falha ao espelhar parecer em avaliacoes:', legacyError)
-      }
-      await markDesignacaoStatus(designacao.id, 'concluido')
-      await refreshSubmissionStatus(designacao.submissao_id)
-      return json({ sucesso: true, armazenamento: 'avaliacoes_v2' })
+    if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
+    const { designacaoId, submissaoId } = body
+    if (!designacaoId) return json({ erro: 'Identificação da avaliação não encontrada.' }, 400)
+    const designacao = await getDesignacaoById(Number(designacaoId))
+    if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
+    const submissaoFinalId = Number(designacao.submissao_id)
+    if (submissaoId && Number(submissaoId) !== submissaoFinalId) return json({ erro: 'A submissão informada não corresponde à designação.' }, 400)
+    if (Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode enviar parecer para esta designação.' }, 403)
+    if (designacao.status === 'recusado') return json({ erro: 'Não é possível enviar parecer para uma tarefa recusada.' }, 409)
+    await upsertReviewV2({ designacao, user, body })
+    try {
+      await upsertReview({ designacao, user, body })
+    } catch (legacyError) {
+      console.error('Falha ao espelhar parecer em avaliacoes:', legacyError)
     }
-
-    // Solicitar certificado
-    if (action === 'request_certificate') {
-      if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403)
-      const { nomeCompleto, email, certificadoMinicurso, certificadoParticipacaoGeral, certificadoComunicacaoOral, minicursos, autorizaPublicacaoTexto, resumoExpandido, tituloComunicacaoOral, autoresComunicacaoOral } = body
-      await sql`INSERT INTO solicitacoes_certificados_evento (usuario_id, nome_completo, email, certificado_minicurso, certificado_participacao_geral, certificado_comunicacao_oral, minicursos, autoriza_publicacao_texto, resumo_expandido, titulo_comunicacao_oral, autores_comunicacao_oral) VALUES (${user.id}, ${nomeCompleto}, ${email}, ${!!certificadoMinicurso}, ${!!certificadoParticipacaoGeral}, ${!!certificadoComunicacaoOral}, ${minicursos || null}, ${typeof autorizaPublicacaoTexto === 'boolean' ? autorizaPublicacaoTexto : null}, ${resumoExpandido || null}, ${tituloComunicacaoOral || null}, ${autoresComunicacaoOral || null})`
-      return json({ sucesso: true })
-    }
-
-    // Deletar submissão
-    if (action === 'delete_submission') {
-      if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
-      const { submissaoId, senhaConfirmacao } = body
-      if (!submissaoId || !senhaConfirmacao) return json({ erro: 'Informe submissão e senha.' }, 400)
-      const ok = await bcrypt.compare(senhaConfirmacao, user.senha_hash)
-      if (!ok) return json({ erro: 'Senha de confirmação inválida.' }, 401)
-      await sql`DELETE FROM submissoes WHERE id = ${submissaoId}`
-      return json({ sucesso: true })
-    }
-
-    // Criar submissão para autor
-    if (action === 'create_submission_for_author') {
-      if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-      const { autorId, titulo, secao, idioma, resumo, palavrasChave, dossieId } = body
-      if (!titulo || !secao || !resumo) return json({ erro: 'Preencha título, seção e resumo.' }, 400)
-      const autorFinal = autorId ? Number(autorId) : user.id
-      const submissaoCols = await getTableColumns('submissoes')
-      let created
-      if (submissaoCols.has('editor_responsavel_id') && submissaoCols.has('editor_adjunto_id')) {
-        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.perfil === 'editor_chefe' ? user.id : null}, ${user.perfil === 'editor_adjunto' ? user.id : null}) RETURNING id`
-      } else if (submissaoCols.has('editor_responsavel_id')) {
-        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
-      } else if (submissaoCols.has('editor_adjunto_id')) {
-        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
-      } else {
-        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido') RETURNING id`
-      }
-      return json({ sucesso: true, submissaoId: created[0]?.id })
-    }
-
-    // Se nenhuma ação corresponder
-    return json({ erro: 'Ação inválida.' }, 400)
-    
-  } catch (erro) {
-    console.error('Erro em action.js:', erro)
-    return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
+    await markDesignacaoStatus(designacao.id, 'concluido')
+    await refreshSubmissionStatus(designacao.submissao_id)
+    return json({ sucesso: true, armazenamento: 'avaliacoes_v2' })
   }
+
+  // Solicitar certificado
+  if (action === 'request_certificate') {
+    if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403)
+    const { nomeCompleto, email, certificadoMinicurso, certificadoParticipacaoGeral, certificadoComunicacaoOral, minicursos, autorizaPublicacaoTexto, resumoExpandido, tituloComunicacaoOral, autoresComunicacaoOral } = body
+    await sql`INSERT INTO solicitacoes_certificados_evento (usuario_id, nome_completo, email, certificado_minicurso, certificado_participacao_geral, certificado_comunicacao_oral, minicursos, autoriza_publicacao_texto, resumo_expandido, titulo_comunicacao_oral, autores_comunicacao_oral) VALUES (${user.id}, ${nomeCompleto}, ${email}, ${!!certificadoMinicurso}, ${!!certificadoParticipacaoGeral}, ${!!certificadoComunicacaoOral}, ${minicursos || null}, ${typeof autorizaPublicacaoTexto === 'boolean' ? autorizaPublicacaoTexto : null}, ${resumoExpandido || null}, ${tituloComunicacaoOral || null}, ${autoresComunicacaoOral || null})`
+    return json({ sucesso: true })
+  }
+
+  // Deletar submissão
+  if (action === 'delete_submission') {
+    if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
+    const { submissaoId, senhaConfirmacao } = body
+    if (!submissaoId || !senhaConfirmacao) return json({ erro: 'Informe submissão e senha.' }, 400)
+    const ok = await bcrypt.compare(senhaConfirmacao, user.senha_hash)
+    if (!ok) return json({ erro: 'Senha de confirmação inválida.' }, 401)
+    await sql`DELETE FROM submissoes WHERE id = ${submissaoId}`
+    return json({ sucesso: true })
+  }
+
+  // Criar submissão para autor
+  if (action === 'create_submission_for_author') {
+    if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+    const { autorId, titulo, secao, idioma, resumo, palavrasChave, dossieId } = body
+    if (!titulo || !secao || !resumo) return json({ erro: 'Preencha título, seção e resumo.' }, 400)
+    const autorFinal = autorId ? Number(autorId) : user.id
+    const submissaoCols = await getTableColumns('submissoes')
+    let created
+    if (submissaoCols.has('editor_responsavel_id') && submissaoCols.has('editor_adjunto_id')) {
+      created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.perfil === 'editor_chefe' ? user.id : null}, ${user.perfil === 'editor_adjunto' ? user.id : null}) RETURNING id`
+    } else if (submissaoCols.has('editor_responsavel_id')) {
+      created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
+    } else if (submissaoCols.has('editor_adjunto_id')) {
+      created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
+    } else {
+      created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido') RETURNING id`
+    }
+    return json({ sucesso: true, submissaoId: created[0]?.id })
+  }
+  if (action === 'clear_chat') {
+    const { contactId } = body
+    if (!contactId) return json({ erro: 'ID do contato não informado.' }, 400)
+
+    // Verificar se o usuário é participante da conversa
+    const participantCheck = await sql`
+    SELECT id FROM mensagens_internas
+    WHERE (remetente_id = ${user.id} AND destinatario_id = ${contactId})
+       OR (remetente_id = ${contactId} AND destinatario_id = ${user.id})
+    LIMIT 1
+  `
+    if (!participantCheck.length) {
+      return json({ erro: 'Você não tem permissão para limpar esta conversa.' }, 403)
+    }
+
+    // 1. Buscar todas as mensagens da conversa que têm anexo_path
+    const messages = await sql`
+    SELECT id, anexo_path FROM mensagens_internas
+    WHERE (remetente_id = ${user.id} AND destinatario_id = ${contactId})
+       OR (remetente_id = ${contactId} AND destinatario_id = ${user.id})
+  `
+
+    // 2. Deletar arquivos do Supabase (se anexo_path existir)
+    const supabaseUrl = process.env.SUPABASE_URL
+    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+    if (supabaseUrl && supabaseServiceKey) {
+      for (const msg of messages) {
+        if (msg.anexo_path) {
+          const deleteUrl = `${supabaseUrl}/storage/v1/object/chat-anexos/${msg.anexo_path}`
+          try {
+            await fetch(deleteUrl, {
+              method: 'DELETE',
+              headers: { 'Authorization': `Bearer ${supabaseServiceKey}` }
+            })
+            console.log(`🗑️ Deletado arquivo: ${msg.anexo_path}`)
+          } catch (err) {
+            console.error(`Erro ao deletar arquivo ${msg.anexo_path}:`, err)
+          }
+        }
+      }
+    }
+
+    // 3. Deletar as mensagens do banco
+    await sql`
+    DELETE FROM mensagens_internas
+    WHERE (remetente_id = ${user.id} AND destinatario_id = ${contactId})
+       OR (remetente_id = ${contactId} AND destinatario_id = ${user.id})
+  `
+
+    return json({ sucesso: true, mensagem: 'Conversa limpa com sucesso.' })
+  }
+
+  // Se nenhuma ação corresponder
+  return json({ erro: 'Ação inválida.' }, 400)
+
+} catch (erro) {
+  console.error('Erro em action.js:', erro)
+  return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
+}
 }
 
 exports.handler = wrapHttp(main)

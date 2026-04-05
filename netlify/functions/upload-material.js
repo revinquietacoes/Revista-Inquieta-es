@@ -104,33 +104,7 @@ const main = async (req) => {
 
     console.log('✅ Arquivo salvo com sucesso, URL:', publicUrl)
 
-    // Lógica específica para submissões (opcional)
-    if (submissaoId && categoria === 'manuscrito') {
-      const check = await sql`SELECT to_regclass('public.arquivos_submissao') AS nome`
-      if (check?.[0]?.nome) {
-        await sql`
-          INSERT INTO arquivos_submissao (submissao_id, nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria)
-          VALUES (${submissaoId}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${publicUrl}, 'principal')
-        `
-      }
-    }
-
-    if (submissaoId && categoria === 'devolutiva') {
-      try {
-        const tableCheck = await sql`SELECT to_regclass('public.arquivos_avaliacao') AS nome`
-        if (tableCheck?.[0]?.nome) {
-          const colCheck = await sql`SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'arquivos_avaliacao'`
-          const cols = new Set((colCheck || []).map(r => r.column_name))
-          if (cols.has('submissao_id')) {
-            await sql`INSERT INTO arquivos_avaliacao (submissao_id, nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria) VALUES (${submissaoId}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${publicUrl}, 'devolutiva')`
-          } else {
-            await sql`INSERT INTO arquivos_avaliacao (nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria) VALUES (${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${publicUrl}, 'devolutiva')`
-          }
-        }
-      } catch (e) { console.error('Falha ao registrar devolutiva:', e) }
-    }
-
-    // Retorna também o storage_path para ser usado no chat
+    // Retornar também o storage_path para ser usado na mensagem
     return json({
       sucesso: true,
       arquivo: {
