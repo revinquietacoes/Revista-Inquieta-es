@@ -53,13 +53,15 @@ export async function handler(event) {
             token: process.env.NETLIFY_BLOBS_TOKEN
         })
 
-        const key = `${Date.now()}-avatar.webp`
+        // CORREÇÃO: A key deve incluir a pasta "usuarios/"
+        const key = `usuarios/${Date.now()}-avatar.webp`
 
         await store.set(key, fileBuffer, {
             contentType: mimeType
         })
 
-        const url = `${process.env.URL}/.netlify/blobs/usuarios/${key}`
+        // A URL precisa incluir o nome do store "arquivos" e a key completa
+        const url = `${process.env.URL}/.netlify/blobs/arquivos/${key}`
 
         return {
             statusCode: 200,
