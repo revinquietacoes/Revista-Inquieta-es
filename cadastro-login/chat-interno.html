@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,14 +8,16 @@
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
   <style>
-    /* Estilo MSN Messenger */
+    /* Estilo MSN Messenger - contraste melhorado */
     :root {
       --msn-blue: #1e88e5;
       --msn-dark: #0d2b3e;
-      --msn-bg: #f0f2f5;
-      --msn-sidebar: #eef2f5;
-      --msn-hover: #e3e9ef;
-      --msn-border: #c4cdd6;
+      --msn-bg: #e9ecef;
+      --msn-sidebar: #f8f9fa;
+      --msn-hover: #dee2e6;
+      --msn-border: #ced4da;
+      --msn-text: #212529;
+      --msn-text-light: #495057;
     }
 
     .msn-chat {
@@ -103,6 +104,7 @@
     .msn-contact-name {
       font-weight: bold;
       font-size: 14px;
+      color: var(--msn-text);
     }
 
     .msn-contact-status {
@@ -132,11 +134,15 @@
 
     .msn-conversation-header {
       padding: 12px 16px;
-      background: #f9f9f9;
+      background: #f1f3f5;
       border-bottom: 1px solid var(--msn-border);
       display: flex;
       justify-content: space-between;
       align-items: center;
+    }
+
+    .msn-conversation-header strong {
+      color: var(--msn-text);
     }
 
     .msn-conversation-actions button {
@@ -151,14 +157,14 @@
     }
 
     .msn-conversation-actions button:hover {
-      background: #e0e0e0;
+      background: #dee2e6;
     }
 
     .msn-messages {
       flex: 1;
       overflow-y: auto;
       padding: 16px;
-      background: #fefefe;
+      background: #ffffff;
       display: flex;
       flex-direction: column;
       gap: 12px;
@@ -176,12 +182,12 @@
     }
 
     .message-bubble {
-      background: #e4e6eb;
+      background: #e9ecef;
       padding: 8px 12px;
       border-radius: 18px;
       font-size: 14px;
       word-wrap: break-word;
-      position: relative;
+      color: var(--msn-text);
     }
 
     .is-self .message-bubble {
@@ -190,7 +196,7 @@
 
     .message-meta {
       font-size: 11px;
-      color: #65676b;
+      color: var(--msn-text-light);
       margin-top: 4px;
       margin-left: 8px;
       display: flex;
@@ -200,7 +206,7 @@
     .message-anexo {
       margin-top: 6px;
       font-size: 12px;
-      background: #f0f0f0;
+      background: #f1f3f5;
       padding: 4px 8px;
       border-radius: 12px;
       display: inline-block;
@@ -216,26 +222,16 @@
     }
 
     @keyframes nudge {
-
-      0%,
-      100% {
-        transform: translateX(0);
-      }
-
-      25% {
-        transform: translateX(-4px);
-      }
-
-      75% {
-        transform: translateX(4px);
-      }
+      0%, 100% { transform: translateX(0); }
+      25% { transform: translateX(-4px); }
+      75% { transform: translateX(4px); }
     }
 
     /* Área de entrada */
     .msn-input-area {
       border-top: 1px solid var(--msn-border);
       padding: 12px;
-      background: #f9f9f9;
+      background: #f8f9fa;
     }
 
     .msn-toolbar {
@@ -255,10 +251,11 @@
       display: inline-flex;
       align-items: center;
       gap: 4px;
+      color: var(--msn-text);
     }
 
     .msn-toolbar button:hover {
-      background: #e0e0e0;
+      background: #e9ecef;
     }
 
     .msn-input-row {
@@ -292,21 +289,12 @@
     }
 
     @keyframes pulse {
-      0% {
-        opacity: 1;
-      }
-
-      50% {
-        opacity: 0.7;
-      }
-
-      100% {
-        opacity: 1;
-      }
+      0% { opacity: 1; }
+      50% { opacity: 0.7; }
+      100% { opacity: 1; }
     }
 
-    .local-video,
-    .remote-video {
+    .local-video, .remote-video {
       position: fixed;
       bottom: 20px;
       right: 20px;
@@ -314,7 +302,7 @@
       background: black;
       border-radius: 12px;
       z-index: 1000;
-      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 4px 12px rgba(0,0,0,0.3);
     }
 
     .remote-video {
@@ -328,7 +316,7 @@
       bottom: 20px;
       left: 50%;
       transform: translateX(-50%);
-      background: rgba(0, 0, 0, 0.7);
+      background: rgba(0,0,0,0.7);
       padding: 8px 16px;
       border-radius: 40px;
       display: flex;
@@ -347,26 +335,13 @@
     }
 
     @media (max-width: 768px) {
-      .msn-chat {
-        flex-direction: column;
-      }
-
-      .msn-contacts {
-        width: 100%;
-        height: 200px;
-      }
-
-      .msn-conversation {
-        height: 60vh;
-      }
-
-      .remote-video {
-        width: 200px;
-      }
+      .msn-chat { flex-direction: column; }
+      .msn-contacts { width: 100%; height: 200px; }
+      .msn-conversation { height: 60vh; }
+      .remote-video { width: 200px; }
     }
   </style>
 </head>
-
 <body>
   <div class="page-shell">
     <header class="topbar">
@@ -466,16 +441,20 @@
       const container = document.getElementById('contactList');
       const searchTerm = document.getElementById('searchContact').value.toLowerCase();
       const filtered = contacts.filter(c => c.nome.toLowerCase().includes(searchTerm));
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state" style="padding: 16px; text-align: center;">Nenhum contato encontrado</div>';
+        return;
+      }
       container.innerHTML = filtered.map(c => `
-      <div class="msn-contact" data-id="${c.id}">
-        <img class="msn-contact-avatar" src="${c.foto_perfil_url || '../assets/avatares/avatar-padrao.png'}" alt="avatar">
-        <div class="msn-contact-info">
-          <div class="msn-contact-name">${escapeHtml(c.nome)}</div>
-          <div class="msn-contact-status ${c.online ? '' : 'offline'}">${c.online ? 'Online' : 'Offline'}</div>
+        <div class="msn-contact" data-id="${c.id}">
+          <img class="msn-contact-avatar" src="${c.foto_perfil_url || '../assets/avatares/avatar-padrao.png'}" alt="avatar">
+          <div class="msn-contact-info">
+            <div class="msn-contact-name">${escapeHtml(c.nome)}</div>
+            <div class="msn-contact-status ${c.online ? '' : 'offline'}">${c.online ? 'Online' : 'Offline'}</div>
+          </div>
+          ${c.unread ? `<span class="msn-contact-badge">${c.unread}</span>` : ''}
         </div>
-        ${c.unread ? `<span class="msn-contact-badge">${c.unread}</span>` : ''}
-      </div>
-    `).join('');
+      `).join('');
       // Adicionar eventos
       document.querySelectorAll('.msn-contact').forEach(el => {
         el.addEventListener('click', () => selectContact(parseInt(el.dataset.id)));
@@ -499,19 +478,23 @@
 
     async function loadMessages(contactId) {
       const container = document.getElementById('messagesContainer');
-      container.innerHTML = '<div class="loading">Carregando mensagens...</div>';
+      container.innerHTML = '<div class="loading" style="padding: 16px; text-align: center;">Carregando mensagens...</div>';
       try {
         const data = await AppPanel.apiData('chat_messages', { targetUserId: contactId });
         messagesCache.set(contactId, data.mensagens || []);
         renderMessages(contactId);
       } catch (err) {
-        container.innerHTML = '<div class="error">Erro ao carregar mensagens.</div>';
+        container.innerHTML = '<div class="error" style="padding: 16px; text-align: center; color: red;">Erro ao carregar mensagens.</div>';
       }
     }
 
     function renderMessages(contactId) {
       const msgs = messagesCache.get(contactId) || [];
       const container = document.getElementById('messagesContainer');
+      if (msgs.length === 0) {
+        container.innerHTML = '<div class="empty-state" style="padding: 16px; text-align: center;">Nenhuma mensagem ainda. Envie uma mensagem!</div>';
+        return;
+      }
       container.innerHTML = msgs.map(msg => {
         const isSelf = msg.remetente_id === currentUser.id;
         const date = new Date(msg.criado_em).toLocaleString('pt-BR');
@@ -521,15 +504,15 @@
         }
         let nudgeClass = msg.mensagem === '🔔 *nudge*' ? 'nudge-animation' : '';
         return `
-        <div class="message-item ${isSelf ? 'is-self' : ''} ${nudgeClass}">
-          <div class="message-bubble">${escapeHtml(msg.mensagem || '')}</div>
-          ${anexoHtml}
-          <div class="message-meta">
-            <span>${isSelf ? 'Você' : msg.remetente_nome}</span>
-            <span>${date}</span>
+          <div class="message-item ${isSelf ? 'is-self' : ''} ${nudgeClass}">
+            <div class="message-bubble">${escapeHtml(msg.mensagem || '')}</div>
+            ${anexoHtml}
+            <div class="message-meta">
+              <span>${isSelf ? 'Você' : msg.remetente_nome}</span>
+              <span>${date}</span>
+            </div>
           </div>
-        </div>
-      `;
+        `;
       }).join('');
       container.scrollTop = container.scrollHeight;
     }
@@ -589,8 +572,10 @@
         stream.getTracks().forEach(t => t.stop());
         document.getElementById('audioMsgBtn').classList.remove('recording');
         document.getElementById('audioMsgBtn').innerHTML = '🎤 Áudio';
+        isRecording = false;
       };
       mediaRecorder.start();
+      isRecording = true;
       document.getElementById('audioMsgBtn').classList.add('recording');
       document.getElementById('audioMsgBtn').innerHTML = '⏹️ Parar';
       setTimeout(() => {
@@ -629,14 +614,12 @@
       setTimeout(() => container.classList.remove('nudge-animation'), 500);
     }
 
-    // WebRTC – chamada de vídeo (simples, usando oferta/resposta via mensagem especial)
-    let pendingOffer = null;
+    // WebRTC – chamada de vídeo (simples)
     async function startVideoCall() {
       if (!peerConnection) {
         peerConnection = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
         localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
         localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
-        // Exibir vídeo local
         if (!localVideoElement) {
           localVideoElement = document.createElement('video');
           localVideoElement.className = 'local-video';
@@ -658,31 +641,28 @@
 
         peerConnection.onicecandidate = event => {
           if (event.candidate) {
-            // Enviar candidato via mensagem especial (implementação simplificada – apenas oferta/resposta)
+            // Enviar candidato via mensagem (simplificado)
+            sendMessage(`📹 ice_candidate:${JSON.stringify(event.candidate)}`);
           }
         };
 
         const offer = await peerConnection.createOffer();
         await peerConnection.setLocalDescription(offer);
-        // Enviar oferta como mensagem especial
         await sendMessage(`📹 video_offer:${JSON.stringify(offer)}`);
       }
     }
 
-    // Receber oferta (será tratado em loadMessages – verificar se mensagem contém "video_offer")
-    // Implementação simplificada: ao receber oferta, criar resposta e enviar answer.
-    // Por brevidade, este exemplo não implementa todo o signaling completo; você pode estender.
+    // Receber oferta (a ser implementado em loadMessages - por simplicidade, omitido)
+    // Para um chat completo, seria necessário processar mensagens com prefixo "video_offer:" e "ice_candidate:"
 
     // Utilitários
     function escapeHtml(str) {
       if (!str) return '';
-      return str.replace(/[&<>]/g, function (m) {
+      return str.replace(/[&<>]/g, function(m) {
         if (m === '&') return '&amp;';
         if (m === '<') return '&lt;';
         if (m === '>') return '&gt;';
         return m;
-      }).replace(/[\uD800-\uDBFF][\uDC00-\uDFFF]/g, function (c) {
-        return c;
       });
     }
 
@@ -734,10 +714,8 @@
     document.getElementById('audioMsgBtn').addEventListener('click', () => {
       if (isRecording) {
         stopAudioRecording();
-        isRecording = false;
       } else {
         startAudioRecording();
-        isRecording = true;
       }
     });
     document.getElementById('locationBtn').addEventListener('click', sendLocation);
@@ -745,5 +723,4 @@
     document.getElementById('videoCallBtn').addEventListener('click', startVideoCall);
   </script>
 </body>
-
 </html>
