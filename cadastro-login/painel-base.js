@@ -117,6 +117,15 @@
     return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
   }
 
+  function atualizarAvatares() {
+    const user = currentUser();
+    if (!user) return;
+    const avatarUrl = user.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
+    document.querySelectorAll('[data-avatar-user]').forEach(img => {
+      img.src = avatarUrl;
+    });
+  }
+
   // ========== FUNÇÕES DE NOTIFICAÇÃO ==========
   async function buscarNotificacoes(apenasNaoLidas = false, limit = 20, offset = 0) {
     return await apiData('notificacoes', { apenasNaoLidas, limit, offset });

@@ -9,44 +9,45 @@
     <link rel="stylesheet" href="painel-base.css">
     <script src="painel-base.js" defer></script>
 </head>
-<script>
-    document.addEventListener('DOMContentLoaded', () => {
-        const user = AppPanel.requireRole(['autor']);
-        if (!user) return;
-        AppPanel.atualizarAvatares();
-        AppPanel.atualizarContadorNotificacoes();
-        AppPanel.iniciarPollingNotificacoes();
-        document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
-    });
-</script>
 
 <body>
     <div class="page-shell">
         <header class="topbar">
             <div class="brand-wrap">
-                <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img
-                        class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div>
+                <div class="avatar-box">
+                    <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+                    <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+                </div>
                 <div class="brand-copy">
                     <h1>Painel do(a) Autor(a)</h1>
                     <p>Submissões, certificados e acompanhamento editorial pessoal</p>
                 </div>
             </div>
-            <div class="actions-row"><a class="btn btn-secondary"
-                    href="https://revista-inquietacoes.netlify.app/">Voltar ao portal</a><button class="btn btn-soft"
-                    data-action="logout">Sair</button></div>
+            <div class="actions-row">
+                <!-- Ícone de notificações (agora no topo) -->
+                <div style="position: relative; margin-right: 10px;">
+                    <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+                    <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+                    <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+                </div>
+                <a class="btn btn-secondary" href="https://revista-inquietacoes.netlify.app/">Voltar ao portal</a>
+                <button class="btn btn-soft" data-action="logout">Sair</button>
+            </div>
         </header>
+
         <section class="hero">
             <h2>Boas-vindas, <span data-user-name></span></h2>
             <p>Aqui você abre novas submissões, acompanha seus trabalhos já enviados, solicita certificados do evento e
                 mantém sua foto de perfil e seus dados acadêmicos organizados.</p>
         </section>
+
         <div class="cards-grid">
             <article class="card">
                 <div class="card-top">
                     <h3>Minhas submissões</h3><span class="badge badge-blue">Acompanhamento</span>
                 </div>
                 <p>Aqui você consulta títulos, status editoriais, dossiês vinculados e prazos em aberto.</p>
-                <div class="actions-row"><a class="btn btn-primary" href="autor-submissoes.html">Abrir</a></div>
+                <div class="actions-row"><a class='btn btn-primary' href='/cadastro-login/autor-submissoes'>Abrir</a></div>
             </article>
             <article class="card">
                 <div class="card-top">
@@ -54,7 +55,7 @@
                 </div>
                 <p>Aqui você insere título, resumo, seção, dossiê temático, arquivo principal e foto opcional com
                     consentimento LGPD.</p>
-                <div class="actions-row"><a class="btn btn-primary" href="submissoes.html">Ir ao conteúdo</a></div>
+                <div class="actions-row"><a class='btn btn-primary' href='/cadastro-login/submissoes'>Ir ao conteúdo</a></div>
             </article>
             <article class="card">
                 <div class="card-top">
@@ -62,7 +63,7 @@
                 </div>
                 <p>Aqui você acessa a nova página de inscrições dos cursos e eventos da revista, com dados vinculados ao
                     seu cadastro de autor(a).</p>
-                <div class="actions-row"><a class="btn btn-primary" href="solicitacao-certificados.html">Abrir</a></div>
+                <div class="actions-row"><a class='btn btn-primary' href='/cadastro-login/solicitacao-certificados'>Abrir</a></div>
             </article>
             <article class="card">
                 <div class="card-top">
@@ -77,34 +78,57 @@
                     <h3>Perfil</h3><span class="badge badge-blue">Cadastro</span>
                 </div>
                 <p>Aqui você atualiza seus dados e altera sua foto de perfil.</p>
-                <div class="actions-row"><a class="btn btn-primary" href="perfil.html">Abrir</a></div>
+                <div class="actions-row"><a class='btn btn-primary' href='/cadastro-login/perfil'>Abrir</a></div>
             </article>
             <article class="card">
                 <div class="card-top">
                     <h3>Chat interno</h3><span class="badge badge-green">Mensagens</span>
                 </div>
                 <p>Aqui você fala com a editoria e envia mensagens com anexos.</p>
-                <div class="actions-row"><a class="btn btn-primary" href="chat-interno.html">Abrir</a></div>
+                <div class="actions-row"><a class='btn btn-primary' href='/cadastro-login/chat-interno'>Abrir</a></div>
             </article>
             <article class="card">
                 <div class="card-top">
                     <h3>Certificados</h3><span class="badge badge-gold">Documentos</span>
                 </div>
                 <p>Aqui você abre a pasta de certificados correspondente ao seu perfil.</p>
-                <div class="actions-row"><a class="btn btn-primary" href="certificados.html">Abrir</a></div>
+                <div class="actions-row"><a class='btn btn-primary' href='/cadastro-login/certificados'>Abrir</a></div>
             </article>
-            <div style="position: relative;">
-                <button id="btn-notificacoes"
-                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer; position: relative;">🔔</button>
-                <span id="notificacao-badge"
-                    style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
-                <div id="notificacoes-dropdown"
-                    style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;">
-                </div>
-            </div>
         </div>
         <footer class="page-footer"></footer>
     </div>
+
+    <script>
+        // Aguarda o carregamento do DOM e do AppPanel
+        document.addEventListener('DOMContentLoaded', () => {
+            // Pequeno atraso para garantir que o painel-base.js já definiu AppPanel
+            setTimeout(() => {
+                if (typeof AppPanel === 'undefined') {
+                    console.error('AppPanel não carregado');
+                    return;
+                }
+                const user = AppPanel.requireRole(['autor']);
+                if (!user) return;
+
+                // Atualiza nome no cabeçalho (opcional)
+                const nameSpan = document.querySelector('[data-user-name]');
+                if (nameSpan) nameSpan.textContent = user.nome;
+
+                // Atualiza avatares
+                AppPanel.atualizarAvatares();
+
+                // Inicializa notificações
+                AppPanel.atualizarContadorNotificacoes();
+                AppPanel.iniciarPollingNotificacoes();
+
+                // Botão de notificações
+                const btn = document.getElementById('btn-notificacoes');
+                if (btn) {
+                    btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+                }
+            }, 100);
+        });
+    </script>
 </body>
 
 </html>
