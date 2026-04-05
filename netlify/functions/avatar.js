@@ -4,17 +4,16 @@ const main = async (req) => {
     try {
         const url = new URL(req.url)
         let key = url.searchParams.get("key")
-
         if (!key) {
             return new Response('Parâmetro "key" é obrigatório.', { status: 400 })
         }
 
-        // Garantir o prefixo "usuarios/"
+        // Garantir prefixo
         if (!key.startsWith("usuarios/")) {
             key = `usuarios/${key}`
         }
 
-        console.log("🔑 Avatar solicitado:", key)
+        console.log(`🔑 Avatar solicitado: ${key}`)
 
         const siteID = process.env.NETLIFY_BLOBS_SITE_ID
         const token = process.env.NETLIFY_BLOBS_TOKEN
@@ -26,9 +25,7 @@ const main = async (req) => {
         }
 
         const blobUrl = `https://api.netlify.com/api/v1/sites/${siteID}/blobs/${storeName}/${encodeURIComponent(key)}`
-
         const response = await fetch(blobUrl, {
-            method: "GET",
             headers: { "Authorization": `Bearer ${token}` }
         })
 
@@ -41,12 +38,13 @@ const main = async (req) => {
         const byteLength = arrayBuffer.byteLength
 
         if (byteLength === 0) {
-            console.error("⚠️ Blob está vazio!")
+            console.error("⚠️ Blob vazio!")
             return new Response('Arquivo vazio.', { status: 404 })
         }
 
         console.log(`✅ Avatar servido: ${byteLength} bytes`)
 
+        // Determinar Content-Type pela extensão ou pelo cabeçalho original (se disponível)
         let contentType = "image/jpeg"
         if (key.endsWith(".png")) contentType = "image/png"
         else if (key.endsWith(".gif")) contentType = "image/gif"

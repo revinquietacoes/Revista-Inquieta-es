@@ -1,4 +1,5 @@
 const Busboy = require("busboy")
+const { getStore } = require("@netlify/blobs")
 
 exports.handler = async (event) => {
     const corsHeaders = {
@@ -32,7 +33,7 @@ exports.handler = async (event) => {
 
         const busboy = Busboy({ headers: event.headers })
         let fileBuffer = null
-        let mimeType = null
+        let mimeType = "image/webp"
         let originalName = null
 
         await new Promise((resolve, reject) => {
@@ -60,38 +61,30 @@ exports.handler = async (event) => {
             }
         }
 
-        // Determinar extensão correta com base no MIME type
-        let extension = "webp" // fallback
+        // Determinar extensão com base no MIME type (opcional, para manter formato original)
+        let extension = "webp"
         if (mimeType === "image/jpeg") extension = "jpg"
         else if (mimeType === "image/png") extension = "png"
         else if (mimeType === "image/gif") extension = "gif"
-        else if (mimeType === "image/webp") extension = "webp"
 
-        const siteID = process.env.NETLIFY_BLOBS_SITE_ID
-        const token = process.env.NETLIFY_BLOBS_TOKEN
-        const storeName = "revista-arquivos"
         const timestamp = Date.now()
         const random = Math.random().toString(36).substring(2, 8)
         const key = `usuarios/${usuarioId}/avatar/${timestamp}-${random}.${extension}`
 
-        const blobUrl = `https://api.netlify.com/api/v1/sites/${siteID}/blobs/${storeName}/${encodeURIComponent(key)}`
-
-        const uploadResponse = await fetch(blobUrl, {
-            method: "PUT",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": mimeType
-            },
-            body: fileBuffer
+        // Usar SDK do Netlify Blobs com opção public: true
+        const store = getStore("revista-arquivos", {
+            siteID: process.env.NETLIFY_BLOBS_SITE_ID,
+            token: process.env.NETLIFY_BLOBS_TOKEN
         })
 
-        if (!uploadResponse.ok) {
-            const errorText = await uploadResponse.text()
-            throw new Error(`Erro ao salvar blob: ${uploadResponse.status} - ${errorText}`)
-        }
+        await store.set(key, fileBuffer, {
+            contentType: mimeType,
+            public: true   // Torna o blob acessível publicamente via CDN (opcional, mas ajuda)
+        })
 
-        console.log(`✅ Avatar salvo em: ${storeName}/${key}`)
+        console.log(`✅ Avatar salvo: ${key} (${fileBuffer.length} bytes, ${mimeType})`)
 
+        // URL para a função avatar (mais confiável)
         const avatarUrl = `/.netlify/functions/avatar?key=${encodeURIComponent(key)}`
 
         return {
