@@ -1,125 +1,61 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Cadastro | Revista Inquietações</title><link rel="icon" type="image/png" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="https://www.google.com/recaptcha/api.js" async defer></script><style>.shell{width:min(1220px,96vw);margin:0 auto;padding:24px 0 34px}.hero{text-align:center;max-width:820px;margin:0 auto 18px}.hero img{width:min(100%,340px);max-height:130px;object-fit:contain}.hero h1{font-family:Georgia,"Times New Roman",serif;font-size:clamp(1.9rem,3vw,3rem);margin:8px 0 10px}.hero p{color:var(--muted);line-height:1.75}.stack{display:grid;grid-template-columns:1fr;gap:18px;max-width:980px;margin:0 auto}.section-card{overflow:hidden}.section-head{padding:16px 18px;border-bottom:1px solid rgba(255,255,255,.1);display:flex;justify-content:space-between;gap:12px;align-items:flex-start;flex-wrap:wrap;background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02))}.section-head h2{margin:0 0 4px;font-family:Georgia,"Times New Roman",serif;font-size:1.2rem}.section-head p{margin:0;color:var(--muted);line-height:1.5}.section-body{padding:18px}</style></head><body><div class="shell"><header class="hero"><img src="../logo-revista.png" alt="Logo da Revista Inquietações"><h1>Cadastro no sistema editorial</h1><p>Preencha os dados abaixo. Se você usou login social, alguns campos já estarão preenchidos.</p><div class="actions-row" style="justify-content:center"><a class="btn btn-primary" href="login.html">Já possuo login</a><a class="btn btn-secondary" href="../index.html">Voltar à revista</a></div></header><main class="stack">
+const bcrypt = require('bcryptjs')
+const { sql, json, getTableColumns, normalizeRole } = require('./_db')
+const { wrapHttp } = require('./_netlify')
 
-<!-- Seletor de perfil (aparece antes do formulário) -->
-<div class="panel section-card" id="profile-selector">
-  <div class="section-head"><h2>Escolha seu perfil</h2><p>Selecione o tipo de cadastro</p></div>
-  <div class="section-body">
-    <div class="actions-row" style="justify-content:center;gap:16px">
-      <button id="select-autor" class="btn btn-primary" data-perfil="autor">Autor(a)</button>
-      <button id="select-parecerista" class="btn btn-primary" data-perfil="parecerista">Parecerista</button>
-      <button id="select-editor" class="btn btn-primary" data-perfil="editor_adjunto">Editor(a) Adjunto(a)</button>
-    </div>
-  </div>
-</div>
+const main = async (req) => {
+  try {
+    if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
 
-<!-- Formulário para autor -->
-<section id="cadastro-autor" class="panel section-card" style="display:none">
-  <div class="section-head"><div><h2>Cadastro como autor(a)</h2><p>Destinado a pessoas interessadas em submeter materiais e acompanhar o fluxo editorial.</p></div><span class="badge badge-gold">Acesso imediato</span></div>
-  <div class="section-body"><form id="form-autor"><div class="form-grid"><div class="field full"><label>Nome</label><input name="nome" required></div><div class="field"><label>E-mail</label><input type="email" name="email" required></div><div class="field"><label>Senha</label><input type="password" name="senha" required></div><div class="field"><label>Instituição</label><input name="instituicao"></div><div class="field"><label>ORCID (se tiver)</label><input name="orcid"></div><div class="field"><label>Lattes (se tiver)</label><input name="lattes"></div><div class="field"><label>Origem</label><input name="origem" value="Brasil"></div><div class="field"><label>Telefone</label><input name="telefone"></div><div class="field full checkbox-line"><input type="checkbox" id="autor-news" name="receber_noticias_email"><label for="autor-news">Autorizo a Revista Inquietações a enviar por e-mail notícias da revista, publicações e chamadas para dossiê temático.</label></div><div class="field full"><div class="g-recaptcha" data-sitekey="{{RECAPTCHA_SITE_KEY}}"></div></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Cadastrar autor(a)</button></div><div class="form-message" id="msg-autor"></div></form></div></section>
+    const body = await req.json().catch(() => ({}))
+    const {
+      nome, email, senha, perfil, instituicao, orcid, lattes,
+      origem, telefone, foto_perfil_url, consentimento_foto_publica,
+      receber_noticias_email
+    } = body
 
-<!-- Formulário para parecerista -->
-<section id="cadastro-parecerista" class="panel section-card" style="display:none">
-  <div class="section-head"><div><h2>Cadastro como parecerista</h2><p>Cadastro sujeito à autorização da editoria-chefe. O acesso fica pendente até aprovação.</p></div><span class="badge badge-green">Aprovação necessária</span></div>
-  <div class="section-body"><form id="form-parecerista"><div class="form-grid"><div class="field full"><label>Nome</label><input name="nome" required></div><div class="field"><label>E-mail</label><input type="email" name="email" required></div><div class="field"><label>Senha</label><input type="password" name="senha" required></div><div class="field"><label>Instituição</label><input name="instituicao"></div><div class="field"><label>ORCID (se tiver)</label><input name="orcid"></div><div class="field"><label>Lattes (se tiver)</label><input name="lattes"></div><div class="field"><label>Origem</label><input name="origem" value="Brasil"></div><div class="field"><label>Telefone</label><input name="telefone"></div><div class="field full checkbox-line"><input type="checkbox" id="parecerista-news" name="receber_noticias_email"><label for="parecerista-news">Autorizo a Revista Inquietações a enviar por e-mail notícias da revista, publicações e chamadas para dossiê temático.</label></div><div class="field full"><div class="g-recaptcha" data-sitekey="{{RECAPTCHA_SITE_KEY}}"></div></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Cadastrar parecerista</button></div><div class="form-message" id="msg-parecerista"></div></form></div></section>
+    if (!nome || !email || !senha || !perfil) return json({ erro: 'Preencha nome, e-mail, senha e perfil.' }, 400)
 
-<!-- Formulário para editor adjunto -->
-<section id="cadastro-editor" class="panel section-card" style="display:none">
-  <div class="section-head"><div><h2>Cadastro como editor(a) adjunto(a)</h2><p>Cadastro sujeito à autorização da editoria-chefe. O acesso fica pendente até aprovação.</p></div><span class="badge badge-blue">Aprovação necessária</span></div>
-  <div class="section-body"><form id="form-editor"><div class="form-grid"><div class="field full"><label>Nome</label><input name="nome" required></div><div class="field"><label>E-mail</label><input type="email" name="email" required></div><div class="field"><label>Senha</label><input type="password" name="senha" required></div><div class="field"><label>Instituição</label><input name="instituicao"></div><div class="field"><label>ORCID (se tiver)</label><input name="orcid"></div><div class="field"><label>Lattes (se tiver)</label><input name="lattes"></div><div class="field"><label>Origem</label><input name="origem" value="Brasil"></div><div class="field"><label>Telefone</label><input name="telefone"></div><div class="field full checkbox-line"><input type="checkbox" id="editor-news" name="receber_noticias_email"><label for="editor-news">Autorizo a Revista Inquietações a enviar por e-mail notícias da revista, publicações e chamadas para dossiê temático.</label></div><div class="field full"><div class="g-recaptcha" data-sitekey="{{RECAPTCHA_SITE_KEY}}"></div></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Cadastrar editor(a) adjunto(a)</button></div><div class="form-message" id="msg-editor"></div></form></div></section>
+    const perfilNormalizado = normalizeRole(perfil)
+    const perfisPermitidos = ['autor', 'parecerista', 'editor_adjunto']
+    if (!perfisPermitidos.includes(perfilNormalizado)) return json({ erro: 'Perfil inválido.' }, 400)
 
-</main></div><script>
-// Ler parâmetros da URL (OAuth)
-const urlParams = new URLSearchParams(window.location.search);
-const provider = urlParams.get('provider');
-const preNome = urlParams.get('nome') || '';
-const preEmail = urlParams.get('email') || '';
-const preFoto = urlParams.get('foto') || '';
-const preOrcid = urlParams.get('orcid') || '';
+    const existente = await sql`SELECT id FROM usuarios WHERE email = ${email} LIMIT 1`
+    if (existente.length > 0) return json({ erro: 'Já existe um usuário com este e-mail.' }, 409)
 
-// Armazenar dados temporariamente (para usar no formulário escolhido)
-let oauthData = { nome: preNome, email: preEmail, foto: preFoto, orcid: preOrcid };
+    const senhaHash = await bcrypt.hash(senha, 10)
+    const statusInicial = perfilNormalizado === 'autor' ? 'ativo' : 'pendente'
+    const cols = await getTableColumns('usuarios')
 
-// Função para preencher o formulário ativo
-function preencherFormulario(formId) {
-  const form = document.getElementById(formId);
-  if (!form) return;
-  if (oauthData.nome) form.querySelector('[name="nome"]').value = oauthData.nome;
-  if (oauthData.email) form.querySelector('[name="email"]').value = oauthData.email;
-  if (oauthData.orcid) form.querySelector('[name="orcid"]').value = oauthData.orcid;
-  // Se o provedor forneceu foto, podemos armazenar em um campo hidden ou ignorar (a foto será atualizada depois)
-}
+    const campos = ['nome', 'email', 'senha_hash', 'perfil']
+    const valores = [nome, email, senhaHash, perfilNormalizado]
 
-// Mostrar o formulário conforme perfil selecionado
-function mostrarFormulario(perfil) {
-  document.getElementById('cadastro-autor').style.display = 'none';
-  document.getElementById('cadastro-parecerista').style.display = 'none';
-  document.getElementById('cadastro-editor').style.display = 'none';
-  if (perfil === 'autor') {
-    document.getElementById('cadastro-autor').style.display = 'block';
-    preencherFormulario('form-autor');
-  } else if (perfil === 'parecerista') {
-    document.getElementById('cadastro-parecerista').style.display = 'block';
-    preencherFormulario('form-parecerista');
-  } else if (perfil === 'editor_adjunto') {
-    document.getElementById('cadastro-editor').style.display = 'block';
-    preencherFormulario('form-editor');
+    if (cols.has('instituicao')) { campos.push('instituicao'); valores.push(instituicao || null) }
+    if (cols.has('orcid')) { campos.push('orcid'); valores.push(orcid || null) }
+    if (cols.has('lattes')) { campos.push('lattes'); valores.push(lattes || null) }
+    if (cols.has('origem')) { campos.push('origem'); valores.push(origem || null) }
+    if (cols.has('telefone')) { campos.push('telefone'); valores.push(telefone || null) }
+    if (cols.has('foto_perfil_url')) { campos.push('foto_perfil_url'); valores.push(foto_perfil_url || '../assets/avatares/avatar-padrao.png') }
+    if (cols.has('foto_perfil_aprovada')) { campos.push('foto_perfil_aprovada'); valores.push(false) }
+    if (cols.has('consentimento_foto_publica')) { campos.push('consentimento_foto_publica'); valores.push(Boolean(consentimento_foto_publica)) }
+    if (cols.has('receber_noticias_email')) { campos.push('receber_noticias_email'); valores.push(Boolean(receber_noticias_email)) }
+    if (cols.has('status')) { campos.push('status'); valores.push(statusInicial) }
+
+    const placeholders = valores.map((_, i) => `$${i + 1}`).join(', ')
+    const returning = `id, nome, email, perfil, ${cols.has('status') ? 'status' : "'ativo'::text AS status"}`
+    const query = `INSERT INTO usuarios (${campos.join(', ')}) VALUES (${placeholders}) RETURNING ${returning}`
+    const inserted = await sql.query(query, valores)
+
+    return json({
+      sucesso: true,
+      usuario: inserted[0],
+      mensagem: statusInicial === 'ativo'
+        ? 'Cadastro realizado com sucesso. Você já pode acessar o sistema.'
+        : 'Cadastro recebido. O acesso é liberado após autorização da editoria-chefe.'
+    })
+  } catch (erro) {
+    console.error('cadastro erro:', erro)
+    return json({ erro: 'Erro ao cadastrar usuário.', detalhe: erro.message }, 500)
   }
 }
 
-// Eventos dos botões de seleção
-document.getElementById('select-autor').addEventListener('click', () => mostrarFormulario('autor'));
-document.getElementById('select-parecerista').addEventListener('click', () => mostrarFormulario('parecerista'));
-document.getElementById('select-editor').addEventListener('click', () => mostrarFormulario('editor_adjunto'));
-
-// Se já veio com perfil na URL (ex: ?perfil=autor) – opcional
-const urlPerfil = urlParams.get('perfil');
-if (urlPerfil && ['autor','parecerista','editor_adjunto'].includes(urlPerfil)) mostrarFormulario(urlPerfil);
-
-// Função genérica de cadastro
-async function bindCadastro(formId, perfil, msgId) {
-  const form = document.getElementById(formId);
-  const msg = document.getElementById(msgId);
-  form.addEventListener('submit', async (e) => {
-    e.preventDefault();
-    msg.className = 'form-message';
-    msg.textContent = '';
-    // Validar reCAPTCHA
-    const recaptchaResponse = grecaptcha.getResponse();
-    if (!recaptchaResponse) {
-      msg.textContent = 'Confirme que você não é um robô.';
-      msg.classList.add('err');
-      return;
-    }
-    const payload = Object.fromEntries(new FormData(form).entries());
-    payload.perfil = perfil;
-    payload.receber_noticias_email = !!form.querySelector('[name="receber_noticias_email"]').checked;
-    payload.recaptcha = recaptchaResponse;
-    // Se veio de OAuth, manter email e nome (já estão no formulário)
-    try {
-      const res = await fetch('/.netlify/functions/cadastro', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-      const data = await res.json();
-      if (!res.ok) throw new Error(data.erro || data.detalhe || 'Erro no cadastro.');
-      msg.textContent = data.mensagem || 'Cadastro enviado com sucesso.';
-      msg.classList.add('ok');
-      form.reset();
-      // Se houver foto do OAuth, podemos redirecionar para login
-      if (oauthData.foto) {
-        localStorage.setItem('temp_avatar', oauthData.foto);
-      }
-      setTimeout(() => window.location.href = 'login.html', 2000);
-    } catch (err) {
-      msg.textContent = err.message || 'Erro no cadastro.';
-      msg.classList.add('err');
-    }
-  });
-}
-
-bindCadastro('form-autor', 'autor', 'msg-autor');
-bindCadastro('form-parecerista', 'parecerista', 'msg-parecerista');
-bindCadastro('form-editor', 'editor_adjunto', 'msg-editor');
-</script>
-</body></html>
+exports.handler = wrapHttp(main)
