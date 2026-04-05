@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -8,34 +9,153 @@
     <link rel="stylesheet" href="painel-base.css">
     <script src="painel-base.js" defer></script>
     <style>
-        .avatar-area { display: flex; flex-direction: column; align-items: center; gap: 15px; }
-        .avatar-preview { width: 150px; height: 150px; border-radius: 50%; overflow: hidden; border: 3px solid #ddd; background: #fafafa; cursor: pointer; transition: all 0.3s ease; }
-        .avatar-preview:hover { border-color: #2d6cdf; transform: scale(1.02); }
-        .avatar-preview img { width: 100%; height: 100%; object-fit: cover; }
-        .avatar-drop { border: 2px dashed #bbb; padding: 25px; border-radius: 10px; cursor: pointer; text-align: center; max-width: 300px; width: 100%; transition: 0.2s; background: #f9f9f9; }
-        .avatar-drop:hover { border-color: #2d6cdf; background: #f0f4ff; }
-        .avatar-drop.drag { border-color: #2d6cdf; background: #e8f0fe; transform: scale(1.02); }
-        .crop-container { display: none; margin-top: 15px; text-align: center; }
-        .crop-container canvas { max-width: 300px; border-radius: 8px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
-        .form-message { margin-top: 10px; padding: 10px; border-radius: 4px; font-size: 14px; font-weight: 500; text-align: center; }
-        .form-message.error { background: #fee; color: #c00; border-left: 4px solid #c00; }
-        .form-message.success { background: #efe; color: #060; border-left: 4px solid #060; }
-        .form-message.loading { background: #e3f2fd; color: #0056b3; border-left: 4px solid #0056b3; }
-        .form-message.warning { background: #fff3e0; color: #e67e22; border-left: 4px solid #e67e22; }
-        .btn:disabled { opacity: 0.6; cursor: not-allowed; }
-        .actions-row { display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn-soft { background: #f0f0f0; border: none; padding: 8px 16px; border-radius: 6px; cursor: pointer; text-decoration: none; color: #333; transition: 0.2s; }
-        .btn-soft:hover { background: #e0e0e0; }
-        .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px; }
-        @media (max-width: 768px) { .content-grid { grid-template-columns: 1fr; } }
+        .avatar-area {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .avatar-preview {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            overflow: hidden;
+            border: 3px solid #ddd;
+            background: #fafafa;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar-preview:hover {
+            border-color: #2d6cdf;
+            transform: scale(1.02);
+        }
+
+        .avatar-preview img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .avatar-drop {
+            border: 2px dashed #bbb;
+            padding: 25px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            max-width: 300px;
+            width: 100%;
+            transition: 0.2s;
+            background: #f9f9f9;
+        }
+
+        .avatar-drop:hover {
+            border-color: #2d6cdf;
+            background: #f0f4ff;
+        }
+
+        .avatar-drop.drag {
+            border-color: #2d6cdf;
+            background: #e8f0fe;
+            transform: scale(1.02);
+        }
+
+        .crop-container {
+            display: none;
+            margin-top: 15px;
+            text-align: center;
+        }
+
+        .crop-container canvas {
+            max-width: 300px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .form-message {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 4px;
+            font-size: 14px;
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .form-message.error {
+            background: #fee;
+            color: #c00;
+            border-left: 4px solid #c00;
+        }
+
+        .form-message.success {
+            background: #efe;
+            color: #060;
+            border-left: 4px solid #060;
+        }
+
+        .form-message.loading {
+            background: #e3f2fd;
+            color: #0056b3;
+            border-left: 4px solid #0056b3;
+        }
+
+        .form-message.warning {
+            background: #fff3e0;
+            color: #e67e22;
+            border-left: 4px solid #e67e22;
+        }
+
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+        }
+
+        .actions-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-soft {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            transition: 0.2s;
+        }
+
+        .btn-soft:hover {
+            background: #e0e0e0;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
     </style>
 </head>
+
 <body>
     <div class="page-shell">
         <header class="topbar">
             <div class="brand-wrap">
                 <div class="avatar-box">
-                    <img class="avatar-img" data-avatar-user alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                    <img class="avatar-img" data-avatar-user alt="Avatar"
+                        style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
                     <img class="logo-inline" src="../logo-revista.png" alt="Logo" style="height: 40px;">
                 </div>
                 <div class="brand-copy">
@@ -77,7 +197,8 @@
                     </div>
                     <div id="avatar-drop" class="avatar-drop">
                         📸 Arraste uma imagem aqui ou clique para selecionar
-                        <small style="display: block; margin-top: 5px; color: #666;">Formatos: JPG, PNG, GIF, WEBP | Máx: 5MB</small>
+                        <small style="display: block; margin-top: 5px; color: #666;">Formatos: JPG, PNG, GIF, WEBP |
+                            Máx: 5MB</small>
                     </div>
                     <input type="file" id="avatar-input" accept="image/*" hidden>
                     <div class="crop-container">
@@ -95,8 +216,10 @@
         <footer class="page-footer">
             <div>Revista Inquietações — periódico científico em acesso aberto.</div>
             <div>Organização editorial: Diego Vinícius Brito dos Santos • @iamthed1</div>
-            <div><a href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank">Código de Conduta</a></div>
-            <div><a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div>
+            <div><a href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md"
+                    target="_blank">Código de Conduta</a></div>
+            <div><a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido
+                    com apoio de Netlify</a></div>
         </footer>
     </div>
 
@@ -111,14 +234,13 @@
             }
 
             try {
-                // 1. Carregar dados do usuário a partir do Neon (via AppPanel)
                 if (typeof AppPanel === 'undefined') throw new Error("AppPanel não carregado");
                 const data = await AppPanel.apiData("me");
                 usuarioAtual = data.usuario;
                 if (!usuarioAtual?.id) throw new Error("Usuário não encontrado");
                 console.log("✅ Dados do usuário carregados:", usuarioAtual);
 
-                // 2. Preencher formulário
+                // Preencher formulário
                 const form = document.getElementById("form-perfil");
                 if (form) {
                     form.nome.value = usuarioAtual.nome || "";
@@ -131,19 +253,21 @@
                     form.telefone.value = usuarioAtual.telefone || "";
                 }
 
-                // 3. Exibir avatar atual (se houver)
+                // Avatar preview (usa URL pública do Supabase, se existir)
                 const preview = document.getElementById("avatar-preview");
                 const defaultAvatar = "../assets/avatares/avatar-padrao.png";
                 if (usuarioAtual.foto_perfil_url && usuarioAtual.foto_perfil_url !== "null") {
-                    preview.src = usuarioAtual.foto_perfil_url + "&t=" + Date.now();
+                    let avatarUrl = usuarioAtual.foto_perfil_url;
+                    // Se a URL for antiga (do Netlify Blobs), converte? Não precisa mais.
+                    preview.src = avatarUrl + "?t=" + Date.now();
                     document.querySelectorAll("[data-avatar-user]").forEach(el => {
-                        if (el) el.src = usuarioAtual.foto_perfil_url + "&t=" + Date.now();
+                        if (el) el.src = avatarUrl + "?t=" + Date.now();
                     });
                 } else {
                     preview.src = defaultAvatar;
                 }
 
-                // ========== UPLOAD DE AVATAR (usa função Netlify) ==========
+                // ========== UPLOAD DE AVATAR (chama função Netlify que salva no Supabase) ==========
                 const drop = document.getElementById("avatar-drop");
                 const previewClick = document.getElementById("avatar-preview-click");
                 const input = document.getElementById("avatar-input");
@@ -157,11 +281,9 @@
                 let imgObj = null;
                 let cropSize = 300;
 
-                // Abrir seletor de arquivo
                 if (drop) drop.onclick = () => input.click();
                 if (previewClick) previewClick.onclick = () => input.click();
 
-                // Drag & drop
                 if (drop) {
                     drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("drag"); });
                     drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
@@ -176,7 +298,6 @@
 
                 if (input) input.addEventListener("change", () => { if (input.files[0]) loadImage(input.files[0]); });
 
-                // Cancelar crop
                 if (btnCancel) btnCancel.onclick = () => {
                     cropBox.style.display = "none";
                     imgObj = null;
@@ -217,7 +338,6 @@
                     cropCtx.drawImage(imgObj, sx, sy, size, size, 0, 0, cropSize, cropSize);
                 }
 
-                // Salvar avatar (chama a função Netlify)
                 if (btnSave) {
                     btnSave.onclick = async () => {
                         if (!usuarioAtual?.id) {
@@ -253,9 +373,9 @@
                                 const result = await response.json();
                                 if (!response.ok) throw new Error(result.erro || "Erro no upload");
 
-                                // A função já atualizou o banco; a URL retornada é pública
+                                // A função retorna a URL pública do Supabase
                                 const publicUrl = result.url;
-                                const urlComTimestamp = publicUrl + "&t=" + Date.now();
+                                const urlComTimestamp = publicUrl + "?t=" + Date.now();  // CORRIGIDO: use "?"
                                 preview.src = urlComTimestamp;
                                 document.querySelectorAll("[data-avatar-user]").forEach(el => el.src = urlComTimestamp);
 
@@ -325,4 +445,5 @@
         });
     </script>
 </body>
+
 </html>
