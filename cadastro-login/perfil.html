@@ -3,8 +3,8 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <title>Perfil</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil - Revista Inquietações</title>
     <link rel="icon" href="../assets/favicon.png">
     <link rel="stylesheet" href="painel-base.css">
     <script src="painel-base.js" defer></script>
@@ -27,6 +27,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .avatar-preview:hover {
+            border-color: #2d6cdf;
+            transform: scale(1.02);
         }
 
         .avatar-preview img {
@@ -44,64 +51,100 @@
             max-width: 300px;
             width: 100%;
             transition: 0.2s;
+            background: #f9f9f9;
+        }
+
+        .avatar-drop:hover {
+            border-color: #2d6cdf;
+            background: #f0f4ff;
         }
 
         .avatar-drop.drag {
             border-color: #2d6cdf;
-            background: #f2f6ff;
+            background: #e8f0fe;
+            transform: scale(1.02);
         }
 
         .crop-container {
             display: none;
             margin-top: 15px;
+            text-align: center;
         }
 
         .crop-container canvas {
             max-width: 300px;
-            border-radius: 6px;
+            border-radius: 8px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
         }
-        
+
         .form-message {
             margin-top: 10px;
             padding: 10px;
             border-radius: 4px;
             font-size: 14px;
             font-weight: 500;
+            text-align: center;
         }
-        
+
         .form-message.error {
             background: #fee;
             color: #c00;
             border-left: 4px solid #c00;
         }
-        
+
         .form-message.success {
             background: #efe;
             color: #060;
             border-left: 4px solid #060;
         }
-        
+
         .form-message.loading {
             background: #e3f2fd;
             color: #0056b3;
             border-left: 4px solid #0056b3;
         }
-        
+
+        .form-message.warning {
+            background: #fff3e0;
+            color: #e67e22;
+            border-left: 4px solid #e67e22;
+        }
+
         .btn:disabled {
             opacity: 0.6;
             cursor: not-allowed;
+        }
+
+        .actions-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-soft {
+            background: #f0f0f0;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 6px;
+            cursor: pointer;
+            text-decoration: none;
+            color: #333;
+            transition: 0.2s;
+        }
+
+        .btn-soft:hover {
+            background: #e0e0e0;
         }
     </style>
 </head>
 
 <body>
-
     <div class="page-shell">
         <header class="topbar">
             <div class="brand-wrap">
                 <div class="avatar-box">
-                    <img class="avatar-img" data-avatar-user alt="">
-                    <img class="logo-inline" src="../logo-revista.png">
+                    <img class="avatar-img" data-avatar-user alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                    <img class="logo-inline" src="../logo-revista.png" alt="Logo" style="height: 40px;">
                 </div>
                 <div class="brand-copy">
                     <h1>Perfil</h1>
@@ -114,7 +157,7 @@
             </div>
         </header>
 
-        <div class="content-grid">
+        <div class="content-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px;">
             <section class="panel">
                 <div class="panel-head">
                     <h2>Dados cadastrais</h2>
@@ -163,24 +206,36 @@
 
             <aside class="panel">
                 <div class="avatar-area">
-                    <div class="avatar-preview">
-                        <img id="avatar-preview" src="../assets/avatares/avatar-padrao.png">
+                    <div class="avatar-preview" id="avatar-preview-click">
+                        <img id="avatar-preview" src="../assets/avatares/avatar-padrao.png" alt="Avatar">
                     </div>
+
                     <div id="avatar-drop" class="avatar-drop">
-                        Arraste uma imagem aqui ou clique para selecionar
+                        📸 Arraste uma imagem aqui ou clique para selecionar
+                        <small style="display: block; margin-top: 5px; color: #666;">Formatos: JPG, PNG, GIF, WEBP | Máx: 5MB</small>
                     </div>
+
                     <input type="file" id="avatar-input" accept="image/*" hidden>
+
                     <div class="crop-container">
                         <canvas id="crop-canvas" width="300" height="300"></canvas>
-                        <div class="actions-row" style="margin-top:10px">
-                            <button id="btn-save-avatar" class="btn btn-primary">Salvar foto</button>
+                        <div class="actions-row" style="margin-top: 10px; justify-content: center;">
+                            <button id="btn-save-avatar" class="btn btn-primary">💾 Salvar foto</button>
+                            <button id="btn-cancel-crop" class="btn btn-secondary">Cancelar</button>
                         </div>
                     </div>
+
                     <div id="msg-avatar" class="form-message"></div>
                 </div>
             </aside>
         </div>
-        <footer class="page-footer"></footer>
+
+        <footer class="page-footer">
+            <div>Revista Inquietações — periódico científico em acesso aberto.</div>
+            <div>Organização editorial: Diego Vinícius Brito dos Santos • @iamthed1</div>
+            <div><a href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank">Código de Conduta</a></div>
+            <div><a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div>
+        </footer>
     </div>
 
     <script>
@@ -194,14 +249,14 @@
             element.className = `form-message ${type}`
         }
 
-        function hideMessage(element) {
+        function hideMessage(element, delay = 3000) {
             if (!element) return
             setTimeout(() => {
-                if (element.textContent) {
+                if (element.textContent && !element.textContent.includes("sucesso")) {
                     element.textContent = ""
                     element.className = "form-message"
                 }
-            }, 3000)
+            }, delay)
         }
 
         try {
@@ -212,6 +267,8 @@
             if (!usuarioAtual || !usuarioAtual.id) {
                 throw new Error("Usuário não encontrado")
             }
+
+            console.log("Usuário carregado:", usuarioAtual.id, usuarioAtual.nome)
 
             // Preencher formulário
             const form = document.getElementById("form-perfil")
@@ -253,18 +310,23 @@
 
             // Configurar upload de avatar
             const drop = document.getElementById("avatar-drop")
+            const previewClick = document.getElementById("avatar-preview-click")
             const input = document.getElementById("avatar-input")
             const canvas = document.getElementById("crop-canvas")
             const cropBox = document.querySelector(".crop-container")
             const btnSave = document.getElementById("btn-save-avatar")
+            const btnCancel = document.getElementById("btn-cancel-crop")
             const msgAvatar = document.getElementById("msg-avatar")
 
             let cropCtx = canvas.getContext("2d")
             let imgObj = null
             let cropSize = 300
 
+            // Abrir seletor de arquivo
             drop.onclick = () => input.click()
+            previewClick.onclick = () => input.click()
 
+            // Drag and drop
             drop.addEventListener("dragover", e => {
                 e.preventDefault()
                 drop.classList.add("drag")
@@ -291,9 +353,20 @@
                 if (file) loadImage(file)
             })
 
+            // Cancelar crop
+            btnCancel.onclick = () => {
+                cropBox.style.display = "none"
+                imgObj = null
+                input.value = ""
+                showMessage(msgAvatar, "Operação cancelada", "warning")
+                setTimeout(() => {
+                    msgAvatar.textContent = ""
+                }, 2000)
+            }
+
             function loadImage(file) {
                 if (!file.type.startsWith("image/")) {
-                    showMessage(msgAvatar, "Selecione uma imagem válida (JPG, PNG, GIF)", "error")
+                    showMessage(msgAvatar, "Selecione uma imagem válida (JPG, PNG, GIF, WEBP)", "error")
                     hideMessage(msgAvatar)
                     return
                 }
@@ -313,8 +386,8 @@
                     drawCrop()
                     cropBox.style.display = "block"
                     URL.revokeObjectURL(url)
-                    showMessage(msgAvatar, "Imagem carregada. Ajuste o crop e clique em Salvar", "success")
-                    hideMessage(msgAvatar)
+                    showMessage(msgAvatar, "✓ Imagem carregada! Ajuste o crop e clique em Salvar", "success")
+                    hideMessage(msgAvatar, 2000)
                 }
                 
                 imgObj.onerror = () => {
@@ -341,7 +414,7 @@
 
             btnSave.onclick = async () => {
                 if (!usuarioAtual || !usuarioAtual.id) {
-                    showMessage(msgAvatar, "Usuário não identificado", "error")
+                    showMessage(msgAvatar, "Usuário não identificado. Recarregue a página.", "error")
                     return
                 }
 
@@ -352,14 +425,15 @@
 
                 // Desabilitar botão durante upload
                 btnSave.disabled = true
-                btnSave.textContent = "Salvando..."
+                const originalText = btnSave.textContent
+                btnSave.textContent = "⏳ Salvando..."
                 showMessage(msgAvatar, "Processando imagem...", "loading")
 
                 canvas.toBlob(async blob => {
                     if (!blob) {
                         showMessage(msgAvatar, "Erro ao processar imagem", "error")
                         btnSave.disabled = false
-                        btnSave.textContent = "Salvar foto"
+                        btnSave.textContent = originalText
                         return
                     }
 
@@ -367,7 +441,7 @@
                     fd.append("arquivo", blob, "avatar.webp")
 
                     try {
-                        showMessage(msgAvatar, "Enviando para o servidor...", "loading")
+                        showMessage(msgAvatar, "📤 Enviando para o servidor...", "loading")
 
                         const response = await fetch("/.netlify/functions/upload-avatar", {
                             method: "POST",
@@ -384,7 +458,7 @@
                         }
 
                         if (!result.sucesso) {
-                            throw new Error(result.erro || "Falha no processamento")
+                            throw new Error(result.mensagem || "Falha no processamento")
                         }
 
                         // Atualizar imagem na tela com timestamp para evitar cache
@@ -395,7 +469,15 @@
                             if (el) el.src = urlComTimestamp
                         })
 
-                        // Atualizar dados do usuário local
+                        // Mensagem de sucesso
+                        let mensagem = result.mensagem || "Avatar atualizado com sucesso!"
+                        if (!result.db_atualizado) {
+                            mensagem += " ⚠️ Recarregue a página para ver as alterações"
+                        }
+                        
+                        showMessage(msgAvatar, mensagem, result.db_atualizado ? "success" : "warning")
+                        
+                        // Atualizar dados locais
                         usuarioAtual.foto_perfil_url = result.url
                         
                         // Salvar no localStorage se existir
@@ -405,8 +487,6 @@
                             userData.foto_perfil_url = result.url
                             localStorage.setItem("usuario", JSON.stringify(userData))
                         }
-
-                        showMessage(msgAvatar, result.mensagem || "Avatar atualizado com sucesso!", "success")
                         
                         // Limpar e esconder crop
                         setTimeout(() => {
@@ -420,8 +500,8 @@
                         showMessage(msgAvatar, err.message || "Erro ao atualizar avatar", "error")
                     } finally {
                         btnSave.disabled = false
-                        btnSave.textContent = "Salvar foto"
-                        hideMessage(msgAvatar)
+                        btnSave.textContent = originalText
+                        hideMessage(msgAvatar, 4000)
                     }
                 }, "image/webp", 0.85)
             }
@@ -434,8 +514,9 @@
                 e.preventDefault()
                 
                 const submitBtn = perfilForm.querySelector('button[type="submit"]')
+                const originalText = submitBtn.textContent
                 submitBtn.disabled = true
-                submitBtn.textContent = "Salvando..."
+                submitBtn.textContent = "💾 Salvando..."
                 
                 showMessage(msgPerfil, "Salvando dados...", "loading")
                 
@@ -450,7 +531,7 @@
                         throw new Error(response?.error || "Erro ao salvar")
                     }
                     
-                    showMessage(msgPerfil, "Perfil atualizado com sucesso!", "success")
+                    showMessage(msgPerfil, "✓ Perfil atualizado com sucesso!", "success")
                     
                     // Atualizar dados locais
                     Object.assign(usuarioAtual, dados)
@@ -460,7 +541,7 @@
                     showMessage(msgPerfil, err.message || "Erro ao salvar dados", "error")
                 } finally {
                     submitBtn.disabled = false
-                    submitBtn.textContent = "Salvar perfil"
+                    submitBtn.textContent = originalText
                     hideMessage(msgPerfil)
                 }
             })
@@ -469,7 +550,7 @@
             console.error("Erro ao carregar página:", err)
             const msg = document.getElementById("msg-avatar")
             if (msg) {
-                showMessage(msg, "Erro ao carregar dados do usuário. Recarregue a página.", "error")
+                showMessage(msg, "❌ Erro ao carregar dados do usuário. Recarregue a página.", "error")
             }
         }
     })

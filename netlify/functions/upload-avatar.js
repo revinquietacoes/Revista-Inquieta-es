@@ -2,10 +2,9 @@ import Busboy from "busboy"
 import { getStore } from "@netlify/blobs"
 import pg from 'pg'
 
-// Configurar conexão com Neon
 const { Pool } = pg
 
-// Criar pool de conexões (reutilizado entre chamadas)
+// Pool de conexões global (reutilizado entre chamadas)
 let pool = null
 
 function getDatabasePool() {
@@ -15,17 +14,20 @@ function getDatabasePool() {
             ssl: {
                 rejectUnauthorized: false // Necessário para Neon
             },
-            max: 20, // Máximo de conexões
+            max: 20,
             idleTimeoutMillis: 30000,
-            connectionTimeoutMillis: 5000
+            connectionTimeoutMillis: 10000
+        })
+
+        // Tratar erros do pool
+        pool.on('error', (err) => {
+            console.error('Erro inesperado no pool do banco:', err)
         })
     }
     return pool
 }
 
 export async function handler(event) {
-
-    // CORS headers
     const corsHeaders = {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Methods": "POST, OPTIONS",
@@ -47,111 +49,83 @@ export async function handler(event) {
     }
 
     let client = null
-    
+
     try {
-        // PEGAR O USUÁRIO DO HEADER
+        // Validar usuário
         const usuarioId = event.headers["x-user-id"]
-        
+
         if (!usuarioId) {
             return {
                 statusCode: 401,
                 headers: corsHeaders,
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     erro: "Usuário não autenticado",
-                    detalhes: "Header X-User-Id não fornecido"
+                    detalhe: "Header X-User-Id é obrigatório"
                 })
             }
         }
 
-        // Validar se é número
         const usuarioIdNumber = parseInt(usuarioId)
         if (isNaN(usuarioIdNumber)) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     erro: "ID de usuário inválido",
-                    detalhes: "O ID deve ser um número"
+                    detalhe: "O ID deve ser um número"
                 })
             }
         }
 
-        // PROCESSAR UPLOAD DO ARQUIVO
-        const busboy = Busboy({ 
+        // Processar upload do arquivo
+        const busboy = Busboy({
             headers: event.headers,
-            limits: {
-                fileSize: 5 * 1024 * 1024 // 5MB
-            }
+            limits: { fileSize: 5 * 1024 * 1024 } // 5MB
         })
 
         let fileBuffer = null
         let mimeType = "image/webp"
-        let uploadError = null
 
         await new Promise((resolve, reject) => {
             busboy.on("file", (name, file, info) => {
                 mimeType = info.mimeType
                 const chunks = []
-                
+
                 file.on("data", d => chunks.push(d))
-                
                 file.on("end", () => {
                     fileBuffer = Buffer.concat(chunks)
                     resolve()
                 })
-                
-                file.on("error", (err) => {
-                    uploadError = err.message
-                    reject(err)
-                })
+                file.on("error", reject)
             })
+            busboy.on("error", reject)
+            busboy.on("finish", () => resolve())
 
-            busboy.on("error", (err) => {
-                uploadError = err.message
-                reject(err)
-            })
-
-            busboy.on("finish", () => {
-                resolve()
-            })
-
-            // Converter body para buffer
+            // Converter body
             const bodyBuffer = Buffer.from(event.body, "base64")
             busboy.end(bodyBuffer)
         })
-
-        if (uploadError) {
-            return {
-                statusCode: 400,
-                headers: corsHeaders,
-                body: JSON.stringify({ erro: uploadError })
-            }
-        }
 
         if (!fileBuffer || fileBuffer.length === 0) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
-                body: JSON.stringify({ 
-                    erro: "Arquivo não enviado",
-                    detalhes: "Nenhum dado recebido"
-                })
+                body: JSON.stringify({ erro: "Arquivo não enviado" })
             }
         }
 
-        // Validar tipo de arquivo
         if (!mimeType.startsWith("image/")) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
-                body: JSON.stringify({ 
+                body: JSON.stringify({
                     erro: "Tipo de arquivo inválido",
-                    detalhes: "Envie apenas imagens (JPG, PNG, GIF, WEBP)"
+                    detalhe: "Envie apenas imagens"
                 })
             }
         }
 
-        // SALVAR NO NETLIFY BLOBS
+        // Salvar no Netlify Blobs
         const store = getStore({
             name: "arquivos",
             siteID: process.env.NETLIFY_BLOBS_SITE_ID,
@@ -166,102 +140,103 @@ export async function handler(event) {
             contentType: mimeType || "image/webp"
         })
 
-        const baseUrl = process.env.URL || `https://${event.headers.host}`
+        const baseUrl = process.env.SITE_URL || process.env.URL || `https://${event.headers.host}`
         const fotoUrl = `${baseUrl}/.netlify/blobs/arquivos/${key}`
 
-        // ATUALIZAR NO NEON (PostgreSQL)
+        // Atualizar banco de dados (Neon)
         let dbAtualizado = false
-        let dbError = null
-        
+        let colunaUsada = null
+
         try {
             const pool = getDatabasePool()
             client = await pool.connect()
-            
-            // Primeiro, verificar se o usuário existe
+
+            // Verificar se o usuário existe
             const checkQuery = 'SELECT id FROM usuarios WHERE id = $1'
             const checkResult = await client.query(checkQuery, [usuarioIdNumber])
-            
+
             if (checkResult.rows.length === 0) {
-                throw new Error(`Usuário ${usuarioIdNumber} não encontrado no banco`)
+                console.warn(`Usuário ${usuarioIdNumber} não encontrado`)
+                throw new Error("Usuário não encontrado no banco")
             }
-            
-            // Tentar atualizar com diferentes nomes de coluna
-            let updateQuery = ''
-            let columnName = ''
-            
+
             // Verificar qual coluna de foto existe
-            const columnCheckQuery = `
+            const columnQuery = `
                 SELECT column_name 
                 FROM information_schema.columns 
                 WHERE table_name = 'usuarios' 
-                AND column_name IN ('foto_perfil_url', 'avatar_url', 'foto_url', 'imagem_url')
+                AND column_name IN ('foto_perfil_url', 'avatar_url', 'foto_url')
+                LIMIT 1
             `
-            
-            const columnsResult = await client.query(columnCheckQuery)
-            
-            if (columnsResult.rows.length > 0) {
-                // Usar a primeira coluna encontrada
-                columnName = columnsResult.rows[0].column_name
-                updateQuery = `UPDATE usuarios SET ${columnName} = $1 WHERE id = $2`
+
+            const columnResult = await client.query(columnQuery)
+
+            if (columnResult.rows.length > 0) {
+                colunaUsada = columnResult.rows[0].column_name
+                const updateQuery = `UPDATE usuarios SET ${colunaUsada} = $1 WHERE id = $2`
+                const updateResult = await client.query(updateQuery, [fotoUrl, usuarioIdNumber])
+
+                if (updateResult.rowCount > 0) {
+                    dbAtualizado = true
+                    console.log(`Banco atualizado: usuário ${usuarioIdNumber}, coluna ${colunaUsada}`)
+                }
             } else {
-                // Se nenhuma coluna existir, tentar criar
-                console.log("Coluna de foto não encontrada, tentando criar...")
+                // Se não existir coluna de foto, criar
+                console.log("Coluna de foto não encontrada, criando...")
                 const alterQuery = `
                     ALTER TABLE usuarios 
                     ADD COLUMN IF NOT EXISTS foto_perfil_url TEXT
                 `
                 await client.query(alterQuery)
-                columnName = 'foto_perfil_url'
-                updateQuery = `UPDATE usuarios SET ${columnName} = $1 WHERE id = $2`
+                colunaUsada = "foto_perfil_url"
+
+                const updateQuery = `UPDATE usuarios SET ${colunaUsada} = $1 WHERE id = $2`
+                const updateResult = await client.query(updateQuery, [fotoUrl, usuarioIdNumber])
+
+                if (updateResult.rowCount > 0) {
+                    dbAtualizado = true
+                    console.log(`Coluna criada e banco atualizado: usuário ${usuarioIdNumber}`)
+                }
             }
-            
-            // Executar update
-            const updateResult = await client.query(updateQuery, [fotoUrl, usuarioIdNumber])
-            
-            if (updateResult.rowCount > 0) {
-                dbAtualizado = true
-                console.log(`Banco atualizado: usuário ${usuarioIdNumber}, coluna ${columnName}`)
-            } else {
-                dbError = "Usuário encontrado mas não foi possível atualizar"
-            }
-            
-        } catch (err) {
-            dbError = err.message
-            console.error("Erro no banco de dados:", err)
+
+        } catch (dbErr) {
+            console.error("Erro no banco de dados:", dbErr)
+            // Não falha o upload, apenas avisa
         } finally {
             if (client) {
                 client.release()
             }
         }
 
-        // RESPOSTA FINAL
+        // Sucesso
         return {
             statusCode: 200,
             headers: {
                 ...corsHeaders,
                 "Content-Type": "application/json",
-                "Cache-Control": "no-cache, no-store, must-revalidate"
+                "Cache-Control": "no-cache"
             },
             body: JSON.stringify({
                 sucesso: true,
                 url: fotoUrl,
                 db_atualizado: dbAtualizado,
-                coluna_usada: columnName || null,
-                aviso: dbError ? `Imagem salva mas não vinculada ao perfil: ${dbError}` : null,
-                mensagem: dbAtualizado ? "Avatar atualizado com sucesso!" : "Avatar salvo, mas banco não atualizado"
+                coluna_usada: colunaUsada,
+                mensagem: dbAtualizado
+                    ? "Avatar atualizado com sucesso!"
+                    : "Avatar salvo, mas não foi possível vincular ao perfil",
+                usuario_id: usuarioIdNumber
             })
         }
 
     } catch (err) {
         console.error("Erro fatal:", err)
-        
+
         return {
             statusCode: 500,
             headers: corsHeaders,
             body: JSON.stringify({
                 erro: "Erro interno no servidor",
-                detalhes: process.env.NODE_ENV === "development" ? err.message : "Contate o administrador",
-                stack: process.env.NODE_ENV === "development" ? err.stack : undefined
+                detalhes: process.env.NODE_ENV === "development" ? err.message : undefined
             })
         }
     }
