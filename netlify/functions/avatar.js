@@ -1,57 +1,57 @@
 const { makeStore } = require("./_blobs")
-const { wrapHttp } = require("./_netlify")
 
-const main = async (req) => {
+exports.handler = async (event) => {
     try {
-        const url = new URL(req.url)
-        let key = url.searchParams.get("key")
+        console.log("=== AVATAR FUNCTION START ===")
+        const key = event.queryStringParameters?.key
 
         if (!key) {
-            return new Response('Parâmetro "key" é obrigatório.', { status: 400 })
+            return {
+                statusCode: 400,
+                body: "Parâmetro 'key' é obrigatório"
+            }
         }
 
-        // Se a key não começar com "usuarios/", adicionar (compatibilidade)
-        if (!key.startsWith("usuarios/")) {
-            key = `usuarios/${key}`
+        // Normalizar key
+        let normalizedKey = key
+        if (!normalizedKey.startsWith("usuarios/")) {
+            normalizedKey = `usuarios/${normalizedKey}`
         }
 
-        console.log("🔑 Key solicitada:", key)
+        console.log("Key normalizada:", normalizedKey)
 
-        // Usar o store 'revista-arquivos'
         const store = makeStore("revista-arquivos")
-        const blob = await store.get(key, { type: "arrayBuffer" })
+        const blob = await store.get(normalizedKey, { type: "arrayBuffer" })
 
         if (!blob) {
-            console.log("❌ Blob não encontrado para a key:", key)
-            return new Response('Avatar não encontrado.', { status: 404 })
+            console.log("Blob não encontrado")
+            return {
+                statusCode: 404,
+                body: "Avatar não encontrado"
+            }
         }
 
         const byteLength = blob.byteLength || blob.length || 0
-        console.log(`✅ Blob encontrado. Tamanho: ${byteLength} bytes`)
+        console.log(`Blob encontrado. Tamanho: ${byteLength} bytes`)
 
-        if (byteLength === 0) {
-            console.log("⚠️ Blob está vazio!")
-            return new Response('Arquivo vazio.', { status: 404 })
-        }
-
-        // Determinar o content-type pela extensão
         let contentType = "image/jpeg"
-        if (key.endsWith(".webp")) contentType = "image/webp"
-        else if (key.endsWith(".png")) contentType = "image/png"
-        else if (key.endsWith(".jpg") || key.endsWith(".jpeg")) contentType = "image/jpeg"
+        if (normalizedKey.endsWith(".webp")) contentType = "image/webp"
+        else if (normalizedKey.endsWith(".png")) contentType = "image/png"
 
-        return new Response(blob, {
-            status: 200,
+        return {
+            statusCode: 200,
             headers: {
                 "Content-Type": contentType,
-                "Content-Length": String(byteLength),
                 "Cache-Control": "public, max-age=86400"
-            }
-        })
+            },
+            body: Buffer.from(blob).toString("base64"),
+            isBase64Encoded: true
+        }
     } catch (err) {
-        console.error("❌ Erro ao servir avatar:", err)
-        return new Response(`Erro interno: ${err.message}`, { status: 500 })
+        console.error("Erro:", err)
+        return {
+            statusCode: 500,
+            body: `Erro: ${err.message}`
+        }
     }
 }
-
-exports.handler = wrapHttp(main)
