@@ -58,7 +58,7 @@ exports.handler = async (event) => {
             }
         }
 
-        // Determinar extensão
+        // Determinar extensão correta
         let extension = "webp"
         if (mimeType === "image/jpeg") extension = "jpg"
         else if (mimeType === "image/png") extension = "png"
