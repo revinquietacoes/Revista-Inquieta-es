@@ -1,12 +1,10 @@
 import { getStore } from "@netlify/blobs"
 import Busboy from "busboy"
 
-const MAX_SIZE = 3 * 1024 * 1024
+export async function handler(event) {
 
-export async function handler(event){
-
-if(event.httpMethod!=="POST"){
-return{
+if(event.httpMethod !== "POST"){
+return {
 statusCode:405,
 body:JSON.stringify({erro:"Método não permitido"})
 }
@@ -14,80 +12,84 @@ body:JSON.stringify({erro:"Método não permitido"})
 
 try{
 
-const bb=Busboy({
-headers:event.headers,
-limits:{fileSize:MAX_SIZE}
+const busboy = Busboy({
+headers:event.headers
 })
 
-let buffer=null
-let mime=null
 let usuario_id=null
-
+let mime=null
+let buffer=null
 const chunks=[]
 
 await new Promise((resolve,reject)=>{
 
-bb.on("file",(name,file,info)=>{
+busboy.on("file",(name,file,info)=>{
 
 mime=info.mimeType
 
-file.on("data",d=>chunks.push(d))
+file.on("data",data=>{
+chunks.push(data)
+})
 
-file.on("limit",()=>reject(new Error("Arquivo muito grande")))
-
-file.on("end",()=>buffer=Buffer.concat(chunks))
+file.on("end",()=>{
+buffer=Buffer.concat(chunks)
+})
 
 })
 
-bb.on("field",(n,v)=>{
-if(n==="usuario_id") usuario_id=v
+busboy.on("field",(name,val)=>{
+if(name==="usuario_id") usuario_id=val
 })
 
-bb.on("finish",resolve)
-bb.on("error",reject)
+busboy.on("finish",resolve)
+busboy.on("error",reject)
 
-bb.end(Buffer.from(event.body,"base64"))
+const body = event.isBase64Encoded
+? Buffer.from(event.body,"base64")
+: Buffer.from(event.body)
+
+busboy.end(body)
 
 })
 
-if(!buffer) throw new Error("Arquivo não enviado")
-if(!usuario_id) throw new Error("Usuário inválido")
-if(!mime.startsWith("image/")) throw new Error("Arquivo não é imagem")
+if(!buffer){
+throw new Error("Arquivo não recebido")
+}
 
-const filename=`avatar-${usuario_id}.jpg`
+if(!mime.startsWith("image/")){
+throw new Error("Arquivo não é imagem")
+}
 
+if(buffer.length > 4 * 1024 * 1024){
+throw new Error("Imagem maior que 4MB")
+}
+
+const filename=`avatar-${usuario_id}.webp`
 const store=getStore("avatars")
 
-try{
-
 await store.set(filename,buffer,{
-contentType:"image/jpeg"
+contentType:"image/webp"
 })
 
-}catch(e){
-
-console.error("Blobs falhou",e)
-
-return{
-statusCode:500,
-body:JSON.stringify({erro:"Falha no armazenamento"})
-}
-
-}
+const version=Date.now()
 
 return{
 statusCode:200,
 body:JSON.stringify({
-mensagem:"Avatar enviado",
-url:`/avatars/${filename}`
+url:`/avatars/${filename}?v=${version}`
 })
 }
 
 }catch(err){
 
+console.error("ERRO AVATAR:",err)
+
 return{
-statusCode:400,
-body:JSON.stringify({erro:err.message})
+statusCode:500,
+body:JSON.stringify({
+erro:"Falha no upload",
+detalhe:err.message
+})
 }
 
 }
