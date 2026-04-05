@@ -74,7 +74,7 @@
         .crop-container canvas {
             max-width: 300px;
             border-radius: 8px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .form-message {
@@ -143,7 +143,8 @@
         <header class="topbar">
             <div class="brand-wrap">
                 <div class="avatar-box">
-                    <img class="avatar-img" data-avatar-user alt="Avatar" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+                    <img class="avatar-img" data-avatar-user alt="Avatar"
+                        style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
                     <img class="logo-inline" src="../logo-revista.png" alt="Logo" style="height: 40px;">
                 </div>
                 <div class="brand-copy">
@@ -157,7 +158,8 @@
             </div>
         </header>
 
-        <div class="content-grid" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px;">
+        <div class="content-grid"
+            style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 1200px; margin: 0 auto; padding: 20px;">
             <section class="panel">
                 <div class="panel-head">
                     <h2>Dados cadastrais</h2>
@@ -212,7 +214,8 @@
 
                     <div id="avatar-drop" class="avatar-drop">
                         📸 Arraste uma imagem aqui ou clique para selecionar
-                        <small style="display: block; margin-top: 5px; color: #666;">Formatos: JPG, PNG, GIF, WEBP | Máx: 5MB</small>
+                        <small style="display: block; margin-top: 5px; color: #666;">Formatos: JPG, PNG, GIF, WEBP |
+                            Máx: 5MB</small>
                     </div>
 
                     <input type="file" id="avatar-input" accept="image/*" hidden>
@@ -233,327 +236,312 @@
         <footer class="page-footer">
             <div>Revista Inquietações — periódico científico em acesso aberto.</div>
             <div>Organização editorial: Diego Vinícius Brito dos Santos • @iamthed1</div>
-            <div><a href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank">Código de Conduta</a></div>
-            <div><a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div>
+            <div><a href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md"
+                    target="_blank">Código de Conduta</a></div>
+            <div><a href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido
+                    com apoio de Netlify</a></div>
         </footer>
     </div>
 
     <script>
-    document.addEventListener("DOMContentLoaded", async () => {
-        let usuarioAtual = null
+        document.addEventListener("DOMContentLoaded", async () => {
+            let usuarioAtual = null
 
-        // Função para mostrar mensagens
-        function showMessage(element, text, type = "loading") {
-            if (!element) return
-            element.textContent = text
-            element.className = `form-message ${type}`
-        }
-
-        function hideMessage(element, delay = 3000) {
-            if (!element) return
-            setTimeout(() => {
-                if (element.textContent && !element.textContent.includes("sucesso")) {
-                    element.textContent = ""
-                    element.className = "form-message"
-                }
-            }, delay)
-        }
-
-        try {
-            // Carregar dados do usuário
-            const data = await AppPanel.apiData("me")
-            usuarioAtual = data.usuario
-
-            if (!usuarioAtual || !usuarioAtual.id) {
-                throw new Error("Usuário não encontrado")
+            // Função para mostrar mensagens
+            function showMessage(element, text, type = "loading") {
+                if (!element) return
+                element.textContent = text
+                element.className = `form-message ${type}`
             }
 
-            console.log("Usuário carregado:", usuarioAtual.id, usuarioAtual.nome)
-
-            // Preencher formulário
-            const form = document.getElementById("form-perfil")
-            if (form) {
-                form.nome.value = usuarioAtual.nome || ""
-                form.email.value = usuarioAtual.email || ""
-                form.perfil.value = usuarioAtual.perfil || ""
-                form.instituicao.value = usuarioAtual.instituicao || ""
-                form.orcid.value = usuarioAtual.orcid || ""
-                form.lattes.value = usuarioAtual.lattes || ""
-                form.origem.value = usuarioAtual.origem || ""
-                form.telefone.value = usuarioAtual.telefone || ""
+            function hideMessage(element, delay = 3000) {
+                if (!element) return
+                setTimeout(() => {
+                    if (element.textContent && !element.textContent.includes("sucesso")) {
+                        element.textContent = ""
+                        element.className = "form-message"
+                    }
+                }, delay)
             }
 
-            // Configurar avatar
-            const preview = document.getElementById("avatar-preview")
-            const defaultAvatar = "../assets/avatares/avatar-padrao.png"
-            
-            if (usuarioAtual.foto_perfil_url && 
-                usuarioAtual.foto_perfil_url !== "null" && 
-                usuarioAtual.foto_perfil_url !== "") {
-                
-                // Testar se a imagem carrega
-                const testImg = new Image()
-                testImg.onload = () => {
-                    preview.src = usuarioAtual.foto_perfil_url
-                    document.querySelectorAll("[data-avatar-user]").forEach(el => {
-                        if (el) el.src = usuarioAtual.foto_perfil_url
-                    })
+            try {
+                // Carregar dados do usuário
+                const data = await AppPanel.apiData("me")
+                usuarioAtual = data.usuario
+
+                if (!usuarioAtual || !usuarioAtual.id) {
+                    throw new Error("Usuário não encontrado")
                 }
-                testImg.onerror = () => {
-                    console.log("URL antiga falhou, usando padrão")
+
+                console.log("Usuário carregado:", usuarioAtual.id, usuarioAtual.nome)
+
+                // Preencher formulário
+                const form = document.getElementById("form-perfil")
+                if (form) {
+                    form.nome.value = usuarioAtual.nome || ""
+                    form.email.value = usuarioAtual.email || ""
+                    form.perfil.value = usuarioAtual.perfil || ""
+                    form.instituicao.value = usuarioAtual.instituicao || ""
+                    form.orcid.value = usuarioAtual.orcid || ""
+                    form.lattes.value = usuarioAtual.lattes || ""
+                    form.origem.value = usuarioAtual.origem || ""
+                    form.telefone.value = usuarioAtual.telefone || ""
+                }
+
+                // Configurar avatar
+                const preview = document.getElementById("avatar-preview")
+                const defaultAvatar = "../assets/avatares/avatar-padrao.png"
+
+                if (usuarioAtual.foto_perfil_url &&
+                    usuarioAtual.foto_perfil_url !== "null" &&
+                    usuarioAtual.foto_perfil_url !== "") {
+
+                    // Testar se a imagem carrega
+                    const testImg = new Image()
+                    testImg.onload = () => {
+                        preview.src = usuarioAtual.foto_perfil_url
+                        document.querySelectorAll("[data-avatar-user]").forEach(el => {
+                            if (el) el.src = usuarioAtual.foto_perfil_url
+                        })
+                    }
+                    testImg.onerror = () => {
+                        console.log("URL antiga falhou, usando padrão")
+                        preview.src = defaultAvatar
+                    }
+                    testImg.src = usuarioAtual.foto_perfil_url
+                } else {
                     preview.src = defaultAvatar
                 }
-                testImg.src = usuarioAtual.foto_perfil_url
-            } else {
-                preview.src = defaultAvatar
-            }
 
-            // Configurar upload de avatar
-            const drop = document.getElementById("avatar-drop")
-            const previewClick = document.getElementById("avatar-preview-click")
-            const input = document.getElementById("avatar-input")
-            const canvas = document.getElementById("crop-canvas")
-            const cropBox = document.querySelector(".crop-container")
-            const btnSave = document.getElementById("btn-save-avatar")
-            const btnCancel = document.getElementById("btn-cancel-crop")
-            const msgAvatar = document.getElementById("msg-avatar")
+                // Configurar upload de avatar
+                const drop = document.getElementById("avatar-drop")
+                const previewClick = document.getElementById("avatar-preview-click")
+                const input = document.getElementById("avatar-input")
+                const canvas = document.getElementById("crop-canvas")
+                const cropBox = document.querySelector(".crop-container")
+                const btnSave = document.getElementById("btn-save-avatar")
+                const btnCancel = document.getElementById("btn-cancel-crop")
+                const msgAvatar = document.getElementById("msg-avatar")
 
-            let cropCtx = canvas.getContext("2d")
-            let imgObj = null
-            let cropSize = 300
+                let cropCtx = canvas.getContext("2d")
+                let imgObj = null
+                let cropSize = 300
 
-            // Abrir seletor de arquivo
-            drop.onclick = () => input.click()
-            previewClick.onclick = () => input.click()
+                // Abrir seletor de arquivo
+                drop.onclick = () => input.click()
+                previewClick.onclick = () => input.click()
 
-            // Drag and drop
-            drop.addEventListener("dragover", e => {
-                e.preventDefault()
-                drop.classList.add("drag")
-            })
+                // Drag and drop
+                drop.addEventListener("dragover", e => {
+                    e.preventDefault()
+                    drop.classList.add("drag")
+                })
 
-            drop.addEventListener("dragleave", () => {
-                drop.classList.remove("drag")
-            })
+                drop.addEventListener("dragleave", () => {
+                    drop.classList.remove("drag")
+                })
 
-            drop.addEventListener("drop", e => {
-                e.preventDefault()
-                drop.classList.remove("drag")
-                const file = e.dataTransfer.files[0]
-                if (file && file.type.startsWith("image/")) {
-                    loadImage(file)
-                } else {
-                    showMessage(msgAvatar, "Por favor, selecione uma imagem válida", "error")
-                    hideMessage(msgAvatar)
-                }
-            })
+                drop.addEventListener("drop", e => {
+                    e.preventDefault()
+                    drop.classList.remove("drag")
+                    const file = e.dataTransfer.files[0]
+                    if (file && file.type.startsWith("image/")) {
+                        loadImage(file)
+                    } else {
+                        showMessage(msgAvatar, "Por favor, selecione uma imagem válida", "error")
+                        hideMessage(msgAvatar)
+                    }
+                })
 
-            input.addEventListener("change", () => {
-                const file = input.files[0]
-                if (file) loadImage(file)
-            })
+                input.addEventListener("change", () => {
+                    const file = input.files[0]
+                    if (file) loadImage(file)
+                })
 
-            // Cancelar crop
-            btnCancel.onclick = () => {
-                cropBox.style.display = "none"
-                imgObj = null
-                input.value = ""
-                showMessage(msgAvatar, "Operação cancelada", "warning")
-                setTimeout(() => {
-                    msgAvatar.textContent = ""
-                }, 2000)
-            }
-
-            function loadImage(file) {
-                if (!file.type.startsWith("image/")) {
-                    showMessage(msgAvatar, "Selecione uma imagem válida (JPG, PNG, GIF, WEBP)", "error")
-                    hideMessage(msgAvatar)
-                    return
+                // Cancelar crop
+                btnCancel.onclick = () => {
+                    cropBox.style.display = "none"
+                    imgObj = null
+                    input.value = ""
+                    showMessage(msgAvatar, "Operação cancelada", "warning")
+                    setTimeout(() => {
+                        msgAvatar.textContent = ""
+                    }, 2000)
                 }
 
-                if (file.size > 5 * 1024 * 1024) {
-                    showMessage(msgAvatar, "Imagem muito grande. Máximo 5MB", "error")
-                    hideMessage(msgAvatar)
-                    return
-                }
-
-                const url = URL.createObjectURL(file)
-                imgObj = new Image()
-                
-                imgObj.onload = () => {
-                    canvas.width = cropSize
-                    canvas.height = cropSize
-                    drawCrop()
-                    cropBox.style.display = "block"
-                    URL.revokeObjectURL(url)
-                    showMessage(msgAvatar, "✓ Imagem carregada! Ajuste o crop e clique em Salvar", "success")
-                    hideMessage(msgAvatar, 2000)
-                }
-                
-                imgObj.onerror = () => {
-                    showMessage(msgAvatar, "Erro ao carregar imagem", "error")
-                    hideMessage(msgAvatar)
-                }
-                
-                imgObj.src = url
-            }
-
-            function drawCrop() {
-                if (!imgObj) return
-                cropCtx.clearRect(0, 0, cropSize, cropSize)
-                
-                let size = Math.min(imgObj.width, imgObj.height)
-                let sx = (imgObj.width - size) / 2
-                let sy = (imgObj.height - size) / 2
-
-                cropCtx.drawImage(
-                    imgObj, sx, sy, size, size,
-                    0, 0, cropSize, cropSize
-                )
-            }
-
-            btnSave.onclick = async () => {
-                if (!usuarioAtual || !usuarioAtual.id) {
-                    showMessage(msgAvatar, "Usuário não identificado. Recarregue a página.", "error")
-                    return
-                }
-
-                if (!imgObj) {
-                    showMessage(msgAvatar, "Nenhuma imagem selecionada", "error")
-                    return
-                }
-
-                // Desabilitar botão durante upload
-                btnSave.disabled = true
-                const originalText = btnSave.textContent
-                btnSave.textContent = "⏳ Salvando..."
-                showMessage(msgAvatar, "Processando imagem...", "loading")
-
-                canvas.toBlob(async blob => {
-                    if (!blob) {
-                        showMessage(msgAvatar, "Erro ao processar imagem", "error")
-                        btnSave.disabled = false
-                        btnSave.textContent = originalText
+                function loadImage(file) {
+                    if (!file.type.startsWith("image/")) {
+                        showMessage(msgAvatar, "Selecione uma imagem válida (JPG, PNG, GIF, WEBP)", "error")
+                        hideMessage(msgAvatar)
                         return
                     }
 
-                    const fd = new FormData()
-                    fd.append("arquivo", blob, "avatar.webp")
-
-                    try {
-                        showMessage(msgAvatar, "📤 Enviando para o servidor...", "loading")
-
-                        const response = await fetch("/.netlify/functions/upload-avatar", {
-                            method: "POST",
-                            headers: {
-                                "X-User-Id": usuarioAtual.id.toString()
-                            },
-                            body: fd
-                        })
-
-                        const result = await response.json()
-
-                        if (!response.ok) {
-                            throw new Error(result.erro || result.detalhes || "Erro no upload")
-                        }
-
-                        if (!result.sucesso) {
-                            throw new Error(result.mensagem || "Falha no processamento")
-                        }
-
-                        // Atualizar imagem na tela com timestamp para evitar cache
-                        const urlComTimestamp = `${result.url}?t=${Date.now()}`
-                        preview.src = urlComTimestamp
-                        
-                        document.querySelectorAll("[data-avatar-user]").forEach(el => {
-                            if (el) el.src = urlComTimestamp
-                        })
-
-                        // Mensagem de sucesso
-                        let mensagem = result.mensagem || "Avatar atualizado com sucesso!"
-                        if (!result.db_atualizado) {
-                            mensagem += " ⚠️ Recarregue a página para ver as alterações"
-                        }
-                        
-                        showMessage(msgAvatar, mensagem, result.db_atualizado ? "success" : "warning")
-                        
-                        // Atualizar dados locais
-                        usuarioAtual.foto_perfil_url = result.url
-                        
-                        // Salvar no localStorage se existir
-                        const storedUser = localStorage.getItem("usuario")
-                        if (storedUser) {
-                            const userData = JSON.parse(storedUser)
-                            userData.foto_perfil_url = result.url
-                            localStorage.setItem("usuario", JSON.stringify(userData))
-                        }
-                        
-                        // Limpar e esconder crop
-                        setTimeout(() => {
-                            cropBox.style.display = "none"
-                            imgObj = null
-                            input.value = ""
-                        }, 1500)
-
-                    } catch (err) {
-                        console.error("Erro detalhado:", err)
-                        showMessage(msgAvatar, err.message || "Erro ao atualizar avatar", "error")
-                    } finally {
-                        btnSave.disabled = false
-                        btnSave.textContent = originalText
-                        hideMessage(msgAvatar, 4000)
+                    if (file.size > 5 * 1024 * 1024) {
+                        showMessage(msgAvatar, "Imagem muito grande. Máximo 5MB", "error")
+                        hideMessage(msgAvatar)
+                        return
                     }
-                }, "image/webp", 0.85)
-            }
 
-            // Salvar dados do perfil
-            const perfilForm = document.getElementById("form-perfil")
-            const msgPerfil = document.getElementById("msg-perfil")
+                    const url = URL.createObjectURL(file)
+                    imgObj = new Image()
 
-            perfilForm.addEventListener("submit", async (e) => {
-                e.preventDefault()
-                
-                const submitBtn = perfilForm.querySelector('button[type="submit"]')
-                const originalText = submitBtn.textContent
-                submitBtn.disabled = true
-                submitBtn.textContent = "💾 Salvando..."
-                
-                showMessage(msgPerfil, "Salvando dados...", "loading")
-                
-                const formData = new FormData(perfilForm)
-                const dados = Object.fromEntries(formData.entries())
-                dados.id = usuarioAtual.id
-                
-                try {
-                    const response = await AppPanel.apiData("atualizar-usuario", dados)
-                    
-                    if (!response || response.error) {
-                        throw new Error(response?.error || "Erro ao salvar")
+                    imgObj.onload = () => {
+                        canvas.width = cropSize
+                        canvas.height = cropSize
+                        drawCrop()
+                        cropBox.style.display = "block"
+                        URL.revokeObjectURL(url)
+                        showMessage(msgAvatar, "✓ Imagem carregada! Ajuste o crop e clique em Salvar", "success")
+                        hideMessage(msgAvatar, 2000)
                     }
-                    
-                    showMessage(msgPerfil, "✓ Perfil atualizado com sucesso!", "success")
-                    
-                    // Atualizar dados locais
-                    Object.assign(usuarioAtual, dados)
-                    
-                } catch (err) {
-                    console.error("Erro ao salvar perfil:", err)
-                    showMessage(msgPerfil, err.message || "Erro ao salvar dados", "error")
-                } finally {
-                    submitBtn.disabled = false
-                    submitBtn.textContent = originalText
-                    hideMessage(msgPerfil)
+
+                    imgObj.onerror = () => {
+                        showMessage(msgAvatar, "Erro ao carregar imagem", "error")
+                        hideMessage(msgAvatar)
+                    }
+
+                    imgObj.src = url
                 }
-            })
-            
-        } catch (err) {
-            console.error("Erro ao carregar página:", err)
-            const msg = document.getElementById("msg-avatar")
-            if (msg) {
-                showMessage(msg, "❌ Erro ao carregar dados do usuário. Recarregue a página.", "error")
-            }
-        }
-    })
+
+                function drawCrop() {
+                    if (!imgObj) return
+                    cropCtx.clearRect(0, 0, cropSize, cropSize)
+
+                    let size = Math.min(imgObj.width, imgObj.height)
+                    let sx = (imgObj.width - size) / 2
+                    let sy = (imgObj.height - size) / 2
+
+                    cropCtx.drawImage(
+                        imgObj, sx, sy, size, size,
+                        0, 0, cropSize, cropSize
+                    )
+                }
+
+                btnSave.onclick = async () => {
+                    if (!usuarioAtual || !usuarioAtual.id) {
+                        showMessage(msgAvatar, "Usuário não identificado. Recarregue a página.", "error")
+                        return
+                    }
+
+                    if (!imgObj) {
+                        showMessage(msgAvatar, "Nenhuma imagem selecionada", "error")
+                        return
+                    }
+
+                    // Desabilitar botão durante upload
+                    btnSave.disabled = true
+                    const originalText = btnSave.textContent
+                    btnSave.textContent = "⏳ Salvando..."
+                    showMessage(msgAvatar, "Processando imagem...", "loading")
+
+                    canvas.toBlob(async blob => {
+                        if (!blob) {
+                            showMessage(msgAvatar, "Erro ao processar imagem", "error")
+                            btnSave.disabled = false
+                            btnSave.textContent = originalText
+                            return
+                        }
+
+                        const fd = new FormData()
+                        fd.append("arquivo", blob, "avatar.webp")
+
+                        // No perfil.html, modifique a parte do upload para não tentar salvar no banco via action:
+
+                        btnSave.onclick = async () => {
+                            // ... código anterior ...
+
+                            try {
+                                const response = await fetch("/.netlify/functions/upload-avatar", {
+                                    method: "POST",
+                                    headers: {
+                                        "X-User-Id": usuarioAtual.id.toString()
+                                    },
+                                    body: fd
+                                })
+
+                                const result = await response.json()
+
+                                if (!response.ok) {
+                                    throw new Error(result.erro || "Erro no upload")
+                                }
+
+                                // Atualizar imagem na tela
+                                const urlComTimestamp = `${result.url}?t=${Date.now()}`
+                                preview.src = urlComTimestamp
+
+                                document.querySelectorAll("[data-avatar-user]").forEach(el => {
+                                    if (el) el.src = urlComTimestamp
+                                })
+
+                                // Atualizar dados locais
+                                usuarioAtual.foto_perfil_url = result.url
+
+                                // NÃO precisa chamar apiData novamente, o upload-avatar já salvou no banco!
+
+                                showMessage(msgAvatar, "Avatar atualizado com sucesso!", "success")
+
+                                // ... resto do código ...
+
+                            } catch (err) {
+                                // ... tratamento de erro ...
+                            }
+                        }
+
+                        // Salvar dados do perfil
+                        const perfilForm = document.getElementById("form-perfil")
+                        const msgPerfil = document.getElementById("msg-perfil")
+
+                        perfilForm.addEventListener("submit", async (e) => {
+                            e.preventDefault()
+
+                            const submitBtn = perfilForm.querySelector('button[type="submit"]')
+                            const originalText = submitBtn.textContent
+                            submitBtn.disabled = true
+                            submitBtn.textContent = "💾 Salvando..."
+
+                            showMessage(msgPerfil, "Salvando dados...", "loading")
+
+                            const formData = new FormData(perfilForm)
+                            const dados = Object.fromEntries(formData.entries())
+
+                            try {
+                                // CORREÇÃO AQUI: Usar a action correta "update_profile"
+                                const response = await AppPanel.apiData("update_profile", {
+                                    userId: usuarioAtual.id,
+                                    nome: dados.nome,
+                                    instituicao: dados.instituicao,
+                                    orcid: dados.orcid,
+                                    lattes: dados.lattes,
+                                    origem: dados.origem,
+                                    telefone: dados.telefone,
+                                    receber_noticias_email: dados.receber_noticias_email || false
+                                })
+
+                                if (!response || response.erro) {
+                                    throw new Error(response?.erro || "Erro ao salvar")
+                                }
+
+                                showMessage(msgPerfil, "✓ Perfil atualizado com sucesso!", "success")
+
+                                // Atualizar dados locais
+                                if (response.usuario) {
+                                    Object.assign(usuarioAtual, response.usuario)
+                                }
+
+                                // Recarregar dados após 1 segundo
+                                setTimeout(() => {
+                                    window.location.reload()
+                                }, 1500)
+
+                            } catch (err) {
+                                console.error("Erro ao salvar perfil:", err)
+                                showMessage(msgPerfil, err.message || "Erro ao salvar dados", "error")
+                            } finally {
+                                submitBtn.disabled = false
+                                submitBtn.textContent = originalText
+                                hideMessage(msgPerfil, 3000)
+                            }
+                        })
     </script>
 </body>
 
