@@ -58,7 +58,6 @@ exports.handler = async (event) => {
             }
         }
 
-        // Determinar extensão
         let extension = "webp"
         if (mimeType === "image/jpeg") extension = "jpg"
         else if (mimeType === "image/png") extension = "png"
@@ -66,12 +65,11 @@ exports.handler = async (event) => {
 
         const timestamp = Date.now()
         const random = Math.random().toString(36).substring(2, 8)
-        // Chave simples: usuarioId-timestamp-random.ext
         const key = `${usuarioId}-${timestamp}-${random}.${extension}`
 
         const siteID = process.env.NETLIFY_BLOBS_SITE_ID
         const token = process.env.NETLIFY_BLOBS_TOKEN
-        const storeName = "avatars"   // store exclusivo
+        const storeName = "avatares"   // Será criado automaticamente
 
         if (!siteID || !token) {
             throw new Error("Variáveis de ambiente do Blobs não configuradas")
@@ -93,9 +91,8 @@ exports.handler = async (event) => {
             throw new Error(`Erro ao salvar blob: ${uploadResponse.status} - ${errorText}`)
         }
 
-        console.log(`✅ Avatar salvo em 'avatars': ${key} (${fileBuffer.length} bytes)`)
+        console.log(`✅ Avatar salvo em store 'avatares': ${key} (${fileBuffer.length} bytes)`)
 
-        // URL pública via função avatar (ainda usaremos a mesma função)
         const avatarUrl = `/.netlify/functions/avatar?key=${encodeURIComponent(key)}`
 
         return {
