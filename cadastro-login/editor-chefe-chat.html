@@ -83,7 +83,6 @@
   </header>
 
   <div class="msn-chat">
-    <!-- Lista de contatos -->
     <div class="msn-contacts">
       <div class="msn-contacts-header">
         <img src="../assets/avatares/avatar-padrao.png" alt="Meu avatar" id="myAvatarHeader">
@@ -94,8 +93,6 @@
       </div>
       <div class="msn-contact-list" id="contactList"></div>
     </div>
-
-    <!-- Área da conversa (inicialmente oculta) -->
     <div class="msn-conversation" id="conversationArea" style="display: none;">
       <div class="msn-conversation-header">
         <div>
@@ -103,6 +100,7 @@
           <span id="chatContactStatus" style="font-size: 12px; margin-left: 8px;"></span>
         </div>
         <div class="msn-conversation-actions">
+          <button id="clearChatBtn" title="Limpar conversa">🗑️</button>
           <button id="videoCallBtn" title="Chamada de vídeo">🎥</button>
           <button id="nudgeBtn" title="Chamar atenção">✨</button>
         </div>
@@ -122,7 +120,6 @@
       </div>
     </div>
   </div>
-
   <footer class="page-footer"></footer>
 </div>
 
@@ -149,7 +146,6 @@
   async function loadContacts() {
     try {
       const data = await AppPanel.apiData('chat_recipients');
-      // Converte IDs para string e remove o próprio usuário
       contacts = data.usuarios.filter(u => String(u.id) !== String(currentUser.id)).map(u => ({ ...u, id: String(u.id) }));
       renderContactList();
       console.log('Contatos carregados:', contacts.length);
@@ -179,28 +175,23 @@
     `).join('');
   }
 
-  // Delegação de eventos para cliques nos contatos
   document.getElementById('contactList').addEventListener('click', (e) => {
     const contactDiv = e.target.closest('.msn-contact');
     if (contactDiv) {
-      const contactId = contactDiv.dataset.id; // string
-      console.log('Clique no contato com ID (string):', contactId);
-      if (contactId) {
-        selectContact(contactId);
-      }
+      const contactId = contactDiv.dataset.id;
+      console.log('Clique no contato com ID:', contactId);
+      if (contactId) selectContact(contactId);
     }
   });
 
   async function selectContact(contactId) {
-    console.log('Selecionando contato com ID:', contactId);
+    console.log('Selecionando contato:', contactId);
     let contact = contacts.find(c => c.id === contactId);
     if (!contact) {
-      console.warn('Contato não encontrado. Recarregando lista...');
       await loadContacts();
       contact = contacts.find(c => c.id === contactId);
       if (!contact) {
-        console.error('Contato ainda não encontrado:', contactId);
-        alert('Contato não encontrado. Tente novamente.');
+        alert('Contato não encontrado.');
         return;
       }
     }
@@ -209,12 +200,11 @@
     convArea.style.display = 'flex';
     document.getElementById('chatContactName').innerText = contact.nome;
     document.getElementById('chatContactStatus').innerHTML = contact.online ? '🟢 Online' : '⚫ Offline';
-    // Marcar como ativo na lista
     document.querySelectorAll('.msn-contact').forEach(el => {
       el.classList.remove('active');
       if (el.dataset.id === contactId) el.classList.add('active');
     });
-    loadMessages(contact.id);
+    loadMessages(contactId);
   }
 
   async function loadMessages(contactId) {
@@ -243,7 +233,6 @@
       let anexoHtml = '';
       if (msg.anexo_url) {
         let url = msg.anexo_url;
-        // Fallback para URLs antigas do Netlify Blobs (opcional)
         if (url.includes('/.netlify/functions/arquivo')) {
           anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo antigo'}</a></div>`;
         } else {
@@ -284,6 +273,7 @@
       };
       if (anexoInfo) {
         payload.anexoUrl = anexoInfo.url;
+        payload.anexoPath = anexoInfo.storage_path;
         payload.anexoNome = anexoInfo.nome;
         payload.anexoMime = anexoInfo.mime;
       }
@@ -307,7 +297,12 @@
     });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.erro || 'Falha no upload');
-    return { url: data.arquivo.url_acesso, nome: file.name, mime: file.type };
+    return {
+      url: data.arquivo.url_acesso,
+      storage_path: data.arquivo.storage_path,
+      nome: file.name,
+      mime: file.type
+    };
   }
 
   async function startAudioRecording() {
@@ -392,8 +387,7 @@
     try {
       if (typeof AppPanel === 'undefined') throw new Error('AppPanel não carregado');
       currentUser = await AppPanel.requireRole(['editor_chefe']);
-      if (!currentUser) throw new Error('Usuário não autenticado ou perfil não autorizado');
-      // Garantir que o ID do usuário seja string
+      if (!currentUser) throw new Error('Usuário não autenticado');
       currentUser.id = String(currentUser.id);
       console.log('Usuário logado:', currentUser);
       document.getElementById('myNameHeader').innerText = currentUser.nome;
@@ -402,16 +396,13 @@
       await loadContacts();
       const urlParams = new URLSearchParams(location.search);
       const targetId = urlParams.get('target');
-      if (targetId && contacts.find(c => c.id === targetId)) {
-        selectContact(targetId);
-      }
+      if (targetId && contacts.find(c => c.id === targetId)) selectContact(targetId);
     } catch (err) {
       console.error('Erro na inicialização:', err);
       document.getElementById('contactList').innerHTML = `<div style="padding:16px;text-align:center;color:red;">${err.message}</div>`;
     }
   });
 
-  // Eventos da interface
   document.getElementById('searchContact').addEventListener('input', () => renderContactList());
   document.getElementById('sendMsgBtn').addEventListener('click', () => {
     const text = document.getElementById('messageText').value;
@@ -437,6 +428,18 @@
   document.getElementById('locationBtn').addEventListener('click', sendLocation);
   document.getElementById('nudgeBtn').addEventListener('click', sendNudge);
   document.getElementById('videoCallBtn').addEventListener('click', startVideoCall);
+  document.getElementById('clearChatBtn').addEventListener('click', async () => {
+    if (!activeContactId) return;
+    if (!confirm('⚠️ Tem certeza? Isso apagará TODAS as mensagens e os arquivos anexados desta conversa (não poderá ser desfeito).')) return;
+    try {
+      await AppPanel.apiAction('clear_chat', { contactId: activeContactId });
+      alert('Conversa limpa com sucesso!');
+      messagesCache.set(activeContactId, []);
+      renderMessages(activeContactId);
+    } catch (err) {
+      alert('Erro ao limpar conversa: ' + err.message);
+    }
+  });
 </script>
 </body>
 </html>
