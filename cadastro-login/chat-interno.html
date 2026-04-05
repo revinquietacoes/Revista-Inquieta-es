@@ -83,7 +83,6 @@
   </header>
 
   <div class="msn-chat">
-    <!-- Lista de contatos -->
     <div class="msn-contacts">
       <div class="msn-contacts-header">
         <img src="../assets/avatares/avatar-padrao.png" alt="Meu avatar" id="myAvatarHeader">
@@ -94,8 +93,6 @@
       </div>
       <div class="msn-contact-list" id="contactList"></div>
     </div>
-
-    <!-- Área da conversa (inicialmente oculta) -->
     <div class="msn-conversation" id="conversationArea" style="display: none;">
       <div class="msn-conversation-header">
         <div>
@@ -122,7 +119,6 @@
       </div>
     </div>
   </div>
-
   <footer class="page-footer"></footer>
 </div>
 
@@ -150,10 +146,11 @@
     try {
       const data = await AppPanel.apiData('chat_recipients');
       contacts = data.usuarios.filter(u => u.id !== currentUser.id);
-      renderContactList();
       console.log('Contatos carregados:', contacts.length);
+      renderContactList();
     } catch (err) {
       console.error('Erro ao carregar contatos:', err);
+      document.getElementById('contactList').innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar contatos.</div>';
     }
   }
 
@@ -175,7 +172,6 @@
         ${c.unread ? `<span class="msn-contact-badge">${c.unread}</span>` : ''}
       </div>
     `).join('');
-    // O evento de clique será tratado por delegação no container, não é necessário adicionar listeners individuais.
   }
 
   // Delegação de eventos para cliques nos contatos
@@ -184,6 +180,7 @@
     if (contactDiv) {
       const contactId = parseInt(contactDiv.dataset.id);
       if (contactId) {
+        console.log('Clique no contato:', contactId);
         selectContact(contactId);
       }
     }
@@ -197,7 +194,6 @@
       return;
     }
     activeContactId = contactId;
-    // Exibir área de conversa
     const convArea = document.getElementById('conversationArea');
     convArea.style.display = 'flex';
     document.getElementById('chatContactName').innerText = contact.nome;
@@ -368,11 +364,19 @@
 
   document.addEventListener('DOMContentLoaded', async () => {
     try {
-      currentUser = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
-      if (!currentUser) {
-        console.error('Usuário não autenticado ou sem permissão.');
+      // Verifica se AppPanel existe
+      if (typeof AppPanel === 'undefined') {
+        console.error('AppPanel não carregado!');
         return;
       }
+      // Obtém usuário autenticado (permitindo todos os perfis que têm acesso ao chat)
+      currentUser = await AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
+      if (!currentUser) {
+        console.error('Usuário não autenticado ou perfil não autorizado.');
+        document.getElementById('contactList').innerHTML = '<div style="padding:16px;text-align:center;color:red;">Você precisa estar logado para acessar o chat.</div>';
+        return;
+      }
+      console.log('Usuário logado:', currentUser);
       document.getElementById('myNameHeader').innerText = currentUser.nome;
       const myAvatar = currentUser.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
       document.getElementById('myAvatarHeader').src = myAvatar;
@@ -387,7 +391,7 @@
     }
   });
 
-  // Eventos da interface (usando delegação onde possível)
+  // Eventos da interface
   document.getElementById('searchContact').addEventListener('input', () => renderContactList());
   document.getElementById('sendMsgBtn').addEventListener('click', () => {
     const text = document.getElementById('messageText').value;
