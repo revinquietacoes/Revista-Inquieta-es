@@ -1,5 +1,5 @@
 const Busboy = require("busboy")
-const { getStore } = require("@netlify/blobs")
+const { makeStore } = require("./_blobs")
 
 exports.handler = async (event) => {
     const corsHeaders = {
@@ -23,7 +23,6 @@ exports.handler = async (event) => {
 
     try {
         console.log("=== UPLOAD-AVATAR INICIADO ===")
-        
         const usuarioId = event.headers["x-user-id"]
         if (!usuarioId) {
             return {
@@ -64,12 +63,8 @@ exports.handler = async (event) => {
 
         console.log(`Arquivo recebido: ${fileBuffer.length} bytes, tipo: ${mimeType}`)
 
-        // CORREÇÃO: Usar a sintaxe correta para obter o store
-        const store = getStore("arquivos", {
-            siteID: process.env.NETLIFY_BLOBS_SITE_ID,
-            token: process.env.NETLIFY_BLOBS_TOKEN
-        })
-
+        // Usar o makeStore do projeto (já configurado com siteID e token)
+        const store = makeStore("arquivos")
         const timestamp = Date.now()
         const random = Math.random().toString(36).substring(2, 8)
         const key = `usuarios/${usuarioId}-${timestamp}-${random}.webp`
@@ -101,7 +96,8 @@ exports.handler = async (event) => {
             headers: corsHeaders,
             body: JSON.stringify({
                 erro: "Erro interno do servidor",
-                detalhe: err.message
+                detalhe: err.message,
+                stack: process.env.NODE_ENV === "development" ? err.stack : undefined
             })
         }
     }
