@@ -13,6 +13,21 @@
     <script src="painel-base.js" defer></script>
 
     <style>
+        .avatar-box-panel {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .profile-avatar {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ddd;
+        }
+
         .avatar-container {
             display: flex;
             flex-direction: column;
@@ -139,24 +154,17 @@
 
             <aside class="panel">
 
-                <div class="panel-head">
-                    <h2>Foto de perfil</h2>
-                </div>
+                <div class="avatar-box-panel">
 
-                <div class="avatar-container">
+                    <img id="avatar-img" class="profile-avatar" src="../assets/avatar-default.png" alt="Avatar" />
 
-                    <img id="profile-avatar" class="profile-avatar" src="../assets/avatar-default.png">
+                    <input type="file" id="avatar-input" accept="image/*" hidden />
 
-                    <div class="avatar-drop" id="avatar-drop">
-                        Arraste sua foto aqui<br>
-                        ou clique para escolher
-                    </div>
-
-                    <input type="file" id="arquivo-avatar" accept="image/*" hidden>
-
-                    <button id="btn-upload-avatar">
-                        Salvar foto
+                    <button id="avatar-btn" class="btn btn-secondary">
+                        Alterar foto
                     </button>
+
+                    <div id="msg-avatar" class="form-message"></div>
 
                 </div>
 
@@ -325,6 +333,118 @@
         }
 
 })
+
+            < script >
+
+            document.addEventListener("DOMContentLoaded", async () => {
+
+                const user = await AppPanel.apiData("me")
+                const u = user.usuario
+
+                const img = document.getElementById("avatar-img")
+                const input = document.getElementById("avatar-input")
+                const btn = document.getElementById("avatar-btn")
+                const msg = document.getElementById("msg-avatar")
+
+                img.src = u.foto_perfil_url || "../assets/avatar-default.png"
+
+                btn.onclick = () => input.click()
+
+                input.addEventListener("change", async () => {
+
+                    const file = input.files[0]
+                    if (!file) return
+
+                    if (!file.type.startsWith("image/")) {
+                        msg.textContent = "Selecione uma imagem válida."
+                        return
+                    }
+
+                    const compressed = await compressImage(file)
+
+                    preview(compressed)
+
+                    await uploadAvatar(compressed)
+
+                })
+
+                async function compressImage(file) {
+
+                    const img = await createImageBitmap(file)
+
+                    const canvas = document.createElement("canvas")
+                    const ctx = canvas.getContext("2d")
+
+                    const max = 512
+
+                    let w = img.width
+                    let h = img.height
+
+                    if (w > h) {
+                        if (w > max) { h *= max / w; w = max }
+                    } else {
+                        if (h > max) { w *= max / h; h = max }
+                    }
+
+                    canvas.width = w
+                    canvas.height = h
+
+                    ctx.drawImage(img, 0, 0, w, h)
+
+                    return new Promise(resolve => {
+                        canvas.toBlob(blob => {
+                            resolve(new File([blob], "avatar.webp", { type: "image/webp" }))
+                        }, "image/webp", 0.82)
+                    })
+
+                }
+
+                function preview(file) {
+                    img.src = URL.createObjectURL(file)
+                }
+
+                async function uploadAvatar(file) {
+
+                    msg.textContent = "Enviando..."
+
+                    const fd = new FormData()
+
+                    fd.append("arquivo", file)
+                    fd.append("usuario_id", u.id)
+
+                    try {
+
+                        const r = await fetch("/.netlify/functions/upload-avatar", {
+                            method: "POST",
+                            headers: AppPanel.currentUserHeaders(),
+                            body: fd
+                        })
+
+                        const data = await r.json()
+
+                        if (!r.ok) {
+                            throw new Error(data.erro || "Falha no upload")
+                        }
+
+                        img.src = data.url
+
+                        document
+                            .querySelectorAll("[data-avatar-user]")
+                            .forEach(el => {
+                                el.src = data.url
+                            })
+
+                        msg.textContent = "Foto atualizada com sucesso."
+
+                    } catch (err) {
+
+                        msg.textContent = err.message
+
+                    }
+
+                }
+
+            })
 
     </script>
 
