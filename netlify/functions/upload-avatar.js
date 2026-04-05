@@ -58,18 +58,13 @@ exports.handler = async (event) => {
             }
         }
 
-        // Usar o store 'revista-arquivos'
+        // Configurações do store
         const siteID = process.env.NETLIFY_BLOBS_SITE_ID
         const token = process.env.NETLIFY_BLOBS_TOKEN
-        const storeName = "revista-arquivos"
-
-        if (!siteID || !token) {
-            throw new Error("Variáveis de ambiente do Blobs não configuradas")
-        }
-
+        const storeName = "revista-arquivos"   // Nome correto do store
         const timestamp = Date.now()
         const random = Math.random().toString(36).substring(2, 8)
-        // Estrutura: usuarios/{id}/avatar/{timestamp}-{random}.webp
+        // Caminho completo: usuarios/{id}/avatar/{timestamp}-{random}.webp
         const key = `usuarios/${usuarioId}/avatar/${timestamp}-${random}.webp`
 
         const blobUrl = `https://api.netlify.com/api/v1/sites/${siteID}/blobs/${storeName}/${encodeURIComponent(key)}`
@@ -88,7 +83,9 @@ exports.handler = async (event) => {
             throw new Error(`Erro ao salvar blob: ${uploadResponse.status} - ${errorText}`)
         }
 
-        // URL da função avatar (que servirá a imagem)
+        console.log(`✅ Avatar salvo em: ${storeName}/${key}`)
+
+        // URL pública via função avatar
         const avatarUrl = `/.netlify/functions/avatar?key=${encodeURIComponent(key)}`
 
         return {
@@ -105,7 +102,7 @@ exports.handler = async (event) => {
             })
         }
     } catch (err) {
-        console.error("Erro no upload:", err)
+        console.error("❌ Erro no upload:", err)
         return {
             statusCode: 500,
             headers: corsHeaders,
