@@ -1,21 +1,5 @@
 const Busboy = require("busboy")
 const { getStore } = require("@netlify/blobs")
-const { Pool } = require("pg")
-
-let pool = null
-
-function getDatabasePool() {
-    if (!pool) {
-        pool = new Pool({
-            connectionString: process.env.NETLIFY_DATABASE_URL,
-            ssl: { rejectUnauthorized: false },
-            max: 20,
-            idleTimeoutMillis: 30000,
-            connectionTimeoutMillis: 10000
-        })
-    }
-    return pool
-}
 
 exports.handler = async (event) => {
     const corsHeaders = {
@@ -37,11 +21,11 @@ exports.handler = async (event) => {
         }
     }
 
-    let client = null
-    
     try {
+        console.log("=== UPLOAD-AVATAR INICIADO ===")
+        console.log("Headers:", JSON.stringify(event.headers, null, 2))
+
         const usuarioId = event.headers["x-user-id"]
-        
         if (!usuarioId) {
             return {
                 statusCode: 401,
@@ -50,19 +34,16 @@ exports.handler = async (event) => {
             }
         }
 
-        const busboy = Busboy({ 
-            headers: event.headers,
-            limits: { fileSize: 5 * 1024 * 1024 }
-        })
-
+        // Processar o multipart form
+        const busboy = Busboy({ headers: event.headers })
         let fileBuffer = null
         let mimeType = "image/webp"
 
         await new Promise((resolve, reject) => {
-            busboy.on("file", (name, file, info) => {
+            busboy.on("file", (fieldname, file, info) => {
                 mimeType = info.mimeType
                 const chunks = []
-                file.on("data", d => chunks.push(d))
+                file.on("data", (chunk) => chunks.push(chunk))
                 file.on("end", () => {
                     fileBuffer = Buffer.concat(chunks)
                     resolve()
@@ -71,9 +52,7 @@ exports.handler = async (event) => {
             })
             busboy.on("error", reject)
             busboy.on("finish", () => resolve())
-            
-            const bodyBuffer = Buffer.from(event.body, "base64")
-            busboy.end(bodyBuffer)
+            busboy.end(Buffer.from(event.body, "base64"))
         })
 
         if (!fileBuffer || fileBuffer.length === 0) {
@@ -84,6 +63,9 @@ exports.handler = async (event) => {
             }
         }
 
+        console.log(`Arquivo recebido: ${fileBuffer.length} bytes, tipo: ${mimeType}`)
+
+        // Configurar o blob store
         const store = getStore({
             name: "arquivos",
             siteID: process.env.NETLIFY_BLOBS_SITE_ID,
@@ -91,41 +73,15 @@ exports.handler = async (event) => {
         })
 
         const timestamp = Date.now()
-        const key = `usuarios/${usuarioId}-${timestamp}.webp`
+        const random = Math.random().toString(36).substring(2, 8)
+        const key = `usuarios/${usuarioId}-${timestamp}-${random}.webp`
 
-        await store.set(key, fileBuffer, {
-            contentType: mimeType || "image/webp"
-        })
+        await store.set(key, fileBuffer, { contentType: mimeType || "image/webp" })
 
         const baseUrl = process.env.URL || `https://${event.headers.host}`
         const fotoUrl = `${baseUrl}/.netlify/blobs/arquivos/${key}`
 
-        // Tentar salvar no banco (opcional)
-        let dbAtualizado = false
-        try {
-            const pool = getDatabasePool()
-            client = await pool.connect()
-            
-            // Verificar qual coluna existe
-            const columnQuery = `
-                SELECT column_name 
-                FROM information_schema.columns 
-                WHERE table_name = 'usuarios' 
-                AND column_name IN ('foto_perfil_url', 'avatar_url', 'foto_url')
-                LIMIT 1
-            `
-            const columnResult = await client.query(columnQuery)
-            
-            if (columnResult.rows.length > 0) {
-                const coluna = columnResult.rows[0].column_name
-                await client.query(`UPDATE usuarios SET ${coluna} = $1 WHERE id = $2`, [fotoUrl, usuarioId])
-                dbAtualizado = true
-            }
-        } catch (dbErr) {
-            console.error("Erro no banco:", dbErr.message)
-        } finally {
-            if (client) client.release()
-        }
+        console.log("Upload bem-sucedido. URL:", fotoUrl)
 
         return {
             statusCode: 200,
@@ -136,19 +92,19 @@ exports.handler = async (event) => {
             body: JSON.stringify({
                 sucesso: true,
                 url: fotoUrl,
-                db_atualizado: dbAtualizado,
                 mensagem: "Avatar salvo com sucesso!"
             })
         }
-
     } catch (err) {
-        console.error("Erro:", err)
+        console.error("ERRO NA FUNÇÃO:", err)
+        console.error("STACK:", err.stack)
         return {
             statusCode: 500,
             headers: corsHeaders,
-            body: JSON.stringify({ 
-                erro: "Erro interno",
-                detalhes: err.message 
+            body: JSON.stringify({
+                erro: "Erro interno do servidor",
+                detalhe: err.message,
+                stack: process.env.NODE_ENV === "development" ? err.stack : undefined
             })
         }
     }
