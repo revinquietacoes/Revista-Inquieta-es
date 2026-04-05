@@ -4,25 +4,56 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Equipe editorial da Revista Inquietações.">
+  <meta name="description"
+    content="Conheça a equipe editorial da Revista Inquietações, periódico acadêmico em Ciências Humanas dedicado à produção científica, avaliação editorial e difusão do conhecimento.">
   <meta name="author" content="Revista Inquietações">
   <title>Equipe Editorial | Revista Inquietações</title>
   <link rel="stylesheet" href="styles.css">
-  <link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48"
-    type="image/png">
-  <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
-    type="image/png">
-  <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
+  <link rel="icon" href="assets/favicon.png" sizes="48x48" type="image/png">
+  <link rel="shortcut icon" href="assets/favicon.png" type="image/png">
+  <link rel="apple-touch-icon" href="assets/favicon.png">
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
   "name": "Revista Inquietações",
-  "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/Editora-Revista-Inquietacoes/index.html",
-  "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
+  "url": "https://revista-inquietacoes.netlify.app/index.html",
+  "logo": "https://revista-inquietacoes.netlify.app/assets/favicon.png"
 }
 </script>
   <style>
+    .bio-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .bio-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 12px;
+      border-radius: 8px;
+      background: #f4f7fb;
+      border: 1px solid #d8e2f0;
+      text-decoration: none;
+      font-size: .85rem;
+      font-weight: 600;
+      color: #1f3c88;
+      transition: all .15s ease;
+    }
+
+    .bio-btn img {
+      width: 16px;
+      height: 16px;
+    }
+
+    .bio-btn:hover {
+      background: #e6f0ff;
+      transform: translateY(-1px);
+    }
+
     .editorial-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -438,6 +469,50 @@
       padding: 8px 8px;
       white-space: nowrap;
     }
+
+    .parecerista-links {
+      display: flex;
+      gap: 10px;
+      margin-top: 6px;
+    }
+
+    .btn-perfil {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #f1f5fb;
+      border: 1px solid #dbe3ef;
+      transition: all .15s ease;
+    }
+
+    .btn-perfil img {
+      width: 18px;
+      height: 18px;
+    }
+
+    .btn-perfil:hover {
+      background: #e6f0ff;
+      transform: translateY(-2px);
+    }
+
+    .certificados-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 100%;
+      max-width: 320px;
+      margin: 20px auto;
+      padding: 12px 20px;
+      background: #1f3c88;
+      color: #fff;
+      border-radius: 8px;
+      text-decoration: none;
+      font-weight: 600;
+      text-align: center;
+    }
   </style>
 </head>
 
@@ -498,9 +573,16 @@
           <h2 id="h2-2">Certificados de Membros</h2>
           <div id="div-certificados-box" class="certificados-box">
             <p id="p-1">Acesse a pasta institucional com os certificados dos membros do corpo editorial da Revista
-              Inquietações.</p><a id="link-12omguyozm3qlzuxdlio-3x7plumewuyf"
-              href="https://drive.google.com/drive/folders/12oMGUyoZm3qLzuxdLIo-3x7plUMEWUyF?usp=drive_link"
-              target="_blank" rel="noopener noreferrer" class="certificados-btn">Acessar certificados</a>
+              Inquietações.</p>
+            <p>
+              Os certificados institucionais da Revista Inquietações estão disponíveis no
+              painel do usuário. Após realizar login, cada participante poderá acessar
+              seus certificados editoriais, pareceres ou eventos vinculados ao portal.
+            </p>
+
+            <a class="certificados-btn" href="https://revista-inquietacoes.netlify.app/cadastro-login/certificados">
+              Acessar área de certificados
+            </a>
           </div>
         </section>
       </aside>
@@ -524,12 +606,25 @@
                   <p id="p-4">Graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN) e em
                     Pedagogia pelo Centro Universitário Internacional (UNINTER), desenvolvendo atividades editoriais,
                     científicas e formativas vinculadas à Revista Inquietações.</p>
-                  <p id="p-5">E-mail:<a id="link-mailto-rev-inquietacoes-gmail-com-2"
-                      href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a><br>Instagram:
-                    @iamthed1<br>Lattes:<a id="link-4347574894656811" href="http://lattes.cnpq.br/4347574894656811"
-                      target="_blank">http://lattes.cnpq.br/4347574894656811</a><br>Orcid:<a
-                      id="link-0000-0002-9064-0663" href="https://orcid.org/0000-0002-9064-0663"
-                      target="_blank">https://orcid.org/0000-0002-9064-0663</a></p>
+                  <div class="bio-links">
+
+                    <a class="bio-btn email" href="mailto:rev.inquietacoes@gmail.com">
+                      <img src="assets/email.png" alt="Email">
+                      <span>Email</span>
+                    </a>
+
+                    <a class="bio-btn lattes" href="http://lattes.cnpq.br/4347574894656811" target="_blank">
+                      <img src="assets/lattes-icon.png" alt="Currículo Lattes">
+                      <span>Lattes</span>
+                    </a>
+
+                    <a class="bio-btn orcid" href="https://orcid.org/0000-0002-9064-0663" target="_blank">
+                      <img src="assets/orcid-icon.png" alt="ORCID">
+                      <span>ORCID</span>
+                    </a>
+
+                  </div>
+
                 </div>
               </details>
             </div>
@@ -552,12 +647,24 @@
                     (UFPI), com atuação na área educacional e em atividades relacionadas à organização editorial.</p>
                   <p id="p-8">Participa do acompanhamento dos fluxos editoriais e do apoio institucional da Revista
                     Inquietações.</p>
-                  <p id="p-9">E-mail:<a id="link-mailto-geiza-venicia-hotmail-com"
-                      href="mailto:geiza_venicia@hotmail.com">geiza_venicia@hotmail.com</a><br>Instagram:
-                    @geiza_venicia<br>Lattes:<a id="link-4444946198128059" href="http://lattes.cnpq.br/4444946198128059"
-                      target="_blank">http://lattes.cnpq.br/4444946198128059</a><br>Orcid:<a
-                      id="link-0000-0003-2797-8271" href="https://orcid.org/0000-0003-2797-8271"
-                      target="_blank">https://orcid.org/0000-0003-2797-8271</a></p>
+                  <div class="bio-links">
+
+                    <a class="bio-btn email" href="mailto:geiza_venicia@hotmail.com">
+                      <img src="assets/email.png" alt="Email">
+                      <span>Email</span>
+                    </a>
+
+                    <a class="bio-btn lattes" href="http://lattes.cnpq.br/4444946198128059" target="_blank">
+                      <img src="assets/lattes-icon.png" alt="Currículo Lattes">
+                      <span>Lattes</span>
+                    </a>
+
+                    <a class="bio-btn orcid" href="https://orcid.org/0000-0003-2797-8271" target="_blank">
+                      <img src="assets/orcid-icon.png" alt="ORCID">
+                      <span>ORCID</span>
+                    </a>
+
+                  </div>
                 </div>
               </details>
             </div>
@@ -580,14 +687,24 @@
                     interesse em estudos filosóficos e colaboração em atividades editoriais.</p>
                   <p id="p-12">Atua no apoio à organização do periódico e ao acompanhamento dos processos editoriais da
                     Revista Inquietações.</p>
-                  <p id="p-13">E-mail:<a id="link-mailto-taisamaria9090-gmail-com"
-                      href="mailto:taisamaria9090@gmail.com">taisamaria9090@gmail.com</a><br>Instagram:
-                    @taisasantos80476<br>Lattes:<a id="link-6216572061896584"
-                      href="https://lattes.cnpq.br/6216572061896584"
-                      target="_blank">https://lattes.cnpq.br/6216572061896584</a><br>Orcid:<a
-                      id="link-0000-0002-8766-5683" href="https://orcid.org/0000-0002-8766-5683"
-                      target="_blank">https://orcid.org/0000-0002-8766-5683</a></p>
-                </div>
+                  <div class="bio-links">
+
+                    <a class="bio-btn email" href="mailto:taisamaria9090@gmail.com">
+                      <img src="assets/email.png" alt="Email">
+                      <span>Email</span>
+                    </a>
+
+                    <a class="bio-btn lattes" href="https://lattes.cnpq.br/6216572061896584" target="_blank">
+                      <img src="assets/lattes-icon.png" alt="Currículo Lattes">
+                      <span>Lattes</span>
+                    </a>
+
+                    <a class="bio-btn orcid" href="https://orcid.org/0000-0002-8766-5683" target="_blank">
+                      <img src="assets/orcid-icon.png" alt="ORCID">
+                      <span>ORCID</span>
+                    </a>
+
+                  </div>
               </details>
             </div>
           </div>
@@ -612,11 +729,24 @@
                       (UFRN), com atuação em tecnologia da informação e suporte técnico ao portal editorial.</p>
                     <p id="p-16">Colabora na manutenção de sistemas e no apoio técnico relacionado à estrutura digital
                       da Revista Inquietações.</p>
-                    <p id="p-17">E-mail:<a id="link-mailto-suelitonmdr-gmail-com"
-                        href="mailto:suelitonmdr@gmail.com">suelitonmdr@gmail.com</a><br>Instagram:
-                      @suelitonx<br>Lattes:<a id="link-7440416224129619" href="https://lattes.cnpq.br/7440416224129619"
-                        target="_blank">https://lattes.cnpq.br/7440416224129619</a></p>
-                  </div>
+                    <div class="bio-links">
+
+                      <a class="bio-btn email" href="mailto:suelitonmdr@gmail.com">
+                        <img src="assets/email.png" alt="Email">
+                        <span>Email</span>
+                      </a>
+
+                      <a class="bio-btn lattes" href="https://lattes.cnpq.br/7440416224129619" target="_blank">
+                        <img src="assets/lattes-icon.png" alt="Currículo Lattes">
+                        <span>Lattes</span>
+                      </a>
+
+                      <a class="bio-btn orcid" href="https://lattes.cnpq.br/7440416224129619" target="_blank">
+                        <img src="assets/orcid-icon.png" alt="ORCID">
+                        <span>ORCID</span>
+                      </a>
+
+                    </div>
                 </details>
               </div>
               <div id="div-editor-card-5" class="editor-card">
@@ -631,13 +761,24 @@
                     <p id="p-18">Além da direção editorial, também atua em atividades de apoio técnico ao portal da
                       Revista Inquietações, colaborando na organização, manutenção e acompanhamento dos materiais
                       digitais do periódico.</p>
-                    <p id="p-19">E-mail:<a id="link-mailto-rev-inquietacoes-gmail-com-3"
-                        href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a><br>Instagram:
-                      @iamthed1<br>Lattes:<a id="link-4347574894656811-2" href="http://lattes.cnpq.br/4347574894656811"
-                        target="_blank">http://lattes.cnpq.br/4347574894656811</a><br>Orcid:<a
-                        id="link-0000-0002-9064-0663-2" href="https://orcid.org/0000-0002-9064-0663"
-                        target="_blank">https://orcid.org/0000-0002-9064-0663</a></p>
-                  </div>
+                    <div class="bio-links">
+
+                      <a class="bio-btn email" href="mailto:rev.inquietacoes@gmail.com">
+                        <img src="assets/email.png" alt="Email">
+                        <span>Email</span>
+                      </a>
+
+                      <a class="bio-btn lattes" href="http://lattes.cnpq.br/4347574894656811" target="_blank">
+                        <img src="assets/lattes-icon.png" alt="Currículo Lattes">
+                        <span>Lattes</span>
+                      </a>
+
+                      <a class="bio-btn orcid" href="https://orcid.org/0000-0002-9064-0663" target="_blank">
+                        <img src="assets/orcid-icon.png" alt="ORCID">
+                        <span>ORCID</span>
+                      </a>
+
+                    </div>
                 </details>
               </div>
             </div>
@@ -652,41 +793,110 @@
             </div>
             <div id="div-panel-body-2" class="panel-body">
               <div id="div-pareceristas-list" class="pareceristas-list">
-                <div id="div-parecerista-item" class="parecerista-item"><a id="link-0000-0002-9064-0663-3"
-                    class="parecerista-photo-link" href="https://orcid.org/0000-0002-9064-0663" target="_blank"><img
-                      id="imagem-diego-png-3" class="parecerista-photo" src="corpo editorial/diego.png"
-                      alt="Foto de Diego Vinícius Brito dos Santos"></a>
-                  <div id="div-parecerista-info" class="parecerista-info"><strong>Diego Vinícius Brito dos
-                      Santos</strong>
-                    <div id="div-parecerista-links" class="parecerista-links"><a id="link-4347574894656811-3"
-                        href="http://lattes.cnpq.br/4347574894656811" target="_blank">Currículo Lattes</a><a
-                        id="link-0000-0002-9064-0663-4" href="https://orcid.org/0000-0002-9064-0663"
-                        target="_blank">ORCID</a></div>
+
+                <!-- Parecerista 1 -->
+
+                <div id="div-parecerista-item" class="parecerista-item">
+                  <a id="link-0000-0002-9064-0663-3" class="parecerista-photo-link"
+                    href="https://orcid.org/0000-0002-9064-0663" target="_blank">
+
+                    <img id="imagem-diego-png-3" class="parecerista-photo" src="corpo editorial/diego.png"
+                      alt="Foto de Diego Vinícius Brito dos Santos">
+
+                  </a>
+
+                  <div id="div-parecerista-info" class="parecerista-info">
+
+                    <strong>Diego Vinícius Brito dos Santos</strong>
+
+                    <div id="div-parecerista-links" class="parecerista-links">
+
+                      <a class="btn-perfil" href="http://lattes.cnpq.br/4347574894656811" target="_blank">
+
+                        <img src="assets/lattes-icon.png" alt="Currículo Lattes">
+
+                      </a>
+
+                      <a class="btn-perfil" href="https://orcid.org/0000-0002-9064-0663" target="_blank">
+
+                        <img src="assets/orcid-icon.png" alt="ORCID">
+
+                      </a>
+
+                    </div>
                   </div>
                 </div>
-                <div id="div-parecerista-item-2" class="parecerista-item"><a id="link-0000-0003-2797-8271-2"
-                    class="parecerista-photo-link" href="https://orcid.org/0000-0003-2797-8271" target="_blank"><img
-                      id="imagem-geiza-png-2" class="parecerista-photo" src="corpo editorial/geiza.png"
-                      alt="Foto de Geiza Venicia dos Santos"></a>
-                  <div id="div-parecerista-info-2" class="parecerista-info"><strong>Geiza Venicia dos Santos</strong>
-                    <div id="div-parecerista-links-2" class="parecerista-links"><a id="link-4444946198128059-2"
-                        href="http://lattes.cnpq.br/4444946198128059" target="_blank">Currículo Lattes</a><a
-                        id="link-0000-0003-2797-8271-3" href="https://orcid.org/0000-0003-2797-8271"
-                        target="_blank">ORCID</a></div>
+
+
+                <!-- Parecerista 2 -->
+
+                <div id="div-parecerista-item-2" class="parecerista-item">
+
+                  <a id="link-0000-0003-2797-8271-2" class="parecerista-photo-link"
+                    href="https://orcid.org/0000-0003-2797-8271" target="_blank">
+
+                    <img id="imagem-geiza-png-2" class="parecerista-photo" src="corpo editorial/geiza.png"
+                      alt="Foto de Geiza Venicia dos Santos">
+
+                  </a>
+
+                  <div id="div-parecerista-info-2" class="parecerista-info">
+
+                    <strong>Geiza Venicia dos Santos</strong>
+
+                    <div id="div-parecerista-links-2" class="parecerista-links">
+
+                      <a class="btn-perfil" href="http://lattes.cnpq.br/4444946198128059" target="_blank">
+
+                        <img src="assets/lattes-icon.png" alt="Currículo Lattes">
+
+                      </a>
+
+                      <a class="btn-perfil" href="https://orcid.org/0000-0003-2797-8271" target="_blank">
+
+                        <img src="assets/orcid-icon.png" alt="ORCID">
+
+                      </a>
+
+                    </div>
                   </div>
                 </div>
-                <div id="div-parecerista-item-3" class="parecerista-item"><a id="link-0000-0002-8766-5683-2"
-                    class="parecerista-photo-link" href="https://orcid.org/0000-0002-8766-5683" target="_blank"><img
-                      id="imagem-taisa-png-2" class="parecerista-photo" src="corpo editorial/taisa.png"
-                      alt="Foto de Taisa Maria Brito dos Santos"></a>
-                  <div id="div-parecerista-info-3" class="parecerista-info"><strong>Taisa Maria Brito dos
-                      Santos</strong>
-                    <div id="div-parecerista-links-3" class="parecerista-links"><a id="link-6216572061896584-2"
-                        href="https://lattes.cnpq.br/6216572061896584" target="_blank">Currículo Lattes</a><a
-                        id="link-0000-0002-8766-5683-3" href="https://orcid.org/0000-0002-8766-5683"
-                        target="_blank">ORCID</a></div>
+
+
+                <!-- Parecerista 3 -->
+
+                <div id="div-parecerista-item-3" class="parecerista-item">
+
+                  <a id="link-0000-0002-8766-5683-2" class="parecerista-photo-link"
+                    href="https://orcid.org/0000-0002-8766-5683" target="_blank">
+
+                    <img id="imagem-taisa-png-2" class="parecerista-photo" src="corpo editorial/taisa.png"
+                      alt="Foto de Taisa Maria Brito dos Santos">
+
+                  </a>
+
+                  <div id="div-parecerista-info-3" class="parecerista-info">
+
+                    <strong>Taisa Maria Brito dos Santos</strong>
+
+                    <div id="div-parecerista-links-3" class="parecerista-links">
+
+                      <a class="btn-perfil" href="https://lattes.cnpq.br/6216572061896584" target="_blank">
+
+                        <img src="assets/lattes-icon.png" alt="Currículo Lattes">
+
+                      </a>
+
+                      <a class="btn-perfil" href="https://orcid.org/0000-0002-8766-5683" target="_blank">
+
+                        <img src="assets/orcid-icon.png" alt="ORCID">
+
+                      </a>
+
+                    </div>
                   </div>
                 </div>
+
               </div>
             </div>
           </section>
@@ -709,13 +919,23 @@
                       <p id="p-22">Atua na preparação visual, organização gráfica e padronização editorial dos materiais
                         publicados pela Revista Inquietações, colaborando com a apresentação final dos conteúdos do
                         periódico.</p>
-                      <p id="p-23">E-mail:<a id="link-mailto-rev-inquietacoes-gmail-com-4"
-                          href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a><br>Lattes:<a
-                          id="link-4347574894656811-4" href="http://lattes.cnpq.br/4347574894656811"
-                          target="_blank">http://lattes.cnpq.br/4347574894656811</a><br>Orcid:<a
-                          id="link-0000-0002-9064-0663-5" href="https://orcid.org/0000-0002-9064-0663"
-                          target="_blank">https://orcid.org/0000-0002-9064-0663</a></p>
-                    </div>
+                      <div class="bio-links">
+
+                        <a class="bio-btn email" href="mailto:rev.inquietacoes@gmail.com">
+                          <img src="assets/email.png" alt="Email">
+                          <span>Email</span>
+                        </a>
+
+                        <a class="bio-btn lattes" href="http://lattes.cnpq.br/4347574894656811" target="_blank">
+                          <img src="assets/lattes-icon.png" alt="Currículo Lattes">
+                          <span>Lattes</span>
+                        </a>
+
+                        <a class="bio-btn orcid" href="https://orcid.org/0000-0002-9064-0663" target="_blank">
+                          <img src="assets/orcid-icon.png" alt="ORCID">
+                          <span>ORCID</span>
+                        </a>
+                      </div>
                   </details>
                 </div>
               </div>
@@ -727,12 +947,40 @@
             <h2 id="h2-9">Sobre a equipe editorial</h2>
           </div>
           <div id="div-panel-body-4" class="panel-body">
-            <p id="p-24">A equipe editorial da Revista Inquietações atua na condução científica e técnica do periódico,
-              reunindo profissionais envolvidos com coordenação editorial, editoração, diagramação, suporte técnico e
-              avaliação ad hoc.</p>
-            <p id="p-25">As informações institucionais desta página poderão ser atualizadas progressivamente, conforme a
-              ampliação das atividades do periódico e a inclusão de novos membros no corpo editorial.</p>
-          </div>
+            <p>
+              A equipe editorial da Revista Inquietações atua na condução científica e
+              técnica do periódico, reunindo profissionais envolvidos com coordenação
+              editorial, editoração, diagramação, suporte técnico e avaliação ad hoc.
+            </p>
+
+            <p>
+              A Revista Inquietações encontra-se em processo de ampliação de seu corpo
+              editorial e convida pesquisadoras e pesquisadores interessados em colaborar
+              com as atividades científicas do periódico a realizarem seu cadastro no
+              portal institucional.
+            </p>
+
+            <a class="editorial-join-btn" href="https://revista-inquietacoes.netlify.app/cadastro-login/cadastro">
+              Cadastrar-se para colaborar com a revista
+            </a>
+            <style>
+              .editorial-join-btn {
+                display: inline-block;
+                margin-top: 14px;
+                padding: 10px 18px;
+                border-radius: 999px;
+                background: #1f3c88;
+                color: #fff;
+                font-weight: 700;
+                text-decoration: none;
+                transition: .15s;
+              }
+
+              .editorial-join-btn:hover {
+                transform: translateY(-2px);
+                box-shadow: 0 6px 14px rgba(0, 0, 0, .15);
+              }
+            </style>
         </section>
       </main>
     </div>
