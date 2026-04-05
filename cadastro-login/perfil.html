@@ -10,6 +10,40 @@
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
 </head>
+<style>
+  #avatar-uploader {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    align-items: center;
+  }
+
+  #avatar-drop {
+    border: 2px dashed #bbb;
+    padding: 30px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 300px;
+  }
+
+  #avatar-drop.drag {
+    border-color: #2d6cdf;
+    background: #f5f8ff;
+  }
+
+  #avatar-canvas {
+    border-radius: 50%;
+    border: 3px solid #ddd;
+    object-fit: cover;
+  }
+
+  .crop-actions {
+    display: flex;
+    gap: 10px;
+  }
+</style>
 
 <body>
 
@@ -127,36 +161,39 @@
           A publicação depende de aprovação editorial e consentimento.
         </p>
 
-        <form id="form-avatar">
+        <div id="avatar-uploader">
 
-          <div class="form-grid">
-
-            <div class="field full">
-              <label>Nova foto</label>
-              <input name="arquivo" type="file" accept=".png,.jpg,.jpeg,.webp" required>
-            </div>
-
-            <div class="field full checkbox-line">
-              <input type="checkbox" id="consentimento" name="consentimento" value="true" required>
-              <label for="consentimento">
-                Autorizo a publicação da minha foto no portal da revista.
-              </label>
-            </div>
-
+          <div id="avatar-drop">
+            <p>Arraste uma foto aqui ou clique para selecionar</p>
+            <input type="file" id="avatar-input" accept="image/*" hidden>
           </div>
 
-          <div class="actions-row">
-            <button class="btn btn-primary" type="submit">Enviar nova foto</button>
+          <canvas id="avatar-canvas" width="300" height="300"></canvas>
+
+          <div class="crop-actions">
+            <button id="avatar-save" class="btn btn-primary">
+              Salvar foto
+            </button>
           </div>
 
           <div class="form-message" id="msg-avatar"></div>
-        </form>
 
-      </aside>
+        </div>
 
     </div>
 
-    <footer class="page-footer"></footer>
+    <div class="actions-row">
+      <button class="btn btn-primary" type="submit">Enviar nova foto</button>
+    </div>
+
+    <div class="form-message" id="msg-avatar"></div>
+    </form>
+
+    </aside>
+
+  </div>
+
+  <footer class="page-footer"></footer>
 
   </div>
 
@@ -225,52 +262,128 @@
       })
 
       // upload avatar
-      document.getElementById('form-avatar').addEventListener('submit', async (e) => {
+      let selectedImage = null
 
+      const drop = document.getElementById("avatar-drop")
+      const input = document.getElementById("avatar-input")
+      const canvas = document.getElementById("avatar-canvas")
+      const ctx = canvas.getContext("2d")
+
+      drop.addEventListener("click", () => input.click())
+
+      drop.addEventListener("dragover", e => {
         e.preventDefault()
-
-        const msg = document.getElementById('msg-avatar')
-        msg.className = 'form-message'
-
-        const fd = new FormData(e.target)
-        fd.set('usuario_id', String(u.id))
-        fd.set('consentimento',
-          document.getElementById('consentimento').checked ? 'true' : 'false'
-        )
-
-        try {
-          const res = await fetch('/.netlify/functions/upload-avatar', {
-            method: 'POST',
-            headers: AppPanel.currentUserHeaders(),
-            body: fd
-          })
-
-          const data = await res.json()
-
-          if (!res.ok) {
-            throw new Error(
-              data.detalhe ||
-              data.erro ||
-              'Erro ao enviar foto.'
-            )
-          }
-
-          msg.textContent = data.mensagem || 'Foto enviada.'
-          msg.classList.add('ok')
-
-          e.target.reset()
-
-        } catch (err) {
-          msg.textContent = err.message || 'Erro ao enviar foto.'
-          msg.classList.add('err')
-
-          console.error('upload-avatar:', err)
-        }
-
+        drop.classList.add("drag")
       })
 
-    })
+      drop.addEventListener("dragleave", () => {
+        drop.classList.remove("drag")
+      })
+
+      drop.addEventListener("drop", e => {
+        e.preventDefault()
+        drop.classList.remove("drag")
+
+        const file = e.dataTransfer.files[0]
+        loadImage(file)
+      })
+
+      input.addEventListener("change", () => {
+        loadImage(input.files[0])
+      })
+
+      async function loadImage(file) {
+
+        if (!file) return
+
+        if (!file.type.startsWith("image/")) {
+          alert("Arquivo inválido")
+          return
+        }
+
+        const img = await createImageBitmap(file)
+
+        canvas.width = 300
+        canvas.height = 300
+
+        ctx.clearRect(0, 0, 300, 300)
+
+        const size = Math.min(img.width, img.height)
+
+        ctx.drawImage(
+          img,
+          (img.width - size) / 2,
+          (img.height - size) / 2,
+          size,
+          size,
+          0,
+          0,
+          300,
+          300
+        )
+
+        selectedImage = canvas
+      }
+
+      document
+        .getElementById("avatar-save")
+        .addEventListener("click", async () => {
+
+          if (!selectedImage) {
+            alert("Selecione uma imagem")
+            return
+          }
+
+          const blob = await new Promise(r =>
+            canvas.toBlob(r, "image/jpeg", 0.85)
+          )
+
+          const fd = new FormData()
+
+          fd.append("arquivo", blob, "avatar.jpg")
+          fd.append("usuario_id", String(u.id))
+          fd.append("consentimento", "true")
+
+          const msg = document.getElementById("msg-avatar")
+          msg.className = "form-message"
+
+          try {
+
+            const res = await fetch(
+              "/.netlify/functions/upload-avatar",
+              {
+                method: "POST",
+                headers: AppPanel.currentUserHeaders(),
+                body: fd
+              }
+            )
+
+            const data = await res.json()
+
+            if (!res.ok) {
+              throw new Error(data.erro || "Erro no upload")
+            }
+
+            msg.textContent = "Foto atualizada com sucesso"
+            msg.classList.add("ok")
+
+            // atualizar avatar na página
+            document
+              .querySelectorAll("[data-avatar-user]")
+              .forEach(img => {
+                img.src = data.url + "?t=" + Date.now()
+              })
+
+          } catch (err) {
+
+            msg.textContent = err.message
+            msg.classList.add("err")
+
+          }
+
+        })
   </script>
 
 </body>
+
 </html>
