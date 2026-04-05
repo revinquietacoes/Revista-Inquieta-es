@@ -44,9 +44,13 @@ body: JSON.stringify({ erro: "Arquivo não enviado" })
 }
 }
 
-/* conexão automática com Netlify Blobs */
+/* STORE COM CREDENCIAIS */
 
-const store = getStore("arquivos")
+const store = getStore({
+name: "arquivos",
+siteID: process.env.NETLIFY_BLOBS_SITE_ID,
+token: process.env.NETLIFY_BLOBS_TOKEN
+})
 
 const key = `usuarios/${Date.now()}-avatar.webp`
 
@@ -54,7 +58,7 @@ await store.set(key, fileBuffer, {
 contentType: mimeType
 })
 
-/* gerar URL pública */
+/* URL PUBLICA */
 
 const url = `https://${process.env.URL}/.netlify/blobs/${key}`
 
