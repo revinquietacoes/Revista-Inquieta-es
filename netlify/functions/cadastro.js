@@ -1,14 +1,3 @@
-// Verificar reCAPTCHA
-const { recaptcha } = body;
-if (!recaptcha) return json({ erro: 'Confirme que você não é um robô.' }, 400);
-const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
-const recaptchaRes = await fetch('https://www.google.com/recaptcha/api/siteverify', {
-  method: 'POST',
-  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-  body: `secret=${recaptchaSecret}&response=${recaptcha}`
-});
-const recaptchaData = await recaptchaRes.json();
-if (!recaptchaData.success) return json({ erro: 'Falha na verificação do captcha.' }, 400);
 const bcrypt = require('bcryptjs')
 const { sql, json, getTableColumns, normalizeRole } = require('./_db')
 const { wrapHttp } = require('./_netlify')
@@ -45,7 +34,7 @@ const main = async (req) => {
     if (cols.has('lattes')) { campos.push('lattes'); valores.push(lattes || null) }
     if (cols.has('origem')) { campos.push('origem'); valores.push(origem || null) }
     if (cols.has('telefone')) { campos.push('telefone'); valores.push(telefone || null) }
-    if (cols.has('foto_perfil_url')) { campos.push('foto_perfil_url'); valores.push(foto_perfil_url || 'assets/avatares/avatar-padrao.png') }
+    if (cols.has('foto_perfil_url')) { campos.push('foto_perfil_url'); valores.push(foto_perfil_url || '../assets/avatares/avatar-padrao.png') }
     if (cols.has('foto_perfil_aprovada')) { campos.push('foto_perfil_aprovada'); valores.push(false) }
     if (cols.has('consentimento_foto_publica')) { campos.push('consentimento_foto_publica'); valores.push(Boolean(consentimento_foto_publica)) }
     if (cols.has('receber_noticias_email')) { campos.push('receber_noticias_email'); valores.push(Boolean(receber_noticias_email)) }
@@ -64,6 +53,7 @@ const main = async (req) => {
         : 'Cadastro recebido. O acesso é liberado após autorização da editoria-chefe.'
     })
   } catch (erro) {
+    console.error('cadastro erro:', erro)
     return json({ erro: 'Erro ao cadastrar usuário.', detalhe: erro.message }, 500)
   }
 }
