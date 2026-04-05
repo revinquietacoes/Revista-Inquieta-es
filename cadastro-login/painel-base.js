@@ -1,4 +1,4 @@
-// painel-base.js - Versão corrigida
+// painel-base.js - Versão definitiva
 (function () {
   // Evita recriar se já existir
   if (window.AppPanel) return;
@@ -12,7 +12,6 @@
     if (token) {
       headers['Authorization'] = `Bearer ${token}`;
     }
-    // O sistema atual usa x-user-id no header (do backend)
     const user = JSON.parse(localStorage.getItem('usuario_logado') || '{}');
     if (user.id) {
       headers['X-User-Id'] = user.id;
@@ -20,7 +19,7 @@
     return headers;
   }
 
-  // Função genérica para chamar data.js (ações de consulta)
+  // Função genérica para chamar data.js (consultas)
   async function apiData(action, extra = {}) {
     const user = JSON.parse(localStorage.getItem('usuario_logado') || '{}');
     const payload = { action, userId: user.id || null, ...extra };
@@ -36,7 +35,7 @@
     return resp.json();
   }
 
-  // Função genérica para chamar action.js (ações de modificação)
+  // Função genérica para chamar action.js (modificações)
   async function apiAction(action, extra = {}) {
     const user = JSON.parse(localStorage.getItem('usuario_logado') || '{}');
     const payload = { action, userId: user.id || null, ...extra };
@@ -52,13 +51,13 @@
     return resp.json();
   }
 
-  // Obtém usuário atual (a partir do localStorage)
+  // Obtém usuário atual do localStorage
   function currentUser() {
     const u = localStorage.getItem('usuario_logado');
     return u ? JSON.parse(u) : null;
   }
 
-  // Obtém headers para requisições com autenticação (para FormData, sem Content-Type)
+  // Headers para uploads (FormData) – sem Content-Type
   function currentUserHeaders() {
     const user = currentUser();
     const headers = {};
@@ -68,18 +67,16 @@
     return headers;
   }
 
-  // Verifica se o usuário tem um dos perfis permitidos; redireciona se não tiver
+  // Verifica permissão e redireciona se não tiver
   function requireRole(allowedRoles) {
     const user = currentUser();
     if (!user || !allowedRoles.includes(user.perfil)) {
-      // Redirecionar para login
       window.location.href = 'login.html';
       return null;
     }
     return user;
   }
 
-  // Formata papel do usuário
   function formatRole(role) {
     const roles = {
       autor: 'Autor(a)',
@@ -90,19 +87,16 @@
     return roles[role] || role;
   }
 
-  // Formata status de presença curto
   function formatPresenceShort(user) {
     return user.online ? '🟢 Online' : '⚫ Offline';
   }
 
-  // Formata última atividade
   function formatLastSeen(date) {
     if (!date) return 'Nunca';
     const d = new Date(date);
     return d.toLocaleString('pt-BR');
   }
 
-  // Gera HTML para chip de usuário (avatar + nome)
   function userChipHtml(user, extraText = '') {
     const avatar = user.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
     return `<div class="user-chip" style="display: flex; align-items: center; gap: 8px;">
@@ -173,7 +167,7 @@
       </div>
     `;
     dropdown.style.display = 'block';
-    // Eventos dos itens
+    // Eventos
     document.querySelectorAll('.notificacao-item').forEach(el => {
       el.addEventListener('click', async (e) => {
         e.stopPropagation();
@@ -184,8 +178,6 @@
           el.dataset.lida = 'true';
           atualizarContadorNotificacoes();
         }
-        // Opcional: redirecionar se tiver link
-        // const link = el.dataset.link; if (link) window.location.href = link;
       });
     });
     const btnMarcar = document.getElementById('marcar-todas-lidas');
@@ -199,18 +191,15 @@
     }
   }
 
-  // Atualiza todas as imagens com data-avatar-user
+  // ========== FUNÇÃO PARA ATUALIZAR AVATARES ==========
   function atualizarAvatares() {
-    const user = AppPanel.currentUser();
+    const user = currentUser();
     if (!user) return;
     const avatarUrl = user.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
     document.querySelectorAll('[data-avatar-user]').forEach(img => {
       img.src = avatarUrl;
     });
   }
-
-  // Chamar após carregar o usuário e também após login
-  window.AppPanel.atualizarAvatares = atualizarAvatares;
 
   // Expor globalmente
   window.AppPanel = {
@@ -229,6 +218,7 @@
     marcarTodasLidas,
     atualizarContadorNotificacoes,
     iniciarPollingNotificacoes,
-    mostrarDropdownNotificacoes
+    mostrarDropdownNotificacoes,
+    atualizarAvatares   // <-- agora incluído
   };
 })();

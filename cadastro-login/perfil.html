@@ -224,13 +224,11 @@
     </div>
 
     <script>
-        document.addEventListener("DOMContentLoaded", async () => {
-            let usuarioAtual = null;
-
-            function showMessage(element, text, type = "loading") {
-                if (!element) return;
-                element.textContent = text;
-                element.className = `form-message ${type}`;
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Aguarda o AppPanel estar disponível
+            if (typeof AppPanel === 'undefined') {
+                console.error('AppPanel não carregado. Recarregue a página.');
+                return;
             }
 
             try {
@@ -442,6 +440,7 @@
                 const msg = document.getElementById("msg-avatar");
                 if (msg) showMessage(msg, "❌ Erro ao carregar dados. Recarregue a página.", "error");
             }
+            AppPanel.atualizarAvatares(); // se necessário
         });
     </script>
 </body>
