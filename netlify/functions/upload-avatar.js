@@ -1,4 +1,5 @@
-const Busboy = require("busboy")
+const Busboy = require("busboy");
+const { createClient } = require('@supabase/supabase-js');
 
 exports.handler = async (event) => {
     const corsHeaders = {
@@ -6,117 +7,105 @@ exports.handler = async (event) => {
         "Access-Control-Allow-Methods": "POST, OPTIONS",
         "Access-Control-Allow-Headers": "Content-Type, X-User-Id",
         "Access-Control-Max-Age": "86400"
-    }
+    };
 
     if (event.httpMethod === "OPTIONS") {
-        return { statusCode: 204, headers: corsHeaders, body: "" }
+        return { statusCode: 204, headers: corsHeaders, body: "" };
     }
 
     if (event.httpMethod !== "POST") {
-        return {
-            statusCode: 405,
-            headers: corsHeaders,
-            body: JSON.stringify({ erro: "Método não permitido" })
-        }
+        return { statusCode: 405, headers: corsHeaders, body: JSON.stringify({ erro: "Método não permitido" }) };
     }
 
     try {
-        const usuarioId = event.headers["x-user-id"]
+        const usuarioId = event.headers["x-user-id"];
         if (!usuarioId) {
-            return {
-                statusCode: 401,
-                headers: corsHeaders,
-                body: JSON.stringify({ erro: "Usuário não autenticado" })
-            }
+            return { statusCode: 401, headers: corsHeaders, body: JSON.stringify({ erro: "Usuário não autenticado" }) };
         }
 
-        const busboy = Busboy({ headers: event.headers })
-        let fileBuffer = null
-        let mimeType = "image/webp"
+        const busboy = Busboy({ headers: event.headers });
+        let fileBuffer = null;
+        let mimeType = "image/webp";
 
         await new Promise((resolve, reject) => {
             busboy.on("file", (fieldname, file, info) => {
-                mimeType = info.mimeType
-                const chunks = []
-                file.on("data", (chunk) => chunks.push(chunk))
+                mimeType = info.mimeType;
+                const chunks = [];
+                file.on("data", (chunk) => chunks.push(chunk));
                 file.on("end", () => {
-                    fileBuffer = Buffer.concat(chunks)
-                    resolve()
-                })
-                file.on("error", reject)
-            })
-            busboy.on("error", reject)
-            busboy.on("finish", () => resolve())
-            busboy.end(Buffer.from(event.body, "base64"))
-        })
+                    fileBuffer = Buffer.concat(chunks);
+                    resolve();
+                });
+                file.on("error", reject);
+            });
+            busboy.on("error", reject);
+            busboy.on("finish", () => resolve());
+            busboy.end(Buffer.from(event.body, "base64"));
+        });
 
         if (!fileBuffer) {
-            return {
-                statusCode: 400,
-                headers: corsHeaders,
-                body: JSON.stringify({ erro: "Arquivo não enviado" })
-            }
+            return { statusCode: 400, headers: corsHeaders, body: JSON.stringify({ erro: "Arquivo não enviado" }) };
         }
 
-        let extension = "webp"
-        if (mimeType === "image/jpeg") extension = "jpg"
-        else if (mimeType === "image/png") extension = "png"
-        else if (mimeType === "image/gif") extension = "gif"
+        let extension = "webp";
+        if (mimeType === "image/jpeg") extension = "jpg";
+        else if (mimeType === "image/png") extension = "png";
+        else if (mimeType === "image/gif") extension = "gif";
 
-        const timestamp = Date.now()
-        const random = Math.random().toString(36).substring(2, 8)
-        const key = `${usuarioId}-${timestamp}-${random}.${extension}`
+        const fileName = `${usuarioId}-${Date.now()}.${extension}`;
+        const filePath = `${usuarioId}/${fileName}`;
 
-        const siteID = process.env.NETLIFY_BLOBS_SITE_ID
-        const token = process.env.NETLIFY_BLOBS_TOKEN
-        const storeName = "avatares"   // Será criado automaticamente
-
-        if (!siteID || !token) {
-            throw new Error("Variáveis de ambiente do Blobs não configuradas")
+        // Inicializa Supabase com a SERVICE_ROLE_KEY (para ter permissão de escrita)
+        const supabaseUrl = process.env.SUPABASE_URL;
+        const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // você precisará criar essa variável
+        if (!supabaseUrl || !supabaseServiceKey) {
+            throw new Error("Variáveis SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não definidas");
         }
+        const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-        const blobUrl = `https://api.netlify.com/api/v1/sites/${siteID}/blobs/${storeName}/${encodeURIComponent(key)}`
+        // Upload para o bucket 'avatars'
+        const { data: uploadData, error: uploadError } = await supabase.storage
+            .from('avatars')
+            .upload(filePath, fileBuffer, {
+                contentType: mimeType,
+                upsert: true
+            });
 
-        const uploadResponse = await fetch(blobUrl, {
-            method: "PUT",
-            headers: {
-                "Authorization": `Bearer ${token}`,
-                "Content-Type": mimeType
-            },
-            body: fileBuffer
-        })
+        if (uploadError) throw new Error(`Erro no upload Supabase: ${uploadError.message}`);
 
-        if (!uploadResponse.ok) {
-            const errorText = await uploadResponse.text()
-            throw new Error(`Erro ao salvar blob: ${uploadResponse.status} - ${errorText}`)
-        }
+        // Obter URL pública
+        const { data: publicUrlData } = supabase.storage.from('avatars').getPublicUrl(filePath);
+        const publicUrl = publicUrlData.publicUrl;
 
-        console.log(`✅ Avatar salvo em store 'avatares': ${key} (${fileBuffer.length} bytes)`)
+        // Atualizar o banco Neon com a URL (usando sua action.js ou diretamente via Neon)
+        // Como você já tem uma função action.js que recebe update_profile, vamos chamá-la via fetch interno
+        // Para evitar loop, você pode fazer uma chamada HTTP para sua própria função data/action ou atualizar diretamente o Neon.
+        // Vou optar por atualizar diretamente o Neon (já que temos a conexão via _db.js)
+        const { sql } = require('./_db');
+        await sql`
+            UPDATE usuarios
+            SET foto_perfil_url = ${publicUrl},
+                atualizado_em = CURRENT_TIMESTAMP
+            WHERE id = ${Number(usuarioId)}
+        `;
 
-        const avatarUrl = `/.netlify/functions/avatar?key=${encodeURIComponent(key)}`
+        console.log(`✅ Avatar salvo no Supabase: ${publicUrl}`);
 
         return {
             statusCode: 200,
-            headers: {
-                ...corsHeaders,
-                "Content-Type": "application/json"
-            },
+            headers: { ...corsHeaders, "Content-Type": "application/json" },
             body: JSON.stringify({
                 sucesso: true,
-                url: avatarUrl,
-                key: key,
+                url: publicUrl,
                 mensagem: "Avatar salvo com sucesso!"
             })
-        }
+        };
     } catch (err) {
-        console.error("❌ Erro no upload:", err)
+        console.error("❌ Erro no upload:", err);
         return {
             statusCode: 500,
             headers: corsHeaders,
-            body: JSON.stringify({
-                erro: "Erro interno",
-                detalhe: err.message
-            })
-        }
+            body: JSON.stringify({ erro: "Erro interno", detalhe: err.message })
+        };
     }
-}
+};
