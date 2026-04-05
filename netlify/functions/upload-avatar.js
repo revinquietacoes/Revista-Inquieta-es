@@ -53,13 +53,13 @@ export async function handler(event) {
             token: process.env.NETLIFY_BLOBS_TOKEN
         })
 
-        const key = `usuarios/${Date.now()}-avatar.webp`
+        const key = `${Date.now()}-avatar.webp`
 
         await store.set(key, fileBuffer, {
             contentType: mimeType
         })
 
-        const url = `${process.env.URL}/.netlify/blobs/${key}`
+        const url = `${process.env.URL}/.netlify/blobs/usuarios/${key}`
 
         return {
             statusCode: 200,
