@@ -124,12 +124,58 @@
   }
 
   async function atualizarContadorNotificacoes() {
-    const data = await buscarNotificacoes(true, 1);
-    const badge = document.getElementById('notificacao-badge');
-    if (badge) {
-      const count = data.naoLidas || 0;
-      badge.textContent = count > 0 ? count : '';
-      badge.style.display = count > 0 ? 'inline-flex' : 'none';
+    try {
+      const data = await buscarNotificacoes(true, 1);
+      const badge = document.getElementById('notificacao-badge');
+      if (badge) {
+        const count = data.naoLidas || 0;
+        badge.textContent = count > 0 ? count : '';
+        badge.style.display = count > 0 ? 'inline-flex' : 'none';
+      }
+    } catch (err) {
+      console.error('Erro ao atualizar contador de notificações:', err);
+      // Não fazer nada, apenas não quebrar
+    }
+  }
+
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('[data-action="logout"]');
+    if (btn) {
+      e.preventDefault();
+      if (window.AppPanel && window.AppPanel.logout) {
+        window.AppPanel.logout();
+      } else {
+        // Fallback
+        localStorage.removeItem('usuario_logado');
+        localStorage.removeItem('auth_token');
+        window.location.href = 'login.html';
+      }
+    }
+  });
+
+  function logout() {
+    localStorage.removeItem('usuario_logado');
+    localStorage.removeItem('auth_token');
+    window.location.href = 'login.html';
+  }
+
+  async function mostrarDropdownNotificacoes(event) {
+    event.stopPropagation();
+    const dropdown = document.getElementById('notificacoes-dropdown');
+    if (!dropdown) return;
+    if (dropdown.style.display === 'block') {
+      dropdown.style.display = 'none';
+      return;
+    }
+    try {
+      const data = await buscarNotificacoes(false, 5);
+      const lista = data.notificacoes || [];
+      const naoLidas = data.naoLidas || 0;
+      // ... resto do código
+    } catch (err) {
+      console.error('Erro ao carregar dropdown de notificações:', err);
+      dropdown.innerHTML = '<div style="padding: 16px; text-align: center;">Erro ao carregar notificações</div>';
+      dropdown.style.display = 'block';
     }
   }
 
