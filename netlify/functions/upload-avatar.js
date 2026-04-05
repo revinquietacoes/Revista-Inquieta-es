@@ -1,110 +1,210 @@
-const { getStore } = require("@netlify/blobs")
-const Busboy = require("busboy")
-const { sql } = require("./_db")
+<!DOCTYPE html>
+<html lang="pt-BR">
 
-const store = getStore("revista-arquivos")
+<head>
 
-exports.handler = async (event) => {
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-if (event.httpMethod !== "POST") {
-return { statusCode:405, body:"Método não permitido" }
+<title>Perfil</title>
+
+<link rel="stylesheet" href="../css/painel-base.css">
+
+<style>
+
+.avatar-box-panel{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:12px;
 }
 
-try {
-
-const busboy = Busboy({ headers:event.headers })
-
-let usuario_id = null
-let buffer = null
-let mime = null
-const chunks = []
-
-await new Promise((resolve,reject)=>{
-
-busboy.on("file",(name,file,info)=>{
-
-mime = info.mimeType
-
-file.on("data",d=>chunks.push(d))
-
-file.on("end",()=>{
-buffer = Buffer.concat(chunks)
-})
-
-})
-
-busboy.on("field",(name,val)=>{
-if(name==="usuario_id") usuario_id = val
-})
-
-busboy.on("finish",resolve)
-busboy.on("error",reject)
-
-const body = event.isBase64Encoded
-? Buffer.from(event.body,"base64")
-: Buffer.from(event.body)
-
-busboy.end(body)
-
-})
-
-if(!usuario_id) throw new Error("Usuário não informado")
-if(!buffer) throw new Error("Arquivo não recebido")
-if(!mime.startsWith("image/")) throw new Error("Arquivo inválido")
-
-if(buffer.length > 2 * 1024 * 1024){
-throw new Error("Imagem maior que 2MB")
+.profile-avatar{
+width:140px;
+height:140px;
+border-radius:50%;
+object-fit:cover;
+border:3px solid #ddd;
 }
 
-const key = `usuarios/${usuario_id}/avatar/avatar.webp`
-
-/* remove avatar anterior do blob */
-
-await store.delete(key).catch(()=>{})
-
-/* salva novo avatar */
-
-await store.set(key,buffer,{
-contentType:"image/webp"
-})
-
-const url = `/.netlify/functions/arquivo?key=${encodeURIComponent(key)}`
-
-/* remove registros antigos */
-
-await sql`
-DELETE FROM arquivos_publicacao
-WHERE usuario_id = ${usuario_id}
-AND categoria = 'avatar'
-`
-
-/* registra novo avatar */
-
-await sql`
-INSERT INTO arquivos_publicacao
-(usuario_id,categoria,mime_type,blob_key,url_acesso,publico)
-VALUES
-(${usuario_id},'avatar','image/webp',${key},${url},true)
-`
-
-return {
-statusCode:200,
-body:JSON.stringify({
-url: url + "&v=" + Date.now()
-})
+#msg-avatar{
+font-size:13px;
+color:#555;
 }
+
+</style>
+
+</head>
+
+<body>
+
+<aside class="panel">
+
+<div class="avatar-box-panel">
+
+<img
+id="avatar-img"
+class="profile-avatar"
+src="../assets/avatares/avatar-padrao.png"
+alt="Avatar"
+/>
+
+<input
+type="file"
+id="avatar-input"
+accept="image/*"
+hidden
+/>
+
+<button
+type="button"
+id="avatar-btn"
+class="btn btn-secondary">
+Alterar foto
+</button>
+
+<div id="msg-avatar"></div>
+
+</div>
+
+</aside>
+
+<script src="../js/painel-base.js"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+const avatarImg = document.getElementById("avatar-img")
+const avatarInput = document.getElementById("avatar-input")
+const avatarBtn = document.getElementById("avatar-btn")
+const msg = document.getElementById("msg-avatar")
+
+/* abrir seletor */
+
+avatarBtn.addEventListener("click", () => {
+
+avatarInput.click()
+
+})
+
+/* selecionar imagem */
+
+avatarInput.addEventListener("change", async () => {
+
+const file = avatarInput.files[0]
+
+if(!file) return
+
+if(!file.type.startsWith("image/")){
+msg.textContent = "Selecione uma imagem válida."
+return
+}
+
+msg.textContent = "Preparando imagem..."
+
+const compressed = await compressImage(file)
+
+/* preview */
+
+avatarImg.src = URL.createObjectURL(compressed)
+
+msg.textContent = "Enviando..."
+
+await uploadAvatar(compressed)
+
+})
+
+/* compressão da imagem */
+
+async function compressImage(file){
+
+const img = await createImageBitmap(file)
+
+const canvas = document.createElement("canvas")
+const ctx = canvas.getContext("2d")
+
+const max = 512
+
+let w = img.width
+let h = img.height
+
+if(w > h){
+
+if(w > max){
+h *= max / w
+w = max
+}
+
+}else{
+
+if(h > max){
+w *= max / h
+h = max
+}
+
+}
+
+canvas.width = w
+canvas.height = h
+
+ctx.drawImage(img,0,0,w,h)
+
+return new Promise(resolve=>{
+
+canvas.toBlob(blob=>{
+
+resolve(new File([blob],"avatar.webp",{type:"image/webp"}))
+
+},"image/webp",0.82)
+
+})
+
+}
+
+/* upload do avatar */
+
+async function uploadAvatar(file){
+
+try{
+
+const user = await AppPanel.apiData("me")
+const usuario = user.usuario
+
+const fd = new FormData()
+
+fd.append("arquivo",file)
+fd.append("usuario_id",usuario.id)
+
+const r = await fetch("/.netlify/functions/upload-avatar",{
+method:"POST",
+headers: AppPanel.currentUserHeaders(),
+body: fd
+})
+
+const data = await r.json()
+
+if(!r.ok){
+throw new Error(data.erro || "Erro no upload")
+}
+
+/* atualizar avatar */
+
+avatarImg.src = data.url
+
+msg.textContent = "Foto atualizada com sucesso."
 
 }catch(err){
 
-console.error("ERRO AVATAR:",err)
+msg.textContent = err.message
 
-return {
-statusCode:500,
-body:JSON.stringify({
-erro: err.message
+}
+
+}
+
 })
-}
 
-}
+</script>
 
-}
+</body>
+</html>
