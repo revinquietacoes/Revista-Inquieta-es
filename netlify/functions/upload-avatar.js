@@ -1,5 +1,4 @@
 const Busboy = require("busboy")
-const { makeStore } = require("./_blobs")
 
 exports.handler = async (event) => {
     const corsHeaders = {
@@ -63,16 +62,36 @@ exports.handler = async (event) => {
 
         console.log(`Arquivo recebido: ${fileBuffer.length} bytes, tipo: ${mimeType}`)
 
-        // Usar o makeStore do projeto (já configurado com siteID e token)
-        const store = makeStore("arquivos")
+        // Usar API REST do Netlify Blobs
+        const siteID = process.env.NETLIFY_BLOBS_SITE_ID
+        const token = process.env.NETLIFY_BLOBS_TOKEN
+        const storeName = "arquivos"
+
+        if (!siteID || !token) {
+            throw new Error("Variáveis de ambiente do Blobs não configuradas")
+        }
+
         const timestamp = Date.now()
         const random = Math.random().toString(36).substring(2, 8)
         const key = `usuarios/${usuarioId}-${timestamp}-${random}.webp`
 
-        await store.set(key, fileBuffer, { contentType: mimeType || "image/webp" })
+        const blobUrl = `https://api.netlify.com/api/v1/sites/${siteID}/blobs/${storeName}/${key}`
+
+        const uploadResponse = await fetch(blobUrl, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": mimeType || "image/webp"
+            },
+            body: fileBuffer
+        })
+
+        if (!uploadResponse.ok) {
+            throw new Error(`Erro ao salvar blob: ${uploadResponse.status} ${uploadResponse.statusText}`)
+        }
 
         const baseUrl = process.env.URL || `https://${event.headers.host}`
-        const fotoUrl = `${baseUrl}/.netlify/blobs/arquivos/${key}`
+        const fotoUrl = `${baseUrl}/.netlify/blobs/${storeName}/${key}`
 
         console.log("Upload bem-sucedido. URL:", fotoUrl)
 
@@ -96,8 +115,7 @@ exports.handler = async (event) => {
             headers: corsHeaders,
             body: JSON.stringify({
                 erro: "Erro interno do servidor",
-                detalhe: err.message,
-                stack: process.env.NODE_ENV === "development" ? err.stack : undefined
+                detalhe: err.message
             })
         }
     }
