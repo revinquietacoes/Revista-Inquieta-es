@@ -3,12 +3,12 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Chat Messenger - Revista Inquietações</title>
+  <title>Chat Messenger - Editor-Chefe</title>
   <link rel="icon" href="../assets/favicon.png">
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
   <style>
-    /* (mesmo estilo do MSN – cores com bom contraste) */
+    /* Mesmo estilo do MSN (cores com bom contraste) */
     :root {
       --msn-blue: #1e88e5;
       --msn-dark: #0d2b3e;
@@ -72,7 +72,7 @@
         <img class="logo-inline" src="../logo-revista.png" alt="Logo">
       </div>
       <div class="brand-copy">
-        <h1>Windows Live Messenger</h1>
+        <h1>Windows Live Messenger - Editor-Chefe</h1>
         <p>Converse, compartilhe arquivos, faça chamadas de vídeo e muito mais.</p>
       </div>
     </div>
@@ -149,11 +149,13 @@
   async function loadContacts() {
     try {
       const data = await AppPanel.apiData('chat_recipients');
-      contacts = data.usuarios.filter(u => u.id !== currentUser.id);
+      // Converte IDs para string e remove o próprio usuário
+      contacts = data.usuarios.filter(u => String(u.id) !== String(currentUser.id)).map(u => ({ ...u, id: String(u.id) }));
       renderContactList();
       console.log('Contatos carregados:', contacts.length);
     } catch (err) {
       console.error('Erro ao carregar contatos:', err);
+      document.getElementById('contactList').innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar contatos.</div>';
     }
   }
 
@@ -175,29 +177,34 @@
         ${c.unread ? `<span class="msn-contact-badge">${c.unread}</span>` : ''}
       </div>
     `).join('');
-    // O evento de clique será tratado por delegação no container, não é necessário adicionar listeners individuais.
   }
 
   // Delegação de eventos para cliques nos contatos
   document.getElementById('contactList').addEventListener('click', (e) => {
     const contactDiv = e.target.closest('.msn-contact');
     if (contactDiv) {
-      const contactId = parseInt(contactDiv.dataset.id);
+      const contactId = contactDiv.dataset.id; // string
+      console.log('Clique no contato com ID (string):', contactId);
       if (contactId) {
         selectContact(contactId);
       }
     }
   });
 
-  function selectContact(contactId) {
-    console.log('Selecionando contato:', contactId);
-    const contact = contacts.find(c => c.id === contactId);
+  async function selectContact(contactId) {
+    console.log('Selecionando contato com ID:', contactId);
+    let contact = contacts.find(c => c.id === contactId);
     if (!contact) {
-      console.error('Contato não encontrado:', contactId);
-      return;
+      console.warn('Contato não encontrado. Recarregando lista...');
+      await loadContacts();
+      contact = contacts.find(c => c.id === contactId);
+      if (!contact) {
+        console.error('Contato ainda não encontrado:', contactId);
+        alert('Contato não encontrado. Tente novamente.');
+        return;
+      }
     }
     activeContactId = contactId;
-    // Exibir área de conversa
     const convArea = document.getElementById('conversationArea');
     convArea.style.display = 'flex';
     document.getElementById('chatContactName').innerText = contact.nome;
@@ -205,16 +212,16 @@
     // Marcar como ativo na lista
     document.querySelectorAll('.msn-contact').forEach(el => {
       el.classList.remove('active');
-      if (parseInt(el.dataset.id) === contactId) el.classList.add('active');
+      if (el.dataset.id === contactId) el.classList.add('active');
     });
-    loadMessages(contactId);
+    loadMessages(contact.id);
   }
 
   async function loadMessages(contactId) {
     const container = document.getElementById('messagesContainer');
     container.innerHTML = '<div style="padding:16px;text-align:center;">Carregando mensagens...</div>';
     try {
-      const data = await AppPanel.apiData('chat_messages', { targetUserId: contactId });
+      const data = await AppPanel.apiData('chat_messages', { targetUserId: parseInt(contactId) });
       messagesCache.set(contactId, data.mensagens || []);
       renderMessages(contactId);
     } catch (err) {
@@ -231,11 +238,26 @@
       return;
     }
     container.innerHTML = msgs.map(msg => {
-      const isSelf = msg.remetente_id === currentUser.id;
+      const isSelf = String(msg.remetente_id) === String(currentUser.id);
       const date = new Date(msg.criado_em).toLocaleString('pt-BR');
       let anexoHtml = '';
       if (msg.anexo_url) {
-        anexoHtml = `<div class="message-anexo"><a href="${msg.anexo_url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo'}</a></div>`;
+        let url = msg.anexo_url;
+        // Fallback para URLs antigas do Netlify Blobs (opcional)
+        if (url.includes('/.netlify/functions/arquivo')) {
+          anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo antigo'}</a></div>`;
+        } else {
+          const lowerUrl = url.toLowerCase();
+          if (lowerUrl.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
+            anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank"><img src="${url}" style="max-width: 200px; max-height: 150px; border-radius: 8px; margin-top: 6px; cursor: pointer;"></a></div>`;
+          } else if (lowerUrl.match(/\.(mp3|wav|ogg|webm)$/)) {
+            anexoHtml = `<div class="message-anexo"><audio controls src="${url}" style="max-width: 200px;"></audio></div>`;
+          } else if (lowerUrl.match(/\.(mp4|webm)$/)) {
+            anexoHtml = `<div class="message-anexo"><video controls src="${url}" style="max-width: 250px; border-radius: 8px;"></video></div>`;
+          } else {
+            anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo'}</a></div>`;
+          }
+        }
       }
       let nudgeClass = msg.mensagem === '🔔 *nudge*' ? 'nudge-animation' : '';
       return `
@@ -257,7 +279,7 @@
     if (!text.trim() && !anexoInfo) return;
     try {
       const payload = {
-        destinatarioId: activeContactId,
+        destinatarioId: parseInt(activeContactId),
         mensagem: text.trim() || '📎 Arquivo anexado'
       };
       if (anexoInfo) {
@@ -368,26 +390,28 @@
 
   document.addEventListener('DOMContentLoaded', async () => {
     try {
-      currentUser = AppPanel.requireRole(['editor_chefe']);
-      if (!currentUser) {
-        console.error('Usuário não autenticado ou sem permissão.');
-        return;
-      }
+      if (typeof AppPanel === 'undefined') throw new Error('AppPanel não carregado');
+      currentUser = await AppPanel.requireRole(['editor_chefe']);
+      if (!currentUser) throw new Error('Usuário não autenticado ou perfil não autorizado');
+      // Garantir que o ID do usuário seja string
+      currentUser.id = String(currentUser.id);
+      console.log('Usuário logado:', currentUser);
       document.getElementById('myNameHeader').innerText = currentUser.nome;
       const myAvatar = currentUser.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
       document.getElementById('myAvatarHeader').src = myAvatar;
       await loadContacts();
       const urlParams = new URLSearchParams(location.search);
       const targetId = urlParams.get('target');
-      if (targetId && contacts.find(c => c.id == targetId)) {
-        selectContact(parseInt(targetId));
+      if (targetId && contacts.find(c => c.id === targetId)) {
+        selectContact(targetId);
       }
     } catch (err) {
       console.error('Erro na inicialização:', err);
+      document.getElementById('contactList').innerHTML = `<div style="padding:16px;text-align:center;color:red;">${err.message}</div>`;
     }
   });
 
-  // Eventos da interface (usando delegação onde possível)
+  // Eventos da interface
   document.getElementById('searchContact').addEventListener('input', () => renderContactList());
   document.getElementById('sendMsgBtn').addEventListener('click', () => {
     const text = document.getElementById('messageText').value;
