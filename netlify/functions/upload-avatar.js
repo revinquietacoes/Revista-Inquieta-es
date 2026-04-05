@@ -1,5 +1,5 @@
 const Busboy = require("busboy")
-const { getStore } = require("@netlify/blobs")
+const { makeStore } = require("./_blobs")
 
 exports.handler = async (event) => {
     const corsHeaders = {
@@ -61,7 +61,7 @@ exports.handler = async (event) => {
             }
         }
 
-        // Determinar extensão com base no MIME type (opcional, para manter formato original)
+        // Determinar extensão
         let extension = "webp"
         if (mimeType === "image/jpeg") extension = "jpg"
         else if (mimeType === "image/png") extension = "png"
@@ -71,20 +71,16 @@ exports.handler = async (event) => {
         const random = Math.random().toString(36).substring(2, 8)
         const key = `usuarios/${usuarioId}/avatar/${timestamp}-${random}.${extension}`
 
-        // Usar SDK do Netlify Blobs com opção public: true
-        const store = getStore("revista-arquivos", {
-            siteID: process.env.NETLIFY_BLOBS_SITE_ID,
-            token: process.env.NETLIFY_BLOBS_TOKEN
-        })
+        // Usar makeStore do projeto (já configurado)
+        const store = makeStore("revista-arquivos")
 
         await store.set(key, fileBuffer, {
             contentType: mimeType,
-            public: true   // Torna o blob acessível publicamente via CDN (opcional, mas ajuda)
+            public: true
         })
 
-        console.log(`✅ Avatar salvo: ${key} (${fileBuffer.length} bytes, ${mimeType})`)
+        console.log(`✅ Avatar salvo: ${key} (${fileBuffer.length} bytes)`)
 
-        // URL para a função avatar (mais confiável)
         const avatarUrl = `/.netlify/functions/avatar?key=${encodeURIComponent(key)}`
 
         return {
