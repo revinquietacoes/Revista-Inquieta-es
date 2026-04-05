@@ -1,65 +1,84 @@
+import Busboy from "busboy"
 import { getStore } from "@netlify/blobs"
 
-export async function handler(event){
+export async function handler(event) {
 
-try{
+try {
 
-if(event.httpMethod !== "POST"){
+if (event.httpMethod !== "POST") {
 return {
-statusCode:405,
-body:"Método não permitido"
+statusCode: 405,
+body: "Method not allowed"
 }
 }
 
-const store = getStore("arquivos")
-
-const boundary = event.headers["content-type"].split("boundary=")[1]
-
-const parts = event.body.split("--"+boundary)
-
-let filePart = parts.find(p=>p.includes("filename="))
-
-if(!filePart){
-return {
-statusCode:400,
-body:JSON.stringify({erro:"Arquivo não enviado"})
-}
-}
-
-const start = filePart.indexOf("\r\n\r\n") + 4
-const end = filePart.lastIndexOf("\r\n")
-
-const fileData = filePart.slice(start,end)
-
-const buffer = Buffer.from(fileData,"binary")
-
-const fileName =
-"usuarios/" +
-Date.now() +
-"-avatar.webp"
-
-await store.set(fileName,buffer,{
-contentType:"image/webp"
+const busboy = Busboy({
+headers: event.headers
 })
 
-const url = await store.getPublicURL(fileName)
+let fileBuffer = null
+let mimeType = "image/webp"
+
+await new Promise((resolve, reject) => {
+
+busboy.on("file", (fieldname, file, info) => {
+
+mimeType = info.mimeType
+
+const chunks = []
+
+file.on("data", data => chunks.push(data))
+
+file.on("end", () => {
+fileBuffer = Buffer.concat(chunks)
+})
+
+})
+
+busboy.on("finish", resolve)
+busboy.on("error", reject)
+
+busboy.end(Buffer.from(event.body, "base64"))
+
+})
+
+if (!fileBuffer) {
+return {
+statusCode: 400,
+body: JSON.stringify({ erro: "Nenhum arquivo recebido" })
+}
+}
+
+/* usa credenciais do ambiente */
+
+const store = getStore({
+name: "arquivos",
+siteID: process.env.NETLIFY_BLOBS_SITE_ID,
+token: process.env.NETLIFY_BLOBS_TOKEN
+})
+
+const key = `usuarios/${Date.now()}-avatar.webp`
+
+await store.set(key, fileBuffer, {
+contentType: mimeType
+})
+
+const url = await store.getPublicURL(key)
 
 return {
-statusCode:200,
-headers:{
-"Content-Type":"application/json"
+statusCode: 200,
+headers: {
+"Content-Type": "application/json"
 },
-body:JSON.stringify({
-url
-})
+body: JSON.stringify({ url })
 }
 
-}catch(err){
+} catch (err) {
 
 return {
-statusCode:500,
-body:JSON.stringify({
-erro:err.message
+statusCode: 500,
+body: JSON.stringify({
+erro: err.message
 })
 }
 
