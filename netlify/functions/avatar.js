@@ -11,7 +11,7 @@ const main = async (req) => {
 
         const siteID = process.env.NETLIFY_BLOBS_SITE_ID
         const token = process.env.NETLIFY_BLOBS_TOKEN
-        const storeName = "avatars"
+        const storeName = "avatares"
 
         if (!siteID || !token) {
             return new Response('Configuração de armazenamento ausente.', { status: 500 })
