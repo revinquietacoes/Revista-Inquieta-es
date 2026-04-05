@@ -3,452 +3,341 @@
 
 <head>
 
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-    <title>Perfil</title>
+<title>Perfil</title>
 
-    <link rel="icon" href="../assets/favicon.png">
-    <link rel="stylesheet" href="painel-base.css">
-    <script src="painel-base.js" defer></script>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<script src="painel-base.js" defer></script>
 
-    <style>
-        .avatar-box-panel {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
+<style>
 
-        .profile-avatar {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #ddd;
-        }
+.avatar-area{
+display:flex;
+flex-direction:column;
+align-items:center;
+gap:15px;
+}
 
-        .avatar-container {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 15px;
-        }
+.avatar-preview{
+width:150px;
+height:150px;
+border-radius:50%;
+overflow:hidden;
+border:3px solid #ddd;
+background:#fafafa;
+display:flex;
+align-items:center;
+justify-content:center;
+}
 
-        .avatar-drop {
-            border: 2px dashed #bbb;
-            padding: 30px;
-            border-radius: 8px;
-            cursor: pointer;
-            text-align: center;
-            width: 100%;
-            max-width: 320px;
-        }
+.avatar-preview img{
+width:100%;
+height:100%;
+object-fit:cover;
+}
 
-        .avatar-drop.drag {
-            border-color: #2d6cdf;
-            background: #f4f7ff;
-        }
+.avatar-drop{
 
-        .profile-avatar {
-            width: 140px;
-            height: 140px;
-            border-radius: 50%;
-            object-fit: cover;
-            border: 3px solid #ddd;
-        }
-    </style>
+border:2px dashed #bbb;
+padding:25px;
+border-radius:10px;
+cursor:pointer;
+text-align:center;
+max-width:300px;
+width:100%;
+transition:0.2s;
+
+}
+
+.avatar-drop.drag{
+border-color:#2d6cdf;
+background:#f2f6ff;
+}
+
+.crop-container{
+display:none;
+margin-top:15px;
+}
+
+.crop-container canvas{
+max-width:300px;
+border-radius:6px;
+}
+
+</style>
 
 </head>
 
 <body>
 
-    <div class="page-shell">
+<div class="page-shell">
 
-        <header class="topbar">
+<header class="topbar">
 
-            <div class="brand-wrap">
+<div class="brand-wrap">
 
-                <div class="avatar-box">
-                    <img class="avatar-img" data-avatar-user alt="">
-                    <img class="logo-inline" src="../logo-revista.png">
-                </div>
+<div class="avatar-box">
+<img class="avatar-img" data-avatar-user alt="">
+<img class="logo-inline" src="../logo-revista.png">
+</div>
 
-                <div class="brand-copy">
-                    <h1>Perfil</h1>
-                    <p>Gerencie seus dados e sua foto.</p>
-                </div>
+<div class="brand-copy">
+<h1>Perfil</h1>
+<p>Gerencie seus dados e sua foto.</p>
+</div>
 
-            </div>
+</div>
 
-            <div class="actions-row">
-                <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
-                <button class="btn btn-soft" data-action="logout">Sair</button>
-            </div>
+<div class="actions-row">
+<a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+<button class="btn btn-soft" data-action="logout">Sair</button>
+</div>
 
-        </header>
+</header>
 
-        <div class="content-grid">
+<div class="content-grid">
 
-            <section class="panel">
+<section class="panel">
 
-                <div class="panel-head">
-                    <h2>Dados cadastrais</h2>
-                </div>
+<div class="panel-head">
+<h2>Dados cadastrais</h2>
+</div>
 
-                <form id="form-perfil">
+<form id="form-perfil">
 
-                    <div class="form-grid">
+<div class="form-grid">
 
-                        <div class="field full">
-                            <label>Nome</label>
-                            <input name="nome" required>
-                        </div>
+<div class="field full">
+<label>Nome</label>
+<input name="nome" required>
+</div>
 
-                        <div class="field">
-                            <label>E-mail</label>
-                            <input name="email" disabled>
-                        </div>
+<div class="field">
+<label>E-mail</label>
+<input name="email" disabled>
+</div>
 
-                        <div class="field">
-                            <label>Perfil</label>
-                            <input name="perfil" disabled>
-                        </div>
+<div class="field">
+<label>Perfil</label>
+<input name="perfil" disabled>
+</div>
 
-                        <div class="field">
-                            <label>Instituição</label>
-                            <input name="instituicao">
-                        </div>
+<div class="field">
+<label>Instituição</label>
+<input name="instituicao">
+</div>
 
-                        <div class="field">
-                            <label>ORCID</label>
-                            <input name="orcid">
-                        </div>
+<div class="field">
+<label>ORCID</label>
+<input name="orcid">
+</div>
 
-                        <div class="field full">
-                            <label>Lattes</label>
-                            <input name="lattes">
-                        </div>
+<div class="field full">
+<label>Lattes</label>
+<input name="lattes">
+</div>
 
-                        <div class="field">
-                            <label>Origem</label>
-                            <input name="origem">
-                        </div>
+<div class="field">
+<label>Origem</label>
+<input name="origem">
+</div>
 
-                        <div class="field">
-                            <label>Telefone</label>
-                            <input name="telefone">
-                        </div>
+<div class="field">
+<label>Telefone</label>
+<input name="telefone">
+</div>
 
-                    </div>
+</div>
 
-                    <div class="actions-row">
-                        <button class="btn btn-primary" type="submit">Salvar perfil</button>
-                    </div>
+<div class="actions-row">
+<button class="btn btn-primary" type="submit">
+Salvar perfil
+</button>
+</div>
 
-                    <div class="form-message" id="msg-perfil"></div>
+<div id="msg-perfil" class="form-message"></div>
 
-                </form>
+</form>
 
-            </section>
+</section>
 
-            <aside class="panel">
+<aside class="panel">
 
-                <div class="avatar-box-panel">
+<div class="avatar-area">
 
-                    <img id="avatar-img" class="profile-avatar" src="../assets/avatares/avatar-padrao.png"
-                        alt="Avatar" />
+<div class="avatar-preview">
+<img id="avatar-preview" src="../assets/avatares/avatar-padrao.png">
+</div>
 
-                    <input type="file" id="avatar-input" accept="image/*" hidden />
+<div id="avatar-drop" class="avatar-drop">
+Arraste uma imagem aqui ou clique para selecionar
+</div>
 
-                    <button id="avatar-btn" class="btn btn-secondary">
-                        Alterar foto
-                    </button>
+<input type="file" id="avatar-input" accept="image/*" hidden>
 
-                    <div id="msg-avatar" class="form-message"></div>
+<div class="crop-container">
+<canvas id="crop-canvas"></canvas>
 
-                </div>
+<div class="actions-row" style="margin-top:10px">
+<button id="btn-save-avatar" class="btn btn-primary">
+Salvar foto
+</button>
+</div>
+</div>
 
-                <div class="form-message" id="msg-avatar"></div>
+<div id="msg-avatar" class="form-message"></div>
 
-            </aside>
+</div>
 
-        </div>
+</aside>
 
-        <footer class="page-footer"></footer>
+</div>
 
-    </div>
+<footer class="page-footer"></footer>
 
-    <script>
+</div>
 
-        document.addEventListener("DOMContentLoaded", async () => {
+<script>
 
-            const user = AppPanel.requireRole([
-                'autor', 'parecerista', 'editor_adjunto', 'editor_chefe'
-            ])
+document.addEventListener("DOMContentLoaded", async ()=>{
 
-            if (!user) return
+const data = await AppPanel.apiData("me")
+const u = data.usuario
 
-            const data = await AppPanel.apiData("me")
-            const u = data.usuario
+const preview = document.getElementById("avatar-preview")
+const drop = document.getElementById("avatar-drop")
+const input = document.getElementById("avatar-input")
+const canvas = document.getElementById("crop-canvas")
+const cropBox = document.querySelector(".crop-container")
+const btnSave = document.getElementById("btn-save-avatar")
+const msg = document.getElementById("msg-avatar")
 
-            const avatar = document.getElementById("profile-avatar")
-            const drop = document.getElementById("avatar-drop")
-            const input = document.getElementById("arquivo-avatar")
-            const btn = document.getElementById("btn-upload-avatar")
-            const msg = document.getElementById("msg-avatar")
+preview.src = u.foto_perfil_url || "../assets/avatares/avatar-padrao.png"
 
-            avatar.src = u.foto_perfil_url || "/public/images/avatar-default.png"
+let cropCtx = canvas.getContext("2d")
+let imgObj = null
+let cropSize = 300
 
-            let imageBlob = null
+drop.onclick = ()=>input.click()
 
+drop.addEventListener("dragover",e=>{
+e.preventDefault()
+drop.classList.add("drag")
+})
 
-            async function compressImage(file) {
+drop.addEventListener("dragleave",()=>{
+drop.classList.remove("drag")
+})
 
-                const img = await createImageBitmap(file)
+drop.addEventListener("drop",e=>{
+e.preventDefault()
+drop.classList.remove("drag")
 
-                const canvas = document.createElement("canvas")
-                const ctx = canvas.getContext("2d")
+const file = e.dataTransfer.files[0]
 
-                const max = 512
+if(file) loadImage(file)
+})
 
-                let w = img.width
-                let h = img.height
+input.addEventListener("change",()=>{
+const file = input.files[0]
+if(file) loadImage(file)
+})
 
-                if (w > h) {
-                    if (w > max) { h *= max / w; w = max }
-                } else {
-                    if (h > max) { w *= max / h; h = max }
-                }
+function loadImage(file){
 
-                canvas.width = w
-                canvas.height = h
+if(!file.type.startsWith("image/")){
+msg.textContent="Selecione uma imagem válida."
+return
+}
 
-                ctx.drawImage(img, 0, 0, w, h)
+const url = URL.createObjectURL(file)
 
-                return new Promise(resolve => {
-                    canvas.toBlob(blob => {
+imgObj = new Image()
 
-                        imageBlob = blob
+imgObj.onload=()=>{
 
-                        avatar.src = URL.createObjectURL(blob)
+canvas.width=cropSize
+canvas.height=cropSize
 
-                        resolve()
+drawCrop()
 
-                    }, "image/jpeg", 0.82)
-                })
+cropBox.style.display="block"
 
-            }
+}
 
+imgObj.src=url
 
-            drop.onclick = () => input.click()
+}
 
-            input.addEventListener("change", async () => {
-                const file = input.files[0]
-                if (file) await compressImage(file)
-            })
+function drawCrop(){
 
+cropCtx.clearRect(0,0,cropSize,cropSize)
 
-            drop.addEventListener("dragover", e => {
-                e.preventDefault()
-                drop.classList.add("drag")
-            })
+let size=Math.min(imgObj.width,imgObj.height)
 
-            drop.addEventListener("dragleave", () => {
-                drop.classList.remove("drag")
-            })
+cropCtx.drawImage(
+imgObj,
+(imgObj.width-size)/2,
+(imgObj.height-size)/2,
+size,
+size,
+0,
+0,
+cropSize,
+cropSize
+)
 
-            drop.addEventListener("drop", async e => {
-                e.preventDefault()
-                drop.classList.remove("drag")
+}
 
-                const file = e.dataTransfer.files[0]
+btnSave.onclick=async()=>{
 
-                if (file) await compressImage(file)
-            })
+msg.textContent="Enviando..."
 
+canvas.toBlob(async blob=>{
 
-            btn.onclick = async () => {
+const fd=new FormData()
 
-                if (!imageBlob) {
-                    alert("Escolha uma foto")
-                    return
-                }
+fd.append("arquivo",new File([blob],"avatar.webp",{type:"image/webp"}))
+fd.append("usuario_id",u.id)
 
-                btn.disabled = true
-                btn.innerText = "Enviando..."
+try{
 
-                const fd = new FormData()
+const r=await fetch("/.netlify/functions/upload-avatar",{
+method:"POST",
+headers:AppPanel.currentUserHeaders(),
+body:fd
+})
 
-                fd.append("arquivo", imageBlob)
-                fd.append("usuario_id", u.id)
+const data=await r.json()
 
-                const r = await fetch("/.netlify/functions/upload-avatar", {
-                    method: "POST",
-                    headers: AppPanel.currentUserHeaders(),
-                    body: fd
-                })
+if(!r.ok){
+throw new Error(data.erro || "Erro no upload")
+}
 
-                const data = await r.json()
+preview.src=data.url
 
-                if (!r.ok) {
-                    throw new Error(data.erro || "Falha no upload")
-                }
+document
+.querySelectorAll("[data-avatar-user]")
+.forEach(el=>el.src=data.url)
 
+msg.textContent="Foto atualizada com sucesso."
 
-                await fetch("/.netlify/functions/actions", {
-                    method: "POST",
-                    headers: {
-                        "Content-Type": "application/json",
-                        ...AppPanel.currentUserHeaders()
-                    },
-                    body: JSON.stringify({
-                        action: "update_avatar",
-                        userId: u.id,
-                        avatarUrl: data.url
-                    })
-                })
+}catch(err){
 
+msg.textContent=err.message
 
-                avatar.src = data.url + "?v=" + Date.now()
+}
 
-                document
-                    .querySelectorAll("[data-avatar-user]")
-                    .forEach(img => {
-                        img.src = data.url + "?v=" + Date.now()
-                    })
+},"image/webp",0.85)
 
-                msg.textContent = "Foto atualizada com sucesso"
-                msg.classList.add("ok")
-
-            }catch (err) {
-
-                msg.textContent = err.message
-                msg.classList.add("err")
-
-            }
-
-            btn.disabled = false
-            btn.innerText = "Salvar foto"
-
-        }
+}
 
 })
 
-            < script >
-
-            document.addEventListener("DOMContentLoaded", async () => {
-
-                const user = await AppPanel.apiData("me")
-                const u = user.usuario
-
-                const img = document.getElementById("avatar-img")
-                const input = document.getElementById("avatar-input")
-                const btn = document.getElementById("avatar-btn")
-                const msg = document.getElementById("msg-avatar")
-
-                img.src = u.foto_perfil_url || "../assets/avatares/avatar-padrao.png"
-
-                btn.onclick = () => input.click()
-
-                input.addEventListener("change", async () => {
-
-                    const file = input.files[0]
-                    if (!file) return
-
-                    if (!file.type.startsWith("image/")) {
-                        msg.textContent = "Selecione uma imagem válida."
-                        return
-                    }
-
-                    const compressed = await compressImage(file)
-
-                    preview(compressed)
-
-                    await uploadAvatar(compressed)
-
-                })
-
-                async function compressImage(file) {
-
-                    const img = await createImageBitmap(file)
-
-                    const canvas = document.createElement("canvas")
-                    const ctx = canvas.getContext("2d")
-
-                    const max = 512
-
-                    let w = img.width
-                    let h = img.height
-
-                    if (w > h) {
-                        if (w > max) { h *= max / w; w = max }
-                    } else {
-                        if (h > max) { w *= max / h; h = max }
-                    }
-
-                    canvas.width = w
-                    canvas.height = h
-
-                    ctx.drawImage(img, 0, 0, w, h)
-
-                    return new Promise(resolve => {
-                        canvas.toBlob(blob => {
-                            resolve(new File([blob], "avatar.webp", { type: "image/webp" }))
-                        }, "image/webp", 0.82)
-                    })
-
-                }
-
-                function preview(file) {
-                    img.src = URL.createObjectURL(file)
-                }
-
-                async function uploadAvatar(file) {
-
-                    msg.textContent = "Enviando..."
-
-                    const fd = new FormData()
-
-                    fd.append("arquivo", file)
-                    fd.append("usuario_id", u.id)
-
-                    try {
-
-                        const r = await fetch("/.netlify/functions/upload-avatar", {
-                            method: "POST",
-                            headers: AppPanel.currentUserHeaders(),
-                            body: fd
-                        })
-
-                        const data = await r.json()
-
-                        if (!r.ok) {
-                            throw new Error(data.erro || "Falha no upload")
-                        }
-
-                        img.src = data.url
-
-                        document
-                            .querySelectorAll("[data-avatar-user]")
-                            .forEach(el => {
-                                el.src = data.url
-                            })
-
-                        msg.textContent = "Foto atualizada com sucesso."
-
-                    } catch (err) {
-
-                        msg.textContent = err.message
-
-                    }
-
-                }
-
-            })
-
-    </script>
+</script>
 
 </body>
-
 </html>
