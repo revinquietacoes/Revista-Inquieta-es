@@ -20,7 +20,6 @@ async function getTableColumns(tableName) {
   return new Set((rows || []).map((row) => row.column_name))
 }
 
-
 async function ensureEditorialColumnsCompatibility() {
   await sql`ALTER TABLE submissoes ADD COLUMN IF NOT EXISTS editor_responsavel_id BIGINT`
   await sql`ALTER TABLE submissoes ADD COLUMN IF NOT EXISTS editor_adjunto_id BIGINT`
@@ -203,12 +202,20 @@ const main = async (req) => {
   try {
     await ensureSupportTables()
     await ensureEditorialColumnsCompatibility()
-    if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
+    
+    if (req.method !== 'POST') {
+      return json({ erro: 'Método não permitido.' }, 405)
+    }
+    
     const body = await parseJson(req)
     const { action, userId } = body
     const user = await getUserById(Number(userId), action === 'delete_submission')
-    if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
+    
+    if (!user) {
+      return json({ erro: 'Usuário não encontrado.' }, 404)
+    }
 
+    // Ações de presença
     if (action === 'presence_ping') {
       await sql`UPDATE usuarios SET ultimo_acesso_em = CURRENT_TIMESTAMP, online = TRUE, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${user.id}`
       const refreshed = await getUserById(user.id)
@@ -225,31 +232,24 @@ const main = async (req) => {
       return json({ sucesso: true, usuario: refreshed })
     }
 
+    // Atualização de perfil
     if (action === 'update_profile') {
-      if (action === 'update_avatar') {  // <-- ESTÁ COMENTADO!
-        const { avatarUrl } = body
-        if (!avatarUrl) {
-          return json({ erro: 'URL da imagem não informada.' }, 400)
-        }
+      const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
+      
+      // Se for atualização de avatar
+      if (avatarUrl) {
         await sql`
-            UPDATE usuarios
-            SET foto_perfil_url = ${avatarUrl},
-                atualizado_em = CURRENT_TIMESTAMP
-            WHERE id = ${user.id}
+          UPDATE usuarios
+          SET foto_perfil_url = ${avatarUrl},
+              atualizado_em = CURRENT_TIMESTAMP
+          WHERE id = ${user.id}
         `
         const refreshed = await getUserById(user.id)
         return json({ sucesso: true, usuario: refreshed })
       }
-
-      const refreshed = await getUserById(user.id)
-
-      return json({
-        sucesso: true,
-        usuario: refreshed
-      })
-    }
-    const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email } = body
-    await sql`
+      
+      // Atualização de dados do perfil
+      await sql`
         UPDATE usuarios
         SET nome = COALESCE(${nome || null}, nome),
             instituicao = ${instituicao || null},
@@ -259,160 +259,173 @@ const main = async (req) => {
             telefone = ${telefone || null},
             receber_noticias_email = ${!!receber_noticias_email},
             atualizado_em = CURRENT_TIMESTAMP
-        WHERE id = ${user.id}`
-    const refreshed = await getUserById(user.id)
-    return json({ sucesso: true, usuario: refreshed })
-  }
+        WHERE id = ${user.id}
+      `
+      const refreshed = await getUserById(user.id)
+      return json({ sucesso: true, usuario: refreshed })
+    }
 
+    // Aprovar usuário
     if (action === 'approve_user') {
-    if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
-    const { targetUserId, status, foto_perfil_aprovada, consentimento_foto_publica, total_avaliacoes } = body
-    if (status) await sql`UPDATE usuarios SET status = ${status}, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${targetUserId}`
-    if (typeof foto_perfil_aprovada === 'boolean' || typeof consentimento_foto_publica === 'boolean') {
-      await sql`UPDATE usuarios SET foto_perfil_aprovada = COALESCE(${typeof foto_perfil_aprovada === 'boolean' ? foto_perfil_aprovada : null}, foto_perfil_aprovada), consentimento_foto_publica = COALESCE(${typeof consentimento_foto_publica === 'boolean' ? consentimento_foto_publica : null}, consentimento_foto_publica), atualizado_em = CURRENT_TIMESTAMP WHERE id = ${targetUserId}`
+      if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
+      const { targetUserId, status, foto_perfil_aprovada, consentimento_foto_publica, total_avaliacoes } = body
+      if (status) await sql`UPDATE usuarios SET status = ${status}, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${targetUserId}`
+      if (typeof foto_perfil_aprovada === 'boolean' || typeof consentimento_foto_publica === 'boolean') {
+        await sql`UPDATE usuarios SET foto_perfil_aprovada = COALESCE(${typeof foto_perfil_aprovada === 'boolean' ? foto_perfil_aprovada : null}, foto_perfil_aprovada), consentimento_foto_publica = COALESCE(${typeof consentimento_foto_publica === 'boolean' ? consentimento_foto_publica : null}, consentimento_foto_publica), atualizado_em = CURRENT_TIMESTAMP WHERE id = ${targetUserId}`
+      }
+      if (Number.isFinite(Number(total_avaliacoes))) {
+        await sql`INSERT INTO contribuicoes_usuarios (usuario_id, total_avaliacoes) VALUES (${targetUserId}, ${Number(total_avaliacoes)}) ON CONFLICT (usuario_id) DO UPDATE SET total_avaliacoes = EXCLUDED.total_avaliacoes, atualizado_em = CURRENT_TIMESTAMP`
+      }
+      return json({ sucesso: true })
     }
-    if (Number.isFinite(Number(total_avaliacoes))) {
-      await sql`INSERT INTO contribuicoes_usuarios (usuario_id, total_avaliacoes) VALUES (${targetUserId}, ${Number(total_avaliacoes)}) ON CONFLICT (usuario_id) DO UPDATE SET total_avaliacoes = EXCLUDED.total_avaliacoes, atualizado_em = CURRENT_TIMESTAMP`
-    }
-    return json({ sucesso: true })
-  }
 
-  if (action === 'create_dossier') {
-    if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
-    const { titulo, descricao, editorResponsavelId, dataAbertura, dataFechamento } = body
-    if (!titulo || !descricao || !editorResponsavelId) return json({ erro: 'Preencha título, descrição e editor responsável.' }, 400)
-    const dossieCols = await getTableColumns('dossies_tematicos')
-    if (dossieCols.has('editor_responsavel_id') && dossieCols.has('editor_adjunto_id')) {
-      await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_responsavel_id, editor_adjunto_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
-    } else if (dossieCols.has('editor_responsavel_id')) {
-      await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_responsavel_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
-    } else if (dossieCols.has('editor_adjunto_id')) {
-      await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_adjunto_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
-    } else {
-      await sql`INSERT INTO dossies_tematicos (titulo, descricao, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+    // Criar dossiê
+    if (action === 'create_dossier') {
+      if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
+      const { titulo, descricao, editorResponsavelId, dataAbertura, dataFechamento } = body
+      if (!titulo || !descricao || !editorResponsavelId) return json({ erro: 'Preencha título, descrição e editor responsável.' }, 400)
+      const dossieCols = await getTableColumns('dossies_tematicos')
+      if (dossieCols.has('editor_responsavel_id') && dossieCols.has('editor_adjunto_id')) {
+        await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_responsavel_id, editor_adjunto_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+      } else if (dossieCols.has('editor_responsavel_id')) {
+        await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_responsavel_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+      } else if (dossieCols.has('editor_adjunto_id')) {
+        await sql`INSERT INTO dossies_tematicos (titulo, descricao, editor_adjunto_id, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${editorResponsavelId}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+      } else {
+        await sql`INSERT INTO dossies_tematicos (titulo, descricao, criado_por_editor_chefe_id, status, data_abertura, data_fechamento) VALUES (${titulo}, ${descricao}, ${user.id}, 'aberto', ${dataAbertura || null}, ${dataFechamento || null})`
+      }
+      return json({ sucesso: true })
     }
-    return json({ sucesso: true })
-  }
 
-  if (action === 'assign_reviewer') {
-    if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-    const { submissaoId, pareceristaId, prazoParecer, mensagemConvite } = body
-    if (!submissaoId || !pareceristaId) return json({ erro: 'Informe submissão e parecerista.' }, 400)
-    const existing = await sql`
+    // Designar revisor
+    if (action === 'assign_reviewer') {
+      if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      const { submissaoId, pareceristaId, prazoParecer, mensagemConvite } = body
+      if (!submissaoId || !pareceristaId) return json({ erro: 'Informe submissão e parecerista.' }, 400)
+      const existing = await sql`
         SELECT id, status
         FROM designacoes_avaliacao
         WHERE submissao_id = ${submissaoId}
           AND parecerista_id = ${pareceristaId}
           AND status <> 'recusado'
         LIMIT 1`
-    if (existing.length) return json({ erro: 'Este parecerista já possui uma designação ativa para esta submissão.' }, 409)
-    await sql`INSERT INTO designacoes_avaliacao (submissao_id, parecerista_id, editor_id, status, prazo_parecer, mensagem_convite) VALUES (${submissaoId}, ${pareceristaId}, ${user.id}, 'convite_enviado', ${prazoParecer || null}, ${mensagemConvite || null})`
-    const submissaoCols = await getTableColumns('submissoes')
-    if (submissaoCols.has('editor_responsavel_id') && submissaoCols.has('editor_adjunto_id')) {
-      await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_responsavel_id = COALESCE(editor_responsavel_id, ${user.id}), editor_adjunto_id = CASE WHEN ${user.perfil} = 'editor_adjunto' THEN ${user.id} ELSE COALESCE(editor_adjunto_id, editor_responsavel_id, ${user.id}) END WHERE id = ${submissaoId}`
-    } else if (submissaoCols.has('editor_responsavel_id')) {
-      await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_responsavel_id = COALESCE(editor_responsavel_id, ${user.id}) WHERE id = ${submissaoId}`
-    } else if (submissaoCols.has('editor_adjunto_id')) {
-      await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_adjunto_id = CASE WHEN ${user.perfil} = 'editor_adjunto' THEN ${user.id} ELSE COALESCE(editor_adjunto_id, ${user.id}) END WHERE id = ${submissaoId}`
-    } else {
-      await sql`UPDATE submissoes SET status = 'alocada_sem_aceite' WHERE id = ${submissaoId}`
+      if (existing.length) return json({ erro: 'Este parecerista já possui uma designação ativa para esta submissão.' }, 409)
+      await sql`INSERT INTO designacoes_avaliacao (submissao_id, parecerista_id, editor_id, status, prazo_parecer, mensagem_convite) VALUES (${submissaoId}, ${pareceristaId}, ${user.id}, 'convite_enviado', ${prazoParecer || null}, ${mensagemConvite || null})`
+      const submissaoCols = await getTableColumns('submissoes')
+      if (submissaoCols.has('editor_responsavel_id') && submissaoCols.has('editor_adjunto_id')) {
+        await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_responsavel_id = COALESCE(editor_responsavel_id, ${user.id}), editor_adjunto_id = CASE WHEN ${user.perfil} = 'editor_adjunto' THEN ${user.id} ELSE COALESCE(editor_adjunto_id, editor_responsavel_id, ${user.id}) END WHERE id = ${submissaoId}`
+      } else if (submissaoCols.has('editor_responsavel_id')) {
+        await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_responsavel_id = COALESCE(editor_responsavel_id, ${user.id}) WHERE id = ${submissaoId}`
+      } else if (submissaoCols.has('editor_adjunto_id')) {
+        await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_adjunto_id = CASE WHEN ${user.perfil} = 'editor_adjunto' THEN ${user.id} ELSE COALESCE(editor_adjunto_id, ${user.id}) END WHERE id = ${submissaoId}`
+      } else {
+        await sql`UPDATE submissoes SET status = 'alocada_sem_aceite' WHERE id = ${submissaoId}`
+      }
+      return json({ sucesso: true })
     }
-    return json({ sucesso: true })
-  }
 
-  if (action === 'update_designacao_status') {
-    if (!canAccess(user, ['parecerista', 'editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-    const { designacaoId, status, diasAdicionais } = body
-    const designacao = await getDesignacaoById(Number(designacaoId))
-    if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
-    if (user.perfil === 'parecerista' && Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode alterar esta designação.' }, 403)
-    const statusVal = status || 'aceito'
-    if (designacao.status === 'concluido' && statusVal !== 'concluido') return json({ erro: 'Esta designação já foi concluída e não pode mais ser alterada.' }, 409)
-    const cols = await getTableColumns('designacoes_avaliacao')
-    if (cols.has('atualizado_em')) {
-      await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais), atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
-    } else if (cols.has('updated_at')) {
-      await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais), updated_at = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
-    } else {
-      await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais) WHERE id = ${designacao.id}`
+    // Atualizar status da designação
+    if (action === 'update_designacao_status') {
+      if (!canAccess(user, ['parecerista', 'editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      const { designacaoId, status, diasAdicionais } = body
+      const designacao = await getDesignacaoById(Number(designacaoId))
+      if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
+      if (user.perfil === 'parecerista' && Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode alterar esta designação.' }, 403)
+      const statusVal = status || 'aceito'
+      if (designacao.status === 'concluido' && statusVal !== 'concluido') return json({ erro: 'Esta designação já foi concluída e não pode mais ser alterada.' }, 409)
+      const cols = await getTableColumns('designacoes_avaliacao')
+      if (cols.has('atualizado_em')) {
+        await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais), atualizado_em = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
+      } else if (cols.has('updated_at')) {
+        await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais), updated_at = CURRENT_TIMESTAMP WHERE id = ${designacao.id}`
+      } else {
+        await sql`UPDATE designacoes_avaliacao SET status = ${statusVal}, dias_adicionais = COALESCE(${diasAdicionais || null}, dias_adicionais) WHERE id = ${designacao.id}`
+      }
+      await refreshSubmissionStatus(designacao.submissao_id)
+      return json({ sucesso: true })
     }
-    await refreshSubmissionStatus(designacao.submissao_id)
-    return json({ sucesso: true })
-  }
 
-  if (action === 'send_direct_message') {
-    const { destinatarioId, mensagem, anexoUrl, anexoNome, anexoMime } = body
-    const targetId = Number(destinatarioId)
-    const cleanMessage = String(mensagem || '').trim()
-    if (!targetId || !cleanMessage) return json({ erro: 'Informe destinatário e mensagem.' }, 400)
-    if (targetId === Number(user.id)) return json({ erro: 'Não é possível enviar mensagem para si mesmo(a).' }, 400)
-    const targetRows = await sql`SELECT id, status FROM usuarios WHERE id = ${targetId} LIMIT 1`
-    if (!targetRows.length || targetRows[0].status !== 'ativo') return json({ erro: 'Destinatário inválido ou inativo.' }, 404)
-    await sql`INSERT INTO mensagens_internas (remetente_id, destinatario_id, mensagem, anexo_url, anexo_nome, anexo_mime) VALUES (${user.id}, ${targetId}, ${cleanMessage}, ${anexoUrl || null}, ${anexoNome || null}, ${anexoMime || null})`
-    return json({ sucesso: true })
-  }
-
-  if (action === 'submit_review') {
-    if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
-    const { designacaoId, submissaoId } = body
-    if (!designacaoId) return json({ erro: 'Identificação da avaliação não encontrada.' }, 400)
-    const designacao = await getDesignacaoById(Number(designacaoId))
-    if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
-    const submissaoFinalId = Number(designacao.submissao_id)
-    if (submissaoId && Number(submissaoId) !== submissaoFinalId) return json({ erro: 'A submissão informada não corresponde à designação.' }, 400)
-    if (Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode enviar parecer para esta designação.' }, 403)
-    if (designacao.status === 'recusado') return json({ erro: 'Não é possível enviar parecer para uma tarefa recusada.' }, 409)
-    await upsertReviewV2({ designacao, user, body })
-    try {
-      await upsertReview({ designacao, user, body })
-    } catch (legacyError) {
-      console.error('Falha ao espelhar parecer em avaliacoes:', legacyError)
+    // Enviar mensagem direta
+    if (action === 'send_direct_message') {
+      const { destinatarioId, mensagem, anexoUrl, anexoNome, anexoMime } = body
+      const targetId = Number(destinatarioId)
+      const cleanMessage = String(mensagem || '').trim()
+      if (!targetId || !cleanMessage) return json({ erro: 'Informe destinatário e mensagem.' }, 400)
+      if (targetId === Number(user.id)) return json({ erro: 'Não é possível enviar mensagem para si mesmo(a).' }, 400)
+      const targetRows = await sql`SELECT id, status FROM usuarios WHERE id = ${targetId} LIMIT 1`
+      if (!targetRows.length || targetRows[0].status !== 'ativo') return json({ erro: 'Destinatário inválido ou inativo.' }, 404)
+      await sql`INSERT INTO mensagens_internas (remetente_id, destinatario_id, mensagem, anexo_url, anexo_nome, anexo_mime) VALUES (${user.id}, ${targetId}, ${cleanMessage}, ${anexoUrl || null}, ${anexoNome || null}, ${anexoMime || null})`
+      return json({ sucesso: true })
     }
-    await markDesignacaoStatus(designacao.id, 'concluido')
-    await refreshSubmissionStatus(designacao.submissao_id)
-    return json({ sucesso: true, armazenamento: 'avaliacoes_v2' })
-  }
 
-  if (action === 'request_certificate') {
-    if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403)
-    const { nomeCompleto, email, certificadoMinicurso, certificadoParticipacaoGeral, certificadoComunicacaoOral, minicursos, autorizaPublicacaoTexto, resumoExpandido, tituloComunicacaoOral, autoresComunicacaoOral } = body
-    await sql`INSERT INTO solicitacoes_certificados_evento (usuario_id, nome_completo, email, certificado_minicurso, certificado_participacao_geral, certificado_comunicacao_oral, minicursos, autoriza_publicacao_texto, resumo_expandido, titulo_comunicacao_oral, autores_comunicacao_oral) VALUES (${user.id}, ${nomeCompleto}, ${email}, ${!!certificadoMinicurso}, ${!!certificadoParticipacaoGeral}, ${!!certificadoComunicacaoOral}, ${minicursos || null}, ${typeof autorizaPublicacaoTexto === 'boolean' ? autorizaPublicacaoTexto : null}, ${resumoExpandido || null}, ${tituloComunicacaoOral || null}, ${autoresComunicacaoOral || null})`
-    return json({ sucesso: true })
-  }
-
-  if (action === 'delete_submission') {
-    if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
-    const { submissaoId, senhaConfirmacao } = body
-    if (!submissaoId || !senhaConfirmacao) return json({ erro: 'Informe submissão e senha.' }, 400)
-    const ok = await bcrypt.compare(senhaConfirmacao, user.senha_hash)
-    if (!ok) return json({ erro: 'Senha de confirmação inválida.' }, 401)
-    await sql`DELETE FROM submissoes WHERE id = ${submissaoId}`
-    return json({ sucesso: true })
-  }
-
-  if (action === 'create_submission_for_author') {
-    if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-    const { autorId, titulo, secao, idioma, resumo, palavrasChave, dossieId } = body
-    if (!titulo || !secao || !resumo) return json({ erro: 'Preencha título, seção e resumo.' }, 400)
-    const autorFinal = autorId ? Number(autorId) : user.id
-    const submissaoCols = await getTableColumns('submissoes')
-    let created
-    if (submissaoCols.has('editor_responsavel_id') && submissaoCols.has('editor_adjunto_id')) {
-      created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.perfil === 'editor_chefe' ? user.id : null}, ${user.perfil === 'editor_adjunto' ? user.id : null}) RETURNING id`
-    } else if (submissaoCols.has('editor_responsavel_id')) {
-      created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
-    } else if (submissaoCols.has('editor_adjunto_id')) {
-      created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
-    } else {
-      created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido') RETURNING id`
+    // Submeter avaliação
+    if (action === 'submit_review') {
+      if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
+      const { designacaoId, submissaoId } = body
+      if (!designacaoId) return json({ erro: 'Identificação da avaliação não encontrada.' }, 400)
+      const designacao = await getDesignacaoById(Number(designacaoId))
+      if (!designacao) return json({ erro: 'Designação não encontrada.' }, 404)
+      const submissaoFinalId = Number(designacao.submissao_id)
+      if (submissaoId && Number(submissaoId) !== submissaoFinalId) return json({ erro: 'A submissão informada não corresponde à designação.' }, 400)
+      if (Number(designacao.parecerista_id) !== Number(user.id)) return json({ erro: 'Você não pode enviar parecer para esta designação.' }, 403)
+      if (designacao.status === 'recusado') return json({ erro: 'Não é possível enviar parecer para uma tarefa recusada.' }, 409)
+      await upsertReviewV2({ designacao, user, body })
+      try {
+        await upsertReview({ designacao, user, body })
+      } catch (legacyError) {
+        console.error('Falha ao espelhar parecer em avaliacoes:', legacyError)
+      }
+      await markDesignacaoStatus(designacao.id, 'concluido')
+      await refreshSubmissionStatus(designacao.submissao_id)
+      return json({ sucesso: true, armazenamento: 'avaliacoes_v2' })
     }
-    return json({ sucesso: true, submissaoId: created[0]?.id })
-  }
 
-  return json({ erro: 'Ação inválida.' }, 400)
-} catch (erro) {
-  return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
-}
+    // Solicitar certificado
+    if (action === 'request_certificate') {
+      if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403)
+      const { nomeCompleto, email, certificadoMinicurso, certificadoParticipacaoGeral, certificadoComunicacaoOral, minicursos, autorizaPublicacaoTexto, resumoExpandido, tituloComunicacaoOral, autoresComunicacaoOral } = body
+      await sql`INSERT INTO solicitacoes_certificados_evento (usuario_id, nome_completo, email, certificado_minicurso, certificado_participacao_geral, certificado_comunicacao_oral, minicursos, autoriza_publicacao_texto, resumo_expandido, titulo_comunicacao_oral, autores_comunicacao_oral) VALUES (${user.id}, ${nomeCompleto}, ${email}, ${!!certificadoMinicurso}, ${!!certificadoParticipacaoGeral}, ${!!certificadoComunicacaoOral}, ${minicursos || null}, ${typeof autorizaPublicacaoTexto === 'boolean' ? autorizaPublicacaoTexto : null}, ${resumoExpandido || null}, ${tituloComunicacaoOral || null}, ${autoresComunicacaoOral || null})`
+      return json({ sucesso: true })
+    }
+
+    // Deletar submissão
+    if (action === 'delete_submission') {
+      if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
+      const { submissaoId, senhaConfirmacao } = body
+      if (!submissaoId || !senhaConfirmacao) return json({ erro: 'Informe submissão e senha.' }, 400)
+      const ok = await bcrypt.compare(senhaConfirmacao, user.senha_hash)
+      if (!ok) return json({ erro: 'Senha de confirmação inválida.' }, 401)
+      await sql`DELETE FROM submissoes WHERE id = ${submissaoId}`
+      return json({ sucesso: true })
+    }
+
+    // Criar submissão para autor
+    if (action === 'create_submission_for_author') {
+      if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      const { autorId, titulo, secao, idioma, resumo, palavrasChave, dossieId } = body
+      if (!titulo || !secao || !resumo) return json({ erro: 'Preencha título, seção e resumo.' }, 400)
+      const autorFinal = autorId ? Number(autorId) : user.id
+      const submissaoCols = await getTableColumns('submissoes')
+      let created
+      if (submissaoCols.has('editor_responsavel_id') && submissaoCols.has('editor_adjunto_id')) {
+        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.perfil === 'editor_chefe' ? user.id : null}, ${user.perfil === 'editor_adjunto' ? user.id : null}) RETURNING id`
+      } else if (submissaoCols.has('editor_responsavel_id')) {
+        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_responsavel_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
+      } else if (submissaoCols.has('editor_adjunto_id')) {
+        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status, editor_adjunto_id) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido', ${user.id}) RETURNING id`
+      } else {
+        created = await sql`INSERT INTO submissoes (autor_id, titulo, secao, idioma, resumo, palavras_chave, dossie_id, status) VALUES (${autorFinal}, ${titulo}, ${secao}, ${idioma || 'pt-BR'}, ${resumo}, ${palavrasChave || null}, ${dossieId || null}, 'submetido') RETURNING id`
+      }
+      return json({ sucesso: true, submissaoId: created[0]?.id })
+    }
+
+    // Se nenhuma ação corresponder
+    return json({ erro: 'Ação inválida.' }, 400)
+    
+  } catch (erro) {
+    console.error('Erro em action.js:', erro)
+    return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
+  }
 }
 
 exports.handler = wrapHttp(main)
