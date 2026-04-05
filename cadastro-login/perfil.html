@@ -273,7 +273,7 @@
                 usuarioAtual = data.usuario
                 if (!usuarioAtual?.id) throw new Error("Usuário não encontrado")
 
-                // Preencher formulário (dados pessoais)
+                // Preencher formulário
                 const form = document.getElementById("form-perfil")
                 if (form) {
                     form.nome.value = usuarioAtual.nome || ""
@@ -292,7 +292,6 @@
 
                 if (usuarioAtual.foto_perfil_url && usuarioAtual.foto_perfil_url !== "null") {
                     let avatarUrl = usuarioAtual.foto_perfil_url
-                    // Converter URLs antigas (se houver)
                     if (avatarUrl.includes('/.netlify/blobs/')) {
                         const match = avatarUrl.match(/\/blobs\/[^/]+\/(.+)$/)
                         if (match) avatarUrl = `/.netlify/functions/avatar?key=${encodeURIComponent(match[1])}`
@@ -354,6 +353,7 @@
                     const url = URL.createObjectURL(file)
                     imgObj = new Image()
                     imgObj.onload = () => {
+                        console.log(`📐 Imagem carregada: ${imgObj.width}x${imgObj.height}`)
                         canvas.width = cropSize
                         canvas.height = cropSize
                         drawCrop()
@@ -374,6 +374,7 @@
                     cropCtx.drawImage(imgObj, sx, sy, size, size, 0, 0, cropSize, cropSize)
                 }
 
+                // Upload do avatar
                 if (btnSave) {
                     btnSave.onclick = async () => {
                         if (!usuarioAtual?.id) {
@@ -395,6 +396,12 @@
                                 btnSave.disabled = false
                                 btnSave.textContent = originalText
                                 return
+                            }
+
+                            console.log(`📦 Tamanho do blob gerado: ${blob.size} bytes`)
+                            if (blob.size < 5000) {
+                                showMessage(msgAvatar, "⚠️ Imagem muito pequena. Tente uma imagem maior ou ajuste o crop.", "warning")
+                                // continua mesmo assim, mas avisa
                             }
 
                             const fd = new FormData()
@@ -441,11 +448,11 @@
                                 btnSave.disabled = false
                                 btnSave.textContent = originalText
                             }
-                        }, "image/webp", 0.95)  // qualidade alta
+                        }, "image/webp", 0.95) // qualidade alta
                     }
                 }
 
-                // Salvar outros dados do perfil
+                // Salvar outros dados do perfil (nome, instituição, etc.)
                 const perfilForm = document.getElementById("form-perfil")
                 const msgPerfil = document.getElementById("msg-perfil")
                 if (perfilForm) {
@@ -476,6 +483,7 @@
                         }
                     })
                 }
+
             } catch (err) {
                 console.error("Erro ao carregar página:", err)
                 const msg = document.getElementById("msg-avatar")
