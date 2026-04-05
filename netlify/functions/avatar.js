@@ -3,20 +3,15 @@ const { wrapHttp } = require("./_netlify")
 const main = async (req) => {
     try {
         const url = new URL(req.url)
-        let key = url.searchParams.get("key")
+        const key = url.searchParams.get("key")
 
         if (!key) {
             return new Response('Parâmetro "key" é obrigatório.', { status: 400 })
         }
 
-        // Garantir prefixo
-        if (!key.startsWith("usuarios/")) {
-            key = `usuarios/${key}`
-        }
-
         const siteID = process.env.NETLIFY_BLOBS_SITE_ID
         const token = process.env.NETLIFY_BLOBS_TOKEN
-        const storeName = "revista-arquivos"
+        const storeName = "avatars"
 
         if (!siteID || !token) {
             return new Response('Configuração de armazenamento ausente.', { status: 500 })
@@ -34,11 +29,10 @@ const main = async (req) => {
         const arrayBuffer = await response.arrayBuffer()
         const byteLength = arrayBuffer.byteLength
 
-        let contentType = "image/jpeg"
+        let contentType = "image/webp"
         if (key.endsWith(".png")) contentType = "image/png"
-        else if (key.endsWith(".gif")) contentType = "image/gif"
-        else if (key.endsWith(".webp")) contentType = "image/webp"
         else if (key.endsWith(".jpg") || key.endsWith(".jpeg")) contentType = "image/jpeg"
+        else if (key.endsWith(".gif")) contentType = "image/gif"
 
         return new Response(arrayBuffer, {
             status: 200,
