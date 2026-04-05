@@ -128,38 +128,6 @@ async function upsertReview({ designacao, user, body }) {
   }
 }
 
-// ==================== NOTIFICAÇÕES ====================
-async function criarNotificacao(usuarioId, tipo, titulo, mensagem, link = null) {
-  try {
-    await sql`
-      INSERT INTO notificacoes (usuario_id, tipo, titulo, mensagem, link)
-      VALUES (${usuarioId}, ${tipo}, ${titulo}, ${mensagem}, ${link})
-    `;
-    enviarEmailNotificacao(usuarioId, titulo, mensagem, link).catch(console.error);
-  } catch (err) {
-    console.error('Erro ao criar notificação:', err);
-  }
-}
-
-async function enviarEmailNotificacao(usuarioId, titulo, mensagem, link = null) {
-  try {
-    const user = await getUserById(usuarioId);
-    if (!user || !user.receber_noticias_email) return;
-    const email = user.email;
-    if (!email) return;
-    const baseUrl = process.env.URL || 'https://revista-inquietacoes.netlify.app';
-    const fullLink = link ? `${baseUrl}${link}` : baseUrl;
-    const html = `<p>${mensagem}</p><p><a href="${fullLink}">Ver detalhes</a></p>`;
-    await fetch(`${baseUrl}/.netlify/functions/send-email`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ to: email, subject: titulo, html })
-    });
-  } catch (err) {
-    console.error('Erro no envio de e-mail:', err);
-  }
-}
-
 async function ensureReviewStoreV2() {
   await sql`
     CREATE TABLE IF NOT EXISTS avaliacoes_v2 (
@@ -231,7 +199,7 @@ async function markDesignacaoStatus(designacaoId, status) {
   await sql`UPDATE designacoes_avaliacao SET status = ${status} WHERE id = ${designacaoId}`
 }
 
-// ==================== FUNÇÕES DE NOTIFICAÇÃO ====================
+// ==================== NOTIFICAÇÕES ====================
 async function criarNotificacao(usuarioId, tipo, titulo, mensagem, link = null) {
   try {
     await sql`
@@ -267,21 +235,21 @@ async function enviarEmailNotificacao(usuarioId, titulo, mensagem, link = null) 
 const main = async (req) => {
   try {
     await ensureSupportTables()
-    // ... outras chamadas de ensure...
-
+    await ensureEditorialColumnsCompatibility()
+    
     if (req.method !== 'POST') {
       return json({ erro: 'Método não permitido.' }, 405)
     }
-
+    
     const body = await parseJson(req)
-    const { action, userId } = body   // <-- AGORA action é declarada aqui
+    const { action, userId } = body
     const user = await getUserById(Number(userId), action === 'delete_submission')
-
+    
     if (!user) {
       return json({ erro: 'Usuário não encontrado.' }, 404)
     }
 
-    // Ações de presença
+    // ---------- Ações de presença ----------
     if (action === 'presence_ping') {
       await sql`UPDATE usuarios SET ultimo_acesso_em = CURRENT_TIMESTAMP, online = TRUE, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${user.id}`
       const refreshed = await getUserById(user.id)
@@ -294,7 +262,7 @@ const main = async (req) => {
       return json({ sucesso: true, usuario: refreshed })
     }
 
-    // Atualização de perfil
+    // ---------- Atualização de perfil ----------
     if (action === 'update_profile') {
       const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
       if (avatarUrl) {
@@ -318,7 +286,7 @@ const main = async (req) => {
       return json({ sucesso: true, usuario: refreshed })
     }
 
-    // Aprovar usuário
+    // ---------- Aprovar usuário ----------
     if (action === 'approve_user') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       const { targetUserId, status, foto_perfil_aprovada, consentimento_foto_publica, total_avaliacoes } = body
@@ -332,7 +300,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // Criar dossiê
+    // ---------- Criar dossiê ----------
     if (action === 'create_dossier') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       const { titulo, descricao, editorResponsavelId, dataAbertura, dataFechamento } = body
@@ -350,7 +318,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // Designar revisor
+    // ---------- Designar revisor ----------
     if (action === 'assign_reviewer') {
       if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { submissaoId, pareceristaId, prazoParecer, mensagemConvite } = body
@@ -377,7 +345,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // Atualizar status da designação
+    // ---------- Atualizar status da designação ----------
     if (action === 'update_designacao_status') {
       if (!canAccess(user, ['parecerista', 'editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { designacaoId, status, diasAdicionais } = body
@@ -398,7 +366,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // Enviar mensagem direta (com notificação)
+    // ---------- Enviar mensagem direta (com notificação) ----------
     if (action === 'send_direct_message') {
       const { destinatarioId, mensagem, anexoUrl, anexoPath, anexoNome, anexoMime } = body
       const targetId = Number(destinatarioId)
@@ -415,7 +383,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // Submeter avaliação (com notificação)
+    // ---------- Submeter avaliação (com notificação) ----------
     if (action === 'submit_review') {
       if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
       const { designacaoId, submissaoId } = body
@@ -446,7 +414,7 @@ const main = async (req) => {
       return json({ sucesso: true, armazenamento: 'avaliacoes_v2' })
     }
 
-    // Solicitar certificado
+    // ---------- Solicitar certificado ----------
     if (action === 'request_certificate') {
       if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403)
       const { nomeCompleto, email, certificadoMinicurso, certificadoParticipacaoGeral, certificadoComunicacaoOral, minicursos, autorizaPublicacaoTexto, resumoExpandido, tituloComunicacaoOral, autoresComunicacaoOral } = body
@@ -454,7 +422,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // Deletar submissão
+    // ---------- Deletar submissão ----------
     if (action === 'delete_submission') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       const { submissaoId, senhaConfirmacao } = body
@@ -465,7 +433,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // Criar submissão para autor
+    // ---------- Criar submissão para autor ----------
     if (action === 'create_submission_for_author') {
       if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { autorId, titulo, secao, idioma, resumo, palavrasChave, dossieId } = body
@@ -485,7 +453,7 @@ const main = async (req) => {
       return json({ sucesso: true, submissaoId: created[0]?.id })
     }
 
-    // Enviar notificação em massa (editor-chefe)
+    // ---------- Enviar notificação em massa (editor-chefe) ----------
     if (action === 'send_notification') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       const { targetType, targetIds, titulo, mensagem, link } = body
@@ -506,7 +474,7 @@ const main = async (req) => {
       return json({ sucesso: true, enviadas: usuarios.length })
     }
 
-    // Limpar conversa (clear_chat)
+    // ---------- Limpar conversa ----------
     if (action === 'clear_chat') {
       const { contactId } = body
       if (!contactId) return json({ erro: 'ID do contato não informado.' }, 400)
@@ -551,33 +519,6 @@ const main = async (req) => {
     console.error('Erro em action.js:', erro)
     return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
   }
-
-  // Exemplo de ação de notificação (já deve estar dentro)
-  if (action === 'send_notification') {
-    if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
-    const { targetType, targetIds, titulo, mensagem, link } = body
-    let usuarios = []
-    if (targetType === 'todos') {
-      usuarios = await sql`SELECT id FROM usuarios WHERE status = 'ativo'`
-    } else if (targetType === 'perfil') {
-      usuarios = await sql`SELECT id FROM usuarios WHERE perfil = ${targetIds} AND status = 'ativo'`
-    } else if (targetType === 'lista') {
-      const ids = Array.isArray(targetIds) ? targetIds : [targetIds]
-      usuarios = ids.map(id => ({ id: Number(id) }))
-    } else {
-      return json({ erro: 'Tipo de destino inválido.' }, 400)
-    }
-    for (const u of usuarios) {
-      await criarNotificacao(u.id, 'notificacao_editor', titulo, mensagem, link)
-    }
-    return json({ sucesso: true, enviadas: usuarios.length })
-  }
-
-  // Se nenhuma ação corresponder
-  return json({ erro: 'Ação inválida.' }, 400)
-
-} catch (erro) {
-  console.error('Erro em action.js:', erro)
-  return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
 }
+
 exports.handler = wrapHttp(main)
