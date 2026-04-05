@@ -33,8 +33,11 @@ const main = async (req) => {
     const senhaValida = await bcrypt.compare(senha, usuario.senha_hash || '')
     if (!senhaValida) return json({ erro: 'Senha inválida.' }, 401)
 
+    // Atualiza último acesso e online
     await sql`UPDATE usuarios SET ultimo_acesso_em = CURRENT_TIMESTAMP, online = TRUE, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${usuario.id}`
 
+    // Retorna o usuário (sem a senha)
+    delete usuario.senha_hash
     return json({ sucesso: true, usuario })
   } catch (erro) {
     console.error('login erro:', erro)

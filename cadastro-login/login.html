@@ -20,7 +20,6 @@
 .oauth-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:40px;border:1px solid #ccc;background:white;color:#333;font-weight:500;cursor:pointer;transition:0.2s}
 .oauth-btn:hover{background:#f0f0f0}
 .oauth-btn.google{color:#db4437;border-color:#db4437}
-.oauth-btn.facebook{color:#1877f2;border-color:#1877f2}
 .oauth-btn.orcid{color:#2ecc71;border-color:#2ecc71}
 .divider{text-align:center;margin:16px 0;color:var(--muted);position:relative}
 .divider span{background:var(--surface);padding:0 12px}
@@ -72,16 +71,13 @@
   const senhaInput = document.getElementById('senha');
   const btnLogin = document.getElementById('btn-login');
   const btnGoogle = document.getElementById('btn-google');
-  const btnFacebook = document.getElementById('btn-facebook');
   const btnOrcid = document.getElementById('btn-orcid');
 
   if (!form || !msg) return;
 
+  // Botões OAuth (apenas os que existem no HTML)
   btnGoogle?.addEventListener('click', () => {
     window.location.href = '/.netlify/functions/oauth-google';
-  });
-  btnFacebook?.addEventListener('click', () => {
-    window.location.href = '/.netlify/functions/oauth-facebook';
   });
   btnOrcid?.addEventListener('click', () => {
     window.location.href = '/.netlify/functions/oauth-orcid';
@@ -100,6 +96,11 @@
       msg.classList.add('err');
       return;
     }
+
+    // 🔥 Limpa qualquer dado antigo antes de tentar logar
+    localStorage.removeItem('usuario_logado');
+    localStorage.removeItem('auth_token');
+    sessionStorage.clear();
 
     btnLogin.disabled = true;
     btnLogin.textContent = 'Entrando...';
@@ -121,8 +122,10 @@
 
       if (!res.ok) throw new Error(data.erro || data.detalhe || 'Erro ao realizar login.');
 
+      // Salva o novo usuário
       localStorage.setItem('usuario_logado', JSON.stringify(data.usuario));
 
+      // Redireciona conforme o perfil
       const perfil = data.usuario.perfil;
       if (perfil === 'autor') window.location.href = 'painel-autor.html';
       else if (perfil === 'parecerista') window.location.href = 'painel-parecerista.html';
