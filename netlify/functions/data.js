@@ -562,25 +562,25 @@ const main = async (req) => {
         editor_adjunto: 'https://drive.google.com/drive/folders/12oMGUyoZm3qLzuxdLIo-3x7plUMEWUyF?usp=drive_link',
         editor_chefe: 'https://drive.google.com/drive/folders/12oMGUyoZm3qLzuxdLIo-3x7plUMEWUyF?usp=drive_link'
       }
+      return json({ sucesso: true, link: mapa[user.perfil] })
+    }
 
-      // Atualização de perfil (inclui avatar e dados)
-      if (action === 'update_profile') {
-        const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
-
-        // Se for atualização de avatar (URL da função)
-        if (avatarUrl) {
-          await sql`
+    // ===== NOVA AÇÃO update_profile =====
+    if (action === 'update_profile') {
+      const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
+      
+      if (avatarUrl) {
+        await sql`
           UPDATE usuarios
           SET foto_perfil_url = ${avatarUrl},
               atualizado_em = CURRENT_TIMESTAMP
           WHERE id = ${user.id}
         `
-          const refreshed = await getUserById(user.id)
-          return json({ sucesso: true, usuario: refreshed })
-        }
-
-        // Atualização de dados do perfil
-        await sql`
+        const refreshed = await getUserById(user.id)
+        return json({ sucesso: true, usuario: refreshed })
+      }
+      
+      await sql`
         UPDATE usuarios
         SET nome = COALESCE(${nome || null}, nome),
             instituicao = ${instituicao || null},
@@ -592,14 +592,14 @@ const main = async (req) => {
             atualizado_em = CURRENT_TIMESTAMP
         WHERE id = ${user.id}
       `
-        const refreshed = await getUserById(user.id)
-        return json({ sucesso: true, usuario: refreshed })
-      }
-
-      return json({ erro: 'Ação inválida.' }, 400)
-    } catch (erro) {
-      return json({ erro: 'Erro ao carregar dados.', detalhe: erro.message }, 500)
+      const refreshed = await getUserById(user.id)
+      return json({ sucesso: true, usuario: refreshed })
     }
+
+    return json({ erro: 'Ação inválida.' }, 400)
+  } catch (erro) {
+    return json({ erro: 'Erro ao carregar dados.', detalhe: erro.message }, 500)
   }
+}
 
 exports.handler = wrapHttp(main)
