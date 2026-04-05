@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
   <style>
-    /* (mesmo estilo do MSN – cores com bom contraste) */
+    /* (mesmo estilo MSN – cores com bom contraste) */
     :root {
       --msn-blue: #1e88e5;
       --msn-dark: #0d2b3e;
@@ -145,7 +145,8 @@
   async function loadContacts() {
     try {
       const data = await AppPanel.apiData('chat_recipients');
-      contacts = data.usuarios.filter(u => u.id !== currentUser.id);
+      // Filtra o próprio usuário e converte IDs para string para evitar problemas de tipo
+      contacts = data.usuarios.filter(u => String(u.id) !== String(currentUser.id)).map(u => ({ ...u, id: String(u.id) }));
       console.log('Contatos carregados:', contacts.length);
       renderContactList();
     } catch (err) {
@@ -178,22 +179,29 @@
   document.getElementById('contactList').addEventListener('click', (e) => {
     const contactDiv = e.target.closest('.msn-contact');
     if (contactDiv) {
-      const contactId = parseInt(contactDiv.dataset.id);
+      const contactId = contactDiv.dataset.id; // string
+      console.log('Clique no contato com ID (string):', contactId);
       if (contactId) {
-        console.log('Clique no contato:', contactId);
         selectContact(contactId);
       }
     }
   });
 
-  function selectContact(contactId) {
-    console.log('Selecionando contato:', contactId);
-    const contact = contacts.find(c => c.id === contactId);
+  async function selectContact(contactId) {
+    console.log('Selecionando contato com ID:', contactId);
+    // Busca o contato no array atual (compara como string)
+    let contact = contacts.find(c => c.id === contactId);
     if (!contact) {
-      console.error('Contato não encontrado:', contactId);
-      return;
+      console.warn('Contato não encontrado no array atual. Recarregando contatos...');
+      await loadContacts();
+      contact = contacts.find(c => c.id === contactId);
+      if (!contact) {
+        console.error('Contato ainda não encontrado após recarregar. ID:', contactId);
+        alert('Contato não encontrado. Tente novamente mais tarde.');
+        return;
+      }
     }
-    activeContactId = contactId;
+    activeContactId = contact.id;
     const convArea = document.getElementById('conversationArea');
     convArea.style.display = 'flex';
     document.getElementById('chatContactName').innerText = contact.nome;
@@ -201,16 +209,16 @@
     // Marcar como ativo na lista
     document.querySelectorAll('.msn-contact').forEach(el => {
       el.classList.remove('active');
-      if (parseInt(el.dataset.id) === contactId) el.classList.add('active');
+      if (el.dataset.id === contactId) el.classList.add('active');
     });
-    loadMessages(contactId);
+    loadMessages(contact.id);
   }
 
   async function loadMessages(contactId) {
     const container = document.getElementById('messagesContainer');
     container.innerHTML = '<div style="padding:16px;text-align:center;">Carregando mensagens...</div>';
     try {
-      const data = await AppPanel.apiData('chat_messages', { targetUserId: contactId });
+      const data = await AppPanel.apiData('chat_messages', { targetUserId: parseInt(contactId) });
       messagesCache.set(contactId, data.mensagens || []);
       renderMessages(contactId);
     } catch (err) {
@@ -227,7 +235,7 @@
       return;
     }
     container.innerHTML = msgs.map(msg => {
-      const isSelf = msg.remetente_id === currentUser.id;
+      const isSelf = String(msg.remetente_id) === String(currentUser.id);
       const date = new Date(msg.criado_em).toLocaleString('pt-BR');
       let anexoHtml = '';
       if (msg.anexo_url) {
@@ -253,7 +261,7 @@
     if (!text.trim() && !anexoInfo) return;
     try {
       const payload = {
-        destinatarioId: activeContactId,
+        destinatarioId: parseInt(activeContactId),
         mensagem: text.trim() || '📎 Arquivo anexado'
       };
       if (anexoInfo) {
@@ -364,18 +372,11 @@
 
   document.addEventListener('DOMContentLoaded', async () => {
     try {
-      // Verifica se AppPanel existe
-      if (typeof AppPanel === 'undefined') {
-        console.error('AppPanel não carregado!');
-        return;
-      }
-      // Obtém usuário autenticado (permitindo todos os perfis que têm acesso ao chat)
+      if (typeof AppPanel === 'undefined') throw new Error('AppPanel não carregado');
       currentUser = await AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
-      if (!currentUser) {
-        console.error('Usuário não autenticado ou perfil não autorizado.');
-        document.getElementById('contactList').innerHTML = '<div style="padding:16px;text-align:center;color:red;">Você precisa estar logado para acessar o chat.</div>';
-        return;
-      }
+      if (!currentUser) throw new Error('Usuário não autenticado ou perfil não autorizado');
+      // Garantir que o ID do usuário seja string para consistência
+      currentUser.id = String(currentUser.id);
       console.log('Usuário logado:', currentUser);
       document.getElementById('myNameHeader').innerText = currentUser.nome;
       const myAvatar = currentUser.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
@@ -383,11 +384,12 @@
       await loadContacts();
       const urlParams = new URLSearchParams(location.search);
       const targetId = urlParams.get('target');
-      if (targetId && contacts.find(c => c.id == targetId)) {
-        selectContact(parseInt(targetId));
+      if (targetId && contacts.find(c => c.id === targetId)) {
+        selectContact(targetId);
       }
     } catch (err) {
       console.error('Erro na inicialização:', err);
+      document.getElementById('contactList').innerHTML = `<div style="padding:16px;text-align:center;color:red;">${err.message}</div>`;
     }
   });
 
