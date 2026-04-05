@@ -156,7 +156,8 @@
 
                 <div class="avatar-box-panel">
 
-                    <img id="avatar-img" class="profile-avatar" src="../assets/avatar-default.png" alt="Avatar" />
+                    <img id="avatar-img" class="profile-avatar" src="../assets/avatares/avatar-padrao.png"
+                        alt="Avatar" />
 
                     <input type="file" id="avatar-input" accept="image/*" hidden />
 
@@ -346,7 +347,7 @@
                 const btn = document.getElementById("avatar-btn")
                 const msg = document.getElementById("msg-avatar")
 
-                img.src = u.foto_perfil_url || "../assets/avatar-default.png"
+                img.src = u.foto_perfil_url || "../assets/avatares/avatar-padrao.png"
 
                 btn.onclick = () => input.click()
 
