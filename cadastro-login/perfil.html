@@ -294,9 +294,18 @@
             const defaultAvatar = "../assets/avatares/avatar-padrao.png"
 
             if (usuarioAtual.foto_perfil_url && usuarioAtual.foto_perfil_url !== "null" && usuarioAtual.foto_perfil_url !== "") {
-                preview.src = usuarioAtual.foto_perfil_url
+                let avatarUrl = usuarioAtual.foto_perfil_url
+                // Se for URL antiga do blob direto (/.netlify/blobs/...), converte para função avatar
+                if (avatarUrl.includes('/.netlify/blobs/')) {
+                    const match = avatarUrl.match(/\/blobs\/[^/]+\/(.+)$/)
+                    if (match && match[1]) {
+                        const key = match[1]
+                        avatarUrl = `/.netlify/functions/avatar?key=${encodeURIComponent(key)}`
+                    }
+                }
+                preview.src = avatarUrl + "&t=" + Date.now()
                 document.querySelectorAll("[data-avatar-user]").forEach(el => {
-                    if (el) el.src = usuarioAtual.foto_perfil_url
+                    if (el) el.src = avatarUrl + "&t=" + Date.now()
                 })
             } else {
                 preview.src = defaultAvatar
@@ -412,7 +421,7 @@
                         }
 
                         const fd = new FormData()
-                        fd.append("arquivo", blob, "avatar.webp")
+                        fd.append("arquivo", blob, "avatar")
 
                         try {
                             showMessage(msgAvatar, "📤 Enviando...", "loading")
@@ -424,13 +433,18 @@
                             const result = await response.json()
                             if (!response.ok) throw new Error(result.erro || "Erro no upload")
 
-                            // result.url já é a URL da função avatar: /.netlify/functions/avatar?key=...
+                            // result.url é a URL da função avatar
                             const avatarUrl = result.url
-                            // Adicionar timestamp com & (não ?) para evitar duplicação
                             const urlComTimestamp = avatarUrl + "&t=" + Date.now()
                             preview.src = urlComTimestamp
                             document.querySelectorAll("[data-avatar-user]").forEach(el => {
                                 if (el) el.src = urlComTimestamp
+                            })
+
+                            // Persistir a URL da função avatar no banco via action.js
+                            await AppPanel.apiData("update_profile", {
+                                userId: usuarioAtual.id,
+                                avatarUrl: avatarUrl
                             })
 
                             // Atualizar dados locais
@@ -459,7 +473,7 @@
                 }
             }
 
-            // Salvar dados do perfil
+            // Salvar dados do perfil (nome, instituição, etc.)
             const perfilForm = document.getElementById("form-perfil")
             const msgPerfil = document.getElementById("msg-perfil")
 

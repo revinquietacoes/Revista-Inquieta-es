@@ -232,11 +232,11 @@ const main = async (req) => {
       return json({ sucesso: true, usuario: refreshed })
     }
 
-    // Atualização de perfil
+    // Atualização de perfil (inclui avatar e dados)
     if (action === 'update_profile') {
       const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
       
-      // Se for atualização de avatar
+      // Se for atualização de avatar (URL da função)
       if (avatarUrl) {
         await sql`
           UPDATE usuarios

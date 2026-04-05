@@ -32,11 +32,13 @@ exports.handler = async (event) => {
 
         const busboy = Busboy({ headers: event.headers })
         let fileBuffer = null
-        let mimeType = "image/webp"
+        let mimeType = null
+        let originalName = null
 
         await new Promise((resolve, reject) => {
             busboy.on("file", (fieldname, file, info) => {
                 mimeType = info.mimeType
+                originalName = info.filename
                 const chunks = []
                 file.on("data", (chunk) => chunks.push(chunk))
                 file.on("end", () => {
@@ -58,14 +60,19 @@ exports.handler = async (event) => {
             }
         }
 
-        // Configurações do store
+        // Determinar extensão correta com base no MIME type
+        let extension = "webp" // fallback
+        if (mimeType === "image/jpeg") extension = "jpg"
+        else if (mimeType === "image/png") extension = "png"
+        else if (mimeType === "image/gif") extension = "gif"
+        else if (mimeType === "image/webp") extension = "webp"
+
         const siteID = process.env.NETLIFY_BLOBS_SITE_ID
         const token = process.env.NETLIFY_BLOBS_TOKEN
-        const storeName = "revista-arquivos"   // Nome correto do store
+        const storeName = "revista-arquivos"
         const timestamp = Date.now()
         const random = Math.random().toString(36).substring(2, 8)
-        // Caminho completo: usuarios/{id}/avatar/{timestamp}-{random}.webp
-        const key = `usuarios/${usuarioId}/avatar/${timestamp}-${random}.webp`
+        const key = `usuarios/${usuarioId}/avatar/${timestamp}-${random}.${extension}`
 
         const blobUrl = `https://api.netlify.com/api/v1/sites/${siteID}/blobs/${storeName}/${encodeURIComponent(key)}`
 
@@ -73,7 +80,7 @@ exports.handler = async (event) => {
             method: "PUT",
             headers: {
                 "Authorization": `Bearer ${token}`,
-                "Content-Type": mimeType || "image/webp"
+                "Content-Type": mimeType
             },
             body: fileBuffer
         })
@@ -85,7 +92,6 @@ exports.handler = async (event) => {
 
         console.log(`✅ Avatar salvo em: ${storeName}/${key}`)
 
-        // URL pública via função avatar
         const avatarUrl = `/.netlify/functions/avatar?key=${encodeURIComponent(key)}`
 
         return {
