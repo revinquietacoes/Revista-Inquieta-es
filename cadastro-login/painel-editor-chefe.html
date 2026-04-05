@@ -13,8 +13,7 @@
   document.addEventListener('DOMContentLoaded', () => {
     const user = AppPanel.requireRole(['editor_chefe']);
     if (!user) return;
-
-    // Inicializa notificações
+    AppPanel.atualizarAvatares();
     AppPanel.atualizarContadorNotificacoes();
     AppPanel.iniciarPollingNotificacoes();
     document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
@@ -166,7 +165,7 @@
 
     <footer class="page-footer"></footer>
   </div>
- 
+
 </body>
 
 </html>

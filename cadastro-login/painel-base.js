@@ -1,5 +1,5 @@
 // painel-base.js - Versão corrigida
-(function() {
+(function () {
   // Evita recriar se já existir
   if (window.AppPanel) return;
 
@@ -198,6 +198,19 @@
       });
     }
   }
+
+  // Atualiza todas as imagens com data-avatar-user
+  function atualizarAvatares() {
+    const user = AppPanel.currentUser();
+    if (!user) return;
+    const avatarUrl = user.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
+    document.querySelectorAll('[data-avatar-user]').forEach(img => {
+      img.src = avatarUrl;
+    });
+  }
+
+  // Chamar após carregar o usuário e também após login
+  window.AppPanel.atualizarAvatares = atualizarAvatares;
 
   // Expor globalmente
   window.AppPanel = {

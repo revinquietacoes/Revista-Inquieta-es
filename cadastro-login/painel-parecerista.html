@@ -13,8 +13,7 @@
     document.addEventListener('DOMContentLoaded', () => {
         const user = AppPanel.requireRole(['editor_chefe']);
         if (!user) return;
-
-        // Inicializa notificações
+        AppPanel.atualizarAvatares();
         AppPanel.atualizarContadorNotificacoes();
         AppPanel.iniciarPollingNotificacoes();
         document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
@@ -32,8 +31,9 @@
                     <p>Avaliações disponíveis, prazos e envio de pareceres</p>
                 </div>
             </div>
-            <div class="actions-row"><a class="btn btn-secondary" href="https://revista-inquietacoes.netlify.app/">Voltar ao portal</a><button
-                    class="btn btn-soft" data-action="logout">Sair</button></div>
+            <div class="actions-row"><a class="btn btn-secondary"
+                    href="https://revista-inquietacoes.netlify.app/">Voltar ao portal</a><button class="btn btn-soft"
+                    data-action="logout">Sair</button></div>
         </header>
         <section class="hero">
             <h2>Boas-vindas, <span data-user-name></span></h2>

@@ -128,6 +128,38 @@ async function upsertReview({ designacao, user, body }) {
   }
 }
 
+// ==================== NOTIFICAÇÕES ====================
+async function criarNotificacao(usuarioId, tipo, titulo, mensagem, link = null) {
+  try {
+    await sql`
+      INSERT INTO notificacoes (usuario_id, tipo, titulo, mensagem, link)
+      VALUES (${usuarioId}, ${tipo}, ${titulo}, ${mensagem}, ${link})
+    `;
+    enviarEmailNotificacao(usuarioId, titulo, mensagem, link).catch(console.error);
+  } catch (err) {
+    console.error('Erro ao criar notificação:', err);
+  }
+}
+
+async function enviarEmailNotificacao(usuarioId, titulo, mensagem, link = null) {
+  try {
+    const user = await getUserById(usuarioId);
+    if (!user || !user.receber_noticias_email) return;
+    const email = user.email;
+    if (!email) return;
+    const baseUrl = process.env.URL || 'https://revista-inquietacoes.netlify.app';
+    const fullLink = link ? `${baseUrl}${link}` : baseUrl;
+    const html = `<p>${mensagem}</p><p><a href="${fullLink}">Ver detalhes</a></p>`;
+    await fetch(`${baseUrl}/.netlify/functions/send-email`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ to: email, subject: titulo, html })
+    });
+  } catch (err) {
+    console.error('Erro no envio de e-mail:', err);
+  }
+}
+
 async function ensureReviewStoreV2() {
   await sql`
     CREATE TABLE IF NOT EXISTS avaliacoes_v2 (
@@ -235,16 +267,16 @@ async function enviarEmailNotificacao(usuarioId, titulo, mensagem, link = null) 
 const main = async (req) => {
   try {
     await ensureSupportTables()
-    await ensureEditorialColumnsCompatibility()
-    
+    // ... outras chamadas de ensure...
+
     if (req.method !== 'POST') {
       return json({ erro: 'Método não permitido.' }, 405)
     }
-    
+
     const body = await parseJson(req)
-    const { action, userId } = body
+    const { action, userId } = body   // <-- AGORA action é declarada aqui
     const user = await getUserById(Number(userId), action === 'delete_submission')
-    
+
     if (!user) {
       return json({ erro: 'Usuário não encontrado.' }, 404)
     }
@@ -514,11 +546,38 @@ const main = async (req) => {
 
     // Se nenhuma ação corresponder
     return json({ erro: 'Ação inválida.' }, 400)
-    
+
   } catch (erro) {
     console.error('Erro em action.js:', erro)
     return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
   }
-}
 
+  // Exemplo de ação de notificação (já deve estar dentro)
+  if (action === 'send_notification') {
+    if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
+    const { targetType, targetIds, titulo, mensagem, link } = body
+    let usuarios = []
+    if (targetType === 'todos') {
+      usuarios = await sql`SELECT id FROM usuarios WHERE status = 'ativo'`
+    } else if (targetType === 'perfil') {
+      usuarios = await sql`SELECT id FROM usuarios WHERE perfil = ${targetIds} AND status = 'ativo'`
+    } else if (targetType === 'lista') {
+      const ids = Array.isArray(targetIds) ? targetIds : [targetIds]
+      usuarios = ids.map(id => ({ id: Number(id) }))
+    } else {
+      return json({ erro: 'Tipo de destino inválido.' }, 400)
+    }
+    for (const u of usuarios) {
+      await criarNotificacao(u.id, 'notificacao_editor', titulo, mensagem, link)
+    }
+    return json({ sucesso: true, enviadas: usuarios.length })
+  }
+
+  // Se nenhuma ação corresponder
+  return json({ erro: 'Ação inválida.' }, 400)
+
+} catch (erro) {
+  console.error('Erro em action.js:', erro)
+  return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
+}
 exports.handler = wrapHttp(main)
