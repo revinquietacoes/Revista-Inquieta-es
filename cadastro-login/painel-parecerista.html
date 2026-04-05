@@ -1,1 +1,68 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Painel do(a) Parecerista</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Painel do(a) Parecerista</h1><p>Avaliações disponíveis, prazos e envio de pareceres</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="../index.html">Voltar ao portal</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><section class="hero"><h2>Boas-vindas, <span data-user-name></span></h2><p>Aqui você abre convites de avaliação, aceita tarefas, baixa o arquivo principal sem dados de autoria e registra seu parecer técnico.</p></section><div class="cards-grid"><article class="card"><div class="card-top"><h3>Avaliações atribuídas</h3><span class="badge badge-blue">Fila pessoal</span></div><p>Aqui você consulta convites, tarefas em andamento e prazos de avaliação.</p><div class="actions-row"><a class="btn btn-primary" href="parecerista-avaliacoes.html">Abrir</a></div></article><article class="card"><div class="card-top"><h3>Formulário de parecer</h3><span class="badge badge-green">Devolutiva</span></div><p>Aqui você preenche critérios, parecer final e registra o tempo de avaliação.</p><div class="actions-row"><a class="btn btn-primary" href="formulario-parecer.html">Ir ao conteúdo</a></div></article><article class="card"><div class="card-top"><h3>Perfil</h3><span class="badge badge-blue">Cadastro</span></div><p>Aqui você atualiza seus dados e altera sua foto de perfil.</p><div class="actions-row"><a class="btn btn-primary" href="perfil.html">Abrir</a></div></article><article class="card"><div class="card-top"><h3>Chat interno</h3><span class="badge badge-green">Mensagens</span></div><p>Aqui você fala com a editoria e envia mensagens com anexos.</p><div class="actions-row"><a class="btn btn-primary" href="chat-interno.html">Abrir</a></div></article><article class="card"><div class="card-top"><h3>Certificados</h3><span class="badge badge-gold">Documentos</span></div><p>Aqui você abre a pasta de certificados correspondente ao seu perfil.</p><div class="actions-row"><a class="btn btn-primary" href="certificados-parecerista.html">Abrir</a></div></article></div><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',()=>{const user=AppPanel.requireRole(['parecerista']);if(!user)return;});</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do(a) Parecerista</title>
+    <link rel="icon" href="../assets/favicon.png">
+    <link rel="stylesheet" href="painel-base.css">
+    <script src="painel-base.js" defer></script>
+</head>
+
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <div class="brand-wrap">
+                <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img
+                        class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div>
+                <div class="brand-copy">
+                    <h1>Painel do(a) Parecerista</h1>
+                    <p>Avaliações disponíveis, prazos e envio de pareceres</p>
+                </div>
+            </div>
+            <div class="actions-row"><a class="btn btn-secondary" href="../index.html">Voltar ao portal</a><button
+                    class="btn btn-soft" data-action="logout">Sair</button></div>
+        </header>
+        <section class="hero">
+            <h2>Boas-vindas, <span data-user-name></span></h2>
+            <p>Aqui você abre convites de avaliação, aceita tarefas, baixa o arquivo principal sem dados de autoria e
+                registra seu parecer técnico.</p>
+        </section>
+        <div class="cards-grid">
+            <article class="card">
+                <div class="card-top">
+                    <h3>Avaliações atribuídas</h3><span class="badge badge-blue">Fila pessoal</span>
+                </div>
+                <p>Aqui você consulta convites, tarefas em andamento e prazos de avaliação.</p>
+                <div class="actions-row"><a class="btn btn-primary" href="parecerista-avaliacoes.html">Abrir</a></div>
+            </article>
+
+            <article class="card">
+                <div class="card-top">
+                    <h3>Perfil</h3><span class="badge badge-blue">Cadastro</span>
+                </div>
+                <p>Aqui você atualiza seus dados e altera sua foto de perfil.</p>
+                <div class="actions-row"><a class="btn btn-primary" href="perfil.html">Abrir</a></div>
+            </article>
+            <article class="card">
+                <div class="card-top">
+                    <h3>Chat interno</h3><span class="badge badge-green">Mensagens</span>
+                </div>
+                <p>Aqui você fala com a editoria e envia mensagens com anexos.</p>
+                <div class="actions-row"><a class="btn btn-primary" href="chat-interno.html">Abrir</a></div>
+            </article>
+            <article class="card">
+                <div class="card-top">
+                    <h3>Certificados</h3><span class="badge badge-gold">Documentos</span>
+                </div>
+                <p>Aqui você abre a pasta de certificados correspondente ao seu perfil.</p>
+                <div class="actions-row"><a class="btn btn-primary" href="certificados-parecerista.html">Abrir</a></div>
+            </article>
+        </div>
+        <footer class="page-footer"></footer>
+    </div>
+    <script>document.addEventListener('DOMContentLoaded', () => { const user = AppPanel.requireRole(['parecerista']); if (!user) return; });</script>
+</body>
+
+</html>
