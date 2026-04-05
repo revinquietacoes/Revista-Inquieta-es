@@ -11,6 +11,28 @@ function normalizeReviewBucket(status) {
 
 const CHIEF_ALLOWED_SUBMISSION_STATUSES = ['submetido', 'em_avaliacao', 'rejeitado', 'aceito_com_correcoes', 'correcoes_necessarias', 'aceito']
 
+// Função de logout
+function logout() {
+  localStorage.removeItem('usuario_logado');
+  localStorage.removeItem('auth_token');
+  window.location.href = 'login.html';
+}
+
+// Expor globalmente (adicionando a função logout ao objeto existente)
+window.AppPanel = {
+  // ... todas as outras funções que você já tem
+  logout  // <-- apenas adiciona a referência
+};
+
+// Evento global para capturar cliques em data-action="logout"
+document.addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-action="logout"]');
+  if (btn) {
+    e.preventDefault();
+    window.AppPanel.logout();
+  }
+});
+
 async function maybeRows(table, queryFn, fallback = []) {
   if (!(await tableExists(table))) return fallback
   return queryFn()
