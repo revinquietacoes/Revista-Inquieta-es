@@ -199,7 +199,7 @@ async function markDesignacaoStatus(designacaoId, status) {
   await sql`UPDATE designacoes_avaliacao SET status = ${status} WHERE id = ${designacaoId}`
 }
 
-// ==================== NOTIFICAÇÕES ====================
+// ==================== NOTIFICAÇÕES (apenas uma definição) ====================
 async function criarNotificacao(usuarioId, tipo, titulo, mensagem, link = null) {
   try {
     await sql`
