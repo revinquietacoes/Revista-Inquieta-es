@@ -3,77 +3,76 @@ import { getStore } from "@netlify/blobs"
 
 export async function handler(event) {
 
-    try {
+try {
 
-        if (event.httpMethod !== "POST") {
-            return { statusCode: 405, body: "Method not allowed" }
-        }
+if (event.httpMethod !== "POST") {
+return { statusCode: 405, body: "Method not allowed" }
+}
 
-        const busboy = Busboy({ headers: event.headers })
+const busboy = Busboy({ headers: event.headers })
 
-        let fileBuffer = null
-        let mimeType = "image/webp"
+let fileBuffer = null
+let mimeType = "image/webp"
 
-        await new Promise((resolve, reject) => {
+await new Promise((resolve, reject) => {
 
-            busboy.on("file", (name, file, info) => {
+busboy.on("file", (name, file, info) => {
 
-                mimeType = info.mimeType
-                const chunks = []
+mimeType = info.mimeType
 
-                file.on("data", d => chunks.push(d))
+const chunks = []
 
-                file.on("end", () => {
-                    fileBuffer = Buffer.concat(chunks)
-                })
+file.on("data", d => chunks.push(d))
 
-            })
+file.on("end", () => {
+fileBuffer = Buffer.concat(chunks)
+})
 
-            busboy.on("finish", resolve)
-            busboy.on("error", reject)
+})
 
-            busboy.end(Buffer.from(event.body, "base64"))
+busboy.on("finish", resolve)
+busboy.on("error", reject)
 
-        })
+busboy.end(Buffer.from(event.body, "base64"))
 
-        if (!fileBuffer) {
-            return {
-                statusCode: 400,
-                body: JSON.stringify({ erro: "Arquivo não enviado" })
-            }
-        }
+})
 
-        const store = getStore({
-            name: "arquivos",
-            siteID: process.env.NETLIFY_BLOBS_SITE_ID,
-            token: process.env.NETLIFY_BLOBS_TOKEN
-        })
+if (!fileBuffer) {
+return {
+statusCode: 400,
+body: JSON.stringify({ erro: "Arquivo não enviado" })
+}
+}
 
-        const key = `usuarios/${Date.now()}-avatar.webp`
+/* conexão automática com Netlify Blobs */
 
-        await store.set(key, fileBuffer, {
-            contentType: mimeType
-        })
+const store = getStore("arquivos")
 
-        /* API nova do Netlify Blobs */
+const key = `usuarios/${Date.now()}-avatar.webp`
 
-        const url = await store.get(key, { type: "url" })
+await store.set(key, fileBuffer, {
+contentType: mimeType
+})
 
-        return {
-            statusCode: 200,
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ url })
-        }
+/* gerar URL pública */
 
-    } catch (err) {
+const url = `https://${process.env.URL}/.netlify/blobs/${key}`
 
-        return {
-            statusCode: 500,
-            body: JSON.stringify({
-                erro: err.message
-            })
-        }
+return {
+statusCode: 200,
+headers: { "Content-Type": "application/json" },
+body: JSON.stringify({ url })
+}
 
-    }
+} catch (err) {
+
+return {
+statusCode: 500,
+body: JSON.stringify({
+erro: err.message
+})
+}
+
+}
 
 }
