@@ -21,7 +21,6 @@ exports.handler = async (event) => {
     }
 
     try {
-        console.log("=== UPLOAD-AVATAR INICIADO ===")
         const usuarioId = event.headers["x-user-id"]
         if (!usuarioId) {
             return {
@@ -31,7 +30,6 @@ exports.handler = async (event) => {
             }
         }
 
-        // Processar o multipart form
         const busboy = Busboy({ headers: event.headers })
         let fileBuffer = null
         let mimeType = "image/webp"
@@ -52,15 +50,13 @@ exports.handler = async (event) => {
             busboy.end(Buffer.from(event.body, "base64"))
         })
 
-        if (!fileBuffer || fileBuffer.length === 0) {
+        if (!fileBuffer) {
             return {
                 statusCode: 400,
                 headers: corsHeaders,
                 body: JSON.stringify({ erro: "Arquivo não enviado" })
             }
         }
-
-        console.log(`Arquivo recebido: ${fileBuffer.length} bytes, tipo: ${mimeType}`)
 
         // Usar API REST do Netlify Blobs
         const siteID = process.env.NETLIFY_BLOBS_SITE_ID
@@ -73,9 +69,10 @@ exports.handler = async (event) => {
 
         const timestamp = Date.now()
         const random = Math.random().toString(36).substring(2, 8)
+        // CORREÇÃO: Garantir o prefixo "usuarios/"
         const key = `usuarios/${usuarioId}-${timestamp}-${random}.webp`
 
-        const blobUrl = `https://api.netlify.com/api/v1/sites/${siteID}/blobs/${storeName}/${key}`
+        const blobUrl = `https://api.netlify.com/api/v1/sites/${siteID}/blobs/${storeName}/${encodeURIComponent(key)}`
 
         const uploadResponse = await fetch(blobUrl, {
             method: "PUT",
@@ -87,13 +84,12 @@ exports.handler = async (event) => {
         })
 
         if (!uploadResponse.ok) {
-            throw new Error(`Erro ao salvar blob: ${uploadResponse.status} ${uploadResponse.statusText}`)
+            const errorText = await uploadResponse.text()
+            throw new Error(`Erro ao salvar blob: ${uploadResponse.status} - ${errorText}`)
         }
 
-        const baseUrl = process.env.URL || `https://${event.headers.host}`
-        const fotoUrl = `${baseUrl}/.netlify/blobs/${storeName}/${key}`
-
-        console.log("Upload bem-sucedido. URL:", fotoUrl)
+        // A URL pública não funciona diretamente, usaremos a função avatar
+        const avatarUrl = `/.netlify/functions/avatar?key=${encodeURIComponent(key)}`
 
         return {
             statusCode: 200,
@@ -103,18 +99,18 @@ exports.handler = async (event) => {
             },
             body: JSON.stringify({
                 sucesso: true,
-                url: fotoUrl,
+                url: avatarUrl,
+                key: key,
                 mensagem: "Avatar salvo com sucesso!"
             })
         }
     } catch (err) {
-        console.error("ERRO NA FUNÇÃO:", err)
-        console.error("STACK:", err.stack)
+        console.error("Erro:", err)
         return {
             statusCode: 500,
             headers: corsHeaders,
             body: JSON.stringify({
-                erro: "Erro interno do servidor",
+                erro: "Erro interno",
                 detalhe: err.message
             })
         }
