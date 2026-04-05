@@ -11,7 +11,7 @@
 </head>
 <script>
   document.addEventListener('DOMContentLoaded', () => {
-    const user = AppPanel.requireRole(['editor_chefe']);
+    const user = AppPanel.requireRole(['editor_adjunto']);
     if (!user) return;
     AppPanel.atualizarAvatares();
     AppPanel.atualizarContadorNotificacoes();

@@ -77,14 +77,21 @@
     return user;
   }
 
-  function formatRole(role) {
-    const roles = {
-      autor: 'Autor(a)',
-      parecerista: 'Parecerista',
-      editor_adjunto: 'Editor(a) Adjunto(a)',
-      editor_chefe: 'Editor(a)-chefe'
-    };
-    return roles[role] || role;
+  function requireRole(allowedRoles) {
+    const user = currentUser();
+    console.log('requireRole - user:', user);
+    if (!user) {
+      console.log('Usuário não encontrado, redirecionando para login');
+      window.location.href = 'login.html';
+      return null;
+    }
+    console.log('Perfil do usuário:', user.perfil);
+    if (!allowedRoles.includes(user.perfil)) {
+      console.log('Perfil não autorizado. Permitidos:', allowedRoles);
+      window.location.href = 'login.html';
+      return null;
+    }
+    return user;
   }
 
   function formatPresenceShort(user) {
