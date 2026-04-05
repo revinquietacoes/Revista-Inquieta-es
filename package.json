@@ -1,9 +1,23 @@
 {
-  "name": "netlify-functions",
+  "name": "revista-inquietacoes",
   "version": "1.0.0",
+  "description": "Revista Inquietações - Plataforma",
+  "main": "index.js",
+  "scripts": {
+    "build": "echo 'Build completed'",
+    "dev": "netlify dev"
+  },
   "dependencies": {
-    "@netlify/blobs": "^1.0.0",
+    "@netlify/blobs": "^1.6.1",
+    "@netlify/neon": "^0.1.2",
+    "bcryptjs": "^2.4.3",
     "busboy": "^1.6.0",
     "pg": "^8.20.0"
-  }
+  },
+  "devDependencies": {
+    "netlify-cli": "^24.9.0"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
 }
