@@ -2,509 +2,385 @@
 <html lang="pt-BR">
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Perfil</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Perfil</title>
 
-  <link rel="icon" href="../assets/favicon.png">
-  <link rel="stylesheet" href="painel-base.css">
-  <script src="painel-base.js" defer></script>
-</head>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<script src="painel-base.js" defer></script>
+
 <style>
-  #avatar-uploader {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    align-items: center;
-  }
 
-  #avatar-drop {
-    border: 2px dashed #bbb;
-    padding: 30px;
-    text-align: center;
-    cursor: pointer;
-    border-radius: 8px;
-    width: 100%;
-    max-width: 300px;
-  }
+#avatar-uploader{
+display:flex;
+flex-direction:column;
+gap:15px;
+align-items:center;
+}
 
-  #avatar-drop.drag {
-    border-color: #2d6cdf;
-    background: #f5f8ff;
-  }
+#avatar-drop{
+border:2px dashed #bbb;
+padding:25px;
+border-radius:8px;
+cursor:pointer;
+text-align:center;
+width:100%;
+max-width:320px;
+}
 
-  #avatar-canvas {
-    border-radius: 50%;
-    border: 3px solid #ddd;
-    object-fit: cover;
-  }
+#avatar-drop.drag{
+border-color:#2d6cdf;
+background:#f4f7ff;
+}
 
-  .crop-actions {
-    display: flex;
-    gap: 10px;
-  }
+#avatar-canvas{
+margin-top:10px;
+border-radius:50%;
+border:3px solid #ddd;
+}
 
-  #avatar-drop {
-    border: 2px dashed #bbb;
-    padding: 25px;
-    border-radius: 8px;
-    cursor: pointer;
-    text-align: center;
-  }
-
-  #avatar-drop.drag {
-    border-color: #2d6cdf;
-    background: #f4f7ff;
-  }
-
-  #avatar-canvas {
-    margin-top: 10px;
-    border-radius: 50%;
-    border: 3px solid #ddd;
-  }
 </style>
+</head>
 
 <body>
 
-  <div class="page-shell">
-
-    <!-- HEADER -->
-    <header class="topbar">
-      <div class="brand-wrap">
-
-        <div class="avatar-box">
-          <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
-          <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
-        </div>
-
-        <div class="brand-copy">
-          <h1>Perfil</h1>
-          <p>Aqui você consulta e edita seus dados cadastrais e sua foto de perfil.</p>
-        </div>
-
-      </div>
-
-      <div class="actions-row">
-        <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
-        <button class="btn btn-soft" data-action="logout">Sair</button>
-      </div>
-    </header>
+<div class="page-shell">
 
-    <!-- CONTEÚDO -->
-    <div class="content-grid">
+<header class="topbar">
 
-      <!-- FORM PERFIL -->
-      <section class="panel">
-        <div class="panel-head">
-          <h2>Dados cadastrais</h2>
-        </div>
+<div class="brand-wrap">
 
-        <form id="form-perfil">
-          <div class="form-grid">
+<div class="avatar-box">
+<img class="avatar-img" data-avatar-user alt="Foto do usuário">
+<img class="logo-inline" src="../logo-revista.png">
+</div>
 
-            <div class="field full">
-              <label>Nome</label>
-              <input name="nome" required>
-            </div>
+<div class="brand-copy">
+<h1>Perfil</h1>
+<p>Aqui você consulta e edita seus dados cadastrais e sua foto de perfil.</p>
+</div>
 
-            <div class="field">
-              <label>E-mail</label>
-              <input name="email" disabled>
-            </div>
+</div>
 
-            <div class="field">
-              <label>Perfil</label>
-              <input name="perfil" disabled>
-            </div>
+<div class="actions-row">
+<a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+<button class="btn btn-soft" data-action="logout">Sair</button>
+</div>
 
-            <div class="field">
-              <label>Instituição</label>
-              <input name="instituicao">
-            </div>
+</header>
 
-            <div class="field">
-              <label>ORCID</label>
-              <input name="orcid">
-            </div>
+<div class="content-grid">
 
-            <div class="field full">
-              <label>Lattes</label>
-              <input name="lattes">
-            </div>
+<!-- FORM PERFIL -->
 
-            <div class="field">
-              <label>Origem</label>
-              <input name="origem">
-            </div>
+<section class="panel">
 
-            <div class="field">
-              <label>Telefone</label>
-              <input name="telefone">
-            </div>
+<div class="panel-head">
+<h2>Dados cadastrais</h2>
+</div>
 
-            <div class="field full checkbox-line">
-              <input type="checkbox" id="receber_noticias_email" name="receber_noticias_email">
-              <label for="receber_noticias_email">
-                Autorizo o envio de notícias e chamadas da revista por e-mail.
-              </label>
-            </div>
+<form id="form-perfil">
 
-          </div>
+<div class="form-grid">
 
-          <div class="actions-row">
-            <button class="btn btn-primary" type="submit">Salvar perfil</button>
-          </div>
+<div class="field full">
+<label>Nome</label>
+<input name="nome" required>
+</div>
 
-          <div class="form-message" id="msg-perfil"></div>
-        </form>
-      </section>
+<div class="field">
+<label>E-mail</label>
+<input name="email" disabled>
+</div>
 
-      <!-- FOTO DE PERFIL -->
-      <div id="avatar-uploader">
+<div class="field">
+<label>Perfil</label>
+<input name="perfil" disabled>
+</div>
 
-        <div id="avatar-drop">
-          <p>Clique ou arraste uma foto aqui</p>
+<div class="field">
+<label>Instituição</label>
+<input name="instituicao">
+</div>
 
-          <input type="file" id="avatar-input" accept="image/png,image/jpeg,image/webp">
-        </div>
+<div class="field">
+<label>ORCID</label>
+<input name="orcid">
+</div>
 
-        <canvas id="avatar-canvas" width="300" height="300"></canvas>
+<div class="field full">
+<label>Lattes</label>
+<input name="lattes">
+</div>
 
-        <div class="actions-row">
-          <button id="avatar-save" class="btn btn-primary">
-            Salvar foto
-          </button>
-        </div>
+<div class="field">
+<label>Origem</label>
+<input name="origem">
+</div>
 
-        <div class="form-message" id="msg-avatar"></div>
+<div class="field">
+<label>Telefone</label>
+<input name="telefone">
+</div>
 
-      </div>
+<div class="field full checkbox-line">
+<input type="checkbox" id="receber_noticias_email" name="receber_noticias_email">
+<label for="receber_noticias_email">
+Autorizo o envio de notícias e chamadas da revista por e-mail.
+</label>
+</div>
 
-    </div>
+</div>
 
-    <div class="actions-row">
-      <button class="btn btn-primary" type="submit">Enviar nova foto</button>
-    </div>
+<div class="actions-row">
+<button class="btn btn-primary" type="submit">
+Salvar perfil
+</button>
+</div>
 
-    <div class="form-message" id="msg-avatar"></div>
-    </form>
+<div class="form-message" id="msg-perfil"></div>
 
-    </aside>
+</form>
 
-  </div>
+</section>
 
-  <footer class="page-footer"></footer>
+<!-- FOTO DE PERFIL -->
 
-  </div>
+<aside class="panel">
 
-  <!-- SCRIPT -->
-  <script>
-    document.addEventListener('DOMContentLoaded', async () => {
+<div class="panel-head">
+<h2>Foto de perfil</h2>
+</div>
 
-      const user = AppPanel.requireRole([
-        'autor',
-        'parecerista',
-        'editor_adjunto',
-        'editor_chefe'
-      ])
+<div id="avatar-uploader">
 
-      if (!user) return
+<div id="avatar-drop">
+<p>Clique ou arraste uma foto aqui</p>
 
-      const data = await AppPanel.apiData('me')
-      const u = data.usuario
-      const drop = document.getElementById("avatar-drop")
-      const input = document.getElementById("avatar-input")
-      const canvas = document.getElementById("avatar-canvas")
-      const ctx = canvas.getContext("2d")
+<input
+type="file"
+id="avatar-input"
+accept="image/png,image/jpeg,image/webp"
+>
+</div>
 
-      let avatarBlob = null
+<canvas id="avatar-canvas" width="300" height="300"></canvas>
 
-      function previewImage(file) {
+<div class="actions-row">
+<button id="avatar-save" class="btn btn-primary">
+Salvar foto
+</button>
+</div>
 
-        if (!file) return
+<div class="form-message" id="msg-avatar"></div>
 
-        if (!file.type.startsWith("image/")) {
-          alert("Arquivo inválido")
-          return
-        }
+</div>
 
-        const img = new Image()
+</aside>
 
-        img.onload = () => {
+</div>
 
-          canvas.width = 300
-          canvas.height = 300
+<footer class="page-footer"></footer>
 
-          const size = Math.min(img.width, img.height)
+</div>
 
-          ctx.clearRect(0, 0, 300, 300)
+<script>
 
-          ctx.drawImage(
-            img,
-            (img.width - size) / 2,
-            (img.height - size) / 2,
-            size,
-            size,
-            0,
-            0,
-            300,
-            300
-          )
+document.addEventListener("DOMContentLoaded", async ()=>{
 
-          canvas.toBlob(b => {
-            avatarBlob = b
-          }, "image/jpeg", 0.85)
+const user = AppPanel.requireRole([
+'autor',
+'parecerista',
+'editor_adjunto',
+'editor_chefe'
+])
 
-        }
+if(!user) return
 
-        img.src = URL.createObjectURL(file)
-      }
+const data = await AppPanel.apiData("me")
+const u = data.usuario
 
-      input.addEventListener("change", () => {
-        previewImage(input.files[0])
-      })
+/* ================================
+PREENCHE PERFIL
+================================ */
 
-      drop.addEventListener("dragover", e => {
-        e.preventDefault()
-        drop.classList.add("drag")
-      })
+const form = document.getElementById("form-perfil")
 
-      drop.addEventListener("dragleave", () => {
-        drop.classList.remove("drag")
-      })
+[
+'nome',
+'email',
+'perfil',
+'instituicao',
+'orcid',
+'lattes',
+'origem',
+'telefone'
+].forEach(k=>{
+if(form.elements[k]){
+form.elements[k].value = u[k] || ""
+}
+})
 
-      drop.addEventListener("drop", e => {
-        e.preventDefault()
-        drop.classList.remove("drag")
+form.elements["perfil"].value = AppPanel.formatRole(u.perfil)
+form.elements["receber_noticias_email"].checked = !!u.receber_noticias_email
 
-        const file = e.dataTransfer.files[0]
-        previewImage(file)
-      })
+form.addEventListener("submit", async (e)=>{
 
-      document
-        .getElementById("avatar-save")
-        .addEventListener("click", async () => {
+e.preventDefault()
 
-          if (!avatarBlob) {
-            alert("Selecione uma foto primeiro")
-            return
-          }
+const fd = new FormData(form)
+const payload = Object.fromEntries(fd.entries())
 
-          const fd = new FormData()
+payload.receber_noticias_email =
+form.elements["receber_noticias_email"].checked
 
-          fd.append("arquivo", avatarBlob, "avatar.jpg")
-          fd.append("usuario_id", String(u.id))
-          fd.append("consentimento", "true")
+const msg = document.getElementById("msg-perfil")
+msg.className="form-message"
 
-          const msg = document.getElementById("msg-avatar")
-          msg.className = "form-message"
+try{
 
-          try {
+const res = await AppPanel.apiAction("update_profile",payload)
 
-            const res = await fetch(
-              "/.netlify/functions/upload-avatar",
-              {
-                method: "POST",
-                headers: AppPanel.currentUserHeaders(),
-                body: fd
-              }
-            )
+AppPanel.applyUserIdentity(res.usuario)
 
-            const data = await res.json()
+msg.textContent="Perfil atualizado com sucesso"
+msg.classList.add("ok")
 
-            if (!res.ok) {
-              throw new Error(data.erro || "Erro no upload")
-            }
+}catch(err){
 
-            msg.textContent = "Foto atualizada"
-            msg.classList.add("ok")
+msg.textContent = err.message
+msg.classList.add("err")
 
-            document
-              .querySelectorAll("[data-avatar-user]")
-              .forEach(img => {
-                img.src = data.url + "?v=" + Date.now()
-              })
+}
 
-          } catch (err) {
+})
 
-            msg.textContent = err.message
-            msg.classList.add("err")
+/* ================================
+UPLOAD AVATAR
+================================ */
 
-          }
+const drop = document.getElementById("avatar-drop")
+const input = document.getElementById("avatar-input")
+const canvas = document.getElementById("avatar-canvas")
+const ctx = canvas.getContext("2d")
 
-        })
+let avatarBlob = null
 
-      const form = document.getElementById('form-perfil')
+drop.addEventListener("click",()=>input.click())
 
-      // preencher dados
-      [
-        'nome',
-        'email',
-        'perfil',
-        'instituicao',
-        'orcid',
-        'lattes',
-        'origem',
-        'telefone'
-      ].forEach(k => {
-        if (form.elements[k]) {
-          form.elements[k].value = u[k] || ''
-        }
-      })
+input.addEventListener("change",()=>{
+previewImage(input.files[0])
+})
 
-      form.elements['perfil'].value = AppPanel.formatRole(u.perfil)
-      form.elements['receber_noticias_email'].checked = !!u.receber_noticias_email
+drop.addEventListener("dragover",e=>{
+e.preventDefault()
+drop.classList.add("drag")
+})
 
-      // salvar perfil
-      form.addEventListener('submit', async (e) => {
-        e.preventDefault()
+drop.addEventListener("dragleave",()=>{
+drop.classList.remove("drag")
+})
 
-        const fd = new FormData(form)
-        const payload = Object.fromEntries(fd.entries())
+drop.addEventListener("drop",e=>{
+e.preventDefault()
+drop.classList.remove("drag")
+previewImage(e.dataTransfer.files[0])
+})
 
-        payload.receber_noticias_email =
-          form.elements['receber_noticias_email'].checked
+function previewImage(file){
 
-        const msg = document.getElementById('msg-perfil')
-        msg.className = 'form-message'
+if(!file || !file.type.startsWith("image/")){
+alert("Arquivo inválido")
+return
+}
 
-        try {
-          const res = await AppPanel.apiAction('update_profile', payload)
+const img = new Image()
 
-          AppPanel.applyUserIdentity(res.usuario)
+img.onload = ()=>{
 
-          msg.textContent = 'Perfil atualizado com sucesso.'
-          msg.classList.add('ok')
+const size = Math.min(img.width,img.height)
 
-        } catch (err) {
-          msg.textContent = err.message
-          msg.classList.add('err')
-        }
-      })
+ctx.clearRect(0,0,300,300)
 
-      // upload avatar
-      let selectedImage = null
+ctx.drawImage(
+img,
+(img.width-size)/2,
+(img.height-size)/2,
+size,
+size,
+0,
+0,
+300,
+300
+)
 
-      const drop = document.getElementById("avatar-drop")
-      const input = document.getElementById("avatar-input")
-      const canvas = document.getElementById("avatar-canvas")
-      const ctx = canvas.getContext("2d")
+canvas.toBlob(b=>{
+avatarBlob = b
+},"image/jpeg",0.85)
 
-      drop.addEventListener("click", () => input.click())
+}
 
-      drop.addEventListener("dragover", e => {
-        e.preventDefault()
-        drop.classList.add("drag")
-      })
+img.src = URL.createObjectURL(file)
 
-      drop.addEventListener("dragleave", () => {
-        drop.classList.remove("drag")
-      })
+}
 
-      drop.addEventListener("drop", e => {
-        e.preventDefault()
-        drop.classList.remove("drag")
+document
+.getElementById("avatar-save")
+.addEventListener("click", async ()=>{
 
-        const file = e.dataTransfer.files[0]
-        loadImage(file)
-      })
+if(!avatarBlob){
+alert("Selecione uma foto")
+return
+}
 
-      input.addEventListener("change", () => {
-        loadImage(input.files[0])
-      })
+const fd = new FormData()
 
-      async function loadImage(file) {
+fd.append("arquivo",avatarBlob,"avatar.jpg")
+fd.append("usuario_id",String(u.id))
+fd.append("consentimento","true")
 
-        if (!file) return
+const msg = document.getElementById("msg-avatar")
+msg.className="form-message"
 
-        if (!file.type.startsWith("image/")) {
-          alert("Arquivo inválido")
-          return
-        }
+try{
 
-        const img = await createImageBitmap(file)
+const res = await fetch(
+"/.netlify/functions/upload-avatar",
+{
+method:"POST",
+headers:AppPanel.currentUserHeaders(),
+body:fd
+}
+)
 
-        canvas.width = 300
-        canvas.height = 300
+const data = await res.json()
 
-        ctx.clearRect(0, 0, 300, 300)
+if(!res.ok){
+throw new Error(data.erro || "Erro no upload")
+}
 
-        const size = Math.min(img.width, img.height)
+msg.textContent="Foto atualizada com sucesso"
+msg.classList.add("ok")
 
-        ctx.drawImage(
-          img,
-          (img.width - size) / 2,
-          (img.height - size) / 2,
-          size,
-          size,
-          0,
-          0,
-          300,
-          300
-        )
+document
+.querySelectorAll("[data-avatar-user]")
+.forEach(img=>{
+img.src = data.url + "?v=" + Date.now()
+})
 
-        selectedImage = canvas
-      }
+}catch(err){
 
-      document
-        .getElementById("avatar-save")
-        .addEventListener("click", async () => {
+msg.textContent = err.message
+msg.classList.add("err")
 
-          if (!selectedImage) {
-            alert("Selecione uma imagem")
-            return
-          }
+}
 
-          const blob = await new Promise(r =>
-            canvas.toBlob(r, "image/jpeg", 0.85)
-          )
+})
 
-          const fd = new FormData()
+})
 
-          fd.append("arquivo", blob, "avatar.jpg")
-          fd.append("usuario_id", String(u.id))
-          fd.append("consentimento", "true")
-
-          const msg = document.getElementById("msg-avatar")
-          msg.className = "form-message"
-
-          try {
-
-            const res = await fetch(
-              "/.netlify/functions/upload-avatar",
-              {
-                method: "POST",
-                headers: AppPanel.currentUserHeaders(),
-                body: fd
-              }
-            )
-
-            const data = await res.json()
-
-            if (!res.ok) {
-              throw new Error(data.erro || "Erro no upload")
-            }
-
-            msg.textContent = "Foto atualizada com sucesso"
-            msg.classList.add("ok")
-
-            // atualizar avatar na página
-            document
-              .querySelectorAll("[data-avatar-user]")
-              .forEach(img => {
-                img.src = data.url + "?t=" + Date.now()
-              })
-
-          } catch (err) {
-
-            msg.textContent = err.message
-            msg.classList.add("err")
-
-          }
-
-        })
-  </script>
+</script>
 
 </body>
-
 </html>
