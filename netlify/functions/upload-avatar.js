@@ -5,6 +5,9 @@ export async function handler(event) {
 
 try {
 
+console.log("SITE ID:", process.env.NETLIFY_BLOBS_SITE_ID)
+console.log("TOKEN:", process.env.NETLIFY_BLOBS_TOKEN ? "TOKEN OK" : "TOKEN MISSING")
+
 if (event.httpMethod !== "POST") {
 return { statusCode: 405, body: "Method not allowed" }
 }
@@ -44,8 +47,6 @@ body: JSON.stringify({ erro: "Arquivo não enviado" })
 }
 }
 
-/* STORE COM CREDENCIAIS */
-
 const store = getStore({
 name: "arquivos",
 siteID: process.env.NETLIFY_BLOBS_SITE_ID,
@@ -58,8 +59,6 @@ await store.set(key, fileBuffer, {
 contentType: mimeType
 })
 
-/* URL PUBLICA */
-
 const url = `https://${process.env.URL}/.netlify/blobs/${key}`
 
 return {
@@ -69,6 +68,8 @@ body: JSON.stringify({ url })
 }
 
 } catch (err) {
+
+console.error(err)
 
 return {
 statusCode: 500,
