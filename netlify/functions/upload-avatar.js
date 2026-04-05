@@ -1,44 +1,40 @@
-import { getStore } from "@netlify/blobs"
-import Busboy from "busboy"
+const { getStore } = require("@netlify/blobs")
+const Busboy = require("busboy")
+const { sql } = require("./_db")
 
-export async function handler(event) {
+const store = getStore("revista-arquivos")
 
-if(event.httpMethod !== "POST"){
-return {
-statusCode:405,
-body:JSON.stringify({erro:"Método não permitido"})
+exports.handler = async (event) => {
+
+if (event.httpMethod !== "POST") {
+return { statusCode:405, body:"Método não permitido" }
 }
-}
 
-try{
+try {
 
-const busboy = Busboy({
-headers:event.headers
-})
+const busboy = Busboy({ headers:event.headers })
 
-let usuario_id=null
-let mime=null
-let buffer=null
-const chunks=[]
+let usuario_id = null
+let buffer = null
+let mime = null
+const chunks = []
 
 await new Promise((resolve,reject)=>{
 
 busboy.on("file",(name,file,info)=>{
 
-mime=info.mimeType
+mime = info.mimeType
 
-file.on("data",data=>{
-chunks.push(data)
-})
+file.on("data",d=>chunks.push(d))
 
 file.on("end",()=>{
-buffer=Buffer.concat(chunks)
+buffer = Buffer.concat(chunks)
 })
 
 })
 
 busboy.on("field",(name,val)=>{
-if(name==="usuario_id") usuario_id=val
+if(name==="usuario_id") usuario_id = val
 })
 
 busboy.on("finish",resolve)
@@ -52,31 +48,49 @@ busboy.end(body)
 
 })
 
-if(!buffer){
-throw new Error("Arquivo não recebido")
+if(!usuario_id) throw new Error("Usuário não informado")
+if(!buffer) throw new Error("Arquivo não recebido")
+if(!mime.startsWith("image/")) throw new Error("Arquivo inválido")
+
+if(buffer.length > 2 * 1024 * 1024){
+throw new Error("Imagem maior que 2MB")
 }
 
-if(!mime.startsWith("image/")){
-throw new Error("Arquivo não é imagem")
-}
+const key = `usuarios/${usuario_id}/avatar/avatar.webp`
 
-if(buffer.length > 4 * 1024 * 1024){
-throw new Error("Imagem maior que 4MB")
-}
+/* remove avatar anterior do blob */
 
-const filename=`avatar-${usuario_id}.webp`
-const store=getStore("avatars")
+await store.delete(key).catch(()=>{})
 
-await store.set(filename,buffer,{
+/* salva novo avatar */
+
+await store.set(key,buffer,{
 contentType:"image/webp"
 })
 
-const version=Date.now()
+const url = `/.netlify/functions/arquivo?key=${encodeURIComponent(key)}`
 
-return{
+/* remove registros antigos */
+
+await sql`
+DELETE FROM arquivos_publicacao
+WHERE usuario_id = ${usuario_id}
+AND categoria = 'avatar'
+`
+
+/* registra novo avatar */
+
+await sql`
+INSERT INTO arquivos_publicacao
+(usuario_id,categoria,mime_type,blob_key,url_acesso,publico)
+VALUES
+(${usuario_id},'avatar','image/webp',${key},${url},true)
+`
+
+return {
 statusCode:200,
 body:JSON.stringify({
-url:`/avatars/${filename}?v=${version}`
+url: url + "&v=" + Date.now()
 })
 }
 
@@ -84,11 +98,10 @@ url:`/avatars/${filename}?v=${version}`
 
 console.error("ERRO AVATAR:",err)
 
-return{
+return {
 statusCode:500,
 body:JSON.stringify({
-erro:"Falha no upload",
-detalhe:err.message
+erro: err.message
 })
 }
 
