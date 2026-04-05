@@ -2,7 +2,7 @@ const bcrypt = require('bcryptjs')
 const { sql, json, parseJson, getUserById, canAccess, ensureSupportTables } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
-// ==================== FUNÇÕES AUXILIARES EXISTENTES ====================
+// ==================== FUNÇÕES AUXILIARES ====================
 async function getDesignacaoById(id) {
   const rows = await sql`
     SELECT da.*, s.status AS submissao_status
@@ -199,14 +199,13 @@ async function markDesignacaoStatus(designacaoId, status) {
   await sql`UPDATE designacoes_avaliacao SET status = ${status} WHERE id = ${designacaoId}`
 }
 
-// ==================== NOVAS FUNÇÕES DE NOTIFICAÇÃO ====================
+// ==================== FUNÇÕES DE NOTIFICAÇÃO ====================
 async function criarNotificacao(usuarioId, tipo, titulo, mensagem, link = null) {
   try {
     await sql`
       INSERT INTO notificacoes (usuario_id, tipo, titulo, mensagem, link)
       VALUES (${usuarioId}, ${tipo}, ${titulo}, ${mensagem}, ${link})
     `;
-    // Dispara o e-mail em segundo plano (não espera)
     enviarEmailNotificacao(usuarioId, titulo, mensagem, link).catch(console.error);
   } catch (err) {
     console.error('Erro ao criar notificação:', err);
@@ -222,13 +221,11 @@ async function enviarEmailNotificacao(usuarioId, titulo, mensagem, link = null) 
     const baseUrl = process.env.URL || 'https://revista-inquietacoes.netlify.app';
     const fullLink = link ? `${baseUrl}${link}` : baseUrl;
     const html = `<p>${mensagem}</p><p><a href="${fullLink}">Ver detalhes</a></p>`;
-    // Chama a função de envio de e-mail
-    const emailRes = await fetch(`${baseUrl}/.netlify/functions/send-email`, {
+    await fetch(`${baseUrl}/.netlify/functions/send-email`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ to: email, subject: titulo, html })
     });
-    if (!emailRes.ok) console.error('Falha ao enviar e-mail para', email);
   } catch (err) {
     console.error('Erro no envio de e-mail:', err);
   }
@@ -239,46 +236,20 @@ const main = async (req) => {
   try {
     await ensureSupportTables()
     await ensureEditorialColumnsCompatibility()
-
-    // ===== NOTIFICAÇÕES =====
-    if (action === 'notificacoes') {
-      const { limit = 20, offset = 0, apenasNaoLidas = false } = body;
-      let query = sql`SELECT id, tipo, titulo, mensagem, link, lida, criado_em FROM notificacoes WHERE usuario_id = ${user.id}`;
-      if (apenasNaoLidas) {
-        query = sql`${query} AND lida = FALSE`;
-      }
-      query = sql`${query} ORDER BY criado_em DESC LIMIT ${limit} OFFSET ${offset}`;
-      const notificacoes = await query;
-      const naoLidasResult = await sql`SELECT COUNT(*) FROM notificacoes WHERE usuario_id = ${user.id} AND lida = FALSE`;
-      const naoLidas = parseInt(naoLidasResult[0].count);
-      return json({ sucesso: true, notificacoes, naoLidas });
-    }
-
-    if (action === 'marcar_notificacao_lida') {
-      const { notificacaoId } = body;
-      if (!notificacaoId) return json({ erro: 'ID da notificação não informado.' }, 400);
-      await sql`UPDATE notificacoes SET lida = TRUE WHERE id = ${notificacaoId} AND usuario_id = ${user.id}`;
-      return json({ sucesso: true });
-    }
-
-    if (action === 'marcar_todas_lidas') {
-      await sql`UPDATE notificacoes SET lida = TRUE WHERE usuario_id = ${user.id}`;
-      return json({ sucesso: true });
-    }
-
+    
     if (req.method !== 'POST') {
       return json({ erro: 'Método não permitido.' }, 405)
     }
-
+    
     const body = await parseJson(req)
     const { action, userId } = body
     const user = await getUserById(Number(userId), action === 'delete_submission')
-
+    
     if (!user) {
       return json({ erro: 'Usuário não encontrado.' }, 404)
     }
 
-    // ---------- Ações de presença (já existentes) ----------
+    // Ações de presença
     if (action === 'presence_ping') {
       await sql`UPDATE usuarios SET ultimo_acesso_em = CURRENT_TIMESTAMP, online = TRUE, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${user.id}`
       const refreshed = await getUserById(user.id)
@@ -286,30 +257,19 @@ const main = async (req) => {
     }
 
     if (action === 'presence_leave') {
-      await sql`UPDATE usuarios
-               SET online = FALSE,
-                   ultimo_acesso_em = (CURRENT_TIMESTAMP - INTERVAL '10 minutes'),
-                   atualizado_em = CURRENT_TIMESTAMP
-               WHERE id = ${user.id}`
+      await sql`UPDATE usuarios SET online = FALSE, ultimo_acesso_em = (CURRENT_TIMESTAMP - INTERVAL '10 minutes'), atualizado_em = CURRENT_TIMESTAMP WHERE id = ${user.id}`
       const refreshed = await getUserById(user.id)
       return json({ sucesso: true, usuario: refreshed })
     }
 
-    // ---------- Atualização de perfil (existente) ----------
+    // Atualização de perfil
     if (action === 'update_profile') {
       const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
-
       if (avatarUrl) {
-        await sql`
-          UPDATE usuarios
-          SET foto_perfil_url = ${avatarUrl},
-              atualizado_em = CURRENT_TIMESTAMP
-          WHERE id = ${user.id}
-        `
+        await sql`UPDATE usuarios SET foto_perfil_url = ${avatarUrl}, atualizado_em = CURRENT_TIMESTAMP WHERE id = ${user.id}`
         const refreshed = await getUserById(user.id)
         return json({ sucesso: true, usuario: refreshed })
       }
-
       await sql`
         UPDATE usuarios
         SET nome = COALESCE(${nome || null}, nome),
@@ -326,7 +286,7 @@ const main = async (req) => {
       return json({ sucesso: true, usuario: refreshed })
     }
 
-    // ---------- Aprovar usuário (existente) ----------
+    // Aprovar usuário
     if (action === 'approve_user') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       const { targetUserId, status, foto_perfil_aprovada, consentimento_foto_publica, total_avaliacoes } = body
@@ -340,7 +300,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // ---------- Criar dossiê (existente) ----------
+    // Criar dossiê
     if (action === 'create_dossier') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       const { titulo, descricao, editorResponsavelId, dataAbertura, dataFechamento } = body
@@ -358,7 +318,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // ---------- Designar revisor (existente) ----------
+    // Designar revisor
     if (action === 'assign_reviewer') {
       if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { submissaoId, pareceristaId, prazoParecer, mensagemConvite } = body
@@ -385,7 +345,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // ---------- Atualizar status da designação (existente) ----------
+    // Atualizar status da designação
     if (action === 'update_designacao_status') {
       if (!canAccess(user, ['parecerista', 'editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { designacaoId, status, diasAdicionais } = body
@@ -406,7 +366,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // ---------- Enviar mensagem direta (MODIFICADO para criar notificação) ----------
+    // Enviar mensagem direta (com notificação)
     if (action === 'send_direct_message') {
       const { destinatarioId, mensagem, anexoUrl, anexoPath, anexoNome, anexoMime } = body
       const targetId = Number(destinatarioId)
@@ -419,12 +379,11 @@ const main = async (req) => {
         INSERT INTO mensagens_internas (remetente_id, destinatario_id, mensagem, anexo_url, anexo_path, anexo_nome, anexo_mime)
         VALUES (${user.id}, ${targetId}, ${cleanMessage}, ${anexoUrl || null}, ${anexoPath || null}, ${anexoNome || null}, ${anexoMime || null})
       `
-      // Cria notificação para o destinatário
-      await criarNotificacao(targetId, 'mensagem', `Nova mensagem de ${user.nome}`, cleanMessage.substring(0, 100), `/cadastro-login/chat-interno?target=${user.id}`);
+      await criarNotificacao(targetId, 'mensagem', `Nova mensagem de ${user.nome}`, cleanMessage.substring(0, 100), `/cadastro-login/chat-interno?target=${user.id}`)
       return json({ sucesso: true })
     }
 
-    // ---------- Submeter avaliação (MODIFICADO para criar notificação) ----------
+    // Submeter avaliação (com notificação)
     if (action === 'submit_review') {
       if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
       const { designacaoId, submissaoId } = body
@@ -443,20 +402,19 @@ const main = async (req) => {
       }
       await markDesignacaoStatus(designacao.id, 'concluido')
       await refreshSubmissionStatus(designacao.submissao_id)
-
-      // Notificar editores responsáveis pela submissão
+      // Notificar editores
       const submissaoInfo = await sql`SELECT editor_responsavel_id, editor_adjunto_id, titulo FROM submissoes WHERE id = ${submissaoFinalId}`
       if (submissaoInfo.length) {
         const { editor_responsavel_id, editor_adjunto_id, titulo } = submissaoInfo[0]
         const editores = [editor_responsavel_id, editor_adjunto_id].filter(Boolean)
         for (const editorId of editores) {
-          await criarNotificacao(editorId, 'parecer_concluido', `Parecer concluído para "${titulo}"`, `O parecerista ${user.nome} finalizou a avaliação.`, `/cadastro-login/decisao-editorial?submissao=${submissaoFinalId}`);
+          await criarNotificacao(editorId, 'parecer_concluido', `Parecer concluído para "${titulo}"`, `O parecerista ${user.nome} finalizou a avaliação.`, `/cadastro-login/decisao-editorial?submissao=${submissaoFinalId}`)
         }
       }
       return json({ sucesso: true, armazenamento: 'avaliacoes_v2' })
     }
 
-    // ---------- Solicitar certificado (existente) ----------
+    // Solicitar certificado
     if (action === 'request_certificate') {
       if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403)
       const { nomeCompleto, email, certificadoMinicurso, certificadoParticipacaoGeral, certificadoComunicacaoOral, minicursos, autorizaPublicacaoTexto, resumoExpandido, tituloComunicacaoOral, autoresComunicacaoOral } = body
@@ -464,7 +422,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // ---------- Deletar submissão (existente) ----------
+    // Deletar submissão
     if (action === 'delete_submission') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       const { submissaoId, senhaConfirmacao } = body
@@ -475,7 +433,7 @@ const main = async (req) => {
       return json({ sucesso: true })
     }
 
-    // ---------- Criar submissão para autor (existente) ----------
+    // Criar submissão para autor
     if (action === 'create_submission_for_author') {
       if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { autorId, titulo, secao, idioma, resumo, palavrasChave, dossieId } = body
@@ -495,10 +453,10 @@ const main = async (req) => {
       return json({ sucesso: true, submissaoId: created[0]?.id })
     }
 
-    // ---------- NOVA AÇÃO: Enviar notificação em massa (editor-chefe) ----------
+    // Enviar notificação em massa (editor-chefe)
     if (action === 'send_notification') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
-      const { targetType, targetIds, titulo, mensagem, link } = body // targetType: 'todos', 'perfil', 'lista'
+      const { targetType, targetIds, titulo, mensagem, link } = body
       let usuarios = []
       if (targetType === 'todos') {
         usuarios = await sql`SELECT id FROM usuarios WHERE status = 'ativo'`
@@ -516,9 +474,47 @@ const main = async (req) => {
       return json({ sucesso: true, enviadas: usuarios.length })
     }
 
+    // Limpar conversa (clear_chat)
+    if (action === 'clear_chat') {
+      const { contactId } = body
+      if (!contactId) return json({ erro: 'ID do contato não informado.' }, 400)
+      const participantCheck = await sql`
+        SELECT id FROM mensagens_internas
+        WHERE (remetente_id = ${user.id} AND destinatario_id = ${contactId})
+           OR (remetente_id = ${contactId} AND destinatario_id = ${user.id})
+        LIMIT 1
+      `
+      if (!participantCheck.length) {
+        return json({ erro: 'Você não tem permissão para limpar esta conversa.' }, 403)
+      }
+      const messages = await sql`
+        SELECT id, anexo_path FROM mensagens_internas
+        WHERE (remetente_id = ${user.id} AND destinatario_id = ${contactId})
+           OR (remetente_id = ${contactId} AND destinatario_id = ${user.id})
+      `
+      const supabaseUrl = process.env.SUPABASE_URL
+      const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+      if (supabaseUrl && supabaseServiceKey) {
+        for (const msg of messages) {
+          if (msg.anexo_path) {
+            const deleteUrl = `${supabaseUrl}/storage/v1/object/chat-anexos/${msg.anexo_path}`
+            try {
+              await fetch(deleteUrl, { method: 'DELETE', headers: { 'Authorization': `Bearer ${supabaseServiceKey}` } })
+            } catch (err) { console.error('Erro ao deletar arquivo:', err) }
+          }
+        }
+      }
+      await sql`
+        DELETE FROM mensagens_internas
+        WHERE (remetente_id = ${user.id} AND destinatario_id = ${contactId})
+           OR (remetente_id = ${contactId} AND destinatario_id = ${user.id})
+      `
+      return json({ sucesso: true, mensagem: 'Conversa limpa com sucesso.' })
+    }
+
     // Se nenhuma ação corresponder
     return json({ erro: 'Ação inválida.' }, 400)
-
+    
   } catch (erro) {
     console.error('Erro em action.js:', erro)
     return json({ erro: 'Erro ao executar ação.', detalhe: erro.message }, 500)
