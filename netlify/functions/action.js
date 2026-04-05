@@ -41,8 +41,8 @@ async function refreshSubmissionStatus(submissaoId) {
   const statuses = rows.map((row) => row.status)
   let nextStatus = 'alocada_sem_aceite'
   if (statuses.some((status) => status === 'concluido')) {
-  nextStatus = 'em_avaliacao'
-}
+    nextStatus = 'em_avaliacao'
+  }
   else if (statuses.some((status) => ['aceito', 'em_andamento'].includes(status))) nextStatus = 'em_avaliacao'
   else if (statuses.every((status) => status === 'recusado')) nextStatus = 'nao_alocada'
   await sql`UPDATE submissoes SET status = ${nextStatus} WHERE id = ${submissaoId}`
@@ -226,6 +226,28 @@ const main = async (req) => {
     }
 
     if (action === 'update_profile') {
+      if (action === 'update_avatar') {
+
+        const { avatarUrl } = body
+
+        if (!avatarUrl) {
+          return json({ erro: 'URL da imagem não informada.' }, 400)
+        }
+
+        await sql`
+    UPDATE usuarios
+    SET foto_perfil_url = ${avatarUrl},
+        atualizado_em = CURRENT_TIMESTAMP
+    WHERE id = ${user.id}
+  `
+
+        const refreshed = await getUserById(user.id)
+
+        return json({
+          sucesso: true,
+          usuario: refreshed
+        })
+      }
       const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email } = body
       await sql`
         UPDATE usuarios
@@ -369,7 +391,7 @@ const main = async (req) => {
     }
 
     if (action === 'create_submission_for_author') {
-      if (!canAccess(user, ['editor_chefe','editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { autorId, titulo, secao, idioma, resumo, palavrasChave, dossieId } = body
       if (!titulo || !secao || !resumo) return json({ erro: 'Preencha título, seção e resumo.' }, 400)
       const autorFinal = autorId ? Number(autorId) : user.id

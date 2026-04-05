@@ -1,304 +1,324 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
 
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
 
-<title>Perfil</title>
+    <title>Perfil</title>
 
-<link rel="icon" href="../assets/favicon.png">
-<link rel="stylesheet" href="painel-base.css">
-<script src="painel-base.js" defer></script>
+    <link rel="icon" href="../assets/favicon.png">
+    <link rel="stylesheet" href="painel-base.css">
+    <script src="painel-base.js" defer></script>
 
-<style>
+    <style>
+        .avatar-uploader {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 15px;
+        }
 
-.avatar-uploader{
-display:flex;
-flex-direction:column;
-align-items:center;
-gap:15px;
-}
+        .avatar-drop {
+            border: 2px dashed #bbb;
+            padding: 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            text-align: center;
+            width: 100%;
+            max-width: 320px;
+        }
 
-.avatar-drop{
-border:2px dashed #bbb;
-padding:30px;
-border-radius:8px;
-cursor:pointer;
-text-align:center;
-width:100%;
-max-width:320px;
-}
+        .avatar-drop.drag {
+            border-color: #2d6cdf;
+            background: #f4f7ff;
+        }
 
-.avatar-drop.drag{
-border-color:#2d6cdf;
-background:#f4f7ff;
-}
-
-.avatar-preview{
-width:140px;
-height:140px;
-border-radius:50%;
-object-fit:cover;
-border:3px solid #ddd;
-}
-
-</style>
+        .avatar-preview {
+            width: 140px;
+            height: 140px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid #ddd;
+        }
+    </style>
 
 </head>
 
 <body>
 
-<div class="page-shell">
+    <div class="page-shell">
 
-<header class="topbar">
+        <header class="topbar">
 
-<div class="brand-wrap">
+            <div class="brand-wrap">
 
-<div class="avatar-box">
-<img class="avatar-img" data-avatar-user alt="">
-<img class="logo-inline" src="../logo-revista.png">
-</div>
+                <div class="avatar-box">
+                    <img class="avatar-img" data-avatar-user alt="">
+                    <img class="logo-inline" src="../logo-revista.png">
+                </div>
 
-<div class="brand-copy">
-<h1>Perfil</h1>
-<p>Gerencie seus dados e sua foto.</p>
-</div>
+                <div class="brand-copy">
+                    <h1>Perfil</h1>
+                    <p>Gerencie seus dados e sua foto.</p>
+                </div>
 
-</div>
+            </div>
 
-<div class="actions-row">
-<a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
-<button class="btn btn-soft" data-action="logout">Sair</button>
-</div>
+            <div class="actions-row">
+                <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+                <button class="btn btn-soft" data-action="logout">Sair</button>
+            </div>
 
-</header>
+        </header>
 
-<div class="content-grid">
+        <div class="content-grid">
 
-<section class="panel">
+            <section class="panel">
 
-<div class="panel-head">
-<h2>Dados cadastrais</h2>
-</div>
+                <div class="panel-head">
+                    <h2>Dados cadastrais</h2>
+                </div>
 
-<form id="form-perfil">
+                <form id="form-perfil">
 
-<div class="form-grid">
+                    <div class="form-grid">
 
-<div class="field full">
-<label>Nome</label>
-<input name="nome" required>
-</div>
+                        <div class="field full">
+                            <label>Nome</label>
+                            <input name="nome" required>
+                        </div>
 
-<div class="field">
-<label>E-mail</label>
-<input name="email" disabled>
-</div>
+                        <div class="field">
+                            <label>E-mail</label>
+                            <input name="email" disabled>
+                        </div>
 
-<div class="field">
-<label>Perfil</label>
-<input name="perfil" disabled>
-</div>
+                        <div class="field">
+                            <label>Perfil</label>
+                            <input name="perfil" disabled>
+                        </div>
 
-<div class="field">
-<label>Instituição</label>
-<input name="instituicao">
-</div>
+                        <div class="field">
+                            <label>Instituição</label>
+                            <input name="instituicao">
+                        </div>
 
-<div class="field">
-<label>ORCID</label>
-<input name="orcid">
-</div>
+                        <div class="field">
+                            <label>ORCID</label>
+                            <input name="orcid">
+                        </div>
 
-<div class="field full">
-<label>Lattes</label>
-<input name="lattes">
-</div>
+                        <div class="field full">
+                            <label>Lattes</label>
+                            <input name="lattes">
+                        </div>
 
-<div class="field">
-<label>Origem</label>
-<input name="origem">
-</div>
+                        <div class="field">
+                            <label>Origem</label>
+                            <input name="origem">
+                        </div>
 
-<div class="field">
-<label>Telefone</label>
-<input name="telefone">
-</div>
+                        <div class="field">
+                            <label>Telefone</label>
+                            <input name="telefone">
+                        </div>
 
-</div>
+                    </div>
 
-<div class="actions-row">
-<button class="btn btn-primary" type="submit">Salvar perfil</button>
-</div>
+                    <div class="actions-row">
+                        <button class="btn btn-primary" type="submit">Salvar perfil</button>
+                    </div>
 
-<div class="form-message" id="msg-perfil"></div>
+                    <div class="form-message" id="msg-perfil"></div>
 
-</form>
+                </form>
 
-</section>
+            </section>
 
 
-<aside class="panel">
+            <aside class="panel">
 
-<div class="panel-head">
-<h2>Foto de perfil</h2>
-</div>
+                <div class="panel-head">
+                    <h2>Foto de perfil</h2>
+                </div>
 
-<div class="avatar-uploader">
+                <div class="avatar-uploader">
 
-<img id="avatar-preview" class="avatar-preview">
+                    <img id="avatar-preview" class="avatar-preview">
 
-<div class="avatar-drop" id="avatar-drop">
-Clique ou arraste sua foto
-<input type="file" id="avatar-input" accept="image/*" hidden>
-</div>
+                    <div class="avatar-drop" id="avatar-drop">
+                        Clique ou arraste sua foto
+                        <input type="file" id="avatar-input" accept="image/*" hidden>
+                    </div>
 
-<button id="avatar-save" type="button" class="btn btn-primary">
-Salvar foto
-</button>
+                    <button id="avatar-save" type="button" class="btn btn-primary">
+                        Salvar foto
+                    </button>
 
-<div class="form-message" id="msg-avatar"></div>
+                    <div class="form-message" id="msg-avatar"></div>
 
-</div>
+                </div>
 
-</aside>
+            </aside>
 
-</div>
+        </div>
 
-<footer class="page-footer"></footer>
+        <footer class="page-footer"></footer>
 
-</div>
+    </div>
 
-<script>
+    <script>
 
-document.addEventListener("DOMContentLoaded", async ()=>{
+        document.addEventListener("DOMContentLoaded", async () => {
 
-const user = AppPanel.requireRole([
-'autor','parecerista','editor_adjunto','editor_chefe'
-])
+            const user = AppPanel.requireRole([
+                'autor', 'parecerista', 'editor_adjunto', 'editor_chefe'
+            ])
 
-if(!user) return
+            if (!user) return
 
-const data = await AppPanel.apiData("me")
-const u = data.usuario
+            const data = await AppPanel.apiData("me")
+            const u = data.usuario
 
-const preview = document.getElementById("avatar-preview")
-const drop = document.getElementById("avatar-drop")
-const input = document.getElementById("avatar-input")
+            const preview = document.getElementById("avatar-preview")
+            const drop = document.getElementById("avatar-drop")
+            const input = document.getElementById("avatar-input")
 
-preview.src = u.foto_perfil_url || "../assets/avatar-default.png"
+            preview.src = u.foto_perfil_url || "../assets/avatar-default.png"
 
-let compressedFile=null
+            let compressedFile = null
 
 
-async function compressImage(file){
+            async function compressImage(file) {
 
-const img = await createImageBitmap(file)
+                const img = await createImageBitmap(file)
 
-const canvas=document.createElement("canvas")
-const ctx=canvas.getContext("2d")
+                const canvas = document.createElement("canvas")
+                const ctx = canvas.getContext("2d")
 
-const max=512
+                const max = 512
 
-let w=img.width
-let h=img.height
+                let w = img.width
+                let h = img.height
 
-if(w>h){
-if(w>max){h*=max/w;w=max}
-}else{
-if(h>max){w*=max/h;h=max}
-}
+                if (w > h) {
+                    if (w > max) { h *= max / w; w = max }
+                } else {
+                    if (h > max) { w *= max / h; h = max }
+                }
 
-canvas.width=w
-canvas.height=h
+                canvas.width = w
+                canvas.height = h
 
-ctx.drawImage(img,0,0,w,h)
+                ctx.drawImage(img, 0, 0, w, h)
 
-return new Promise(resolve=>{
-canvas.toBlob(blob=>{
-compressedFile=new File([blob],"avatar.jpg",{type:"image/jpeg"})
-preview.src=URL.createObjectURL(blob)
-resolve()
-},"image/jpeg",0.82)
-})
+                return new Promise(resolve => {
+                    canvas.toBlob(blob => {
+                        compressedFile = new File([blob], "avatar.jpg", { type: "image/jpeg" })
+                        preview.src = URL.createObjectURL(blob)
+                        resolve()
+                    }, "image/jpeg", 0.82)
+                })
 
-}
+            }
 
 
-drop.addEventListener("click",()=>input.click())
+            drop.addEventListener("click", () => input.click())
 
-input.addEventListener("change",async()=>{
-const file=input.files[0]
-if(file) await compressImage(file)
-})
+            input.addEventListener("change", async () => {
+                const file = input.files[0]
+                if (file) await compressImage(file)
+            })
 
-drop.addEventListener("dragover",e=>{
-e.preventDefault()
-drop.classList.add("drag")
-})
+            drop.addEventListener("dragover", e => {
+                e.preventDefault()
+                drop.classList.add("drag")
+            })
 
-drop.addEventListener("dragleave",()=>{
-drop.classList.remove("drag")
-})
+            drop.addEventListener("dragleave", () => {
+                drop.classList.remove("drag")
+            })
 
-drop.addEventListener("drop",async e=>{
-e.preventDefault()
-drop.classList.remove("drag")
-await compressImage(e.dataTransfer.files[0])
-})
+            drop.addEventListener("drop", async e => {
+                e.preventDefault()
+                drop.classList.remove("drag")
+                await compressImage(e.dataTransfer.files[0])
+            })
 
 
-document.getElementById("avatar-save")
-.addEventListener("click",async()=>{
+            document.getElementById("avatar-save")
+                .addEventListener("click", async () => {
 
-if(!compressedFile){
-alert("Selecione uma imagem")
-return
-}
+                    if (!compressedFile) {
+                        alert("Selecione uma imagem")
+                        return
+                    }
 
-const fd=new FormData()
+                    const fd = new FormData()
 
-fd.append("arquivo",compressedFile)
-fd.append("usuario_id",u.id)
+                    fd.append("arquivo", compressedFile)
+                    fd.append("usuario_id", u.id)
 
-const msg=document.getElementById("msg-avatar")
+                    const msg = document.getElementById("msg-avatar")
 
-try{
+                    try {
 
-const res=await fetch("/.netlify/functions/upload-avatar",{
-method:"POST",
-headers:AppPanel.currentUserHeaders(),
-body:fd
-})
+                        const res = await fetch(
+                            "/.netlify/functions/upload-avatar",
+                            {
+                                method: "POST",
+                                headers: AppPanel.currentUserHeaders(),
+                                body: fd
+                            }
+                        )
 
-const data=await res.json()
+                        const data = await res.json()
 
-if(!res.ok) throw new Error(data.erro)
+                        if (!res.ok) {
+                            throw new Error(data.erro)
+                        }
 
-preview.src=data.url+"?v="+Date.now()
+                        /* 🔥 AGORA ATUALIZA O BANCO */
 
-document
-.querySelectorAll("[data-avatar-user]")
-.forEach(img=>{
-img.src=data.url+"?v="+Date.now()
-})
+                        await fetch("/.netlify/functions/actions", {
+                            method: "POST",
+                            headers: {
+                                "Content-Type": "application/json",
+                                ...AppPanel.currentUserHeaders()
+                            },
+                            body: JSON.stringify({
+                                action: "update_avatar",
+                                userId: u.id,
+                                avatarUrl: data.url
+                            })
+                        })
 
-msg.textContent="Foto atualizada com sucesso"
-msg.classList.add("ok")
+                        preview.src = data.url + "?v=" + Date.now()
 
-}catch(err){
+                        document
+                            .querySelectorAll("[data-avatar-user]")
+                            .forEach(img => {
+                                img.src = data.url + "?v=" + Date.now()
+                            })
 
-msg.textContent=err.message
-msg.classList.add("err")
+                        msg.textContent = "Foto atualizada com sucesso"
+                        msg.classList.add("ok")
 
-}
+                    } catch (err) {
 
-})
+                        msg.textContent = err.message
+                        msg.classList.add("err")
 
-})
+                    }
 
-</script>
+                })
+
+        })
+
+    </script>
 
 </body>
+
 </html>
