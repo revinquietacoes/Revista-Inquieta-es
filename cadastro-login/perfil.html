@@ -43,6 +43,25 @@
     display: flex;
     gap: 10px;
   }
+
+  #avatar-drop {
+    border: 2px dashed #bbb;
+    padding: 25px;
+    border-radius: 8px;
+    cursor: pointer;
+    text-align: center;
+  }
+
+  #avatar-drop.drag {
+    border-color: #2d6cdf;
+    background: #f4f7ff;
+  }
+
+  #avatar-canvas {
+    margin-top: 10px;
+    border-radius: 50%;
+    border: 3px solid #ddd;
+  }
 </style>
 
 <body>
@@ -141,44 +160,25 @@
       </section>
 
       <!-- FOTO DE PERFIL -->
-      <aside class="panel">
+      <div id="avatar-uploader">
 
-        <div class="panel-head">
-          <h2>Foto de perfil</h2>
+        <div id="avatar-drop">
+          <p>Clique ou arraste uma foto aqui</p>
+
+          <input type="file" id="avatar-input" accept="image/png,image/jpeg,image/webp">
         </div>
 
-        <div class="profile-chip">
-          <img data-avatar-user alt="Foto atual">
+        <canvas id="avatar-canvas" width="300" height="300"></canvas>
 
-          <div>
-            <strong data-user-name></strong>
-            <div class="helper" data-user-role></div>
-          </div>
+        <div class="actions-row">
+          <button id="avatar-save" class="btn btn-primary">
+            Salvar foto
+          </button>
         </div>
 
-        <p class="helper">
-          Ao enviar uma nova foto, a imagem anterior deixa de ficar armazenada.
-          A publicação depende de aprovação editorial e consentimento.
-        </p>
+        <div class="form-message" id="msg-avatar"></div>
 
-        <div id="avatar-uploader">
-
-          <div id="avatar-drop">
-            <p>Arraste uma foto aqui ou clique para selecionar</p>
-            <input type="file" id="avatar-input" accept="image/*" hidden>
-          </div>
-
-          <canvas id="avatar-canvas" width="300" height="300"></canvas>
-
-          <div class="crop-actions">
-            <button id="avatar-save" class="btn btn-primary">
-              Salvar foto
-            </button>
-          </div>
-
-          <div class="form-message" id="msg-avatar"></div>
-
-        </div>
+      </div>
 
     </div>
 
@@ -212,6 +212,127 @@
 
       const data = await AppPanel.apiData('me')
       const u = data.usuario
+      const drop = document.getElementById("avatar-drop")
+      const input = document.getElementById("avatar-input")
+      const canvas = document.getElementById("avatar-canvas")
+      const ctx = canvas.getContext("2d")
+
+      let avatarBlob = null
+
+      function previewImage(file) {
+
+        if (!file) return
+
+        if (!file.type.startsWith("image/")) {
+          alert("Arquivo inválido")
+          return
+        }
+
+        const img = new Image()
+
+        img.onload = () => {
+
+          canvas.width = 300
+          canvas.height = 300
+
+          const size = Math.min(img.width, img.height)
+
+          ctx.clearRect(0, 0, 300, 300)
+
+          ctx.drawImage(
+            img,
+            (img.width - size) / 2,
+            (img.height - size) / 2,
+            size,
+            size,
+            0,
+            0,
+            300,
+            300
+          )
+
+          canvas.toBlob(b => {
+            avatarBlob = b
+          }, "image/jpeg", 0.85)
+
+        }
+
+        img.src = URL.createObjectURL(file)
+      }
+
+      input.addEventListener("change", () => {
+        previewImage(input.files[0])
+      })
+
+      drop.addEventListener("dragover", e => {
+        e.preventDefault()
+        drop.classList.add("drag")
+      })
+
+      drop.addEventListener("dragleave", () => {
+        drop.classList.remove("drag")
+      })
+
+      drop.addEventListener("drop", e => {
+        e.preventDefault()
+        drop.classList.remove("drag")
+
+        const file = e.dataTransfer.files[0]
+        previewImage(file)
+      })
+
+      document
+        .getElementById("avatar-save")
+        .addEventListener("click", async () => {
+
+          if (!avatarBlob) {
+            alert("Selecione uma foto primeiro")
+            return
+          }
+
+          const fd = new FormData()
+
+          fd.append("arquivo", avatarBlob, "avatar.jpg")
+          fd.append("usuario_id", String(u.id))
+          fd.append("consentimento", "true")
+
+          const msg = document.getElementById("msg-avatar")
+          msg.className = "form-message"
+
+          try {
+
+            const res = await fetch(
+              "/.netlify/functions/upload-avatar",
+              {
+                method: "POST",
+                headers: AppPanel.currentUserHeaders(),
+                body: fd
+              }
+            )
+
+            const data = await res.json()
+
+            if (!res.ok) {
+              throw new Error(data.erro || "Erro no upload")
+            }
+
+            msg.textContent = "Foto atualizada"
+            msg.classList.add("ok")
+
+            document
+              .querySelectorAll("[data-avatar-user]")
+              .forEach(img => {
+                img.src = data.url + "?v=" + Date.now()
+              })
+
+          } catch (err) {
+
+            msg.textContent = err.message
+            msg.classList.add("err")
+
+          }
+
+        })
 
       const form = document.getElementById('form-perfil')
 
