@@ -1,3 +1,14 @@
+// Verificar reCAPTCHA
+const { recaptcha } = body;
+if (!recaptcha) return json({ erro: 'Confirme que você não é um robô.' }, 400);
+const recaptchaSecret = process.env.RECAPTCHA_SECRET_KEY;
+const recaptchaRes = await fetch('https://www.google.com/recaptcha/api/siteverify', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+  body: `secret=${recaptchaSecret}&response=${recaptcha}`
+});
+const recaptchaData = await recaptchaRes.json();
+if (!recaptchaData.success) return json({ erro: 'Falha na verificação do captcha.' }, 400);
 const bcrypt = require('bcryptjs')
 const { sql, json, normalizeRole } = require('./_db')
 const { wrapHttp } = require('./_netlify')

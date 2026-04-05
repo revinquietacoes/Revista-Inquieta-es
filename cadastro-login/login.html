@@ -6,6 +6,7 @@
 <title>Login | Revista Inquietações</title>
 <link rel="icon" type="image/png" href="../assets/favicon.png">
 <link rel="stylesheet" href="painel-base.css">
+<script src="https://www.google.com/recaptcha/api.js" async defer></script>
 <style>
 .center-shell{width:min(1120px,94vw);margin:0 auto;padding:28px 0 36px;display:grid;grid-template-columns:1fr .92fr;gap:24px;align-items:center}
 .brand-side{text-align:center}
@@ -16,6 +17,14 @@
 .login-card h2{font-family:Georgia,"Times New Roman",serif;font-size:2rem;margin:0 0 10px}
 .support-note{padding:14px 16px;border-radius:16px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08);color:var(--muted);line-height:1.6}
 .support-note a{color:#ffe7b2}
+.oauth-buttons{display:flex;flex-wrap:wrap;gap:12px;margin:20px 0 16px;justify-content:center}
+.oauth-btn{display:inline-flex;align-items:center;gap:10px;padding:10px 18px;border-radius:40px;border:1px solid #ccc;background:white;color:#333;font-weight:500;cursor:pointer;transition:0.2s}
+.oauth-btn:hover{background:#f0f0f0}
+.oauth-btn.google{color:#db4437;border-color:#db4437}
+.oauth-btn.facebook{color:#1877f2;border-color:#1877f2}
+.oauth-btn.orcid{color:#2ecc71;border-color:#2ecc71}
+.divider{text-align:center;margin:16px 0;color:var(--muted);position:relative}
+.divider span{background:var(--surface);padding:0 12px}
 @media(max-width:920px){.center-shell{grid-template-columns:1fr}}
 </style>
 </head>
@@ -30,9 +39,13 @@
   <section class="panel login-card">
     <h2>Login</h2>
     <p class="helper">Entre com seu e-mail e sua senha de usuário.</p>
-    <p class="support-note">Caso tenha esquecido a senha, use o recurso de recuperação. Se necessário, escreva para <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>.</p>
-
-    <form id="form-login" action="#" method="post" novalidate>
+    <div class="oauth-buttons">
+      <button id="btn-google" class="oauth-btn google">🔵 Entrar com Google</button>
+      <button id="btn-facebook" class="oauth-btn facebook">📘 Entrar com Facebook</button>
+      <button id="btn-orcid" class="oauth-btn orcid">🆔 Entrar com ORCID</button>
+    </div>
+    <div class="divider"><span>ou use suas credenciais</span></div>
+    <form id="form-login" novalidate>
       <div class="form-grid">
         <div class="field full">
           <label for="email">E-mail</label>
@@ -43,13 +56,12 @@
           <input id="senha" name="senha" type="password" autocomplete="current-password" required>
         </div>
       </div>
-
+      <div class="g-recaptcha" data-sitekey="{{RECAPTCHA_SITE_KEY}}"></div>
       <div class="actions-row">
         <button class="btn btn-primary" id="btn-login" type="submit">Entrar</button>
         <a class="btn btn-secondary" href="cadastro.html">Criar cadastro</a>
         <a class="btn btn-soft" href="reset-senha.html">Redefinir senha</a>
       </div>
-
       <div class="form-message" id="msg-login" aria-live="polite"></div>
     </form>
   </section>
@@ -62,13 +74,25 @@
   const emailInput = document.getElementById('email');
   const senhaInput = document.getElementById('senha');
   const btnLogin = document.getElementById('btn-login');
+  const btnGoogle = document.getElementById('btn-google');
+  const btnFacebook = document.getElementById('btn-facebook');
+  const btnOrcid = document.getElementById('btn-orcid');
 
-  if (!form || !msg || !emailInput || !senhaInput || !btnLogin) return;
+  if (!form || !msg) return;
+
+  // Redirecionar para as funções OAuth
+  btnGoogle?.addEventListener('click', () => {
+    window.location.href = '/.netlify/functions/oauth-google';
+  });
+  btnFacebook?.addEventListener('click', () => {
+    window.location.href = '/.netlify/functions/oauth-facebook';
+  });
+  btnOrcid?.addEventListener('click', () => {
+    window.location.href = '/.netlify/functions/oauth-orcid';
+  });
 
   async function enviarLogin(event) {
     event.preventDefault();
-    event.stopPropagation();
-
     msg.className = 'form-message';
     msg.textContent = '';
 
@@ -81,6 +105,14 @@
       return;
     }
 
+    // Verificar reCAPTCHA
+    const recaptchaResponse = grecaptcha.getResponse();
+    if (!recaptchaResponse) {
+      msg.textContent = 'Confirme que você não é um robô.';
+      msg.classList.add('err');
+      return;
+    }
+
     btnLogin.disabled = true;
     btnLogin.textContent = 'Entrando...';
 
@@ -88,7 +120,7 @@
       const res = await fetch(`${window.location.origin}/.netlify/functions/login`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', 'Accept': 'application/json' },
-        body: JSON.stringify({ email, senha })
+        body: JSON.stringify({ email, senha, recaptcha: recaptchaResponse })
       });
 
       const contentType = res.headers.get('content-type') || '';
@@ -96,33 +128,19 @@
       let data = {};
 
       if (contentType.includes('application/json')) {
-        try {
-          data = raw ? JSON.parse(raw) : {};
-        } catch {
-          throw new Error('Resposta inválida do servidor.');
-        }
-      } else {
-        throw new Error(raw && raw.includes('405') ? 'A função de login rejeitou a requisição. Atualize a página e tente novamente.' : `Resposta inválida da função: ${raw || 'vazia'}`);
-      }
+        try { data = raw ? JSON.parse(raw) : {}; } catch { throw new Error('Resposta inválida do servidor.'); }
+      } else { throw new Error(`Resposta inválida: ${raw || 'vazia'}`); }
 
-      if (!res.ok) {
-        throw new Error(data.erro || data.detalhe || 'Erro ao realizar login.');
-      }
+      if (!res.ok) throw new Error(data.erro || data.detalhe || 'Erro ao realizar login.');
 
       localStorage.setItem('usuario_logado', JSON.stringify(data.usuario));
 
       const perfil = data.usuario.perfil;
-      if (perfil === 'autor') {
-        window.location.href = 'painel-autor.html';
-      } else if (perfil === 'parecerista') {
-        window.location.href = 'painel-parecerista.html';
-      } else if (perfil === 'editor_adjunto') {
-        window.location.href = 'painel-editor.html';
-      } else if (perfil === 'editor_chefe') {
-        window.location.href = 'painel-editor-chefe.html';
-      } else {
-        throw new Error('Perfil desconhecido.');
-      }
+      if (perfil === 'autor') window.location.href = 'painel-autor.html';
+      else if (perfil === 'parecerista') window.location.href = 'painel-parecerista.html';
+      else if (perfil === 'editor_adjunto') window.location.href = 'painel-editor.html';
+      else if (perfil === 'editor_chefe') window.location.href = 'painel-editor-chefe.html';
+      else throw new Error('Perfil desconhecido.');
     } catch (err) {
       msg.textContent = err.message || 'Erro ao realizar login.';
       msg.classList.add('err');
