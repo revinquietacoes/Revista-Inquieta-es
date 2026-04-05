@@ -1,49 +1,9 @@
 {
-  "name": "revista-inquietacoes",
+  "name": "netlify-functions",
   "version": "1.0.0",
-  "description": "Sistema editorial da Revista Inquietações",
-  "type": "module",
-  "private": true,
-
-  "scripts": {
-    "dev": "netlify dev",
-    "build": "echo 'Build not required'",
-    "start": "netlify dev"
-  },
-
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/revinquietacoes/Revista-Inquieta-es.git"
-  },
-
-  "keywords": [
-    "revista",
-    "periodico",
-    "cientifico",
-    "netlify",
-    "neon",
-    "postgres",
-    "editorial"
-  ],
-
-  "author": "Revista Inquietações",
-  "license": "MIT",
-
-  "bugs": {
-    "url": "https://github.com/revinquietacoes/Revista-Inquieta-es/issues"
-  },
-
-  "homepage": "https://github.com/revinquietacoes/Revista-Inquieta-es",
-
   "dependencies": {
-    "@netlify/blobs": "^10.7.4",
-    "@netlify/neon": "^0.1.2",
-    "bcryptjs": "^3.0.3",
+    "@netlify/blobs": "^1.0.0",
     "busboy": "^1.6.0",
-    "pg": "^8.12.0"
-  },
-
-  "engines": {
-    "node": ">=18"
+    "pg": "^8.11.3"
   }
 }
