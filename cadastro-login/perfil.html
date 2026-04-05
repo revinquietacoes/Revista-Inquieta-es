@@ -65,6 +65,23 @@
             max-width: 300px;
             border-radius: 6px;
         }
+        
+        .form-message {
+            margin-top: 10px;
+            padding: 8px;
+            border-radius: 4px;
+            font-size: 14px;
+        }
+        
+        .form-message.error {
+            background: #fee;
+            color: #c00;
+        }
+        
+        .form-message.success {
+            background: #efe;
+            color: #060;
+        }
     </style>
 
 </head>
@@ -177,7 +194,7 @@
                     <input type="file" id="avatar-input" accept="image/*" hidden>
 
                     <div class="crop-container">
-                        <canvas id="crop-canvas"></canvas>
+                        <canvas id="crop-canvas" width="300" height="300"></canvas>
 
                         <div class="actions-row" style="margin-top:10px">
                             <button id="btn-save-avatar" class="btn btn-primary">
@@ -199,11 +216,24 @@
     </div>
 
     <script>
+    document.addEventListener("DOMContentLoaded", async () => {
 
-        document.addEventListener("DOMContentLoaded", async () => {
-
+        try {
             const data = await AppPanel.apiData("me")
             const u = data.usuario
+
+            // Preencher formulário
+            const form = document.getElementById("form-perfil")
+            if (form) {
+                form.nome.value = u.nome || ""
+                form.email.value = u.email || ""
+                form.perfil.value = u.perfil || ""
+                form.instituicao.value = u.instituicao || ""
+                form.orcid.value = u.orcid || ""
+                form.lattes.value = u.lattes || ""
+                form.origem.value = u.origem || ""
+                form.telefone.value = u.telefone || ""
+            }
 
             const preview = document.getElementById("avatar-preview")
             const drop = document.getElementById("avatar-drop")
@@ -213,7 +243,25 @@
             const btnSave = document.getElementById("btn-save-avatar")
             const msg = document.getElementById("msg-avatar")
 
-            preview.src = u.foto_perfil_url || "../assets/avatares/avatar-padrao.png"
+            // CORREÇÃO 1: Verificar se a URL existe e está acessível
+            if (u.foto_perfil_url && u.foto_perfil_url !== "null" && u.foto_perfil_url !== "") {
+                // Testar se a imagem carrega
+                const testImg = new Image()
+                testImg.onload = () => {
+                    preview.src = u.foto_perfil_url
+                    // Atualizar também o avatar do header
+                    document.querySelectorAll("[data-avatar-user]").forEach(el => {
+                        if (el) el.src = u.foto_perfil_url
+                    })
+                }
+                testImg.onerror = () => {
+                    console.log("URL antiga falhou, usando padrão")
+                    preview.src = "../assets/avatares/avatar-padrao.png"
+                }
+                testImg.src = u.foto_perfil_url
+            } else {
+                preview.src = "../assets/avatares/avatar-padrao.png"
+            }
 
             let cropCtx = canvas.getContext("2d")
             let imgObj = null
@@ -233,9 +281,7 @@
             drop.addEventListener("drop", e => {
                 e.preventDefault()
                 drop.classList.remove("drag")
-
                 const file = e.dataTransfer.files[0]
-
                 if (file) loadImage(file)
             })
 
@@ -245,41 +291,45 @@
             })
 
             function loadImage(file) {
-
                 if (!file.type.startsWith("image/")) {
                     msg.textContent = "Selecione uma imagem válida."
+                    msg.className = "form-message error"
                     return
                 }
 
                 const url = URL.createObjectURL(file)
-
                 imgObj = new Image()
-
+                
                 imgObj.onload = () => {
-
                     canvas.width = cropSize
                     canvas.height = cropSize
-
                     drawCrop()
-
                     cropBox.style.display = "block"
-
+                    URL.revokeObjectURL(url) // Limpar memória
+                    msg.textContent = ""
+                    msg.className = "form-message"
                 }
-
+                
+                imgObj.onerror = () => {
+                    msg.textContent = "Erro ao carregar imagem"
+                    msg.className = "form-message error"
+                }
+                
                 imgObj.src = url
-
             }
 
             function drawCrop() {
-
                 cropCtx.clearRect(0, 0, cropSize, cropSize)
-
+                
+                // CORREÇÃO 2: Melhorar o crop para manter proporção
                 let size = Math.min(imgObj.width, imgObj.height)
+                let sx = (imgObj.width - size) / 2
+                let sy = (imgObj.height - size) / 2
 
                 cropCtx.drawImage(
                     imgObj,
-                    (imgObj.width - size) / 2,
-                    (imgObj.height - size) / 2,
+                    sx,
+                    sy,
                     size,
                     size,
                     0,
@@ -287,25 +337,27 @@
                     cropSize,
                     cropSize
                 )
-
             }
 
             btnSave.onclick = async () => {
-
                 msg.textContent = "Enviando..."
+                msg.className = "form-message"
+                msg.style.color = "#666"
 
                 canvas.toBlob(async blob => {
+                    if (!blob) {
+                        msg.textContent = "Erro ao processar imagem"
+                        msg.className = "form-message error"
+                        return
+                    }
 
                     const fd = new FormData()
-
-                    fd.append("arquivo", new File([blob], "avatar.webp", { type: "image/webp" }))
-                    fd.append("usuario_id", u.id)
+                    fd.append("arquivo", blob, "avatar.webp")
 
                     try {
-
+                        // CORREÇÃO 3: Upload sem headers personalizados
                         const r = await fetch("/.netlify/functions/upload-avatar", {
                             method: "POST",
-                            headers: AppPanel.currentUserHeaders(),
                             body: fd
                         })
 
@@ -315,26 +367,97 @@
                             throw new Error(data.erro || "Erro no upload")
                         }
 
-                        preview.src = data.url
+                        // CORREÇÃO 4: Verificar se a URL retornada está correta
+                        console.log("URL retornada:", data.url)
+                        
+                        if (!data.url) {
+                            throw new Error("URL não retornada pelo servidor")
+                        }
+
+                        // CORREÇÃO 5: Atualizar a foto no banco de dados
+                        const updateResponse = await AppPanel.apiData("atualizar-usuario", {
+                            id: u.id,
+                            campo: "foto_perfil_url",
+                            valor: data.url
+                        })
+
+                        if (!updateResponse || updateResponse.error) {
+                            throw new Error(updateResponse?.error || "Erro ao salvar no banco")
+                        }
+
+                        // Atualizar a imagem na tela
+                        preview.src = data.url + "?t=" + Date.now() // Forçar refresh
 
                         document
                             .querySelectorAll("[data-avatar-user]")
-                            .forEach(el => el.src = data.url)
+                            .forEach(el => {
+                                if (el) el.src = data.url + "?t=" + Date.now()
+                            })
 
-                        msg.textContent = "Foto atualizada com sucesso."
+                        msg.textContent = "Foto atualizada com sucesso!"
+                        msg.className = "form-message success"
+                        
+                        // Esconder o crop após salvar
+                        setTimeout(() => {
+                            cropBox.style.display = "none"
+                            setTimeout(() => {
+                                msg.textContent = ""
+                                msg.className = "form-message"
+                            }, 3000)
+                        }, 2000)
 
                     } catch (err) {
-
+                        console.error("Erro no upload:", err)
                         msg.textContent = err.message
-
+                        msg.className = "form-message error"
                     }
-
                 }, "image/webp", 0.85)
-
             }
 
-        })
-
+            // Salvar dados do perfil
+            const perfilForm = document.getElementById("form-perfil")
+            perfilForm.addEventListener("submit", async (e) => {
+                e.preventDefault()
+                
+                const msgPerfil = document.getElementById("msg-perfil")
+                msgPerfil.textContent = "Salvando..."
+                msgPerfil.className = "form-message"
+                
+                const formData = new FormData(perfilForm)
+                const dados = Object.fromEntries(formData.entries())
+                dados.id = u.id
+                
+                try {
+                    const response = await AppPanel.apiData("atualizar-usuario", dados)
+                    
+                    if (!response || response.error) {
+                        throw new Error(response?.error || "Erro ao salvar")
+                    }
+                    
+                    msgPerfil.textContent = "Perfil atualizado com sucesso!"
+                    msgPerfil.className = "form-message success"
+                    
+                    setTimeout(() => {
+                        msgPerfil.textContent = ""
+                        msgPerfil.className = "form-message"
+                    }, 3000)
+                    
+                } catch (err) {
+                    console.error("Erro ao salvar perfil:", err)
+                    msgPerfil.textContent = err.message
+                    msgPerfil.className = "form-message error"
+                }
+            })
+            
+        } catch (err) {
+            console.error("Erro ao carregar página:", err)
+            const msg = document.getElementById("msg-avatar")
+            if (msg) {
+                msg.textContent = "Erro ao carregar dados do usuário"
+                msg.className = "form-message error"
+            }
+        }
+    })
     </script>
 
 </body>
