@@ -93,7 +93,7 @@ const main = async (req) => {
 
     const publicUrl = `${supabaseUrl}/storage/v1/object/public/chat-anexos/${filePath}`
 
-    // Salvar no banco Neon (tabela arquivos_publicacao)
+    // Salvar no banco Neon (tabela arquivos_publicacao) – sem restrição de categoria
     const inserido = await sql`
       INSERT INTO arquivos_publicacao (
         usuario_id, submissao_id, categoria, nome_original, mime_type, tamanho_bytes, blob_key, blob_store, url_acesso, publico
@@ -103,32 +103,6 @@ const main = async (req) => {
     `
 
     console.log('✅ Arquivo salvo com sucesso, URL:', publicUrl)
-
-    // (Opcional) lógica para submissoes – mantenha se existir
-    if (submissaoId && categoria === 'manuscrito') {
-      const check = await sql`SELECT to_regclass('public.arquivos_submissao') AS nome`
-      if (check?.[0]?.nome) {
-        await sql`
-          INSERT INTO arquivos_submissao (submissao_id, nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria)
-          VALUES (${submissaoId}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${publicUrl}, 'principal')
-        `
-      }
-    }
-
-    if (submissaoId && categoria === 'devolutiva') {
-      try {
-        const tableCheck = await sql`SELECT to_regclass('public.arquivos_avaliacao') AS nome`
-        if (tableCheck?.[0]?.nome) {
-          const colCheck = await sql`SELECT column_name FROM information_schema.columns WHERE table_schema = 'public' AND table_name = 'arquivos_avaliacao'`
-          const cols = new Set((colCheck || []).map(r => r.column_name))
-          if (cols.has('submissao_id')) {
-            await sql`INSERT INTO arquivos_avaliacao (submissao_id, nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria) VALUES (${submissaoId}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${publicUrl}, 'devolutiva')`
-          } else {
-            await sql`INSERT INTO arquivos_avaliacao (nome_arquivo, tipo_arquivo, tamanho_bytes, url_arquivo, categoria) VALUES (${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${publicUrl}, 'devolutiva')`
-          }
-        }
-      } catch (e) { console.error('Falha ao registrar devolutiva:', e) }
-    }
 
     return json({ sucesso: true, arquivo: { url_acesso: publicUrl, id: inserido[0].id } })
   } catch (erro) {

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -19,151 +20,435 @@
       --msn-text: #212529;
       --msn-text-light: #495057;
     }
-    .msn-chat { display: flex; height: calc(100vh - 160px); min-height: 500px; background: white; border-radius: 16px; overflow: hidden; box-shadow: 0 8px 20px rgba(0,0,0,0.1); border: 1px solid var(--msn-border); }
-    .msn-contacts { width: 280px; background: var(--msn-sidebar); border-right: 1px solid var(--msn-border); display: flex; flex-direction: column; overflow: hidden; }
-    .msn-contacts-header { padding: 12px; background: var(--msn-dark); color: white; font-weight: bold; display: flex; align-items: center; gap: 8px; }
-    .msn-contacts-header img { width: 32px; border-radius: 50%; }
-    .msn-search { padding: 8px; border-bottom: 1px solid var(--msn-border); }
-    .msn-search input { width: 100%; padding: 6px 10px; border: 1px solid var(--msn-border); border-radius: 20px; font-size: 12px; }
-    .msn-contact-list { flex: 1; overflow-y: auto; }
-    .msn-contact { display: flex; align-items: center; gap: 12px; padding: 10px 12px; cursor: pointer; transition: background 0.2s; border-bottom: 1px solid var(--msn-border); }
-    .msn-contact:hover, .msn-contact.active { background: var(--msn-hover); }
-    .msn-contact-avatar { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; background: #ccc; }
-    .msn-contact-info { flex: 1; }
-    .msn-contact-name { font-weight: bold; font-size: 14px; color: var(--msn-text); }
-    .msn-contact-status { font-size: 11px; color: #4caf50; }
-    .msn-contact-status.offline { color: #9e9e9e; }
-    .msn-contact-badge { font-size: 11px; background: var(--msn-blue); color: white; border-radius: 10px; padding: 2px 6px; }
-    .msn-conversation { flex: 1; display: flex; flex-direction: column; background: white; }
-    .msn-conversation-header { padding: 12px 16px; background: #f1f3f5; border-bottom: 1px solid var(--msn-border); display: flex; justify-content: space-between; align-items: center; }
-    .msn-conversation-header strong { color: var(--msn-text); }
-    .msn-conversation-actions button { background: none; border: none; font-size: 20px; cursor: pointer; margin-left: 8px; padding: 4px 8px; border-radius: 8px; }
-    .msn-conversation-actions button:hover { background: #dee2e6; }
-    .msn-messages { flex: 1; overflow-y: auto; padding: 16px; background: #ffffff; display: flex; flex-direction: column; gap: 12px; }
-    .message-item { display: flex; flex-direction: column; max-width: 70%; align-self: flex-start; }
-    .message-item.is-self { align-self: flex-end; }
-    .message-bubble { background: #e9ecef; padding: 8px 12px; border-radius: 18px; font-size: 14px; word-wrap: break-word; color: var(--msn-text); }
-    .is-self .message-bubble { background: #dcf8c5; }
-    .message-meta { font-size: 11px; color: var(--msn-text-light); margin-top: 4px; margin-left: 8px; display: flex; gap: 8px; }
-    .message-anexo { margin-top: 6px; font-size: 12px; background: #f1f3f5; padding: 4px 8px; border-radius: 12px; display: inline-block; }
-    .message-anexo a { color: var(--msn-blue); text-decoration: none; }
-    .nudge-animation { animation: nudge 0.5s ease-in-out; }
-    @keyframes nudge { 0%,100% { transform: translateX(0); } 25% { transform: translateX(-4px); } 75% { transform: translateX(4px); } }
-    .msn-input-area { border-top: 1px solid var(--msn-border); padding: 12px; background: #f8f9fa; }
-    .msn-toolbar { display: flex; gap: 8px; margin-bottom: 8px; flex-wrap: wrap; }
-    .msn-toolbar button { background: none; border: 1px solid var(--msn-border); border-radius: 16px; padding: 4px 12px; font-size: 12px; cursor: pointer; display: inline-flex; align-items: center; gap: 4px; color: var(--msn-text); }
-    .msn-toolbar button:hover { background: #e9ecef; }
-    .msn-input-row { display: flex; gap: 8px; align-items: flex-end; }
-    .msn-input-row textarea { flex: 1; border: 1px solid var(--msn-border); border-radius: 20px; padding: 10px 12px; resize: none; font-family: inherit; font-size: 14px; }
-    .msn-input-row button { background: var(--msn-blue); color: white; border: none; border-radius: 24px; padding: 8px 16px; cursor: pointer; }
-    .recording { background: #f44336 !important; animation: pulse 1s infinite; }
-    @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.7; } 100% { opacity: 1; } }
-    .local-video, .remote-video { position: fixed; bottom: 20px; right: 20px; width: 200px; background: black; border-radius: 12px; z-index: 1000; box-shadow: 0 4px 12px rgba(0,0,0,0.3); }
-    .remote-video { right: auto; left: 20px; width: 300px; }
-    @media (max-width: 768px) { .msn-chat { flex-direction: column; } .msn-contacts { width: 100%; height: 200px; } .msn-conversation { height: 60vh; } .remote-video { width: 200px; } }
+
+    .msn-chat {
+      display: flex;
+      height: calc(100vh - 160px);
+      min-height: 500px;
+      background: white;
+      border-radius: 16px;
+      overflow: hidden;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      border: 1px solid var(--msn-border);
+    }
+
+    .msn-contacts {
+      width: 280px;
+      background: var(--msn-sidebar);
+      border-right: 1px solid var(--msn-border);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    .msn-contacts-header {
+      padding: 12px;
+      background: var(--msn-dark);
+      color: white;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .msn-contacts-header img {
+      width: 32px;
+      border-radius: 50%;
+    }
+
+    .msn-search {
+      padding: 8px;
+      border-bottom: 1px solid var(--msn-border);
+    }
+
+    .msn-search input {
+      width: 100%;
+      padding: 6px 10px;
+      border: 1px solid var(--msn-border);
+      border-radius: 20px;
+      font-size: 12px;
+    }
+
+    .msn-contact-list {
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .msn-contact {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      cursor: pointer;
+      transition: background 0.2s;
+      border-bottom: 1px solid var(--msn-border);
+    }
+
+    .msn-contact:hover,
+    .msn-contact.active {
+      background: var(--msn-hover);
+    }
+
+    .msn-contact-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      object-fit: cover;
+      background: #ccc;
+    }
+
+    .msn-contact-info {
+      flex: 1;
+    }
+
+    .msn-contact-name {
+      font-weight: bold;
+      font-size: 14px;
+      color: var(--msn-text);
+    }
+
+    .msn-contact-status {
+      font-size: 11px;
+      color: #4caf50;
+    }
+
+    .msn-contact-status.offline {
+      color: #9e9e9e;
+    }
+
+    .msn-contact-badge {
+      font-size: 11px;
+      background: var(--msn-blue);
+      color: white;
+      border-radius: 10px;
+      padding: 2px 6px;
+    }
+
+    .msn-conversation {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      background: white;
+    }
+
+    .msn-conversation-header {
+      padding: 12px 16px;
+      background: #f1f3f5;
+      border-bottom: 1px solid var(--msn-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .msn-conversation-header strong {
+      color: var(--msn-text);
+    }
+
+    .msn-conversation-actions button {
+      background: none;
+      border: none;
+      font-size: 20px;
+      cursor: pointer;
+      margin-left: 8px;
+      padding: 4px 8px;
+      border-radius: 8px;
+    }
+
+    .msn-conversation-actions button:hover {
+      background: #dee2e6;
+    }
+
+    .msn-messages {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+      background: #ffffff;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+    }
+
+    .message-item {
+      display: flex;
+      flex-direction: column;
+      max-width: 70%;
+      align-self: flex-start;
+    }
+
+    .message-item.is-self {
+      align-self: flex-end;
+    }
+
+    .message-bubble {
+      background: #e9ecef;
+      padding: 8px 12px;
+      border-radius: 18px;
+      font-size: 14px;
+      word-wrap: break-word;
+      color: var(--msn-text);
+    }
+
+    .is-self .message-bubble {
+      background: #dcf8c5;
+    }
+
+    .message-meta {
+      font-size: 11px;
+      color: var(--msn-text-light);
+      margin-top: 4px;
+      margin-left: 8px;
+      display: flex;
+      gap: 8px;
+    }
+
+    .message-anexo {
+      margin-top: 6px;
+      font-size: 12px;
+      background: #f1f3f5;
+      padding: 4px 8px;
+      border-radius: 12px;
+      display: inline-block;
+    }
+
+    .message-anexo a {
+      color: var(--msn-blue);
+      text-decoration: none;
+    }
+
+    .nudge-animation {
+      animation: nudge 0.5s ease-in-out;
+    }
+
+    @keyframes nudge {
+
+      0%,
+      100% {
+        transform: translateX(0);
+      }
+
+      25% {
+        transform: translateX(-4px);
+      }
+
+      75% {
+        transform: translateX(4px);
+      }
+    }
+
+    .msn-input-area {
+      border-top: 1px solid var(--msn-border);
+      padding: 12px;
+      background: #f8f9fa;
+    }
+
+    .msn-toolbar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 8px;
+      flex-wrap: wrap;
+    }
+
+    .msn-toolbar button {
+      background: none;
+      border: 1px solid var(--msn-border);
+      border-radius: 16px;
+      padding: 4px 12px;
+      font-size: 12px;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      color: var(--msn-text);
+    }
+
+    .msn-toolbar button:hover {
+      background: #e9ecef;
+    }
+
+    .msn-input-row {
+      display: flex;
+      gap: 8px;
+      align-items: flex-end;
+    }
+
+    .msn-input-row textarea {
+      flex: 1;
+      border: 1px solid var(--msn-border);
+      border-radius: 20px;
+      padding: 10px 12px;
+      resize: none;
+      font-family: inherit;
+      font-size: 14px;
+    }
+
+    .msn-input-row button {
+      background: var(--msn-blue);
+      color: white;
+      border: none;
+      border-radius: 24px;
+      padding: 8px 16px;
+      cursor: pointer;
+    }
+
+    .recording {
+      background: #f44336 !important;
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.7;
+      }
+
+      100% {
+        opacity: 1;
+      }
+    }
+
+    .local-video,
+    .remote-video {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      width: 200px;
+      background: black;
+      border-radius: 12px;
+      z-index: 1000;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .remote-video {
+      right: auto;
+      left: 20px;
+      width: 300px;
+    }
+
+    @media (max-width: 768px) {
+      .msn-chat {
+        flex-direction: column;
+      }
+
+      .msn-contacts {
+        width: 100%;
+        height: 200px;
+      }
+
+      .msn-conversation {
+        height: 60vh;
+      }
+
+      .remote-video {
+        width: 200px;
+      }
+    }
   </style>
 </head>
+
 <body>
-<div class="page-shell">
-  <header class="topbar">
-    <div class="brand-wrap">
-      <div class="avatar-box">
-        <img class="avatar-img" data-avatar-user alt="Avatar">
-        <img class="logo-inline" src="../logo-revista.png" alt="Logo">
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="avatar-box">
+          <img class="avatar-img" data-avatar-user alt="Avatar">
+          <img class="logo-inline" src="../logo-revista.png" alt="Logo">
+        </div>
+        <div class="brand-copy">
+          <h1>Windows Live Messenger</h1>
+          <p>Converse, compartilhe arquivos, faça chamadas de vídeo e muito mais.</p>
+        </div>
       </div>
-      <div class="brand-copy">
-        <h1>Windows Live Messenger</h1>
-        <p>Converse, compartilhe arquivos, faça chamadas de vídeo e muito mais.</p>
+      <div class="actions-row">
+        <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+        <button class="btn btn-soft" data-action="logout">Sair</button>
       </div>
-    </div>
-    <div class="actions-row">
-      <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
-      <button class="btn btn-soft" data-action="logout">Sair</button>
-    </div>
-  </header>
+    </header>
 
-  <div class="msn-chat">
-    <div class="msn-contacts">
-      <div class="msn-contacts-header">
-        <img src="../assets/avatares/avatar-padrao.png" alt="Meu avatar" id="myAvatarHeader">
-        <span id="myNameHeader">Carregando...</span>
+    <div class="msn-chat">
+      <div class="msn-contacts">
+        <div class="msn-contacts-header">
+          <img src="../assets/avatares/avatar-padrao.png" alt="Meu avatar" id="myAvatarHeader">
+          <span id="myNameHeader">Carregando...</span>
+        </div>
+        <div class="msn-search">
+          <input type="text" placeholder="Localizar contato..." id="searchContact">
+        </div>
+        <div class="msn-contact-list" id="contactList"></div>
       </div>
-      <div class="msn-search">
-        <input type="text" placeholder="Localizar contato..." id="searchContact">
+      <div class="msn-conversation" id="conversationArea" style="display: none;">
+        <div class="msn-conversation-header">
+          <div>
+            <strong id="chatContactName"></strong>
+            <span id="chatContactStatus" style="font-size: 12px; margin-left: 8px;"></span>
+          </div>
+          <div class="msn-conversation-actions">
+            <button id="videoCallBtn" title="Chamada de vídeo">🎥</button>
+            <button id="nudgeBtn" title="Chamar atenção">✨</button>
+          </div>
+        </div>
+        <div class="msn-messages" id="messagesContainer"></div>
+        <div class="msn-input-area">
+          <div class="msn-toolbar">
+            <button id="attachFileBtn">📎 Anexar</button>
+            <button id="audioMsgBtn">🎤 Áudio</button>
+            <button id="locationBtn">📍 Localização</button>
+            <input type="file" id="fileInput" hidden accept="image/*,application/pdf,audio/*,video/*">
+          </div>
+          <div class="msn-input-row">
+            <textarea id="messageText" rows="2" placeholder="Digite sua mensagem..."></textarea>
+            <button id="sendMsgBtn">Enviar</button>
+          </div>
+        </div>
       </div>
-      <div class="msn-contact-list" id="contactList"></div>
     </div>
-    <div class="msn-conversation" id="conversationArea" style="display: none;">
-      <div class="msn-conversation-header">
-        <div>
-          <strong id="chatContactName"></strong>
-          <span id="chatContactStatus" style="font-size: 12px; margin-left: 8px;"></span>
-        </div>
-        <div class="msn-conversation-actions">
-          <button id="videoCallBtn" title="Chamada de vídeo">🎥</button>
-          <button id="nudgeBtn" title="Chamar atenção">✨</button>
-        </div>
-      </div>
-      <div class="msn-messages" id="messagesContainer"></div>
-      <div class="msn-input-area">
-        <div class="msn-toolbar">
-          <button id="attachFileBtn">📎 Anexar</button>
-          <button id="audioMsgBtn">🎤 Áudio</button>
-          <button id="locationBtn">📍 Localização</button>
-          <input type="file" id="fileInput" hidden accept="image/*,application/pdf,audio/*,video/*">
-        </div>
-        <div class="msn-input-row">
-          <textarea id="messageText" rows="2" placeholder="Digite sua mensagem..."></textarea>
-          <button id="sendMsgBtn">Enviar</button>
-        </div>
-      </div>
-    </div>
+    <footer class="page-footer"></footer>
   </div>
-  <footer class="page-footer"></footer>
-</div>
 
-<script>
-  let currentUser = null;
-  let contacts = [];
-  let activeContactId = null;
-  let messagesCache = new Map();
-  let mediaRecorder = null;
-  let audioChunks = [];
-  let isRecording = false;
-  let peerConnection = null;
-  let localStream = null;
-  let remoteVideoElement = null;
-  let localVideoElement = null;
+  <script>
+    let currentUser = null;
+    let contacts = [];
+    let activeContactId = null;
+    let messagesCache = new Map();
+    let mediaRecorder = null;
+    let audioChunks = [];
+    let isRecording = false;
+    let peerConnection = null;
+    let localStream = null;
+    let remoteVideoElement = null;
+    let localVideoElement = null;
 
-  function authHeaders() {
-    const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
-    delete headers['Content-Type'];
-    delete headers['content-type'];
-    return headers;
-  }
-
-  async function loadContacts() {
-    try {
-      const data = await AppPanel.apiData('chat_recipients');
-      // Filtra o próprio usuário e converte IDs para string para evitar problemas de tipo
-      contacts = data.usuarios.filter(u => String(u.id) !== String(currentUser.id)).map(u => ({ ...u, id: String(u.id) }));
-      console.log('Contatos carregados:', contacts.length);
-      renderContactList();
-    } catch (err) {
-      console.error('Erro ao carregar contatos:', err);
-      document.getElementById('contactList').innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar contatos.</div>';
+    function authHeaders() {
+      const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
+      delete headers['Content-Type'];
+      delete headers['content-type'];
+      return headers;
     }
-  }
 
-  function renderContactList() {
-    const container = document.getElementById('contactList');
-    const searchTerm = document.getElementById('searchContact').value.toLowerCase();
-    const filtered = contacts.filter(c => c.nome.toLowerCase().includes(searchTerm));
-    if (filtered.length === 0) {
-      container.innerHTML = '<div class="empty-state" style="padding: 16px; text-align: center;">Nenhum contato encontrado</div>';
-      return;
+    async function loadContacts() {
+      try {
+        const data = await AppPanel.apiData('chat_recipients');
+        // Filtra o próprio usuário e converte IDs para string para evitar problemas de tipo
+        contacts = data.usuarios.filter(u => String(u.id) !== String(currentUser.id)).map(u => ({ ...u, id: String(u.id) }));
+        console.log('Contatos carregados:', contacts.length);
+        renderContactList();
+      } catch (err) {
+        console.error('Erro ao carregar contatos:', err);
+        document.getElementById('contactList').innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar contatos.</div>';
+      }
     }
-    container.innerHTML = filtered.map(c => `
+
+    function renderContactList() {
+      const container = document.getElementById('contactList');
+      const searchTerm = document.getElementById('searchContact').value.toLowerCase();
+      const filtered = contacts.filter(c => c.nome.toLowerCase().includes(searchTerm));
+      if (filtered.length === 0) {
+        container.innerHTML = '<div class="empty-state" style="padding: 16px; text-align: center;">Nenhum contato encontrado</div>';
+        return;
+      }
+      container.innerHTML = filtered.map(c => `
       <div class="msn-contact" data-id="${c.id}">
         <img class="msn-contact-avatar" src="${c.foto_perfil_url || '../assets/avatares/avatar-padrao.png'}" alt="avatar">
         <div class="msn-contact-info">
@@ -173,252 +458,269 @@
         ${c.unread ? `<span class="msn-contact-badge">${c.unread}</span>` : ''}
       </div>
     `).join('');
-  }
+    }
 
-  // Delegação de eventos para cliques nos contatos
-  document.getElementById('contactList').addEventListener('click', (e) => {
-    const contactDiv = e.target.closest('.msn-contact');
-    if (contactDiv) {
-      const contactId = contactDiv.dataset.id; // string
-      console.log('Clique no contato com ID (string):', contactId);
-      if (contactId) {
-        selectContact(contactId);
+    // Delegação de eventos para cliques nos contatos
+    document.getElementById('contactList').addEventListener('click', (e) => {
+      const contactDiv = e.target.closest('.msn-contact');
+      if (contactDiv) {
+        const contactId = contactDiv.dataset.id; // string
+        console.log('Clique no contato com ID (string):', contactId);
+        if (contactId) {
+          selectContact(contactId);
+        }
+      }
+    });
+
+    async function selectContact(contactId) {
+      console.log('Selecionando contato com ID:', contactId);
+      // Busca o contato no array atual (compara como string)
+      let contact = contacts.find(c => c.id === contactId);
+      if (!contact) {
+        console.warn('Contato não encontrado no array atual. Recarregando contatos...');
+        await loadContacts();
+        contact = contacts.find(c => c.id === contactId);
+        if (!contact) {
+          console.error('Contato ainda não encontrado após recarregar. ID:', contactId);
+          alert('Contato não encontrado. Tente novamente mais tarde.');
+          return;
+        }
+      }
+      activeContactId = contact.id;
+      const convArea = document.getElementById('conversationArea');
+      convArea.style.display = 'flex';
+      document.getElementById('chatContactName').innerText = contact.nome;
+      document.getElementById('chatContactStatus').innerHTML = contact.online ? '🟢 Online' : '⚫ Offline';
+      // Marcar como ativo na lista
+      document.querySelectorAll('.msn-contact').forEach(el => {
+        el.classList.remove('active');
+        if (el.dataset.id === contactId) el.classList.add('active');
+      });
+      loadMessages(contact.id);
+    }
+
+    async function loadMessages(contactId) {
+      const container = document.getElementById('messagesContainer');
+      container.innerHTML = '<div style="padding:16px;text-align:center;">Carregando mensagens...</div>';
+      try {
+        const data = await AppPanel.apiData('chat_messages', { targetUserId: parseInt(contactId) });
+        messagesCache.set(contactId, data.mensagens || []);
+        renderMessages(contactId);
+      } catch (err) {
+        console.error('Erro ao carregar mensagens:', err);
+        container.innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar mensagens.</div>';
       }
     }
-  });
 
-  async function selectContact(contactId) {
-    console.log('Selecionando contato com ID:', contactId);
-    // Busca o contato no array atual (compara como string)
-    let contact = contacts.find(c => c.id === contactId);
-    if (!contact) {
-      console.warn('Contato não encontrado no array atual. Recarregando contatos...');
-      await loadContacts();
-      contact = contacts.find(c => c.id === contactId);
-      if (!contact) {
-        console.error('Contato ainda não encontrado após recarregar. ID:', contactId);
-        alert('Contato não encontrado. Tente novamente mais tarde.');
+    function renderMessages(contactId) {
+      const msgs = messagesCache.get(contactId) || [];
+      const container = document.getElementById('messagesContainer');
+      if (msgs.length === 0) {
+        container.innerHTML = '<div style="padding:16px;text-align:center;">Nenhuma mensagem ainda. Envie uma mensagem!</div>';
         return;
       }
-    }
-    activeContactId = contact.id;
-    const convArea = document.getElementById('conversationArea');
-    convArea.style.display = 'flex';
-    document.getElementById('chatContactName').innerText = contact.nome;
-    document.getElementById('chatContactStatus').innerHTML = contact.online ? '🟢 Online' : '⚫ Offline';
-    // Marcar como ativo na lista
-    document.querySelectorAll('.msn-contact').forEach(el => {
-      el.classList.remove('active');
-      if (el.dataset.id === contactId) el.classList.add('active');
-    });
-    loadMessages(contact.id);
-  }
-
-  async function loadMessages(contactId) {
-    const container = document.getElementById('messagesContainer');
-    container.innerHTML = '<div style="padding:16px;text-align:center;">Carregando mensagens...</div>';
-    try {
-      const data = await AppPanel.apiData('chat_messages', { targetUserId: parseInt(contactId) });
-      messagesCache.set(contactId, data.mensagens || []);
-      renderMessages(contactId);
-    } catch (err) {
-      console.error('Erro ao carregar mensagens:', err);
-      container.innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar mensagens.</div>';
-    }
-  }
-
-  function renderMessages(contactId) {
-    const msgs = messagesCache.get(contactId) || [];
-    const container = document.getElementById('messagesContainer');
-    if (msgs.length === 0) {
-      container.innerHTML = '<div style="padding:16px;text-align:center;">Nenhuma mensagem ainda. Envie uma mensagem!</div>';
-      return;
-    }
-    container.innerHTML = msgs.map(msg => {
-      const isSelf = String(msg.remetente_id) === String(currentUser.id);
-      const date = new Date(msg.criado_em).toLocaleString('pt-BR');
-      let anexoHtml = '';
-      if (msg.anexo_url) {
-        anexoHtml = `<div class="message-anexo"><a href="${msg.anexo_url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo'}</a></div>`;
-      }
-      let nudgeClass = msg.mensagem === '🔔 *nudge*' ? 'nudge-animation' : '';
-      return `
-        <div class="message-item ${isSelf ? 'is-self' : ''} ${nudgeClass}">
-          <div class="message-bubble">${escapeHtml(msg.mensagem || '')}</div>
-          ${anexoHtml}
-          <div class="message-meta">
-            <span>${isSelf ? 'Você' : msg.remetente_nome}</span>
-            <span>${date}</span>
-          </div>
+      container.innerHTML = msgs.map(msg => {
+        const isSelf = String(msg.remetente_id) === String(currentUser.id);
+        const date = new Date(msg.criado_em).toLocaleString('pt-BR');
+        let anexoHtml = '';
+        if (msg.anexo_url) {
+          let url = msg.anexo_url;
+          // Se for URL antiga do Netlify Blobs, tenta converter (fallback) – ou apenas mostra link
+          if (url.includes('/.netlify/functions/arquivo')) {
+            // Mantém como link, pois a função arquivo.js pode ter sido removida
+            anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo antigo'}</a></div>`;
+          } else {
+            const lowerUrl = url.toLowerCase();
+            if (lowerUrl.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
+              anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank"><img src="${url}" style="max-width: 200px; max-height: 150px; border-radius: 8px; margin-top: 6px; cursor: pointer;"></a></div>`;
+            } else if (lowerUrl.match(/\.(mp3|wav|ogg|webm)$/)) {
+              anexoHtml = `<div class="message-anexo"><audio controls src="${url}" style="max-width: 200px;"></audio></div>`;
+            } else if (lowerUrl.match(/\.(mp4|webm)$/)) {
+              anexoHtml = `<div class="message-anexo"><video controls src="${url}" style="max-width: 250px; border-radius: 8px;"></video></div>`;
+            } else {
+              anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo'}</a></div>`;
+            }
+          }
+        }
+        let nudgeClass = msg.mensagem === '🔔 *nudge*' ? 'nudge-animation' : '';
+        return `
+      <div class="message-item ${isSelf ? 'is-self' : ''} ${nudgeClass}">
+        <div class="message-bubble">${escapeHtml(msg.mensagem || '')}</div>
+        ${anexoHtml}
+        <div class="message-meta">
+          <span>${isSelf ? 'Você' : msg.remetente_nome}</span>
+          <span>${date}</span>
         </div>
-      `;
-    }).join('');
-    container.scrollTop = container.scrollHeight;
-  }
-
-  async function sendMessage(text, anexoInfo = null) {
-    if (!activeContactId) return;
-    if (!text.trim() && !anexoInfo) return;
-    try {
-      const payload = {
-        destinatarioId: parseInt(activeContactId),
-        mensagem: text.trim() || '📎 Arquivo anexado'
-      };
-      if (anexoInfo) {
-        payload.anexoUrl = anexoInfo.url;
-        payload.anexoNome = anexoInfo.nome;
-        payload.anexoMime = anexoInfo.mime;
-      }
-      await AppPanel.apiAction('send_direct_message', payload);
-      await loadMessages(activeContactId);
-      document.getElementById('messageText').value = '';
-    } catch (err) {
-      alert('Erro ao enviar mensagem: ' + err.message);
+      </div>
+    `;
+      }).join('');
+      container.scrollTop = container.scrollHeight;
     }
-  }
 
-  async function uploadAttachment(file) {
-    const fd = new FormData();
-    fd.append('usuario_id', currentUser.id);
-    fd.append('categoria', 'chat');
-    fd.append('arquivo', file);
-    const resp = await fetch('/.netlify/functions/upload-material', {
-      method: 'POST',
-      headers: authHeaders(),
-      body: fd
+    async function sendMessage(text, anexoInfo = null) {
+      if (!activeContactId) return;
+      if (!text.trim() && !anexoInfo) return;
+      try {
+        const payload = {
+          destinatarioId: parseInt(activeContactId),
+          mensagem: text.trim() || '📎 Arquivo anexado'
+        };
+        if (anexoInfo) {
+          payload.anexoUrl = anexoInfo.url;
+          payload.anexoNome = anexoInfo.nome;
+          payload.anexoMime = anexoInfo.mime;
+        }
+        await AppPanel.apiAction('send_direct_message', payload);
+        await loadMessages(activeContactId);
+        document.getElementById('messageText').value = '';
+      } catch (err) {
+        alert('Erro ao enviar mensagem: ' + err.message);
+      }
+    }
+
+    async function uploadAttachment(file) {
+      const fd = new FormData();
+      fd.append('usuario_id', currentUser.id);
+      fd.append('categoria', 'chat');
+      fd.append('arquivo', file);
+      const resp = await fetch('/.netlify/functions/upload-material', {
+        method: 'POST',
+        headers: authHeaders(),
+        body: fd
+      });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.erro || 'Falha no upload');
+      return { url: data.arquivo.url_acesso, nome: file.name, mime: file.type };
+    }
+
+    async function startAudioRecording() {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      mediaRecorder = new MediaRecorder(stream);
+      audioChunks = [];
+      mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+      mediaRecorder.onstop = async () => {
+        const blob = new Blob(audioChunks, { type: 'audio/webm' });
+        const file = new File([blob], 'audio-mensagem.webm', { type: 'audio/webm' });
+        try {
+          const anexo = await uploadAttachment(file);
+          await sendMessage('🎤 Mensagem de áudio', anexo);
+        } catch (err) { alert('Erro ao enviar áudio: ' + err.message); }
+        stream.getTracks().forEach(t => t.stop());
+        document.getElementById('audioMsgBtn').classList.remove('recording');
+        document.getElementById('audioMsgBtn').innerHTML = '🎤 Áudio';
+        isRecording = false;
+      };
+      mediaRecorder.start();
+      isRecording = true;
+      document.getElementById('audioMsgBtn').classList.add('recording');
+      document.getElementById('audioMsgBtn').innerHTML = '⏹️ Parar';
+      setTimeout(() => { if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); }, 30000);
+    }
+
+    function stopAudioRecording() { if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); }
+
+    function sendLocation() {
+      if (!navigator.geolocation) { alert('Geolocalização não suportada.'); return; }
+      navigator.geolocation.getCurrentPosition(async (pos) => {
+        const { latitude, longitude } = pos.coords;
+        const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
+        await sendMessage(`📍 Minha localização: ${mapsUrl}`);
+      }, () => alert('Não foi possível obter sua localização.'));
+    }
+
+    async function sendNudge() {
+      await sendMessage('🔔 *nudge*');
+      const container = document.getElementById('messagesContainer');
+      container.classList.add('nudge-animation');
+      setTimeout(() => container.classList.remove('nudge-animation'), 500);
+    }
+
+    async function startVideoCall() {
+      if (!peerConnection) {
+        peerConnection = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
+        localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
+        localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
+        if (!localVideoElement) {
+          localVideoElement = document.createElement('video');
+          localVideoElement.className = 'local-video';
+          localVideoElement.autoplay = true;
+          localVideoElement.muted = true;
+          document.body.appendChild(localVideoElement);
+        }
+        localVideoElement.srcObject = localStream;
+        peerConnection.ontrack = event => {
+          if (!remoteVideoElement) {
+            remoteVideoElement = document.createElement('video');
+            remoteVideoElement.className = 'remote-video';
+            remoteVideoElement.autoplay = true;
+            document.body.appendChild(remoteVideoElement);
+          }
+          remoteVideoElement.srcObject = event.streams[0];
+        };
+        peerConnection.onicecandidate = event => {
+          if (event.candidate) sendMessage(`📹 ice_candidate:${JSON.stringify(event.candidate)}`);
+        };
+        const offer = await peerConnection.createOffer();
+        await peerConnection.setLocalDescription(offer);
+        await sendMessage(`📹 video_offer:${JSON.stringify(offer)}`);
+      }
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return str.replace(/[&<>]/g, m => { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; });
+    }
+
+    document.addEventListener('DOMContentLoaded', async () => {
+      try {
+        if (typeof AppPanel === 'undefined') throw new Error('AppPanel não carregado');
+        currentUser = await AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
+        if (!currentUser) throw new Error('Usuário não autenticado ou perfil não autorizado');
+        // Garantir que o ID do usuário seja string para consistência
+        currentUser.id = String(currentUser.id);
+        console.log('Usuário logado:', currentUser);
+        document.getElementById('myNameHeader').innerText = currentUser.nome;
+        const myAvatar = currentUser.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
+        document.getElementById('myAvatarHeader').src = myAvatar;
+        await loadContacts();
+        const urlParams = new URLSearchParams(location.search);
+        const targetId = urlParams.get('target');
+        if (targetId && contacts.find(c => c.id === targetId)) {
+          selectContact(targetId);
+        }
+      } catch (err) {
+        console.error('Erro na inicialização:', err);
+        document.getElementById('contactList').innerHTML = `<div style="padding:16px;text-align:center;color:red;">${err.message}</div>`;
+      }
     });
-    const data = await resp.json();
-    if (!resp.ok) throw new Error(data.erro || 'Falha no upload');
-    return { url: data.arquivo.url_acesso, nome: file.name, mime: file.type };
-  }
 
-  async function startAudioRecording() {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
-    mediaRecorder = new MediaRecorder(stream);
-    audioChunks = [];
-    mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
-    mediaRecorder.onstop = async () => {
-      const blob = new Blob(audioChunks, { type: 'audio/webm' });
-      const file = new File([blob], 'audio-mensagem.webm', { type: 'audio/webm' });
+    // Eventos da interface
+    document.getElementById('searchContact').addEventListener('input', () => renderContactList());
+    document.getElementById('sendMsgBtn').addEventListener('click', () => {
+      const text = document.getElementById('messageText').value;
+      if (text.trim()) sendMessage(text);
+    });
+    document.getElementById('messageText').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        document.getElementById('sendMsgBtn').click();
+      }
+    });
+    document.getElementById('attachFileBtn').addEventListener('click', () => { document.getElementById('fileInput').click(); });
+    document.getElementById('fileInput').addEventListener('change', async (e) => {
+      const file = e.target.files[0];
+      if (!file) return;
       try {
         const anexo = await uploadAttachment(file);
-        await sendMessage('🎤 Mensagem de áudio', anexo);
-      } catch (err) { alert('Erro ao enviar áudio: ' + err.message); }
-      stream.getTracks().forEach(t => t.stop());
-      document.getElementById('audioMsgBtn').classList.remove('recording');
-      document.getElementById('audioMsgBtn').innerHTML = '🎤 Áudio';
-      isRecording = false;
-    };
-    mediaRecorder.start();
-    isRecording = true;
-    document.getElementById('audioMsgBtn').classList.add('recording');
-    document.getElementById('audioMsgBtn').innerHTML = '⏹️ Parar';
-    setTimeout(() => { if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); }, 30000);
-  }
-
-  function stopAudioRecording() { if (mediaRecorder && mediaRecorder.state === 'recording') mediaRecorder.stop(); }
-
-  function sendLocation() {
-    if (!navigator.geolocation) { alert('Geolocalização não suportada.'); return; }
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const { latitude, longitude } = pos.coords;
-      const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-      await sendMessage(`📍 Minha localização: ${mapsUrl}`);
-    }, () => alert('Não foi possível obter sua localização.'));
-  }
-
-  async function sendNudge() {
-    await sendMessage('🔔 *nudge*');
-    const container = document.getElementById('messagesContainer');
-    container.classList.add('nudge-animation');
-    setTimeout(() => container.classList.remove('nudge-animation'), 500);
-  }
-
-  async function startVideoCall() {
-    if (!peerConnection) {
-      peerConnection = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
-      localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
-      localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
-      if (!localVideoElement) {
-        localVideoElement = document.createElement('video');
-        localVideoElement.className = 'local-video';
-        localVideoElement.autoplay = true;
-        localVideoElement.muted = true;
-        document.body.appendChild(localVideoElement);
-      }
-      localVideoElement.srcObject = localStream;
-      peerConnection.ontrack = event => {
-        if (!remoteVideoElement) {
-          remoteVideoElement = document.createElement('video');
-          remoteVideoElement.className = 'remote-video';
-          remoteVideoElement.autoplay = true;
-          document.body.appendChild(remoteVideoElement);
-        }
-        remoteVideoElement.srcObject = event.streams[0];
-      };
-      peerConnection.onicecandidate = event => {
-        if (event.candidate) sendMessage(`📹 ice_candidate:${JSON.stringify(event.candidate)}`);
-      };
-      const offer = await peerConnection.createOffer();
-      await peerConnection.setLocalDescription(offer);
-      await sendMessage(`📹 video_offer:${JSON.stringify(offer)}`);
-    }
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, m => { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; });
-  }
-
-  document.addEventListener('DOMContentLoaded', async () => {
-    try {
-      if (typeof AppPanel === 'undefined') throw new Error('AppPanel não carregado');
-      currentUser = await AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
-      if (!currentUser) throw new Error('Usuário não autenticado ou perfil não autorizado');
-      // Garantir que o ID do usuário seja string para consistência
-      currentUser.id = String(currentUser.id);
-      console.log('Usuário logado:', currentUser);
-      document.getElementById('myNameHeader').innerText = currentUser.nome;
-      const myAvatar = currentUser.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
-      document.getElementById('myAvatarHeader').src = myAvatar;
-      await loadContacts();
-      const urlParams = new URLSearchParams(location.search);
-      const targetId = urlParams.get('target');
-      if (targetId && contacts.find(c => c.id === targetId)) {
-        selectContact(targetId);
-      }
-    } catch (err) {
-      console.error('Erro na inicialização:', err);
-      document.getElementById('contactList').innerHTML = `<div style="padding:16px;text-align:center;color:red;">${err.message}</div>`;
-    }
-  });
-
-  // Eventos da interface
-  document.getElementById('searchContact').addEventListener('input', () => renderContactList());
-  document.getElementById('sendMsgBtn').addEventListener('click', () => {
-    const text = document.getElementById('messageText').value;
-    if (text.trim()) sendMessage(text);
-  });
-  document.getElementById('messageText').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      document.getElementById('sendMsgBtn').click();
-    }
-  });
-  document.getElementById('attachFileBtn').addEventListener('click', () => { document.getElementById('fileInput').click(); });
-  document.getElementById('fileInput').addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    try {
-      const anexo = await uploadAttachment(file);
-      await sendMessage('', anexo);
-    } catch (err) { alert('Erro ao enviar anexo: ' + err.message); }
-    e.target.value = '';
-  });
-  document.getElementById('audioMsgBtn').addEventListener('click', () => { if (isRecording) stopAudioRecording(); else startAudioRecording(); });
-  document.getElementById('locationBtn').addEventListener('click', sendLocation);
-  document.getElementById('nudgeBtn').addEventListener('click', sendNudge);
-  document.getElementById('videoCallBtn').addEventListener('click', startVideoCall);
-</script>
+        await sendMessage('', anexo);
+      } catch (err) { alert('Erro ao enviar anexo: ' + err.message); }
+      e.target.value = '';
+    });
+    document.getElementById('audioMsgBtn').addEventListener('click', () => { if (isRecording) stopAudioRecording(); else startAudioRecording(); });
+    document.getElementById('locationBtn').addEventListener('click', sendLocation);
+    document.getElementById('nudgeBtn').addEventListener('click', sendNudge);
+    document.getElementById('videoCallBtn').addEventListener('click', startVideoCall);
+  </script>
 </body>
+
 </html>
