@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Enviar notificação em massa</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Avatar"><img class="logo-inline" src="../logo-revista.png" alt="Logo"></div>
+      <div class="brand-copy"><h1>Enviar notificação</h1><p>Envie comunicados para usuários do sistema</p></div>
+    </div>
+    <div class="actions-row"><a class="btn btn-secondary" href="painel-editor-chefe.html">Voltar</a><button class="btn btn-soft" data-action="logout">Sair</button></div>
+  </header>
+  <div class="panel" style="max-width: 700px; margin: 20px auto;">
+    <div class="panel-head"><h2>Nova notificação</h2></div>
+    <div class="panel-body">
+      <form id="form-notificacao">
+        <div class="form-grid">
+          <div class="field full">
+            <label>Destinatários</label>
+            <select id="targetType" name="targetType" required>
+              <option value="todos">Todos os usuários ativos</option>
+              <option value="perfil">Por perfil</option>
+              <option value="lista">Lista de IDs (separados por vírgula)</option>
+            </select>
+          </div>
+          <div class="field full" id="perfil-group" style="display:none;">
+            <label>Perfil</label>
+            <select id="perfilValue">
+              <option value="autor">Autor</option>
+              <option value="parecerista">Parecerista</option>
+              <option value="editor_adjunto">Editor Adjunto</option>
+              <option value="editor_chefe">Editor Chefe</option>
+            </select>
+          </div>
+          <div class="field full" id="lista-group" style="display:none;">
+            <label>IDs dos usuários (ex: 1,2,3)</label>
+            <input type="text" id="listaIds" placeholder="1,2,3">
+          </div>
+          <div class="field full"><label>Título</label><input type="text" id="titulo" required></div>
+          <div class="field full"><label>Mensagem</label><textarea id="mensagem" rows="4" required></textarea></div>
+          <div class="field full"><label>Link (opcional)</label><input type="text" id="link" placeholder="ex: /cadastro-login/notificacoes.html"></div>
+        </div>
+        <div class="actions-row"><button class="btn btn-primary" type="submit">Enviar notificação</button></div>
+        <div id="msg" class="form-message"></div>
+      </form>
+    </div>
+  </div>
+</div>
+<script>
+  const targetType = document.getElementById('targetType');
+  const perfilGroup = document.getElementById('perfil-group');
+  const listaGroup = document.getElementById('lista-group');
+
+  targetType.addEventListener('change', () => {
+    perfilGroup.style.display = targetType.value === 'perfil' ? 'block' : 'none';
+    listaGroup.style.display = targetType.value === 'lista' ? 'block' : 'none';
+  });
+
+  document.getElementById('form-notificacao').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msgDiv = document.getElementById('msg');
+    msgDiv.className = 'form-message';
+    msgDiv.textContent = 'Enviando...';
+    const payload = {
+      action: 'send_notification',
+      targetType: targetType.value,
+      titulo: document.getElementById('titulo').value,
+      mensagem: document.getElementById('mensagem').value,
+      link: document.getElementById('link').value || null
+    };
+    if (targetType.value === 'perfil') {
+      payload.targetIds = document.getElementById('perfilValue').value;
+    } else if (targetType.value === 'lista') {
+      const ids = document.getElementById('listaIds').value.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
+      if (ids.length === 0) {
+        msgDiv.textContent = 'Informe pelo menos um ID válido.';
+        msgDiv.classList.add('err');
+        return;
+      }
+      payload.targetIds = ids;
+    }
+    try {
+      const result = await AppPanel.apiAction('send_notification', payload);
+      if (result.erro) throw new Error(result.erro);
+      msgDiv.textContent = `Notificação enviada para ${result.enviadas} usuário(s).`;
+      msgDiv.classList.add('ok');
+      document.getElementById('form-notificacao').reset();
+    } catch (err) {
+      msgDiv.textContent = err.message;
+      msgDiv.classList.add('err');
+    }
+  });
+</script>
+</body>
+</html>

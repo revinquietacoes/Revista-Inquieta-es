@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas notificações</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+  <style>
+    .notificacao-lista { max-width: 800px; margin: 20px auto; }
+    .notificacao-item { background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); cursor: pointer; transition: 0.2s; }
+    .notificacao-item.nao-lida { background: #e8f0fe; border-left: 4px solid #1e88e5; }
+    .notificacao-item:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    .notificacao-titulo { font-weight: bold; margin-bottom: 5px; }
+    .notificacao-mensagem { color: #555; margin-bottom: 8px; }
+    .notificacao-data { font-size: 0.75rem; color: #999; }
+    .paginacao { display: flex; justify-content: center; gap: 10px; margin-top: 20px; }
+  </style>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Avatar"><img class="logo-inline" src="../logo-revista.png" alt="Logo"></div>
+      <div class="brand-copy"><h1>Minhas notificações</h1><p>Histórico de alertas e comunicados</p></div>
+    </div>
+    <div class="actions-row"><a class="btn btn-secondary" href="javascript:history.back()">Voltar</a><button class="btn btn-soft" data-action="logout">Sair</button></div>
+  </header>
+  <div class="notificacao-lista" id="lista-notificacoes"></div>
+  <div class="paginacao" id="paginacao"></div>
+</div>
+<script>
+  let currentPage = 0;
+  const limit = 20;
+
+  async function carregarNotificacoes(page = 0) {
+    const offset = page * limit;
+    const data = await AppPanel.buscarNotificacoes(false, limit, offset);
+    const container = document.getElementById('lista-notificacoes');
+    if (!data.notificacoes.length && page === 0) {
+      container.innerHTML = '<p style="text-align:center">Nenhuma notificação encontrada.</p>';
+      return;
+    }
+    container.innerHTML = data.notificacoes.map(n => `
+      <div class="notificacao-item ${!n.lida ? 'nao-lida' : ''}" data-id="${n.id}" data-lida="${n.lida}">
+        <div class="notificacao-titulo">${escapeHtml(n.titulo)}</div>
+        <div class="notificacao-mensagem">${escapeHtml(n.mensagem)}</div>
+        <div class="notificacao-data">${new Date(n.criado_em).toLocaleString('pt-BR')}</div>
+      </div>
+    `).join('');
+    // Marcar como lida ao clicar
+    document.querySelectorAll('.notificacao-item').forEach(el => {
+      el.addEventListener('click', async () => {
+        const id = el.dataset.id;
+        if (el.dataset.lida === 'false') {
+          await AppPanel.marcarNotificacaoLida(id);
+          el.classList.remove('nao-lida');
+          el.dataset.lida = 'true';
+        }
+        // Se a notificação tem link, redirecionar
+        // (você pode armazenar o link em um atributo)
+      });
+    });
+    // Paginação (simples)
+    const pagDiv = document.getElementById('paginacao');
+    pagDiv.innerHTML = `
+      <button class="btn btn-secondary" ${page === 0 ? 'disabled' : ''} onclick="carregarNotificacoes(${page - 1})">Anterior</button>
+      <button class="btn btn-secondary" ${data.notificacoes.length < limit ? 'disabled' : ''} onclick="carregarNotificacoes(${page + 1})">Próxima</button>
+    `;
+  }
+
+  function escapeHtml(str) {
+    return str.replace(/[&<>]/g, function(m) {
+      if (m === '&') return '&amp;';
+      if (m === '<') return '&lt;';
+      if (m === '>') return '&gt;';
+      return m;
+    });
+  }
+
+  document.addEventListener('DOMContentLoaded', async () => {
+    const user = AppPanel.requireRole(['autor','parecerista','editor_adjunto','editor_chefe']);
+    if (!user) return;
+    await carregarNotificacoes(0);
+    // Opcional: marcar todas como lidas (botão)
+  });
+</script>
+</body>
+</html>

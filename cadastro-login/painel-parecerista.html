@@ -59,10 +59,25 @@
                 <p>Aqui você abre a pasta de certificados correspondente ao seu perfil.</p>
                 <div class="actions-row"><a class="btn btn-primary" href="certificados-parecerista.html">Abrir</a></div>
             </article>
+            <div style="position: relative;">
+                <button id="btn-notificacoes"
+                    style="background: none; border: none; font-size: 1.5rem; cursor: pointer; position: relative;">🔔</button>
+                <span id="notificacao-badge"
+                    style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+                <div id="notificacoes-dropdown"
+                    style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;">
+                </div>
+            </div>
         </div>
         <footer class="page-footer"></footer>
     </div>
-    <script>document.addEventListener('DOMContentLoaded', () => { const user = AppPanel.requireRole(['parecerista']); if (!user) return; });</script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => { const user = AppPanel.requireRole(['parecerista']); if (!user) return; });
+        AppPanel.atualizarContadorNotificacoes();
+        AppPanel.iniciarPollingNotificacoes();
+        document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+    </script>
+    </script>
 </body>
 
 </html>

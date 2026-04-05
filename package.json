@@ -13,10 +13,11 @@
     "@supabase/supabase-js": "^2.101.1",
     "bcryptjs": "^2.4.3",
     "busboy": "^1.6.0",
+    "nodemailer": "^8.0.4",
     "pg": "^8.20.0"
   },
   "devDependencies": {
-    "netlify-cli": "^24.9.0"
+    "netlify-cli": "^15.0.2"
   },
   "keywords": [],
   "author": "",

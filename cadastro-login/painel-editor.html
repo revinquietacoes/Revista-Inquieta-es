@@ -1,177 +1,191 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel do(a) Editor(a) Adjunto(a)</title>
-<link rel="icon" href="../assets/favicon.png">
-<link rel="stylesheet" href="painel-base.css">
-<script src="painel-base.js" defer></script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Painel do(a) Editor(a) Adjunto(a)</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
 </head>
 
 <body>
-<div class="page-shell">
+  <div class="page-shell">
 
-<header class="topbar">
-  <div class="brand-wrap">
-    <div class="avatar-box">
-      <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
-      <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="avatar-box">
+          <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+          <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+        </div>
+
+        <div class="brand-copy">
+          <h1>Painel do(a) Editor(a) Adjunto(a)</h1>
+          <p>Dossiês temáticos, pareceristas e acompanhamento editorial setorial</p>
+        </div>
+      </div>
+
+      <div class="actions-row">
+        <a class="btn btn-secondary" href="../index.html">Voltar ao portal</a>
+        <button class="btn btn-soft" data-action="logout">Sair</button>
+      </div>
+    </header>
+
+    <section class="hero">
+      <h2>Blocos de trabalho</h2>
+      <p>
+        Aqui você acompanha dossiês sob sua responsabilidade, lê submissões recentes vinculadas ao seu escopo e
+        seleciona pareceristas, sem substituir a decisão final do(a) editor(a)-chefe.
+      </p>
+    </section>
+
+    <div class="cards-grid">
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Dossiês sob responsabilidade</h3>
+          <span class="badge badge-blue">Curadoria</span>
+        </div>
+        <p>
+          Aqui você reúne dossiês abertos, editor(a)-chefe responsável pela criação e descrição da proposta temática.
+        </p>
+        <div class="actions-row">
+          <a class="btn btn-primary" href="editor-dossies.html">Abrir</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Submissões recentes</h3>
+          <span class="badge badge-gold">Acompanhamento</span>
+        </div>
+        <p>
+          Aqui você visualiza submissões vinculadas aos dossiês de sua responsabilidade e pode designar pareceristas.
+        </p>
+        <div class="actions-row">
+          <a class="btn btn-primary" href="editor-submissoes.html">Abrir</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Pareceristas</h3>
+          <span class="badge badge-green">Base de avaliadores(as)</span>
+        </div>
+        <p>
+          Aqui você consulta pareceristas ativos e sua contagem de avaliações para apoiar o fluxo editorial setorial.
+        </p>
+        <div class="actions-row">
+          <a class="btn btn-primary" href="editor-pareceristas.html">Ir ao conteúdo</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Pareceres por parecerista</h3>
+          <span class="badge badge-green">Consulta editorial</span>
+        </div>
+
+        <p>
+          Selecione um parecerista e consulte o histórico completo de avaliações.
+        </p>
+
+        <div class="actions-row">
+          <a class="btn btn-primary" href="pareceres-parecerista.html">Abrir</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Quem está online</h3>
+          <span class="badge badge-green">Presença</span>
+        </div>
+        <p>
+          Aqui você acompanha editores(as) e pareceristas online e envia mensagens.
+        </p>
+        <div class="actions-row">
+          <a class="btn btn-primary" href="usuarios-online.html">Abrir</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Perfil</h3>
+          <span class="badge badge-blue">Cadastro</span>
+        </div>
+        <p>
+          Aqui você atualiza seus dados e altera sua foto de perfil.
+        </p>
+        <div class="actions-row">
+          <a class="btn btn-primary" href="perfil.html">Abrir</a>
+        </div>
+      </article>
+
+      <article class="card">
+        <div class="card-top">
+          <h3>Certificados</h3>
+          <span class="badge badge-gold">Documentos</span>
+        </div>
+        <p>
+          Aqui você abre a pasta de certificados correspondente ao seu perfil.
+        </p>
+        <div class="actions-row">
+          <a class="btn btn-primary" href="certificados.html">Abrir</a>
+        </div>
+      </article>
+      <div style="position: relative;">
+        <button id="btn-notificacoes"
+          style="background: none; border: none; font-size: 1.5rem; cursor: pointer; position: relative;">🔔</button>
+        <span id="notificacao-badge"
+          style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+        <div id="notificacoes-dropdown"
+          style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;">
+        </div>
+      </div>
     </div>
 
-    <div class="brand-copy">
-      <h1>Painel do(a) Editor(a) Adjunto(a)</h1>
-      <p>Dossiês temáticos, pareceristas e acompanhamento editorial setorial</p>
-    </div>
+    <footer class="page-footer"></footer>
   </div>
 
-  <div class="actions-row">
-    <a class="btn btn-secondary" href="../index.html">Voltar ao portal</a>
-    <button class="btn btn-soft" data-action="logout">Sair</button>
-  </div>
-</header>
+  <script>
 
-<section class="hero">
-  <h2>Blocos de trabalho</h2>
-  <p>
-    Aqui você acompanha dossiês sob sua responsabilidade, lê submissões recentes vinculadas ao seu escopo e seleciona pareceristas, sem substituir a decisão final do(a) editor(a)-chefe.
-  </p>
-</section>
+    // 🔹 Função de status
+    function statusAutor(s) {
+      if (!s) return 'Em avaliação';
+      if (s === 'avaliacao_concluida') return 'Avaliação concluída';
+      if (s === 'ajustes_solicitados') return 'Correções solicitadas';
+      if (s === 'parecer_recusado') return 'Parecer recusado';
+      return 'Em avaliação';
+    }
 
-<div class="cards-grid">
+    // 🔹 Exemplo preparado (não quebra se não houver submissão)
+    function obterStatusSubmissao(submissao) {
+      if (!submissao) return 'Em avaliação';
+      return statusAutor(submissao.status_autor || submissao.status);
+    }
 
-  <article class="card">
-    <div class="card-top">
-      <h3>Dossiês sob responsabilidade</h3>
-      <span class="badge badge-blue">Curadoria</span>
-    </div>
-    <p>
-      Aqui você reúne dossiês abertos, editor(a)-chefe responsável pela criação e descrição da proposta temática.
-    </p>
-    <div class="actions-row">
-      <a class="btn btn-primary" href="editor-dossies.html">Abrir</a>
-    </div>
-  </article>
+    // 🔹 Inicialização
+    document.addEventListener('DOMContentLoaded', () => {
+      const user = AppPanel.requireRole(['editor_adjunto']);
+      if (!user) return;
 
-  <article class="card">
-    <div class="card-top">
-      <h3>Submissões recentes</h3>
-      <span class="badge badge-gold">Acompanhamento</span>
-    </div>
-    <p>
-      Aqui você visualiza submissões vinculadas aos dossiês de sua responsabilidade e pode designar pareceristas.
-    </p>
-    <div class="actions-row">
-      <a class="btn btn-primary" href="editor-submissoes.html">Abrir</a>
-    </div>
-  </article>
+      // Exemplo de uso (quando você tiver dados reais)
+      /*
+      const submissao = {
+        status: 'avaliacao_concluida'
+      };
+    
+      const status = obterStatusSubmissao(submissao);
+      console.log(status);
+      */
+    });
 
-  <article class="card">
-    <div class="card-top">
-      <h3>Pareceristas</h3>
-      <span class="badge badge-green">Base de avaliadores(as)</span>
-    </div>
-    <p>
-      Aqui você consulta pareceristas ativos e sua contagem de avaliações para apoiar o fluxo editorial setorial.
-    </p>
-    <div class="actions-row">
-      <a class="btn btn-primary" href="editor-pareceristas.html">Ir ao conteúdo</a>
-    </div>
-  </article>
-
-  <article class="card">
-  <div class="card-top">
-    <h3>Pareceres por parecerista</h3>
-    <span class="badge badge-green">Consulta editorial</span>
-  </div>
-
-  <p>
-    Selecione um parecerista e consulte o histórico completo de avaliações.
-  </p>
-
-  <div class="actions-row">
-    <a class="btn btn-primary" href="pareceres-parecerista.html">Abrir</a>
-  </div>
-</article>
-
-  <article class="card">
-    <div class="card-top">
-      <h3>Quem está online</h3>
-      <span class="badge badge-green">Presença</span>
-    </div>
-    <p>
-      Aqui você acompanha editores(as) e pareceristas online e envia mensagens.
-    </p>
-    <div class="actions-row">
-      <a class="btn btn-primary" href="usuarios-online.html">Abrir</a>
-    </div>
-  </article>
-
-  <article class="card">
-    <div class="card-top">
-      <h3>Perfil</h3>
-      <span class="badge badge-blue">Cadastro</span>
-    </div>
-    <p>
-      Aqui você atualiza seus dados e altera sua foto de perfil.
-    </p>
-    <div class="actions-row">
-      <a class="btn btn-primary" href="perfil.html">Abrir</a>
-    </div>
-  </article>
-
-  <article class="card">
-    <div class="card-top">
-      <h3>Certificados</h3>
-      <span class="badge badge-gold">Documentos</span>
-    </div>
-    <p>
-      Aqui você abre a pasta de certificados correspondente ao seu perfil.
-    </p>
-    <div class="actions-row">
-      <a class="btn btn-primary" href="certificados.html">Abrir</a>
-    </div>
-  </article>
-
-</div>
-
-<footer class="page-footer"></footer>
-</div>
-
-<script>
-
-// 🔹 Função de status
-function statusAutor(s){
-  if(!s) return 'Em avaliação';
-  if(s==='avaliacao_concluida') return 'Avaliação concluída';
-  if(s==='ajustes_solicitados') return 'Correções solicitadas';
-  if(s==='parecer_recusado') return 'Parecer recusado';
-  return 'Em avaliação';
-}
-
-// 🔹 Exemplo preparado (não quebra se não houver submissão)
-function obterStatusSubmissao(submissao){
-  if(!submissao) return 'Em avaliação';
-  return statusAutor(submissao.status_autor || submissao.status);
-}
-
-// 🔹 Inicialização
-document.addEventListener('DOMContentLoaded',()=>{
-  const user = AppPanel.requireRole(['editor_adjunto']);
-  if(!user) return;
-
-  // Exemplo de uso (quando você tiver dados reais)
-  /*
-  const submissao = {
-    status: 'avaliacao_concluida'
-  };
-
-  const status = obterStatusSubmissao(submissao);
-  console.log(status);
-  */
-});
-
-</script>
+    AppPanel.atualizarContadorNotificacoes();
+    AppPanel.iniciarPollingNotificacoes();
+    document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+  </script>
 
 </body>
+
 </html>

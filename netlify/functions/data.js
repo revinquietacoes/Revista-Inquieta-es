@@ -267,6 +267,27 @@ const main = async (req) => {
       return json({ sucesso: true, usuario: user, submissoes })
     }
 
+    if (action === 'notificacoes') {
+      const { limit = 20, offset = 0, apenasNaoLidas = false } = body;
+      let query = sql`SELECT id, tipo, titulo, mensagem, link, lida, criado_em FROM notificacoes WHERE usuario_id = ${user.id}`;
+      if (apenasNaoLidas) query = sql`${query} AND lida = FALSE`;
+      query = sql`${query} ORDER BY criado_em DESC LIMIT ${limit} OFFSET ${offset}`;
+      const notificacoes = await query;
+      const naoLidas = apenasNaoLidas ? notificacoes.length : (await sql`SELECT COUNT(*) FROM notificacoes WHERE usuario_id = ${user.id} AND lida = FALSE`)[0].count;
+      return json({ sucesso: true, notificacoes, naoLidas });
+    }
+
+    if (action === 'marcar_notificacao_lida') {
+      const { notificacaoId } = body;
+      await sql`UPDATE notificacoes SET lida = TRUE WHERE id = ${notificacaoId} AND usuario_id = ${user.id}`;
+      return json({ sucesso: true });
+    }
+
+    if (action === 'marcar_todas_lidas') {
+      await sql`UPDATE notificacoes SET lida = TRUE WHERE usuario_id = ${user.id}`;
+      return json({ sucesso: true });
+    }
+
     if (action === 'chief_submission_status_queue') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
       return json({ sucesso: true, ...(await getChiefSubmissionStatusQueue()) })
@@ -568,7 +589,7 @@ const main = async (req) => {
     // ===== NOVA AÇÃO update_profile =====
     if (action === 'update_profile') {
       const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
-      
+
       if (avatarUrl) {
         await sql`
           UPDATE usuarios
@@ -579,7 +600,7 @@ const main = async (req) => {
         const refreshed = await getUserById(user.id)
         return json({ sucesso: true, usuario: refreshed })
       }
-      
+
       await sql`
         UPDATE usuarios
         SET nome = COALESCE(${nome || null}, nome),

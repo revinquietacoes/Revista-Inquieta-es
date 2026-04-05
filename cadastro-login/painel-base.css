@@ -72,3 +72,5 @@ label{font-weight:700;font-size:.92rem} input,select,textarea{width:100%;border-
 .message-item.is-self{border-color:rgba(143,227,168,.22);background:rgba(143,227,168,.06)}
 .chat-toolbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:12px}
 .chat-toolbar .helper{margin:0}
+#notificacoes-dropdown { min-width: 280px; max-width: 350px; } 
+.notificacao-item:hover { background-color: #f5f5f5; }
