@@ -9,6 +9,17 @@
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
 </head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const user = AppPanel.requireRole(['editor_chefe']);
+    if (!user) return;
+
+    // Inicializa notificações
+    AppPanel.atualizarContadorNotificacoes();
+    AppPanel.iniciarPollingNotificacoes();
+    document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+  });
+</script>
 
 <body>
   <div class="page-shell">
@@ -165,25 +176,6 @@
       return statusAutor(submissao.status_autor || submissao.status);
     }
 
-    // 🔹 Inicialização
-    document.addEventListener('DOMContentLoaded', () => {
-      const user = AppPanel.requireRole(['editor_adjunto']);
-      if (!user) return;
-
-      // Exemplo de uso (quando você tiver dados reais)
-      /*
-      const submissao = {
-        status: 'avaliacao_concluida'
-      };
-    
-      const status = obterStatusSubmissao(submissao);
-      console.log(status);
-      */
-    });
-
-    AppPanel.atualizarContadorNotificacoes();
-    AppPanel.iniciarPollingNotificacoes();
-    document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
   </script>
 
 </body>

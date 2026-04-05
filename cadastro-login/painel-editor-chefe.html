@@ -9,6 +9,17 @@
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
 </head>
+<script>
+  document.addEventListener('DOMContentLoaded', () => {
+    const user = AppPanel.requireRole(['editor_chefe']);
+    if (!user) return;
+
+    // Inicializa notificações
+    AppPanel.atualizarContadorNotificacoes();
+    AppPanel.iniciarPollingNotificacoes();
+    document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+  });
+</script>
 
 <body>
   <div class="page-shell">
@@ -155,17 +166,7 @@
 
     <footer class="page-footer"></footer>
   </div>
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const user = AppPanel.requireRole(['editor_chefe']);
-      if (!user) return;
-    });
-
-  
-    AppPanel.atualizarContadorNotificacoes();
-    AppPanel.iniciarPollingNotificacoes();
-    document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
-  </script>
+ 
 </body>
 
 </html>
