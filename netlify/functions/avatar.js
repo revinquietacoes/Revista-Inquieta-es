@@ -4,6 +4,7 @@ const main = async (req) => {
     try {
         const url = new URL(req.url)
         let key = url.searchParams.get("key")
+
         if (!key) {
             return new Response('Parâmetro "key" é obrigatório.', { status: 400 })
         }
@@ -13,14 +14,11 @@ const main = async (req) => {
             key = `usuarios/${key}`
         }
 
-        console.log(`🔑 Avatar solicitado: ${key}`)
-
         const siteID = process.env.NETLIFY_BLOBS_SITE_ID
         const token = process.env.NETLIFY_BLOBS_TOKEN
         const storeName = "revista-arquivos"
 
         if (!siteID || !token) {
-            console.error("❌ Variáveis de ambiente ausentes")
             return new Response('Configuração de armazenamento ausente.', { status: 500 })
         }
 
@@ -30,21 +28,12 @@ const main = async (req) => {
         })
 
         if (!response.ok) {
-            console.error(`❌ Blob não encontrado: ${response.status}`)
             return new Response('Avatar não encontrado.', { status: 404 })
         }
 
         const arrayBuffer = await response.arrayBuffer()
         const byteLength = arrayBuffer.byteLength
 
-        if (byteLength === 0) {
-            console.error("⚠️ Blob vazio!")
-            return new Response('Arquivo vazio.', { status: 404 })
-        }
-
-        console.log(`✅ Avatar servido: ${byteLength} bytes`)
-
-        // Determinar Content-Type pela extensão ou pelo cabeçalho original (se disponível)
         let contentType = "image/jpeg"
         if (key.endsWith(".png")) contentType = "image/png"
         else if (key.endsWith(".gif")) contentType = "image/gif"
@@ -60,7 +49,7 @@ const main = async (req) => {
             }
         })
     } catch (err) {
-        console.error("❌ Erro fatal no avatar:", err)
+        console.error("Erro no avatar:", err)
         return new Response(`Erro interno: ${err.message}`, { status: 500 })
     }
 }

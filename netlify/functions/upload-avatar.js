@@ -1,5 +1,4 @@
 const Busboy = require("busboy")
-const { makeStore } = require("./_blobs")
 
 exports.handler = async (event) => {
     const corsHeaders = {
@@ -34,12 +33,10 @@ exports.handler = async (event) => {
         const busboy = Busboy({ headers: event.headers })
         let fileBuffer = null
         let mimeType = "image/webp"
-        let originalName = null
 
         await new Promise((resolve, reject) => {
             busboy.on("file", (fieldname, file, info) => {
                 mimeType = info.mimeType
-                originalName = info.filename
                 const chunks = []
                 file.on("data", (chunk) => chunks.push(chunk))
                 file.on("end", () => {
@@ -71,13 +68,29 @@ exports.handler = async (event) => {
         const random = Math.random().toString(36).substring(2, 8)
         const key = `usuarios/${usuarioId}/avatar/${timestamp}-${random}.${extension}`
 
-        // Usar makeStore do projeto (já configurado)
-        const store = makeStore("revista-arquivos")
+        const siteID = process.env.NETLIFY_BLOBS_SITE_ID
+        const token = process.env.NETLIFY_BLOBS_TOKEN
+        const storeName = "revista-arquivos"
 
-        await store.set(key, fileBuffer, {
-            contentType: mimeType,
-            public: true
+        if (!siteID || !token) {
+            throw new Error("Variáveis de ambiente do Blobs não configuradas")
+        }
+
+        const blobUrl = `https://api.netlify.com/api/v1/sites/${siteID}/blobs/${storeName}/${encodeURIComponent(key)}`
+
+        const uploadResponse = await fetch(blobUrl, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${token}`,
+                "Content-Type": mimeType
+            },
+            body: fileBuffer
         })
+
+        if (!uploadResponse.ok) {
+            const errorText = await uploadResponse.text()
+            throw new Error(`Erro ao salvar blob: ${uploadResponse.status} - ${errorText}`)
+        }
 
         console.log(`✅ Avatar salvo: ${key} (${fileBuffer.length} bytes)`)
 
