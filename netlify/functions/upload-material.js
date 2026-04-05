@@ -61,20 +61,21 @@ const main = async (req) => {
     if (!permitidos.includes(arquivo.type)) return json({ erro: 'Tipo de arquivo não permitido.' }, 400)
     if (arquivo.size > 10_000_000) return json({ erro: 'Arquivo acima do limite de 10 MB.' }, 400)
 
-    // Usar Supabase Storage em vez de Netlify Blobs
     const supabaseUrl = process.env.SUPABASE_URL
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
     if (!supabaseUrl || !supabaseServiceKey) {
-      throw new Error('Variáveis SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não definidas')
+      console.error('❌ Variáveis SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não definidas')
+      return json({ erro: 'Configuração de armazenamento ausente.' }, 500)
     }
 
     const timestamp = Date.now()
     const safeName = sanitizarNome(arquivo.name || 'arquivo')
     const filePath = `chat/${targetUser.id}/${categoria}/${timestamp}-${safeName}`
-
-    // Upload para o Supabase Storage
     const uploadUrl = `${supabaseUrl}/storage/v1/object/chat-anexos/${filePath}`
     const bytes = Buffer.from(await arquivo.arrayBuffer())
+
+    console.log(`📤 Upload para Supabase: ${uploadUrl}, tamanho: ${bytes.length} bytes`)
+
     const uploadResponse = await fetch(uploadUrl, {
       method: 'PUT',
       headers: {
@@ -86,13 +87,13 @@ const main = async (req) => {
 
     if (!uploadResponse.ok) {
       const errorText = await uploadResponse.text()
+      console.error('❌ Erro no upload Supabase:', uploadResponse.status, errorText)
       throw new Error(`Erro no upload Supabase: ${uploadResponse.status} - ${errorText}`)
     }
 
-    // URL pública do arquivo
     const publicUrl = `${supabaseUrl}/storage/v1/object/public/chat-anexos/${filePath}`
 
-    // Registrar no banco Neon (tabela arquivos_publicacao) – opcional, mas mantém compatibilidade
+    // Salvar no banco Neon (tabela arquivos_publicacao)
     const inserido = await sql`
       INSERT INTO arquivos_publicacao (
         usuario_id, submissao_id, categoria, nome_original, mime_type, tamanho_bytes, blob_key, blob_store, url_acesso, publico
@@ -101,7 +102,9 @@ const main = async (req) => {
       ) RETURNING id, url_acesso, blob_key
     `
 
-    // Se for anexo de chat, não precisa de lógica adicional de submissão
+    console.log('✅ Arquivo salvo com sucesso, URL:', publicUrl)
+
+    // (Opcional) lógica para submissoes – mantenha se existir
     if (submissaoId && categoria === 'manuscrito') {
       const check = await sql`SELECT to_regclass('public.arquivos_submissao') AS nome`
       if (check?.[0]?.nome) {
@@ -127,10 +130,9 @@ const main = async (req) => {
       } catch (e) { console.error('Falha ao registrar devolutiva:', e) }
     }
 
-    // Retornar a URL pública para ser usada no chat
     return json({ sucesso: true, arquivo: { url_acesso: publicUrl, id: inserido[0].id } })
   } catch (erro) {
-    console.error('upload-material erro:', erro)
+    console.error('❌ upload-material erro:', erro)
     return json({ erro: 'Erro ao enviar arquivo.', detalhe: erro.message }, 500)
   }
 }
