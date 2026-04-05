@@ -1,5 +1,4 @@
 const Busboy = require("busboy");
-const { createClient } = require('@supabase/supabase-js');
 
 exports.handler = async (event) => {
     const corsHeaders = {
@@ -55,32 +54,33 @@ exports.handler = async (event) => {
         const fileName = `${usuarioId}-${Date.now()}.${extension}`;
         const filePath = `${usuarioId}/${fileName}`;
 
-        // Inicializa Supabase com a SERVICE_ROLE_KEY (para ter permissão de escrita)
         const supabaseUrl = process.env.SUPABASE_URL;
-        const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY; // você precisará criar essa variável
+        const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+
         if (!supabaseUrl || !supabaseServiceKey) {
             throw new Error("Variáveis SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não definidas");
         }
-        const supabase = createClient(supabaseUrl, supabaseServiceKey);
 
-        // Upload para o bucket 'avatars'
-        const { data: uploadData, error: uploadError } = await supabase.storage
-            .from('avatars')
-            .upload(filePath, fileBuffer, {
-                contentType: mimeType,
-                upsert: true
-            });
+        // Upload para o Supabase Storage via API REST
+        const uploadUrl = `${supabaseUrl}/storage/v1/object/avatars/${filePath}`;
+        const uploadResponse = await fetch(uploadUrl, {
+            method: "PUT",
+            headers: {
+                "Authorization": `Bearer ${supabaseServiceKey}`,
+                "Content-Type": mimeType
+            },
+            body: fileBuffer
+        });
 
-        if (uploadError) throw new Error(`Erro no upload Supabase: ${uploadError.message}`);
+        if (!uploadResponse.ok) {
+            const errorText = await uploadResponse.text();
+            throw new Error(`Erro no upload Supabase: ${uploadResponse.status} - ${errorText}`);
+        }
 
-        // Obter URL pública
-        const { data: publicUrlData } = supabase.storage.from('avatars').getPublicUrl(filePath);
-        const publicUrl = publicUrlData.publicUrl;
+        // URL pública do arquivo
+        const publicUrl = `${supabaseUrl}/storage/v1/object/public/avatars/${filePath}`;
 
-        // Atualizar o banco Neon com a URL (usando sua action.js ou diretamente via Neon)
-        // Como você já tem uma função action.js que recebe update_profile, vamos chamá-la via fetch interno
-        // Para evitar loop, você pode fazer uma chamada HTTP para sua própria função data/action ou atualizar diretamente o Neon.
-        // Vou optar por atualizar diretamente o Neon (já que temos a conexão via _db.js)
+        // Atualizar o banco Neon (usando sua função _db.js)
         const { sql } = require('./_db');
         await sql`
             UPDATE usuarios
