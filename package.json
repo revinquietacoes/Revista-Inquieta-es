@@ -15,7 +15,7 @@
     "pg": "^8.20.0"
   },
   "devDependencies": {
-    "netlify-cli": "^24.9.0"
+    "netlify-cli": "^15.0.2"
   },
   "keywords": [],
   "author": "",

@@ -23,8 +23,7 @@ exports.handler = async (event) => {
 
     try {
         console.log("=== UPLOAD-AVATAR INICIADO ===")
-        console.log("Headers:", JSON.stringify(event.headers, null, 2))
-
+        
         const usuarioId = event.headers["x-user-id"]
         if (!usuarioId) {
             return {
@@ -65,9 +64,8 @@ exports.handler = async (event) => {
 
         console.log(`Arquivo recebido: ${fileBuffer.length} bytes, tipo: ${mimeType}`)
 
-        // Configurar o blob store
-        const store = getStore({
-            name: "arquivos",
+        // CORREÇÃO: Usar a sintaxe correta para obter o store
+        const store = getStore("arquivos", {
             siteID: process.env.NETLIFY_BLOBS_SITE_ID,
             token: process.env.NETLIFY_BLOBS_TOKEN
         })
@@ -103,8 +101,7 @@ exports.handler = async (event) => {
             headers: corsHeaders,
             body: JSON.stringify({
                 erro: "Erro interno do servidor",
-                detalhe: err.message,
-                stack: process.env.NODE_ENV === "development" ? err.stack : undefined
+                detalhe: err.message
             })
         }
     }
