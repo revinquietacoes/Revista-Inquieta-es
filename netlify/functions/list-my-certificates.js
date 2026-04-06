@@ -1,4 +1,4 @@
-const { sql, json, getUserById, ensureSupportTables, tableExists } = require('./_db')
+const { sql, json, getUserById, ensureSupportTables } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
 function getHeader(headers, name) {
@@ -9,67 +9,57 @@ function getHeader(headers, name) {
   return headers[name] || headers[name.toLowerCase()] || null
 }
 
-function getAuthenticatedUserId(req, url) {
-  const headerId = getHeader(req.headers, 'x-user-id') || getHeader(req.headers, 'X-User-Id')
-  const queryId = url.searchParams.get('user_id')
-  return Number(headerId || queryId || 0)
+function getAuthenticatedUserId(req) {
+  const headers = req.headers
+  const headerId = getHeader(headers, 'x-user-id') || getHeader(headers, 'X-User-Id')
+  return headerId ? Number(headerId) : null
 }
 
 const main = async (req) => {
   try {
-    if (req.method !== 'GET') return json({ erro: 'Método não permitido.' }, 405)
+    if (req.method !== 'GET') {
+      return json({ erro: 'Método não permitido.' }, 405)
+    }
+
     await ensureSupportTables()
 
-    const url = new URL(req.url)
-    const userId = getAuthenticatedUserId(req, url)
-    if (!userId) return json({ erro: 'Usuário não autenticado.' }, 401)
+    // Autenticação via header X-User-Id (não via query string por segurança)
+    const userId = getAuthenticatedUserId(req)
+    if (!userId) {
+      console.log('❌ Nenhum X-User-Id encontrado no header')
+      return json({ erro: 'Usuário não autenticado. Header X-User-Id ausente.' }, 401)
+    }
 
     const user = await getUserById(userId)
-    if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
-
-    const type = String(url.searchParams.get('type') || '').trim()
-    let todos = []
-
-    // Verifica se a tabela certificados_privados existe
-    const hasPrivados = await tableExists('certificados_privados')
-    if (hasPrivados && (!type || type === 'privado')) {
-      const privados = await sql`
-        SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'privado' as origem
-        FROM certificados_privados
-        WHERE usuario_id = ${user.id}
-      `
-      todos.push(...privados)
+    if (!user) {
+      return json({ erro: 'Usuário não encontrado.' }, 404)
     }
 
-    // Verifica se a tabela certificados_parecerista existe
-    const hasParecerista = await tableExists('certificados_parecerista')
-    if (hasParecerista && (!type || type === 'parecerista')) {
-      const pareceristas = await sql`
-        SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'parecerista' as origem
-        FROM certificados_parecerista
-        WHERE usuario_id = ${user.id}
-      `
-      todos.push(...pareceristas)
-    }
-
-    todos.sort((a, b) => new Date(b.criado_em) - new Date(a.criado_em))
+    // Consulta apenas a tabela certificados_privados (já que a outra pode não existir ainda)
+    // Se quiser unir com certificados_parecerista, descomente depois que a tabela existir
+    const rows = await sql`
+      SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'privado' as origem
+      FROM certificados_privados
+      WHERE usuario_id = ${user.id}
+      ORDER BY criado_em DESC
+    `
 
     return json({
       sucesso: true,
-      certificados: todos.map(item => ({
-        id: item.id,
-        tipo: item.tipo,
-        categoria: item.categoria,
-        titulo: item.titulo,
-        nome_arquivo: item.nome_arquivo,
-        mime_type: item.mime_type,
-        criado_em: item.criado_em,
-        blob_key: item.blob_key,
-        origem: item.origem
+      certificados: rows.map(row => ({
+        id: row.id,
+        tipo: row.tipo,
+        categoria: row.categoria,
+        titulo: row.titulo,
+        nome_arquivo: row.nome_arquivo,
+        mime_type: row.mime_type,
+        criado_em: row.criado_em,
+        blob_key: row.blob_key,
+        origem: row.origem
       }))
     })
   } catch (error) {
-    console.error('Erro em list-my-certificates:', error)
+    console.error('❌ Erro em list-my-certificates:', error)
     return json({ erro: 'Erro interno ao listar certificados.', detalhe: error.message }, 500)
   }
 }

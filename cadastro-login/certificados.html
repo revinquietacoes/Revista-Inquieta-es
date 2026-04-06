@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,6 +14,7 @@
       max-width: 800px;
       margin: 20px auto;
     }
+
     .cert-item {
       background: #1e293b;
       border-radius: 1.2rem;
@@ -25,9 +27,11 @@
       gap: 1rem;
       border: 1px solid #334155;
     }
+
     .cert-info {
       flex: 1;
     }
+
     .cert-titulo {
       font-weight: bold;
       margin-bottom: 5px;
@@ -36,10 +40,12 @@
       gap: 0.5rem;
       flex-wrap: wrap;
     }
+
     .cert-data {
       font-size: 0.75rem;
       color: #94a3b8;
     }
+
     .cert-tipo {
       display: inline-block;
       padding: 2px 8px;
@@ -47,19 +53,24 @@
       font-size: 0.7rem;
       font-weight: 600;
     }
+
     .cert-tipo-evento {
       background: #e3f2fd;
       color: #1565c0;
     }
+
     .cert-tipo-parecer {
       background: #e8f5e9;
       color: #2e7d32;
     }
+
     .cert-tipo-equipe {
       background: #fff3e0;
       color: #e65100;
     }
-    .btn-soft, .btn-primary {
+
+    .btn-soft,
+    .btn-primary {
       padding: 0.4rem 1rem;
       border-radius: 2rem;
       font-size: 0.8rem;
@@ -68,19 +79,23 @@
       align-items: center;
       gap: 0.5rem;
     }
+
     .btn-soft {
       background: #334155;
       color: #f1f5f9;
     }
+
     .btn-primary {
       background: #3b82f6;
       color: white;
     }
+
     .empty-state {
       text-align: center;
       padding: 2rem;
       color: #94a3b8;
     }
+
     .error-state {
       text-align: center;
       padding: 2rem;
@@ -88,147 +103,155 @@
     }
   </style>
 </head>
+
 <body>
-<div class="page-shell">
-  <header class="topbar">
-    <div class="brand-wrap">
-      <div class="avatar-box">
-        <img class="avatar-img" data-avatar-user alt="Avatar">
-        <img class="logo-inline" src="../logo-revista.png" alt="Logo">
+  <div class="page-shell">
+    <header class="topbar">
+      <div class="brand-wrap">
+        <div class="avatar-box">
+          <img class="avatar-img" data-avatar-user alt="Avatar">
+          <img class="logo-inline" src="../logo-revista.png" alt="Logo">
+        </div>
+        <div class="brand-copy">
+          <h1><i class="fas fa-certificate"></i> Meus certificados</h1>
+          <p>Área privada com certificados vinculados ao seu usuário</p>
+        </div>
       </div>
-      <div class="brand-copy">
-        <h1><i class="fas fa-certificate"></i> Meus certificados</h1>
-        <p>Área privada com certificados vinculados ao seu usuário</p>
+      <div class="actions-row">
+        <div style="position: relative; margin-right: 10px;">
+          <button id="btn-notificacoes"
+            style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+          <span id="notificacao-badge"
+            style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+          <div id="notificacoes-dropdown"
+            style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;">
+          </div>
+        </div>
+        <a class="btn btn-secondary" href="javascript:history.back()"><i class="fas fa-arrow-left"></i> Voltar</a>
+        <button class="btn btn-soft" data-action="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
       </div>
-    </div>
-    <div class="actions-row">
-      <div style="position: relative; margin-right: 10px;">
-        <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
-        <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
-        <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
-      </div>
-      <a class="btn btn-secondary" href="javascript:history.back()"><i class="fas fa-arrow-left"></i> Voltar</a>
-      <button class="btn btn-soft" data-action="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
-    </div>
-  </header>
+    </header>
 
-  <div class="cert-list" id="cert-list">
-    <div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-pulse"></i> Carregando certificados...</div>
+    <div class="cert-list" id="cert-list">
+      <div style="text-align: center; padding: 40px;"><i class="fas fa-spinner fa-pulse"></i> Carregando certificados...
+      </div>
+    </div>
+    <footer class="page-footer" style="text-align: center; margin-top: 2rem; font-size: 0.7rem; color: #5b6e8c;">
+      <i class="fas fa-database"></i> Certificados armazenados em Supabase Storage
+    </footer>
   </div>
-  <footer class="page-footer" style="text-align: center; margin-top: 2rem; font-size: 0.7rem; color: #5b6e8c;">
-    <i class="fas fa-database"></i> Certificados armazenados em Supabase Storage
-  </footer>
-</div>
 
-<script>
-  // Funções auxiliares
-  function getTipoClass(tipo) {
-    if (tipo === 'evento') return 'cert-tipo-evento';
-    if (tipo === 'parecer' || tipo === 'parecerista') return 'cert-tipo-parecer';
-    if (tipo === 'equipe_editorial') return 'cert-tipo-equipe';
-    return '';
-  }
-
-  function getTipoLabel(tipo) {
-    if (tipo === 'evento') return 'Evento';
-    if (tipo === 'parecer' || tipo === 'parecerista') return 'Parecer';
-    if (tipo === 'equipe_editorial') return 'Equipe editorial';
-    return tipo || 'Certificado';
-  }
-
-  function escapeHtml(str) {
-    if (!str) return '';
-    return String(str).replace(/[&<>]/g, function(m) {
-      if (m === '&') return '&amp;';
-      if (m === '<') return '&lt;';
-      if (m === '>') return '&gt;';
-      return m;
-    });
-  }
-
-  function authHeaders() {
-    var headers = {};
-    if (typeof AppPanel !== 'undefined' && AppPanel.currentUserHeaders) {
-      headers = AppPanel.currentUserHeaders();
+  <script>
+    // Funções auxiliares
+    function getTipoClass(tipo) {
+      if (tipo === 'evento') return 'cert-tipo-evento';
+      if (tipo === 'parecer' || tipo === 'parecerista') return 'cert-tipo-parecer';
+      if (tipo === 'equipe_editorial') return 'cert-tipo-equipe';
+      return '';
     }
-    delete headers['Content-Type'];
-    delete headers['content-type'];
-    return headers;
-  }
 
-  // Função principal que carrega os certificados
-  async function carregarCertificados() {
-    var container = document.getElementById('cert-list');
-    try {
-      var response = await fetch('/.netlify/functions/list-my-certificates', {
-        headers: authHeaders()
+    function getTipoLabel(tipo) {
+      if (tipo === 'evento') return 'Evento';
+      if (tipo === 'parecer' || tipo === 'parecerista') return 'Parecer';
+      if (tipo === 'equipe_editorial') return 'Equipe editorial';
+      return tipo || 'Certificado';
+    }
+
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>]/g, function (m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
       });
-      var data = await response.json();
-      if (!response.ok) {
-        throw new Error(data.erro || data.detalhe || 'HTTP ' + response.status);
-      }
-
-      var certificados = data.certificados || [];
-      if (certificados.length === 0) {
-        container.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i> Nenhum certificado encontrado para o seu usuário.</div>';
-        return;
-      }
-
-      var usuarioLogado = AppPanel.currentUser();
-      var userId = usuarioLogado ? usuarioLogado.id : null;
-      if (!userId) {
-        throw new Error('Usuário não identificado.');
-      }
-
-      var html = '';
-      for (var i = 0; i < certificados.length; i++) {
-        var cert = certificados[i];
-        var visualizarUrl = '/.netlify/functions/get-my-certificate?id=' + cert.id + '&download=0&user_id=' + userId + '&tabela=' + cert.origem;
-        var baixarUrl = '/.netlify/functions/get-my-certificate?id=' + cert.id + '&download=1&user_id=' + userId + '&tabela=' + cert.origem;
-        html += '<div class="cert-item">' +
-                  '<div class="cert-info">' +
-                    '<div class="cert-titulo">' +
-                      escapeHtml(cert.titulo) +
-                      '<span class="cert-tipo ' + getTipoClass(cert.tipo) + '">' + getTipoLabel(cert.tipo) + '</span>' +
-                    '</div>' +
-                    '<div class="cert-data">' +
-                      '<i class="far fa-calendar-alt"></i> Enviado em: ' + new Date(cert.criado_em).toLocaleDateString('pt-BR') +
-                    '</div>' +
-                  '</div>' +
-                  '<div class="actions-row">' +
-                    '<a class="btn btn-soft" href="' + visualizarUrl + '" target="_blank"><i class="fas fa-eye"></i> Visualizar</a>' +
-                    '<a class="btn btn-primary" href="' + baixarUrl + '"><i class="fas fa-download"></i> Baixar PDF</a>' +
-                  '</div>' +
-                '</div>';
-      }
-      container.innerHTML = html;
-    } catch (err) {
-      console.error('Erro ao carregar certificados:', err);
-      container.innerHTML = '<div class="error-state"><i class="fas fa-exclamation-triangle"></i> Erro ao carregar certificados: ' + escapeHtml(err.message) + '</div>';
     }
-  }
 
-  // Inicialização quando o DOM estiver pronto
-  document.addEventListener('DOMContentLoaded', function() {
-    setTimeout(async function() {
-      if (typeof AppPanel === 'undefined') {
-        document.getElementById('cert-list').innerHTML = '<div class="error-state">Sistema não inicializado. Recarregue a página.</div>';
-        return;
+    function authHeaders() {
+      var headers = {};
+      if (typeof AppPanel !== 'undefined' && AppPanel.currentUserHeaders) {
+        headers = AppPanel.currentUserHeaders();
+        console.log('🔑 Headers enviados:', headers); // <-- adicione este log
       }
-      var usuario = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe', 'editor-chefe']);
-      if (!usuario) return;
+      delete headers['Content-Type'];
+      delete headers['content-type'];
+      return headers;
+    }
 
-      if (typeof AppPanel.atualizarAvatares === 'function') AppPanel.atualizarAvatares();
-      if (typeof AppPanel.atualizarContadorNotificacoes === 'function') AppPanel.atualizarContadorNotificacoes();
-      if (typeof AppPanel.iniciarPollingNotificacoes === 'function') AppPanel.iniciarPollingNotificacoes();
-      var btnNotif = document.getElementById('btn-notificacoes');
-      if (btnNotif && typeof AppPanel.mostrarDropdownNotificacoes === 'function') {
-        btnNotif.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+    // Função principal que carrega os certificados
+    async function carregarCertificados() {
+      var container = document.getElementById('cert-list');
+      try {
+        var response = await fetch('/.netlify/functions/list-my-certificates', {
+          headers: authHeaders()
+        });
+        var data = await response.json();
+        if (!response.ok) {
+          throw new Error(data.erro || data.detalhe || 'HTTP ' + response.status);
+        }
+
+        var certificados = data.certificados || [];
+        if (certificados.length === 0) {
+          container.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i> Nenhum certificado encontrado para o seu usuário.</div>';
+          return;
+        }
+
+        var usuarioLogado = AppPanel.currentUser();
+        var userId = usuarioLogado ? usuarioLogado.id : null;
+        if (!userId) {
+          throw new Error('Usuário não identificado.');
+        }
+
+        var html = '';
+        for (var i = 0; i < certificados.length; i++) {
+          var cert = certificados[i];
+          var visualizarUrl = '/.netlify/functions/get-my-certificate?id=' + cert.id + '&download=0&user_id=' + userId + '&tabela=' + cert.origem;
+          var baixarUrl = '/.netlify/functions/get-my-certificate?id=' + cert.id + '&download=1&user_id=' + userId + '&tabela=' + cert.origem;
+          html += '<div class="cert-item">' +
+            '<div class="cert-info">' +
+            '<div class="cert-titulo">' +
+            escapeHtml(cert.titulo) +
+            '<span class="cert-tipo ' + getTipoClass(cert.tipo) + '">' + getTipoLabel(cert.tipo) + '</span>' +
+            '</div>' +
+            '<div class="cert-data">' +
+            '<i class="far fa-calendar-alt"></i> Enviado em: ' + new Date(cert.criado_em).toLocaleDateString('pt-BR') +
+            '</div>' +
+            '</div>' +
+            '<div class="actions-row">' +
+            '<a class="btn btn-soft" href="' + visualizarUrl + '" target="_blank"><i class="fas fa-eye"></i> Visualizar</a>' +
+            '<a class="btn btn-primary" href="' + baixarUrl + '"><i class="fas fa-download"></i> Baixar PDF</a>' +
+            '</div>' +
+            '</div>';
+        }
+        container.innerHTML = html;
+      } catch (err) {
+        console.error('Erro ao carregar certificados:', err);
+        container.innerHTML = '<div class="error-state"><i class="fas fa-exclamation-triangle"></i> Erro ao carregar certificados: ' + escapeHtml(err.message) + '</div>';
       }
+    }
 
-      await carregarCertificados();
-    }, 100);
-  });
-</script>
+    // Inicialização quando o DOM estiver pronto
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(async function () {
+        if (typeof AppPanel === 'undefined') {
+          document.getElementById('cert-list').innerHTML = '<div class="error-state">Sistema não inicializado. Recarregue a página.</div>';
+          return;
+        }
+        var usuario = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe', 'editor-chefe']);
+        if (!usuario) return;
+
+        if (typeof AppPanel.atualizarAvatares === 'function') AppPanel.atualizarAvatares();
+        if (typeof AppPanel.atualizarContadorNotificacoes === 'function') AppPanel.atualizarContadorNotificacoes();
+        if (typeof AppPanel.iniciarPollingNotificacoes === 'function') AppPanel.iniciarPollingNotificacoes();
+        var btnNotif = document.getElementById('btn-notificacoes');
+        if (btnNotif && typeof AppPanel.mostrarDropdownNotificacoes === 'function') {
+          btnNotif.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+        }
+
+        await carregarCertificados();
+      }, 100);
+    });
+  </script>
 </body>
+
 </html>
