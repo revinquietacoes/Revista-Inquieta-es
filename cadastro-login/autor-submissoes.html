@@ -1,1 +1,80 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Minhas submissões</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Minhas submissões</h1><p>Aqui você consulta e acompanha seus trabalhos submetidos.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="painel-autor.html">Voltar ao painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><div class="content-grid"><section class="panel"><div class="panel-head"><div><h2>Lista de trabalhos</h2><p class="helper">Aqui você abre cada submissão e acompanha o estado editorial.</p></div><span class="badge badge-blue" id="badge-total">0 registros</span></div><div class="list" id="lista-submissoes"></div></section><aside class="panel detail-card is-open" id="detalhe"><h3>Selecione uma submissão</h3><p class="helper">O painel lateral exibe detalhes, dossiê vinculado e prazo editorial.</p></aside></div><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',async()=>{const user=AppPanel.requireRole(['autor']);if(!user) return;function labelStatusSubmissao(status){return{submetido:'Submetido',em_avaliacao:'Em avaliação',rejeitado:'Rejeitado',aceito_com_correcoes:'Aceito com correções',correcoes_necessarias:'Correções necessárias',aceito:'Aceito',submissoes_ativas:'Submissões ativas',nao_alocada:'Não alocada',alocada_sem_aceite:'Aguardando aceite de parecerista',ajustes_solicitados:'Ajustes solicitados',recusado:'Recusado',arquivado:'Arquivado'}[status]||status||'—';}try{const data=await AppPanel.apiData('author_dashboard');const lista=document.getElementById('lista-submissoes');const detalhe=document.getElementById('detalhe');document.getElementById('badge-total').textContent=`${data.submissoes.length} registro(s)`;if(!data.submissoes.length){lista.innerHTML='<div class="empty-state">Aqui você ainda não possui submissões registradas.</div>';return;}data.submissoes.forEach(s=>{const btn=document.createElement('button');btn.innerHTML=`<div class="item-title">${s.titulo}</div><div class="item-meta">${s.secao} • ${labelStatusSubmissao(s.status)} • ${new Date(s.data_submissao).toLocaleDateString('pt-BR')}</div>`;btn.addEventListener('click',()=>{detalhe.innerHTML=`<h3>${s.titulo}</h3><div class="detail-grid"><div class="metric-box"><span class="helper">Seção</span><strong>${s.secao}</strong></div><div class="metric-box"><span class="helper">Status</span><strong>${labelStatusSubmissao(s.status)}</strong></div><div class="metric-box"><span class="helper">Dossiê</span><strong>${s.dossie_titulo||'Fluxo contínuo'}</strong></div><div class="metric-box"><span class="helper">Editor(a) responsável</span><strong>${s.editor_nome||'A definir'}</strong></div><div class="metric-box"><span class="helper">Data de envio</span><strong>${new Date(s.data_submissao).toLocaleString('pt-BR')}</strong></div><div class="metric-box"><span class="helper">Prazo editorial</span><strong>${s.prazo_final_avaliacao?new Date(s.prazo_final_avaliacao).toLocaleDateString('pt-BR'):'—'}</strong></div></div>`});lista.appendChild(btn)});}catch(err){document.getElementById('lista-submissoes').innerHTML=`<div class="empty-state">${err.message}</div>`;}})</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Minhas submissões</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Avatar"><img class="logo-inline" src="../logo-revista.png" alt="Logo"></div>
+      <div class="brand-copy"><h1>Minhas submissões</h1><p>Acompanhe seus trabalhos submetidos</p></div>
+    </div>
+    <div class="actions-row">
+      <div style="position: relative; margin-right: 10px;">
+        <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+        <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+        <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+      </div>
+      <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+      <button class="btn btn-soft" data-action="logout">Sair</button>
+    </div>
+  </header>
+
+  <div class="panel" style="max-width: 800px; margin: 20px auto;">
+    <div class="panel-head"><h2>Lista de trabalhos</h2></div>
+    <div class="panel-body" id="lista-submissoes">
+      <div style="text-align: center; padding: 40px;">Carregando...</div>
+    </div>
+  </div>
+  <footer class="page-footer"></footer>
+</div>
+
+<script>
+  async function carregarSubmissoes() {
+    const container = document.getElementById('lista-submissoes');
+    try {
+      const data = await AppPanel.apiData('author_dashboard');
+      const submissoes = data.submissoes || [];
+      if (submissoes.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 40px;">Nenhuma submissão encontrada.</div>';
+        return;
+      }
+      container.innerHTML = submissoes.map(s => `
+        <div style="border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+          <h3 style="margin: 0 0 8px;">${escapeHtml(s.titulo)}</h3>
+          <p><strong>Status:</strong> <span class="badge badge-${s.status === 'aceito' ? 'success' : s.status === 'rejeitado' ? 'danger' : 'warning'}">${s.status || 'submetido'}</span></p>
+          <p><strong>Data de submissão:</strong> ${s.data_submissao ? new Date(s.data_submissao).toLocaleDateString('pt-BR') : '-'}</p>
+          <p><strong>Prazo final:</strong> ${s.prazo_final_avaliacao ? new Date(s.prazo_final_avaliacao).toLocaleDateString('pt-BR') : '-'}</p>
+          ${s.dossie_titulo ? `<p><strong>Dossiê:</strong> ${escapeHtml(s.dossie_titulo)}</p>` : ''}
+          ${s.editor_nome ? `<p><strong>Editor(a) responsável:</strong> ${escapeHtml(s.editor_nome)}</p>` : ''}
+        </div>
+      `).join('');
+    } catch (err) {
+      container.innerHTML = `<div style="text-align: center; padding: 40px; color: red;">Erro: ${err.message}</div>`;
+    }
+  }
+
+  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(async () => {
+      if (typeof AppPanel === 'undefined') { console.error('AppPanel não carregado'); return; }
+      const user = AppPanel.requireRole(['autor']);
+      if (!user) return;
+      AppPanel.atualizarAvatares();
+      AppPanel.atualizarContadorNotificacoes();
+      AppPanel.iniciarPollingNotificacoes();
+      const btn = document.getElementById('btn-notificacoes');
+      if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+      await carregarSubmissoes();
+    }, 100);
+  });
+</script>
+</body>
+</html>
