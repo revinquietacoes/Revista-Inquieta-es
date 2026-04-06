@@ -88,17 +88,18 @@
         return;
       }
       container.innerHTML = data.notificacoes.map(n => `
-  <div class="notificacao-item ${!n.lida ? 'nao-lida' : ''}" data-id="${n.id}" data-lida="${n.lida}">
-    <div style="display: flex; align-items: center; gap: 12px;">
-      <img class="avatar-img" data-avatar-user alt="Avatar" src="../assets/avatares/avatar-padrao.png" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
-      <div style="flex: 1;">
-        <div class="notificacao-titulo">${escapeHtml(n.titulo)}</div>
-        <div class="notificacao-mensagem">${escapeHtml(n.mensagem)}</div>
-        <div class="notificacao-data">${new Date(n.criado_em).toLocaleString('pt-BR')}</div>
+      <div class="notificacao-item ${!n.lida ? 'nao-lida' : ''}" data-id="${n.id}" data-lida="${n.lida}">
+        <div style="display: flex; align-items: center; gap: 12px;">
+          <img src="${n.remetente_foto || '../assets/avatares/avatar-padrao.png'}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+          <div style="flex: 1;">
+            <div class="notificacao-titulo">${escapeHtml(n.titulo)}</div>
+            <div class="notificacao-mensagem">${escapeHtml(n.mensagem)}</div>
+            <div class="notificacao-data">${new Date(n.criado_em).toLocaleString('pt-BR')}</div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-`).join('');
+    `).join('');
+
       // Marcar como lida ao clicar
       document.querySelectorAll('.notificacao-item').forEach(el => {
         el.addEventListener('click', async () => {
@@ -108,11 +109,10 @@
             el.classList.remove('nao-lida');
             el.dataset.lida = 'true';
           }
-          // Se a notificação tem link, redirecionar
-          // (você pode armazenar o link em um atributo)
         });
       });
-      // Paginação (simples)
+
+      // Paginação
       const pagDiv = document.getElementById('paginacao');
       pagDiv.innerHTML = `
       <button class="btn btn-secondary" ${page === 0 ? 'disabled' : ''} onclick="carregarNotificacoes(${page - 1})">Anterior</button>
@@ -121,6 +121,7 @@
     }
 
     function escapeHtml(str) {
+      if (!str) return '';
       return str.replace(/[&<>]/g, function (m) {
         if (m === '&') return '&amp;';
         if (m === '<') return '&lt;';
@@ -132,8 +133,12 @@
     document.addEventListener('DOMContentLoaded', async () => {
       const user = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
       if (!user) return;
+
+      // 🔥 CORREÇÃO: Atualiza o avatar do cabeçalho
+      AppPanel.atualizarAvatares();
+
+      // Carrega as notificações
       await carregarNotificacoes(0);
-      // Opcional: marcar todas como lidas (botão)
     });
   </script>
 </body>
