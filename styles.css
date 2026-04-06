@@ -456,12 +456,6 @@ a:hover {
   text-decoration: none;
 }
 
-.btn.secondary {
-  background: #edf3fb;
-  color: var(--brand);
-  border: 1px solid #d5e2f4;
-}
-
 .cta-row,
 .reader-actions,
 .course-actions {
