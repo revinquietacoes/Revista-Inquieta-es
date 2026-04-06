@@ -90,7 +90,7 @@
       container.innerHTML = data.notificacoes.map(n => `
   <div class="notificacao-item ${!n.lida ? 'nao-lida' : ''}" data-id="${n.id}" data-lida="${n.lida}">
     <div style="display: flex; align-items: center; gap: 12px;">
-      <img src="${n.remetente_foto || '../assets/avatares/avatar-padrao.png'}" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
+      <img class="avatar-img" data-avatar-user alt="Avatar" src="../assets/avatares/avatar-padrao.png" style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover;">
       <div style="flex: 1;">
         <div class="notificacao-titulo">${escapeHtml(n.titulo)}</div>
         <div class="notificacao-mensagem">${escapeHtml(n.mensagem)}</div>
