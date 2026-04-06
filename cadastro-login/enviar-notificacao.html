@@ -15,34 +15,24 @@
       <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Avatar"><img class="logo-inline" src="../logo-revista.png" alt="Logo"></div>
       <div class="brand-copy"><h1>Enviar notificação</h1><p>Envie comunicados para usuários do sistema</p></div>
     </div>
-    <div class="actions-row"><a class="btn btn-secondary" href="painel-editor-chefe.html">Voltar</a><button class="btn btn-soft" data-action="logout">Sair</button></div>
+    <div class="actions-row">
+      <div style="position: relative; margin-right: 10px;">
+        <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+        <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+        <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+      </div>
+      <a class="btn btn-secondary" href="painel-editor-chefe.html">Voltar</a>
+      <button class="btn btn-soft" data-action="logout">Sair</button>
+    </div>
   </header>
   <div class="panel" style="max-width: 700px; margin: 20px auto;">
     <div class="panel-head"><h2>Nova notificação</h2></div>
     <div class="panel-body">
       <form id="form-notificacao">
         <div class="form-grid">
-          <div class="field full">
-            <label>Destinatários</label>
-            <select id="targetType" name="targetType" required>
-              <option value="todos">Todos os usuários ativos</option>
-              <option value="perfil">Por perfil</option>
-              <option value="lista">Lista de IDs (separados por vírgula)</option>
-            </select>
-          </div>
-          <div class="field full" id="perfil-group" style="display:none;">
-            <label>Perfil</label>
-            <select id="perfilValue">
-              <option value="autor">Autor</option>
-              <option value="parecerista">Parecerista</option>
-              <option value="editor_adjunto">Editor Adjunto</option>
-              <option value="editor_chefe">Editor Chefe</option>
-            </select>
-          </div>
-          <div class="field full" id="lista-group" style="display:none;">
-            <label>IDs dos usuários (ex: 1,2,3)</label>
-            <input type="text" id="listaIds" placeholder="1,2,3">
-          </div>
+          <div class="field full"><label>Destinatários</label><select id="targetType" name="targetType" required><option value="todos">Todos os usuários ativos</option><option value="perfil">Por perfil</option><option value="lista">Lista de IDs (separados por vírgula)</option></select></div>
+          <div class="field full" id="perfil-group" style="display:none;"><label>Perfil</label><select id="perfilValue"><option value="autor">Autor</option><option value="parecerista">Parecerista</option><option value="editor_adjunto">Editor Adjunto</option><option value="editor_chefe">Editor Chefe</option></select></div>
+          <div class="field full" id="lista-group" style="display:none;"><label>IDs dos usuários (ex: 1,2,3)</label><input type="text" id="listaIds" placeholder="1,2,3"></div>
           <div class="field full"><label>Título</label><input type="text" id="titulo" required></div>
           <div class="field full"><label>Mensagem</label><textarea id="mensagem" rows="4" required></textarea></div>
           <div class="field full"><label>Link (opcional)</label><input type="text" id="link" placeholder="ex: /cadastro-login/notificacoes.html"></div>
@@ -54,6 +44,19 @@
   </div>
 </div>
 <script>
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(async () => {
+      if (typeof AppPanel === 'undefined') { console.error('AppPanel não carregado'); return; }
+      const user = AppPanel.requireRole(['editor_chefe']);
+      if (!user) return;
+      AppPanel.atualizarAvatares();
+      AppPanel.atualizarContadorNotificacoes();
+      AppPanel.iniciarPollingNotificacoes();
+      const btn = document.getElementById('btn-notificacoes');
+      if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+    }, 100);
+  });
+
   const targetType = document.getElementById('targetType');
   const perfilGroup = document.getElementById('perfil-group');
   const listaGroup = document.getElementById('lista-group');
@@ -68,34 +71,16 @@
     const msgDiv = document.getElementById('msg');
     msgDiv.className = 'form-message';
     msgDiv.textContent = 'Enviando...';
-    const payload = {
-      action: 'send_notification',
-      targetType: targetType.value,
-      titulo: document.getElementById('titulo').value,
-      mensagem: document.getElementById('mensagem').value,
-      link: document.getElementById('link').value || null
-    };
-    if (targetType.value === 'perfil') {
-      payload.targetIds = document.getElementById('perfilValue').value;
-    } else if (targetType.value === 'lista') {
-      const ids = document.getElementById('listaIds').value.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n));
-      if (ids.length === 0) {
-        msgDiv.textContent = 'Informe pelo menos um ID válido.';
-        msgDiv.classList.add('err');
-        return;
-      }
-      payload.targetIds = ids;
-    }
+    const payload = { action: 'send_notification', targetType: targetType.value, titulo: document.getElementById('titulo').value, mensagem: document.getElementById('mensagem').value, link: document.getElementById('link').value || null };
+    if (targetType.value === 'perfil') { payload.targetIds = document.getElementById('perfilValue').value; }
+    else if (targetType.value === 'lista') { const ids = document.getElementById('listaIds').value.split(',').map(s => parseInt(s.trim())).filter(n => !isNaN(n)); if (ids.length === 0) { msgDiv.textContent = 'Informe pelo menos um ID válido.'; msgDiv.classList.add('err'); return; } payload.targetIds = ids; }
     try {
       const result = await AppPanel.apiAction('send_notification', payload);
       if (result.erro) throw new Error(result.erro);
       msgDiv.textContent = `Notificação enviada para ${result.enviadas} usuário(s).`;
       msgDiv.classList.add('ok');
       document.getElementById('form-notificacao').reset();
-    } catch (err) {
-      msgDiv.textContent = err.message;
-      msgDiv.classList.add('err');
-    }
+    } catch (err) { msgDiv.textContent = err.message; msgDiv.classList.add('err'); }
   });
 </script>
 </body>

@@ -1,89 +1,104 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Gestão de certificados | Revista Inquietações</title>
-<link rel="icon" href="../assets/favicon.png">
-<link rel="stylesheet" href="painel-base.css">
-<script src="painel-base.js" defer></script>
-<style>
-.admin-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;align-items:start;}
-.user-select-list{display:grid;gap:10px;max-height:520px;overflow:auto;}
-.user-select-button{width:100%;text-align:left;padding:14px;border-radius:16px;border:1px solid rgba(255,255,255,.08);background:rgba(255,255,255,.04);color:var(--text);cursor:pointer;transition:transform .15s ease,border-color .15s ease,background .15s ease;}
-.user-select-button:hover{transform:translateY(-1px);border-color:rgba(255,255,255,.18);}
-.upload-note{padding:18px;border-radius:18px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);}
-.upload-note p{margin:0 0 10px;color:var(--muted);line-height:1.7;}
-.upload-note p:last-child{margin-bottom:0;}
-@media(max-width:980px){.admin-grid{grid-template-columns:1fr;}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestão de certificados</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+  <style>
+    .form-cert { max-width: 700px; margin: 20px auto; }
+    .preview-card { background: #f8f9fa; border-radius: 12px; padding: 16px; margin-top: 20px; }
+  </style>
 </head>
 <body>
-<div class="page-shell" id="page-shell-gestao-certificados">
-<header class="topbar" id="topbar-gestao-certificados"><div class="brand-wrap" id="brand-wrap-gestao-certificados"><div class="avatar-box" id="avatar-box-gestao-certificados"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy" id="brand-copy-gestao-certificados"><h1 id="titulo-gestao-certificados">Gestão de certificados</h1><p id="descricao-gestao-certificados">Upload privado de certificados para autores inscritos em eventos, pareceristas e membros da equipe editorial.</p></div></div><div class="actions-row" id="acoes-topo-gestao-certificados"><a class="btn btn-secondary" id="btn-voltar-painel-chefe" href="painel-editor-chefe.html">Voltar ao painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header>
-<div class="admin-grid" id="grid-gestao-certificados">
-<section class="panel" id="painel-usuarios-gestao-certificados"><div class="panel-head" id="head-usuarios-gestao-certificados"><h2 id="titulo-usuarios-gestao-certificados">Selecionar usuário</h2><p class="helper" id="subtitulo-usuarios-gestao-certificados">Escolha o usuário que receberá acesso ao certificado.</p></div><div class="user-select-list" id="lista-usuarios-certificados"></div></section>
-<section class="panel" id="painel-upload-gestao-certificados"><div class="panel-head" id="head-upload-gestao-certificados"><h2 id="titulo-upload-gestao-certificados">Enviar certificado</h2><p class="helper" id="subtitulo-upload-gestao-certificados">O arquivo será armazenado nas bolhas e liberado apenas ao usuário selecionado.</p></div><form id="form-upload-certificado"><div class="form-grid" id="grid-form-upload-certificado"><div class="field full"><label for="cert-user-display">Usuário selecionado</label><input id="cert-user-display" readonly placeholder="Selecione um usuário na coluna ao lado."></div><input id="cert-user-id" name="targetUserId" type="hidden"><div class="field"><label for="cert-titulo">Título do certificado</label><input id="cert-titulo" name="titulo" required></div><div class="field"><label for="cert-tipo">Tipo</label><select id="cert-tipo" name="tipo" required><option value="evento">Evento ou curso</option><option value="parecer">Parecer realizado</option><option value="parecerista">Atuação como parecerista</option><option value="equipe_editorial">Equipe editorial</option></select></div><div class="field"><label for="cert-descricao">Descrição breve</label><input id="cert-descricao" name="descricao"></div><div class="field full"><label for="cert-arquivo">Arquivo PDF</label><input id="cert-arquivo" name="arquivo" type="file" accept="application/pdf" required></div></div><div class="actions-row" id="acoes-upload-certificado"><button class="btn btn-primary" id="btn-upload-certificado" type="submit">Enviar certificado</button></div><div class="form-message" id="msg-upload-certificado"></div></form><div class="upload-note" id="nota-upload-certificado"><p id="nota-upload-certificado-1">Esta área envia o PDF para a function <code>upload-certificado</code>, que grava o arquivo nas bolhas e registra o vínculo na Neon.</p><p id="nota-upload-certificado-2">Somente o editor-chefe autenticado poderá concluir o envio.</p></div></section>
-</div>
-<footer class="page-footer" id="rodape-gestao-certificados"></footer>
-</div>
-<script>
-document.addEventListener('DOMContentLoaded',async()=>{
-  const user=AppPanel.requireRole(['editor_chefe']);
-  if(!user)return;
-  const lista=document.getElementById('lista-usuarios-certificados');
-  const display=document.getElementById('cert-user-display');
-  const hidden=document.getElementById('cert-user-id');
-  const msg=document.getElementById('msg-upload-certificado');
-  let selectedBtn=null;
-  try{
-    const data=await AppPanel.apiData('chief_dashboard');
-    const users=(data.usuarios||[]).filter(u=>['autor','parecerista','editor_adjunto','editor_chefe'].includes(u.perfil));
-    if(!users.length){lista.innerHTML='<div class="empty-state" id="estado-vazio-usuarios-certificados">Nenhum usuário foi encontrado.</div>';} else {
-      lista.innerHTML='';
-      users.forEach(u=>{
-        const btn=document.createElement('button');
-        btn.type='button';
-        btn.className='user-select-button';
-        btn.id=`usuario-certificado-${u.id}`;
-        btn.innerHTML=`<strong>${u.nome}</strong><div class="helper">${AppPanel.formatRole(u.perfil)} • ${u.email}</div>`;
-        btn.addEventListener('click',()=>{
-          if(selectedBtn) selectedBtn.classList.remove('is-selected');
-          selectedBtn=btn;
-          btn.classList.add('is-selected');
-          display.value=`${u.nome} (${AppPanel.formatRole(u.perfil)})`;
-          hidden.value=u.id;
-        });
-        lista.appendChild(btn);
-      });
-    }
-  }catch(err){lista.innerHTML=`<div class="empty-state" id="estado-erro-usuarios-certificados">${err.message}</div>`;}
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Avatar"><img class="logo-inline" src="../logo-revista.png" alt="Logo"></div>
+      <div class="brand-copy"><h1>Gestão de certificados</h1><p>Upload privado de certificados para usuários</p></div>
+    </div>
+    <div class="actions-row">
+      <div style="position: relative; margin-right: 10px;">
+        <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+        <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+        <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+      </div>
+      <a class="btn btn-secondary" href="painel-editor-chefe.html">Voltar</a>
+      <button class="btn btn-soft" data-action="logout">Sair</button>
+    </div>
+  </header>
 
-  document.getElementById('form-upload-certificado').addEventListener('submit',async(ev)=>{
-    ev.preventDefault();
-    msg.className='form-message';
-    msg.textContent='';
-    if(!hidden.value){msg.textContent='Selecione um usuário antes de enviar o certificado.';msg.classList.add('err');return;}
-    const file=document.getElementById('cert-arquivo').files[0];
-    if(!file){msg.textContent='Selecione um arquivo PDF.';msg.classList.add('err');return;}
-    try{
-      const fd=new FormData();
-      fd.set('target_user_id', String(hidden.value));
-      fd.set('certificate_type', document.getElementById('cert-tipo').value);
-      fd.set('title', document.getElementById('cert-titulo').value.trim());
-      fd.set('description', document.getElementById('cert-descricao').value.trim());
-      fd.set('arquivo', file);
-      const data=await AppPanel.authedFormFetch('/.netlify/functions/upload-certificado', fd);
-      msg.textContent=data.mensagem||data.detalhe||'Certificado enviado com sucesso.';
-      msg.classList.add('ok');
-      ev.target.reset();
-      hidden.value='';
-      display.value='';
-      if(selectedBtn) selectedBtn.classList.remove('is-selected');
-      selectedBtn=null;
-    }catch(err){msg.textContent=err.message||'Erro no upload do certificado.';msg.classList.add('err');}
+  <div class="panel form-cert">
+    <div class="panel-head"><h2>Enviar certificado</h2></div>
+    <div class="panel-body">
+      <form id="form-certificado" enctype="multipart/form-data">
+        <div class="form-grid">
+          <div class="field full"><label>Selecionar usuário</label><select id="target_user_id" name="target_user_id" required></select></div>
+          <div class="field full"><label>Título do certificado</label><input type="text" id="titulo" name="titulo" required></div>
+          <div class="field full"><label>Tipo</label><select id="tipo" name="tipo"><option value="evento">Evento ou curso</option><option value="parecer">Parecer realizado</option><option value="equipe_editorial">Equipe editorial</option></select></div>
+          <div class="field full"><label>Descrição breve</label><textarea id="descricao" name="descricao" rows="3"></textarea></div>
+          <div class="field full"><label>Arquivo PDF</label><input type="file" id="arquivo" name="arquivo" accept="application/pdf" required></div>
+        </div>
+        <div class="actions-row"><button class="btn btn-primary" type="submit">Enviar certificado</button></div>
+        <div id="msg" class="form-message"></div>
+      </form>
+      <div class="preview-card" id="preview" style="display:none;"></div>
+    </div>
+  </div>
+  <footer class="page-footer"></footer>
+</div>
+
+<script>
+  let usuariosList = [];
+
+  async function carregarUsuarios() {
+    try {
+      const data = await AppPanel.apiData('chat_recipients');
+      usuariosList = data.usuarios;
+      const select = document.getElementById('target_user_id');
+      select.innerHTML = '<option value="">Selecione um usuário</option>' + usuariosList.map(u => `<option value="${u.id}">${escapeHtml(u.nome)} - ${escapeHtml(u.perfil)}</option>`).join('');
+    } catch (err) { console.error('Erro ao carregar usuários:', err); }
+  }
+
+  document.getElementById('form-certificado').addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msgDiv = document.getElementById('msg');
+    msgDiv.className = 'form-message';
+    msgDiv.textContent = 'Enviando...';
+    const fd = new FormData();
+    fd.append('target_user_id', document.getElementById('target_user_id').value);
+    fd.append('titulo', document.getElementById('titulo').value);
+    fd.append('tipo', document.getElementById('tipo').value);
+    fd.append('descricao', document.getElementById('descricao').value);
+    fd.append('arquivo', document.getElementById('arquivo').files[0]);
+    try {
+      const resp = await fetch('/.netlify/functions/upload-certificado', { method: 'POST', headers: AppPanel.currentUserHeaders(), body: fd });
+      const data = await resp.json();
+      if (!resp.ok) throw new Error(data.erro || 'Falha no upload');
+      msgDiv.textContent = 'Certificado enviado com sucesso!';
+      msgDiv.classList.add('ok');
+      document.getElementById('form-certificado').reset();
+      setTimeout(() => msgDiv.textContent = '', 3000);
+    } catch (err) { msgDiv.textContent = err.message; msgDiv.classList.add('err'); }
   });
-});
+
+  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(async () => {
+      if (typeof AppPanel === 'undefined') { console.error('AppPanel não carregado'); return; }
+      const user = AppPanel.requireRole(['editor_chefe']);
+      if (!user) return;
+      AppPanel.atualizarAvatares();
+      AppPanel.atualizarContadorNotificacoes();
+      AppPanel.iniciarPollingNotificacoes();
+      const btn = document.getElementById('btn-notificacoes');
+      if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+      await carregarUsuarios();
+    }, 100);
+  });
 </script>
 </body>
 </html>

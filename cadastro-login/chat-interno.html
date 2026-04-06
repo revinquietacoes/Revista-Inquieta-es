@@ -8,7 +8,7 @@
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
   <style>
-    /* (mesmo estilo MSN – cores com bom contraste) */
+    /* MSN Messenger Style */
     :root {
       --msn-blue: #1e88e5;
       --msn-dark: #0d2b3e;
@@ -67,17 +67,10 @@
 <div class="page-shell">
   <header class="topbar">
     <div class="brand-wrap">
-      <div class="avatar-box">
-        <img class="avatar-img" data-avatar-user alt="Avatar">
-        <img class="logo-inline" src="../logo-revista.png" alt="Logo">
-      </div>
-      <div class="brand-copy">
-        <h1>Windows Live Messenger</h1>
-        <p>Converse, compartilhe arquivos, faça chamadas de vídeo e muito mais.</p>
-      </div>
+      <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Avatar"><img class="logo-inline" src="../logo-revista.png" alt="Logo"></div>
+      <div class="brand-copy"><h1>Windows Live Messenger</h1><p>Converse, compartilhe arquivos, faça chamadas de vídeo e muito mais.</p></div>
     </div>
     <div class="actions-row">
-      <!-- Ícone de notificações no topo -->
       <div style="position: relative; margin-right: 10px;">
         <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
         <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
@@ -90,39 +83,17 @@
 
   <div class="msn-chat">
     <div class="msn-contacts">
-      <div class="msn-contacts-header">
-        <img src="../assets/avatares/avatar-padrao.png" alt="Meu avatar" id="myAvatarHeader">
-        <span id="myNameHeader">Carregando...</span>
-      </div>
-      <div class="msn-search">
-        <input type="text" placeholder="Localizar contato..." id="searchContact">
-      </div>
+      <div class="msn-contacts-header"><img src="../assets/avatares/avatar-padrao.png" alt="Meu avatar" id="myAvatarHeader"><span id="myNameHeader">Carregando...</span></div>
+      <div class="msn-search"><input type="text" placeholder="Localizar contato..." id="searchContact"></div>
       <div class="msn-contact-list" id="contactList"></div>
     </div>
     <div class="msn-conversation" id="conversationArea" style="display: none;">
-      <div class="msn-conversation-header">
-        <div>
-          <strong id="chatContactName"></strong>
-          <span id="chatContactStatus" style="font-size: 12px; margin-left: 8px;"></span>
-        </div>
-        <div class="msn-conversation-actions">
-          <button id="clearChatBtn" title="Limpar conversa">🗑️</button>
-          <button id="videoCallBtn" title="Chamada de vídeo">🎥</button>
-          <button id="nudgeBtn" title="Chamar atenção">✨</button>
-        </div>
-      </div>
+      <div class="msn-conversation-header"><div><strong id="chatContactName"></strong><span id="chatContactStatus" style="font-size: 12px; margin-left: 8px;"></span></div>
+      <div class="msn-conversation-actions"><button id="clearChatBtn" title="Limpar conversa">🗑️</button><button id="videoCallBtn" title="Chamada de vídeo">🎥</button><button id="nudgeBtn" title="Chamar atenção">✨</button></div></div>
       <div class="msn-messages" id="messagesContainer"></div>
       <div class="msn-input-area">
-        <div class="msn-toolbar">
-          <button id="attachFileBtn">📎 Anexar</button>
-          <button id="audioMsgBtn">🎤 Áudio</button>
-          <button id="locationBtn">📍 Localização</button>
-          <input type="file" id="fileInput" hidden accept="image/*,application/pdf,audio/*,video/*">
-        </div>
-        <div class="msn-input-row">
-          <textarea id="messageText" rows="2" placeholder="Digite sua mensagem..."></textarea>
-          <button id="sendMsgBtn">Enviar</button>
-        </div>
+        <div class="msn-toolbar"><button id="attachFileBtn">📎 Anexar</button><button id="audioMsgBtn">🎤 Áudio</button><button id="locationBtn">📍 Localização</button><input type="file" id="fileInput" hidden accept="image/*,application/pdf,audio/*,video/*"></div>
+        <div class="msn-input-row"><textarea id="messageText" rows="2" placeholder="Digite sua mensagem..."></textarea><button id="sendMsgBtn">Enviar</button></div>
       </div>
     </div>
   </div>
@@ -142,74 +113,34 @@
   let remoteVideoElement = null;
   let localVideoElement = null;
 
-  function authHeaders() {
-    const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
-    delete headers['Content-Type'];
-    delete headers['content-type'];
-    return headers;
-  }
+  function authHeaders() { const headers = { ...(AppPanel.currentUserHeaders?.() || {}) }; delete headers['Content-Type']; delete headers['content-type']; return headers; }
 
   async function loadContacts() {
     try {
       const data = await AppPanel.apiData('chat_recipients');
       contacts = data.usuarios.filter(u => String(u.id) !== String(currentUser.id)).map(u => ({ ...u, id: String(u.id) }));
       renderContactList();
-      console.log('Contatos carregados:', contacts.length);
-    } catch (err) {
-      console.error('Erro ao carregar contatos:', err);
-      document.getElementById('contactList').innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar contatos.</div>';
-    }
+    } catch (err) { console.error('Erro ao carregar contatos:', err); document.getElementById('contactList').innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar contatos.</div>'; }
   }
 
   function renderContactList() {
     const container = document.getElementById('contactList');
     const searchTerm = document.getElementById('searchContact').value.toLowerCase();
     const filtered = contacts.filter(c => c.nome.toLowerCase().includes(searchTerm));
-    if (filtered.length === 0) {
-      container.innerHTML = '<div class="empty-state" style="padding: 16px; text-align: center;">Nenhum contato encontrado</div>';
-      return;
-    }
-    container.innerHTML = filtered.map(c => `
-      <div class="msn-contact" data-id="${c.id}">
-        <img class="msn-contact-avatar" src="${c.foto_perfil_url || '../assets/avatares/avatar-padrao.png'}" alt="avatar">
-        <div class="msn-contact-info">
-          <div class="msn-contact-name">${escapeHtml(c.nome)}</div>
-          <div class="msn-contact-status ${c.online ? '' : 'offline'}">${c.online ? 'Online' : 'Offline'}</div>
-        </div>
-        ${c.unread ? `<span class="msn-contact-badge">${c.unread}</span>` : ''}
-      </div>
-    `).join('');
+    if (filtered.length === 0) { container.innerHTML = '<div class="empty-state" style="padding: 16px; text-align: center;">Nenhum contato encontrado</div>'; return; }
+    container.innerHTML = filtered.map(c => `<div class="msn-contact" data-id="${c.id}"><img class="msn-contact-avatar" src="${c.foto_perfil_url || '../assets/avatares/avatar-padrao.png'}" alt="avatar"><div class="msn-contact-info"><div class="msn-contact-name">${escapeHtml(c.nome)}</div><div class="msn-contact-status ${c.online ? '' : 'offline'}">${c.online ? 'Online' : 'Offline'}</div></div>${c.unread ? `<span class="msn-contact-badge">${c.unread}</span>` : ''}</div>`).join('');
   }
 
-  document.getElementById('contactList').addEventListener('click', (e) => {
-    const contactDiv = e.target.closest('.msn-contact');
-    if (contactDiv) {
-      const contactId = contactDiv.dataset.id;
-      console.log('Clique no contato com ID:', contactId);
-      if (contactId) selectContact(contactId);
-    }
-  });
+  document.getElementById('contactList').addEventListener('click', (e) => { const contactDiv = e.target.closest('.msn-contact'); if (contactDiv) { const contactId = contactDiv.dataset.id; if (contactId) selectContact(contactId); } });
 
   async function selectContact(contactId) {
-    console.log('Selecionando contato:', contactId);
     let contact = contacts.find(c => c.id === contactId);
-    if (!contact) {
-      await loadContacts();
-      contact = contacts.find(c => c.id === contactId);
-      if (!contact) {
-        alert('Contato não encontrado.');
-        return;
-      }
-    }
+    if (!contact) { await loadContacts(); contact = contacts.find(c => c.id === contactId); if (!contact) { alert('Contato não encontrado.'); return; } }
     activeContactId = contactId;
-    const convArea = document.getElementById('conversationArea');
-    convArea.style.display = 'flex';
+    document.getElementById('conversationArea').style.display = 'flex';
     document.getElementById('chatContactName').innerText = contact.nome;
     document.getElementById('chatContactStatus').innerHTML = contact.online ? '🟢 Online' : '⚫ Offline';
-    document.querySelectorAll('.msn-contact').forEach(el => {
-      el.classList.remove('active');
-      if (el.dataset.id === contactId) el.classList.add('active');
-    });
+    document.querySelectorAll('.msn-contact').forEach(el => { el.classList.remove('active'); if (el.dataset.id === contactId) el.classList.add('active'); });
     loadMessages(contactId);
   }
 
@@ -220,51 +151,30 @@
       const data = await AppPanel.apiData('chat_messages', { targetUserId: parseInt(contactId) });
       messagesCache.set(contactId, data.mensagens || []);
       renderMessages(contactId);
-    } catch (err) {
-      console.error('Erro ao carregar mensagens:', err);
-      container.innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar mensagens.</div>';
-    }
+    } catch (err) { container.innerHTML = '<div style="padding:16px;text-align:center;color:red;">Erro ao carregar mensagens.</div>'; }
   }
 
   function renderMessages(contactId) {
     const msgs = messagesCache.get(contactId) || [];
     const container = document.getElementById('messagesContainer');
-    if (msgs.length === 0) {
-      container.innerHTML = '<div style="padding:16px;text-align:center;">Nenhuma mensagem ainda. Envie uma mensagem!</div>';
-      return;
-    }
+    if (msgs.length === 0) { container.innerHTML = '<div style="padding:16px;text-align:center;">Nenhuma mensagem ainda. Envie uma mensagem!</div>'; return; }
     container.innerHTML = msgs.map(msg => {
       const isSelf = String(msg.remetente_id) === String(currentUser.id);
       const date = new Date(msg.criado_em).toLocaleString('pt-BR');
       let anexoHtml = '';
       if (msg.anexo_url) {
         let url = msg.anexo_url;
-        if (url.includes('/.netlify/functions/arquivo')) {
-          anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo antigo'}</a></div>`;
-        } else {
+        if (url.includes('/.netlify/functions/arquivo')) { anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo antigo'}</a></div>`; }
+        else {
           const lowerUrl = url.toLowerCase();
-          if (lowerUrl.match(/\.(jpg|jpeg|png|gif|webp)$/)) {
-            anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank"><img src="${url}" style="max-width: 200px; max-height: 150px; border-radius: 8px; margin-top: 6px; cursor: pointer;"></a></div>`;
-          } else if (lowerUrl.match(/\.(mp3|wav|ogg|webm)$/)) {
-            anexoHtml = `<div class="message-anexo"><audio controls src="${url}" style="max-width: 200px;"></audio></div>`;
-          } else if (lowerUrl.match(/\.(mp4|webm)$/)) {
-            anexoHtml = `<div class="message-anexo"><video controls src="${url}" style="max-width: 250px; border-radius: 8px;"></video></div>`;
-          } else {
-            anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo'}</a></div>`;
-          }
+          if (lowerUrl.match(/\.(jpg|jpeg|png|gif|webp)$/)) { anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank"><img src="${url}" style="max-width: 200px; max-height: 150px; border-radius: 8px; margin-top: 6px; cursor: pointer;"></a></div>`; }
+          else if (lowerUrl.match(/\.(mp3|wav|ogg|webm)$/)) { anexoHtml = `<div class="message-anexo"><audio controls src="${url}" style="max-width: 200px;"></audio></div>`; }
+          else if (lowerUrl.match(/\.(mp4|webm)$/)) { anexoHtml = `<div class="message-anexo"><video controls src="${url}" style="max-width: 250px; border-radius: 8px;"></video></div>`; }
+          else { anexoHtml = `<div class="message-anexo"><a href="${url}" target="_blank">📎 ${msg.anexo_nome || 'Anexo'}</a></div>`; }
         }
       }
       let nudgeClass = msg.mensagem === '🔔 *nudge*' ? 'nudge-animation' : '';
-      return `
-        <div class="message-item ${isSelf ? 'is-self' : ''} ${nudgeClass}">
-          <div class="message-bubble">${escapeHtml(msg.mensagem || '')}</div>
-          ${anexoHtml}
-          <div class="message-meta">
-            <span>${isSelf ? 'Você' : msg.remetente_nome}</span>
-            <span>${date}</span>
-          </div>
-        </div>
-      `;
+      return `<div class="message-item ${isSelf ? 'is-self' : ''} ${nudgeClass}"><div class="message-bubble">${escapeHtml(msg.mensagem || '')}</div>${anexoHtml}<div class="message-meta"><span>${isSelf ? 'Você' : msg.remetente_nome}</span><span>${date}</span></div></div>`;
     }).join('');
     container.scrollTop = container.scrollHeight;
   }
@@ -273,22 +183,12 @@
     if (!activeContactId) return;
     if (!text.trim() && !anexoInfo) return;
     try {
-      const payload = {
-        destinatarioId: parseInt(activeContactId),
-        mensagem: text.trim() || '📎 Arquivo anexado'
-      };
-      if (anexoInfo) {
-        payload.anexoUrl = anexoInfo.url;
-        payload.anexoPath = anexoInfo.storage_path;
-        payload.anexoNome = anexoInfo.nome;
-        payload.anexoMime = anexoInfo.mime;
-      }
+      const payload = { destinatarioId: parseInt(activeContactId), mensagem: text.trim() || '📎 Arquivo anexado' };
+      if (anexoInfo) { payload.anexoUrl = anexoInfo.url; payload.anexoPath = anexoInfo.storage_path; payload.anexoNome = anexoInfo.nome; payload.anexoMime = anexoInfo.mime; }
       await AppPanel.apiAction('send_direct_message', payload);
       await loadMessages(activeContactId);
       document.getElementById('messageText').value = '';
-    } catch (err) {
-      alert('Erro ao enviar mensagem: ' + err.message);
-    }
+    } catch (err) { alert('Erro ao enviar mensagem: ' + err.message); }
   }
 
   async function uploadAttachment(file) {
@@ -296,19 +196,10 @@
     fd.append('usuario_id', currentUser.id);
     fd.append('categoria', 'chat');
     fd.append('arquivo', file);
-    const resp = await fetch('/.netlify/functions/upload-material', {
-      method: 'POST',
-      headers: authHeaders(),
-      body: fd
-    });
+    const resp = await fetch('/.netlify/functions/upload-material', { method: 'POST', headers: authHeaders(), body: fd });
     const data = await resp.json();
     if (!resp.ok) throw new Error(data.erro || 'Falha no upload');
-    return {
-      url: data.arquivo.url_acesso,
-      storage_path: data.arquivo.storage_path,
-      nome: file.name,
-      mime: file.type
-    };
+    return { url: data.arquivo.url_acesso, storage_path: data.arquivo.storage_path, nome: file.name, mime: file.type };
   }
 
   async function startAudioRecording() {
@@ -319,10 +210,7 @@
     mediaRecorder.onstop = async () => {
       const blob = new Blob(audioChunks, { type: 'audio/webm' });
       const file = new File([blob], 'audio-mensagem.webm', { type: 'audio/webm' });
-      try {
-        const anexo = await uploadAttachment(file);
-        await sendMessage('🎤 Mensagem de áudio', anexo);
-      } catch (err) { alert('Erro ao enviar áudio: ' + err.message); }
+      try { const anexo = await uploadAttachment(file); await sendMessage('🎤 Mensagem de áudio', anexo); } catch (err) { alert('Erro ao enviar áudio: ' + err.message); }
       stream.getTracks().forEach(t => t.stop());
       document.getElementById('audioMsgBtn').classList.remove('recording');
       document.getElementById('audioMsgBtn').innerHTML = '🎤 Áudio';
@@ -339,133 +227,58 @@
 
   function sendLocation() {
     if (!navigator.geolocation) { alert('Geolocalização não suportada.'); return; }
-    navigator.geolocation.getCurrentPosition(async (pos) => {
-      const { latitude, longitude } = pos.coords;
-      const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`;
-      await sendMessage(`📍 Minha localização: ${mapsUrl}`);
-    }, () => alert('Não foi possível obter sua localização.'));
+    navigator.geolocation.getCurrentPosition(async (pos) => { const { latitude, longitude } = pos.coords; const mapsUrl = `https://www.google.com/maps?q=${latitude},${longitude}`; await sendMessage(`📍 Minha localização: ${mapsUrl}`); }, () => alert('Não foi possível obter sua localização.'));
   }
 
-  async function sendNudge() {
-    await sendMessage('🔔 *nudge*');
-    const container = document.getElementById('messagesContainer');
-    container.classList.add('nudge-animation');
-    setTimeout(() => container.classList.remove('nudge-animation'), 500);
-  }
+  async function sendNudge() { await sendMessage('🔔 *nudge*'); const container = document.getElementById('messagesContainer'); container.classList.add('nudge-animation'); setTimeout(() => container.classList.remove('nudge-animation'), 500); }
 
   async function startVideoCall() {
     if (!peerConnection) {
       peerConnection = new RTCPeerConnection({ iceServers: [{ urls: 'stun:stun.l.google.com:19302' }] });
       localStream = await navigator.mediaDevices.getUserMedia({ video: true, audio: true });
       localStream.getTracks().forEach(track => peerConnection.addTrack(track, localStream));
-      if (!localVideoElement) {
-        localVideoElement = document.createElement('video');
-        localVideoElement.className = 'local-video';
-        localVideoElement.autoplay = true;
-        localVideoElement.muted = true;
-        document.body.appendChild(localVideoElement);
-      }
+      if (!localVideoElement) { localVideoElement = document.createElement('video'); localVideoElement.className = 'local-video'; localVideoElement.autoplay = true; localVideoElement.muted = true; document.body.appendChild(localVideoElement); }
       localVideoElement.srcObject = localStream;
-      peerConnection.ontrack = event => {
-        if (!remoteVideoElement) {
-          remoteVideoElement = document.createElement('video');
-          remoteVideoElement.className = 'remote-video';
-          remoteVideoElement.autoplay = true;
-          document.body.appendChild(remoteVideoElement);
-        }
-        remoteVideoElement.srcObject = event.streams[0];
-      };
-      peerConnection.onicecandidate = event => {
-        if (event.candidate) sendMessage(`📹 ice_candidate:${JSON.stringify(event.candidate)}`);
-      };
+      peerConnection.ontrack = event => { if (!remoteVideoElement) { remoteVideoElement = document.createElement('video'); remoteVideoElement.className = 'remote-video'; remoteVideoElement.autoplay = true; document.body.appendChild(remoteVideoElement); } remoteVideoElement.srcObject = event.streams[0]; };
+      peerConnection.onicecandidate = event => { if (event.candidate) sendMessage(`📹 ice_candidate:${JSON.stringify(event.candidate)}`); };
       const offer = await peerConnection.createOffer();
       await peerConnection.setLocalDescription(offer);
       await sendMessage(`📹 video_offer:${JSON.stringify(offer)}`);
     }
   }
 
-  function escapeHtml(str) {
-    if (!str) return '';
-    return str.replace(/[&<>]/g, m => { if (m === '&') return '&amp;'; if (m === '<') return '&lt;'; if (m === '>') return '&gt;'; return m; });
-  }
+  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
 
   document.addEventListener('DOMContentLoaded', async () => {
-    try {
-      if (typeof AppPanel === 'undefined') throw new Error('AppPanel não carregado');
-      
-      // Permite todos os perfis que podem usar o chat
+    setTimeout(async () => {
+      if (typeof AppPanel === 'undefined') { console.error('AppPanel não carregado'); return; }
       currentUser = await AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
-      if (!currentUser) throw new Error('Usuário não autenticado');
-      
+      if (!currentUser) return;
       currentUser.id = String(currentUser.id);
-      console.log('Usuário logado:', currentUser);
-      
-      // Atualiza o avatar do cabeçalho
       AppPanel.atualizarAvatares();
-      
-      document.getElementById('myNameHeader').innerText = currentUser.nome;
-      const myAvatar = currentUser.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
-      document.getElementById('myAvatarHeader').src = myAvatar;
-      
-      // Inicializa notificações
       AppPanel.atualizarContadorNotificacoes();
       AppPanel.iniciarPollingNotificacoes();
-      
-      const btnNotif = document.getElementById('btn-notificacoes');
-      if (btnNotif) {
-        btnNotif.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
-      }
-      
+      const btn = document.getElementById('btn-notificacoes');
+      if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+      document.getElementById('myNameHeader').innerText = currentUser.nome;
+      document.getElementById('myAvatarHeader').src = currentUser.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
       await loadContacts();
-      
       const urlParams = new URLSearchParams(location.search);
       const targetId = urlParams.get('target');
       if (targetId && contacts.find(c => c.id === targetId)) selectContact(targetId);
-      
-    } catch (err) {
-      console.error('Erro na inicialização:', err);
-      document.getElementById('contactList').innerHTML = `<div style="padding:16px;text-align:center;color:red;">${err.message}</div>`;
-    }
+    }, 100);
   });
 
-  // Eventos da interface
   document.getElementById('searchContact').addEventListener('input', () => renderContactList());
-  document.getElementById('sendMsgBtn').addEventListener('click', () => {
-    const text = document.getElementById('messageText').value;
-    if (text.trim()) sendMessage(text);
-  });
-  document.getElementById('messageText').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter' && !e.shiftKey) {
-      e.preventDefault();
-      document.getElementById('sendMsgBtn').click();
-    }
-  });
+  document.getElementById('sendMsgBtn').addEventListener('click', () => { const text = document.getElementById('messageText').value; if (text.trim()) sendMessage(text); });
+  document.getElementById('messageText').addEventListener('keypress', (e) => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); document.getElementById('sendMsgBtn').click(); } });
   document.getElementById('attachFileBtn').addEventListener('click', () => { document.getElementById('fileInput').click(); });
-  document.getElementById('fileInput').addEventListener('change', async (e) => {
-    const file = e.target.files[0];
-    if (!file) return;
-    try {
-      const anexo = await uploadAttachment(file);
-      await sendMessage('', anexo);
-    } catch (err) { alert('Erro ao enviar anexo: ' + err.message); }
-    e.target.value = '';
-  });
+  document.getElementById('fileInput').addEventListener('change', async (e) => { const file = e.target.files[0]; if (!file) return; try { const anexo = await uploadAttachment(file); await sendMessage('', anexo); } catch (err) { alert('Erro ao enviar anexo: ' + err.message); } e.target.value = ''; });
   document.getElementById('audioMsgBtn').addEventListener('click', () => { if (isRecording) stopAudioRecording(); else startAudioRecording(); });
   document.getElementById('locationBtn').addEventListener('click', sendLocation);
   document.getElementById('nudgeBtn').addEventListener('click', sendNudge);
   document.getElementById('videoCallBtn').addEventListener('click', startVideoCall);
-  document.getElementById('clearChatBtn').addEventListener('click', async () => {
-    if (!activeContactId) return;
-    if (!confirm('⚠️ Tem certeza? Isso apagará TODAS as mensagens e os arquivos anexados desta conversa (não poderá ser desfeito).')) return;
-    try {
-      await AppPanel.apiAction('clear_chat', { contactId: activeContactId });
-      alert('Conversa limpa com sucesso!');
-      messagesCache.set(activeContactId, []);
-      renderMessages(activeContactId);
-    } catch (err) {
-      alert('Erro ao limpar conversa: ' + err.message);
-    }
-  });
+  document.getElementById('clearChatBtn').addEventListener('click', async () => { if (!activeContactId) return; if (!confirm('⚠️ Tem certeza? Isso apagará TODAS as mensagens e os arquivos anexados desta conversa (não poderá ser desfeito).')) return; try { await AppPanel.apiAction('clear_chat', { contactId: activeContactId }); alert('Conversa limpa com sucesso!'); messagesCache.set(activeContactId, []); renderMessages(activeContactId); } catch (err) { alert('Erro ao limpar conversa: ' + err.message); } });
 </script>
 </body>
 </html>

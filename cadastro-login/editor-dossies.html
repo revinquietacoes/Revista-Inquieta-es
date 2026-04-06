@@ -1,1 +1,78 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Dossiês sob responsabilidade</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Dossiês sob responsabilidade</h1><p>Aqui você acompanha dossiês temáticos atribuídos ao seu perfil.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="painel-editor.html">Voltar ao painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><section class="panel"><div class="panel-head"><h2>Dossiês</h2></div><div class="list" id="lista-dossies"></div></section><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',async()=>{const user=AppPanel.requireRole(['editor_adjunto']);if(!user)return;try{const data=await AppPanel.apiData('editor_dashboard');const box=document.getElementById('lista-dossies');if(!data.dossies.length){box.innerHTML='<div class="empty-state">Aqui você ainda não possui dossiês atribuídos.</div>';return;}data.dossies.forEach(d=>{const div=document.createElement('div');div.className='item';div.innerHTML=`<div class="item-title">${d.titulo}</div><div class="item-meta">${d.descricao}</div><div class="item-meta">Editor(a)-chefe criador(a): ${d.criado_por_nome||'—'} • Status: ${d.status}</div>`;box.appendChild(div)})}catch(err){document.getElementById('lista-dossies').innerHTML=`<div class="empty-state">${err.message}</div>`}})</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dossiês sob responsabilidade</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Avatar"><img class="logo-inline" src="../logo-revista.png" alt="Logo"></div>
+      <div class="brand-copy"><h1>Dossiês sob responsabilidade</h1><p>Acompanhe dossiês temáticos atribuídos ao seu perfil</p></div>
+    </div>
+    <div class="actions-row">
+      <div style="position: relative; margin-right: 10px;">
+        <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+        <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+        <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+      </div>
+      <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+      <button class="btn btn-soft" data-action="logout">Sair</button>
+    </div>
+  </header>
+
+  <div class="panel" style="max-width: 800px; margin: 20px auto;">
+    <div class="panel-head"><h2>Dossiês</h2></div>
+    <div class="panel-body" id="lista-dossies">
+      <div style="text-align: center; padding: 40px;">Carregando...</div>
+    </div>
+  </div>
+  <footer class="page-footer"></footer>
+</div>
+
+<script>
+  async function carregarDossies() {
+    const container = document.getElementById('lista-dossies');
+    try {
+      const data = await AppPanel.apiData('editor_dashboard');
+      const dossies = data.dossies || [];
+      if (dossies.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 40px;">Nenhum dossiê encontrado sob sua responsabilidade.</div>';
+        return;
+      }
+      container.innerHTML = dossies.map(d => `
+        <div style="border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
+          <h3 style="margin: 0 0 8px;">${escapeHtml(d.titulo)}</h3>
+          <p>${escapeHtml(d.descricao || 'Sem descrição')}</p>
+          <p><strong>Status:</strong> ${d.status || 'aberto'}</p>
+          <p><strong>Período:</strong> ${d.data_abertura ? new Date(d.data_abertura).toLocaleDateString('pt-BR') : '-'} até ${d.data_fechamento ? new Date(d.data_fechamento).toLocaleDateString('pt-BR') : '-'}</p>
+        </div>
+      `).join('');
+    } catch (err) {
+      container.innerHTML = `<div style="text-align: center; padding: 40px; color: red;">Erro: ${err.message}</div>`;
+    }
+  }
+
+  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(async () => {
+      if (typeof AppPanel === 'undefined') { console.error('AppPanel não carregado'); return; }
+      const user = AppPanel.requireRole(['editor_adjunto']);
+      if (!user) return;
+      AppPanel.atualizarAvatares();
+      AppPanel.atualizarContadorNotificacoes();
+      AppPanel.iniciarPollingNotificacoes();
+      const btn = document.getElementById('btn-notificacoes');
+      if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+      await carregarDossies();
+    }, 100);
+  });
+</script>
+</body>
+</html>
