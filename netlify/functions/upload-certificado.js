@@ -117,6 +117,23 @@ const main = async (req) => {
       console.error('❌ Erro no upload para Supabase:', uploadError)
       return json({ erro: 'Erro ao salvar o arquivo no armazenamento.' }, 500)
     }
+    // Após gerar o storagePath e codigoAutenticidade, decida a tabela
+    let tabelaDestino = 'certificados_privados';
+    if (payload.certificateType === 'parecer' || payload.certificateType === 'parecerista') {
+      tabelaDestino = 'certificados_parecerista';
+    }
+
+    const inserted = await sql`
+    INSERT INTO ${sql(tabelaDestino)} (
+        usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key,
+        nome_arquivo, mime_type, tamanho_bytes, codigo_autenticidade
+    ) VALUES (
+        ${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null},
+        ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${storagePath},
+        ${safeFileName}, ${mimeType}, ${bytes.length}, ${codigoAutenticidade}
+    )
+    RETURNING id, criado_em, codigo_autenticidade
+`;
 
     // Obter URL pública
     const { data: urlData } = supabase.storage.from('certificados').getPublicUrl(storagePath)

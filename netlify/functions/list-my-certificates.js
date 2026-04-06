@@ -32,6 +32,7 @@ const main = async (req) => {
       ? await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${user.id} AND tipo = ${type} ORDER BY criado_em DESC`
       : await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${user.id} ORDER BY criado_em DESC`
 
+    const rows = await sql` SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'privado' as origem FROM certificados_privados WHERE usuario_id = ${user.id} UNION ALL SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'parecerista' as origem FROM certificados_parecerista WHERE usuario_id = ${user.id} ORDER BY criado_em DESC `;
     return json({
       sucesso: true,
       certificados: rows.map((item) => ({
@@ -45,6 +46,7 @@ const main = async (req) => {
         blob_key: item.blob_key
       }))
     })
+
   } catch (error) {
     console.error('Erro em list-my-certificates:', error)
     return json({ erro: 'Erro interno ao listar certificados.', detalhe: error.message }, 500)

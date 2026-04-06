@@ -15,6 +15,14 @@ function safeDownloadName(name) {
     .replace(/^-|-$/g, '')
 }
 
+const tabela = url.searchParams.get('tabela') === 'parecerista' ? 'certificados_parecerista' : 'certificados_privados';
+const rows = await sql`
+    SELECT id, titulo, blob_key, mime_type, nome_arquivo, usuario_id
+    FROM ${sql(tabela)}
+    WHERE id = ${certificateId}
+    LIMIT 1
+`;
+
 const main = async (req) => {
   try {
     if (req.method !== 'GET') {
