@@ -68,7 +68,144 @@
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded',async()=>{const user=AppPanel.requireRole(['editor_chefe']);if(!user)return;const lista=document.getElementById('lista-submissoes');const msg=document.getElementById('msg-box');const filtroBusca=document.getElementById('filtro-busca');const filtroStatus=document.getElementById('filtro-status');let raw=[];function labelStatus(v){return{submetido:'Submetido',em_avaliacao:'Em avaliação',rejeitado:'Rejeitado',aceito_com_correcoes:'Aceito com correções',correcoes_necessarias:'Correções necessárias',aceito:'Aceito'}[v]||v||'—';}function badgeClass(v){return v==='aceito'?'badge badge-green':v==='rejeitado'?'badge badge-blue':v==='aceito_com_correcoes' || v==='correcoes_necessarias'?'badge badge-gold':'badge badge-blue';}function render(){const q=(filtroBusca.value||'').toLowerCase().trim();const s=filtroStatus.value;const items=raw.filter(item=>{const byText=!q||String(item.titulo||'').toLowerCase().includes(q)||String(item.autor_nome||'').toLowerCase().includes(q);const byStatus=!s||item.status===s;return byText&&byStatus;});lista.innerHTML=items.map(item=>`<article class="status-card"><div class="status-top"><div><h3>${AppPanel.escapeHtml(item.titulo||'Sem título')}</h3><div class="helper">Autor(a): ${AppPanel.escapeHtml(item.autor_nome||'—')} • Dossiê: ${AppPanel.escapeHtml(item.dossie_titulo||'—')}</div></div><span class="${badgeClass(item.status)}">${AppPanel.escapeHtml(labelStatus(item.status))}</span></div><div class="status-meta"><div class="metric-box"><span class="helper">Submissão</span><strong>#${AppPanel.escapeHtml(String(item.id))}</strong></div><div class="metric-box"><span class="helper">Seção</span><strong>${AppPanel.escapeHtml(item.secao||'—')}</strong></div><div class="metric-box"><span class="helper">Data de submissão</span><strong>${item.data_submissao?new Date(item.data_submissao).toLocaleDateString('pt-BR'):'—'}</strong></div><div class="metric-box"><span class="helper">Última atualização</span><strong>${item.status_atualizado_em?new Date(item.status_atualizado_em).toLocaleString('pt-BR'):'—'}</strong></div></div><div class="status-actions"><select id="status-${item.id}"><option value="submetido"${item.status==='submetido'?' selected':''}>Submetido</option><option value="em_avaliacao"${item.status==='em_avaliacao'?' selected':''}>Em avaliação</option><option value="rejeitado"${item.status==='rejeitado'?' selected':''}>Rejeitado</option><option value="aceito_com_correcoes"${item.status==='aceito_com_correcoes'?' selected':''}>Aceito com correções</option><option value="correcoes_necessarias"${item.status==='correcoes_necessarias'?' selected':''}>Correções necessárias</option><option value="aceito"${item.status==='aceito'?' selected':''}>Aceito</option></select><textarea id="obs-${item.id}" placeholder="Observação interna sobre a mudança de status (opcional)"></textarea><div class="actions-row"><button class="btn btn-primary" data-save="${item.id}">Salvar status</button></div></div></article>`).join('')||'<div class="empty-state">Nenhuma submissão encontrada para o filtro aplicado.</div>';document.querySelectorAll('[data-save]').forEach(btn=>btn.addEventListener('click',async()=>{const id=Number(btn.getAttribute('data-save'));const status=document.getElementById(`status-${id}`).value;const observacao=document.getElementById(`obs-${id}`).value;btn.disabled=true;try{await AppPanel.apiData('chief_update_submission_status',{submissaoId:id,status,observacao});msg.className='form-message ok';msg.textContent='Status atualizado com sucesso.';await load();}catch(err){msg.className='form-message err';msg.textContent=err.message||'Não foi possível atualizar o status.';}finally{btn.disabled=false;}}));}async function load(){const data=await AppPanel.apiData('chief_submission_status_queue');raw=Array.isArray(data.items)?data.items:[];render();}filtroBusca.addEventListener('input',render);filtroStatus.addEventListener('change',render);try{await load();}catch(err){msg.className='form-message err';msg.textContent=err.message||'Não foi possível carregar as submissões.';}});  
+document.addEventListener('DOMContentLoaded', async () => {
+  // Aguarda um pequeno delay para garantir que o painel-base.js foi carregado
+  setTimeout(async () => {
+    if (typeof AppPanel === 'undefined') {
+      console.error('AppPanel não carregado');
+      const msg = document.getElementById('msg-box');
+      if (msg) {
+        msg.className = 'form-message err';
+        msg.textContent = 'Erro de inicialização: sistema não disponível.';
+      }
+      return;
+    }
+
+    const user = AppPanel.requireRole(['editor_chefe']);
+    if (!user) return;
+
+    // Atualiza o avatar
+    if (typeof AppPanel.atualizarAvatares === 'function') {
+      AppPanel.atualizarAvatares();
+    } else {
+      console.warn('atualizarAvatares não disponível');
+    }
+
+    // Atualiza contador de notificações (opcional, mas consistente)
+    if (typeof AppPanel.atualizarContadorNotificacoes === 'function') {
+      AppPanel.atualizarContadorNotificacoes();
+    }
+    if (typeof AppPanel.iniciarPollingNotificacoes === 'function') {
+      AppPanel.iniciarPollingNotificacoes();
+    }
+    const btnNotif = document.getElementById('btn-notificacoes');
+    if (btnNotif && typeof AppPanel.mostrarDropdownNotificacoes === 'function') {
+      btnNotif.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+    }
+
+    const lista = document.getElementById('lista-submissoes');
+    const msg = document.getElementById('msg-box');
+    const filtroBusca = document.getElementById('filtro-busca');
+    const filtroStatus = document.getElementById('filtro-status');
+    let raw = [];
+
+    function labelStatus(v) {
+      const map = {
+        submetido: 'Submetido',
+        em_avaliacao: 'Em avaliação',
+        rejeitado: 'Rejeitado',
+        aceito_com_correcoes: 'Aceito com correções',
+        correcoes_necessarias: 'Correções necessárias',
+        aceito: 'Aceito'
+      };
+      return map[v] || v || '—';
+    }
+
+    function badgeClass(v) {
+      if (v === 'aceito') return 'badge badge-green';
+      if (v === 'rejeitado') return 'badge badge-blue';
+      if (v === 'aceito_com_correcoes' || v === 'correcoes_necessarias') return 'badge badge-gold';
+      return 'badge badge-blue';
+    }
+
+    function render() {
+      const q = (filtroBusca.value || '').toLowerCase().trim();
+      const s = filtroStatus.value;
+      const items = raw.filter(item => {
+        const byText = !q || String(item.titulo || '').toLowerCase().includes(q) || String(item.autor_nome || '').toLowerCase().includes(q);
+        const byStatus = !s || item.status === s;
+        return byText && byStatus;
+      });
+      lista.innerHTML = items.map(item => `
+        <article class="status-card">
+          <div class="status-top">
+            <div>
+              <h3>${AppPanel.escapeHtml(item.titulo || 'Sem título')}</h3>
+              <div class="helper">Autor(a): ${AppPanel.escapeHtml(item.autor_nome || '—')} • Dossiê: ${AppPanel.escapeHtml(item.dossie_titulo || '—')}</div>
+            </div>
+            <span class="${badgeClass(item.status)}">${AppPanel.escapeHtml(labelStatus(item.status))}</span>
+          </div>
+          <div class="status-meta">
+            <div class="metric-box"><span class="helper">Submissão</span><strong>#${AppPanel.escapeHtml(String(item.id))}</strong></div>
+            <div class="metric-box"><span class="helper">Seção</span><strong>${AppPanel.escapeHtml(item.secao || '—')}</strong></div>
+            <div class="metric-box"><span class="helper">Data de submissão</span><strong>${item.data_submissao ? new Date(item.data_submissao).toLocaleDateString('pt-BR') : '—'}</strong></div>
+            <div class="metric-box"><span class="helper">Última atualização</span><strong>${item.status_atualizado_em ? new Date(item.status_atualizado_em).toLocaleString('pt-BR') : '—'}</strong></div>
+          </div>
+          <div class="status-actions">
+            <select id="status-${item.id}">
+              <option value="submetido" ${item.status === 'submetido' ? 'selected' : ''}>Submetido</option>
+              <option value="em_avaliacao" ${item.status === 'em_avaliacao' ? 'selected' : ''}>Em avaliação</option>
+              <option value="rejeitado" ${item.status === 'rejeitado' ? 'selected' : ''}>Rejeitado</option>
+              <option value="aceito_com_correcoes" ${item.status === 'aceito_com_correcoes' ? 'selected' : ''}>Aceito com correções</option>
+              <option value="correcoes_necessarias" ${item.status === 'correcoes_necessarias' ? 'selected' : ''}>Correções necessárias</option>
+              <option value="aceito" ${item.status === 'aceito' ? 'selected' : ''}>Aceito</option>
+            </select>
+            <textarea id="obs-${item.id}" placeholder="Observação interna sobre a mudança de status (opcional)"></textarea>
+            <div class="actions-row">
+              <button class="btn btn-primary" data-save="${item.id}">Salvar status</button>
+            </div>
+          </div>
+        </article>
+      `).join('') || '<div class="empty-state">Nenhuma submissão encontrada para o filtro aplicado.</div>';
+
+      document.querySelectorAll('[data-save]').forEach(btn => {
+        btn.addEventListener('click', async () => {
+          const id = Number(btn.getAttribute('data-save'));
+          const status = document.getElementById(`status-${id}`).value;
+          const observacao = document.getElementById(`obs-${id}`).value;
+          btn.disabled = true;
+          try {
+            await AppPanel.apiData('chief_update_submission_status', { submissaoId: id, status, observacao });
+            msg.className = 'form-message ok';
+            msg.textContent = 'Status atualizado com sucesso.';
+            await load();
+          } catch (err) {
+            msg.className = 'form-message err';
+            msg.textContent = err.message || 'Não foi possível atualizar o status.';
+          } finally {
+            btn.disabled = false;
+          }
+        });
+      });
+    }
+
+    async function load() {
+      try {
+        const data = await AppPanel.apiData('chief_submission_status_queue');
+        raw = Array.isArray(data.items) ? data.items : [];
+        render();
+      } catch (err) {
+        msg.className = 'form-message err';
+        msg.textContent = err.message || 'Não foi possível carregar as submissões.';
+      }
+    }
+
+    filtroBusca.addEventListener('input', render);
+    filtroStatus.addEventListener('change', render);
+
+    await load();
+  }, 100);
+});
 </script>
 </body>
 </html>
