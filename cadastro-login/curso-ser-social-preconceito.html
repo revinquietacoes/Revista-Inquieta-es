@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,121 +10,326 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <script src="painel-base.js" defer></script>
     <style>
-        body { background: #03060d; color: #edf3ff; }
-        .course-shell { max-width: 1120px; margin: 0 auto; padding: 28px 20px 48px; }
+        body {
+            background: #03060d;
+            color: #edf3ff;
+        }
+
+        .course-shell {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 28px 20px 48px;
+        }
+
         .course-header {
-            display: grid; gap: 18px; margin-bottom: 26px; padding: 28px;
-            border: 1px solid #15315f; border-radius: 24px;
+            display: grid;
+            gap: 18px;
+            margin-bottom: 26px;
+            padding: 28px;
+            border: 1px solid #15315f;
+            border-radius: 24px;
             background: linear-gradient(180deg, #071224 0%, #0b1320 100%);
-            box-shadow: 0 16px 44px rgba(0,0,0,.28);
+            box-shadow: 0 16px 44px rgba(0, 0, 0, .28);
         }
+
         .course-label {
-            display: inline-flex; width: max-content; padding: 8px 14px;
-            border-radius: 999px; background: #112a54; color: #a9c4ff;
-            font-size: .86rem; font-weight: 700;
+            display: inline-flex;
+            width: max-content;
+            padding: 8px 14px;
+            border-radius: 999px;
+            background: #112a54;
+            color: #a9c4ff;
+            font-size: .86rem;
+            font-weight: 700;
         }
-        .course-header h1 { margin: 0; font-size: clamp(1.8rem, 3vw, 2.8rem); line-height: 1.15; color: #fff; }
-        .course-header p { margin: 0; color: #c8d6f2; line-height: 1.8; }
-        .course-meta { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px,1fr)); gap: 14px; }
-        .course-meta-card { padding: 15px 16px; border-radius: 18px; background: #0c1930; border: 1px solid #18355f; color: #d6e4ff; }
-        .course-actions-top { display: flex; flex-wrap: wrap; gap: 12px; }
+
+        .course-header h1 {
+            margin: 0;
+            font-size: clamp(1.8rem, 3vw, 2.8rem);
+            line-height: 1.15;
+            color: #fff;
+        }
+
+        .course-header p {
+            margin: 0;
+            color: #c8d6f2;
+            line-height: 1.8;
+        }
+
+        .course-meta {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+            gap: 14px;
+        }
+
+        .course-meta-card {
+            padding: 15px 16px;
+            border-radius: 18px;
+            background: #0c1930;
+            border: 1px solid #18355f;
+            color: #d6e4ff;
+        }
+
+        .course-actions-top {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+        }
+
         .action-btn {
-            display: inline-flex; align-items: center; justify-content: center;
-            padding: 12px 18px; border-radius: 14px; background: #173d7a;
-            border: 1px solid #2857a3; color: #fff; text-decoration: none;
-            font-weight: 700; transition: transform .18s ease, box-shadow .18s ease;
-            box-shadow: 0 10px 20px rgba(8,25,58,.28);
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 12px 18px;
+            border-radius: 14px;
+            background: #173d7a;
+            border: 1px solid #2857a3;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 700;
+            transition: transform .18s ease, box-shadow .18s ease;
+            box-shadow: 0 10px 20px rgba(8, 25, 58, .28);
         }
-        .action-btn:hover { transform: translateY(-2px); background: #1c4c98; }
-        .action-btn.secondary { background: #0e284f; }
-        .action-btn.outline { background: transparent; border: 1px solid #3766b4; }
-        .action-btn.cert { background: #f59e0b; border-color: #d97706; }
-        .lessons-wrap { display: grid; gap: 22px; }
-        .lesson-card { padding: 22px; border-radius: 24px; background: #050b16; border: 1px solid #16315d; }
-        .lesson-top { display: grid; gap: 8px; margin-bottom: 16px; }
-        .lesson-badge { display: inline-flex; width: max-content; padding: 7px 12px; border-radius: 999px; background: #10264a; color: #aecdff; font-size: .84rem; font-weight: 700; }
-        .lesson-top h2 { margin: 0; font-size: 1.2rem; color: #fff; }
-        .video-frame { position: relative; width: 100%; padding-bottom: 56.25%; height: 0; border-radius: 22px; background: #041327; border: 3px solid #163d7d; }
-        .video-frame iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
-        .lesson-actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 18px; }
-        .back-row { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 8px; }
-        .comments-section { margin-top: 3rem; background: rgba(17,24,39,0.85); border-radius: 2rem; padding: 1.8rem; border: 1px solid rgba(71,85,105,0.5); }
-        .comment-item { background: rgba(255,255,255,0.05); border-radius: 1.2rem; padding: 1rem; margin-bottom: 1rem; }
-        .comment-meta { display: flex; gap: 1rem; align-items: center; margin-bottom: 0.5rem; font-size: 0.85rem; color: #94a3b8; }
-        .comment-avatar { width: 32px; height: 32px; border-radius: 50%; }
-        .comment-text { margin: 0.5rem 0; }
-        .comment-anexo { margin-top: 0.5rem; font-size: 0.8rem; }
-        .comment-anexo a { color: #60a5fa; }
-        .form-comment { margin-top: 1.5rem; display: flex; flex-direction: column; gap: 1rem; }
-        .form-comment textarea { width: 100%; background: #0f172a; border: 1px solid #334155; border-radius: 1rem; padding: 0.7rem; color: white; }
-        .form-comment input[type="file"] { background: #0f172a; border: 1px solid #334155; border-radius: 1rem; padding: 0.4rem; color: white; }
-        .btn-submit { background: #3b82f6; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; font-weight: bold; cursor: pointer; align-self: flex-start; }
-        .footer { margin-top: 36px; padding: 22px 0 0; border-top: 1px solid #17315d; color: #adc2e9; text-align: center; }
+
+        .action-btn:hover {
+            transform: translateY(-2px);
+            background: #1c4c98;
+        }
+
+        .action-btn.secondary {
+            background: #0e284f;
+        }
+
+        .action-btn.outline {
+            background: transparent;
+            border: 1px solid #3766b4;
+        }
+
+        .action-btn.cert {
+            background: #f59e0b;
+            border-color: #d97706;
+        }
+
+        .lessons-wrap {
+            display: grid;
+            gap: 22px;
+        }
+
+        .lesson-card {
+            padding: 22px;
+            border-radius: 24px;
+            background: #050b16;
+            border: 1px solid #16315d;
+        }
+
+        .lesson-top {
+            display: grid;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .lesson-badge {
+            display: inline-flex;
+            width: max-content;
+            padding: 7px 12px;
+            border-radius: 999px;
+            background: #10264a;
+            color: #aecdff;
+            font-size: .84rem;
+            font-weight: 700;
+        }
+
+        .lesson-top h2 {
+            margin: 0;
+            font-size: 1.2rem;
+            color: #fff;
+        }
+
+        .video-frame {
+            position: relative;
+            width: 100%;
+            padding-bottom: 56.25%;
+            height: 0;
+            border-radius: 22px;
+            background: #041327;
+            border: 3px solid #163d7d;
+        }
+
+        .video-frame iframe {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            border: 0;
+        }
+
+        .lesson-actions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 18px;
+        }
+
+        .back-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .comments-section {
+            margin-top: 3rem;
+            background: rgba(17, 24, 39, 0.85);
+            border-radius: 2rem;
+            padding: 1.8rem;
+            border: 1px solid rgba(71, 85, 105, 0.5);
+        }
+
+        .comment-item {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 1.2rem;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .comment-meta {
+            display: flex;
+            gap: 1rem;
+            align-items: center;
+            margin-bottom: 0.5rem;
+            font-size: 0.85rem;
+            color: #94a3b8;
+        }
+
+        .comment-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .comment-text {
+            margin: 0.5rem 0;
+        }
+
+        .comment-anexo {
+            margin-top: 0.5rem;
+            font-size: 0.8rem;
+        }
+
+        .comment-anexo a {
+            color: #60a5fa;
+        }
+
+        .form-comment {
+            margin-top: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .form-comment textarea {
+            width: 100%;
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 1rem;
+            padding: 0.7rem;
+            color: white;
+        }
+
+        .form-comment input[type="file"] {
+            background: #0f172a;
+            border: 1px solid #334155;
+            border-radius: 1rem;
+            padding: 0.4rem;
+            color: white;
+        }
+
+        .btn-submit {
+            background: #3b82f6;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: bold;
+            cursor: pointer;
+            align-self: flex-start;
+        }
+
+        .footer {
+            margin-top: 36px;
+            padding: 22px 0 0;
+            border-top: 1px solid #17315d;
+            color: #adc2e9;
+            text-align: center;
+        }
     </style>
 </head>
+
 <body>
-<div class="course-shell">
-    <header class="course-header">
-        <div class="course-label">Leitura comentada</div>
-        <h1>O Ser Social e o Preconceito: Uma Leitura Comentada</h1>
-        <p>Leitura comentada voltada à reflexão crítica sobre o ser social, o preconceito e suas implicações formativas.</p>
-        <div class="course-meta">
-            <div class="course-meta-card"><strong>Formato:</strong> minicurso em vídeo</div>
-            <div class="course-meta-card"><strong>Total de aulas:</strong> 1</div>
-            <div class="course-meta-card"><strong>Certificação:</strong> solicitação online</div>
-        </div>
-        <div class="course-actions-top">
-            <a class="action-btn" href="inscricao-eventos.html">Inscrição no curso/evento</a>
-            <a class="action-btn cert" href="solicitacao-certificados.html"><i class="fas fa-certificate"></i> Solicitar certificado</a>
-            <a class="action-btn secondary" href="certificados.html">Meus certificados</a>
-        </div>
-        <div class="back-row">
-            <a class="action-btn outline" href="selecao.html">Voltar para secretaria</a>
-        </div>
-    </header>
+    <div class="course-shell">
+        <header class="course-header">
+            <div class="course-label">Leitura comentada</div>
+            <h1>O Ser Social e o Preconceito: Uma Leitura Comentada</h1>
+            <p>Leitura comentada voltada à reflexão crítica sobre o ser social, o preconceito e suas implicações
+                formativas.</p>
+            <div class="course-meta">
+                <div class="course-meta-card"><strong>Formato:</strong> minicurso em vídeo</div>
+                <div class="course-meta-card"><strong>Total de aulas:</strong> 1</div>
+                <div class="course-meta-card"><strong>Certificação:</strong> solicitação online</div>
+            </div>
+            <div class="course-actions-top">
+                <a class="action-btn" href="inscricao-eventos.html">Inscrição no curso/evento</a>
+                <a class="action-btn cert" href="solicitacao-certificados.html"><i class="fas fa-certificate"></i>
+                    Solicitar certificado</a>
+                <a class="action-btn secondary" href="certificados.html">Meus certificados</a>
+            </div>
+            <div class="back-row">
+                <a class="action-btn outline" href="selecao.html">Voltar para secretaria</a>
+            </div>
+        </header>
 
-    <main class="lessons-wrap">
-        <section class="lesson-card">
-            <div class="lesson-top">
-                <div class="lesson-badge">Parte 1</div>
-                <h2>Parte 1 • O Ser Social e o Preconceito</h2>
-            </div>
-            <div class="video-frame">
-                <iframe src="https://www.youtube.com/embed/EwXLrsQyGnM" title="Aula" allowfullscreen></iframe>
-            </div>
-            <div class="lesson-actions">
-                <a class="action-btn" href="https://youtu.be/EwXLrsQyGnM" target="_blank">Assistir no YouTube</a>
-                <a class="action-btn secondary" href="solicitacao-certificados.html">Solicitar certificado</a>
-            </div>
-        </section>
-    </main>
+        <main class="lessons-wrap">
+            <section class="lesson-card">
+                <div class="lesson-top">
+                    <div class="lesson-badge">Parte 1</div>
+                    <h2>Parte 1 • O Ser Social e o Preconceito</h2>
+                </div>
+                <div class="video-frame">
+                    <iframe src="https://www.youtube.com/embed/EwXLrsQyGnM" title="Aula" allowfullscreen></iframe>
+                </div>
+                <div class="lesson-actions">
+                    <a class="action-btn" href="https://youtu.be/EwXLrsQyGnM" target="_blank">Assistir no YouTube</a>
+                    <a class="action-btn secondary" href="solicitacao-certificados.html">Solicitar certificado</a>
+                </div>
+            </section>
+        </main>
 
-    <div class="comments-section" id="comments-section" data-curso-slug="curso-ser-social-preconceito">
-        <h3><i class="fas fa-comments"></i> Fórum do curso</h3>
-        <div id="comments-list"></div>
-        <div class="form-comment">
-            <textarea id="comment-text" rows="3" placeholder="Escreva seu comentário, dúvida ou contribuição..."></textarea>
-            <input type="file" id="comment-file" accept="image/*,application/pdf">
-            <button id="submit-comment" class="btn-submit">Enviar comentário</button>
+        <div class="comments-section" id="comments-section" data-curso-slug="curso-ser-social-preconceito">
+            <h3><i class="fas fa-comments"></i> Fórum do curso</h3>
+            <div id="comments-list"></div>
+            <div class="form-comment">
+                <textarea id="comment-text" rows="3"
+                    placeholder="Escreva seu comentário, dúvida ou contribuição..."></textarea>
+                <input type="file" id="comment-file" accept="image/*,application/pdf">
+                <button id="submit-comment" class="btn-submit">Enviar comentário</button>
+            </div>
         </div>
+
+        <footer class="footer">
+            <p><strong>Revista Inquietações</strong> — Página do minicurso</p>
+            <img src="https://media.giphy.com/media/3o7abB06u9bNzA8LC8/giphy.gif" width="50" alt="gato">
+        </footer>
     </div>
 
-    <footer class="footer">
-        <p><strong>Revista Inquietações</strong> — Página do minicurso</p>
-        <img src="https://media.giphy.com/media/3o7abB06u9bNzA8LC8/giphy.gif" width="50" alt="gato">
-    </footer>
-</div>
-
-<script>
-const cursoSlug = document.querySelector('#comments-section').dataset.cursoSlug;
-async function carregarComentarios() {
-    const container = document.getElementById('comments-list');
-    container.innerHTML = '<div style="text-align:center;"><img src="https://media.giphy.com/media/3o7abB06u9bNzA8LC8/giphy.gif" width="40"> Carregando...</div>';
-    try {
-        const data = await AppPanel.apiData('get_comentarios_curso', { curso_slug: cursoSlug });
-        const comentarios = data.comentarios || [];
-        if (!comentarios.length) { container.innerHTML = '<div class="comment-item">Nenhum comentário ainda. Seja o primeiro!</div>'; return; }
-        container.innerHTML = comentarios.map(c => `
+    <script>
+        const cursoSlug = document.querySelector('#comments-section').dataset.cursoSlug;
+        async function carregarComentarios() {
+            const container = document.getElementById('comments-list');
+            container.innerHTML = '<div style="text-align:center;"><img src="https://media.giphy.com/media/3o7abB06u9bNzA8LC8/giphy.gif" width="40"> Carregando...</div>';
+            try {
+                const data = await AppPanel.apiData('get_comentarios_curso', { curso_slug: cursoSlug });
+                const comentarios = data.comentarios || [];
+                if (!comentarios.length) { container.innerHTML = '<div class="comment-item">Nenhum comentário ainda. Seja o primeiro!</div>'; return; }
+                container.innerHTML = comentarios.map(c => `
             <div class="comment-item">
                 <div class="comment-meta">
                     <img class="comment-avatar" src="${c.foto_perfil_url || '../assets/avatares/avatar-padrao.png'}">
@@ -133,57 +339,58 @@ async function carregarComentarios() {
                 ${c.anexo_url ? `<div class="comment-anexo"><a href="${c.anexo_url}" target="_blank">📎 Anexo: ${escapeHtml(c.anexo_nome || 'arquivo')}</a></div>` : ''}
             </div>
         `).join('');
-    } catch (err) { container.innerHTML = '<div class="comment-item">Erro ao carregar comentários.</div>'; }
-}
+            } catch (err) { container.innerHTML = '<div class="comment-item">Erro ao carregar comentários.</div>'; }
+        }
 
-document.getElementById('submit-comment').addEventListener('click', async () => {
-    const texto = document.getElementById('comment-text').value.trim();
-    if (!texto) return alert('Escreva um comentário.');
-    const fileInput = document.getElementById('comment-file');
-    let anexoUrl = null, anexoPath = null, anexoNome = null;
-    if (fileInput.files.length) {
-        const file = fileInput.files[0];
-        const formData = new FormData();
-        formData.append('arquivo', file);
-        formData.append('usuario_id', AppPanel.currentUser().id);
-        formData.append('categoria', 'comentarios');
-        try {
-            const resp = await fetch('/.netlify/functions/upload-material', {
-                method: 'POST',
-                headers: AppPanel.currentUserHeaders(),
-                body: formData
-            });
-            const data = await resp.json();
-            if (resp.ok) {
-                anexoUrl = data.arquivo.url_acesso;
-                anexoPath = data.arquivo.storage_path;
-                anexoNome = file.name;
-            } else throw new Error(data.erro);
-        } catch (err) { alert('Erro no upload: ' + err.message); return; }
-    }
-    try {
-        await AppPanel.apiAction('add_comentario_curso', {
-            curso_slug: cursoSlug,
-            comentario: texto,
-            anexo_url: anexoUrl,
-            anexo_storage_path: anexoPath,
-            anexo_nome: anexoNome
+        document.getElementById('submit-comment').addEventListener('click', async () => {
+            const texto = document.getElementById('comment-text').value.trim();
+            if (!texto) return alert('Escreva um comentário.');
+            const fileInput = document.getElementById('comment-file');
+            let anexoUrl = null, anexoPath = null, anexoNome = null;
+            if (fileInput.files.length) {
+                const file = fileInput.files[0];
+                const formData = new FormData();
+                formData.append('arquivo', file);
+                formData.append('usuario_id', AppPanel.currentUser().id);
+                formData.append('categoria', 'comentarios');
+                try {
+                    const resp = await fetch('/.netlify/functions/upload-material', {
+                        method: 'POST',
+                        headers: AppPanel.currentUserHeaders(),
+                        body: formData
+                    });
+                    const data = await resp.json();
+                    if (resp.ok) {
+                        anexoUrl = data.arquivo.url_acesso;
+                        anexoPath = data.arquivo.storage_path;
+                        anexoNome = file.name;
+                    } else throw new Error(data.erro);
+                } catch (err) { alert('Erro no upload: ' + err.message); return; }
+            }
+            try {
+                await AppPanel.apiAction('add_comentario_curso', {
+                    curso_slug: cursoSlug,
+                    comentario: texto,
+                    anexo_url: anexoUrl,
+                    anexo_storage_path: anexoPath,
+                    anexo_nome: anexoNome
+                });
+                document.getElementById('comment-text').value = '';
+                fileInput.value = '';
+                carregarComentarios();
+            } catch (err) { alert('Erro ao enviar: ' + err.message); }
         });
-        document.getElementById('comment-text').value = '';
-        fileInput.value = '';
-        carregarComentarios();
-    } catch (err) { alert('Erro ao enviar: ' + err.message); }
-});
 
-function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
+        function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
 
-document.addEventListener('DOMContentLoaded', async () => {
-    if (typeof AppPanel === 'undefined') return;
-    const user = AppPanel.requireRole(['autor', 'editor_chefe', 'editor_adjunto']);
-    if (!user) return;
-    AppPanel.atualizarAvatares();
-    await carregarComentarios();
-});
-</script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            if (typeof AppPanel === 'undefined') return;
+            const user = AppPanel.requireRole(['autor', 'editor_chefe', 'editor_adjunto']);
+            if (!user) return;
+            AppPanel.atualizarAvatares();
+            await carregarComentarios();
+        });
+    </script>
 </body>
+
 </html>
