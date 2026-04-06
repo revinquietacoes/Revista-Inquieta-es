@@ -1,4 +1,4 @@
-const { sql, json, getUserById, ensureSupportTables } = require('./_db')
+const { sql, json, getUserById, ensureSupportTables, tableExists } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 
 function getHeader(headers, name) {
@@ -30,7 +30,9 @@ const main = async (req) => {
     const type = String(url.searchParams.get('type') || '').trim()
     let todos = []
 
-    if (!type || type === 'privado') {
+    // Verifica se a tabela certificados_privados existe
+    const hasPrivados = await tableExists('certificados_privados')
+    if (hasPrivados && (!type || type === 'privado')) {
       const privados = await sql`
         SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'privado' as origem
         FROM certificados_privados
@@ -39,7 +41,9 @@ const main = async (req) => {
       todos.push(...privados)
     }
 
-    if (!type || type === 'parecerista') {
+    // Verifica se a tabela certificados_parecerista existe
+    const hasParecerista = await tableExists('certificados_parecerista')
+    if (hasParecerista && (!type || type === 'parecerista')) {
       const pareceristas = await sql`
         SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'parecerista' as origem
         FROM certificados_parecerista
