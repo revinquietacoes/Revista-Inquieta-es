@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Validador de Certificados | Revista Inquietações</title>
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="stylesheet" href="cadastro-login/painel-base.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(135deg, #0a0f1c 0%, #0f172a 100%);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow-x: hidden;
+  }
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle at 20% 30%, rgba(59,130,246,0.08) 0%, transparent 50%);
+    pointer-events: none;
+    animation: slowDrift 20s infinite alternate;
+  }
+  @keyframes slowDrift {
+    0% { transform: translate(0, 0) scale(1); opacity: 0.3; }
+    100% { transform: translate(2%, 1%) scale(1.05); opacity: 0.6; }
+  }
+  .validator-container {
+    width: min(1200px, 92vw);
+    margin: 2rem auto;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+    align-items: center;
+    backdrop-filter: blur(2px);
+  }
+  .hero-side {
+    text-align: center;
+    padding: 1rem;
+    animation: fadeInUp 0.6s ease;
+  }
+  .hero-side img {
+    max-width: 280px;
+    width: 80%;
+    margin-bottom: 1rem;
+    filter: drop-shadow(0 8px 20px rgba(0,0,0,0.3));
+  }
+  .hero-side h1 {
+    font-size: clamp(2rem, 5vw, 3.2rem);
+    font-weight: 800;
+    background: linear-gradient(135deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    margin: 0.5rem 0;
+  }
+  .hero-side p {
+    color: #cbd5e1;
+    line-height: 1.6;
+    max-width: 400px;
+    margin: 0.8rem auto;
+  }
+  .gif-decoration {
+    margin: 1.5rem auto;
+    width: 180px;
+    height: 180px;
+    background: url('https://media.giphy.com/media/LmNwrBhejkK9EFP504/giphy.gif?cid=790b7611h7w6ge9sqs33ur34o71zxo6rrtv3z1ul91b74zpa&ep=v1_gifs_search&rid=giphy.gif&ct=g') center/cover no-repeat;
+    border-radius: 50%;
+    box-shadow: 0 20px 35px -10px rgba(0,0,0,0.5);
+    animation: float 4s ease-in-out infinite;
+    border: 2px solid rgba(59,130,246,0.4);
+  }
+  @keyframes float {
+    0% { transform: translateY(0px); }
+    50% { transform: translateY(-12px); }
+    100% { transform: translateY(0px); }
+  }
+  .validator-card {
+    background: rgba(17, 24, 39, 0.75);
+    backdrop-filter: blur(12px);
+    border-radius: 2rem;
+    padding: 2rem;
+    border: 1px solid rgba(71, 85, 105, 0.5);
+    box-shadow: 0 25px 45px -12px rgba(0,0,0,0.4);
+    transition: transform 0.3s ease;
+    animation: fadeInRight 0.5s ease;
+  }
+  .validator-card:hover {
+    transform: translateY(-4px);
+  }
+  .validator-card h2 {
+    font-size: 1.8rem;
+    font-weight: 700;
+    margin-bottom: 0.2rem;
+    color: #f1f5f9;
+  }
+  .validator-card .helper {
+    color: #94a3b8;
+    margin-bottom: 1.5rem;
+    font-size: 0.9rem;
+  }
+  .form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.2rem;
+  }
+  .form-group label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    color: #cbd5e1;
+  }
+  .input-icon {
+    position: relative;
+  }
+  .input-icon i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #5b6e8c;
+    font-size: 1rem;
+  }
+  .input-icon input {
+    width: 100%;
+    padding: 0.9rem 1rem 0.9rem 2.5rem;
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 1rem;
+    color: #f1f5f9;
+    font-size: 0.95rem;
+    transition: all 0.2s;
+  }
+  .input-icon input:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 3px rgba(59,130,246,0.2);
+  }
+  .btn {
+    padding: 0.7rem 1.4rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    font-size: 0.9rem;
+  }
+  .btn-primary {
+    background: #3b82f6;
+    color: white;
+    box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+  }
+  .btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(59,130,246,0.4);
+  }
+  .result-card {
+    margin-top: 1.5rem;
+    padding: 1rem;
+    border-radius: 1rem;
+    background: rgba(0,0,0,0.3);
+    border-left: 4px solid #10b981;
+    display: none;
+  }
+  .result-card.valido {
+    display: block;
+    border-left-color: #10b981;
+    background: rgba(16,185,129,0.1);
+  }
+  .result-card.invalido {
+    display: block;
+    border-left-color: #ef4444;
+    background: rgba(239,68,68,0.1);
+  }
+  .result-card h3 {
+    margin: 0 0 0.5rem;
+    color: #f1f5f9;
+  }
+  .result-card p {
+    margin: 0.2rem 0;
+    color: #cbd5e1;
+    font-size: 0.9rem;
+  }
+  .result-card .badge {
+    display: inline-block;
+    background: #1e293b;
+    padding: 0.2rem 0.6rem;
+    border-radius: 1rem;
+    font-size: 0.7rem;
+  }
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInRight {
+    from { opacity: 0; transform: translateX(30px); }
+    to { opacity: 1; transform: translateX(0); }
+  }
+  @media (max-width: 780px) {
+    .validator-container { grid-template-columns: 1fr; gap: 1rem; }
+    .hero-side .gif-decoration { width: 130px; height: 130px; }
+    .validator-card { padding: 1.5rem; }
+  }
+</style>
+</head>
+<body>
+<div class="validator-container">
+  <div class="hero-side">
+    <img src="logo-revista.png" alt="Revista Inquietações">
+    <h1>Validador de Certificados</h1>
+    <p>Insira o código de autenticidade presente no seu certificado para verificar sua validade.</p>
+    <div class="gif-decoration"></div>
+    <p style="font-size:0.8rem; margin-top:1rem;"><i class="fas fa-shield-alt"></i> Emissão com garantia de autenticidade</p>
+  </div>
+  <div class="validator-card">
+    <h2><i class="fas fa-check-circle"></i> Verificar certificado</h2>
+    <p class="helper">Digite o código alfanumérico (ex: UUID) que consta no documento</p>
+    <div class="form-group">
+      <label>Código de autenticidade</label>
+      <div class="input-icon">
+        <i class="fas fa-qrcode"></i>
+        <input type="text" id="codigo" placeholder="Ex: 550e8400-e29b-41d4-a716-446655440000">
+      </div>
+    </div>
+    <button class="btn btn-primary" id="btn-validar"><i class="fas fa-search"></i> Validar</button>
+
+    <div id="resultado" class="result-card"></div>
+  </div>
+</div>
+
+<script>
+  const btn = document.getElementById('btn-validar');
+  const inputCodigo = document.getElementById('codigo');
+  const resultadoDiv = document.getElementById('resultado');
+
+  async function validarCertificado() {
+    const codigo = inputCodigo.value.trim();
+    if (!codigo) {
+      mostrarResultado(false, 'Por favor, insira o código de autenticidade.', null);
+      return;
+    }
+
+    btn.disabled = true;
+    btn.innerHTML = '<i class="fas fa-spinner fa-pulse"></i> Validando...';
+
+    try {
+      const response = await fetch(`/.netlify/functions/validar-certificado?codigo=${encodeURIComponent(codigo)}`);
+      const data = await response.json();
+
+      if (!response.ok || !data.valido) {
+        mostrarResultado(false, data.erro || 'Código inválido ou certificado não encontrado.', null);
+        return;
+      }
+
+      mostrarResultado(true, '✅ Certificado autêntico!', data.certificado);
+    } catch (err) {
+      mostrarResultado(false, 'Erro ao conectar ao servidor. Tente novamente.', null);
+    } finally {
+      btn.disabled = false;
+      btn.innerHTML = '<i class="fas fa-search"></i> Validar';
+    }
+  }
+
+  function mostrarResultado(valido, mensagem, certificado) {
+    resultadoDiv.className = 'result-card';
+    resultadoDiv.classList.add(valido ? 'valido' : 'invalido');
+
+    if (!valido) {
+      resultadoDiv.innerHTML = `<h3><i class="fas fa-times-circle"></i> Certificado inválido</h3><p>${mensagem}</p>`;
+      return;
+    }
+
+    const dataEmissao = new Date(certificado.emitido_em).toLocaleDateString('pt-BR');
+    resultadoDiv.innerHTML = `
+      <h3><i class="fas fa-check-circle"></i> ${certificado.titulo}</h3>
+      <p><strong>Destinatário:</strong> ${certificado.destinatario.nome}</p>
+      <p><strong>E-mail:</strong> ${certificado.destinatario.email}</p>
+      <p><strong>Tipo:</strong> ${certificado.tipo} — ${certificado.categoria}</p>
+      <p><strong>Data de emissão:</strong> ${dataEmissao}</p>
+      ${certificado.descricao ? `<p><strong>Descrição:</strong> ${certificado.descricao}</p>` : ''}
+      <p><span class="badge"><i class="fas fa-fingerprint"></i> Código verificado com sucesso</span></p>
+    `;
+  }
+
+  btn.addEventListener('click', validarCertificado);
+  inputCodigo.addEventListener('keypress', (e) => {
+    if (e.key === 'Enter') validarCertificado();
+  });
+</script>
+</body>
+</html>

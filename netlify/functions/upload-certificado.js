@@ -103,6 +103,23 @@ const main = async (req) => {
       }
     })
 
+    const crypto = require('crypto');
+    // ... dentro do bloco onde insere o certificado
+    const codigoAutenticidade = crypto.randomUUID(); // ou use gen_random_uuid() via SQL
+
+    const inserted = await sql`
+  INSERT INTO certificados_privados (
+    usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key,
+    nome_arquivo, mime_type, tamanho_bytes, codigo_autenticidade
+  )
+  VALUES (
+    ${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null},
+    ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${blobKey},
+    ${safeFileName}, ${mimeType}, ${bytes.length}, ${codigoAutenticidade}
+  )
+  RETURNING id, criado_em, codigo_autenticidade
+`;
+
     const inserted = await sql`
       INSERT INTO certificados_privados (usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key, nome_arquivo, mime_type, tamanho_bytes)
       VALUES (${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null}, ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${blobKey}, ${safeFileName}, ${mimeType}, ${bytes.length})
@@ -113,6 +130,7 @@ const main = async (req) => {
   } catch (error) {
     return json({ erro: 'Erro interno ao enviar certificado.', detalhe: error.message }, 500)
   }
+
 }
 
 exports.handler = wrapHttp(main)

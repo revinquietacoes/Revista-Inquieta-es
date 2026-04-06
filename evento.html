@@ -163,7 +163,8 @@
             gap: 2rem;
         }
 
-        .course-actions-evento, .event-info-box {
+        .course-actions-evento,
+        .event-info-box {
             background: #fefefe;
             border-radius: 1.5rem;
             padding: 1.5rem;
@@ -183,17 +184,21 @@
             .event-grid {
                 grid-template-columns: 1fr;
             }
+
             .columns-2 {
                 grid-template-columns: 1fr;
                 gap: 1rem;
             }
+
             .side-nav-link {
                 text-align: center;
             }
         }
 
         /* ANIMAÇÃO DE ENTRADA SUAVE */
-        .event-card, .course-actions-evento, .event-info-box {
+        .event-card,
+        .course-actions-evento,
+        .event-info-box {
             animation: fadeSlideUp 0.5s ease-out forwards;
             opacity: 0;
         }
@@ -203,6 +208,7 @@
                 opacity: 0;
                 transform: translateY(12px);
             }
+
             to {
                 opacity: 1;
                 transform: translateY(0);
@@ -214,8 +220,9 @@
             font-weight: 700;
             border-bottom: 2px solid var(--brand-primary);
         }
+
         .masthead-card {
-            background: rgba(255,255,255,0.7);
+            background: rgba(255, 255, 255, 0.7);
             backdrop-filter: blur(4px);
         }
     </style>
@@ -285,9 +292,13 @@
                     <h2 id="sidebar-titulo-eventos">Navegação da página</h2>
                     <div class="side-nav-card" id="sidebar-links-eventos">
                         <a id="side-sobre-eventos" class="side-nav-link" href="#sobre-evento">Sobre a programação</a>
-                        <a id="side-inscricao" class="side-nav-link" href="cadastro-login/inscricao-eventos.html">📋 Inscrição</a>
-                        <a id="side-certificados" class="side-nav-link" href="cadastro-login/solicitacao-certificados.html">🎓 Certificados</a>
-                        <a id="side-secretaria" class="side-nav-link" href="cadastro-login/selecao.html">🔐 Secretaria</a>
+                        <a id="side-inscricao" class="side-nav-link" href="cadastro-login/inscricao-eventos.html">📋
+                            Inscrição</a>
+                        <a id="side-certificados" class="side-nav-link"
+                            href="cadastro-login/solicitacao-certificados.html">🎓 Certificados</a>
+                        <a id="side-secretaria" class="side-nav-link" href="cadastro-login/selecao.html">🔐
+                            Secretaria</a>
+                        <a id="side-validador" class="side-nav-link" href="validador.html">🔍 Validar certificados</a>
                     </div>
                 </section>
             </aside>
@@ -324,7 +335,7 @@
                         </div>
                     </div>
                 </section>
-                
+
             </main>
         </div>
         <footer class="footer" id="rodape">
