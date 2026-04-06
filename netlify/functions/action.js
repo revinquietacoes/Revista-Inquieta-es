@@ -236,15 +236,15 @@ const main = async (req) => {
   try {
     await ensureSupportTables()
     await ensureEditorialColumnsCompatibility()
-    
+
     if (req.method !== 'POST') {
       return json({ erro: 'Método não permitido.' }, 405)
     }
-    
+
     const body = await parseJson(req)
     const { action, userId } = body
     const user = await getUserById(Number(userId), action === 'delete_submission')
-    
+
     if (!user) {
       return json({ erro: 'Usuário não encontrado.' }, 404)
     }
@@ -472,6 +472,19 @@ const main = async (req) => {
         await criarNotificacao(u.id, 'notificacao_editor', titulo, mensagem, link)
       }
       return json({ sucesso: true, enviadas: usuarios.length })
+    }
+    // ---------- Marcar notificação como lida ----------
+    if (action === 'marcar_notificacao_lida') {
+      const { notificacaoId } = body;
+      if (!notificacaoId) return json({ erro: 'ID da notificação não informado.' }, 400);
+      await sql`UPDATE notificacoes SET lida = TRUE WHERE id = ${notificacaoId} AND usuario_id = ${user.id}`;
+      return json({ sucesso: true });
+    }
+
+    // ---------- Marcar todas as notificações como lidas ----------
+    if (action === 'marcar_todas_lidas') {
+      await sql`UPDATE notificacoes SET lida = TRUE WHERE usuario_id = ${user.id}`;
+      return json({ sucesso: true });
     }
 
     // ---------- Limpar conversa ----------
