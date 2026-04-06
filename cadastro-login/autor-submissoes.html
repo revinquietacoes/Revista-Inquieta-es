@@ -3,10 +3,124 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Minhas submissões</title>
+  <title>Minhas submissões | Revista Inquietações</title>
   <link rel="icon" href="../assets/favicon.png">
   <link rel="stylesheet" href="painel-base.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <script src="painel-base.js" defer></script>
+  <style>
+    .submissao-item {
+      background: #1e293b;
+      border-radius: 1.2rem;
+      padding: 1rem;
+      margin-bottom: 1rem;
+      border: 1px solid #334155;
+      transition: transform 0.2s, box-shadow 0.2s;
+    }
+    .submissao-item:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+    }
+    .submissao-titulo {
+      font-size: 1.1rem;
+      font-weight: bold;
+      cursor: pointer;
+      color: #60a5fa;
+    }
+    .submissao-titulo:hover {
+      text-decoration: underline;
+    }
+    .status-badge {
+      display: inline-block;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-size: 0.75rem;
+      font-weight: 600;
+    }
+    .status-aceito { background: #10b981; color: #fff; }
+    .status-aceito_com_correcoes { background: #f59e0b; color: #fff; }
+    .status-correcoes_necessarias { background: #f97316; color: #fff; }
+    .status-em_avaliacao { background: #3b82f6; color: #fff; }
+    .status-submetido { background: #6b7280; color: #fff; }
+    .status-rejeitado { background: #ef4444; color: #fff; }
+    .modal {
+      display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0,0,0,0.8);
+      z-index: 1000;
+      overflow-y: auto;
+    }
+    .modal-content {
+      max-width: 800px;
+      margin: 2rem auto;
+      background: #0f172a;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      border: 1px solid #334155;
+    }
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      border-bottom: 1px solid #334155;
+      padding-bottom: 0.5rem;
+      margin-bottom: 1rem;
+    }
+    .close-modal {
+      background: none;
+      border: none;
+      font-size: 1.5rem;
+      cursor: pointer;
+      color: #94a3b8;
+    }
+    .revisao-item, .mensagem-item {
+      background: #1e293b;
+      border-radius: 1rem;
+      padding: 0.75rem;
+      margin-bottom: 0.5rem;
+    }
+    .btn-small {
+      padding: 0.3rem 0.8rem;
+      font-size: 0.8rem;
+    }
+    .form-group {
+      margin-bottom: 1rem;
+    }
+    .form-group label {
+      display: block;
+      margin-bottom: 0.3rem;
+      font-weight: 600;
+    }
+    textarea, input[type="text"], input[type="file"] {
+      width: 100%;
+      background: #0f172a;
+      border: 1px solid #334155;
+      border-radius: 0.5rem;
+      padding: 0.5rem;
+      color: #fff;
+    }
+    button {
+      background: #3b82f6;
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 0.5rem;
+      color: white;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+    button:hover { background: #2563eb; }
+    button:disabled { opacity: 0.5; cursor: not-allowed; }
+    .btn-outline {
+      background: transparent;
+      border: 1px solid #3b82f6;
+      color: #3b82f6;
+    }
+    .btn-outline:hover { background: rgba(59,130,246,0.2); }
+  </style>
 </head>
 <body>
 <div class="page-shell">
@@ -26,7 +140,7 @@
     </div>
   </header>
 
-  <div class="panel" style="max-width: 800px; margin: 20px auto;">
+  <div class="panel" style="max-width: 900px; margin: 20px auto;">
     <div class="panel-head"><h2>Lista de trabalhos</h2></div>
     <div class="panel-body" id="lista-submissoes">
       <div style="text-align: center; padding: 40px;">Carregando...</div>
@@ -35,7 +149,48 @@
   <footer class="page-footer"></footer>
 </div>
 
+<!-- Modal de detalhes -->
+<div id="modal-detalhes" class="modal">
+  <div class="modal-content">
+    <div class="modal-header">
+      <h3 id="modal-titulo"></h3>
+      <button class="close-modal">&times;</button>
+    </div>
+    <div id="modal-body">
+      <div style="text-align: center;">Carregando...</div>
+    </div>
+  </div>
+</div>
+
 <script>
+  let currentUser = null;
+  let currentSubmissaoId = null;
+
+  function getStatusLabel(status) {
+    const map = {
+      'submetido': 'Submetido',
+      'em_avaliacao': 'Em avaliação',
+      'rejeitado': 'Rejeitado',
+      'aceito_com_correcoes': 'Aceito com correções',
+      'correcoes_necessarias': 'Correções necessárias',
+      'aceito': 'Aceito',
+      'alocada_sem_aceite': 'Aguardando designação'
+    };
+    return map[status] || status;
+  }
+
+  function getStatusClass(status) {
+    const map = {
+      'aceito': 'status-aceito',
+      'aceito_com_correcoes': 'status-aceito_com_correcoes',
+      'correcoes_necessarias': 'status-correcoes_necessarias',
+      'em_avaliacao': 'status-em_avaliacao',
+      'submetido': 'status-submetido',
+      'rejeitado': 'status-rejeitado'
+    };
+    return map[status] || 'status-submetido';
+  }
+
   async function carregarSubmissoes() {
     const container = document.getElementById('lista-submissoes');
     try {
@@ -46,17 +201,182 @@
         return;
       }
       container.innerHTML = submissoes.map(s => `
-        <div style="border: 1px solid #ddd; border-radius: 12px; padding: 16px; margin-bottom: 16px;">
-          <h3 style="margin: 0 0 8px;">${escapeHtml(s.titulo)}</h3>
-          <p><strong>Status:</strong> <span class="badge badge-${s.status === 'aceito' ? 'success' : s.status === 'rejeitado' ? 'danger' : 'warning'}">${s.status || 'submetido'}</span></p>
-          <p><strong>Data de submissão:</strong> ${s.data_submissao ? new Date(s.data_submissao).toLocaleDateString('pt-BR') : '-'}</p>
-          <p><strong>Prazo final:</strong> ${s.prazo_final_avaliacao ? new Date(s.prazo_final_avaliacao).toLocaleDateString('pt-BR') : '-'}</p>
-          ${s.dossie_titulo ? `<p><strong>Dossiê:</strong> ${escapeHtml(s.dossie_titulo)}</p>` : ''}
-          ${s.editor_nome ? `<p><strong>Editor(a) responsável:</strong> ${escapeHtml(s.editor_nome)}</p>` : ''}
+        <div class="submissao-item" data-id="${s.id}">
+          <div class="submissao-titulo" onclick="abrirDetalhes(${s.id})">${escapeHtml(s.titulo)}</div>
+          <div style="margin-top: 8px;">
+            <span class="status-badge ${getStatusClass(s.status)}">${getStatusLabel(s.status)}</span>
+            <span style="margin-left: 1rem; font-size: 0.8rem; color: #94a3b8;">
+              <i class="far fa-calendar-alt"></i> ${s.data_submissao ? new Date(s.data_submissao).toLocaleDateString('pt-BR') : '-'}
+            </span>
+            <button class="btn-small btn-outline" style="float: right;" onclick="abrirDetalhes(${s.id})">Ver detalhes</button>
+          </div>
         </div>
       `).join('');
     } catch (err) {
       container.innerHTML = `<div style="text-align: center; padding: 40px; color: red;">Erro: ${err.message}</div>`;
+    }
+  }
+
+  async function abrirDetalhes(submissaoId) {
+    currentSubmissaoId = submissaoId;
+    const modal = document.getElementById('modal-detalhes');
+    const modalTitulo = document.getElementById('modal-titulo');
+    const modalBody = document.getElementById('modal-body');
+    modal.style.display = 'block';
+    modalTitulo.textContent = 'Carregando...';
+    modalBody.innerHTML = '<div style="text-align: center;">Carregando detalhes...</div>';
+
+    try {
+      const data = await AppPanel.apiData('submissao_detalhes', { submissaoId });
+      if (!data.sucesso) throw new Error(data.erro);
+      const sub = data.submissao;
+      const revisoes = data.revisoes || [];
+      const conversas = data.conversas || [];
+
+      modalTitulo.textContent = escapeHtml(sub.titulo);
+      let html = `
+        <div><strong>Status:</strong> <span class="status-badge ${getStatusClass(sub.status)}">${getStatusLabel(sub.status)}</span></div>
+        <div><strong>Data de submissão:</strong> ${sub.data_submissao ? new Date(sub.data_submissao).toLocaleDateString('pt-BR') : '-'}</div>
+        ${sub.comentario_editorial ? `<div><strong>Comentário do editor:</strong> <p style="background:#1e293b; padding:0.5rem; border-radius:0.5rem;">${escapeHtml(sub.comentario_editorial)}</p></div>` : ''}
+        <hr style="border-color:#334155; margin: 1rem 0;">
+        <h4><i class="fas fa-history"></i> Histórico de revisões</h4>
+        <div id="revisoes-lista">
+          ${revisoes.length ? revisoes.map(r => `
+            <div class="revisao-item">
+              <strong>Versão ${r.versao}</strong> - ${new Date(r.enviado_em).toLocaleString('pt-BR')}<br>
+              <a href="${r.arquivo_url}" target="_blank"><i class="fas fa-download"></i> ${escapeHtml(r.nome_arquivo)}</a>
+              ${r.comentario ? `<br><em>Comentário:</em> ${escapeHtml(r.comentario)}` : ''}
+            </div>
+          `).join('') : '<div>Nenhuma revisão enviada ainda.</div>'}
+        </div>
+        <hr style="border-color:#334155; margin: 1rem 0;">
+        <h4><i class="fas fa-upload"></i> Enviar nova versão</h4>
+        <div class="form-group">
+          <label>Arquivo (PDF/DOC/DOCX)</label>
+          <input type="file" id="novo-arquivo" accept=".pdf,.doc,.docx">
+        </div>
+        <div class="form-group">
+          <label>Comentário sobre esta revisão (opcional)</label>
+          <textarea id="comentario-revisao" rows="2" placeholder="Descreva as alterações realizadas..."></textarea>
+        </div>
+        <button id="btn-enviar-revisao" onclick="enviarRevisao()">Enviar revisão</button>
+        <hr style="border-color:#334155; margin: 1rem 0;">
+        <h4><i class="fas fa-comments"></i> Conversa com a editoria</h4>
+        <div id="conversas-lista" style="max-height: 300px; overflow-y: auto;">
+          ${conversas.length ? conversas.map(c => `
+            <div class="mensagem-item">
+              <strong>${escapeHtml(c.remetente_nome)}</strong> - ${new Date(c.criado_em).toLocaleString('pt-BR')}<br>
+              ${escapeHtml(c.mensagem)}
+              ${c.anexo_url ? `<br><a href="${c.anexo_url}" target="_blank"><i class="fas fa-paperclip"></i> Anexo</a>` : ''}
+            </div>
+          `).join('') : '<div>Nenhuma mensagem ainda.</div>'}
+        </div>
+        <div class="form-group">
+          <label>Nova mensagem para o editor-chefe</label>
+          <textarea id="nova-mensagem" rows="2" placeholder="Digite sua mensagem..."></textarea>
+        </div>
+        <div class="form-group">
+          <label>Anexo (opcional)</label>
+          <input type="file" id="anexo-mensagem" accept=".pdf,.doc,.docx,.jpg,.png">
+        </div>
+        <button id="btn-enviar-mensagem" onclick="enviarMensagem()">Enviar mensagem</button>
+      `;
+      modalBody.innerHTML = html;
+    } catch (err) {
+      modalBody.innerHTML = `<div style="color: red;">Erro: ${err.message}</div>`;
+    }
+  }
+
+  async function enviarRevisao() {
+    const fileInput = document.getElementById('novo-arquivo');
+    const comentario = document.getElementById('comentario-revisao').value;
+    if (!fileInput.files.length) {
+      alert('Selecione um arquivo.');
+      return;
+    }
+    const file = fileInput.files[0];
+    const btn = document.getElementById('btn-enviar-revisao');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    try {
+      // Upload do arquivo
+      const formData = new FormData();
+      formData.append('arquivo', file);
+      formData.append('usuario_id', currentUser.id);
+      formData.append('categoria', 'revisao');
+      const uploadRes = await fetch('/.netlify/functions/upload-material', {
+        method: 'POST',
+        headers: AppPanel.currentUserHeaders(),
+        body: formData
+      });
+      const uploadData = await uploadRes.json();
+      if (!uploadRes.ok) throw new Error(uploadData.erro || 'Falha no upload');
+      const { url_acesso: arquivoUrl, storage_path: arquivoPath, nome_original: nomeArquivo } = uploadData.arquivo;
+      // Registrar revisão
+      await AppPanel.apiAction('registrar_revisao', {
+        submissaoId: currentSubmissaoId,
+        arquivoUrl,
+        arquivoPath,
+        nomeArquivo,
+        comentario
+      });
+      alert('Revisão enviada com sucesso!');
+      document.getElementById('novo-arquivo').value = '';
+      document.getElementById('comentario-revisao').value = '';
+      abrirDetalhes(currentSubmissaoId); // recarrega
+    } catch (err) {
+      alert('Erro: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Enviar revisão';
+    }
+  }
+
+  async function enviarMensagem() {
+    const mensagem = document.getElementById('nova-mensagem').value.trim();
+    if (!mensagem) {
+      alert('Digite uma mensagem.');
+      return;
+    }
+    const fileInput = document.getElementById('anexo-mensagem');
+    let anexoUrl = null, anexoPath = null, anexoNome = null;
+    const btn = document.getElementById('btn-enviar-mensagem');
+    btn.disabled = true;
+    btn.textContent = 'Enviando...';
+    try {
+      if (fileInput.files.length) {
+        const file = fileInput.files[0];
+        const formData = new FormData();
+        formData.append('arquivo', file);
+        formData.append('usuario_id', currentUser.id);
+        formData.append('categoria', 'mensagem_submissao');
+        const uploadRes = await fetch('/.netlify/functions/upload-material', {
+          method: 'POST',
+          headers: AppPanel.currentUserHeaders(),
+          body: formData
+        });
+        const uploadData = await uploadRes.json();
+        if (!uploadRes.ok) throw new Error(uploadData.erro || 'Falha no upload');
+        anexoUrl = uploadData.arquivo.url_acesso;
+        anexoPath = uploadData.arquivo.storage_path;
+        anexoNome = uploadData.arquivo.nome_original;
+      }
+      await AppPanel.apiAction('enviar_mensagem_submissao', {
+        submissaoId: currentSubmissaoId,
+        mensagem,
+        anexoUrl,
+        anexoPath,
+        anexoNome
+      });
+      alert('Mensagem enviada com sucesso!');
+      document.getElementById('nova-mensagem').value = '';
+      if (fileInput) fileInput.value = '';
+      abrirDetalhes(currentSubmissaoId);
+    } catch (err) {
+      alert('Erro: ' + err.message);
+    } finally {
+      btn.disabled = false;
+      btn.textContent = 'Enviar mensagem';
     }
   }
 
@@ -65,14 +385,20 @@
   document.addEventListener('DOMContentLoaded', () => {
     setTimeout(async () => {
       if (typeof AppPanel === 'undefined') { console.error('AppPanel não carregado'); return; }
-      const user = AppPanel.requireRole(['autor']);
-      if (!user) return;
+      currentUser = AppPanel.requireRole(['autor']);
+      if (!currentUser) return;
       AppPanel.atualizarAvatares();
       AppPanel.atualizarContadorNotificacoes();
       AppPanel.iniciarPollingNotificacoes();
       const btn = document.getElementById('btn-notificacoes');
       if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
       await carregarSubmissoes();
+
+      // Fechar modal ao clicar no X ou fora
+      const modal = document.getElementById('modal-detalhes');
+      const closeBtn = modal.querySelector('.close-modal');
+      closeBtn.onclick = () => modal.style.display = 'none';
+      window.onclick = (e) => { if (e.target === modal) modal.style.display = 'none'; };
     }, 100);
   });
 </script>

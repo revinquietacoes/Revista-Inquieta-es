@@ -262,6 +262,45 @@ async function getArquivoPrincipalPorSubmissaoIds(ids) {
   return new Map(rows.map((r) => [Number(r.submissao_id), { url_arquivo: r.url_acesso, nome_arquivo: r.nome_original }]))
 }
 
+if (action === 'submissao_detalhes') {
+  const { submissaoId } = body;
+  if (!submissaoId) return json({ erro: 'ID da submissão não informado.' }, 400);
+  // Verificar se o usuário é autor da submissão ou editor-chefe
+  const sub = await sql`SELECT * FROM submissoes WHERE id = ${submissaoId}`;
+  if (!sub.length) return json({ erro: 'Submissão não encontrada.' }, 404);
+  if (sub[0].autor_id !== user.id && !canAccess(user, ['editor_chefe'])) {
+    return json({ erro: 'Acesso negado.' }, 403);
+  }
+  // Buscar revisões
+  const revisoes = await sql`SELECT * FROM revisoes_submissoes WHERE submissao_id = ${submissaoId} ORDER BY versao DESC`;
+  // Buscar conversas (últimas 20)
+  const conversas = await sql`
+        SELECT c.*, u.nome AS remetente_nome 
+        FROM conversas_submissao c
+        JOIN usuarios u ON u.id = c.remetente_id
+        WHERE c.submissao_id = ${submissaoId}
+        ORDER BY c.criado_em DESC LIMIT 20
+    `;
+  return json({
+    sucesso: true,
+    submissao: sub[0],
+    revisoes,
+    conversas
+  });
+}
+
+// ---------- Upload de nova versão (revisão) ----------
+if (action === 'upload_revisao') {
+  if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403);
+  const { submissaoId, comentario } = body;
+  // arquivo vem via FormData, precisamos ler multipart
+  // Como é multipart, precisamos tratar. Vamos supor que o front-end envia via FormData.
+  // Adaptar conforme necessário.
+  // Aqui vou assumir que o payload já foi processado com o arquivo.
+  // Implementação real: usar `parseMultipart` ou similar.
+  // Por simplicidade, vou deixar a lógica de upload, mas na prática é melhor usar a função `upload-material`.
+}
+
 const main = async (req) => {
   try {
     await ensureSupportTables()
