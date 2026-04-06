@@ -26,18 +26,13 @@ async function getTableColumns(tableName) {
 
 async function getChiefSubmissionStatusQueue() {
   try {
-    // Obtém as colunas existentes na tabela submissoes
     const submissaoCols = await getTableColumns('submissoes');
-
-    // Define os campos básicos que sempre existem (ajuste conforme sua tabela)
-    let selectFields = [
+    const selectFields = [
       's.id',
       's.titulo',
       's.status',
       's.secao'
     ];
-
-    // data_submissao (se não existir, usa criado_em ou CURRENT_TIMESTAMP)
     if (submissaoCols.has('data_submissao')) {
       selectFields.push('s.data_submissao');
     } else if (submissaoCols.has('criado_em')) {
@@ -45,28 +40,21 @@ async function getChiefSubmissionStatusQueue() {
     } else {
       selectFields.push('CURRENT_TIMESTAMP AS data_submissao');
     }
-
-    // status_atualizado_em
     if (submissaoCols.has('status_atualizado_em')) {
       selectFields.push('s.status_atualizado_em');
     } else {
       selectFields.push('NULL::timestamptz AS status_atualizado_em');
     }
-
-    // status_atualizado_por
     if (submissaoCols.has('status_atualizado_por')) {
       selectFields.push('s.status_atualizado_por');
     } else {
       selectFields.push('NULL::bigint AS status_atualizado_por');
     }
-
-    // Campos de junção
     selectFields.push(
       'a.nome AS autor_nome',
       'dt.titulo AS dossie_titulo',
       'u.nome AS atualizado_por_nome'
     );
-
     const queryText = `
       SELECT ${selectFields.join(', ')}
       FROM submissoes s
@@ -75,8 +63,6 @@ async function getChiefSubmissionStatusQueue() {
       LEFT JOIN usuarios u ON u.id = s.status_atualizado_por
       ORDER BY s.data_submissao DESC, s.id DESC
     `;
-
-    // Usa sql.query com texto puro (sem tagged template) para evitar interpolação problemática
     const rows = await sql.query(queryText);
     return { items: rows, statuses: CHIEF_ALLOWED_SUBMISSION_STATUSES };
   } catch (error) {
@@ -260,45 +246,6 @@ async function getArquivoPrincipalPorSubmissaoIds(ids) {
     ORDER BY submissao_id, id DESC`
 
   return new Map(rows.map((r) => [Number(r.submissao_id), { url_arquivo: r.url_acesso, nome_arquivo: r.nome_original }]))
-}
-
-if (action === 'submissao_detalhes') {
-  const { submissaoId } = body;
-  if (!submissaoId) return json({ erro: 'ID da submissão não informado.' }, 400);
-  // Verificar se o usuário é autor da submissão ou editor-chefe
-  const sub = await sql`SELECT * FROM submissoes WHERE id = ${submissaoId}`;
-  if (!sub.length) return json({ erro: 'Submissão não encontrada.' }, 404);
-  if (sub[0].autor_id !== user.id && !canAccess(user, ['editor_chefe'])) {
-    return json({ erro: 'Acesso negado.' }, 403);
-  }
-  // Buscar revisões
-  const revisoes = await sql`SELECT * FROM revisoes_submissoes WHERE submissao_id = ${submissaoId} ORDER BY versao DESC`;
-  // Buscar conversas (últimas 20)
-  const conversas = await sql`
-        SELECT c.*, u.nome AS remetente_nome 
-        FROM conversas_submissao c
-        JOIN usuarios u ON u.id = c.remetente_id
-        WHERE c.submissao_id = ${submissaoId}
-        ORDER BY c.criado_em DESC LIMIT 20
-    `;
-  return json({
-    sucesso: true,
-    submissao: sub[0],
-    revisoes,
-    conversas
-  });
-}
-
-// ---------- Upload de nova versão (revisão) ----------
-if (action === 'upload_revisao') {
-  if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403);
-  const { submissaoId, comentario } = body;
-  // arquivo vem via FormData, precisamos ler multipart
-  // Como é multipart, precisamos tratar. Vamos supor que o front-end envia via FormData.
-  // Adaptar conforme necessário.
-  // Aqui vou assumir que o payload já foi processado com o arquivo.
-  // Implementação real: usar `parseMultipart` ou similar.
-  // Por simplicidade, vou deixar a lógica de upload, mas na prática é melhor usar a função `upload-material`.
 }
 
 const main = async (req) => {
@@ -569,7 +516,7 @@ const main = async (req) => {
 
     // ========== LISTAR CERTIFICADOS DO USUÁRIO ==========
     if (action === 'listar_certificados') {
-      const { tipo } = body; // opcional: 'evento', 'parecer', 'equipe_editorial'
+      const { tipo } = body;
       let query = sql`
         SELECT id, titulo, descricao, tipo, categoria, nome_arquivo, mime_type, criado_em, blob_key
         FROM certificados_privados
@@ -593,6 +540,31 @@ const main = async (req) => {
           criado_em: row.criado_em,
           blob_key: row.blob_key
         }))
+      });
+    }
+
+    // ========== DETALHES DA SUBMISSÃO PARA AUTOR ==========
+    if (action === 'submissao_detalhes') {
+      const { submissaoId } = body;
+      if (!submissaoId) return json({ erro: 'ID da submissão não informado.' }, 400);
+      const sub = await sql`SELECT * FROM submissoes WHERE id = ${submissaoId}`;
+      if (!sub.length) return json({ erro: 'Submissão não encontrada.' }, 404);
+      if (sub[0].autor_id !== user.id && !canAccess(user, ['editor_chefe'])) {
+        return json({ erro: 'Acesso negado.' }, 403);
+      }
+      const revisoes = await sql`SELECT * FROM revisoes_submissoes WHERE submissao_id = ${submissaoId} ORDER BY versao DESC`;
+      const conversas = await sql`
+        SELECT c.*, u.nome AS remetente_nome 
+        FROM conversas_submissao c
+        JOIN usuarios u ON u.id = c.remetente_id
+        WHERE c.submissao_id = ${submissaoId}
+        ORDER BY c.criado_em DESC LIMIT 30
+      `;
+      return json({
+        sucesso: true,
+        submissao: sub[0],
+        revisoes,
+        conversas
       });
     }
 
@@ -692,14 +664,12 @@ const main = async (req) => {
     }
 
     if (action === 'carregarCertificados') {
-
       const rows = await sql`
-    SELECT id, titulo, descricao, tipo, categoria, nome_arquivo, mime_type, criado_em
-    FROM certificados_privados
-    WHERE usuario_id = ${user.id}
-    ORDER BY criado_em DESC
-  `;
-
+        SELECT id, titulo, descricao, tipo, categoria, nome_arquivo, mime_type, criado_em
+        FROM certificados_privados
+        WHERE usuario_id = ${user.id}
+        ORDER BY criado_em DESC
+      `;
       const certificados = rows.map(row => ({
         id: row.id,
         titulo: row.titulo,
@@ -710,9 +680,7 @@ const main = async (req) => {
         mime_type: row.mime_type,
         criado_em: row.criado_em
       }));
-
       return json({ sucesso: true, certificados });
-
     }
 
     // ========== AÇÕES DE NOTIFICAÇÃO ==========
