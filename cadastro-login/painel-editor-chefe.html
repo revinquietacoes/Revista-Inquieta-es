@@ -1,171 +1,75 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
-
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Painel do(a) Editor(a)-chefe</title>
-  <link rel="icon" href="./assets/favicon.png">
-  <link rel="stylesheet" href="painel-base.css">
-  <script src="painel-base.js" defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Painel do(a) Editor(a)-chefe</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<script src="painel-base.js" defer></script>
 </head>
+<body>
+<div class="page-shell">
+<header class="topbar">
+  <div class="brand-wrap">
+    <div class="avatar-box">
+      <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+      <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+    </div>
+    <div class="brand-copy">
+      <h1>Painel do(a) Editor(a)-chefe</h1>
+      <p>Gestão integral do periódico, dos usuários, das submissões e dos dossiês temáticos</p>
+    </div>
+  </div>
+  <div class="actions-row">
+    <div style="position: relative; margin-right: 10px;">
+      <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+      <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+      <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+    </div>
+    <a class="btn btn-secondary" href="../index.html">Voltar ao portal</a>
+    <button class="btn btn-soft" data-action="logout">Sair</button>
+  </div>
+</header>
+
+<section class="hero">
+  <h2>Visão editorial central</h2>
+  <p>Aqui você acompanha usuários cadastrados, aprova perfis editoriais e pareceristas, cria dossiês temáticos, designa pareceristas, envia mensagens e acompanha o conjunto das submissões da revista.</p>
+</section>
+
+<div class="cards-grid">
+  <article class="card"><div class="card-top"><h3>Enviar notificação</h3><span class="badge badge-blue">Comunicado</span></div><p>Envie uma notificação para autores, pareceristas, editores ou todos os usuários.</p><div class="actions-row"><a class="btn btn-primary" href="enviar-notificacao.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Usuários cadastrados</h3><span class="badge badge-blue">Base completa</span></div><p>Consulta, aprovação e atualização de usuários.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-usuarios.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Submissões ativas</h3><span class="badge badge-gold">Fluxo editorial</span></div><p>Separa materiais por situação.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-submissoes.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Status das submissões</h3><span class="badge badge-blue">Controle manual</span></div><p>Altera manualmente o status editorial.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-status-submissoes.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Pareceres por parecerista</h3><span class="badge badge-green">Consulta editorial</span></div><p>Histórico completo de avaliações por parecerista.</p><div class="actions-row"><a class="btn btn-primary" href="pareceres-parecerista.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Decisão editorial</h3><span class="badge badge-gold">Validação</span></div><p>Valida pareceres e decide o fluxo editorial.</p><div class="actions-row"><a class="btn btn-primary" href="decisao-editorial.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Dossiês temáticos</h3><span class="badge badge-green">Gestão temática</span></div><p>Cria dossiês, define editor responsável e acompanha o estado de abertura.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-dossies.html">Ir ao conteúdo</a></div></article>
+  <article class="card"><div class="card-top"><h3>Chat interno</h3><span class="badge badge-blue">10 dias</span></div><p>Troca mensagens com autores, pareceristas e editores.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-chat.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Quem está online</h3><span class="badge badge-green">Presença</span></div><p>Acompanha usuários online e envia mensagens rápidas.</p><div class="actions-row"><a class="btn btn-primary" href="usuarios-online.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Perfil</h3><span class="badge badge-blue">Cadastro</span></div><p>Atualiza seus dados e altera sua foto de perfil.</p><div class="actions-row"><a class="btn btn-primary" href="perfil.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Certificados</h3><span class="badge badge-gold">Documentos</span></div><p>Área privada de certificados.</p><div class="actions-row"><a class="btn btn-primary" href="certificados.html">Abrir</a></div></article>
+  <article class="card"><div class="card-top"><h3>Gestão de certificados</h3><span class="badge badge-blue">Upload privado</span></div><p>Envia certificados para autores, pareceristas e equipe editorial.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-certificados.html">Abrir</a></div></article>
+</div>
+
+<footer class="page-footer"></footer>
+</div>
 <script>
-  document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', () => {
+  setTimeout(() => {
+    if (typeof AppPanel === 'undefined') {
+      console.error('AppPanel não carregado');
+      return;
+    }
     const user = AppPanel.requireRole(['editor_chefe']);
     if (!user) return;
     AppPanel.atualizarAvatares();
     AppPanel.atualizarContadorNotificacoes();
     AppPanel.iniciarPollingNotificacoes();
-    document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
-  });
+    const btn = document.getElementById('btn-notificacoes');
+    if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+  }, 100);
+});
 </script>
-
-<body>
-  <div class="page-shell">
-    <header class="topbar">
-      <div class="brand-wrap">
-        <div class="avatar-box">
-          <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
-          <img class="logo-inline" src="./logo-revista.png" alt="Logo da Revista Inquietações">
-        </div>
-        <div class="brand-copy">
-          <h1>Painel do(a) Editor(a)-chefe</h1>
-          <p>Gestão integral do periódico, dos usuários, das submissões e dos dossiês temáticos</p>
-        </div>
-      </div>
-      <div class="actions-row">
-        <a class="btn btn-secondary" href="https://revista-inquietacoes.netlify.app/">Voltar ao portal</a>
-        <button class="btn btn-soft" data-action="logout">Sair</button>
-      </div>
-      <div style="position: relative;">
-        <button id="btn-notificacoes"
-          style="background: none; border: none; font-size: 1.5rem; cursor: pointer; position: relative;">🔔</button>
-        <span id="notificacao-badge"
-          style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
-        <div id="notificacoes-dropdown"
-          style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;">
-        </div>
-      </div>
-    </header>
-
-    <section class="hero">
-      <h2>Visão editorial central</h2>
-      <p>Aqui você acompanha usuários cadastrados, aprova perfis editoriais e pareceristas, cria dossiês temáticos,
-        designa pareceristas, envia mensagens e acompanha o conjunto das submissões da revista.</p>
-    </section>
-
-    <div class="cards-grid">
-      <article class="card">
-        <div class="card-top">
-          <h3>Enviar notificação</h3><span class="badge badge-blue">Comunicado</span>
-        </div>
-        <p>Envie uma notificação para autores, pareceristas, editores ou todos os usuários.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="enviar-notificacao.html">Abrir</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Usuários cadastrados</h3><span class="badge badge-blue">Base completa</span>
-        </div>
-        <p>Aqui você consulta autores(as), pareceristas e editores(as), aprova cadastros pendentes e atualiza
-          contribuições.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="editor-chefe-usuarios.html">Abrir</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Submissões ativas</h3><span class="badge badge-gold">Fluxo editorial</span>
-        </div>
-        <p>Aqui você separa materiais por situação: novas, não alocadas, alocadas sem aceite e em avaliação.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="editor-chefe-submissoes.html">Abrir</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Status das submissões</h3><span class="badge badge-blue">Controle manual</span>
-        </div>
-        <p>Aqui você altera manualmente o status editorial dos trabalhos e define o que aparecerá em “Minhas submissões”
-          para os autores.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="editor-chefe-status-submissoes.html">Abrir</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Pareceres por parecerista</h3>
-          <span class="badge badge-green">Consulta editorial</span>
-        </div>
-
-        <p>
-          Selecione um parecerista e consulte o histórico completo de avaliações.
-        </p>
-
-        <div class="actions-row">
-          <a class="btn btn-primary" href="pareceres-parecerista.html">Abrir</a>
-        </div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Decisão editorial</h3><span class="badge badge-gold">Validação</span>
-        </div>
-        <p>Aqui você valida pareceres e decide o fluxo editorial das submissões.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="decisao-editorial.html">Abrir</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Dossiês temáticos</h3><span class="badge badge-green">Gestão temática</span>
-        </div>
-        <p>Aqui você cria dossiês temáticos, define editor(a) responsável e acompanha o estado de abertura.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="editor-chefe-dossies.html">Ir ao conteúdo</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Chat interno</h3><span class="badge badge-blue">10 dias</span>
-        </div>
-        <p>Aqui você troca mensagens com autores(as), pareceristas e editores(as). O histórico visível se limpa
-          automaticamente em 10 dias.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="editor-chefe-chat.html">Abrir</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Quem está online</h3><span class="badge badge-green">Presença</span>
-        </div>
-        <p>Aqui você acompanha usuários online e envia mensagens rápidas.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="usuarios-online.html">Abrir</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Perfil</h3><span class="badge badge-blue">Cadastro</span>
-        </div>
-        <p>Aqui você atualiza seus dados e altera sua foto de perfil.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="perfil.html">Abrir</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Certificados</h3><span class="badge badge-gold">Documentos</span>
-        </div>
-        <p>Aqui você abre sua área privada de certificados.</p>
-        <div class="actions-row"><a class="btn btn-primary" href="certificados.html">Abrir</a></div>
-      </article>
-
-      <article class="card">
-        <div class="card-top">
-          <h3>Gestão de certificados</h3><span class="badge badge-blue">Upload privado</span>
-        </div>
-        <p>Aqui você envia certificados para autores inscritos em eventos, pareceristas e membros da equipe editorial.
-        </p>
-        <div class="actions-row"><a class="btn btn-primary" href="editor-chefe-certificados.html">Abrir</a></div>
-      </article>
-    </div>
-
-    <footer class="page-footer"></footer>
-  </div>
-
 </body>
-
 </html>
