@@ -643,6 +643,20 @@ const main = async (req) => {
       const refreshed = await getUserById(user.id)
       return json({ sucesso: true, usuario: refreshed })
     }
+    
+    // ========== COMENTÁRIOS DOS CURSOS ==========
+    if (action === 'get_comentarios_curso') {
+      const { curso_slug } = body;
+      if (!curso_slug) return json({ erro: 'Slug do curso não informado.' }, 400);
+      const rows = await sql`
+        SELECT c.*, u.nome, u.foto_perfil_url
+        FROM comentarios_cursos c
+        JOIN usuarios u ON c.usuario_id = u.id
+        WHERE c.curso_slug = ${curso_slug}
+        ORDER BY c.criado_em DESC
+    `;
+      return json({ sucesso: true, comentarios: rows });
+    }
 
     // Se nenhuma ação corresponder
     return json({ erro: 'Ação inválida.' }, 400)

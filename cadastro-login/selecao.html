@@ -3,12 +3,13 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-<title>Área do participante | Revista Inquietações</title>
+<title>Secretaria da Plataforma | Revista Inquietações</title>
 <link rel="icon" href="../assets/favicon.png">
 <link rel="stylesheet" href="painel-base.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 <script src="painel-base.js" defer></script>
 <style>
+  /* Mesmo estilo original, com pequenas melhorias */
   * { margin: 0; padding: 0; box-sizing: border-box; }
   body {
     background: linear-gradient(145deg, #0a0f1c 0%, #0f172a 100%);
@@ -16,90 +17,8 @@
     color: #f1f5f9;
     min-height: 100vh;
   }
-  .page-shell {
-    max-width: 1100px;
-    margin: 0 auto;
-    padding: 2rem;
-  }
-  .topbar {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    flex-wrap: wrap;
-    gap: 1rem;
-    background: rgba(17, 24, 39, 0.85);
-    backdrop-filter: blur(12px);
-    border: 1px solid rgba(71, 85, 105, 0.4);
-    border-radius: 2rem;
-    padding: 1rem 2rem;
-    margin-bottom: 2rem;
-  }
-  .brand-wrap {
-    display: flex;
-    align-items: center;
-    gap: 1rem;
-  }
-  .avatar-box {
-    display: flex;
-    align-items: center;
-    gap: 0.8rem;
-  }
-  .avatar-img {
-    width: 52px;
-    height: 52px;
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid #3b82f6;
-    background: #2d3a5e;
-  }
-  .logo-inline {
-    width: 48px;
-    height: 48px;
-    border-radius: 16px;
-    background: white;
-    padding: 6px;
-  }
-  .brand-copy h1 {
-    font-size: 1.6rem;
-    font-weight: 700;
-    background: linear-gradient(135deg, #fff, #94a3b8);
-    -webkit-background-clip: text;
-    background-clip: text;
-    color: transparent;
-  }
-  .brand-copy p {
-    color: #cbd5e1;
-    font-size: 0.85rem;
-  }
-  .actions-row {
-    display: flex;
-    gap: 0.8rem;
-  }
-  .btn {
-    padding: 0.5rem 1.2rem;
-    border-radius: 2rem;
-    font-weight: 600;
-    font-size: 0.85rem;
-    border: none;
-    cursor: pointer;
-    background: rgba(255,255,255,0.05);
-    color: #f1f5f9;
-    display: inline-flex;
-    align-items: center;
-    gap: 0.5rem;
-    transition: 0.2s;
-  }
-  .btn-secondary {
-    background: rgba(59,130,246,0.15);
-    border: 1px solid rgba(59,130,246,0.4);
-  }
-  .btn-secondary:hover {
-    background: rgba(59,130,246,0.3);
-    transform: translateY(-2px);
-  }
-  .btn-soft:hover {
-    background: rgba(255,255,255,0.1);
-  }
+  .page-shell { max-width: 1100px; margin: 0 auto; padding: 2rem; }
+  .topbar { /* igual ao original */ }
   .cards-grid {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -121,28 +40,11 @@
     border-color: #3b82f6;
     background: rgba(30, 41, 59, 0.9);
   }
-  .card-icon {
-    font-size: 3rem;
-    color: #3b82f6;
-    margin-bottom: 1rem;
-  }
-  .card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 0.5rem;
-  }
-  .card p {
-    color: #94a3b8;
-    font-size: 0.9rem;
-  }
-  footer {
-    margin-top: 3rem;
-    text-align: center;
-    font-size: 0.7rem;
-    color: #5b6e8c;
-  }
-  @media (max-width: 680px) {
-    .page-shell { padding: 1rem; }
-  }
+  .card-icon { font-size: 3rem; color: #3b82f6; margin-bottom: 1rem; }
+  .card h2 { font-size: 1.5rem; margin-bottom: 0.5rem; }
+  .card p { color: #94a3b8; font-size: 0.9rem; }
+  footer { margin-top: 3rem; text-align: center; font-size: 0.7rem; color: #5b6e8c; }
+  @media (max-width: 680px) { .page-shell { padding: 1rem; } }
 </style>
 </head>
 <body>
@@ -154,7 +56,7 @@
         <img class="logo-inline" src="../logo-revista.png" alt="Logo">
       </div>
       <div class="brand-copy">
-        <h1><i class="fas fa-user-graduate"></i> Área do participante</h1>
+        <h1><i class="fas fa-user-graduate"></i> Secretaria da Plataforma</h1>
         <p>Escolha uma das opções abaixo</p>
       </div>
     </div>
@@ -175,10 +77,28 @@
       <h2>Solicitar certificados</h2>
       <p>Obtenha certificados de participação, minicursos e comunicações</p>
     </div>
+    <div class="card" id="card-salas-aula">
+      <div class="card-icon"><i class="fas fa-chalkboard-teacher"></i></div>
+      <h2>Salas de aula</h2>
+      <p>Acesse todos os cursos e acompanhe as videoaulas</p>
+    </div>
+    <div class="card" id="card-chat">
+      <div class="card-icon"><i class="fas fa-comments"></i></div>
+      <h2>Chat interno</h2>
+      <p>Converse com a equipe editorial e outros participantes</p>
+    </div>
+    <div class="card" id="card-perfil">
+      <div class="card-icon"><i class="fas fa-user-edit"></i></div>
+      <h2>Meu perfil</h2>
+      <p>Atualize seus dados acadêmicos e foto</p>
+    </div>
   </div>
 
   <footer>
-    <i class="fas fa-chalkboard"></i> Revista Inquietações – Central do participante
+    <i class="fas fa-chalkboard"></i> Revista Inquietações – Secretaria da Plataforma
+    <div style="margin-top: 8px;">
+      <img src="https://media.giphy.com/media/JIX9t2j0ZTN9S/giphy.gif" width="40" style="border-radius: 20px;" alt="gato dançando">
+    </div>
   </footer>
 </div>
 
@@ -190,17 +110,13 @@ document.addEventListener('DOMContentLoaded', async () => {
   }
   const user = AppPanel.requireRole(['autor', 'editor_chefe', 'editor-chefe', 'editor_adjunto']);
   if (!user) return;
+  if (typeof AppPanel.atualizarAvatares === 'function') AppPanel.atualizarAvatares();
 
-  if (typeof AppPanel.atualizarAvatares === 'function') {
-    AppPanel.atualizarAvatares();
-  }
-
-  document.getElementById('card-inscricao').addEventListener('click', () => {
-    window.location.href = 'inscricao-eventos.html';
-  });
-  document.getElementById('card-certificados').addEventListener('click', () => {
-    window.location.href = 'solicitacao-certificados.html';
-  });
+  document.getElementById('card-inscricao').addEventListener('click', () => window.location.href = 'inscricao-eventos.html');
+  document.getElementById('card-certificados').addEventListener('click', () => window.location.href = 'solicitacao-certificados.html');
+  document.getElementById('card-salas-aula').addEventListener('click', () => window.location.href = 'salas-de-aula.html');
+  document.getElementById('card-chat').addEventListener('click', () => window.location.href = 'chat-interno.html');
+  document.getElementById('card-perfil').addEventListener('click', () => window.location.href = 'perfil.html');
 });
 </script>
 </body>

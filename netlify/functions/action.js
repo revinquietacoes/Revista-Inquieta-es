@@ -524,6 +524,16 @@ const main = async (req) => {
       `
       return json({ sucesso: true, mensagem: 'Conversa limpa com sucesso.' })
     }
+    // ========== COMENTÁRIOS DOS CURSOS ==========
+    if (action === 'add_comentario_curso') {
+      const { curso_slug, comentario, anexo_url, anexo_storage_path, anexo_nome } = body;
+      if (!curso_slug || !comentario) return json({ erro: 'Slug e comentário são obrigatórios.' }, 400);
+      await sql`
+        INSERT INTO comentarios_cursos (curso_slug, usuario_id, comentario, anexo_url, anexo_storage_path, anexo_nome)
+        VALUES (${curso_slug}, ${user.id}, ${comentario}, ${anexo_url || null}, ${anexo_storage_path || null}, ${anexo_nome || null})
+    `;
+      return json({ sucesso: true });
+    }
 
     // Se nenhuma ação corresponder
     return json({ erro: 'Ação inválida.' }, 400)
