@@ -12,23 +12,37 @@ function sanitizarNome(nome = '') {
 }
 
 async function resolveActorAndTarget(req, form) {
-  const actorId = getAuthenticatedUserId(req, form.get('usuario_id')) || Number(form.get('usuario_id') || 0)
+  // Obtém o usuário autenticado (via header X-User-Id)
+  const actorId = getAuthenticatedUserId(req)
+  // Se não autenticado, tenta pegar do campo usuario_id do formulário (fallback)
   const targetUserId = Number(form.get('usuario_id') || actorId || 0)
 
-  if (!targetUserId) return { error: json({ erro: 'Usuário inválido para upload.' }, 403) }
+  if (!targetUserId) {
+    return { error: json({ erro: 'Usuário inválido para upload.' }, 403) }
+  }
 
   const actor = actorId ? await getUserById(actorId) : null
-  if (actorId && !actor) return { error: json({ erro: 'Usuário autenticado não encontrado.' }, 404) }
-  if (actor && actor.status && actor.status !== 'ativo') return { error: json({ erro: 'Usuário autenticado inativo.' }, 403) }
+  if (actorId && !actor) {
+    return { error: json({ erro: 'Usuário autenticado não encontrado.' }, 404) }
+  }
+  if (actor && actor.status && actor.status !== 'ativo') {
+    return { error: json({ erro: 'Usuário autenticado inativo.' }, 403) }
+  }
 
   const targetUser = await getUserById(targetUserId)
-  if (!targetUser) return { error: json({ erro: 'Usuário de destino não encontrado.' }, 404) }
-  if (targetUser.status && targetUser.status !== 'ativo') return { error: json({ erro: 'Usuário de destino inativo.' }, 403) }
+  if (!targetUser) {
+    return { error: json({ erro: 'Usuário de destino não encontrado.' }, 404) }
+  }
+  if (targetUser.status && targetUser.status !== 'ativo') {
+    return { error: json({ erro: 'Usuário de destino inativo.' }, 403) }
+  }
 
   const ownUpload = actorId === targetUserId || !actorId
   const privileged = actor && canAccess(actor, ['editor_chefe', 'editor_adjunto'])
 
-  if (!ownUpload && !privileged) return { error: json({ erro: 'Você não pode enviar arquivo para outro usuário.' }, 403) }
+  if (!ownUpload && !privileged) {
+    return { error: json({ erro: 'Você não pode enviar arquivo para outro usuário.' }, 403) }
+  }
 
   return { actor, targetUser }
 }
@@ -43,7 +57,9 @@ const main = async (req) => {
     const categoria = String(form.get('categoria') || 'outro')
     const arquivo = form.get('arquivo')
 
-    if (!arquivo || typeof arquivo === 'string') return json({ erro: 'Selecione um arquivo válido.' }, 400)
+    if (!arquivo || typeof arquivo === 'string') {
+      return json({ erro: 'Selecione um arquivo válido.' }, 400)
+    }
 
     const roleInfo = await resolveActorAndTarget(req, form)
     if (roleInfo.error) return roleInfo.error
@@ -58,8 +74,12 @@ const main = async (req) => {
       'video/mp4', 'video/webm'
     ]
 
-    if (!permitidos.includes(arquivo.type)) return json({ erro: 'Tipo de arquivo não permitido.' }, 400)
-    if (arquivo.size > 10_000_000) return json({ erro: 'Arquivo acima do limite de 10 MB.' }, 400)
+    if (!permitidos.includes(arquivo.type)) {
+      return json({ erro: 'Tipo de arquivo não permitido.' }, 400)
+    }
+    if (arquivo.size > 10_000_000) {
+      return json({ erro: 'Arquivo acima do limite de 10 MB.' }, 400)
+    }
 
     const supabaseUrl = process.env.SUPABASE_URL
     const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
@@ -104,52 +124,13 @@ const main = async (req) => {
 
     console.log('✅ Arquivo salvo com sucesso, URL:', publicUrl)
 
-    // ---------- Registrar nova revisão ----------
-    if (action === 'registrar_revisao') {
-      if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403);
-      const { submissaoId, arquivoUrl, arquivoPath, nomeArquivo, comentario } = body;
-      const maxVersao = await sql`SELECT COALESCE(MAX(versao), 0) as max FROM revisoes_submissoes WHERE submissao_id = ${submissaoId}`;
-      const novaVersao = (maxVersao[0].max || 0) + 1;
-      await sql`
-        INSERT INTO revisoes_submissoes (submissao_id, versao, arquivo_url, arquivo_path, nome_arquivo, comentario)
-        VALUES (${submissaoId}, ${novaVersao}, ${arquivoUrl}, ${arquivoPath}, ${nomeArquivo}, ${comentario})
-    `;
-      const sub = await sql`SELECT editor_responsavel_id, editor_adjunto_id FROM submissoes WHERE id = ${submissaoId}`;
-      const editores = [sub[0].editor_responsavel_id, sub[0].editor_adjunto_id].filter(Boolean);
-      for (const editorId of editores) {
-        await criarNotificacao(editorId, 'revisao', `Nova versão enviada para submissão #${submissaoId}`, `O autor enviou uma nova revisão.`, `/cadastro-login/editor-chefe-submissoes?submissao=${submissaoId}`);
-      }
-      return json({ sucesso: true, versao: novaVersao });
-    }
-
-    // ---------- Enviar mensagem sobre submissão ----------
-    if (action === 'enviar_mensagem_submissao') {
-      if (!canAccess(user, ['autor', 'editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403);
-      const { submissaoId, mensagem, anexoUrl, anexoPath, anexoNome } = body;
-      const sub = await sql`SELECT autor_id, editor_responsavel_id, editor_adjunto_id FROM submissoes WHERE id = ${submissaoId}`;
-      if (!sub.length) return json({ erro: 'Submissão não encontrada.' }, 404);
-      let destinatarioId;
-      if (user.perfil === 'autor') {
-        destinatarioId = sub[0].editor_responsavel_id || sub[0].editor_adjunto_id;
-        if (!destinatarioId) return json({ erro: 'Nenhum editor responsável encontrado.' }, 400);
-      } else {
-        destinatarioId = sub[0].autor_id;
-      }
-      await sql`
-        INSERT INTO conversas_submissao (submissao_id, remetente_id, destinatario_id, mensagem, anexo_url, anexo_path, anexo_nome)
-        VALUES (${submissaoId}, ${user.id}, ${destinatarioId}, ${mensagem}, ${anexoUrl}, ${anexoPath}, ${anexoNome})
-    `;
-      await criarNotificacao(destinatarioId, 'mensagem_submissao', `Nova mensagem sobre submissão #${submissaoId}`, mensagem.substring(0, 100), `/cadastro-login/autor-submissoes?submissao=${submissaoId}`);
-      return json({ sucesso: true });
-    }
-
-    // Retornar também o storage_path para ser usado na mensagem
     return json({
       sucesso: true,
       arquivo: {
         url_acesso: publicUrl,
         storage_path: filePath,
-        id: inserido[0].id
+        id: inserido[0].id,
+        nome_original: arquivo.name
       }
     })
   } catch (erro) {
