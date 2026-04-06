@@ -416,14 +416,24 @@ const main = async (req) => {
 
     // ---------- Solicitar certificado ----------
     if (action === 'request_certificate') {
-      if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403)
-      const { nomeCompleto, email, certificadoMinicurso, certificadoParticipacaoGeral, certificadoComunicacaoOral, minicursos, autorizaPublicacaoTexto, resumoExpandido, tituloComunicacaoOral, autoresComunicacaoOral } = body
-      await sql`INSERT INTO solicitacoes_certificados_evento (usuario_id, nome_completo, email, certificado_minicurso, certificado_participacao_geral, certificado_comunicacao_oral, minicursos, autoriza_publicacao_texto, resumo_expandido, titulo_comunicacao_oral, autores_comunicacao_oral) VALUES (${user.id}, ${nomeCompleto}, ${email}, ${!!certificadoMinicurso}, ${!!certificadoParticipacaoGeral}, ${!!certificadoComunicacaoOral}, ${minicursos || null}, ${typeof autorizaPublicacaoTexto === 'boolean' ? autorizaPublicacaoTexto : null}, ${resumoExpandido || null}, ${tituloComunicacaoOral || null}, ${autoresComunicacaoOral || null})`
-      return json({ sucesso: true })
-    }
-    
-    if (!canAccess(user, ['autor', 'editor_adjunto', 'editor_chefe'])) {
-      return json({ erro: 'Acesso negado.' }, 403);
+      // Permite autor, editor_adjunto e editor_chefe (também editor-chefe)
+      if (!canAccess(user, ['autor', 'editor_adjunto', 'editor_chefe', 'editor-chefe'])) {
+        return json({ erro: 'Acesso negado.' }, 403);
+      }
+      const { nomeCompleto, email, certificadoMinicurso, certificadoParticipacaoGeral, certificadoComunicacaoOral, minicursos, autorizaPublicacaoTexto, resumoExpandidoUrl, tituloComunicacaoOral, autoresComunicacaoOral } = body;
+      await sql`
+    INSERT INTO solicitacoes_certificados_evento (
+      usuario_id, nome_completo, email, certificado_minicurso, certificado_participacao_geral,
+      certificado_comunicacao_oral, minicursos, autoriza_publicacao_texto,
+      resumo_expandido_url, titulo_comunicacao_oral, autores_comunicacao_oral
+    ) VALUES (
+      ${user.id}, ${nomeCompleto}, ${email}, ${!!certificadoMinicurso},
+      ${!!certificadoParticipacaoGeral}, ${!!certificadoComunicacaoOral},
+      ${minicursos || null}, ${typeof autorizaPublicacaoTexto === 'boolean' ? autorizaPublicacaoTexto : null},
+      ${resumoExpandidoUrl || null}, ${tituloComunicacaoOral || null}, ${autoresComunicacaoOral || null}
+    )
+  `;
+      return json({ sucesso: true });
     }
 
     // ---------- Deletar submissão ----------
