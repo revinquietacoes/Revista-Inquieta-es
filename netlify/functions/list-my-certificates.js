@@ -9,29 +9,28 @@ function getHeader(headers, name) {
   return headers[name] || headers[name.toLowerCase()] || null
 }
 
+function getAuthenticatedUserId(req, url) {
+  const headerId = getHeader(req.headers, 'x-user-id') || getHeader(req.headers, 'X-User-Id')
+  const queryId = url.searchParams.get('user_id')
+  return Number(headerId || queryId || 0)
+}
+
 const main = async (req) => {
   try {
     if (req.method !== 'GET') return json({ erro: 'Método não permitido.' }, 405)
     await ensureSupportTables()
 
     const url = new URL(req.url)
-    // Tenta obter userId do header X-User-Id
-    let userId = Number(getHeader(req.headers, 'x-user-id') || getHeader(req.headers, 'X-User-Id') || 0)
-    // Se não veio no header, tenta da query string (fallback)
-    if (!userId) {
-      userId = Number(url.searchParams.get('user_id') || 0)
-    }
-    if (!userId) {
-      return json({ erro: 'Usuário não autenticado.' }, 401)
-    }
+    const userId = getAuthenticatedUserId(req, url)
+    if (!userId) return json({ erro: 'Usuário não autenticado.' }, 401)
 
     const user = await getUserById(userId)
     if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
 
     const type = String(url.searchParams.get('type') || '').trim()
     const rows = type
-      ? await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${userId} AND tipo = ${type} ORDER BY criado_em DESC`
-      : await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${userId} ORDER BY criado_em DESC`
+      ? await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${user.id} AND tipo = ${type} ORDER BY criado_em DESC`
+      : await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${user.id} ORDER BY criado_em DESC`
 
     return json({
       sucesso: true,

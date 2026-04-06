@@ -180,8 +180,8 @@
           return;
         }
 
-        const user = AppPanel.currentUser();
-        const userId = user ? user.id : null;
+        const usuarioLogado = AppPanel.currentUser();
+        const userId = usuarioLogado ? usuarioLogado.id : null;
         if (!userId) throw new Error('Usuário não identificado.');
 
         container.innerHTML = certificados.map(cert => {
@@ -218,8 +218,8 @@
           return;
         }
         // Permite todos os perfis que podem ter certificados
-        const user = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe', 'editor-chefe']);
-        if (!user) return;
+        const usuario = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe', 'editor-chefe']);
+        if (!usuario) return;
 
         // Atualiza avatar e notificações
         if (typeof AppPanel.atualizarAvatares === 'function') AppPanel.atualizarAvatares();
@@ -229,14 +229,6 @@
         if (btnNotif && typeof AppPanel.mostrarDropdownNotificacoes === 'function') {
           btnNotif.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
         }
-
-        const user = AppPanel.currentUser();
-        const userId = user ? user.id : null;
-        if (!userId) throw new Error('Usuário não identificado.');
-
-        const response = await fetch(`/.netlify/functions/list-my-certificates?user_id=${userId}`, {
-          headers: authHeaders()
-        });
 
         await carregarCertificados();
       }, 100);
