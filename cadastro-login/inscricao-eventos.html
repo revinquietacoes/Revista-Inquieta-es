@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Inscrição em eventos | Revista Inquietações</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="painel-base.js" defer></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(145deg, #0a0f1c 0%, #0f172a 100%);
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #f1f5f9;
+    min-height: 100vh;
+  }
+  .page-shell {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .avatar-box {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .avatar-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3b82f6;
+    background: #2d3a5e;
+  }
+  .logo-inline {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: white;
+    padding: 6px;
+  }
+  .brand-copy h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-copy p {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+  }
+  .actions-row {
+    display: flex;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.05);
+    color: #f1f5f9;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: 0.2s;
+  }
+  .btn-secondary {
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.4);
+  }
+  .btn-secondary:hover {
+    background: rgba(59,130,246,0.3);
+    transform: translateY(-2px);
+  }
+  .btn-primary {
+    background: #3b82f6;
+    color: white;
+  }
+  .btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+  }
+  .btn-soft:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .panel {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    border-radius: 1.8rem;
+    padding: 1.8rem;
+  }
+  .panel-head {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+    padding-bottom: 0.8rem;
+  }
+  .panel-head h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .field.full {
+    grid-column: span 2;
+  }
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  input, textarea, select {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 1rem;
+    padding: 0.7rem 1rem;
+    color: #f1f5f9;
+    font-size: 0.9rem;
+    transition: 0.2s;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  .checkbox-line {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .checkbox-line input {
+    width: auto;
+  }
+  .helper {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-top: 0.2rem;
+  }
+  .form-message {
+    margin-top: 1.2rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+    display: none;
+  }
+  .form-message.ok {
+    display: block;
+    background: #064e3b;
+    color: #a7f3d0;
+  }
+  .form-message.err {
+    display: block;
+    background: #7f1d1d;
+    color: #fecaca;
+  }
+  .courses-section {
+    margin: 1.5rem 0;
+  }
+  .course-card {
+    background: rgba(0,0,0,0.3);
+    border-radius: 1rem;
+    margin-bottom: 0.8rem;
+    border: 1px solid #334155;
+  }
+  .course-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem;
+    cursor: pointer;
+  }
+  .course-title {
+    font-weight: 600;
+  }
+  .course-detail {
+    padding: 0 1rem 1rem 1rem;
+    display: none;
+    border-top: 1px solid #334155;
+    margin-top: 0.5rem;
+  }
+  .course-detail.show {
+    display: block;
+  }
+  footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #5b6e8c;
+  }
+  @media (max-width: 680px) {
+    .page-shell { padding: 1rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .field.full { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box">
+        <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+        <img class="logo-inline" src="../logo-revista.png" alt="Logo">
+      </div>
+      <div class="brand-copy">
+        <h1><i class="fas fa-calendar-check"></i> Inscrição em eventos</h1>
+        <p>Escolha os cursos e atividades desejadas</p>
+      </div>
+    </div>
+    <div class="actions-row">
+      <a class="btn btn-secondary" href="selecao.html"><i class="fas fa-arrow-left"></i> Voltar</a>
+      <button class="btn btn-soft" data-action="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="panel-head">
+      <h2><i class="fas fa-graduation-cap"></i> Cursos e atividades disponíveis</h2>
+    </div>
+
+    <div class="courses-section" id="cursos-lista">
+      <!-- Cursos serão inseridos via JS para facilitar manutenção -->
+    </div>
+
+    <form id="form-inscricao">
+      <div class="form-grid">
+        <div class="field">
+          <label><i class="fas fa-user"></i> Nome completo</label>
+          <input name="nomeCompleto" required>
+        </div>
+        <div class="field">
+          <label><i class="fas fa-envelope"></i> E-mail</label>
+          <input type="email" name="email" required>
+        </div>
+        <div class="field">
+          <label><i class="fas fa-phone"></i> Telefone</label>
+          <input name="telefone">
+        </div>
+        <div class="field">
+          <label><i class="fas fa-university"></i> Instituição</label>
+          <input name="instituicao">
+        </div>
+        <div class="field full">
+          <label><i class="fas fa-tasks"></i> Selecione os cursos desejados (múltipla escolha)</label>
+          <div id="checkboxes-cursos" style="display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 0.5rem;"></div>
+        </div>
+        <div class="field full">
+          <label><i class="fas fa-comment"></i> Observações / necessidades especiais</label>
+          <textarea name="observacoes"></textarea>
+        </div>
+      </div>
+      <div class="actions-row" style="margin-top: 1.5rem;">
+        <button class="btn btn-primary" type="submit"><i class="fas fa-save"></i> Confirmar inscrição</button>
+      </div>
+      <div class="form-message" id="msg-inscricao"></div>
+    </form>
+  </section>
+  <footer>
+    <i class="fas fa-chalkboard"></i> Revista Inquietações – Inscrição em eventos acadêmicos
+  </footer>
+</div>
+
+<script>
+// Lista de cursos e atividades (conforme descrição)
+const cursos = [
+  { nome: "O Ser Social e o Preconceito: Uma Leitura Comentada", categoria: "Leitura comentada" },
+  { nome: "Nietzsche e os valores modernos", categoria: "Filosofia" },
+  { nome: "O Manifesto Comunista: O Texto que Mudou o Mundo", categoria: "Teoria social" },
+  { nome: "Endogenia acadêmica e tecnologias", categoria: "Teoria social" },
+  { nome: "Leitura e Comentário do livro O Livro d’Isso", categoria: "Psicanálise" },
+  { nome: "Como escrever um resumo expandido?", categoria: "Escrita acadêmica" },
+  { nome: "Algoritmos do Passado: Inteligência Artificial, História e Ética", categoria: "Tecnologia" },
+  { nome: "Apresentação de trabalhos (comunicação oral)", categoria: "Comunicações acadêmicas" },
+  { nome: "Participação de estudantes e pesquisadores(as) - sessão formativa", categoria: "Comunicações acadêmicas" },
+  { nome: "Palestras e novas atividades (agenda em construção)", categoria: "Palestras" }
+];
+
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (typeof AppPanel === 'undefined') {
+    document.getElementById('msg-inscricao').textContent = 'Erro: sistema não inicializado.';
+    document.getElementById('msg-inscricao').classList.add('err');
+    return;
+  }
+  const user = AppPanel.requireRole(['autor', 'editor_chefe', 'editor-chefe', 'editor_adjunto']);
+  if (!user) return;
+
+  if (typeof AppPanel.atualizarAvatares === 'function') AppPanel.atualizarAvatares();
+
+  // Preenche nome/email do usuário logado
+  const form = document.getElementById('form-inscricao');
+  if (user.nome) form.nomeCompleto.value = user.nome;
+  if (user.email) form.email.value = user.email;
+  if (user.telefone) form.telefone.value = user.telefone;
+  if (user.instituicao) form.instituicao.value = user.instituicao;
+
+  // Renderiza cursos expansíveis
+  const cursosContainer = document.getElementById('cursos-lista');
+  cursos.forEach(curso => {
+    const card = document.createElement('div');
+    card.className = 'course-card';
+    card.innerHTML = `
+      <div class="course-header">
+        <span class="course-title"><i class="fas fa-book"></i> ${escapeHtml(curso.nome)}</span>
+        <span style="color:#3b82f6"><i class="fas fa-chevron-down"></i></span>
+      </div>
+      <div class="course-detail">
+        <span class="helper">Categoria: ${escapeHtml(curso.categoria)}</span>
+      </div>
+    `;
+    const header = card.querySelector('.course-header');
+    const detail = card.querySelector('.course-detail');
+    header.addEventListener('click', () => {
+      detail.classList.toggle('show');
+      const icon = header.querySelector('.fa-chevron-down, .fa-chevron-up');
+      if (detail.classList.contains('show')) {
+        icon.classList.remove('fa-chevron-down');
+        icon.classList.add('fa-chevron-up');
+      } else {
+        icon.classList.remove('fa-chevron-up');
+        icon.classList.add('fa-chevron-down');
+      }
+    });
+    cursosContainer.appendChild(card);
+  });
+
+  // Gera checkboxes para seleção múltipla
+  const checkboxesDiv = document.getElementById('checkboxes-cursos');
+  cursos.forEach(curso => {
+    const label = document.createElement('label');
+    label.className = 'checkbox-line';
+    label.style.marginRight = '1rem';
+    label.innerHTML = `<input type="checkbox" name="cursosSelecionados" value="${escapeHtml(curso.nome)}"> <span>${escapeHtml(curso.nome)}</span>`;
+    checkboxesDiv.appendChild(label);
+  });
+
+  // Submissão do formulário
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    const msg = document.getElementById('msg-inscricao');
+    msg.className = 'form-message';
+    msg.textContent = '';
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+
+    try {
+      // Coleta cursos selecionados
+      const checkboxes = document.querySelectorAll('input[name="cursosSelecionados"]:checked');
+      const cursosSelecionados = Array.from(checkboxes).map(cb => cb.value);
+
+      const fd = new FormData(form);
+      const payload = {
+        usuario_id: user.id,
+        nomeCompleto: fd.get('nomeCompleto'),
+        email: fd.get('email'),
+        telefone: fd.get('telefone') || null,
+        instituicao: fd.get('instituicao') || null,
+        cursos: cursosSelecionados,
+        observacoes: fd.get('observacoes') || null,
+        data_inscricao: new Date().toISOString()
+      };
+
+      // Chama a função serverless para salvar no Neon
+      const result = await AppPanel.apiAction('register_event_registration', payload);
+      msg.textContent = '✅ Inscrição realizada com sucesso! Você receberá um e-mail de confirmação.';
+      msg.classList.add('ok');
+      form.reset();
+      // Recoloca nome/email/telefone/instituição do usuário (reset apagou)
+      if (user.nome) form.nomeCompleto.value = user.nome;
+      if (user.email) form.email.value = user.email;
+      if (user.telefone) form.telefone.value = user.telefone;
+      if (user.instituicao) form.instituicao.value = user.instituicao;
+      // Desmarca checkboxes
+      document.querySelectorAll('input[name="cursosSelecionados"]').forEach(cb => cb.checked = false);
+    } catch (err) {
+      console.error(err);
+      msg.textContent = err.message || 'Erro ao processar inscrição.';
+      msg.classList.add('err');
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+});
+</script>
+</body>
+</html>

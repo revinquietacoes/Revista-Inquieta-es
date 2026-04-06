@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Área do participante | Revista Inquietações</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="painel-base.js" defer></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(145deg, #0a0f1c 0%, #0f172a 100%);
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #f1f5f9;
+    min-height: 100vh;
+  }
+  .page-shell {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .avatar-box {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .avatar-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3b82f6;
+    background: #2d3a5e;
+  }
+  .logo-inline {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: white;
+    padding: 6px;
+  }
+  .brand-copy h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-copy p {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+  }
+  .actions-row {
+    display: flex;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.05);
+    color: #f1f5f9;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: 0.2s;
+  }
+  .btn-secondary {
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.4);
+  }
+  .btn-secondary:hover {
+    background: rgba(59,130,246,0.3);
+    transform: translateY(-2px);
+  }
+  .btn-soft:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .cards-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-top: 1.5rem;
+  }
+  .card {
+    background: rgba(17, 24, 39, 0.75);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(71, 85, 105, 0.5);
+    border-radius: 2rem;
+    padding: 2rem;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  .card:hover {
+    transform: translateY(-8px);
+    border-color: #3b82f6;
+    background: rgba(30, 41, 59, 0.9);
+  }
+  .card-icon {
+    font-size: 3rem;
+    color: #3b82f6;
+    margin-bottom: 1rem;
+  }
+  .card h2 {
+    font-size: 1.5rem;
+    margin-bottom: 0.5rem;
+  }
+  .card p {
+    color: #94a3b8;
+    font-size: 0.9rem;
+  }
+  footer {
+    margin-top: 3rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #5b6e8c;
+  }
+  @media (max-width: 680px) {
+    .page-shell { padding: 1rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box">
+        <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+        <img class="logo-inline" src="../logo-revista.png" alt="Logo">
+      </div>
+      <div class="brand-copy">
+        <h1><i class="fas fa-user-graduate"></i> Área do participante</h1>
+        <p>Escolha uma das opções abaixo</p>
+      </div>
+    </div>
+    <div class="actions-row">
+      <a class="btn btn-secondary" href="painel-autor.html"><i class="fas fa-arrow-left"></i> Voltar ao painel</a>
+      <button class="btn btn-soft" data-action="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
+    </div>
+  </header>
+
+  <div class="cards-grid">
+    <div class="card" id="card-inscricao">
+      <div class="card-icon"><i class="fas fa-calendar-alt"></i></div>
+      <h2>Inscrição em eventos</h2>
+      <p>Inscreva-se nos cursos, palestras e atividades da revista</p>
+    </div>
+    <div class="card" id="card-certificados">
+      <div class="card-icon"><i class="fas fa-certificate"></i></div>
+      <h2>Solicitar certificados</h2>
+      <p>Obtenha certificados de participação, minicursos e comunicações</p>
+    </div>
+  </div>
+
+  <footer>
+    <i class="fas fa-chalkboard"></i> Revista Inquietações – Central do participante
+  </footer>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', async () => {
+  if (typeof AppPanel === 'undefined') {
+    alert('Sistema não inicializado. Recarregue a página.');
+    return;
+  }
+  const user = AppPanel.requireRole(['autor', 'editor_chefe', 'editor-chefe', 'editor_adjunto']);
+  if (!user) return;
+
+  if (typeof AppPanel.atualizarAvatares === 'function') {
+    AppPanel.atualizarAvatares();
+  }
+
+  document.getElementById('card-inscricao').addEventListener('click', () => {
+    window.location.href = 'inscricao-eventos.html';
+  });
+  document.getElementById('card-certificados').addEventListener('click', () => {
+    window.location.href = 'solicitacao-certificados.html';
+  });
+});
+</script>
+</body>
+</html>

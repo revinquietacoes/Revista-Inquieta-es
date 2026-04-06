@@ -125,6 +125,10 @@ const main = async (req) => {
       headers: { 'Content-Type': 'text/plain; charset=utf-8' }
     })
   }
+  const cert = rows[0];
+  if (cert.usuario_id !== userId) {
+    return new Response('Acesso negado a este certificado.', { status: 403 });
+  }
 }
 
 exports.handler = wrapHttp(main)
