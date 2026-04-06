@@ -323,15 +323,12 @@ const main = async (req) => {
       if (!canAccess(user, ['editor_chefe', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
       const { submissaoId, pareceristaId, prazoParecer, mensagemConvite } = body
       if (!submissaoId || !pareceristaId) return json({ erro: 'Informe submissão e parecerista.' }, 400)
-      const existing = await sql`
-        SELECT id, status
-        FROM designacoes_avaliacao
-        WHERE submissao_id = ${submissaoId}
-          AND parecerista_id = ${pareceristaId}
-          AND status <> 'recusado'
-        LIMIT 1`
-      if (existing.length) return json({ erro: 'Este parecerista já possui uma designação ativa para esta submissão.' }, 409)
+
+      // REMOVIDA a verificação que impedia designações duplicadas ativas
+      // Agora permite qualquer nova designação, mesmo que já exista outra pendente/aceita para a mesma submissão
+
       await sql`INSERT INTO designacoes_avaliacao (submissao_id, parecerista_id, editor_id, status, prazo_parecer, mensagem_convite) VALUES (${submissaoId}, ${pareceristaId}, ${user.id}, 'convite_enviado', ${prazoParecer || null}, ${mensagemConvite || null})`
+
       const submissaoCols = await getTableColumns('submissoes')
       if (submissaoCols.has('editor_responsavel_id') && submissaoCols.has('editor_adjunto_id')) {
         await sql`UPDATE submissoes SET status = 'alocada_sem_aceite', editor_responsavel_id = COALESCE(editor_responsavel_id, ${user.id}), editor_adjunto_id = CASE WHEN ${user.perfil} = 'editor_adjunto' THEN ${user.id} ELSE COALESCE(editor_adjunto_id, editor_responsavel_id, ${user.id}) END WHERE id = ${submissaoId}`
