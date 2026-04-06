@@ -201,17 +201,50 @@
   // ========== FUNÇÃO PARA ATUALIZAR AVATARES ==========
   function atualizarAvatares() {
     const user = currentUser();
-    console.log('🔍 [atualizarAvatares] user:', user);
     if (!user) {
-      console.warn('⚠️ Nenhum usuário logado');
+      console.warn('⚠️ Nenhum usuário logado, avatares não atualizados.');
       return;
     }
-    const avatarUrl = user.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
-    console.log('📷 Avatar URL:', avatarUrl);
+
+    // Determina a URL do avatar (usa padrão se vazia)
+    let avatarUrl = user.foto_perfil_url;
+    if (!avatarUrl || avatarUrl === '') {
+      // Caminho absoluto a partir da raiz do site
+      avatarUrl = '/assets/avatares/avatar-padrao.png';
+    }
+
+    // Se for caminho relativo, converte para absoluto (opcional)
+    if (avatarUrl.startsWith('../')) {
+      // Remove '../' e coloca '/' na frente
+      avatarUrl = avatarUrl.replace(/^\.\.\//, '/');
+    }
+
+    async function atualizarUsuarioLocalStorage() {
+      try {
+        const user = currentUser();
+        if (!user) return;
+        const data = await apiData('me');
+        if (data.usuario) {
+          localStorage.setItem('usuario_logado', JSON.stringify(data.usuario));
+          atualizarAvatares(); // reaplica o avatar
+        }
+      } catch (err) {
+        console.error('Erro ao atualizar usuário no localStorage:', err);
+      }
+    }
+
+    // Exportar a nova função
+    window.AppPanel.atualizarUsuarioLocalStorage = atualizarUsuarioLocalStorage;
+
+    console.log('📷 Atualizando avatar para:', avatarUrl);
+
     const elementos = document.querySelectorAll('[data-avatar-user]');
-    console.log('🎯 Elementos encontrados:', elementos.length);
     elementos.forEach(img => {
       img.src = avatarUrl;
+      img.onerror = () => {
+        console.warn('Falha ao carregar avatar, usando padrão absoluto.');
+        img.src = '/assets/avatares/avatar-padrao.png';
+      };
     });
   }
 
