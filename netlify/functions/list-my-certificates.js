@@ -29,18 +29,22 @@ const main = async (req) => {
 
     const type = String(url.searchParams.get('type') || '').trim()
     const rows = type
-      ? await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em FROM certificados_privados WHERE usuario_id = ${user.id} AND tipo = ${type} ORDER BY criado_em DESC`
-      : await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em FROM certificados_privados WHERE usuario_id = ${user.id} ORDER BY criado_em DESC`
+      ? await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${user.id} AND tipo = ${type} ORDER BY criado_em DESC`
+      : await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${user.id} ORDER BY criado_em DESC`
 
-    return json(rows.map((item) => ({
-      id: item.id,
-      certificate_type: item.tipo,
-      category: item.categoria,
-      title: item.titulo,
-      file_name: item.nome_arquivo,
-      mime_type: item.mime_type,
-      created_at: item.criado_em
-    })))
+    return json({
+      sucesso: true,
+      certificados: rows.map((item) => ({
+        id: item.id,
+        tipo: item.tipo,
+        categoria: item.categoria,
+        titulo: item.titulo,
+        nome_arquivo: item.nome_arquivo,
+        mime_type: item.mime_type,
+        criado_em: item.criado_em,
+        blob_key: item.blob_key
+      }))
+    })
   } catch (error) {
     return json({ erro: 'Erro interno ao listar certificados.', detalhe: error.message }, 500)
   }
