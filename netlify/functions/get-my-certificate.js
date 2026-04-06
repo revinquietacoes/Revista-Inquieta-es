@@ -1,6 +1,10 @@
-const { getStore } = require('@netlify/blobs')
-const { sql, ensureSupportTables } = require('./_db')
+const { createClient } = require('@supabase/supabase-js')
+const { sql, ensureSupportTables, getAuthenticatedUserId } = require('./_db')
 const { wrapHttp } = require('./_netlify')
+
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 function safeDownloadName(name) {
   return String(name || 'certificado')
@@ -9,34 +13,6 @@ function safeDownloadName(name) {
     .replace(/[^a-zA-Z0-9._-]/g, '-')
     .replace(/-+/g, '-')
     .replace(/^-|-$/g, '')
-}
-
-function createCertificatesStore() {
-  try {
-    return getStore('certificados-usuarios')
-  } catch (_) {
-    const siteID =
-      process.env.NETLIFY_SITE_ID ||
-      process.env.SITE_ID ||
-      process.env.BLOBS_SITE_ID
-
-    const token =
-      process.env.NETLIFY_BLOBS_TOKEN ||
-      process.env.BLOBS_TOKEN ||
-      process.env.NETLIFY_AUTH_TOKEN
-
-    if (!siteID || !token) {
-      throw new Error(
-        'Netlify Blobs não configurado. Defina NETLIFY_SITE_ID e NETLIFY_BLOBS_TOKEN.'
-      )
-    }
-
-    return getStore({
-      name: 'certificados-usuarios',
-      siteID,
-      token
-    })
-  }
 }
 
 const main = async (req) => {
@@ -55,8 +31,14 @@ const main = async (req) => {
       return new Response('Parâmetro id é obrigatório.', { status: 400 })
     }
 
+    // Verificar autenticação do usuário
+    const userId = getAuthenticatedUserId(req)
+    if (!userId) {
+      return new Response('Usuário não autenticado.', { status: 401 })
+    }
+
     const rows = await sql`
-      SELECT id, titulo, blob_key, mime_type, nome_arquivo
+      SELECT id, titulo, blob_key, mime_type, nome_arquivo, usuario_id
       FROM certificados_privados
       WHERE id = ${certificateId}
       LIMIT 1
@@ -68,66 +50,40 @@ const main = async (req) => {
 
     const cert = rows[0]
 
-    console.log('Certificado localizado:', {
-      id: cert.id,
-      titulo: cert.titulo,
-      blob_key: cert.blob_key,
-      mime_type: cert.mime_type,
-      nome_arquivo: cert.nome_arquivo
-    })
+    // Verificar se o usuário logado é o dono
+    if (cert.usuario_id !== userId) {
+      return new Response('Acesso negado a este certificado.', { status: 403 })
+    }
 
     if (!cert.blob_key) {
-      return new Response('Certificado sem blob_key cadastrado.', { status: 404 })
+      return new Response('Certificado sem arquivo associado.', { status: 404 })
     }
 
-    const certificatesStore = createCertificatesStore()
+    // Buscar do Supabase
+    const { data, error } = await supabase.storage
+      .from('certificados')
+      .download(cert.blob_key)
 
-    const blob = await certificatesStore.get(cert.blob_key, { type: 'arrayBuffer' })
-
-    if (!blob) {
-      return new Response('Arquivo do certificado não encontrado no Blobs.', { status: 404 })
+    if (error || !data) {
+      console.error('Erro ao baixar do Supabase:', error)
+      return new Response('Arquivo do certificado não encontrado.', { status: 404 })
     }
 
-    const byteLength = blob.byteLength || blob.length || 0
-    console.log('Tamanho do arquivo retornado:', byteLength)
+    const bytes = await data.arrayBuffer()
+    const fileName = safeDownloadName(cert.nome_arquivo || cert.titulo || `certificado-${cert.id}.pdf`)
+    const finalFileName = fileName.toLowerCase().endsWith('.pdf') ? fileName : `${fileName}.pdf`
 
-    if (!byteLength) {
-      return new Response('O arquivo do certificado está vazio.', { status: 404 })
-    }
-
-    const fileName = safeDownloadName(
-      cert.nome_arquivo || cert.titulo || `certificado-${cert.id}.pdf`
-    )
-
-    const finalFileName = fileName.toLowerCase().endsWith('.pdf')
-      ? fileName
-      : `${fileName}.pdf`
-
-    const contentType =
-      cert.mime_type && String(cert.mime_type).trim()
-        ? cert.mime_type
-        : 'application/pdf'
-
-    return new Response(blob, {
+    return new Response(bytes, {
       status: 200,
       headers: {
-        'Content-Type': contentType,
-        'Content-Length': String(byteLength),
+        'Content-Type': cert.mime_type || 'application/pdf',
         'Content-Disposition': `${download ? 'attachment' : 'inline'}; filename="${finalFileName}"`,
-        'Cache-Control': 'public, max-age=3600',
-        'X-Certificate-Id': String(cert.id)
+        'Cache-Control': 'public, max-age=3600'
       }
     })
   } catch (error) {
-    console.error('Erro interno ao obter certificado:', error)
-    return new Response(`Erro interno ao obter certificado: ${error.message}`, {
-      status: 500,
-      headers: { 'Content-Type': 'text/plain; charset=utf-8' }
-    })
-  }
-  const cert = rows[0];
-  if (cert.usuario_id !== userId) {
-    return new Response('Acesso negado a este certificado.', { status: 403 });
+    console.error('Erro interno:', error)
+    return new Response(`Erro interno: ${error.message}`, { status: 500 })
   }
 }
 

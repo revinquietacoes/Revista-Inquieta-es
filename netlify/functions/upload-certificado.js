@@ -1,9 +1,16 @@
-const { makeStore } = require('./_blobs')
+const { createClient } = require('@supabase/supabase-js')
 const { sql, json, getUserById, ensureSupportTables, canAccess, getAuthenticatedUserId } = require('./_db')
 const { wrapHttp } = require('./_netlify')
 const crypto = require('crypto')
 
-const certificatesStore = makeStore('certificados-usuarios')
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+
+if (!supabaseUrl || !supabaseServiceKey) {
+  console.error('❌ Variáveis SUPABASE_URL e SUPABASE_SERVICE_ROLE_KEY são obrigatórias.')
+}
+
+const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 function sanitizeFileName(name) {
   return String(name || 'certificado.pdf')
@@ -49,103 +56,75 @@ async function readPayload(req) {
 
 const main = async (req) => {
   try {
-    console.log('🔵 [upload-certificado] Iniciando requisição');
-    
-    if (req.method !== 'POST') {
-      console.log('❌ Método não permitido:', req.method);
-      return json({ erro: 'Método não permitido.' }, 405);
-    }
-    
-    console.log('🔵 Garantindo tabelas...');
-    await ensureSupportTables();
-    
-    console.log('🔵 Obtendo editorId...');
-    const editorId = getAuthenticatedUserId(req);
-    if (!editorId) {
-      console.log('❌ Usuário não autenticado');
-      return json({ erro: 'Usuário não autenticado.' }, 401);
-    }
-    
-    console.log('🔵 Buscando editor:', editorId);
-    const editor = await getUserById(editorId);
-    if (!editor) {
-      console.log('❌ Editor não encontrado');
-      return json({ erro: 'Usuário não encontrado.' }, 404);
-    }
-    if (editor.status !== 'ativo') {
-      console.log('❌ Editor inativo');
-      return json({ erro: 'Usuário inativo.' }, 403);
-    }
+    console.log('🔵 [upload-certificado] Iniciando...')
+    if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
+
+    await ensureSupportTables()
+
+    const editorId = getAuthenticatedUserId(req)
+    if (!editorId) return json({ erro: 'Usuário não autenticado.' }, 401)
+
+    const editor = await getUserById(editorId)
+    if (!editor) return json({ erro: 'Usuário não encontrado.' }, 404)
+    if (editor.status !== 'ativo') return json({ erro: 'Usuário inativo.' }, 403)
     if (!canAccess(editor, ['editor_chefe'])) {
-      console.log('❌ Editor sem permissão');
-      return json({ erro: 'Apenas o editor-chefe pode enviar certificados.' }, 403);
+      return json({ erro: 'Apenas o editor-chefe pode enviar certificados.' }, 403)
     }
-    
-    console.log('🔵 Lendo payload...');
-    const payload = await readPayload(req);
-    console.log('Payload:', { ...payload, arquivo: payload.arquivo ? 'presente' : 'ausente' });
-    
+
+    const payload = await readPayload(req)
     if (!payload.targetUserId || !payload.certificateType || !payload.title) {
-      console.log('❌ Campos obrigatórios faltando');
-      return json({ erro: 'Campos obrigatórios: usuário, tipo e título.' }, 400);
+      return json({ erro: 'Campos obrigatórios: usuário, tipo e título.' }, 400)
     }
-    
-    console.log('🔵 Buscando usuário destino:', payload.targetUserId);
-    const targetUser = await getUserById(payload.targetUserId);
-    if (!targetUser) {
-      console.log('❌ Destinatário não encontrado');
-      return json({ erro: 'Usuário destinatário não encontrado.' }, 404);
-    }
-    if (targetUser.status !== 'ativo') {
-      console.log('❌ Destinatário inativo');
-      return json({ erro: 'Usuário destinatário inativo.' }, 403);
-    }
-    
-    let bytes, mimeType, safeFileName;
-    
+
+    const targetUser = await getUserById(payload.targetUserId)
+    if (!targetUser) return json({ erro: 'Usuário destinatário não encontrado.' }, 404)
+    if (targetUser.status !== 'ativo') return json({ erro: 'Usuário destinatário inativo.' }, 403)
+
+    let bytes, mimeType, safeFileName
+
     if (payload.arquivo && typeof payload.arquivo !== 'string') {
-      mimeType = payload.arquivo.type || 'application/pdf';
-      if (mimeType !== 'application/pdf') {
-        console.log('❌ MIME inválido:', mimeType);
-        return json({ erro: 'Envie um arquivo PDF.' }, 400);
-      }
-      bytes = Buffer.from(await payload.arquivo.arrayBuffer());
-      safeFileName = sanitizeFileName(payload.arquivo.name || `${payload.title}.pdf`);
+      mimeType = payload.arquivo.type || 'application/pdf'
+      if (mimeType !== 'application/pdf') return json({ erro: 'Envie um arquivo PDF.' }, 400)
+      bytes = Buffer.from(await payload.arquivo.arrayBuffer())
+      safeFileName = sanitizeFileName(payload.arquivo.name || `${payload.title}.pdf`)
     } else if (payload.fileBase64) {
       try {
-        bytes = Buffer.from(payload.fileBase64, 'base64');
+        bytes = Buffer.from(payload.fileBase64, 'base64')
       } catch {
-        console.log('❌ Base64 inválido');
-        return json({ erro: 'Arquivo em base64 inválido.' }, 400);
+        return json({ erro: 'Arquivo em base64 inválido.' }, 400)
       }
-      mimeType = payload.mimeType || 'application/pdf';
-      safeFileName = sanitizeFileName(payload.fileName || `${payload.title}.pdf`);
+      mimeType = payload.mimeType || 'application/pdf'
+      safeFileName = sanitizeFileName(payload.fileName || `${payload.title}.pdf`)
     } else {
-      console.log('❌ Nenhum arquivo enviado');
-      return json({ erro: 'Selecione um arquivo PDF.' }, 400);
+      return json({ erro: 'Selecione um arquivo PDF.' }, 400)
     }
-    
-    if (!bytes || !bytes.length) {
-      console.log('❌ Arquivo vazio');
-      return json({ erro: 'Arquivo vazio ou inválido.' }, 400);
+
+    if (!bytes || !bytes.length) return json({ erro: 'Arquivo vazio ou inválido.' }, 400)
+
+    // Upload para Supabase Storage
+    const storagePath = `certificados/${targetUser.id}/${payload.certificateType}/${Date.now()}-${safeFileName}`
+    console.log('🔵 Upload para Supabase:', storagePath)
+
+    const { data: uploadData, error: uploadError } = await supabase.storage
+      .from('certificados')
+      .upload(storagePath, bytes, {
+        contentType: mimeType,
+        cacheControl: '3600',
+        upsert: false
+      })
+
+    if (uploadError) {
+      console.error('❌ Erro no upload para Supabase:', uploadError)
+      return json({ erro: 'Erro ao salvar o arquivo no armazenamento.' }, 500)
     }
-    
-    const blobKey = `usuarios/${targetUser.id}/certificados/${payload.certificateType}/${Date.now()}-${safeFileName}`;
-    console.log('🔵 Salvando blob:', blobKey);
-    
-    await certificatesStore.set(blobKey, bytes, {
-      metadata: {
-        title: payload.title,
-        tipo: payload.certificateType,
-        target_user_id: String(targetUser.id),
-        uploaded_by: String(editorId),
-        mime_type: mimeType
-      }
-    });
-    
-    const codigoAutenticidade = crypto.randomUUID();
-    console.log('🔵 Inserindo no banco com código:', codigoAutenticidade);
-    
+
+    // Obter URL pública
+    const { data: urlData } = supabase.storage.from('certificados').getPublicUrl(storagePath)
+    const publicUrl = urlData.publicUrl
+
+    const codigoAutenticidade = crypto.randomUUID()
+    console.log('🔵 Inserindo no banco com código:', codigoAutenticidade)
+
     const inserted = await sql`
       INSERT INTO certificados_privados (
         usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key,
@@ -153,24 +132,24 @@ const main = async (req) => {
       )
       VALUES (
         ${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null},
-        ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${blobKey},
+        ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${storagePath},
         ${safeFileName}, ${mimeType}, ${bytes.length}, ${codigoAutenticidade}
       )
       RETURNING id, criado_em, codigo_autenticidade
-    `;
-    
-    console.log('✅ Sucesso! ID:', inserted[0].id);
+    `
+
+    console.log('✅ Sucesso! ID:', inserted[0].id)
     return json({
       sucesso: true,
       certificado: inserted[0],
-      codigo_autenticidade: inserted[0].codigo_autenticidade
-    }, 201);
-    
+      codigo_autenticidade: inserted[0].codigo_autenticidade,
+      url: publicUrl
+    }, 201)
+
   } catch (error) {
-    console.error('❌ Erro fatal em upload-certificado:', error);
-    console.error('Stack:', error.stack);
-    return json({ erro: 'Erro interno ao enviar certificado.', detalhe: error.message }, 500);
+    console.error('❌ Erro fatal:', error)
+    return json({ erro: 'Erro interno ao enviar certificado.', detalhe: error.message }, 500)
   }
-};
+}
 
 exports.handler = wrapHttp(main)
