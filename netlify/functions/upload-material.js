@@ -6,10 +6,9 @@ const supabaseUrl = process.env.SUPABASE_URL
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
-const BUCKET_NAME = 'chat-anexos'  // Bucket já existente
+const BUCKET_NAME = 'chat-anexos'
 
 async function ensureBucket() {
-  // Verifica se o bucket existe; se não, tenta criar (mas já deve existir)
   const { data: buckets, error: listError } = await supabase.storage.listBuckets()
   if (listError) throw new Error(`Erro ao listar buckets: ${listError.message}`)
   const bucketExists = buckets.some(b => b.name === BUCKET_NAME)
@@ -18,8 +17,6 @@ async function ensureBucket() {
     const { error: createError } = await supabase.storage.createBucket(BUCKET_NAME, { public: true })
     if (createError) throw new Error(`Erro ao criar bucket: ${createError.message}`)
     console.log(`✅ Bucket "${BUCKET_NAME}" criado com sucesso.`)
-  } else {
-    console.log(`✅ Bucket "${BUCKET_NAME}" já existe.`)
   }
 }
 
@@ -55,12 +52,18 @@ const main = async (req) => {
 
     const form = await req.formData()
     const submissaoId = form.get('submissao_id') ? Number(form.get('submissao_id')) : null
-    const categoria = String(form.get('categoria') || 'geral')
+    let categoria = String(form.get('categoria') || 'outro')
     const arquivo = form.get('arquivo')
 
     if (!arquivo || typeof arquivo === 'string') {
       console.log('❌ Nenhum arquivo enviado')
       return json({ erro: 'Nenhum arquivo enviado.' }, 400)
+    }
+
+    // Garantir que a categoria seja uma das permitidas pela constraint
+    const categoriasPermitidas = ['principal', 'manuscrito', 'outro', 'anexo', 'devolutiva', 'resumo_minicurso', 'revisao', 'mensagem_submissao']
+    if (!categoriasPermitidas.includes(categoria)) {
+      categoria = 'outro'  // fallback seguro
     }
 
     const tiposPermitidos = [
