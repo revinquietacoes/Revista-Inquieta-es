@@ -201,9 +201,16 @@
   // ========== FUNÇÃO PARA ATUALIZAR AVATARES ==========
   function atualizarAvatares() {
     const user = currentUser();
-    if (!user) return;
+    console.log('🔍 [atualizarAvatares] user:', user);
+    if (!user) {
+      console.warn('⚠️ Nenhum usuário logado');
+      return;
+    }
     const avatarUrl = user.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
-    document.querySelectorAll('[data-avatar-user]').forEach(img => {
+    console.log('📷 Avatar URL:', avatarUrl);
+    const elementos = document.querySelectorAll('[data-avatar-user]');
+    console.log('🎯 Elementos encontrados:', elementos.length);
+    elementos.forEach(img => {
       img.src = avatarUrl;
     });
   }
