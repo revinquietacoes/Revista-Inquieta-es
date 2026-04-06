@@ -546,6 +546,58 @@ const main = async (req) => {
       return json({ sucesso: true });
     }
 
+    // ========== REGISTRAR NOVA REVISÃO ==========
+    if (action === 'registrar_revisao') {
+      if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403);
+      const { submissaoId, arquivoUrl, arquivoPath, nomeArquivo, comentario } = body;
+      if (!submissaoId || !arquivoUrl) return json({ erro: 'Dados incompletos para registrar revisão.' }, 400);
+
+      // Obtém a próxima versão
+      const maxVersao = await sql`SELECT COALESCE(MAX(versao), 0) as max FROM revisoes_submissoes WHERE submissao_id = ${submissaoId}`;
+      const novaVersao = (maxVersao[0].max || 0) + 1;
+
+      await sql`
+        INSERT INTO revisoes_submissoes (submissao_id, versao, arquivo_url, arquivo_path, nome_arquivo, comentario)
+        VALUES (${submissaoId}, ${novaVersao}, ${arquivoUrl}, ${arquivoPath}, ${nomeArquivo}, ${comentario})
+      `;
+
+      // Notifica os editores responsáveis
+      const sub = await sql`SELECT editor_responsavel_id, editor_adjunto_id FROM submissoes WHERE id = ${submissaoId}`;
+      const editores = [sub[0].editor_responsavel_id, sub[0].editor_adjunto_id].filter(Boolean);
+      for (const editorId of editores) {
+        await criarNotificacao(editorId, 'revisao', `Nova versão enviada para submissão #${submissaoId}`,
+          `O autor enviou uma nova revisão.`, `/cadastro-login/editor-chefe-submissoes?submissao=${submissaoId}`);
+      }
+      return json({ sucesso: true, versao: novaVersao });
+    }
+
+    // ========== ENVIAR MENSAGEM SOBRE SUBMISSÃO ==========
+    if (action === 'enviar_mensagem_submissao') {
+      if (!canAccess(user, ['autor', 'editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403);
+      const { submissaoId, mensagem, anexoUrl, anexoPath, anexoNome } = body;
+      if (!submissaoId || !mensagem) return json({ erro: 'Dados incompletos para enviar mensagem.' }, 400);
+
+      const sub = await sql`SELECT autor_id, editor_responsavel_id, editor_adjunto_id FROM submissoes WHERE id = ${submissaoId}`;
+      if (!sub.length) return json({ erro: 'Submissão não encontrada.' }, 404);
+
+      let destinatarioId;
+      if (user.perfil === 'autor') {
+        destinatarioId = sub[0].editor_responsavel_id || sub[0].editor_adjunto_id;
+        if (!destinatarioId) return json({ erro: 'Nenhum editor responsável encontrado.' }, 400);
+      } else {
+        destinatarioId = sub[0].autor_id;
+      }
+
+      await sql`
+        INSERT INTO conversas_submissao (submissao_id, remetente_id, destinatario_id, mensagem, anexo_url, anexo_path, anexo_nome)
+        VALUES (${submissaoId}, ${user.id}, ${destinatarioId}, ${mensagem}, ${anexoUrl}, ${anexoPath}, ${anexoNome})
+      `;
+
+      await criarNotificacao(destinatarioId, 'mensagem_submissao', `Nova mensagem sobre submissão #${submissaoId}`,
+        mensagem.substring(0, 100), `/cadastro-login/autor-submissoes?submissao=${submissaoId}`);
+      return json({ sucesso: true });
+    }
+
     // Se nenhuma ação corresponder
     return json({ erro: 'Ação inválida.' }, 400)
 
