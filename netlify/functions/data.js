@@ -100,6 +100,28 @@ async function updateDesignacaoStatus(payload, user) {
   return { ok: true, item: rows[0] }
 }
 
+// ========== AÇÕES DE CERTIFICADOS ==========
+const data = await AppPanel.apiData('listar_certificados');
+if (action === 'listar_certificados') {
+  const rows = await sql`
+    SELECT id, titulo, descricao, tipo, categoria, nome_arquivo, mime_type, criado_em
+    FROM certificados_privados
+    WHERE usuario_id = ${user.id}
+    ORDER BY criado_em DESC
+  `;
+  const certificados = rows.map(row => ({
+    id: row.id,
+    titulo: row.titulo,
+    descricao: row.descricao,
+    tipo: row.tipo,
+    categoria: row.categoria,
+    nome_arquivo: row.nome_arquivo,
+    mime_type: row.mime_type,
+    criado_em: row.criado_em
+  }));
+  return json({ sucesso: true, certificados });
+}
+
 async function getReviewerReviewHistory(user, reviewerId) {
   if (!reviewerId) throw new Error('Parecerista não informado.')
   if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) throw new Error('Acesso negado.')
@@ -461,7 +483,7 @@ const main = async (req) => {
                 LEFT JOIN usuarios a ON a.id = s.autor_id
                 LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
                 ORDER BY s.data_submissao DESC`
-            const fileMap = await getArquivoPrincipalPorSubmissaoIds(submissoes.map((r) => Number(r.id)).filter(Boolean))
+      const fileMap = await getArquivoPrincipalPorSubmissaoIds(submissoes.map((r) => Number(r.id)).filter(Boolean))
       const dossies = await maybeRows('dossies_tematicos', () => {
         if (chiefHasDossieAdj && chiefHasDossieResp) return sql`SELECT dt.*, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = COALESCE(dt.editor_adjunto_id, dt.editor_responsavel_id) ORDER BY dt.criado_em DESC`
         if (chiefHasDossieResp) return sql`SELECT dt.*, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = dt.editor_responsavel_id ORDER BY dt.criado_em DESC`

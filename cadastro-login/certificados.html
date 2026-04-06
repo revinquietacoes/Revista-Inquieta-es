@@ -58,19 +58,29 @@
     return tipo;
   }
 
+  function authHeaders() {
+    const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
+    delete headers['Content-Type'];
+    delete headers['content-type'];
+    return headers;
+  }
+
   async function carregarCertificados() {
     try {
-      const data = await AppPanel.apiData('listar_certificados');
+      const response = await fetch('/.netlify/functions/list-my-certificates', {
+        headers: authHeaders()
+      });
+      const certificados = await response.json();
       const container = document.getElementById('cert-list');
-      if (!data.certificados || data.certificados.length === 0) {
+      if (!certificados || certificados.length === 0) {
         container.innerHTML = '<div style="text-align: center; padding: 40px;">Nenhum certificado encontrado.</div>';
         return;
       }
-      container.innerHTML = data.certificados.map(cert => `
+      container.innerHTML = certificados.map(cert => `
         <div class="cert-item">
           <div class="cert-info">
-            <div class="cert-titulo">${escapeHtml(cert.titulo)} <span class="cert-tipo ${getTipoClass(cert.tipo)}">${getTipoLabel(cert.tipo)}</span></div>
-            <div class="cert-data">Enviado em: ${new Date(cert.criado_em).toLocaleDateString('pt-BR')}</div>
+            <div class="cert-titulo">${escapeHtml(cert.title)} <span class="cert-tipo ${getTipoClass(cert.certificate_type)}">${getTipoLabel(cert.certificate_type)}</span></div>
+            <div class="cert-data">Enviado em: ${new Date(cert.created_at).toLocaleDateString('pt-BR')}</div>
           </div>
           <div class="actions-row">
             <a class="btn btn-soft" href="/.netlify/functions/get-my-certificate?id=${cert.id}&download=0" target="_blank">Visualizar</a>
