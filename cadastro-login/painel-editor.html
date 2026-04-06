@@ -9,16 +9,6 @@
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
 </head>
-<script>
-  document.addEventListener('DOMContentLoaded', () => {
-    const user = AppPanel.requireRole(['editor_adjunto']);
-    if (!user) return;
-    AppPanel.atualizarAvatares();
-    AppPanel.atualizarContadorNotificacoes();
-    AppPanel.iniciarPollingNotificacoes();
-    document.getElementById('btn-notificacoes')?.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
-  });
-</script>
 
 <body>
   <div class="page-shell">
@@ -37,6 +27,12 @@
       </div>
 
       <div class="actions-row">
+        <!-- Ícone de notificações no topo -->
+        <div style="position: relative; margin-right: 10px;">
+          <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+          <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+          <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+        </div>
         <a class="btn btn-secondary" href="https://revista-inquietacoes.netlify.app/">Voltar ao portal</a>
         <button class="btn btn-soft" data-action="logout">Sair</button>
       </div>
@@ -51,7 +47,6 @@
     </section>
 
     <div class="cards-grid">
-
       <article class="card">
         <div class="card-top">
           <h3>Dossiês sob responsabilidade</h3>
@@ -96,11 +91,9 @@
           <h3>Pareceres por parecerista</h3>
           <span class="badge badge-green">Consulta editorial</span>
         </div>
-
         <p>
           Selecione um parecerista e consulte o histórico completo de avaliações.
         </p>
-
         <div class="actions-row">
           <a class="btn btn-primary" href="pareceres-parecerista.html">Abrir</a>
         </div>
@@ -144,39 +137,40 @@
           <a class="btn btn-primary" href="certificados.html">Abrir</a>
         </div>
       </article>
-      <div style="position: relative;">
-        <button id="btn-notificacoes"
-          style="background: none; border: none; font-size: 1.5rem; cursor: pointer; position: relative;">🔔</button>
-        <span id="notificacao-badge"
-          style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
-        <div id="notificacoes-dropdown"
-          style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;">
-        </div>
-      </div>
     </div>
 
     <footer class="page-footer"></footer>
   </div>
 
   <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(() => {
+        if (typeof AppPanel === 'undefined') {
+          console.error('AppPanel não carregado');
+          return;
+        }
+        const user = AppPanel.requireRole(['editor_adjunto']);
+        if (!user) return;
 
-    // 🔹 Função de status
-    function statusAutor(s) {
-      if (!s) return 'Em avaliação';
-      if (s === 'avaliacao_concluida') return 'Avaliação concluída';
-      if (s === 'ajustes_solicitados') return 'Correções solicitadas';
-      if (s === 'parecer_recusado') return 'Parecer recusado';
-      return 'Em avaliação';
-    }
+        // Atualiza nome no cabeçalho (se houver)
+        const nameSpan = document.querySelector('[data-user-name]');
+        if (nameSpan) nameSpan.textContent = user.nome;
 
-    // 🔹 Exemplo preparado (não quebra se não houver submissão)
-    function obterStatusSubmissao(submissao) {
-      if (!submissao) return 'Em avaliação';
-      return statusAutor(submissao.status_autor || submissao.status);
-    }
+        // Atualiza avatares
+        AppPanel.atualizarAvatares();
 
+        // Inicializa notificações
+        AppPanel.atualizarContadorNotificacoes();
+        AppPanel.iniciarPollingNotificacoes();
+
+        // Botão de notificações
+        const btn = document.getElementById('btn-notificacoes');
+        if (btn) {
+          btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+        }
+      }, 100);
+    });
   </script>
-
 </body>
 
 </html>
