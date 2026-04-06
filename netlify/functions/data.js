@@ -101,25 +101,33 @@ async function updateDesignacaoStatus(payload, user) {
 }
 
 // ========== AÇÕES DE CERTIFICADOS ==========
-const data = await AppPanel.apiData('listar_certificados');
-if (action === 'listar_certificados') {
-  const rows = await sql`
-    SELECT id, titulo, descricao, tipo, categoria, nome_arquivo, mime_type, criado_em
-    FROM certificados_privados
-    WHERE usuario_id = ${user.id}
-    ORDER BY criado_em DESC
-  `;
-  const certificados = rows.map(row => ({
-    id: row.id,
-    titulo: row.titulo,
-    descricao: row.descricao,
-    tipo: row.tipo,
-    categoria: row.categoria,
-    nome_arquivo: row.nome_arquivo,
-    mime_type: row.mime_type,
-    criado_em: row.criado_em
-  }));
-  return json({ sucesso: true, certificados });
+async function main(req) {
+
+  const action = req.queryStringParameters?.action;
+
+  if (action === 'listar_certificados') {
+
+    const rows = await sql`
+      SELECT id, titulo, descricao, tipo, categoria, nome_arquivo, mime_type, criado_em
+      FROM certificados_privados
+      WHERE usuario_id = ${user.id}
+      ORDER BY criado_em DESC
+    `;
+
+    const certificados = rows.map(row => ({
+      id: row.id,
+      titulo: row.titulo,
+      descricao: row.descricao,
+      tipo: row.tipo,
+      categoria: row.categoria,
+      nome_arquivo: row.nome_arquivo,
+      mime_type: row.mime_type,
+      criado_em: row.criado_em
+    }));
+
+    return json({ sucesso: true, certificados });
+  }
+
 }
 
 async function getReviewerReviewHistory(user, reviewerId) {
