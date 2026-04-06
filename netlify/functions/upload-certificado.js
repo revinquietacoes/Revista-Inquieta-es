@@ -125,24 +125,37 @@ const main = async (req) => {
       tabelaDestino = 'certificados_parecerista'
     }
 
-    const inserted = await sql`
-      INSERT INTO ${sql(tabelaDestino)} (
+    const insertQuery = `
+      INSERT INTO ${tabelaDestino} (
         usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key,
         nome_arquivo, mime_type, tamanho_bytes, codigo_autenticidade
       )
-      VALUES (
-        ${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null},
-        ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${storagePath},
-        ${safeFileName}, ${mimeType}, ${bytes.length}, ${codigoAutenticidade}
-      )
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
       RETURNING id, criado_em, codigo_autenticidade
     `
 
-    console.log('✅ Sucesso! ID:', inserted[0].id)
+    const insertedRows = await sql.query(insertQuery, [
+      targetUser.id,
+      editorId,
+      payload.title,
+      payload.description || null,
+      payload.certificateType,
+      mapCategory(payload.certificateType),
+      storagePath,
+      safeFileName,
+      mimeType,
+      bytes.length,
+      codigoAutenticidade
+    ])
+
+    const inserted = insertedRows[0]
+    if (!inserted) throw new Error('Falha ao inserir no banco')
+
+    console.log('✅ Sucesso! ID:', inserted.id)
     return json({
       sucesso: true,
-      certificado: inserted[0],
-      codigo_autenticidade: inserted[0].codigo_autenticidade
+      certificado: inserted,
+      codigo_autenticidade: inserted.codigo_autenticidade
     }, 201)
 
   } catch (error) {
