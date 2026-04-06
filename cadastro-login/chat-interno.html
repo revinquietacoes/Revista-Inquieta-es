@@ -77,6 +77,12 @@
       </div>
     </div>
     <div class="actions-row">
+      <!-- Ícone de notificações no topo -->
+      <div style="position: relative; margin-right: 10px;">
+        <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+        <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+        <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+      </div>
       <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
       <button class="btn btn-soft" data-action="logout">Sair</button>
     </div>
@@ -386,23 +392,43 @@
   document.addEventListener('DOMContentLoaded', async () => {
     try {
       if (typeof AppPanel === 'undefined') throw new Error('AppPanel não carregado');
+      
+      // Permite todos os perfis que podem usar o chat
       currentUser = await AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
       if (!currentUser) throw new Error('Usuário não autenticado');
+      
       currentUser.id = String(currentUser.id);
       console.log('Usuário logado:', currentUser);
+      
+      // Atualiza o avatar do cabeçalho
+      AppPanel.atualizarAvatares();
+      
       document.getElementById('myNameHeader').innerText = currentUser.nome;
       const myAvatar = currentUser.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
       document.getElementById('myAvatarHeader').src = myAvatar;
+      
+      // Inicializa notificações
+      AppPanel.atualizarContadorNotificacoes();
+      AppPanel.iniciarPollingNotificacoes();
+      
+      const btnNotif = document.getElementById('btn-notificacoes');
+      if (btnNotif) {
+        btnNotif.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+      }
+      
       await loadContacts();
+      
       const urlParams = new URLSearchParams(location.search);
       const targetId = urlParams.get('target');
       if (targetId && contacts.find(c => c.id === targetId)) selectContact(targetId);
+      
     } catch (err) {
       console.error('Erro na inicialização:', err);
       document.getElementById('contactList').innerHTML = `<div style="padding:16px;text-align:center;color:red;">${err.message}</div>`;
     }
   });
 
+  // Eventos da interface
   document.getElementById('searchContact').addEventListener('input', () => renderContactList());
   document.getElementById('sendMsgBtn').addEventListener('click', () => {
     const text = document.getElementById('messageText').value;
