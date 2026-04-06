@@ -1295,10 +1295,6 @@ hr.soft {
   background: linear-gradient(105deg, #1e3a8a, #2563eb);
 }
 
-.btn.secondary {
-  background: linear-gradient(105deg, #334155, #475569);
-}
-
 .btn.secondary:hover {
   background: linear-gradient(105deg, #1e293b, #334155);
 }
