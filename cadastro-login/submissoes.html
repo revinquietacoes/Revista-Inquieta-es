@@ -1,62 +1,431 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Nova submissão</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Nova submissão</h1><p>Aqui você envia trabalhos em fluxo contínuo ou para dossiês temáticos abertos.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="javascript:history.back()">Voltar</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><section class="panel"><div class="panel-head"><div><h2>Formulário de submissão</h2><p class="helper">Aqui você preenche as informações centrais do material e anexa o arquivo principal.</p></div><span class="badge badge-gold">Prazo editorial de até 60 dias</span></div><form id="form-submissao"><div class="form-grid"><div class="field" id="autor-select-wrap" style="display:none"><label>Autor(a) responsável</label><select name="autorId" id="autorId"><option value="">Selecionar usuário cadastrado</option></select></div><div class="field full"><label>Título do trabalho</label><input name="titulo" required></div><div class="field"><label>Seção</label><select name="secao" id="secao" required><option value="artigo">Artigos</option><option value="resumo_expandido">Resumos expandidos</option><option value="ensaio">Ensaios</option><option value="resenha">Resenhas</option><option value="traducao">Traduções</option><option value="fotografia_tematica">Fotografia temática</option><option value="relato_experiencia">Relatos de experiência</option><option value="homenagem">Homenagens</option><option value="dossie_tematico">Dossiês temáticos</option></select></div><div class="field"><label>Idioma</label><select name="idioma" required><option value="pt-BR">Português</option><option value="es">Espanhol</option><option value="en">Inglês</option><option value="fr">Francês</option><option value="outro">Outro</option></select></div><div class="field full" id="wrap-dossie" style="display:none"><label>Dossiê temático aberto</label><select name="dossieId" id="dossie_id"><option value="">Selecione</option></select><div class="helper" id="info-dossie"></div></div><div class="field full"><label>Resumo / apresentação do material</label><textarea name="resumo" required></textarea></div><div class="field full"><label>Palavras-chave</label><input name="palavrasChave"></div><div class="field full"><label>Arquivo principal (.pdf, .doc, .docx, imagem)</label><input type="file" name="arquivo_principal" required></div><div class="field full"><label>Foto de perfil do(a) autor(a) (opcional)</label><input type="file" name="foto_perfil_autor" accept="image/*"><div class="helper">A revista publica, quando autorizado, a foto de perfil junto ao material para ampliar a visibilidade de seus(as) autores(as).</div></div><div class="field full checkbox-line"><input type="checkbox" id="consentimento-foto" name="consentimento_publicacao_foto" value="sim"><label for="consentimento-foto">Confirmo que autorizo a publicação da imagem enviada, em conformidade com a LGPD.</label></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Enviar submissão</button></div><div class="form-message" id="msg-submissao"></div></form></section><footer class="page-footer"></footer></div><script>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Nova submissão | Revista Inquietações</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="painel-base.js" defer></script>
+<style>
+  /* Estilos complementares para manter consistência */
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    background: linear-gradient(145deg, #0a0f1c 0%, #0f172a 100%);
+    font-family: 'Inter', system-ui, sans-serif;
+    color: #f1f5f9;
+    min-height: 100vh;
+  }
+  .page-shell {
+    max-width: 900px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .avatar-box {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .avatar-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3b82f6;
+    background: #2d3a5e;
+  }
+  .logo-inline {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: white;
+    padding: 6px;
+  }
+  .brand-copy h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-copy p {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+  }
+  .actions-row {
+    display: flex;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.05);
+    color: #f1f5f9;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: 0.2s;
+  }
+  .btn-secondary {
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.4);
+  }
+  .btn-secondary:hover {
+    background: rgba(59,130,246,0.3);
+    transform: translateY(-2px);
+  }
+  .btn-primary {
+    background: #3b82f6;
+    color: white;
+  }
+  .btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+  }
+  .btn-soft:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .panel {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    border-radius: 1.5rem;
+    padding: 1.8rem;
+  }
+  .panel-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+    padding-bottom: 0.8rem;
+  }
+  .panel-head h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+  }
+  .badge-gold {
+    background: #f59e0b;
+    color: #0f172a;
+    padding: 0.3rem 0.8rem;
+    border-radius: 2rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+  }
+  .form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .field.full {
+    grid-column: span 2;
+  }
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  input, textarea, select {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 1rem;
+    padding: 0.7rem 1rem;
+    color: #f1f5f9;
+    font-size: 0.9rem;
+    transition: 0.2s;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+  }
+  textarea {
+    min-height: 100px;
+    resize: vertical;
+  }
+  .checkbox-line {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .checkbox-line input {
+    width: auto;
+  }
+  .helper {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-top: 0.2rem;
+  }
+  .form-message {
+    margin-top: 1.2rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+    display: none;
+  }
+  .form-message.ok {
+    display: block;
+    background: #064e3b;
+    color: #a7f3d0;
+  }
+  .form-message.err {
+    display: block;
+    background: #7f1d1d;
+    color: #fecaca;
+  }
+  footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #5b6e8c;
+  }
+  @media (max-width: 640px) {
+    .page-shell { padding: 1rem; }
+    .topbar { padding: 0.8rem 1rem; }
+    .brand-copy h1 { font-size: 1.2rem; }
+  }
+</style>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box">
+        <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+        <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+      </div>
+      <div class="brand-copy">
+        <h1><i class="fas fa-upload"></i> Nova submissão</h1>
+        <p>Aqui você envia trabalhos em fluxo contínuo ou para dossiês temáticos abertos.</p>
+      </div>
+    </div>
+    <div class="actions-row">
+      <a class="btn btn-secondary" href="javascript:history.back()"><i class="fas fa-arrow-left"></i> Voltar</a>
+      <button class="btn btn-soft" data-action="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2><i class="fas fa-edit"></i> Formulário de submissão</h2>
+        <p class="helper">Preencha as informações centrais do material e anexe o arquivo principal.</p>
+      </div>
+      <span class="badge-gold"><i class="far fa-clock"></i> Prazo editorial de até 60 dias</span>
+    </div>
+
+    <form id="form-submissao">
+      <div class="form-grid">
+        <!-- Campo para editores escolherem autor (oculto para autores) -->
+        <div class="field" id="autor-select-wrap" style="display:none">
+          <label><i class="fas fa-user"></i> Autor(a) responsável</label>
+          <select name="autorId" id="autorId">
+            <option value="">Selecionar usuário cadastrado</option>
+          </select>
+        </div>
+
+        <div class="field full">
+          <label><i class="fas fa-heading"></i> Título do trabalho</label>
+          <input name="titulo" required placeholder="Título completo do artigo, resumo, ensaio etc.">
+        </div>
+
+        <div class="field">
+          <label><i class="fas fa-layer-group"></i> Seção</label>
+          <select name="secao" id="secao" required>
+            <option value="artigo">Artigos</option>
+            <option value="resumo_expandido">Resumos expandidos</option>
+            <option value="ensaio">Ensaios</option>
+            <option value="resenha">Resenhas</option>
+            <option value="traducao">Traduções</option>
+            <option value="fotografia_tematica">Fotografia temática</option>
+            <option value="relato_experiencia">Relatos de experiência</option>
+            <option value="homenagem">Homenagens</option>
+            <option value="dossie_tematico">Dossiês temáticos</option>
+          </select>
+        </div>
+
+        <div class="field">
+          <label><i class="fas fa-language"></i> Idioma</label>
+          <select name="idioma" required>
+            <option value="pt-BR">Português</option>
+            <option value="es">Espanhol</option>
+            <option value="en">Inglês</option>
+            <option value="fr">Francês</option>
+            <option value="outro">Outro</option>
+          </select>
+        </div>
+
+        <div class="field full" id="wrap-dossie" style="display:none">
+          <label><i class="fas fa-folder-open"></i> Dossiê temático aberto</label>
+          <select name="dossieId" id="dossie_id">
+            <option value="">Selecione</option>
+          </select>
+          <div class="helper" id="info-dossie"></div>
+        </div>
+
+        <div class="field full">
+          <label><i class="fas fa-align-left"></i> Resumo / apresentação do material</label>
+          <textarea name="resumo" required placeholder="Resumo, abstract ou apresentação do trabalho..."></textarea>
+        </div>
+
+        <div class="field full">
+          <label><i class="fas fa-tags"></i> Palavras-chave</label>
+          <input name="palavrasChave" placeholder="Separe por vírgulas (ex: educação, tecnologia, inovação)">
+        </div>
+
+        <div class="field full">
+          <label><i class="fas fa-file-alt"></i> Arquivo principal (.pdf, .doc, .docx, imagem)</label>
+          <input type="file" name="arquivo_principal" required accept=".pdf,.doc,.docx,image/*">
+        </div>
+
+        <div class="field full">
+          <label><i class="fas fa-camera"></i> Foto de perfil do(a) autor(a) (opcional)</label>
+          <input type="file" name="foto_perfil_autor" accept="image/*">
+          <div class="helper">A revista publica, quando autorizado, a foto de perfil junto ao material para ampliar a visibilidade de seus(as) autores(as).</div>
+        </div>
+
+        <div class="field full checkbox-line">
+          <input type="checkbox" id="consentimento-foto" name="consentimento_publicacao_foto" value="sim">
+          <label for="consentimento-foto">Confirmo que autorizo a publicação da imagem enviada, em conformidade com a LGPD.</label>
+        </div>
+      </div>
+
+      <div class="actions-row" style="margin-top: 1.5rem;">
+        <button class="btn btn-primary" type="submit"><i class="fas fa-paper-plane"></i> Enviar submissão</button>
+      </div>
+      <div class="form-message" id="msg-submissao"></div>
+    </form>
+  </section>
+
+  <footer>
+    <i class="fas fa-chalkboard"></i> Revista Inquietações – Submissão de trabalhos acadêmicos
+  </footer>
+</div>
+
+<script>
+// Função auxiliar de escape (segurança)
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>]/g, function(m) {
+    if (m === '&') return '&amp;';
+    if (m === '<') return '&lt;';
+    if (m === '>') return '&gt;';
+    return m;
+  });
+}
+
 document.addEventListener('DOMContentLoaded', async () => {
-  const user = AppPanel.requireRole(['autor','editor_adjunto','editor_chefe']);
+  if (typeof AppPanel === 'undefined') {
+    const msgDiv = document.getElementById('msg-submissao');
+    if (msgDiv) {
+      msgDiv.textContent = 'Erro crítico: sistema não inicializado.';
+      msgDiv.classList.add('err');
+    }
+    return;
+  }
+
+  // Permissão: autor, editor adjunto ou editor-chefe
+  const user = AppPanel.requireRole(['autor', 'editor_adjunto', 'editor_chefe', 'editor-chefe']);
   if (!user) return;
+
+  // 🔧 CORREÇÃO DO AVATAR
+  if (typeof AppPanel.atualizarAvatares === 'function') {
+    AppPanel.atualizarAvatares();
+  } else {
+    console.warn('atualizarAvatares não disponível');
+  }
 
   const form = document.getElementById('form-submissao');
   const msg = document.getElementById('msg-submissao');
   const secao = document.getElementById('secao');
-  const wrap = document.getElementById('wrap-dossie');
-  const select = document.getElementById('dossie_id');
-  const info = document.getElementById('info-dossie');
+  const wrapDossie = document.getElementById('wrap-dossie');
+  const selectDossie = document.getElementById('dossie_id');
+  const infoDossie = document.getElementById('info-dossie');
   const autorWrap = document.getElementById('autor-select-wrap');
   const autorSelect = document.getElementById('autorId');
   const submitBtn = form.querySelector('button[type="submit"]');
-      function authHeadersForFormData() {
-        const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
-        delete headers['Content-Type'];
-        delete headers['content-type'];
-        return headers;
-      }
 
-
-  function setMessage(text, type='') {
+  function setMessage(text, type = '') {
     msg.className = 'form-message';
     msg.textContent = text || '';
     if (type) msg.classList.add(type);
   }
 
+  // Cabeçalhos para FormData (remove Content-Type)
+  function authHeadersForFormData() {
+    const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
+    delete headers['Content-Type'];
+    delete headers['content-type'];
+    return headers;
+  }
+
+  // Carregar dossiês públicos
   try {
     const dossiers = await AppPanel.apiData('public_dossiers').catch(() => ({ dossies: [] }));
     (dossiers.dossies || []).forEach((d) => {
       const opt = document.createElement('option');
       opt.value = d.id;
-      opt.textContent = `${d.titulo} — editor(a): ${d.editor_nome || 'A definir'}`;
+      opt.textContent = `${escapeHtml(d.titulo)} — editor(a): ${escapeHtml(d.editor_nome || 'A definir')}`;
       opt.dataset.desc = d.descricao || '';
-      select.appendChild(opt);
+      selectDossie.appendChild(opt);
     });
-  } catch (e) {}
+  } catch (e) {
+    console.warn('Erro ao carregar dossiês:', e);
+  }
 
   secao.addEventListener('change', () => {
-    wrap.style.display = secao.value === 'dossie_tematico' ? 'block' : 'none';
+    wrapDossie.style.display = secao.value === 'dossie_tematico' ? 'block' : 'none';
   });
 
-  select.addEventListener('change', () => {
-    const opt = select.options[select.selectedIndex];
-    info.textContent = opt?.dataset?.desc || '';
+  selectDossie.addEventListener('change', () => {
+    const opt = selectDossie.options[selectDossie.selectedIndex];
+    infoDossie.textContent = opt?.dataset?.desc || '';
   });
 
-  if (['editor_chefe', 'editor_adjunto'].includes(user.perfil)) {
+  // Se for editor, carrega lista de autores
+  if (['editor_chefe', 'editor-chefe', 'editor_adjunto'].includes(user.perfil)) {
     autorWrap.style.display = 'block';
     try {
-      const dashboard = user.perfil === 'editor_chefe'
+      const dashboard = (user.perfil === 'editor_chefe' || user.perfil === 'editor-chefe')
         ? await AppPanel.apiData('chief_dashboard')
         : await AppPanel.apiData('editor_dashboard');
       const users = (dashboard.usuarios || []).filter((u) => u.perfil === 'autor' && u.status === 'ativo');
       users.forEach((a) => {
         const opt = document.createElement('option');
         opt.value = a.id;
-        opt.textContent = a.nome;
+        opt.textContent = escapeHtml(a.nome);
         autorSelect.appendChild(opt);
       });
     } catch (err) {
@@ -64,6 +433,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   }
 
+  // Submissão do formulário
   form.addEventListener('submit', async (e) => {
     e.preventDefault();
     setMessage('Enviando submissão...');
@@ -87,6 +457,7 @@ document.addEventListener('DOMContentLoaded', async () => {
 
       let submissaoId = null;
 
+      // Caso 1: usuário comum (autor)
       if (user.perfil === 'autor') {
         const envio = new FormData();
         envio.append('usuario_id', user.id);
@@ -100,13 +471,19 @@ document.addEventListener('DOMContentLoaded', async () => {
           envio.append('consentimento_publicacao_foto', 'sim');
         }
 
-        const res = await fetch('/.netlify/functions/submissao', { method: 'POST', headers: authHeadersForFormData(), body: envio });
+        const res = await fetch('/.netlify/functions/submissao', {
+          method: 'POST',
+          headers: authHeadersForFormData(),
+          body: envio
+        });
         const raw = await res.text();
         let data = {};
         try { data = raw ? JSON.parse(raw) : {}; } catch { throw new Error(raw || 'Resposta inválida ao registrar submissão.'); }
         if (!res.ok) throw new Error(data.erro || data.detalhe || 'Erro ao registrar submissão.');
         submissaoId = data?.submissao?.id;
-      } else {
+      } 
+      // Caso 2: editor (chefe ou adjunto) submetendo para um autor
+      else {
         const create = await AppPanel.apiAction('create_submission_for_author', payload);
         submissaoId = create.submissaoId || null;
       }
@@ -115,6 +492,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         throw new Error('A submissão não retornou um identificador válido.');
       }
 
+      // Upload do arquivo principal
       const arquivoPrincipal = fd.get('arquivo_principal');
       if (arquivoPrincipal && typeof arquivoPrincipal !== 'string' && arquivoPrincipal.size) {
         const up = new FormData();
@@ -122,33 +500,45 @@ document.addEventListener('DOMContentLoaded', async () => {
         up.append('submissao_id', String(submissaoId));
         up.append('categoria', 'manuscrito');
         up.append('arquivo', arquivoPrincipal);
-        const r1 = await fetch('/.netlify/functions/upload-material', { method: 'POST', headers: authHeadersForFormData(), body: up });
+        const r1 = await fetch('/.netlify/functions/upload-material', {
+          method: 'POST',
+          headers: authHeadersForFormData(),
+          body: up
+        });
         const raw1 = await r1.text();
         let j1 = {};
         try { j1 = raw1 ? JSON.parse(raw1) : {}; } catch { throw new Error(raw1 || 'Falha ao enviar o arquivo principal.'); }
         if (!r1.ok) throw new Error(j1.erro || j1.detalhe || 'Erro ao enviar arquivo principal.');
       }
 
+      // Upload da foto de perfil (opcional)
       const fotoPerfil = fd.get('foto_perfil_autor');
       if (fotoPerfil && typeof fotoPerfil !== 'string' && fotoPerfil.size) {
         const up2 = new FormData();
         up2.append('usuario_id', user.perfil === 'autor' ? String(user.id) : String(payload.autorId || user.id));
         up2.append('arquivo', fotoPerfil);
         up2.append('consentimento', document.getElementById('consentimento-foto').checked ? 'true' : 'false');
-        const r2 = await fetch('/.netlify/functions/upload-avatar', { method: 'POST', headers: authHeadersForFormData(), body: up2 });
+        const r2 = await fetch('/.netlify/functions/upload-avatar', {
+          method: 'POST',
+          headers: authHeadersForFormData(),
+          body: up2
+        });
         const raw2 = await r2.text();
         let j2 = {};
         try { j2 = raw2 ? JSON.parse(raw2) : {}; } catch { throw new Error(raw2 || 'Falha ao enviar a foto de perfil.'); }
         if (!r2.ok) throw new Error(j2.erro || j2.detalhe || 'Erro ao enviar foto de perfil.');
       }
 
-      setMessage('Submissão registrada com sucesso.', 'ok');
+      setMessage('✅ Submissão registrada com sucesso!', 'ok');
       form.reset();
-      wrap.style.display = 'none';
-      info.textContent = '';
+      wrapDossie.style.display = 'none';
+      infoDossie.textContent = '';
       setTimeout(() => {
-        window.location.href = user.perfil === 'autor' ? 'autor-submissoes.html' : (user.perfil === 'editor_chefe' ? 'editor-chefe-submissoes.html' : 'editor-submissoes.html');
-      }, 700);
+        // Redireciona conforme perfil
+        if (user.perfil === 'autor') window.location.href = 'autor-submissoes.html';
+        else if (user.perfil === 'editor_chefe' || user.perfil === 'editor-chefe') window.location.href = 'editor-chefe-submissoes.html';
+        else window.location.href = 'editor-submissoes.html';
+      }, 1500);
     } catch (err) {
       console.error('Falha ao enviar submissão:', err);
       setMessage(err.message || 'Erro ao enviar submissão.', 'err');
@@ -157,4 +547,6 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   });
 });
-</script></body></html>
+</script>
+</body>
+</html>

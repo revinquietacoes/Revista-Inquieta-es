@@ -1,1 +1,218 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Usuários cadastrados</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Usuários cadastrados</h1><p>Aqui você consulta usuários reais do banco e aprova perfis pendentes.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="painel-editor-chefe.html">Voltar ao painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><div class="content-grid"><section class="panel"><div class="panel-head"><div><h2>Lista completa</h2><p class="helper">Selecione um(a) usuário(a) para abrir foto, dados cadastrais e controles editoriais.</p></div></div><div class="list" id="lista-usuarios"></div></section><aside class="panel detail-card is-open" id="detalhe-usuario"><h3>Selecione um(a) usuário(a)</h3><p class="helper">Aqui você aprova, ajusta contribuições e vê a foto de perfil e os dados cadastrais.</p></aside></div><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',async()=>{const user=AppPanel.requireRole(['editor_chefe']);if(!user)return;try{const data=await AppPanel.apiData('chief_dashboard');const lista=document.getElementById('lista-usuarios');const detalhe=document.getElementById('detalhe-usuario');if(!data.usuarios.length){lista.innerHTML='<div class="empty-state">Aqui ainda não há usuários cadastrados.</div>';return;}data.usuarios.forEach(u=>{const btn=document.createElement('button');btn.innerHTML=`${AppPanel.userChipHtml(u,`${AppPanel.formatRole(u.perfil)} • ${u.email} • status: ${u.status}`)}`;btn.addEventListener('click',()=>{const foto=(AppPanel.photoAllowed(u)?AppPanel.resolveAsset(u.foto_perfil_url):'../assets/avatares/avatar-padrao.png');detalhe.innerHTML=`<div class="profile-chip"><img src="${foto}" onerror="this.src='../assets/avatares/avatar-padrao.png'" alt="Foto do usuário"><div><strong>${u.nome}</strong><div class="helper">${AppPanel.formatRole(u.perfil)} • ${u.email}</div></div></div><div class="detail-grid" style="margin-top:12px"><div class="metric-box"><span class="helper">Instituição</span><strong class="wrap-any">${u.instituicao||'—'}</strong></div><div class="metric-box"><span class="helper">ORCID</span><strong class="wrap-any">${u.orcid||'—'}</strong></div><div class="metric-box"><span class="helper">Lattes</span><strong class="wrap-any">${u.lattes||'—'}</strong></div><div class="metric-box"><span class="helper">Telefone</span><strong>${u.telefone||'—'}</strong></div><div class="metric-box"><span class="helper">Submissões</span><strong>${u.total_submissoes}</strong></div><div class="metric-box"><span class="helper">Avaliações</span><strong>${u.total_avaliacoes}</strong></div></div><form id="form-user" style="margin-top:14px"><div class="form-grid"><div class="field"><label>Status do cadastro</label><select name="status"><option value="ativo" ${u.status==='ativo'?'selected':''}>Ativo</option><option value="pendente" ${u.status==='pendente'?'selected':''}>Pendente</option><option value="inativo" ${u.status==='inativo'?'selected':''}>Inativo</option></select></div><div class="field"><label>Total de avaliações</label><input name="total_avaliacoes" type="number" min="0" value="${u.total_avaliacoes||0}"></div><div class="field full checkbox-line"><input type="checkbox" id="foto-${u.id}" ${u.foto_perfil_aprovada?'checked':''}><label for="foto-${u.id}">Aprovar foto de perfil enviada</label></div><div class="field full checkbox-line"><input type="checkbox" id="cons-${u.id}" ${u.consentimento_foto_publica?'checked':''}><label for="cons-${u.id}">Confirmar consentimento de foto pública</label></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Salvar ajustes</button></div><div class="form-message" id="msg-user"></div></form>`;detalhe.querySelector('#form-user').addEventListener('submit',async(ev)=>{ev.preventDefault();const fd=new FormData(ev.target);const msg=detalhe.querySelector('#msg-user');msg.className='form-message';try{await AppPanel.apiAction('approve_user',{targetUserId:u.id,status:fd.get('status'),total_avaliacoes:Number(fd.get('total_avaliacoes')),foto_perfil_aprovada:detalhe.querySelector(`#foto-${u.id}`).checked,consentimento_foto_publica:detalhe.querySelector(`#cons-${u.id}`).checked});msg.textContent='Registro atualizado com sucesso.';msg.classList.add('ok');}catch(err){msg.textContent=err.message;msg.classList.add('err')}})});lista.appendChild(btn)})}catch(err){document.getElementById('lista-usuarios').innerHTML=`<div class="empty-state">${err.message}</div>`}})</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Usuários cadastrados</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<script src="painel-base.js" defer></script>
+<style>
+    /* pequenos ajustes para consistência */
+    .profile-chip { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+    .profile-chip img { width: 56px; height: 56px; border-radius: 50%; object-fit: cover; background: #cbd5e1; }
+    .detail-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 16px 0; }
+    .metric-box { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 8px; }
+    .metric-box .helper { font-size: 0.7rem; color: #94a3b8; display: block; }
+    .metric-box strong { color: #f8fafc; word-break: break-word; }
+    .form-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 16px; }
+    .field.full { grid-column: span 2; }
+    .checkbox-line { display: flex; align-items: center; gap: 8px; }
+    .form-message { margin-top: 12px; padding: 8px; border-radius: 8px; display: none; }
+    .form-message.ok { display: block; background: #166534; color: white; }
+    .form-message.err { display: block; background: #b91c1c; color: white; }
+    .btn { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; }
+    .btn-primary { background: #3b82f6; color: white; }
+    .btn-soft, .btn-secondary { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+    .list button { width: 100%; text-align: left; background: rgba(255,255,255,0.05); border: 1px solid rgba(148,163,184,.3); border-radius: 12px; padding: 12px; margin-bottom: 8px; cursor: pointer; }
+    .list button:hover { background: rgba(255,255,255,0.1); }
+    .empty-state { text-align: center; padding: 32px; color: #94a3b8; }
+    .wrap-any { word-break: break-word; }
+    .content-grid { display: grid; grid-template-columns: 1fr 360px; gap: 24px; margin-top: 24px; }
+    @media (max-width: 720px) { .content-grid { grid-template-columns: 1fr; } }
+    .panel { background: var(--panel, #0f172ad9); border-radius: 16px; padding: 20px; border: 1px solid var(--panel-border, rgba(148,163,184,.2)); }
+</style>
+</head>
+<body>
+<div class="page-shell">
+<header class="topbar">
+<div class="brand-wrap">
+<div class="avatar-box">
+<img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+<img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+</div>
+<div class="brand-copy">
+<h1>Usuários cadastrados</h1>
+<p>Aqui você consulta usuários reais do banco e aprova perfis pendentes.</p>
+</div>
+</div>
+<div class="actions-row">
+<a class='btn btn-secondary' href='/cadastro-login/painel-editor-chefe'>Voltar ao painel</a>
+<button class="btn btn-soft" data-action="logout">Sair</button>
+</div>
+</header>
+<div class="content-grid">
+<section class="panel">
+<div class="panel-head">
+<div>
+<h2>Lista completa</h2>
+<p class="helper">Selecione um(a) usuário(a) para abrir foto, dados cadastrais e controles editoriais.</p>
+</div>
+</div>
+<div class="list" id="lista-usuarios"></div>
+</section>
+<aside class="panel detail-card is-open" id="detalhe-usuario">
+<h3>Selecione um(a) usuário(a)</h3>
+<p class="helper">Aqui você aprova, ajusta contribuições e vê a foto de perfil e os dados cadastrais.</p>
+</aside>
+</div>
+<footer class="page-footer"></footer>
+</div>
+
+<script>
+// Função auxiliar de escape HTML
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof AppPanel === 'undefined') {
+        console.error('AppPanel não carregado');
+        document.getElementById('lista-usuarios').innerHTML = '<div class="empty-state">Erro de inicialização. Recarregue a página.</div>';
+        return;
+    }
+
+    // Permissão: editor-chefe (ambas as grafias)
+    const user = AppPanel.requireRole(['editor_chefe', 'editor-chefe']);
+    if (!user) return;
+
+    // 🔧 CORREÇÃO DO AVATAR: atualiza a foto do usuário logado
+    if (typeof AppPanel.atualizarAvatares === 'function') {
+        AppPanel.atualizarAvatares();
+    } else {
+        console.warn('atualizarAvatares não disponível');
+    }
+
+    try {
+        const data = await AppPanel.apiData('chief_dashboard');
+        const lista = document.getElementById('lista-usuarios');
+        const detalhe = document.getElementById('detalhe-usuario');
+
+        if (!data.usuarios || data.usuarios.length === 0) {
+            lista.innerHTML = '<div class="empty-state">Aqui ainda não há usuários cadastrados.</div>';
+            return;
+        }
+
+        lista.innerHTML = ''; // limpa antes de preencher
+
+        data.usuarios.forEach(u => {
+            const btn = document.createElement('button');
+            // Usa escapeHtml nos dados do usuário para segurança
+            const nomeSeguro = escapeHtml(u.nome);
+            const perfilSeguro = escapeHtml(AppPanel.formatRole(u.perfil));
+            const emailSeguro = escapeHtml(u.email);
+            const statusSeguro = escapeHtml(u.status);
+            btn.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div>
+                        <strong>${nomeSeguro}</strong>
+                        <div class="helper" style="font-size:0.75rem">${perfilSeguro} • ${emailSeguro} • status: ${statusSeguro}</div>
+                    </div>
+                </div>
+            `;
+            btn.addEventListener('click', () => {
+                const foto = (AppPanel.photoAllowed(u) && u.foto_perfil_url) 
+                    ? AppPanel.resolveAsset(u.foto_perfil_url) 
+                    : '../assets/avatares/avatar-padrao.png';
+                const nomeSeguroDet = escapeHtml(u.nome);
+                const emailSeguroDet = escapeHtml(u.email);
+                const perfilSeguroDet = escapeHtml(AppPanel.formatRole(u.perfil));
+                const instituicaoDet = escapeHtml(u.instituicao || '—');
+                const orcidDet = escapeHtml(u.orcid || '—');
+                const lattesDet = escapeHtml(u.lattes || '—');
+                const telefoneDet = escapeHtml(u.telefone || '—');
+
+                detalhe.innerHTML = `
+                    <div class="profile-chip">
+                        <img src="${foto}" onerror="this.src='../assets/avatares/avatar-padrao.png'" alt="Foto do usuário">
+                        <div>
+                            <strong>${nomeSeguroDet}</strong>
+                            <div class="helper">${perfilSeguroDet} • ${emailSeguroDet}</div>
+                        </div>
+                    </div>
+                    <div class="detail-grid">
+                        <div class="metric-box"><span class="helper">Instituição</span><strong class="wrap-any">${instituicaoDet}</strong></div>
+                        <div class="metric-box"><span class="helper">ORCID</span><strong class="wrap-any">${orcidDet}</strong></div>
+                        <div class="metric-box"><span class="helper">Lattes</span><strong class="wrap-any">${lattesDet}</strong></div>
+                        <div class="metric-box"><span class="helper">Telefone</span><strong>${telefoneDet}</strong></div>
+                        <div class="metric-box"><span class="helper">Submissões</span><strong>${u.total_submissoes || 0}</strong></div>
+                        <div class="metric-box"><span class="helper">Avaliações</span><strong>${u.total_avaliacoes || 0}</strong></div>
+                    </div>
+                    <form id="form-user" style="margin-top:14px">
+                        <div class="form-grid">
+                            <div class="field">
+                                <label>Status do cadastro</label>
+                                <select name="status">
+                                    <option value="ativo" ${u.status === 'ativo' ? 'selected' : ''}>Ativo</option>
+                                    <option value="pendente" ${u.status === 'pendente' ? 'selected' : ''}>Pendente</option>
+                                    <option value="inativo" ${u.status === 'inativo' ? 'selected' : ''}>Inativo</option>
+                                </select>
+                            </div>
+                            <div class="field">
+                                <label>Total de avaliações</label>
+                                <input name="total_avaliacoes" type="number" min="0" value="${u.total_avaliacoes || 0}">
+                            </div>
+                            <div class="field full checkbox-line">
+                                <input type="checkbox" id="foto-${u.id}" ${u.foto_perfil_aprovada ? 'checked' : ''}>
+                                <label for="foto-${u.id}">Aprovar foto de perfil enviada</label>
+                            </div>
+                            <div class="field full checkbox-line">
+                                <input type="checkbox" id="cons-${u.id}" ${u.consentimento_foto_publica ? 'checked' : ''}>
+                                <label for="cons-${u.id}">Confirmar consentimento de foto pública</label>
+                            </div>
+                        </div>
+                        <div class="actions-row">
+                            <button class="btn btn-primary" type="submit">Salvar ajustes</button>
+                        </div>
+                        <div class="form-message" id="msg-user"></div>
+                    </form>
+                `;
+
+                const form = detalhe.querySelector('#form-user');
+                form.addEventListener('submit', async (ev) => {
+                    ev.preventDefault();
+                    const fd = new FormData(form);
+                    const msg = detalhe.querySelector('#msg-user');
+                    msg.className = 'form-message';
+                    try {
+                        await AppPanel.apiAction('approve_user', {
+                            targetUserId: u.id,
+                            status: fd.get('status'),
+                            total_avaliacoes: Number(fd.get('total_avaliacoes')),
+                            foto_perfil_aprovada: detalhe.querySelector(`#foto-${u.id}`).checked,
+                            consentimento_foto_publica: detalhe.querySelector(`#cons-${u.id}`).checked
+                        });
+                        msg.textContent = 'Registro atualizado com sucesso.';
+                        msg.classList.add('ok');
+                        setTimeout(() => location.reload(), 1500);
+                    } catch (err) {
+                        msg.textContent = err.message;
+                        msg.classList.add('err');
+                    }
+                });
+            });
+            lista.appendChild(btn);
+        });
+    } catch (err) {
+        document.getElementById('lista-usuarios').innerHTML = `<div class="empty-state">${escapeHtml(err.message)}</div>`;
+    }
+});
+</script>
+</body>
+</html>

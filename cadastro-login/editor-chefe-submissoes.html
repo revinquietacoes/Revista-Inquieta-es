@@ -7,6 +7,32 @@
 <link rel="icon" href="./assets/favicon.png">
 <link rel="stylesheet" href="painel-base.css">
 <script src="painel-base.js" defer></script>
+<style>
+    /* pequenos ajustes */
+    .profile-chip { display: flex; align-items: center; gap: 10px; }
+    .profile-chip img { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    .detail-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin: 12px 0; }
+    .metric-box { background: rgba(255,255,255,0.05); padding: 8px; border-radius: 8px; }
+    .metric-box .helper { font-size: 0.7rem; color: #94a3b8; display: block; }
+    .metric-box strong { color: #f8fafc; word-break: break-word; }
+    .form-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 12px; margin-bottom: 16px; }
+    .field.full { grid-column: span 2; }
+    .form-message { margin-top: 8px; padding: 8px; border-radius: 8px; display: none; }
+    .form-message.ok { display: block; background: #166534; color: white; }
+    .form-message.err { display: block; background: #b91c1c; color: white; }
+    .btn { padding: 8px 16px; border-radius: 8px; border: none; cursor: pointer; }
+    .btn-primary { background: #3b82f6; color: white; }
+    .btn-soft, .btn-secondary { background: rgba(255,255,255,0.1); color: #e2e8f0; }
+    .list button { width: 100%; text-align: left; background: rgba(255,255,255,0.05); border: 1px solid rgba(148,163,184,.3); border-radius: 12px; padding: 12px; margin-bottom: 8px; cursor: pointer; }
+    .list button:hover { background: rgba(255,255,255,0.1); }
+    .empty-state { text-align: center; padding: 32px; color: #94a3b8; }
+    .content-grid { display: grid; grid-template-columns: 1fr 380px; gap: 24px; margin-top: 24px; }
+    @media (max-width: 720px) { .content-grid { grid-template-columns: 1fr; } }
+    .panel { background: var(--panel, #0f172ad9); border-radius: 16px; padding: 20px; border: 1px solid var(--panel-border, rgba(148,163,184,.2)); }
+    .file-pill { display: inline-block; background: #1e293b; padding: 4px 12px; border-radius: 20px; color: #90cdf4; text-decoration: none; font-size: 0.8rem; }
+    textarea, select, input { background: #1e293b; border: 1px solid #334155; color: #f1f5f9; padding: 8px; border-radius: 8px; width: 100%; }
+    label { font-size: 0.8rem; color: #cbd5e1; }
+</style>
 </head>
 <body>
 <div class="page-shell">
@@ -22,7 +48,7 @@
     </div>
   </div>
   <div class="actions-row">
-    <a class="btn btn-secondary" href="painel-editor-chefe.html">Voltar ao painel</a>
+    <a class='btn btn-secondary' href='/cadastro-login/painel-editor-chefe'>Voltar ao painel</a>
     <button class="btn btn-soft" data-action="logout">Sair</button>
   </div>
 </header>
@@ -39,111 +65,170 @@
 </div>
 <footer class="page-footer"></footer>
 </div>
+
 <script>
-document.addEventListener('DOMContentLoaded', async ()=>{
-  const user = AppPanel.requireRole(['editor_chefe'])
-  if(!user) return
-  const all = await AppPanel.apiData('chief_dashboard')
-  const recipients = (await AppPanel.apiData('chat_recipients')).usuarios.filter(u=>u.perfil==='parecerista')
-  const box = document.getElementById('sub-grid')
-  const det = document.getElementById('detalhe-sub')
+// Função auxiliar de escape HTML
+function escapeHtml(str) {
+    if (!str) return '';
+    return String(str).replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
+}
 
-  if(!all.submissoes.length){
-    box.innerHTML = '<div class="empty-state">Aqui ainda não há submissões cadastradas.</div>'
-    return
-  }
+document.addEventListener('DOMContentLoaded', async () => {
+    if (typeof AppPanel === 'undefined') {
+        console.error('AppPanel não carregado');
+        document.getElementById('sub-grid').innerHTML = '<div class="empty-state">Erro de inicialização. Recarregue a página.</div>';
+        return;
+    }
 
-  function updateReviewerLink(container){
-    const select = container.querySelector('select[name="pareceristaId"]')
-    const link = container.querySelector('#btn-historico-parecerista')
-    if(!select || !link) return
-    link.href = `pareceres-parecerista.html?pareceristaId=${encodeURIComponent(select.value)}`
-  }
+    // Permissão: editor-chefe (ambas as grafias)
+    const user = AppPanel.requireRole(['editor_chefe', 'editor-chefe']);
+    if (!user) return;
 
-  all.submissoes.forEach((s)=>{
-    const row = document.createElement('button')
-    row.innerHTML = `${AppPanel.userChipHtml({nome:s.titulo,foto_perfil_url:s.autor_foto,foto_perfil_aprovada:s.foto_perfil_aprovada,consentimento_foto_publica:s.consentimento_foto_publica},`${s.secao} • ${s.autor_nome||'Autor(a) não identificado(a)'} • ${s.status}`)}`
-    row.addEventListener('click', ()=>{
-      det.innerHTML = `
-        <h3>${s.titulo}</h3>
-        <div class="note">${s.resumo || 'Sem resumo informado.'}</div>
-        <div class="detail-grid" style="margin-top:12px">
-          <div class="metric-box"><span class="helper">Palavras-chave</span><strong>${s.palavras_chave || '—'}</strong></div>
-          <div class="metric-box"><span class="helper">Arquivo principal</span><strong>${s.url_arquivo ? `<a class='file-pill' target='_blank' rel='noopener noreferrer' href='${s.url_arquivo}'>${s.nome_arquivo || 'Abrir manuscrito'}</a>` : 'Sem arquivo'}</strong></div>
-        </div>
-        <form id="assign-chief" style="margin-top:14px">
-          <div class="form-grid">
-            <div class="field">
-              <label>Parecerista</label>
-              <select name="pareceristaId">${recipients.map(p=>`<option value='${p.id}'>${p.nome}</option>`).join('')}</select>
-            </div>
-            <div class="field">
-              <label>Prazo do parecer</label>
-              <input type="date" name="prazoParecer">
-            </div>
-            <div class="field full">
-              <label>Mensagem editorial</label>
-              <textarea name="mensagemConvite"></textarea>
-            </div>
-          </div>
-          <div class="actions-row">
-            <button class="btn btn-primary" type="submit">Designar parecerista</button>
-            <a class="btn btn-secondary" id="btn-historico-parecerista" href="pareceres-parecerista.html">Ver histórico do parecerista</a>
-          </div>
-          <div class="form-message" id="msg-assign"></div>
-        </form>
-        <form id="delete-sub" style="margin-top:16px">
-          <div class="form-grid">
-            <div class="field full"><label>Senha do(a) editor(a)-chefe para confirmar exclusão</label><input type="password" name="senhaConfirmacao" required></div>
-          </div>
-          <div class="actions-row"><button class="btn btn-soft" type="submit">Apagar submissão</button></div>
-          <div class="form-message" id="msg-del"></div>
-        </form>`
+    // 🔧 CORREÇÃO DO AVATAR: atualiza a foto do usuário logado
+    if (typeof AppPanel.atualizarAvatares === 'function') {
+        AppPanel.atualizarAvatares();
+    } else {
+        console.warn('atualizarAvatares não disponível');
+    }
 
-      updateReviewerLink(det)
-      det.querySelector('select[name="pareceristaId"]').addEventListener('change', ()=>updateReviewerLink(det))
+    try {
+        const all = await AppPanel.apiData('chief_dashboard');
+        const recipients = (await AppPanel.apiData('chat_recipients')).usuarios.filter(u => u.perfil === 'parecerista');
+        const box = document.getElementById('sub-grid');
+        const det = document.getElementById('detalhe-sub');
 
-      det.querySelector('#assign-chief').addEventListener('submit', async (e)=>{
-        e.preventDefault()
-        const fd = new FormData(e.target)
-        const msg = det.querySelector('#msg-assign')
-        msg.className = 'form-message'
-        try{
-          await AppPanel.apiAction('assign_reviewer', {
-            submissaoId:s.id,
-            pareceristaId:Number(fd.get('pareceristaId')),
-            prazoParecer:fd.get('prazoParecer'),
-            mensagemConvite:fd.get('mensagemConvite')
-          })
-          msg.textContent = 'Parecerista designado(a) com sucesso.'
-          msg.classList.add('ok')
-          updateReviewerLink(det)
-        }catch(err){
-          msg.textContent = err.message
-          msg.classList.add('err')
+        if (!all.submissoes || all.submissoes.length === 0) {
+            box.innerHTML = '<div class="empty-state">Aqui ainda não há submissões cadastradas.</div>';
+            return;
         }
-      })
 
-      det.querySelector('#delete-sub').addEventListener('submit', async (e)=>{
-        e.preventDefault()
-        const fd = new FormData(e.target)
-        const msg = det.querySelector('#msg-del')
-        msg.className = 'form-message'
-        if(!confirm('Confirma a exclusão desta submissão?')) return
-        try{
-          await AppPanel.apiAction('delete_submission', { submissaoId:s.id, senhaConfirmacao:fd.get('senhaConfirmacao') })
-          msg.textContent = 'Submissão apagada com sucesso.'
-          msg.classList.add('ok')
-          setTimeout(()=>location.reload(),900)
-        }catch(err){
-          msg.textContent = err.message
-          msg.classList.add('err')
+        function updateReviewerLink(container) {
+            const select = container.querySelector('select[name="pareceristaId"]');
+            const link = container.querySelector('#btn-historico-parecerista');
+            if (!select || !link) return;
+            link.href = `pareceres-parecerista.html?pareceristaId=${encodeURIComponent(select.value)}`;
         }
-      })
-    })
-    box.appendChild(row)
-  })
-})
+
+        all.submissoes.forEach((s) => {
+            const row = document.createElement('button');
+            // Corrigido: uso de escapeHtml e formato seguro
+            const tituloSeguro = escapeHtml(s.titulo);
+            const secaoSeguro = escapeHtml(s.secao || 'Sem seção');
+            const autorNomeSeguro = escapeHtml(s.autor_nome || 'Autor(a) não identificado(a)');
+            const statusSeguro = escapeHtml(s.status || 'submetido');
+            row.innerHTML = `
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div>
+                        <strong>${tituloSeguro}</strong>
+                        <div class="helper" style="font-size:0.75rem">${secaoSeguro} • ${autorNomeSeguro} • ${statusSeguro}</div>
+                    </div>
+                </div>
+            `;
+            row.addEventListener('click', () => {
+                const resumoEscaped = escapeHtml(s.resumo || 'Sem resumo informado.');
+                const palavrasChaveEscaped = escapeHtml(s.palavras_chave || '—');
+                const arquivoHtml = s.url_arquivo 
+                    ? `<a class='file-pill' target='_blank' rel='noopener noreferrer' href='${escapeHtml(s.url_arquivo)}'>${escapeHtml(s.nome_arquivo || 'Abrir manuscrito')}</a>`
+                    : 'Sem arquivo';
+                const optionsHtml = recipients.map(p => `<option value='${p.id}'>${escapeHtml(p.nome)}</option>`).join('');
+
+                det.innerHTML = `
+                    <h3>${tituloSeguro}</h3>
+                    <div class="note">${resumoEscaped}</div>
+                    <div class="detail-grid">
+                        <div class="metric-box"><span class="helper">Palavras-chave</span><strong>${palavrasChaveEscaped}</strong></div>
+                        <div class="metric-box"><span class="helper">Arquivo principal</span><strong>${arquivoHtml}</strong></div>
+                    </div>
+                    <form id="assign-chief" style="margin-top:14px">
+                        <div class="form-grid">
+                            <div class="field">
+                                <label>Parecerista</label>
+                                <select name="pareceristaId">${optionsHtml}</select>
+                            </div>
+                            <div class="field">
+                                <label>Prazo do parecer</label>
+                                <input type="date" name="prazoParecer">
+                            </div>
+                            <div class="field full">
+                                <label>Mensagem editorial</label>
+                                <textarea name="mensagemConvite"></textarea>
+                            </div>
+                        </div>
+                        <div class="actions-row">
+                            <button class="btn btn-primary" type="submit">Designar parecerista</button>
+                            <a class="btn btn-secondary" id="btn-historico-parecerista" href="pareceres-parecerista.html">Ver histórico do parecerista</a>
+                        </div>
+                        <div class="form-message" id="msg-assign"></div>
+                    </form>
+                    <form id="delete-sub" style="margin-top:16px">
+                        <div class="form-grid">
+                            <div class="field full"><label>Senha do(a) editor(a)-chefe para confirmar exclusão</label><input type="password" name="senhaConfirmacao" required></div>
+                        </div>
+                        <div class="actions-row"><button class="btn btn-soft" type="submit">Apagar submissão</button></div>
+                        <div class="form-message" id="msg-del"></div>
+                    </form>
+                `;
+
+                updateReviewerLink(det);
+                const selectElem = det.querySelector('select[name="pareceristaId"]');
+                if (selectElem) {
+                    selectElem.addEventListener('change', () => updateReviewerLink(det));
+                }
+
+                const assignForm = det.querySelector('#assign-chief');
+                assignForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const fd = new FormData(assignForm);
+                    const msg = det.querySelector('#msg-assign');
+                    msg.className = 'form-message';
+                    try {
+                        await AppPanel.apiAction('assign_reviewer', {
+                            submissaoId: s.id,
+                            pareceristaId: Number(fd.get('pareceristaId')),
+                            prazoParecer: fd.get('prazoParecer'),
+                            mensagemConvite: fd.get('mensagemConvite')
+                        });
+                        msg.textContent = 'Parecerista designado(a) com sucesso.';
+                        msg.classList.add('ok');
+                        setTimeout(() => location.reload(), 1200);
+                    } catch (err) {
+                        msg.textContent = err.message;
+                        msg.classList.add('err');
+                    }
+                });
+
+                const deleteForm = det.querySelector('#delete-sub');
+                deleteForm.addEventListener('submit', async (e) => {
+                    e.preventDefault();
+                    const fd = new FormData(deleteForm);
+                    const msg = det.querySelector('#msg-del');
+                    msg.className = 'form-message';
+                    if (!confirm('Confirma a exclusão desta submissão?')) return;
+                    try {
+                        await AppPanel.apiAction('delete_submission', {
+                            submissaoId: s.id,
+                            senhaConfirmacao: fd.get('senhaConfirmacao')
+                        });
+                        msg.textContent = 'Submissão apagada com sucesso.';
+                        msg.classList.add('ok');
+                        setTimeout(() => location.reload(), 900);
+                    } catch (err) {
+                        msg.textContent = err.message;
+                        msg.classList.add('err');
+                    }
+                });
+            });
+            box.appendChild(row);
+        });
+    } catch (err) {
+        document.getElementById('sub-grid').innerHTML = `<div class="empty-state">${escapeHtml(err.message)}</div>`;
+    }
+});
 </script>
 </body>
 </html>

@@ -1,1 +1,434 @@
-<!DOCTYPE html><html lang="pt-BR"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>Solicitação de certificados</title><link rel="icon" href="../assets/favicon.png"><link rel="stylesheet" href="painel-base.css"><script src="painel-base.js" defer></script></head><body><div class="page-shell"><header class="topbar"><div class="brand-wrap"><div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div><div class="brand-copy"><h1>Solicitação de certificados</h1><p>Aqui você solicita certificados do evento, minicursos e comunicações orais.</p></div></div><div class="actions-row"><a class="btn btn-secondary" href="painel-autor.html">Voltar ao painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div></header><section class="panel"><div class="panel-head"><div><h2>Formulário de solicitação</h2><p class="helper">Aqui você seleciona a modalidade desejada e informa os dados necessários.</p></div></div><form id="form-cert"><div class="form-grid"><div class="field"><label>Nome completo</label><input name="nomeCompleto" required></div><div class="field"><label>E-mail</label><input type="email" name="email" required></div><div class="field full checkbox-line"><input type="checkbox" id="cert-mini" name="certificadoMinicurso"><label for="cert-mini">Certificado de minicurso</label></div><div class="field full checkbox-line"><input type="checkbox" id="cert-geral" name="certificadoParticipacaoGeral"><label for="cert-geral">Certificado de participação geral no evento</label></div><div class="field full checkbox-line"><input type="checkbox" id="cert-com" name="certificadoComunicacaoOral"><label for="cert-com">Certificado de participação em comunicações orais</label></div><div class="field full"><label>Selecione o(s) minicurso(s)</label><textarea name="minicursos" placeholder="Minicurso: O Ser Social e o Preconceito; Minicurso: O Manifesto Comunista; ..."></textarea></div><div class="field full"><label>Autoriza a publicação do texto?</label><select name="autorizaPublicacaoTexto"><option value="">Selecione</option><option value="true">Sim</option><option value="false">Não</option></select></div><div class="field full"><label>Resumo expandido sobre o minicurso</label><textarea name="resumoExpandido"></textarea></div><div class="field"><label>Título da comunicação oral</label><input name="tituloComunicacaoOral"></div><div class="field"><label>Autor(a/es/as) da comunicação</label><input name="autoresComunicacaoOral"></div></div><div class="actions-row"><button class="btn btn-primary" type="submit">Enviar solicitação</button></div><div class="form-message" id="msg-cert"></div></form></section><footer class="page-footer"></footer></div><script>document.addEventListener('DOMContentLoaded',()=>{const user=AppPanel.requireRole(['autor']);if(!user)return;const form=document.getElementById('form-cert');form.nomeCompleto.value=user.nome||'';form.email.value=user.email||'';form.addEventListener('submit',async(e)=>{e.preventDefault();const msg=document.getElementById('msg-cert');msg.className='form-message';msg.textContent='';const fd=new FormData(form);const payload={};fd.forEach((v,k)=>payload[k]=v);payload.certificadoMinicurso=form.certificadoMinicurso.checked;payload.certificadoParticipacaoGeral=form.certificadoParticipacaoGeral.checked;payload.certificadoComunicacaoOral=form.certificadoComunicacaoOral.checked;payload.autorizaPublicacaoTexto=payload.autorizaPublicacaoTexto===''?null:payload.autorizaPublicacaoTexto==='true';try{await AppPanel.apiAction('request_certificate',payload);msg.textContent='Solicitação registrada com sucesso.';msg.classList.add('ok');}catch(err){msg.textContent=err.message;msg.classList.add('err')}})})</script></body></html>
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+<title>Solicitação de certificados | Revista Inquietações</title>
+<link rel="icon" href="../assets/favicon.png">
+<link rel="stylesheet" href="painel-base.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+<script src="painel-base.js" defer></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: linear-gradient(145deg, #0a0f1c 0%, #0f172a 100%);
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: #f1f5f9;
+    min-height: 100vh;
+  }
+  .page-shell {
+    max-width: 980px;
+    margin: 0 auto;
+    padding: 2rem;
+  }
+  .topbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(12px);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    border-radius: 2rem;
+    padding: 1rem 2rem;
+    margin-bottom: 2rem;
+  }
+  .brand-wrap {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+  .avatar-box {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .avatar-img {
+    width: 52px;
+    height: 52px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #3b82f6;
+    background: #2d3a5e;
+  }
+  .logo-inline {
+    width: 48px;
+    height: 48px;
+    border-radius: 16px;
+    background: white;
+    padding: 6px;
+  }
+  .brand-copy h1 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    background: linear-gradient(135deg, #fff, #94a3b8);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+  }
+  .brand-copy p {
+    color: #cbd5e1;
+    font-size: 0.85rem;
+  }
+  .actions-row {
+    display: flex;
+    gap: 0.8rem;
+  }
+  .btn {
+    padding: 0.5rem 1.2rem;
+    border-radius: 2rem;
+    font-weight: 600;
+    font-size: 0.85rem;
+    border: none;
+    cursor: pointer;
+    background: rgba(255,255,255,0.05);
+    color: #f1f5f9;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    transition: 0.2s;
+  }
+  .btn-secondary {
+    background: rgba(59,130,246,0.15);
+    border: 1px solid rgba(59,130,246,0.4);
+  }
+  .btn-secondary:hover {
+    background: rgba(59,130,246,0.3);
+    transform: translateY(-2px);
+  }
+  .btn-primary {
+    background: #3b82f6;
+    color: white;
+  }
+  .btn-primary:hover {
+    background: #2563eb;
+    transform: translateY(-2px);
+  }
+  .btn-soft:hover {
+    background: rgba(255,255,255,0.1);
+  }
+  .panel {
+    background: rgba(17, 24, 39, 0.85);
+    backdrop-filter: blur(8px);
+    border: 1px solid rgba(71, 85, 105, 0.4);
+    border-radius: 1.8rem;
+    padding: 1.8rem;
+  }
+  .panel-head {
+    margin-bottom: 1.5rem;
+    border-bottom: 1px solid rgba(71, 85, 105, 0.5);
+    padding-bottom: 0.8rem;
+  }
+  .panel-head h2 {
+    font-size: 1.3rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+  }
+  .form-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.2rem;
+  }
+  .field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.3rem;
+  }
+  .field.full {
+    grid-column: span 2;
+  }
+  label {
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #cbd5e1;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+  }
+  input, textarea, select {
+    background: #0f172a;
+    border: 1px solid #334155;
+    border-radius: 1rem;
+    padding: 0.7rem 1rem;
+    color: #f1f5f9;
+    font-size: 0.9rem;
+    transition: 0.2s;
+  }
+  input:focus, textarea:focus, select:focus {
+    outline: none;
+    border-color: #3b82f6;
+    box-shadow: 0 0 0 2px rgba(59,130,246,0.3);
+  }
+  textarea {
+    resize: vertical;
+    min-height: 80px;
+  }
+  .checkbox-line {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.8rem;
+  }
+  .checkbox-line input {
+    width: auto;
+  }
+  .helper {
+    font-size: 0.7rem;
+    color: #94a3b8;
+    margin-top: 0.2rem;
+  }
+  .file-info {
+    font-size: 0.7rem;
+    color: #10b981;
+    margin-top: 0.2rem;
+  }
+  .form-message {
+    margin-top: 1.2rem;
+    padding: 0.8rem;
+    border-radius: 1rem;
+    display: none;
+  }
+  .form-message.ok {
+    display: block;
+    background: #064e3b;
+    color: #a7f3d0;
+  }
+  .form-message.err {
+    display: block;
+    background: #7f1d1d;
+    color: #fecaca;
+  }
+  footer {
+    margin-top: 2rem;
+    text-align: center;
+    font-size: 0.7rem;
+    color: #5b6e8c;
+  }
+  @media (max-width: 680px) {
+    .page-shell { padding: 1rem; }
+    .form-grid { grid-template-columns: 1fr; }
+    .field.full { grid-column: 1; }
+  }
+</style>
+</head>
+<body>
+<div class="page-shell">
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box">
+        <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+        <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+      </div>
+      <div class="brand-copy">
+        <h1><i class="fas fa-certificate"></i> Solicitação de certificados</h1>
+        <p>Certificados de participação, minicursos e comunicações orais</p>
+      </div>
+    </div>
+    <div class="actions-row">
+      <a class='btn btn-secondary' href='/cadastro-login/painel-autor'><i class="fas fa-arrow-left"></i> Voltar ao painel</a>
+      <button class="btn btn-soft" data-action="logout"><i class="fas fa-sign-out-alt"></i> Sair</button>
+    </div>
+  </header>
+
+  <section class="panel">
+    <div class="panel-head">
+      <div>
+        <h2><i class="fas fa-edit"></i> Formulário de solicitação</h2>
+        <p class="helper">Selecione as modalidades desejadas e anexe o resumo expandido (se aplicável).</p>
+      </div>
+    </div>
+
+    <form id="form-cert" enctype="multipart/form-data">
+      <div class="form-grid">
+        <div class="field">
+          <label><i class="fas fa-user"></i> Nome completo</label>
+          <input name="nomeCompleto" required>
+        </div>
+        <div class="field">
+          <label><i class="fas fa-envelope"></i> E-mail</label>
+          <input type="email" name="email" required>
+        </div>
+
+        <div class="field full checkbox-line">
+          <input type="checkbox" id="cert-mini" name="certificadoMinicurso">
+          <label for="cert-mini">Certificado de minicurso</label>
+        </div>
+        <div class="field full checkbox-line">
+          <input type="checkbox" id="cert-geral" name="certificadoParticipacaoGeral">
+          <label for="cert-geral">Certificado de participação geral no evento</label>
+        </div>
+        <div class="field full checkbox-line">
+          <input type="checkbox" id="cert-com" name="certificadoComunicacaoOral">
+          <label for="cert-com">Certificado de participação em comunicações orais</label>
+        </div>
+
+        <div class="field full">
+          <label><i class="fas fa-chalkboard"></i> Selecione o(s) minicurso(s)</label>
+          <textarea name="minicursos" placeholder="Ex: Minicurso: O Ser Social e o Preconceito; Minicurso: O Manifesto Comunista; ..."></textarea>
+        </div>
+
+        <div class="field full">
+          <label><i class="fas fa-lock-open"></i> Autoriza a publicação do texto?</label>
+          <select name="autorizaPublicacaoTexto">
+            <option value="">Selecione</option>
+            <option value="true">Sim</option>
+            <option value="false">Não</option>
+          </select>
+        </div>
+
+        <!-- Campo de upload para resumo expandido (substitui o textarea) -->
+        <div class="field full" id="upload-resumo-wrap">
+          <label><i class="fas fa-file-upload"></i> Resumo expandido sobre o minicurso</label>
+          <input type="file" name="resumoExpandidoArquivo" accept=".doc,.docx" id="resumoArquivo">
+          <div class="helper">Envie o arquivo do resumo expandido (formato .doc ou .docx).</div>
+          <div class="file-info" id="file-status"></div>
+        </div>
+
+        <div class="field">
+          <label><i class="fas fa-microphone-alt"></i> Título da comunicação oral</label>
+          <input name="tituloComunicacaoOral">
+        </div>
+        <div class="field">
+          <label><i class="fas fa-users"></i> Autor(a/es/as) da comunicação</label>
+          <input name="autoresComunicacaoOral">
+        </div>
+      </div>
+
+      <div class="actions-row" style="margin-top: 1.5rem;">
+        <button class="btn btn-primary" type="submit"><i class="fas fa-paper-plane"></i> Enviar solicitação</button>
+      </div>
+      <div class="form-message" id="msg-cert"></div>
+    </form>
+  </section>
+
+  <footer>
+    <i class="fas fa-chalkboard"></i> Revista Inquietações – Solicitação de certificados
+  </footer>
+</div>
+
+<script>
+// Helper de escape
+function escapeHtml(str) {
+  if (!str) return '';
+  return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
+}
+
+// Cabeçalhos para FormData (remove Content-Type)
+function authHeadersForFormData() {
+  const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
+  delete headers['Content-Type'];
+  delete headers['content-type'];
+  return headers;
+}
+
+document.addEventListener('DOMContentLoaded', async () => {
+  if (typeof AppPanel === 'undefined') {
+    const msgDiv = document.getElementById('msg-cert');
+    if (msgDiv) {
+      msgDiv.textContent = 'Erro crítico: sistema não inicializado.';
+      msgDiv.classList.add('err');
+    }
+    return;
+  }
+
+  // Permissão: autor (e também permitir editores se necessário)
+  const user = AppPanel.requireRole(['autor', 'editor_chefe', 'editor-chefe', 'editor_adjunto']);
+  if (!user) return;
+
+  // 🔧 CORREÇÃO DO AVATAR
+  if (typeof AppPanel.atualizarAvatares === 'function') {
+    AppPanel.atualizarAvatares();
+  } else {
+    console.warn('atualizarAvatares não disponível');
+  }
+
+  const form = document.getElementById('form-cert');
+  const msgDiv = document.getElementById('msg-cert');
+  const fileInput = document.getElementById('resumoArquivo');
+  const fileStatus = document.getElementById('file-status');
+
+  // Pré-preenche nome e email do usuário logado
+  if (user.nome) form.nomeCompleto.value = user.nome;
+  if (user.email) form.email.value = user.email;
+
+  // Mostrar nome do arquivo selecionado
+  fileInput.addEventListener('change', () => {
+    if (fileInput.files.length > 0) {
+      fileStatus.textContent = `Arquivo selecionado: ${escapeHtml(fileInput.files[0].name)}`;
+      fileStatus.style.color = '#10b981';
+    } else {
+      fileStatus.textContent = '';
+    }
+  });
+
+  form.addEventListener('submit', async (e) => {
+    e.preventDefault();
+    msgDiv.className = 'form-message';
+    msgDiv.textContent = '';
+    const submitBtn = form.querySelector('button[type="submit"]');
+    submitBtn.disabled = true;
+
+    try {
+      // 1. Verificar se há arquivo de resumo expandido e fazer upload
+      let resumoExpandidoUrl = null;
+      const arquivo = fileInput.files[0];
+      if (arquivo) {
+        const uploadForm = new FormData();
+        uploadForm.append('arquivo', arquivo);
+        uploadForm.append('usuario_id', user.id);
+        uploadForm.append('tipo', 'resumo_minicurso');
+
+        const uploadRes = await fetch('/.netlify/functions/upload-resumo-evento', {
+          method: 'POST',
+          headers: authHeadersForFormData(),
+          body: uploadForm
+        });
+        const uploadText = await uploadRes.text();
+        let uploadData;
+        try { uploadData = JSON.parse(uploadText); } catch { throw new Error(uploadText || 'Falha ao enviar resumo expandido.'); }
+        if (!uploadRes.ok) throw new Error(uploadData.erro || uploadData.detalhe || 'Erro no upload do resumo.');
+        resumoExpandidoUrl = uploadData.url; // URL pública do arquivo no Supabase Storage
+      }
+
+      // 2. Montar payload para a solicitação de certificados
+      const fd = new FormData(form);
+      const payload = {
+        nomeCompleto: fd.get('nomeCompleto'),
+        email: fd.get('email'),
+        certificadoMinicurso: document.getElementById('cert-mini').checked,
+        certificadoParticipacaoGeral: document.getElementById('cert-geral').checked,
+        certificadoComunicacaoOral: document.getElementById('cert-com').checked,
+        minicursos: fd.get('minicursos') || null,
+        autorizaPublicacaoTexto: fd.get('autorizaPublicacaoTexto') === 'true' ? true : (fd.get('autorizaPublicacaoTexto') === 'false' ? false : null),
+        tituloComunicacaoOral: fd.get('tituloComunicacaoOral') || null,
+        autoresComunicacaoOral: fd.get('autoresComunicacaoOral') || null,
+        resumoExpandidoUrl: resumoExpandidoUrl   // campo adicional
+      };
+
+      // 3. Enviar solicitação para a função principal
+      await AppPanel.apiAction('request_certificate', payload);
+
+      msgDiv.textContent = '✅ Solicitação registrada com sucesso!';
+      msgDiv.classList.add('ok');
+      form.reset();
+      fileStatus.textContent = '';
+      // Limpa os checkboxes manualmente (reset não limpa checked)
+      document.getElementById('cert-mini').checked = false;
+      document.getElementById('cert-geral').checked = false;
+      document.getElementById('cert-com').checked = false;
+      // Recoloca nome/email (pois reset apagou)
+      if (user.nome) form.nomeCompleto.value = user.nome;
+      if (user.email) form.email.value = user.email;
+    } catch (err) {
+      console.error(err);
+      msgDiv.textContent = err.message || 'Erro ao enviar solicitação.';
+      msgDiv.classList.add('err');
+    } finally {
+      submitBtn.disabled = false;
+    }
+  });
+});
+</script>
+</body>
+</html>
