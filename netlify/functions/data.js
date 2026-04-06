@@ -479,6 +479,35 @@ const main = async (req) => {
       })
     }
 
+    // ========== LISTAR CERTIFICADOS DO USUÁRIO ==========
+    if (action === 'listar_certificados') {
+      const { tipo } = body; // opcional: 'evento', 'parecer', 'equipe_editorial'
+      let query = sql`
+        SELECT id, titulo, descricao, tipo, categoria, nome_arquivo, mime_type, criado_em, blob_key
+        FROM certificados_privados
+        WHERE usuario_id = ${user.id}
+      `;
+      if (tipo && tipo !== 'todos') {
+        query = sql`${query} AND tipo = ${tipo}`;
+      }
+      query = sql`${query} ORDER BY criado_em DESC`;
+      const rows = await query;
+      return json({
+        sucesso: true,
+        certificados: rows.map(row => ({
+          id: row.id,
+          titulo: row.titulo,
+          descricao: row.descricao,
+          tipo: row.tipo,
+          categoria: row.categoria,
+          nome_arquivo: row.nome_arquivo,
+          mime_type: row.mime_type,
+          criado_em: row.criado_em,
+          blob_key: row.blob_key
+        }))
+      });
+    }
+
     // ========== AÇÕES DE PARECERISTA ==========
     if (action === 'reviewer_list_for_history') {
       if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
@@ -643,7 +672,7 @@ const main = async (req) => {
       const refreshed = await getUserById(user.id)
       return json({ sucesso: true, usuario: refreshed })
     }
-    
+
     // ========== COMENTÁRIOS DOS CURSOS ==========
     if (action === 'get_comentarios_curso') {
       const { curso_slug } = body;
