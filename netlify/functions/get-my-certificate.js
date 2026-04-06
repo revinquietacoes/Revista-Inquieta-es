@@ -26,13 +26,18 @@ const main = async (req) => {
     const url = new URL(req.url)
     const certificateId = Number(url.searchParams.get('id') || 0)
     const download = url.searchParams.get('download') === '1'
+    const queryUserId = Number(url.searchParams.get('user_id') || 0)
 
     if (!certificateId) {
       return new Response('Parâmetro id é obrigatório.', { status: 400 })
     }
 
-    // Verificar autenticação do usuário
-    const userId = getAuthenticatedUserId(req)
+    // Tenta obter userId do header; se não, usa da query string
+    let userId = getAuthenticatedUserId(req)
+    if (!userId && queryUserId) {
+      userId = queryUserId
+    }
+
     if (!userId) {
       return new Response('Usuário não autenticado.', { status: 401 })
     }
