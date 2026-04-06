@@ -1,30 +1,93 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Painel Parecerista</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="container">
-<h1>Parecerista</h1>
-<button onclick="load()">Carregar avaliações</button>
-<ul id="lista"></ul>
-</div>
+<html lang="pt-BR">
 
-<script src="app.js"></script>
-<script>
-async function load(){
- const d=await AppPanel.apiData("avaliacoes_parecerista");
- const ul=document.getElementById("lista");
- ul.innerHTML="";
- (d.items||[]).forEach(i=>{
-   const li=document.createElement("li");
-   li.innerText=i.titulo;
-   ul.appendChild(li);
- });
-}
-</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Painel do(a) Parecerista</title>
+    <link rel="icon" href="../assets/favicon.png">
+    <link rel="stylesheet" href="painel-base.css">
+    <script src="painel-base.js" defer></script>
+</head>
+
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <div class="brand-wrap">
+                <div class="avatar-box">
+                    <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
+                    <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
+                </div>
+                <div class="brand-copy">
+                    <h1>Painel do(a) Parecerista</h1>
+                    <p>Avaliações disponíveis, prazos e envio de pareceres</p>
+                </div>
+            </div>
+            <div class="actions-row">
+                <div style="position: relative; margin-right: 10px;">
+                    <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+                    <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+                    <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+                </div>
+                <a class="btn btn-secondary" href="https://revista-inquietacoes.netlify.app/">Voltar ao portal</a>
+                <button class="btn btn-soft" data-action="logout">Sair</button>
+            </div>
+        </header>
+
+        <section class="hero">
+            <h2>Boas-vindas, <span data-user-name></span></h2>
+            <p>Aqui você abre convites de avaliação, aceita tarefas, baixa o arquivo principal sem dados de autoria e
+                registra seu parecer técnico.</p>
+        </section>
+
+        <div class="cards-grid">
+            <article class="card">
+                <div class="card-top"><h3>Avaliações atribuídas</h3><span class="badge badge-blue">Fila pessoal</span></div>
+                <p>Aqui você consulta convites, tarefas em andamento e prazos de avaliação.</p>
+                <div class="actions-row"><a class="btn btn-primary" href="parecerista-avaliacoes.html">Abrir</a></div>
+            </article>
+            <article class="card">
+                <div class="card-top"><h3>Perfil</h3><span class="badge badge-blue">Cadastro</span></div>
+                <p>Aqui você atualiza seus dados e altera sua foto de perfil.</p>
+                <div class="actions-row"><a class="btn btn-primary" href="perfil.html">Abrir</a></div>
+            </article>
+            <article class="card">
+                <div class="card-top"><h3>Chat interno</h3><span class="badge badge-green">Mensagens</span></div>
+                <p>Aqui você fala com a editoria e envia mensagens com anexos.</p>
+                <div class="actions-row"><a class="btn btn-primary" href="chat-interno.html">Abrir</a></div>
+            </article>
+            <article class="card">
+                <div class="card-top"><h3>Certificados</h3><span class="badge badge-gold">Documentos</span></div>
+                <p>Aqui você abre a pasta de certificados correspondente ao seu perfil.</p>
+                <div class="actions-row"><a class="btn btn-primary" href="certificados-parecerista.html">Abrir</a></div>
+            </article>
+        </div>
+
+        <footer class="page-footer"></footer>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            setTimeout(() => {
+                if (typeof AppPanel === 'undefined') {
+                    console.error('AppPanel não carregado');
+                    return;
+                }
+                const user = AppPanel.requireRole(['parecerista']);
+                if (!user) return;
+
+                const nameSpan = document.querySelector('[data-user-name]');
+                if (nameSpan) nameSpan.textContent = user.nome;
+
+                AppPanel.atualizarAvatares();
+                AppPanel.atualizarContadorNotificacoes();
+                AppPanel.iniciarPollingNotificacoes();
+
+                const btn = document.getElementById('btn-notificacoes');
+                if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+            }, 100);
+        });
+    </script>
 </body>
+
 </html>
