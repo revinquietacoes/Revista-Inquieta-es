@@ -1,30 +1,48 @@
-
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Formulário de Parecer</title>
-<link rel="stylesheet" href="style.css">
-</head>
-<body>
-<div class="container">
-<h1>Enviar parecer</h1>
-<textarea id="comentario" placeholder="Comentário ao autor"></textarea>
-<select id="decisao">
-<option value="aceito">Aceito</option>
-<option value="rejeitado">Rejeitado</option>
-</select>
-<button onclick="send()">Enviar</button>
-</div>
+<html lang="pt-BR">
 
-<script src="app.js"></script>
-<script>
-async function send(){
- const comentario=document.getElementById("comentario").value;
- const decisao=document.getElementById("decisao").value;
- const r=await AppPanel.apiAction("enviar_parecer",{comentario,decisao});
- alert(JSON.stringify(r));
-}
-</script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avaliações atribuídas</title>
+    <link rel="icon" href="../assets/favicon.png">
+    <link rel="stylesheet" href="painel-base.css">
+    <script src="painel-base.js" defer></script>
+</head>
+
+<body>
+    <div class="page-shell">
+        <header class="topbar">
+            <div class="brand-wrap">
+                <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)"><img
+                        class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações"></div>
+                <div class="brand-copy">
+                    <h1>Avaliações atribuídas</h1>
+                    <p>Aqui você consulta convites, aceita ou recusa tarefas e acompanha prazos.</p>
+                </div>
+            </div>
+            <div class="actions-row"><a class="btn btn-secondary" href="painel-parecerista.html">Voltar ao
+                    painel</a><button class="btn btn-soft" data-action="logout">Sair</button></div>
+        </header>
+        <div class="content-grid">
+            <section class="panel">
+                <div class="panel-head">
+                    <div>
+                        <h2>Fila de avaliações</h2>
+                        <p class="helper">Antes do aceite, aqui você vê apenas o nome e o resumo do trabalho, sem dados
+                            do(a) autor(a).</p>
+                    </div>
+                </div>
+                <div class="list" id="lista-avaliacoes"></div>
+            </section>
+            <aside class="panel detail-card is-open" id="detalhe">
+                <h3>Selecione uma avaliação</h3>
+                <p class="helper">Aqui você vê os dados essenciais e aceita ou recusa a tarefa.</p>
+            </aside>
+        </div>
+        <footer class="page-footer"></footer>
+    </div>
+    <script>document.addEventListener('DOMContentLoaded', async () => { const user = AppPanel.requireRole(['parecerista']); if (!user) return; try { const data = await AppPanel.apiData('reviewer_dashboard'); const lista = document.getElementById('lista-avaliacoes'); const detalhe = document.getElementById('detalhe'); if (!data.avaliacoes.length) { lista.innerHTML = '<div class="empty-state">Aqui você ainda não possui avaliações atribuídas.</div>'; return; } data.avaliacoes.forEach(a => { const btn = document.createElement('button'); btn.innerHTML = `<div class="item-title">${a.titulo}</div><div class="item-meta">${a.secao} • ${a.status} • prazo: ${a.prazo_parecer ? new Date(a.prazo_parecer).toLocaleDateString('pt-BR') : 'a definir'}</div>`; btn.addEventListener('click', () => { const aceitou = ['aceito', 'em_andamento', 'concluido'].includes(a.status); detalhe.innerHTML = `<h3>${a.titulo}</h3><div class="note">${a.resumo || 'Sem resumo informado.'}</div><div class="detail-grid" style="margin-top:12px"><div class="metric-box"><span class="helper">Palavras-chave</span><strong>${a.palavras_chave || '—'}</strong></div><div class="metric-box"><span class="helper">Prazo</span><strong>${a.prazo_parecer ? new Date(a.prazo_parecer).toLocaleDateString('pt-BR') : 'A definir'}</strong></div><div class="metric-box"><span class="helper">Dias adicionais</span><strong>${a.dias_adicionais || 0}</strong></div><div class="metric-box"><span class="helper">Situação</span><strong>${a.status}</strong></div></div>${aceitou ? `<div class="note" style="margin-top:12px">Arquivo da avaliação: ${a.url_arquivo ? `<a class="file-pill" target="_blank" href="${a.url_arquivo}">${a.nome_arquivo || 'Abrir material'}</a>` : 'Sem arquivo disponível.'}</div>` : ''}<div class="actions-row" style="margin-top:12px">${!aceitou ? `<button class="btn btn-primary" data-id="${a.id}" data-action="aceitar">Aceitar tarefa</button><button class="btn btn-soft" data-id="${a.id}" data-action="recusar">Recusar tarefa</button><span class="helper">Aceite a tarefa para liberar o formulário de parecer.</span>` : `<a class="btn btn-secondary" href="formulario-parecer.html?designacao=${a.id}&submissao=${a.submissao_id}" data-open-form="1">Abrir formulário</a>`}</div>`; const acc = detalhe.querySelector('[data-action="aceitar"]'); if (acc) acc.addEventListener('click', async () => { await AppPanel.apiAction('update_designacao_status', { designacaoId: a.id, status: 'aceito' }); alert('Tarefa aceita com sucesso.'); location.reload(); }); const rec = detalhe.querySelector('[data-action="recusar"]'); if (rec) rec.addEventListener('click', async () => { await AppPanel.apiAction('update_designacao_status', { designacaoId: a.id, status: 'recusado' }); alert('Tarefa recusada.'); location.reload(); }); const openForm = detalhe.querySelector('[data-open-form="1"]'); if (openForm) openForm.addEventListener('click', () => { try { sessionStorage.setItem('parecerAtual', JSON.stringify({ designacaoId: a.id, submissaoId: a.submissao_id, titulo: a.titulo || '' })) } catch { } }); }); lista.appendChild(btn) }); } catch (err) { document.getElementById('lista-avaliacoes').innerHTML = `<div class="empty-state">${err.message}</div>`; } })</script>
 </body>
+
 </html>

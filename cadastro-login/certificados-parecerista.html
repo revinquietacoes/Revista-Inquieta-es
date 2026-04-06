@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Certificados - Parecerista</title>
+  <title>Certificados - Parecerista | Revista Inquietações</title>
   <link rel="icon" href="../assets/favicon.png">
   <link rel="stylesheet" href="painel-base.css">
   <script src="painel-base.js" defer></script>
@@ -70,9 +70,15 @@
 
   document.addEventListener('DOMContentLoaded', () => {
     setTimeout(async () => {
-      if (typeof AppPanel === 'undefined') { console.error('AppPanel não carregado'); return; }
-      const user = AppPanel.requireRole(['parecerista']);
-      if (!user) return;
+      if (typeof AppPanel === 'undefined') { 
+        console.error('AppPanel não carregado'); 
+        document.getElementById('cert-list').innerHTML = '<div style="text-align: center; padding: 40px; color: red;">Erro de inicialização: sistema não disponível.</div>';
+        return; 
+      }
+      // 🔧 CORREÇÃO: permite acesso tanto para parecerista quanto para editor-chefe
+      const user = AppPanel.requireRole(['parecerista', 'editor-chefe']);
+      if (!user) return;  // se não tiver um dos perfis, a função já redireciona ou bloqueia
+      
       AppPanel.atualizarAvatares();
       AppPanel.atualizarContadorNotificacoes();
       AppPanel.iniciarPollingNotificacoes();
