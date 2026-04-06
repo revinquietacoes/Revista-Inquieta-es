@@ -63,92 +63,6 @@
             border-color: #e8dcc4;
         }
 
-        .course-accordion {
-            display: grid;
-            gap: 16px;
-        }
-
-        .course-toggle {
-            border: 1px solid #dddff0;
-            border-radius: 18px;
-            background: #f7f4ff;
-            box-shadow: 0 8px 24px rgba(0, 0, 0, .06);
-            overflow: hidden;
-        }
-
-        .course-toggle summary {
-            list-style: none;
-            cursor: pointer;
-            padding: 18px 20px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 16px;
-            font-weight: 600;
-            color: var(--brand);
-            font-size: 1.06rem;
-        }
-
-        .course-toggle summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .course-toggle summary:hover {
-            background: #f0ebff;
-        }
-
-        .course-summary-left {
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .course-label {
-            display: inline-block;
-            width: max-content;
-            padding: 6px 10px;
-            border-radius: 999px;
-            background: #ebe4ff;
-            color: #4f4585;
-            font-size: .82rem;
-            font-weight: 600;
-        }
-
-        .course-summary-title {
-            font-size: 1.08rem;
-            line-height: 1.4;
-            color: var(--brand);
-        }
-
-        .course-summary-icon {
-            font-size: 1.4rem;
-            line-height: 1;
-            color: var(--brand);
-            transition: transform .2s ease;
-        }
-
-        .course-toggle[open] .course-summary-icon {
-            transform: rotate(45deg);
-        }
-
-        .course-content {
-            padding: 0 20px 20px;
-            border-top: 1px solid #e7e1f6;
-            background: #fcfbff;
-        }
-
-        .course-description {
-            margin: 16px 0 18px;
-            color: #4c5b70;
-            line-height: 1.7;
-        }
-
-        .course-actions-box {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-        }
-
         .topbar {
             display: flex;
             align-items: center;
@@ -200,77 +114,6 @@
 
         .notice-box p:last-child {
             margin-bottom: 0;
-        }
-
-        .comunicacao-accordion {
-            display: grid;
-            gap: 14px;
-        }
-
-        .comunicacao-toggle {
-            border: 1px solid #d7e6dd;
-            border-radius: 16px;
-            background: #f3faf6;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, .05);
-            overflow: hidden;
-        }
-
-        .comunicacao-toggle summary {
-            list-style: none;
-            cursor: pointer;
-            padding: 16px 18px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            gap: 14px;
-        }
-
-        .comunicacao-toggle summary::-webkit-details-marker {
-            display: none;
-        }
-
-        .comunicacao-toggle:hover summary {
-            background: #edf7f1;
-        }
-
-        .comunicacao-summary-left {
-            display: grid;
-            gap: 4px;
-        }
-
-        .comunicacao-summary-left h3 {
-            margin: 0;
-            font-size: 1rem;
-            color: var(--brand);
-        }
-
-        .comunicacao-summary-left p {
-            margin: 0;
-            color: #5b6d67;
-            font-size: .94rem;
-        }
-
-        .comunicacao-icon {
-            font-size: 1.3rem;
-            line-height: 1;
-            color: var(--brand);
-            transition: transform .2s ease;
-        }
-
-        .comunicacao-toggle[open] .comunicacao-icon {
-            transform: rotate(45deg);
-        }
-
-        .comunicacao-body {
-            padding: 0 18px 18px;
-            border-top: 1px solid #dcebe3;
-            background: #fbfefc;
-        }
-
-        .comunicacao-body p {
-            margin: 14px 0 0;
-            color: #4c5b70;
-            line-height: 1.75;
         }
 
         .course-actions-evento {
@@ -351,7 +194,7 @@
             white-space: nowrap;
         }
 
-        .cta-course-link {
+        .btn {
             display: inline-flex;
             align-items: center;
             justify-content: center;
@@ -365,16 +208,30 @@
             transition: transform .18s ease, box-shadow .18s ease, filter .18s ease;
         }
 
-        .cta-course-link:hover {
+        .btn:hover {
             transform: translateY(-2px) scale(1.01);
             box-shadow: 0 14px 28px rgba(31, 60, 136, .26);
             filter: brightness(1.03);
+        }
+
+        .btn.secondary {
+            background: linear-gradient(135deg, #2c55a5 0%, #1f3c88 100%);
+        }
+
+        .columns-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 24px;
         }
 
         @media (max-width:760px) {
             .site-nav-menu a {
                 font-size: .86rem;
                 padding: 8px 7px;
+            }
+            .columns-2 {
+                grid-template-columns: 1fr;
+                gap: 18px;
             }
         }
     </style>
@@ -445,9 +302,6 @@
                     <div class="side-nav-card" id="sidebar-links-eventos">
                         <a id="side-sobre-eventos" class="side-nav-link" href="#sobre-evento">Sobre a programação</a>
                         <a id="side-inscricoes-eventos" class="side-nav-link" href="#inscricoes">Inscrições</a>
-                        <a id="side-minicursos-eventos" class="side-nav-link" href="#minicursos">Cursos</a>
-                        <a id="side-comunicacoes-eventos" class="side-nav-link" href="#comunicacoes">Comunicações</a>
-                        <a id="side-palestras-eventos" class="side-nav-link" href="#palestras">Palestras</a>
                     </div>
                 </section>
             </aside>
@@ -513,228 +367,6 @@
                                     ficam disponíveis somente para o usuário correspondente.</p>
                             </div>
                         </div>
-                    </div>
-                </section>
-                <section class="panel" id="minicursos">
-                    <div class="panel-head" id="minicursos-head">
-                        <h2 id="minicursos-titulo">Cursos da revista</h2>
-                        <p id="minicursos-subtitulo">Os cursos permanecem em cards expansíveis, com acesso à página
-                            individual de cada formação.</p>
-                    </div>
-                    <div class="panel-body" id="minicursos-body">
-                        <div class="course-accordion" id="accordion-cursos">
-                            <details class="course-toggle" id="curso-ser-social-card">
-                                <summary id="curso-ser-social-summary">
-                                    <div class="course-summary-left" id="curso-ser-social-left"><span
-                                            class="course-label" id="curso-ser-social-label">Leitura
-                                            comentada</span><span class="course-summary-title"
-                                            id="curso-ser-social-title">Curso: O Ser Social e o Preconceito: Uma Leitura
-                                            Comentada</span></div><span class="course-summary-icon"
-                                        id="curso-ser-social-icon">+</span>
-                                </summary>
-                                <div class="course-content" id="curso-ser-social-content">
-                                    <p class="course-description" id="curso-ser-social-desc">Leitura comentada voltada à
-                                        reflexão crítica sobre o ser social, o preconceito e suas implicações
-                                        formativas.</p>
-                                    <div class="course-actions-box" id="curso-ser-social-actions"><a
-                                            class="cta-course-link" id="curso-ser-social-link"
-                                            href="curso-ser-social-preconceito.html">Ir ao curso</a></div>
-                                </div>
-                            </details>
-                            <details class="course-toggle" id="curso-nietzsche-card">
-                                <summary id="curso-nietzsche-summary">
-                                    <div class="course-summary-left" id="curso-nietzsche-left"><span
-                                            class="course-label" id="curso-nietzsche-label">Filosofia</span><span
-                                            class="course-summary-title" id="curso-nietzsche-title">Curso: Nietzsche e
-                                            os valores modernos</span></div><span class="course-summary-icon"
-                                        id="curso-nietzsche-icon">+</span>
-                                </summary>
-                                <div class="course-content" id="curso-nietzsche-content">
-                                    <p class="course-description" id="curso-nietzsche-desc">Estudo sobre o adoecimento
-                                        moral do homem moderno a partir da crítica nietzschiana dos valores.</p>
-                                    <div class="course-actions-box" id="curso-nietzsche-actions"><a
-                                            class="cta-course-link" id="curso-nietzsche-link"
-                                            href="curso-nietzsche-valores-modernos.html">Ir ao curso</a></div>
-                                </div>
-                            </details>
-                            <details class="course-toggle" id="curso-manifesto-card">
-                                <summary id="curso-manifesto-summary">
-                                    <div class="course-summary-left" id="curso-manifesto-left"><span
-                                            class="course-label" id="curso-manifesto-label">Teoria social</span><span
-                                            class="course-summary-title" id="curso-manifesto-title">Curso: O Manifesto
-                                            Comunista: O Texto que Mudou o Mundo</span></div><span
-                                        class="course-summary-icon" id="curso-manifesto-icon">+</span>
-                                </summary>
-                                <div class="course-content" id="curso-manifesto-content">
-                                    <p class="course-description" id="curso-manifesto-desc">Introdução comentada a um
-                                        dos textos mais influentes da teoria política e social moderna.</p>
-                                    <div class="course-actions-box" id="curso-manifesto-actions"><a
-                                            class="cta-course-link" id="curso-manifesto-link"
-                                            href="curso-manifesto-comunista.html">Ir ao curso</a></div>
-                                </div>
-                            </details>
-                            <details class="course-toggle" id="curso-endogenia-card">
-                                <summary id="curso-endogenia-summary">
-                                    <div class="course-summary-left" id="curso-endogenia-left"><span
-                                            class="course-label" id="curso-endogenia-label">Teoria social</span><span
-                                            class="course-summary-title" id="curso-endogenia-title">Curso: Endogenia
-                                            acadêmica e tecnologias</span></div><span class="course-summary-icon"
-                                        id="curso-endogenia-icon">+</span>
-                                </summary>
-                                <div class="course-content" id="curso-endogenia-content">
-                                    <p class="course-description" id="curso-endogenia-desc">Discussão introdutória sobre
-                                        endogenia acadêmica, circulação do conhecimento científico e tecnologias
-                                        contemporâneas.</p>
-                                    <div class="course-actions-box" id="curso-endogenia-actions"><a
-                                            class="cta-course-link" id="curso-endogenia-link"
-                                            href="curso-endogenia-academica-tecnologias.html">Ir ao curso</a></div>
-                                </div>
-                            </details>
-                            <details class="course-toggle" id="curso-livro-isso-card">
-                                <summary id="curso-livro-isso-summary">
-                                    <div class="course-summary-left" id="curso-livro-isso-left"><span
-                                            class="course-label" id="curso-livro-isso-label">Psicanálise</span><span
-                                            class="course-summary-title" id="curso-livro-isso-title">Curso: Leitura e
-                                            Comentário do livro O Livro d’Isso</span></div><span
-                                        class="course-summary-icon" id="curso-livro-isso-icon">+</span>
-                                </summary>
-                                <div class="course-content" id="curso-livro-isso-content">
-                                    <p class="course-description" id="curso-livro-isso-desc">Leitura comentada da obra
-                                        de Georg Groddeck, com ênfase em suas contribuições psicanalíticas e culturais.
-                                    </p>
-                                    <div class="course-actions-box" id="curso-livro-isso-actions"><a
-                                            class="cta-course-link" id="curso-livro-isso-link"
-                                            href="curso-livro-disso.html">Ir ao curso</a></div>
-                                </div>
-                            </details>
-                            <details class="course-toggle" id="curso-resumo-expandido-card">
-                                <summary id="curso-resumo-expandido-summary">
-                                    <div class="course-summary-left" id="curso-resumo-expandido-left"><span
-                                            class="course-label" id="curso-resumo-expandido-label">Escrita
-                                            acadêmica</span><span class="course-summary-title"
-                                            id="curso-resumo-expandido-title">Curso: Como escrever um resumo
-                                            expandido?</span></div><span class="course-summary-icon"
-                                        id="curso-resumo-expandido-icon">+</span>
-                                </summary>
-                                <div class="course-content" id="curso-resumo-expandido-content">
-                                    <p class="course-description" id="curso-resumo-expandido-desc">Orientações práticas
-                                        sobre estrutura, clareza, organização técnica e escrita acadêmica do resumo
-                                        expandido.</p>
-                                    <div class="course-actions-box" id="curso-resumo-expandido-actions"><a
-                                            class="cta-course-link" id="curso-resumo-expandido-link"
-                                            href="curso-resumo-expandido.html">Ir ao curso</a></div>
-                                </div>
-                            </details>
-                            <details class="course-toggle" id="curso-algoritmos-card">
-                                <summary id="curso-algoritmos-summary">
-                                    <div class="course-summary-left" id="curso-algoritmos-left"><span
-                                            class="course-label" id="curso-algoritmos-label">Tecnologia</span><span
-                                            class="course-summary-title" id="curso-algoritmos-title">Curso: Algoritmos
-                                            do Passado: Inteligência Artificial, História e Ética</span></div><span
-                                        class="course-summary-icon" id="curso-algoritmos-icon">+</span>
-                                </summary>
-                                <div class="course-content" id="curso-algoritmos-content">
-                                    <p class="course-description" id="curso-algoritmos-desc">Discussão sobre relações
-                                        entre inteligência artificial, historicidade, ética e interpretação do passado.
-                                    </p>
-                                    <div class="course-actions-box" id="curso-algoritmos-actions"><a
-                                            class="cta-course-link" id="curso-algoritmos-link"
-                                            href="curso-algoritmos-do-passado.html">Ir ao curso</a></div>
-                                </div>
-                            </details>
-                        </div>
-                    </div>
-                </section>
-                <section class="panel" id="comunicacoes">
-                    <div class="panel-head" id="comunicacoes-head">
-                        <h2 id="comunicacoes-titulo">Comunicações acadêmicas</h2>
-                        <p id="comunicacoes-subtitulo">Espaço destinado à apresentação de trabalhos e debates
-                            acadêmicos.</p>
-                    </div>
-                    <div class="panel-body" id="comunicacoes-body">
-                        <div class="comunicacao-accordion" id="accordion-comunicacoes">
-                            <details class="comunicacao-toggle" id="comunicacao-apresentacao-card">
-                                <summary id="comunicacao-apresentacao-summary">
-                                    <div class="comunicacao-summary-left" id="comunicacao-apresentacao-left">
-                                        <h3 id="comunicacao-apresentacao-titulo">Apresentação de trabalhos</h3>
-                                        <p id="comunicacao-apresentacao-subtitulo">Finalidade e perfil das comunicações.
-                                        </p>
-                                    </div><span class="comunicacao-icon" id="comunicacao-apresentacao-icon">+</span>
-                                </summary>
-                                <div class="comunicacao-body" id="comunicacao-apresentacao-body">
-                                    <p id="comunicacao-apresentacao-texto">As comunicações destinam-se à socialização de
-                                        pesquisas, ensaios, relatos de experiência e reflexões acadêmicas vinculadas às
-                                        áreas de interesse da revista.</p>
-                                </div>
-                            </details>
-                            <details class="comunicacao-toggle" id="comunicacao-participacao-card">
-                                <summary id="comunicacao-participacao-summary">
-                                    <div class="comunicacao-summary-left" id="comunicacao-participacao-left">
-                                        <h3 id="comunicacao-participacao-titulo">Participação de estudantes e
-                                            pesquisadores(as)</h3>
-                                        <p id="comunicacao-participacao-subtitulo">Caráter formativo e abertura
-                                            acadêmica da programação.</p>
-                                    </div><span class="comunicacao-icon" id="comunicacao-participacao-icon">+</span>
-                                </summary>
-                                <div class="comunicacao-body" id="comunicacao-participacao-body">
-                                    <p id="comunicacao-participacao-texto">A programação busca incentivar a apresentação
-                                        pública de investigações em andamento ou concluídas, fortalecendo a circulação
-                                        do conhecimento e o diálogo entre diferentes percursos formativos.</p>
-                                </div>
-                            </details>
-                            <details class="comunicacao-toggle" id="comunicacao-normas-card">
-                                <summary id="comunicacao-normas-summary">
-                                    <div class="comunicacao-summary-left" id="comunicacao-normas-left">
-                                        <h3 id="comunicacao-normas-titulo">Informações complementares</h3>
-                                        <p id="comunicacao-normas-subtitulo">Normas práticas para envio do resumo e da
-                                            apresentação oral.</p>
-                                    </div><span class="comunicacao-icon" id="comunicacao-normas-icon">+</span>
-                                </summary>
-                                <div class="comunicacao-body" id="comunicacao-normas-body">
-                                    <p id="comunicacao-normas-paragrafo-1">O(a) autor(a) deverá enviar seu resumo
-                                        expandido conforme as diretrizes da revista, disponíveis em <a
-                                            id="link-diretrizes-comunicacao"
-                                            href="https://revinquietacoes.github.io/Revista-Inquieta-es/diretrizes-autores.html"
-                                            target="_blank" rel="noopener noreferrer">Diretrizes para Autores</a>.</p>
-                                    <p id="comunicacao-normas-paragrafo-2">Junto ao resumo expandido, deverá também
-                                        enviar um vídeo gravado na horizontal, apresentando oralmente seu trabalho, com
-                                        exposição dos objetivos, metodologia, desenvolvimento e principais conclusões.
-                                    </p>
-                                    <p id="comunicacao-normas-paragrafo-3">A duração mínima da comunicação oral é de 10
-                                        minutos, sendo aceito o tempo máximo de 15 minutos. Recomenda-se que a gravação
-                                        seja feita em local silencioso, com boa iluminação e boa qualidade de áudio.</p>
-                                    <p id="comunicacao-normas-paragrafo-4">Ao enviar o vídeo para a comunicação oral,
-                                        o(a) autor(a) cede os direitos de imagem e exibição exclusivamente para a
-                                        finalidade da atividade acadêmica no portal da revista.</p>
-                                </div>
-                            </details>
-                        </div>
-                    </div>
-                </section>
-                <section class="panel" id="palestras">
-                    <div class="panel-head" id="palestras-head">
-                        <h2 id="palestras-titulo">Palestras e novas atividades</h2>
-                        <p id="palestras-subtitulo">Programação em expansão permanente.</p>
-                    </div>
-                    <div class="panel-body" id="palestras-body">
-                        <details class="comunicacao-toggle" id="palestras-programacao-card">
-                            <summary id="palestras-programacao-summary">
-                                <div class="comunicacao-summary-left" id="palestras-programacao-left">
-                                    <h3 id="palestras-programacao-titulo">Agenda em construção</h3>
-                                    <p id="palestras-programacao-subtitulo">Informações iniciais sobre futuras
-                                        atividades.</p>
-                                </div><span class="comunicacao-icon" id="palestras-programacao-icon">+</span>
-                            </summary>
-                            <div class="comunicacao-body" id="palestras-programacao-body">
-                                <div class="notice-box" id="palestras-notice">
-                                    <p id="palestras-notice-1"><strong>Em breve:</strong> esta seção receberá novas
-                                        atividades, palestras, mesas, oficinas e ações acadêmicas vinculadas à
-                                        programação permanente da revista.</p>
-                                    <p id="palestras-notice-2">Os novos nomes, temas, horários e convites poderão ser
-                                        divulgados progressivamente no portal e nas redes da Revista Inquietações.</p>
-                                </div>
-                            </div>
-                        </details>
                     </div>
                 </section>
             </main>
