@@ -6,6 +6,23 @@ const supabaseUrl = process.env.SUPABASE_URL
 const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
 const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
+const BUCKET_NAME = 'chat-anexos'  // Bucket já existente
+
+async function ensureBucket() {
+  // Verifica se o bucket existe; se não, tenta criar (mas já deve existir)
+  const { data: buckets, error: listError } = await supabase.storage.listBuckets()
+  if (listError) throw new Error(`Erro ao listar buckets: ${listError.message}`)
+  const bucketExists = buckets.some(b => b.name === BUCKET_NAME)
+  if (!bucketExists) {
+    console.log(`📦 Criando bucket "${BUCKET_NAME}"...`)
+    const { error: createError } = await supabase.storage.createBucket(BUCKET_NAME, { public: true })
+    if (createError) throw new Error(`Erro ao criar bucket: ${createError.message}`)
+    console.log(`✅ Bucket "${BUCKET_NAME}" criado com sucesso.`)
+  } else {
+    console.log(`✅ Bucket "${BUCKET_NAME}" já existe.`)
+  }
+}
+
 function sanitizarNome(nome = '') {
   return String(nome)
     .normalize('NFD')
@@ -18,15 +35,23 @@ function sanitizarNome(nome = '') {
 
 const main = async (req) => {
   try {
+    console.log('🔵 [upload-material] Iniciando...')
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
-    await ensureSupportTables()
 
-    // Obtém o usuário autenticado
+    await ensureSupportTables()
+    await ensureBucket()
+
     const userId = getAuthenticatedUserId(req)
-    if (!userId) return json({ erro: 'Usuário não autenticado.' }, 401)
+    if (!userId) {
+      console.log('❌ Usuário não autenticado')
+      return json({ erro: 'Usuário não autenticado.' }, 401)
+    }
 
     const user = await getUserById(userId)
-    if (!user || user.status !== 'ativo') return json({ erro: 'Usuário inválido ou inativo.' }, 403)
+    if (!user || user.status !== 'ativo') {
+      console.log('❌ Usuário inválido ou inativo')
+      return json({ erro: 'Usuário inválido ou inativo.' }, 403)
+    }
 
     const form = await req.formData()
     const submissaoId = form.get('submissao_id') ? Number(form.get('submissao_id')) : null
@@ -34,10 +59,10 @@ const main = async (req) => {
     const arquivo = form.get('arquivo')
 
     if (!arquivo || typeof arquivo === 'string') {
-      return json({ erro: 'Nenhum arquivo enviado ou arquivo inválido.' }, 400)
+      console.log('❌ Nenhum arquivo enviado')
+      return json({ erro: 'Nenhum arquivo enviado.' }, 400)
     }
 
-    // Validações de tipo e tamanho
     const tiposPermitidos = [
       'application/pdf',
       'application/msword',
@@ -47,22 +72,23 @@ const main = async (req) => {
       'video/mp4', 'video/webm'
     ]
     if (!tiposPermitidos.includes(arquivo.type)) {
+      console.log(`❌ Tipo não permitido: ${arquivo.type}`)
       return json({ erro: 'Tipo de arquivo não permitido.' }, 400)
     }
     if (arquivo.size > 10_000_000) {
+      console.log(`❌ Arquivo muito grande: ${arquivo.size} bytes`)
       return json({ erro: 'Arquivo muito grande (máx. 10 MB).' }, 400)
     }
 
     const timestamp = Date.now()
     const safeName = sanitizarNome(arquivo.name || 'arquivo')
     const storagePath = `${categoria}/${userId}${submissaoId ? `/submissao_${submissaoId}` : ''}/${timestamp}-${safeName}`
-    const bucket = 'uploads'  // Usando um bucket único, crie-o no Supabase
 
-    console.log(`📤 Upload para bucket "${bucket}", caminho: ${storagePath}`)
-
+    console.log(`📤 Fazendo upload para bucket "${BUCKET_NAME}", caminho: ${storagePath}`)
+    const bytes = Buffer.from(await arquivo.arrayBuffer())
     const { data, error } = await supabase.storage
-      .from(bucket)
-      .upload(storagePath, Buffer.from(await arquivo.arrayBuffer()), {
+      .from(BUCKET_NAME)
+      .upload(storagePath, bytes, {
         contentType: arquivo.type,
         cacheControl: '3600',
         upsert: false
@@ -70,13 +96,12 @@ const main = async (req) => {
 
     if (error) {
       console.error('❌ Erro no upload Supabase:', error)
-      return json({ erro: 'Falha ao salvar arquivo no armazenamento.', detalhe: error.message }, 500)
+      return json({ erro: 'Falha ao salvar arquivo no Supabase.', detalhe: error.message }, 500)
     }
 
-    const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(storagePath)
+    const { data: urlData } = supabase.storage.from(BUCKET_NAME).getPublicUrl(storagePath)
     const publicUrl = urlData.publicUrl
 
-    // Registra na tabela arquivos_publicacao
     const inserido = await sql`
       INSERT INTO arquivos_publicacao (
         usuario_id, submissao_id, categoria, nome_original, mime_type, tamanho_bytes, blob_key, blob_store, url_acesso, publico
@@ -85,7 +110,7 @@ const main = async (req) => {
       ) RETURNING id, url_acesso, blob_key
     `
 
-    console.log('✅ Upload concluído, ID:', inserido[0].id)
+    console.log(`✅ Upload concluído. ID: ${inserido[0].id}, URL: ${publicUrl}`)
 
     return json({
       sucesso: true,
