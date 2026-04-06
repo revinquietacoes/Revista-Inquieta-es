@@ -1,75 +1,30 @@
+
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html>
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Painel do(a) Editor(a)-chefe</title>
-<link rel="icon" href="../assets/favicon.png">
-<link rel="stylesheet" href="painel-base.css">
-<script src="painel-base.js" defer></script>
+<title>Painel Editor Chefe</title>
+<link rel="stylesheet" href="style.css">
 </head>
 <body>
-<div class="page-shell">
-<header class="topbar">
-  <div class="brand-wrap">
-    <div class="avatar-box">
-      <img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
-      <img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
-    </div>
-    <div class="brand-copy">
-      <h1>Painel do(a) Editor(a)-chefe</h1>
-      <p>Gestão integral do periódico, dos usuários, das submissões e dos dossiês temáticos</p>
-    </div>
-  </div>
-  <div class="actions-row">
-    <div style="position: relative; margin-right: 10px;">
-      <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
-      <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
-      <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
-    </div>
-    <a class="btn btn-secondary" href="../index.html">Voltar ao portal</a>
-    <button class="btn btn-soft" data-action="logout">Sair</button>
-  </div>
-</header>
-
-<section class="hero">
-  <h2>Visão editorial central</h2>
-  <p>Aqui você acompanha usuários cadastrados, aprova perfis editoriais e pareceristas, cria dossiês temáticos, designa pareceristas, envia mensagens e acompanha o conjunto das submissões da revista.</p>
-</section>
-
-<div class="cards-grid">
-  <article class="card"><div class="card-top"><h3>Enviar notificação</h3><span class="badge badge-blue">Comunicado</span></div><p>Envie uma notificação para autores, pareceristas, editores ou todos os usuários.</p><div class="actions-row"><a class="btn btn-primary" href="enviar-notificacao.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Usuários cadastrados</h3><span class="badge badge-blue">Base completa</span></div><p>Consulta, aprovação e atualização de usuários.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-usuarios.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Submissões ativas</h3><span class="badge badge-gold">Fluxo editorial</span></div><p>Separa materiais por situação.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-submissoes.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Status das submissões</h3><span class="badge badge-blue">Controle manual</span></div><p>Altera manualmente o status editorial.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-status-submissoes.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Pareceres por parecerista</h3><span class="badge badge-green">Consulta editorial</span></div><p>Histórico completo de avaliações por parecerista.</p><div class="actions-row"><a class="btn btn-primary" href="pareceres-parecerista.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Decisão editorial</h3><span class="badge badge-gold">Validação</span></div><p>Valida pareceres e decide o fluxo editorial.</p><div class="actions-row"><a class="btn btn-primary" href="decisao-editorial.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Dossiês temáticos</h3><span class="badge badge-green">Gestão temática</span></div><p>Cria dossiês, define editor responsável e acompanha o estado de abertura.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-dossies.html">Ir ao conteúdo</a></div></article>
-  <article class="card"><div class="card-top"><h3>Chat interno</h3><span class="badge badge-blue">10 dias</span></div><p>Troca mensagens com autores, pareceristas e editores.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-chat.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Quem está online</h3><span class="badge badge-green">Presença</span></div><p>Acompanha usuários online e envia mensagens rápidas.</p><div class="actions-row"><a class="btn btn-primary" href="usuarios-online.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Perfil</h3><span class="badge badge-blue">Cadastro</span></div><p>Atualiza seus dados e altera sua foto de perfil.</p><div class="actions-row"><a class="btn btn-primary" href="perfil.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Certificados</h3><span class="badge badge-gold">Documentos</span></div><p>Área privada de certificados.</p><div class="actions-row"><a class="btn btn-primary" href="certificados.html">Abrir</a></div></article>
-  <article class="card"><div class="card-top"><h3>Gestão de certificados</h3><span class="badge badge-blue">Upload privado</span></div><p>Envia certificados para autores, pareceristas e equipe editorial.</p><div class="actions-row"><a class="btn btn-primary" href="editor-chefe-certificados.html">Abrir</a></div></article>
+<div class="container">
+<h1>Editor-chefe</h1>
+<button onclick="load()">Status das submissões</button>
+<ul id="lista"></ul>
 </div>
 
-<footer class="page-footer"></footer>
-</div>
+<script src="app.js"></script>
 <script>
-document.addEventListener('DOMContentLoaded', () => {
-  setTimeout(() => {
-    if (typeof AppPanel === 'undefined') {
-      console.error('AppPanel não carregado');
-      return;
-    }
-    const user = AppPanel.requireRole(['editor_chefe']);
-    if (!user) return;
-    AppPanel.atualizarAvatares();
-    AppPanel.atualizarContadorNotificacoes();
-    AppPanel.iniciarPollingNotificacoes();
-    const btn = document.getElementById('btn-notificacoes');
-    if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
-  }, 100);
-});
+async function load(){
+ const d=await AppPanel.apiData("fila_status_editor_chefe");
+ const ul=document.getElementById("lista");
+ ul.innerHTML="";
+ (d.items||[]).forEach(i=>{
+   const li=document.createElement("li");
+   li.innerText=i.titulo+" - "+i.status;
+   ul.appendChild(li);
+ });
+}
 </script>
 </body>
 </html>
