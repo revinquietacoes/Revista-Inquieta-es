@@ -15,14 +15,6 @@ function safeDownloadName(name) {
     .replace(/^-|-$/g, '')
 }
 
-const tabela = url.searchParams.get('tabela') === 'parecerista' ? 'certificados_parecerista' : 'certificados_privados';
-const rows = await sql`
-    SELECT id, titulo, blob_key, mime_type, nome_arquivo, usuario_id
-    FROM ${sql(tabela)}
-    WHERE id = ${certificateId}
-    LIMIT 1
-`;
-
 const main = async (req) => {
   try {
     if (req.method !== 'GET') {
@@ -35,12 +27,12 @@ const main = async (req) => {
     const certificateId = Number(url.searchParams.get('id') || 0)
     const download = url.searchParams.get('download') === '1'
     const queryUserId = Number(url.searchParams.get('user_id') || 0)
+    const tabela = url.searchParams.get('tabela') === 'parecerista' ? 'certificados_parecerista' : 'certificados_privados'
 
     if (!certificateId) {
       return new Response('Parâmetro id é obrigatório.', { status: 400 })
     }
 
-    // Tenta obter userId do header; se não, usa da query string
     let userId = getAuthenticatedUserId(req)
     if (!userId && queryUserId) {
       userId = queryUserId
@@ -50,20 +42,17 @@ const main = async (req) => {
       return new Response('Usuário não autenticado.', { status: 401 })
     }
 
-    const rows = await sql`
+    const [cert] = await sql`
       SELECT id, titulo, blob_key, mime_type, nome_arquivo, usuario_id
-      FROM certificados_privados
+      FROM ${sql(tabela)}
       WHERE id = ${certificateId}
       LIMIT 1
     `
 
-    if (!rows.length) {
+    if (!cert) {
       return new Response('Certificado não encontrado.', { status: 404 })
     }
 
-    const cert = rows[0]
-
-    // Verificar se o usuário logado é o dono
     if (cert.usuario_id !== userId) {
       return new Response('Acesso negado a este certificado.', { status: 403 })
     }
@@ -72,7 +61,6 @@ const main = async (req) => {
       return new Response('Certificado sem arquivo associado.', { status: 404 })
     }
 
-    // Buscar do Supabase
     const { data, error } = await supabase.storage
       .from('certificados')
       .download(cert.blob_key)

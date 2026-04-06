@@ -28,14 +28,31 @@ const main = async (req) => {
     if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
 
     const type = String(url.searchParams.get('type') || '').trim()
-    const rows = type
-      ? await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${user.id} AND tipo = ${type} ORDER BY criado_em DESC`
-      : await sql`SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key FROM certificados_privados WHERE usuario_id = ${user.id} ORDER BY criado_em DESC`
+    let todos = []
 
-    const rows = await sql` SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'privado' as origem FROM certificados_privados WHERE usuario_id = ${user.id} UNION ALL SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'parecerista' as origem FROM certificados_parecerista WHERE usuario_id = ${user.id} ORDER BY criado_em DESC `;
+    if (!type || type === 'privado') {
+      const privados = await sql`
+        SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'privado' as origem
+        FROM certificados_privados
+        WHERE usuario_id = ${user.id}
+      `
+      todos.push(...privados)
+    }
+
+    if (!type || type === 'parecerista') {
+      const pareceristas = await sql`
+        SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'parecerista' as origem
+        FROM certificados_parecerista
+        WHERE usuario_id = ${user.id}
+      `
+      todos.push(...pareceristas)
+    }
+
+    todos.sort((a, b) => new Date(b.criado_em) - new Date(a.criado_em))
+
     return json({
       sucesso: true,
-      certificados: rows.map((item) => ({
+      certificados: todos.map(item => ({
         id: item.id,
         tipo: item.tipo,
         categoria: item.categoria,
@@ -43,10 +60,10 @@ const main = async (req) => {
         nome_arquivo: item.nome_arquivo,
         mime_type: item.mime_type,
         criado_em: item.criado_em,
-        blob_key: item.blob_key
+        blob_key: item.blob_key,
+        origem: item.origem
       }))
     })
-
   } catch (error) {
     console.error('Erro em list-my-certificates:', error)
     return json({ erro: 'Erro interno ao listar certificados.', detalhe: error.message }, 500)

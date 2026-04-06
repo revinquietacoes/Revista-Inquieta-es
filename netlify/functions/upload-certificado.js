@@ -101,11 +101,10 @@ const main = async (req) => {
 
     if (!bytes || !bytes.length) return json({ erro: 'Arquivo vazio ou inválido.' }, 400)
 
-    // Upload para Supabase Storage
     const storagePath = `certificados/${targetUser.id}/${payload.certificateType}/${Date.now()}-${safeFileName}`
     console.log('🔵 Upload para Supabase:', storagePath)
 
-    const { data: uploadData, error: uploadError } = await supabase.storage
+    const { error: uploadError } = await supabase.storage
       .from('certificados')
       .upload(storagePath, bytes, {
         contentType: mimeType,
@@ -117,33 +116,17 @@ const main = async (req) => {
       console.error('❌ Erro no upload para Supabase:', uploadError)
       return json({ erro: 'Erro ao salvar o arquivo no armazenamento.' }, 500)
     }
-    // Após gerar o storagePath e codigoAutenticidade, decida a tabela
-    let tabelaDestino = 'certificados_privados';
-    if (payload.certificateType === 'parecer' || payload.certificateType === 'parecerista') {
-      tabelaDestino = 'certificados_parecerista';
-    }
-
-    const inserted = await sql`
-    INSERT INTO ${sql(tabelaDestino)} (
-        usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key,
-        nome_arquivo, mime_type, tamanho_bytes, codigo_autenticidade
-    ) VALUES (
-        ${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null},
-        ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${storagePath},
-        ${safeFileName}, ${mimeType}, ${bytes.length}, ${codigoAutenticidade}
-    )
-    RETURNING id, criado_em, codigo_autenticidade
-`;
-
-    // Obter URL pública
-    const { data: urlData } = supabase.storage.from('certificados').getPublicUrl(storagePath)
-    const publicUrl = urlData.publicUrl
 
     const codigoAutenticidade = crypto.randomUUID()
     console.log('🔵 Inserindo no banco com código:', codigoAutenticidade)
 
+    let tabelaDestino = 'certificados_privados'
+    if (payload.certificateType === 'parecer' || payload.certificateType === 'parecerista') {
+      tabelaDestino = 'certificados_parecerista'
+    }
+
     const inserted = await sql`
-      INSERT INTO certificados_privados (
+      INSERT INTO ${sql(tabelaDestino)} (
         usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key,
         nome_arquivo, mime_type, tamanho_bytes, codigo_autenticidade
       )
@@ -159,8 +142,7 @@ const main = async (req) => {
     return json({
       sucesso: true,
       certificado: inserted[0],
-      codigo_autenticidade: inserted[0].codigo_autenticidade,
-      url: publicUrl
+      codigo_autenticidade: inserted[0].codigo_autenticidade
     }, 201)
 
   } catch (error) {
