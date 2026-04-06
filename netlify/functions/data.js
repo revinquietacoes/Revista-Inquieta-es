@@ -25,15 +25,31 @@ async function getTableColumns(tableName) {
 }
 
 async function getChiefSubmissionStatusQueue() {
-  const rows = await sql`
-    SELECT s.id, s.titulo, s.status, s.secao, s.data_submissao, s.status_atualizado_em, s.status_atualizado_por,
-           a.nome AS autor_nome, dt.titulo AS dossie_titulo, u.nome AS atualizado_por_nome
-    FROM submissoes s
-    LEFT JOIN usuarios a ON a.id = s.autor_id
-    LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
-    LEFT JOIN usuarios u ON u.id = s.status_atualizado_por
-    ORDER BY s.data_submissao DESC, s.id DESC`
-  return { items: rows, statuses: CHIEF_ALLOWED_SUBMISSION_STATUSES }
+  try {
+    // Verifica quais colunas existem na tabela submissoes
+    const submissaoCols = await getTableColumns('submissoes');
+    const selectFields = [];
+    selectFields.push('s.id', 's.titulo', 's.status', 's.secao', 's.data_submissao');
+    if (submissaoCols.has('status_atualizado_em')) selectFields.push('s.status_atualizado_em');
+    else selectFields.push('NULL::timestamptz AS status_atualizado_em');
+    if (submissaoCols.has('status_atualizado_por')) selectFields.push('s.status_atualizado_por');
+    else selectFields.push('NULL::bigint AS status_atualizado_por');
+    selectFields.push('a.nome AS autor_nome', 'dt.titulo AS dossie_titulo', 'u.nome AS atualizado_por_nome');
+
+    const query = sql`
+      SELECT ${sql(selectFields.join(', '))}
+      FROM submissoes s
+      LEFT JOIN usuarios a ON a.id = s.autor_id
+      LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+      LEFT JOIN usuarios u ON u.id = s.status_atualizado_por
+      ORDER BY s.data_submissao DESC, s.id DESC
+    `;
+    const rows = await query;
+    return { items: rows, statuses: CHIEF_ALLOWED_SUBMISSION_STATUSES };
+  } catch (error) {
+    console.error('Erro em getChiefSubmissionStatusQueue:', error);
+    throw error;
+  }
 }
 
 async function updateChiefSubmissionStatus(payload, user) {
