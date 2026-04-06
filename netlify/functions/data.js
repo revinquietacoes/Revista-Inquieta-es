@@ -4,7 +4,7 @@ const { wrapHttp } = require('./_netlify')
 function normalizeReviewBucket(status) {
   if (status === 'concluido') return 'concluidos'
   if (status === 'recusado') return 'nao_aceitos'
- if (status === 'aceito') return 'aceitos'
+  if (status === 'aceito') return 'aceitos'
   if (status === 'em_andamento' || status === 'em_avaliacao') return 'em_avaliacao'
   return 'outros'
 }
@@ -461,7 +461,7 @@ const main = async (req) => {
                 LEFT JOIN usuarios a ON a.id = s.autor_id
                 LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
                 ORDER BY s.data_submissao DESC`
-      const fileMap = await getArquivoPrincipalPorSubmissaoIds(submissoes.map((r) => Number(r.id)).filter(Boolean))
+            const fileMap = await getArquivoPrincipalPorSubmissaoIds(submissoes.map((r) => Number(r.id)).filter(Boolean))
       const dossies = await maybeRows('dossies_tematicos', () => {
         if (chiefHasDossieAdj && chiefHasDossieResp) return sql`SELECT dt.*, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = COALESCE(dt.editor_adjunto_id, dt.editor_responsavel_id) ORDER BY dt.criado_em DESC`
         if (chiefHasDossieResp) return sql`SELECT dt.*, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = dt.editor_responsavel_id ORDER BY dt.criado_em DESC`
@@ -470,4 +470,163 @@ const main = async (req) => {
       })
       const mensagens = await sql`SELECT m.*, ur.nome AS remetente_nome, ur.perfil AS remetente_perfil FROM mensagens_internas m LEFT JOIN usuarios ur ON ur.id = m.remetente_id WHERE m.destinatario_id = ${user.id} OR m.remetente_id = ${user.id} ORDER BY m.criado_em DESC LIMIT 100`
       return json({
-       
+        sucesso: true,
+        usuario: user,
+        usuarios,
+        submissoes: submissoes.map((r) => ({ ...r, ...(fileMap.get(Number(r.id)) || { url_arquivo: null, nome_arquivo: null }) })),
+        dossies,
+        mensagens
+      })
+    }
+
+    // ========== AÇÕES DE PARECERISTA ==========
+    if (action === 'reviewer_list_for_history') {
+      if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      return json({ sucesso: true, ...(await getReviewerListForHistory(user)) })
+    }
+
+    if (action === 'reviewer_review_history') {
+      if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      const reviewerId = Number(pareceristaId || targetUserId || body?.pareceristaId || body?.id)
+      if (!reviewerId) return json({ erro: 'Parecerista não informado.' }, 400)
+      return json({ sucesso: true, usuario: user, ...(await getReviewerReviewHistory(user, reviewerId)) })
+    }
+
+    // ========== AÇÕES DE DECISÃO EDITORIAL ==========
+    if (action === 'editorial_review_queue') {
+      if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      return json({ sucesso: true, ...(await getEditorialQueue()) })
+    }
+
+    if (action === 'editorial_review_decision') {
+      if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
+      return json({ sucesso: true, ...(await decidirParecer({ ...body, editorId: user.id })) })
+    }
+
+    // ========== AÇÕES DE DESIGNACAO ==========
+    if (action === 'update_designacao_status') {
+      const result = await updateDesignacaoStatus(body, user)
+      if (result?.erro) return json({ erro: result.erro }, result.code || 400)
+      return json({ sucesso: true, ...result })
+    }
+
+    // ========== AÇÕES PÚBLICAS ==========
+    if (action === 'public_dossiers') {
+      const dossieCols = await getTableColumns('dossies_tematicos')
+      const hasDossieAdj = dossieCols.has('editor_adjunto_id')
+      const hasDossieResp = dossieCols.has('editor_responsavel_id')
+      const dossies = await maybeRows('dossies_tematicos', () => {
+        if (hasDossieAdj && hasDossieResp) return sql`SELECT dt.id, dt.titulo, dt.descricao, dt.status, dt.data_abertura, dt.data_fechamento, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = COALESCE(dt.editor_adjunto_id, dt.editor_responsavel_id) WHERE dt.status = 'aberto' ORDER BY dt.data_abertura DESC, dt.titulo ASC`
+        if (hasDossieResp) return sql`SELECT dt.id, dt.titulo, dt.descricao, dt.status, dt.data_abertura, dt.data_fechamento, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = dt.editor_responsavel_id WHERE dt.status = 'aberto' ORDER BY dt.data_abertura DESC, dt.titulo ASC`
+        if (hasDossieAdj) return sql`SELECT dt.id, dt.titulo, dt.descricao, dt.status, dt.data_abertura, dt.data_fechamento, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = dt.editor_adjunto_id WHERE dt.status = 'aberto' ORDER BY dt.data_abertura DESC, dt.titulo ASC`
+        return sql`SELECT dt.id, dt.titulo, dt.descricao, dt.status, dt.data_abertura, dt.data_fechamento, NULL::TEXT AS editor_nome FROM dossies_tematicos dt WHERE dt.status = 'aberto' ORDER BY dt.data_abertura DESC, dt.titulo ASC`
+      })
+      return json({ sucesso: true, dossies })
+    }
+
+    // ========== AÇÕES DE USUÁRIOS ONLINE ==========
+    if (action === 'online_users') {
+      if (!canAccess(user, ['editor', 'editor_adjunto', 'editor_chefe', 'parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
+      const rows = user.perfil === 'editor_chefe'
+        ? await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online, ultimo_acesso_em FROM usuarios WHERE COALESCE(status,'ativo')='ativo' ORDER BY online DESC, ultimo_acesso_em DESC NULLS LAST, perfil, nome`
+        : await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online, ultimo_acesso_em FROM usuarios WHERE COALESCE(status,'ativo')='ativo' AND perfil IN ('editor_chefe','editor','editor_adjunto','parecerista') ORDER BY online DESC, ultimo_acesso_em DESC NULLS LAST, perfil, nome`
+      return json({ sucesso: true, usuarios: rows })
+    }
+
+    // ========== AÇÕES DE CHAT ==========
+    if (action === 'chat_recipients') {
+      let rows
+      if (user.perfil === 'autor') rows = await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online, ultimo_acesso_em FROM usuarios WHERE COALESCE(status,'ativo')='ativo' AND perfil IN ('editor_chefe','editor','editor_adjunto') ORDER BY online DESC, ultimo_acesso_em DESC NULLS LAST, perfil, nome`
+      else rows = await sql`SELECT id, nome, perfil, foto_perfil_url, foto_perfil_aprovada, consentimento_foto_publica, CASE WHEN ultimo_acesso_em IS NOT NULL AND ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online, ultimo_acesso_em FROM usuarios WHERE COALESCE(status,'ativo')='ativo' ORDER BY online DESC, ultimo_acesso_em DESC NULLS LAST, perfil, nome`
+      return json({ sucesso: true, usuarios: rows })
+    }
+
+    if (action === 'chat_messages') {
+      const targetId = Number(targetUserId)
+      if (!targetId) return json({ erro: 'Destinatário não informado.' }, 400)
+      const allowedRecipients = user.perfil === 'autor'
+        ? await sql`SELECT id FROM usuarios WHERE COALESCE(status,'ativo')='ativo' AND perfil IN ('editor_chefe','editor','editor_adjunto') AND id = ${targetId}`
+        : await sql`SELECT id FROM usuarios WHERE COALESCE(status,'ativo')='ativo' AND id = ${targetId}`
+      if (!allowedRecipients.length) return json({ erro: 'Você não pode acessar esta conversa.' }, 403)
+      const messages = await sql`
+        SELECT m.*, ur.nome AS remetente_nome, ur.perfil AS remetente_perfil, ur.foto_perfil_url AS remetente_foto,
+               ur.foto_perfil_aprovada AS remetente_foto_aprovada, ur.consentimento_foto_publica AS remetente_foto_consent,
+               ud.nome AS destinatario_nome
+        FROM mensagens_internas m
+        JOIN usuarios ur ON ur.id = m.remetente_id
+        JOIN usuarios ud ON ud.id = m.destinatario_id
+        WHERE (m.remetente_id = ${user.id} AND m.destinatario_id = ${targetId})
+           OR (m.remetente_id = ${targetId} AND m.destinatario_id = ${user.id})
+        ORDER BY m.criado_em ASC
+        LIMIT 300`
+      return json({ sucesso: true, mensagens: messages })
+    }
+
+    // ========== AÇÕES DE CERTIFICADOS ==========
+    if (action === 'certificates') {
+      const mapa = {
+        autor: 'https://drive.google.com/drive/folders/1t_xVWLyB8qsC6Zm77z7OUXqalRu6XdWr?usp=drive_link',
+        parecerista: 'https://drive.google.com/drive/folders/1mLe8TLFmVkL6QpscMVW2pZNmOJDTPcbs?usp=drive_link',
+        editor: 'https://drive.google.com/drive/folders/12oMGUyoZm3qLzuxdLIo-3x7plUMEWUyF?usp=drive_link',
+        editor_adjunto: 'https://drive.google.com/drive/folders/12oMGUyoZm3qLzuxdLIo-3x7plUMEWUyF?usp=drive_link',
+        editor_chefe: 'https://drive.google.com/drive/folders/12oMGUyoZm3qLzuxdLIo-3x7plUMEWUyF?usp=drive_link'
+      }
+      return json({ sucesso: true, link: mapa[user.perfil] })
+    }
+
+    // ========== AÇÕES DE NOTIFICAÇÃO ==========
+    if (action === 'notificacoes') {
+      const { limit = 20, offset = 0, apenasNaoLidas = false } = body
+      let query = sql`
+        SELECT n.*, u.nome AS remetente_nome, u.foto_perfil_url AS remetente_foto
+        FROM notificacoes n
+        LEFT JOIN usuarios u ON u.id = n.remetente_id
+        WHERE n.usuario_id = ${user.id}
+      `
+      if (apenasNaoLidas) query = sql`${query} AND n.lida = FALSE`
+      query = sql`${query} ORDER BY n.criado_em DESC LIMIT ${limit} OFFSET ${offset}`
+      const notificacoes = await query
+      const naoLidasResult = await sql`SELECT COUNT(*) FROM notificacoes WHERE usuario_id = ${user.id} AND lida = FALSE`
+      const naoLidas = parseInt(naoLidasResult[0].count)
+      return json({ sucesso: true, notificacoes, naoLidas })
+    }
+
+    // ========== AÇÕES DE PERFIL ==========
+    if (action === 'update_profile') {
+      const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
+      if (avatarUrl) {
+        await sql`
+          UPDATE usuarios
+          SET foto_perfil_url = ${avatarUrl},
+              atualizado_em = CURRENT_TIMESTAMP
+          WHERE id = ${user.id}
+        `
+        const refreshed = await getUserById(user.id)
+        return json({ sucesso: true, usuario: refreshed })
+      }
+      await sql`
+        UPDATE usuarios
+        SET nome = COALESCE(${nome || null}, nome),
+            instituicao = ${instituicao || null},
+            orcid = ${orcid || null},
+            lattes = ${lattes || null},
+            origem = ${origem || null},
+            telefone = ${telefone || null},
+            receber_noticias_email = ${!!receber_noticias_email},
+            atualizado_em = CURRENT_TIMESTAMP
+        WHERE id = ${user.id}
+      `
+      const refreshed = await getUserById(user.id)
+      return json({ sucesso: true, usuario: refreshed })
+    }
+
+    // Se nenhuma ação corresponder
+    return json({ erro: 'Ação inválida.' }, 400)
+
+  } catch (erro) {
+    console.error('Erro em data.js:', erro)
+    return json({ erro: 'Erro ao carregar dados.', detalhe: erro.message }, 500)
+  }
+}
+
+exports.handler = wrapHttp(main)
