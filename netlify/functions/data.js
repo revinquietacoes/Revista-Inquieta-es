@@ -305,21 +305,7 @@ const main = async (req) => {
     }
 
     // ========== NOVAS AÇÕES DE NOTIFICAÇÃO ==========
-    if (action === 'notificacoes') {
-      const { limit = 20, offset = 0, apenasNaoLidas = false } = body
-      let query = sql`
-        SELECT n.*, u.nome AS remetente_nome, u.foto_perfil_url AS remetente_foto
-        FROM notificacoes n
-        LEFT JOIN usuarios u ON u.id = n.remetente_id
-        WHERE n.usuario_id = ${user.id}
-      `
-      if (apenasNaoLidas) query = sql`${query} AND n.lida = FALSE`
-      query = sql`${query} ORDER BY n.criado_em DESC LIMIT ${limit} OFFSET ${offset}`
-      const notificacoes = await query
-      const naoLidasResult = await sql`SELECT COUNT(*) FROM notificacoes WHERE usuario_id = ${user.id} AND lida = FALSE`
-      const naoLidas = parseInt(naoLidasResult[0].count)
-      return json({ sucesso: true, notificacoes, naoLidas })
-    }
+    if (action === 'notificacoes') { const { limit = 20, offset = 0, apenasNaoLidas = false } = body; let query = sql` SELECT n.*, u.nome AS remetente_nome, u.foto_perfil_url AS remetente_foto FROM notificacoes n LEFT JOIN usuarios u ON u.id = n.remetente_id WHERE n.usuario_id = ${user.id} `; if (apenasNaoLidas) query = sql`${query} AND n.lida = FALSE`; query = sql`${query} ORDER BY n.criado_em DESC LIMIT ${limit} OFFSET ${offset}`; const notificacoes = await query; const naoLidasResult = await sql`SELECT COUNT(*) FROM notificacoes WHERE usuario_id = ${user.id} AND lida = FALSE`; const naoLidas = parseInt(naoLidasResult[0].count); return json({ sucesso: true, notificacoes, naoLidas }); }
 
     if (action === 'marcar_notificacao_lida') {
       const { notificacaoId } = body

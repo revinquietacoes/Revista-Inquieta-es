@@ -29,11 +29,12 @@
   }
 
   function userChipHtml(user, extraText = '') {
+    if (!user) return '<div class="user-chip">Usuário não encontrado</div>';
     const avatar = user.foto_perfil_url || '../assets/avatares/avatar-padrao.png';
     return `<div class="user-chip" style="display: flex; align-items: center; gap: 8px;">
-      <img src="${avatar}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
-      <div><strong>${escapeHtml(user.nome)}</strong><br><small>${escapeHtml(extraText)}</small></div>
-    </div>`;
+    <img src="${avatar}" style="width: 32px; height: 32px; border-radius: 50%; object-fit: cover;">
+    <div><strong>${escapeHtml(user.nome)}</strong><br><small>${escapeHtml(extraText)}</small></div>
+  </div>`;
   }
 
   // ========== FUNÇÕES DE AUTENTICAÇÃO ==========
