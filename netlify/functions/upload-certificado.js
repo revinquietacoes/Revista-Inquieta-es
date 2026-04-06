@@ -1,6 +1,7 @@
 const { makeStore } = require('./_blobs')
 const { sql, json, getUserById, ensureSupportTables, canAccess, getAuthenticatedUserId } = require('./_db')
 const { wrapHttp } = require('./_netlify')
+const crypto = require('crypto')
 
 const certificatesStore = makeStore('certificados-usuarios')
 
@@ -103,34 +104,31 @@ const main = async (req) => {
       }
     })
 
-    const crypto = require('crypto');
-    // ... dentro do bloco onde insere o certificado
-    const codigoAutenticidade = crypto.randomUUID(); // ou use gen_random_uuid() via SQL
+    // Gera código único de autenticidade para validação pública
+    const codigoAutenticidade = crypto.randomUUID()
 
     const inserted = await sql`
-  INSERT INTO certificados_privados (
-    usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key,
-    nome_arquivo, mime_type, tamanho_bytes, codigo_autenticidade
-  )
-  VALUES (
-    ${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null},
-    ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${blobKey},
-    ${safeFileName}, ${mimeType}, ${bytes.length}, ${codigoAutenticidade}
-  )
-  RETURNING id, criado_em, codigo_autenticidade
-`;
-
-    const inserted = await sql`
-      INSERT INTO certificados_privados (usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key, nome_arquivo, mime_type, tamanho_bytes)
-      VALUES (${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null}, ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${blobKey}, ${safeFileName}, ${mimeType}, ${bytes.length})
-      RETURNING id, criado_em
+      INSERT INTO certificados_privados (
+        usuario_id, enviado_por_usuario_id, titulo, descricao, tipo, categoria, blob_key,
+        nome_arquivo, mime_type, tamanho_bytes, codigo_autenticidade
+      )
+      VALUES (
+        ${targetUser.id}, ${editorId}, ${payload.title}, ${payload.description || null},
+        ${payload.certificateType}, ${mapCategory(payload.certificateType)}, ${blobKey},
+        ${safeFileName}, ${mimeType}, ${bytes.length}, ${codigoAutenticidade}
+      )
+      RETURNING id, criado_em, codigo_autenticidade
     `
 
-    return json({ sucesso: true, certificado: inserted[0] }, 201)
+    return json({
+      sucesso: true,
+      certificado: inserted[0],
+      codigo_autenticidade: inserted[0].codigo_autenticidade
+    }, 201)
   } catch (error) {
+    console.error('Erro em upload-certificado:', error)
     return json({ erro: 'Erro interno ao enviar certificado.', detalhe: error.message }, 500)
   }
-
 }
 
 exports.handler = wrapHttp(main)
