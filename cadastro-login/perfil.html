@@ -224,233 +224,236 @@
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', async () => {
-            // Aguarda o AppPanel ser definido (até 2 segundos)
-            let tentativas = 0;
-            while (typeof AppPanel === 'undefined' && tentativas < 20) {
-                await new Promise(r => setTimeout(r, 100));
-                tentativas++;
-            }
-            if (typeof AppPanel === 'undefined') {
-                console.error('AppPanel não carregado após 2 segundos');
-                const msg = document.getElementById("msg-avatar");
-                if (msg) showMessage(msg, "❌ Erro ao carregar sistema. Recarregue a página.", "error");
-                return;
-            }
-            // Restante do código...
-        });
-
-        try {
-            if (typeof AppPanel === 'undefined') throw new Error("AppPanel não carregado");
-            const data = await AppPanel.apiData("me");
-            usuarioAtual = data.usuario;
-            if (!usuarioAtual?.id) throw new Error("Usuário não encontrado");
-            console.log("✅ Dados do usuário carregados:", usuarioAtual);
-
-            // Preencher formulário
-            const form = document.getElementById("form-perfil");
-            if (form) {
-                form.nome.value = usuarioAtual.nome || "";
-                form.email.value = usuarioAtual.email || "";
-                form.perfil.value = usuarioAtual.perfil || "";
-                form.instituicao.value = usuarioAtual.instituicao || "";
-                form.orcid.value = usuarioAtual.orcid || "";
-                form.lattes.value = usuarioAtual.lattes || "";
-                form.origem.value = usuarioAtual.origem || "";
-                form.telefone.value = usuarioAtual.telefone || "";
-            }
-
-            // Avatar preview (usa URL pública do Supabase, se existir)
-            const preview = document.getElementById("avatar-preview");
-            const defaultAvatar = "../assets/avatares/avatar-padrao.png";
-            if (usuarioAtual.foto_perfil_url && usuarioAtual.foto_perfil_url !== "null") {
-                let avatarUrl = usuarioAtual.foto_perfil_url;
-                // Se a URL for antiga (do Netlify Blobs), converte? Não precisa mais.
-                preview.src = avatarUrl + "?t=" + Date.now();
-                document.querySelectorAll("[data-avatar-user]").forEach(el => {
-                    if (el) el.src = avatarUrl + "?t=" + Date.now();
-                });
-            } else {
-                preview.src = defaultAvatar;
-            }
-
-            // ========== UPLOAD DE AVATAR (chama função Netlify que salva no Supabase) ==========
-            const drop = document.getElementById("avatar-drop");
-            const previewClick = document.getElementById("avatar-preview-click");
-            const input = document.getElementById("avatar-input");
-            const canvas = document.getElementById("crop-canvas");
-            const cropBox = document.querySelector(".crop-container");
-            const btnSave = document.getElementById("btn-save-avatar");
-            const btnCancel = document.getElementById("btn-cancel-crop");
-            const msgAvatar = document.getElementById("msg-avatar");
-
-            let cropCtx = canvas.getContext("2d");
-            let imgObj = null;
-            let cropSize = 300;
-
-            if (drop) drop.onclick = () => input.click();
-            if (previewClick) previewClick.onclick = () => input.click();
-
-            if (drop) {
-                drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("drag"); });
-                drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
-                drop.addEventListener("drop", e => {
-                    e.preventDefault();
-                    drop.classList.remove("drag");
-                    const file = e.dataTransfer.files[0];
-                    if (file && file.type.startsWith("image/")) loadImage(file);
-                    else showMessage(msgAvatar, "Selecione uma imagem válida", "error");
-                });
-            }
-
-            if (input) input.addEventListener("change", () => { if (input.files[0]) loadImage(input.files[0]); });
-
-            if (btnCancel) btnCancel.onclick = () => {
-                cropBox.style.display = "none";
-                imgObj = null;
-                input.value = "";
-                showMessage(msgAvatar, "Operação cancelada", "warning");
-                setTimeout(() => msgAvatar.textContent = "", 2000);
-            };
-
-            function loadImage(file) {
-                if (!file.type.startsWith("image/")) {
-                    showMessage(msgAvatar, "Formato inválido. Use JPG, PNG, GIF ou WEBP", "error");
-                    return;
+        document.addEventListener('DOMContentLoaded', function () {
+            // Função para aguardar o AppPanel
+            function esperarAppPanel(callback, tentativas = 0) {
+                if (typeof AppPanel !== 'undefined') {
+                    callback();
+                } else if (tentativas < 20) {
+                    setTimeout(() => esperarAppPanel(callback, tentativas + 1), 100);
+                } else {
+                    console.error('AppPanel não carregado após 2 segundos');
+                    const msg = document.getElementById("msg-avatar");
+                    if (msg) showMessage(msg, "❌ Erro ao carregar sistema. Recarregue a página.", "error");
                 }
-                if (file.size > 5 * 1024 * 1024) {
-                    showMessage(msgAvatar, "Imagem muito grande. Máximo 5MB", "error");
-                    return;
-                }
-                const url = URL.createObjectURL(file);
-                imgObj = new Image();
-                imgObj.onload = () => {
-                    canvas.width = cropSize;
-                    canvas.height = cropSize;
-                    drawCrop();
-                    cropBox.style.display = "block";
-                    URL.revokeObjectURL(url);
-                    showMessage(msgAvatar, "✓ Imagem carregada! Ajuste o crop e clique em Salvar", "success");
-                };
-                imgObj.onerror = () => showMessage(msgAvatar, "Erro ao carregar imagem", "error");
-                imgObj.src = url;
             }
 
-            function drawCrop() {
-                if (!imgObj) return;
-                cropCtx.clearRect(0, 0, cropSize, cropSize);
-                let size = Math.min(imgObj.width, imgObj.height);
-                let sx = (imgObj.width - size) / 2;
-                let sy = (imgObj.height - size) / 2;
-                cropCtx.drawImage(imgObj, sx, sy, size, size, 0, 0, cropSize, cropSize);
-            }
+            esperarAppPanel(() => {
+                // Agora AppPanel está disponível
+                const user = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
+                if (!user) return;
 
-            if (btnSave) {
-                btnSave.onclick = async () => {
-                    if (!usuarioAtual?.id) {
-                        showMessage(msgAvatar, "Usuário não identificado. Recarregue a página.", "error");
-                        return;
-                    }
-                    if (!imgObj) {
-                        showMessage(msgAvatar, "Nenhuma imagem selecionada", "error");
-                        return;
-                    }
-                    btnSave.disabled = true;
-                    const originalText = btnSave.textContent;
-                    btnSave.textContent = "⏳ Salvando...";
-                    showMessage(msgAvatar, "Processando imagem...", "loading");
+                try {
+                    if (typeof AppPanel === 'undefined') throw new Error("AppPanel não carregado");
+                    const data = await AppPanel.apiData("me");
+                    usuarioAtual = data.usuario;
+                    if (!usuarioAtual?.id) throw new Error("Usuário não encontrado");
+                    console.log("✅ Dados do usuário carregados:", usuarioAtual);
 
-                    canvas.toBlob(async blob => {
-                        if (!blob) {
-                            showMessage(msgAvatar, "Erro ao processar imagem", "error");
-                            btnSave.disabled = false;
-                            btnSave.textContent = originalText;
+                    // Preencher formulário
+                    const form = document.getElementById("form-perfil");
+                    if (form) {
+                        form.nome.value = usuarioAtual.nome || "";
+                        form.email.value = usuarioAtual.email || "";
+                        form.perfil.value = usuarioAtual.perfil || "";
+                        form.instituicao.value = usuarioAtual.instituicao || "";
+                        form.orcid.value = usuarioAtual.orcid || "";
+                        form.lattes.value = usuarioAtual.lattes || "";
+                        form.origem.value = usuarioAtual.origem || "";
+                        form.telefone.value = usuarioAtual.telefone || "";
+                    }
+
+                    // Avatar preview (usa URL pública do Supabase, se existir)
+                    const preview = document.getElementById("avatar-preview");
+                    const defaultAvatar = "../assets/avatares/avatar-padrao.png";
+                    if (usuarioAtual.foto_perfil_url && usuarioAtual.foto_perfil_url !== "null") {
+                        let avatarUrl = usuarioAtual.foto_perfil_url;
+                        // Se a URL for antiga (do Netlify Blobs), converte? Não precisa mais.
+                        preview.src = avatarUrl + "?t=" + Date.now();
+                        document.querySelectorAll("[data-avatar-user]").forEach(el => {
+                            if (el) el.src = avatarUrl + "?t=" + Date.now();
+                        });
+                    } else {
+                        preview.src = defaultAvatar;
+                    }
+
+                    // ========== UPLOAD DE AVATAR (chama função Netlify que salva no Supabase) ==========
+                    const drop = document.getElementById("avatar-drop");
+                    const previewClick = document.getElementById("avatar-preview-click");
+                    const input = document.getElementById("avatar-input");
+                    const canvas = document.getElementById("crop-canvas");
+                    const cropBox = document.querySelector(".crop-container");
+                    const btnSave = document.getElementById("btn-save-avatar");
+                    const btnCancel = document.getElementById("btn-cancel-crop");
+                    const msgAvatar = document.getElementById("msg-avatar");
+
+                    let cropCtx = canvas.getContext("2d");
+                    let imgObj = null;
+                    let cropSize = 300;
+
+                    if (drop) drop.onclick = () => input.click();
+                    if (previewClick) previewClick.onclick = () => input.click();
+
+                    if (drop) {
+                        drop.addEventListener("dragover", e => { e.preventDefault(); drop.classList.add("drag"); });
+                        drop.addEventListener("dragleave", () => drop.classList.remove("drag"));
+                        drop.addEventListener("drop", e => {
+                            e.preventDefault();
+                            drop.classList.remove("drag");
+                            const file = e.dataTransfer.files[0];
+                            if (file && file.type.startsWith("image/")) loadImage(file);
+                            else showMessage(msgAvatar, "Selecione uma imagem válida", "error");
+                        });
+                    }
+
+                    if (input) input.addEventListener("change", () => { if (input.files[0]) loadImage(input.files[0]); });
+
+                    if (btnCancel) btnCancel.onclick = () => {
+                        cropBox.style.display = "none";
+                        imgObj = null;
+                        input.value = "";
+                        showMessage(msgAvatar, "Operação cancelada", "warning");
+                        setTimeout(() => msgAvatar.textContent = "", 2000);
+                    };
+
+                    function loadImage(file) {
+                        if (!file.type.startsWith("image/")) {
+                            showMessage(msgAvatar, "Formato inválido. Use JPG, PNG, GIF ou WEBP", "error");
                             return;
                         }
-
-                        const fd = new FormData();
-                        fd.append("arquivo", blob, "avatar");
-
-                        try {
-                            const response = await fetch("/.netlify/functions/upload-avatar", {
-                                method: "POST",
-                                headers: { "X-User-Id": usuarioAtual.id.toString() },
-                                body: fd
-                            });
-                            const result = await response.json();
-                            if (!response.ok) throw new Error(result.erro || "Erro no upload");
-
-                            // A função retorna a URL pública do Supabase
-                            const publicUrl = result.url;
-                            const urlComTimestamp = publicUrl + "?t=" + Date.now();  // CORRIGIDO: use "?"
-                            preview.src = urlComTimestamp;
-                            document.querySelectorAll("[data-avatar-user]").forEach(el => el.src = urlComTimestamp);
-
-                            // Atualizar dados locais
-                            usuarioAtual.foto_perfil_url = publicUrl;
-                            const storedUser = localStorage.getItem("usuario");
-                            if (storedUser) {
-                                const userData = JSON.parse(storedUser);
-                                userData.foto_perfil_url = publicUrl;
-                                localStorage.setItem("usuario", JSON.stringify(userData));
-                            }
-
-                            showMessage(msgAvatar, "✓ Avatar atualizado com sucesso!", "success");
-                            setTimeout(() => {
-                                cropBox.style.display = "none";
-                                imgObj = null;
-                                input.value = "";
-                            }, 1500);
-                        } catch (err) {
-                            console.error(err);
-                            showMessage(msgAvatar, err.message || "Erro ao atualizar avatar", "error");
-                        } finally {
-                            btnSave.disabled = false;
-                            btnSave.textContent = originalText;
+                        if (file.size > 5 * 1024 * 1024) {
+                            showMessage(msgAvatar, "Imagem muito grande. Máximo 5MB", "error");
+                            return;
                         }
-                    }, "image/webp", 0.95);
-                };
-            }
-
-            // ========== SALVAR DADOS DO PERFIL (Neon) ==========
-            const perfilForm = document.getElementById("form-perfil");
-            const msgPerfil = document.getElementById("msg-perfil");
-            if (perfilForm) {
-                perfilForm.addEventListener("submit", async (e) => {
-                    e.preventDefault();
-                    const submitBtn = perfilForm.querySelector('button[type="submit"]');
-                    const originalText = submitBtn.textContent;
-                    submitBtn.disabled = true;
-                    submitBtn.textContent = "💾 Salvando...";
-                    showMessage(msgPerfil, "Salvando dados...", "loading");
-
-                    const formData = new FormData(perfilForm);
-                    const dados = Object.fromEntries(formData.entries());
-                    dados.userId = usuarioAtual.id;
-
-                    try {
-                        const response = await AppPanel.apiData("update_profile", dados);
-                        if (!response || response.erro) throw new Error(response?.erro || "Erro ao salvar");
-                        showMessage(msgPerfil, "✓ Perfil atualizado com sucesso!", "success");
-                        if (response.usuario) Object.assign(usuarioAtual, response.usuario);
-                    } catch (err) {
-                        console.error(err);
-                        showMessage(msgPerfil, err.message || "Erro ao salvar dados", "error");
-                    } finally {
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = originalText;
-                        setTimeout(() => msgPerfil.textContent = "", 3000);
+                        const url = URL.createObjectURL(file);
+                        imgObj = new Image();
+                        imgObj.onload = () => {
+                            canvas.width = cropSize;
+                            canvas.height = cropSize;
+                            drawCrop();
+                            cropBox.style.display = "block";
+                            URL.revokeObjectURL(url);
+                            showMessage(msgAvatar, "✓ Imagem carregada! Ajuste o crop e clique em Salvar", "success");
+                        };
+                        imgObj.onerror = () => showMessage(msgAvatar, "Erro ao carregar imagem", "error");
+                        imgObj.src = url;
                     }
-                });
-            }
 
-        } catch (err) {
-            console.error("❌ Erro fatal:", err);
-            const msg = document.getElementById("msg-avatar");
-            if (msg) showMessage(msg, "❌ Erro ao carregar dados. Recarregue a página.", "error");
-        }
-        AppPanel.atualizarAvatares(); // se necessário
-        });
+                    function drawCrop() {
+                        if (!imgObj) return;
+                        cropCtx.clearRect(0, 0, cropSize, cropSize);
+                        let size = Math.min(imgObj.width, imgObj.height);
+                        let sx = (imgObj.width - size) / 2;
+                        let sy = (imgObj.height - size) / 2;
+                        cropCtx.drawImage(imgObj, sx, sy, size, size, 0, 0, cropSize, cropSize);
+                    }
+
+                    if (btnSave) {
+                        btnSave.onclick = async () => {
+                            if (!usuarioAtual?.id) {
+                                showMessage(msgAvatar, "Usuário não identificado. Recarregue a página.", "error");
+                                return;
+                            }
+                            if (!imgObj) {
+                                showMessage(msgAvatar, "Nenhuma imagem selecionada", "error");
+                                return;
+                            }
+                            btnSave.disabled = true;
+                            const originalText = btnSave.textContent;
+                            btnSave.textContent = "⏳ Salvando...";
+                            showMessage(msgAvatar, "Processando imagem...", "loading");
+
+                            canvas.toBlob(async blob => {
+                                if (!blob) {
+                                    showMessage(msgAvatar, "Erro ao processar imagem", "error");
+                                    btnSave.disabled = false;
+                                    btnSave.textContent = originalText;
+                                    return;
+                                }
+
+                                const fd = new FormData();
+                                fd.append("arquivo", blob, "avatar");
+
+                                try {
+                                    const response = await fetch("/.netlify/functions/upload-avatar", {
+                                        method: "POST",
+                                        headers: { "X-User-Id": usuarioAtual.id.toString() },
+                                        body: fd
+                                    });
+                                    const result = await response.json();
+                                    if (!response.ok) throw new Error(result.erro || "Erro no upload");
+
+                                    // A função retorna a URL pública do Supabase
+                                    const publicUrl = result.url;
+                                    const urlComTimestamp = publicUrl + "?t=" + Date.now();  // CORRIGIDO: use "?"
+                                    preview.src = urlComTimestamp;
+                                    document.querySelectorAll("[data-avatar-user]").forEach(el => el.src = urlComTimestamp);
+
+                                    // Atualizar dados locais
+                                    usuarioAtual.foto_perfil_url = publicUrl;
+                                    const storedUser = localStorage.getItem("usuario");
+                                    if (storedUser) {
+                                        const userData = JSON.parse(storedUser);
+                                        userData.foto_perfil_url = publicUrl;
+                                        localStorage.setItem("usuario", JSON.stringify(userData));
+                                    }
+
+                                    showMessage(msgAvatar, "✓ Avatar atualizado com sucesso!", "success");
+                                    setTimeout(() => {
+                                        cropBox.style.display = "none";
+                                        imgObj = null;
+                                        input.value = "";
+                                    }, 1500);
+                                } catch (err) {
+                                    console.error(err);
+                                    showMessage(msgAvatar, err.message || "Erro ao atualizar avatar", "error");
+                                } finally {
+                                    btnSave.disabled = false;
+                                    btnSave.textContent = originalText;
+                                }
+                            }, "image/webp", 0.95);
+                        };
+                    }
+
+                    // ========== SALVAR DADOS DO PERFIL (Neon) ==========
+                    const perfilForm = document.getElementById("form-perfil");
+                    const msgPerfil = document.getElementById("msg-perfil");
+                    if (perfilForm) {
+                        perfilForm.addEventListener("submit", async (e) => {
+                            e.preventDefault();
+                            const submitBtn = perfilForm.querySelector('button[type="submit"]');
+                            const originalText = submitBtn.textContent;
+                            submitBtn.disabled = true;
+                            submitBtn.textContent = "💾 Salvando...";
+                            showMessage(msgPerfil, "Salvando dados...", "loading");
+
+                            const formData = new FormData(perfilForm);
+                            const dados = Object.fromEntries(formData.entries());
+                            dados.userId = usuarioAtual.id;
+
+                            try {
+                                const response = await AppPanel.apiData("update_profile", dados);
+                                if (!response || response.erro) throw new Error(response?.erro || "Erro ao salvar");
+                                showMessage(msgPerfil, "✓ Perfil atualizado com sucesso!", "success");
+                                if (response.usuario) Object.assign(usuarioAtual, response.usuario);
+                            } catch (err) {
+                                console.error(err);
+                                showMessage(msgPerfil, err.message || "Erro ao salvar dados", "error");
+                            } finally {
+                                submitBtn.disabled = false;
+                                submitBtn.textContent = originalText;
+                                setTimeout(() => msgPerfil.textContent = "", 3000);
+                            }
+                        });
+                    }
+
+                } catch (err) {
+                    console.error("❌ Erro fatal:", err);
+                    const msg = document.getElementById("msg-avatar");
+                    if (msg) showMessage(msg, "❌ Erro ao carregar dados. Recarregue a página.", "error");
+                }
+                AppPanel.atualizarAvatares(); // se necessário
+            });
     </script>
 </body>
 
