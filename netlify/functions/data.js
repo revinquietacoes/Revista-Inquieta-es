@@ -4,7 +4,7 @@ const { wrapHttp } = require('./_netlify')
 function normalizeReviewBucket(status) {
   if (status === 'concluido') return 'concluidos'
   if (status === 'recusado') return 'nao_aceitos'
-  if (status === 'aceito') return 'aceitos'
+ if (status === 'aceito') return 'aceitos'
   if (status === 'em_andamento' || status === 'em_avaliacao') return 'em_avaliacao'
   return 'outros'
 }
@@ -223,12 +223,50 @@ const main = async (req) => {
     const user = await getUserById(Number(userId))
     if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
 
+    // ========== AÇÃO BÁSICA ==========
     if (action === 'me') return json({ sucesso: true, usuario: user })
 
-    // ========== AÇÕES EXISTENTES ==========
+    // ========== DASHBOARDS ==========
     if (action === 'author_dashboard') {
       if (!canAccess(user, ['autor'])) return json({ erro: 'Acesso negado.' }, 403)
-      // ... (mantenha o código original)
+      const submissaoCols = await getTableColumns('submissoes')
+      const hasEditorAdjuntoSub = submissaoCols.has('editor_adjunto_id')
+      const hasEditorResponsavelSub = submissaoCols.has('editor_responsavel_id')
+      const submissoes = hasEditorAdjuntoSub && hasEditorResponsavelSub
+        ? await sql`
+            SELECT s.id, s.titulo, s.secao, s.status, s.data_submissao, s.prazo_final_avaliacao,
+                   dt.titulo AS dossie_titulo, u.nome AS editor_nome
+            FROM submissoes s
+            LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+            LEFT JOIN usuarios u ON u.id = COALESCE(s.editor_adjunto_id, s.editor_responsavel_id)
+            WHERE s.autor_id = ${user.id}
+            ORDER BY s.data_submissao DESC`
+        : hasEditorAdjuntoSub
+          ? await sql`
+              SELECT s.id, s.titulo, s.secao, s.status, s.data_submissao, s.prazo_final_avaliacao,
+                     dt.titulo AS dossie_titulo, u.nome AS editor_nome
+              FROM submissoes s
+              LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+              LEFT JOIN usuarios u ON u.id = s.editor_adjunto_id
+              WHERE s.autor_id = ${user.id}
+              ORDER BY s.data_submissao DESC`
+          : hasEditorResponsavelSub
+            ? await sql`
+                SELECT s.id, s.titulo, s.secao, s.status, s.data_submissao, s.prazo_final_avaliacao,
+                       dt.titulo AS dossie_titulo, u.nome AS editor_nome
+                FROM submissoes s
+                LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+                LEFT JOIN usuarios u ON u.id = s.editor_responsavel_id
+                WHERE s.autor_id = ${user.id}
+                ORDER BY s.data_submissao DESC`
+            : await sql`
+                SELECT s.id, s.titulo, s.secao, s.status, s.data_submissao, s.prazo_final_avaliacao,
+                       dt.titulo AS dossie_titulo, NULL::TEXT AS editor_nome
+                FROM submissoes s
+                LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+                WHERE s.autor_id = ${user.id}
+                ORDER BY s.data_submissao DESC`
+      return json({ sucesso: true, usuario: user, submissoes })
     }
 
     if (action === 'chief_submission_status_queue') {
@@ -243,116 +281,193 @@ const main = async (req) => {
 
     if (action === 'reviewer_dashboard') {
       if (!canAccess(user, ['parecerista'])) return json({ erro: 'Acesso negado.' }, 403)
-      // ... (mantenha o código original)
+      const avaliacoes = await sql`
+        SELECT da.id, da.status, da.prazo_parecer, da.dias_adicionais,
+               s.id AS submissao_id, s.titulo, s.resumo, s.palavras_chave, s.secao
+        FROM designacoes_avaliacao da
+        JOIN submissoes s ON s.id = da.submissao_id
+        WHERE da.parecerista_id = ${user.id}
+        ORDER BY da.criado_em DESC`
+      const fileMap = await getArquivoPrincipalPorSubmissaoIds(avaliacoes.map((r) => Number(r.submissao_id)).filter(Boolean))
+      return json({
+        sucesso: true,
+        usuario: user,
+        avaliacoes: avaliacoes.map((r) => ({ ...r, ...(fileMap.get(Number(r.submissao_id)) || { url_arquivo: null, nome_arquivo: null }) }))
+      })
     }
 
     if (action === 'editor_dashboard') {
       if (!canAccess(user, ['editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-      // ... (mantenha o código original)
+      const dossieCols = await getTableColumns('dossies_tematicos')
+      const submissaoCols = await getTableColumns('submissoes')
+      const hasDossieAdj = dossieCols.has('editor_adjunto_id')
+      const hasDossieResp = dossieCols.has('editor_responsavel_id')
+      const hasSubAdj = submissaoCols.has('editor_adjunto_id')
+      const hasSubResp = submissaoCols.has('editor_responsavel_id')
+
+      const dossies = await maybeRows('dossies_tematicos', () => {
+        if (hasDossieAdj && hasDossieResp) return sql`SELECT dt.*, uc.nome AS criado_por_nome FROM dossies_tematicos dt LEFT JOIN usuarios uc ON uc.id = dt.criado_por_editor_chefe_id WHERE COALESCE(dt.editor_adjunto_id, dt.editor_responsavel_id) = ${user.id} ORDER BY dt.criado_em DESC`
+        if (hasDossieAdj) return sql`SELECT dt.*, uc.nome AS criado_por_nome FROM dossies_tematicos dt LEFT JOIN usuarios uc ON uc.id = dt.criado_por_editor_chefe_id WHERE dt.editor_adjunto_id = ${user.id} ORDER BY dt.criado_em DESC`
+        if (hasDossieResp) return sql`SELECT dt.*, uc.nome AS criado_por_nome FROM dossies_tematicos dt LEFT JOIN usuarios uc ON uc.id = dt.criado_por_editor_chefe_id WHERE dt.editor_responsavel_id = ${user.id} ORDER BY dt.criado_em DESC`
+        return sql`SELECT dt.*, uc.nome AS criado_por_nome FROM dossies_tematicos dt LEFT JOIN usuarios uc ON uc.id = dt.criado_por_editor_chefe_id ORDER BY dt.criado_em DESC`
+      })
+
+      let submissoes
+      if (hasSubAdj && hasDossieAdj && hasDossieResp) {
+        submissoes = await sql`
+          SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                 a.nome AS autor_nome, dt.titulo AS dossie_titulo
+          FROM submissoes s
+          LEFT JOIN usuarios a ON a.id = s.autor_id
+          LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+          WHERE s.editor_adjunto_id = ${user.id}
+             OR s.dossie_id IN (SELECT id FROM dossies_tematicos WHERE COALESCE(editor_adjunto_id, editor_responsavel_id) = ${user.id})
+          ORDER BY s.data_submissao DESC`
+      } else if (hasSubAdj && hasDossieResp) {
+        submissoes = await sql`
+          SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                 a.nome AS autor_nome, dt.titulo AS dossie_titulo
+          FROM submissoes s
+          LEFT JOIN usuarios a ON a.id = s.autor_id
+          LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+          WHERE s.editor_adjunto_id = ${user.id}
+             OR s.dossie_id IN (SELECT id FROM dossies_tematicos WHERE editor_responsavel_id = ${user.id})
+          ORDER BY s.data_submissao DESC`
+      } else if (hasSubResp && hasDossieAdj && hasDossieResp) {
+        submissoes = await sql`
+          SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                 a.nome AS autor_nome, dt.titulo AS dossie_titulo
+          FROM submissoes s
+          LEFT JOIN usuarios a ON a.id = s.autor_id
+          LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+          WHERE s.editor_responsavel_id = ${user.id}
+             OR s.dossie_id IN (SELECT id FROM dossies_tematicos WHERE COALESCE(editor_adjunto_id, editor_responsavel_id) = ${user.id})
+          ORDER BY s.data_submissao DESC`
+      } else if (hasSubResp && hasDossieResp) {
+        submissoes = await sql`
+          SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                 a.nome AS autor_nome, dt.titulo AS dossie_titulo
+          FROM submissoes s
+          LEFT JOIN usuarios a ON a.id = s.autor_id
+          LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+          WHERE s.editor_responsavel_id = ${user.id}
+             OR s.dossie_id IN (SELECT id FROM dossies_tematicos WHERE editor_responsavel_id = ${user.id})
+          ORDER BY s.data_submissao DESC`
+      } else if (hasSubAdj) {
+        submissoes = await sql`
+          SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                 a.nome AS autor_nome, dt.titulo AS dossie_titulo
+          FROM submissoes s
+          LEFT JOIN usuarios a ON a.id = s.autor_id
+          LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+          WHERE s.editor_adjunto_id = ${user.id}
+          ORDER BY s.data_submissao DESC`
+      } else if (hasSubResp) {
+        submissoes = await sql`
+          SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                 a.nome AS autor_nome, dt.titulo AS dossie_titulo
+          FROM submissoes s
+          LEFT JOIN usuarios a ON a.id = s.autor_id
+          LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+          WHERE s.editor_responsavel_id = ${user.id}
+          ORDER BY s.data_submissao DESC`
+      } else {
+        submissoes = await sql`
+          SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                 a.nome AS autor_nome, dt.titulo AS dossie_titulo
+          FROM submissoes s
+          LEFT JOIN usuarios a ON a.id = s.autor_id
+          LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+          ORDER BY s.data_submissao DESC`
+      }
+      const fileMap = await getArquivoPrincipalPorSubmissaoIds(submissoes.map((r) => Number(r.id)).filter(Boolean))
+      const pareceristas = await sql`
+        SELECT u.id, u.nome, u.email, u.instituicao, u.orcid, u.lattes, u.foto_perfil_url, u.foto_perfil_aprovada,
+               u.consentimento_foto_publica,
+               COALESCE(c.total_avaliacoes, 0) AS total_avaliacoes,
+               CASE WHEN u.ultimo_acesso_em IS NOT NULL AND u.ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online,
+               u.ultimo_acesso_em
+        FROM usuarios u
+        LEFT JOIN contribuicoes_usuarios c ON c.usuario_id = u.id
+        WHERE u.perfil = 'parecerista' AND COALESCE(u.status, 'ativo') = 'ativo'
+        ORDER BY u.nome ASC`
+      return json({
+        sucesso: true,
+        usuario: user,
+        dossies,
+        submissoes: submissoes.map((r) => ({ ...r, ...(fileMap.get(Number(r.id)) || { url_arquivo: null, nome_arquivo: null }) })),
+        pareceristas
+      })
     }
 
     if (action === 'chief_dashboard') {
       if (!canAccess(user, ['editor_chefe'])) return json({ erro: 'Acesso negado.' }, 403)
-      // ... (mantenha o código original)
-    }
+      const usuarios = await sql`
+        SELECT u.id, u.nome, u.email, u.perfil, u.instituicao, u.orcid, u.lattes, u.origem, u.telefone, COALESCE(u.status, 'ativo') AS status,
+               u.foto_perfil_url, u.foto_perfil_aprovada, u.consentimento_foto_publica,
+               COALESCE(c.total_submissoes, 0) AS total_submissoes,
+               COALESCE(c.total_avaliacoes, 0) AS total_avaliacoes,
+               COALESCE(c.total_dossies, 0) AS total_dossies,
+               COALESCE(c.total_decisoes_editoriais, 0) AS total_decisoes_editoriais,
+               c.observacoes,
+               CASE WHEN u.ultimo_acesso_em IS NOT NULL AND u.ultimo_acesso_em > (CURRENT_TIMESTAMP - INTERVAL '2 minutes') THEN TRUE ELSE FALSE END AS online,
+               u.ultimo_acesso_em
+        FROM usuarios u
+        LEFT JOIN contribuicoes_usuarios c ON c.usuario_id = u.id
+        ORDER BY u.perfil, u.nome`
+      const submissaoCols = await getTableColumns('submissoes')
+      const dossieCols = await getTableColumns('dossies_tematicos')
+      const chiefHasSubAdj = submissaoCols.has('editor_adjunto_id')
+      const chiefHasSubResp = submissaoCols.has('editor_responsavel_id')
+      const chiefHasDossieAdj = dossieCols.has('editor_adjunto_id')
+      const chiefHasDossieResp = dossieCols.has('editor_responsavel_id')
 
-    if (action === 'reviewer_list_for_history') {
-      if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-      return json({ sucesso: true, ...(await getReviewerListForHistory(user)) })
-    }
-
-    if (action === 'reviewer_review_history') {
-      if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-      const reviewerId = Number(pareceristaId || targetUserId || body?.pareceristaId || body?.id)
-      if (!reviewerId) return json({ erro: 'Parecerista não informado.' }, 400)
-      return json({ sucesso: true, usuario: user, ...(await getReviewerReviewHistory(user, reviewerId)) })
-    }
-
-    if (action === 'editorial_review_queue') {
-      if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-      return json({ sucesso: true, ...(await getEditorialQueue()) })
-    }
-
-    if (action === 'editorial_review_decision') {
-      if (!canAccess(user, ['editor_chefe', 'editor', 'editor_adjunto'])) return json({ erro: 'Acesso negado.' }, 403)
-      return json({ sucesso: true, ...(await decidirParecer({ ...body, editorId: user.id })) })
-    }
-
-    if (action === 'update_designacao_status') {
-      const result = await updateDesignacaoStatus(body, user)
-      if (result?.erro) return json({ erro: result.erro }, result.code || 400)
-      return json({ sucesso: true, ...result })
-    }
-
-    if (action === 'public_dossiers') {
-      // ... (mantenha o código original)
-    }
-
-    if (action === 'online_users') {
-      // ... (mantenha o código original)
-    }
-
-    if (action === 'chat_recipients') {
-      // ... (mantenha o código original)
-    }
-
-    if (action === 'chat_messages') {
-      // ... (mantenha o código original)
-    }
-
-    if (action === 'certificates') {
-      // ... (mantenha o código original)
-    }
-
-    // ========== NOVAS AÇÕES DE NOTIFICAÇÃO ==========
-    if (action === 'notificacoes') { const { limit = 20, offset = 0, apenasNaoLidas = false } = body; let query = sql` SELECT n.*, u.nome AS remetente_nome, u.foto_perfil_url AS remetente_foto FROM notificacoes n LEFT JOIN usuarios u ON u.id = n.remetente_id WHERE n.usuario_id = ${user.id} `; if (apenasNaoLidas) query = sql`${query} AND n.lida = FALSE`; query = sql`${query} ORDER BY n.criado_em DESC LIMIT ${limit} OFFSET ${offset}`; const notificacoes = await query; const naoLidasResult = await sql`SELECT COUNT(*) FROM notificacoes WHERE usuario_id = ${user.id} AND lida = FALSE`; const naoLidas = parseInt(naoLidasResult[0].count); return json({ sucesso: true, notificacoes, naoLidas }); }
-
-    if (action === 'marcar_notificacao_lida') {
-      const { notificacaoId } = body
-      if (!notificacaoId) return json({ erro: 'ID da notificação não informado.' }, 400)
-      await sql`UPDATE notificacoes SET lida = TRUE WHERE id = ${notificacaoId} AND usuario_id = ${user.id}`
-      return json({ sucesso: true })
-    }
-
-    if (action === 'marcar_todas_lidas') {
-      await sql`UPDATE notificacoes SET lida = TRUE WHERE usuario_id = ${user.id}`
-      return json({ sucesso: true })
-    }
-
-    // ========== AÇÃO update_profile (caso ainda não exista) ==========
-    if (action === 'update_profile') {
-      const { nome, instituicao, orcid, lattes, origem, telefone, receber_noticias_email, avatarUrl } = body
-      if (avatarUrl) {
-        await sql`
-          UPDATE usuarios
-          SET foto_perfil_url = ${avatarUrl},
-              atualizado_em = CURRENT_TIMESTAMP
-          WHERE id = ${user.id}
-        `
-        const refreshed = await getUserById(user.id)
-        return json({ sucesso: true, usuario: refreshed })
-      }
-      await sql`
-        UPDATE usuarios
-        SET nome = COALESCE(${nome || null}, nome),
-            instituicao = ${instituicao || null},
-            orcid = ${orcid || null},
-            lattes = ${lattes || null},
-            origem = ${origem || null},
-            telefone = ${telefone || null},
-            receber_noticias_email = ${!!receber_noticias_email},
-            atualizado_em = CURRENT_TIMESTAMP
-        WHERE id = ${user.id}
-      `
-      const refreshed = await getUserById(user.id)
-      return json({ sucesso: true, usuario: refreshed })
-    }
-
-    return json({ erro: 'Ação inválida.' }, 400)
-  } catch (erro) {
-    console.error('Erro em data.js:', erro)
-    return json({ erro: 'Erro ao carregar dados.', detalhe: erro.message }, 500)
-  }
-}
-
-exports.handler = wrapHttp(main)
+      const submissoes = chiefHasSubAdj && chiefHasSubResp
+        ? await sql`
+            SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                   a.nome AS autor_nome, a.foto_perfil_url AS autor_foto, a.foto_perfil_aprovada, a.consentimento_foto_publica,
+                   er.nome AS editor_responsavel_nome, ea.nome AS editor_adjunto_nome, dt.titulo AS dossie_titulo
+            FROM submissoes s
+            LEFT JOIN usuarios a ON a.id = s.autor_id
+            LEFT JOIN usuarios er ON er.id = s.editor_responsavel_id
+            LEFT JOIN usuarios ea ON ea.id = s.editor_adjunto_id
+            LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+            ORDER BY s.data_submissao DESC`
+        : chiefHasSubResp
+          ? await sql`
+              SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                     a.nome AS autor_nome, a.foto_perfil_url AS autor_foto, a.foto_perfil_aprovada, a.consentimento_foto_publica,
+                     er.nome AS editor_responsavel_nome, NULL::TEXT AS editor_adjunto_nome, dt.titulo AS dossie_titulo
+              FROM submissoes s
+              LEFT JOIN usuarios a ON a.id = s.autor_id
+              LEFT JOIN usuarios er ON er.id = s.editor_responsavel_id
+              LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+              ORDER BY s.data_submissao DESC`
+          : chiefHasSubAdj
+            ? await sql`
+                SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                       a.nome AS autor_nome, a.foto_perfil_url AS autor_foto, a.foto_perfil_aprovada, a.consentimento_foto_publica,
+                       NULL::TEXT AS editor_responsavel_nome, ea.nome AS editor_adjunto_nome, dt.titulo AS dossie_titulo
+                FROM submissoes s
+                LEFT JOIN usuarios a ON a.id = s.autor_id
+                LEFT JOIN usuarios ea ON ea.id = s.editor_adjunto_id
+                LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+                ORDER BY s.data_submissao DESC`
+            : await sql`
+                SELECT s.id, s.titulo, s.status, s.secao, s.resumo, s.palavras_chave, s.prazo_final_avaliacao, s.data_submissao,
+                       a.nome AS autor_nome, a.foto_perfil_url AS autor_foto, a.foto_perfil_aprovada, a.consentimento_foto_publica,
+                       NULL::TEXT AS editor_responsavel_nome, NULL::TEXT AS editor_adjunto_nome, dt.titulo AS dossie_titulo
+                FROM submissoes s
+                LEFT JOIN usuarios a ON a.id = s.autor_id
+                LEFT JOIN dossies_tematicos dt ON dt.id = s.dossie_id
+                ORDER BY s.data_submissao DESC`
+      const fileMap = await getArquivoPrincipalPorSubmissaoIds(submissoes.map((r) => Number(r.id)).filter(Boolean))
+      const dossies = await maybeRows('dossies_tematicos', () => {
+        if (chiefHasDossieAdj && chiefHasDossieResp) return sql`SELECT dt.*, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = COALESCE(dt.editor_adjunto_id, dt.editor_responsavel_id) ORDER BY dt.criado_em DESC`
+        if (chiefHasDossieResp) return sql`SELECT dt.*, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = dt.editor_responsavel_id ORDER BY dt.criado_em DESC`
+        if (chiefHasDossieAdj) return sql`SELECT dt.*, u.nome AS editor_nome FROM dossies_tematicos dt LEFT JOIN usuarios u ON u.id = dt.editor_adjunto_id ORDER BY dt.criado_em DESC`
+        return sql`SELECT dt.*, NULL::TEXT AS editor_nome FROM dossies_tematicos dt ORDER BY dt.criado_em DESC`
+      })
+      const mensagens = await sql`SELECT m.*, ur.nome AS remetente_nome, ur.perfil AS remetente_perfil FROM mensagens_internas m LEFT JOIN usuarios ur ON ur.id = m.remetente_id WHERE m.destinatario_id = ${user.id} OR m.remetente_id = ${user.id} ORDER BY m.criado_em DESC LIMIT 100`
+      return json({
+       

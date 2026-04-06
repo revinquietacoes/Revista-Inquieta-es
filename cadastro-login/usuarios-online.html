@@ -22,6 +22,11 @@
         </div>
       </div>
       <div class="actions-row">
+        <div style="position: relative; margin-right: 10px;">
+          <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+          <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+          <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+        </div>
         <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
         <button class="btn btn-soft" data-action="logout">Sair</button>
       </div>
@@ -41,48 +46,74 @@
   </div>
 
   <script>
-    document.addEventListener('DOMContentLoaded', async () => {
-      const u = AppPanel.requireRole(['editor_adjunto','editor_chefe']);
-      if (!u) return;
-      const box = document.getElementById('lista-online');
-      const chatHref = u.perfil === 'editor_chefe' ? 'editor-chefe-chat.html' : 'chat-interno.html';
-
-      async function load() {
-        const data = await AppPanel.apiData('online_users');
-        box.innerHTML = '';
-        if (!data.usuarios.length) {
-          box.innerHTML = '<div class="empty-state">Aqui ainda não há usuários disponíveis.</div>';
+    document.addEventListener('DOMContentLoaded', () => {
+      setTimeout(async () => {
+        if (typeof AppPanel === 'undefined') {
+          console.error('AppPanel não carregado');
           return;
         }
-        data.usuarios.forEach(p => {
-          const div = document.createElement('div');
-          div.className = 'item';
 
-          const top = document.createElement('div');
-          top.innerHTML = AppPanel.userChipHtml(p, `${AppPanel.formatRole(p.perfil)} • ${p.online ? 'está online' : 'offline'} • último ping: ${AppPanel.formatLastSeen(p.ultimo_acesso_em)}`);
-          div.appendChild(top.firstElementChild);
+        // Permite acesso para editor_chefe, editor_adjunto e parecerista
+        const user = AppPanel.requireRole(['editor_chefe', 'editor_adjunto', 'parecerista']);
+        if (!user) return;
 
-          const row = document.createElement('div');
-          row.className = 'actions-row';
-          row.style.marginTop = '10px';
+        // Atualiza avatar do cabeçalho
+        AppPanel.atualizarAvatares();
 
-          const a = document.createElement('a');
-          a.className = 'btn btn-soft';
-          a.href = `${chatHref}?target=${encodeURIComponent(p.id)}`;
-          a.textContent = 'Enviar mensagem';
-          row.appendChild(a);
+        // Inicializa notificações
+        AppPanel.atualizarContadorNotificacoes();
+        AppPanel.iniciarPollingNotificacoes();
 
-          div.appendChild(row);
-          box.appendChild(div);
-        });
-      }
+        const btnNotif = document.getElementById('btn-notificacoes');
+        if (btnNotif) {
+          btnNotif.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+        }
 
-      try {
+        const box = document.getElementById('lista-online');
+        const chatHref = user.perfil === 'editor_chefe' ? 'editor-chefe-chat.html' : 'chat-interno.html';
+
+        async function load() {
+          try {
+            const data = await AppPanel.apiData('online_users');
+            box.innerHTML = '';
+            if (!data.usuarios || data.usuarios.length === 0) {
+              box.innerHTML = '<div class="empty-state">Aqui ainda não há usuários disponíveis.</div>';
+              return;
+            }
+            data.usuarios.forEach(p => {
+              const div = document.createElement('div');
+              div.className = 'item';
+              div.style.padding = '16px';
+              div.style.borderBottom = '1px solid #eee';
+
+              // Usa userChipHtml do AppPanel
+              const chipHtml = AppPanel.userChipHtml(p, `${AppPanel.formatRole(p.perfil)} • ${p.online ? '🟢 online' : '⚫ offline'} • último acesso: ${AppPanel.formatLastSeen(p.ultimo_acesso_em)}`);
+              const tempDiv = document.createElement('div');
+              tempDiv.innerHTML = chipHtml;
+              div.appendChild(tempDiv.firstElementChild);
+
+              const row = document.createElement('div');
+              row.className = 'actions-row';
+              row.style.marginTop = '10px';
+
+              const a = document.createElement('a');
+              a.className = 'btn btn-soft';
+              a.href = `${chatHref}?target=${encodeURIComponent(p.id)}`;
+              a.textContent = 'Enviar mensagem';
+              row.appendChild(a);
+
+              div.appendChild(row);
+              box.appendChild(div);
+            });
+          } catch (err) {
+            console.error('Erro ao carregar usuários online:', err);
+            box.innerHTML = `<div class="empty-state">${AppPanel.escapeHtml(err.message || 'Não foi possível carregar os usuários.')}</div>`;
+          }
+        }
+
         await load();
         setInterval(load, 30000);
-      } catch (err) {
-        box.innerHTML = `<div class="empty-state">${AppPanel.escapeHtml(err.message || 'Não foi possível carregar os usuários.')}</div>`;
-      }
+      }, 100);
     });
   </script>
 </body>
