@@ -1,345 +1,86 @@
 <!DOCTYPE html>
 <html lang="pt-BR">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pareceres por parecerista | Revista Inquietações</title>
-<link rel="icon" href="../assets/favicon.png">
-<link rel="stylesheet" href="painel-base.css">
-<script src="painel-base.js" defer></script>
-<style>
-:root{--bg-1:#0b1220;--bg-2:#0f172a;--bg-3:#111827;--panel:#0f172ad9;--panel-border:rgba(148,163,184,.20);--card:#ffffff;--card-2:#f8fafc;--line:#dbe4f0;--text:#0f172a;--text-soft:#475569;--text-muted:#64748b;--white:#f8fafc;--shadow-lg:0 24px 60px rgba(0,0,0,.28);--shadow-md:0 14px 34px rgba(15,23,42,.14);--shadow-sm:0 10px 24px rgba(15,23,42,.10);--ok-bg:#dcfce7;--ok-text:#166534;--ok-line:#bbf7d0;--warn-bg:#fef3c7;--warn-text:#92400e;--warn-line:#fde68a;--info-bg:#dbeafe;--info-text:#1d4ed8;--info-line:#bfdbfe;--danger-bg:#fee2e2;--danger-text:#b91c1c;--danger-line:#fecaca;}
-*{box-sizing:border-box;}
-html,body{margin:0;padding:0;}
-body{background:linear-gradient(180deg,var(--bg-1) 0%,var(--bg-2) 45%,var(--bg-3) 100%);color:var(--white);font-family:Georgia,"Times New Roman",serif;min-height:100vh;}
-a{text-decoration:none;}
-.page-shell{max-width:1180px;margin:0 auto;padding:28px 18px 56px;}
-.topbar{display:flex;align-items:flex-start;justify-content:space-between;gap:18px;flex-wrap:wrap;background:var(--panel);border:1px solid var(--panel-border);border-radius:26px;padding:26px 28px 22px;box-shadow:var(--shadow-lg);backdrop-filter:blur(10px);}
-.brand-wrap{display:flex;align-items:flex-start;gap:18px;min-width:0;flex:1 1 620px;}
-.avatar-box{display:flex;align-items:center;gap:12px;flex-shrink:0;}
-.avatar-img{width:56px;height:56px;border-radius:50%;object-fit:cover;background:#cbd5e1;border:1px solid rgba(255,255,255,.2);}
-.logo-inline{width:56px;height:56px;border-radius:16px;object-fit:cover;background:#fff;border:1px solid rgba(255,255,255,.16);padding:4px;}
-.brand-copy{min-width:0;}
-.brand-copy h1{margin:0 0 8px;color:var(--white);font-size:2rem;line-height:1.15;font-weight:800;letter-spacing:-.02em;}
-.brand-copy p{margin:0;color:#cbd5e1;font-size:1rem;line-height:1.65;}
-.actions-row{display:flex;align-items:center;gap:12px;flex-wrap:wrap;}
-.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 16px;border-radius:14px;font-weight:700;border:1px solid transparent;cursor:pointer;transition:all .18s ease;}
-.btn-secondary{background:rgba(255,255,255,.08);color:#e5e7eb;border-color:rgba(148,163,184,.25);}
-.btn-secondary:hover{background:rgba(255,255,255,.14);color:#ffffff;border-color:rgba(148,163,184,.35);}
-.panel{margin-top:22px;}
-.info-card{background:var(--panel);border:1px solid var(--panel-border);box-shadow:var(--shadow-lg);border-radius:24px;padding:24px 22px;}
-.selector-wrap{display:grid;gap:10px;margin-bottom:18px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(148,163,184,.18);}
-.selector-label{color:#e5e7eb;font-size:.95rem;font-weight:700;font-family:Arial,Helvetica,sans-serif;}
-.selector-row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
-.identity-box{display:grid;gap:8px;margin-bottom:22px;padding:16px 18px;border-radius:18px;background:rgba(255,255,255,.06);border:1px solid rgba(148,163,184,.18);}
-.identity-name{color:var(--white);font-size:1.2rem;font-weight:800;line-height:1.35;}
-.identity-email{color:#cbd5e1;font-size:1rem;line-height:1.55;word-break:break-word;}
-.stats-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:16px;margin-bottom:22px;}
-.stats-card{background:linear-gradient(180deg,var(--card) 0%,var(--card-2) 100%);border:1px solid var(--line);border-radius:20px;padding:18px 18px 16px;box-shadow:var(--shadow-sm);}
-.stats-card .label{display:block;color:var(--text-muted);font-size:.95rem;font-weight:700;margin-bottom:10px;font-family:Arial,Helvetica,sans-serif;}
-.stats-card .value{display:block;color:var(--text);font-size:2rem;font-weight:800;line-height:1;font-family:Arial,Helvetica,sans-serif;}
-.filters-row{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:18px;}
-.filter-group{display:flex;align-items:center;gap:10px;flex-wrap:wrap;}
-.filter-label{color:#cbd5e1;font-size:.95rem;font-weight:700;font-family:Arial,Helvetica,sans-serif;}
-.filter-select,.filter-input{background:#ffffff;color:var(--text);border:1px solid #cbd5e1;border-radius:14px;padding:11px 14px;min-width:220px;font-family:Arial,Helvetica,sans-serif;box-shadow:0 1px 2px rgba(15,23,42,.04);}
-.filter-select:focus,.filter-input:focus{outline:none;border-color:#3b82f6;box-shadow:0 0 0 4px rgba(59,130,246,.16);}
-.results-head{display:flex;align-items:center;justify-content:space-between;gap:12px;flex-wrap:wrap;margin-bottom:16px;}
-.results-title{margin:0;color:var(--white);font-size:1.2rem;font-weight:800;letter-spacing:-.01em;}
-.results-subtitle{margin:0;color:#cbd5e1;font-size:.95rem;font-family:Arial,Helvetica,sans-serif;}
-.review-list{display:grid;gap:20px;}
-.review-item{background:linear-gradient(180deg,var(--card) 0%,var(--card-2) 100%);border:1px solid var(--line);border-radius:24px;padding:22px 20px;box-shadow:var(--shadow-md);color:var(--text);}
-.review-head{display:flex;align-items:flex-start;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-bottom:12px;}
-.review-head-main{min-width:0;flex:1 1 560px;}
-.review-title{margin:0 0 8px;color:var(--text);font-size:1.28rem;line-height:1.35;font-weight:800;letter-spacing:-.01em;}
-.review-subtitle{margin:0;color:var(--text-soft);font-size:.98rem;font-weight:600;font-family:Arial,Helvetica,sans-serif;}
-.meta-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:16px 18px;margin:16px 0 18px;}
-.meta-card{display:grid;gap:6px;}
-.meta-label{display:block;color:var(--text-muted);font-size:.88rem;font-weight:700;font-family:Arial,Helvetica,sans-serif;}
-.meta-value{display:block;color:var(--text);font-size:1rem;font-weight:700;line-height:1.45;font-family:Arial,Helvetica,sans-serif;}
-.badge{display:inline-flex;align-items:center;justify-content:center;padding:8px 14px;border-radius:999px;font-size:.85rem;font-weight:800;letter-spacing:.02em;border:1px solid transparent;font-family:Arial,Helvetica,sans-serif;}
-.badge-concluido{background:var(--ok-bg);color:var(--ok-text);border-color:var(--ok-line);}
-.badge-em-avaliacao{background:var(--warn-bg);color:var(--warn-text);border-color:var(--warn-line);}
-.badge-aceito{background:var(--info-bg);color:var(--info-text);border-color:var(--info-line);}
-.badge-nao-aceito,.badge-recusado{background:var(--danger-bg);color:var(--danger-text);border-color:var(--danger-line);}
-.badge-default{background:#e2e8f0;color:#334155;border-color:#cbd5e1;}
-.notes-grid{display:grid;gap:14px;margin-top:8px;}
-.note-box{background:#f8fafc;border:1px solid #d7e2ee;border-radius:18px;padding:16px 16px 14px;box-shadow:inset 0 1px 0 rgba(255,255,255,.75);}
-.note-title{display:block;color:#334155;font-size:.9rem;font-weight:800;text-transform:uppercase;letter-spacing:.04em;margin-bottom:8px;font-family:Arial,Helvetica,sans-serif;}
-.note-body{color:#1f2937;font-size:1rem;line-height:1.75;margin:0;font-family:Arial,Helvetica,sans-serif;white-space:pre-wrap;word-break:break-word;}
-.file-box{margin-top:14px;}
-.file-link{display:inline-flex;align-items:center;gap:8px;background:#e8f0fe;color:#1d4ed8;text-decoration:none;font-weight:700;padding:10px 14px;border-radius:12px;border:1px solid #bfd3ff;transition:transform .18s ease,box-shadow .18s ease,background .18s ease;font-family:Arial,Helvetica,sans-serif;}
-.file-link:hover{background:#dbeafe;color:#1e40af;transform:translateY(-1px);box-shadow:0 8px 18px rgba(37,99,235,.18);}
-.empty-state{background:linear-gradient(180deg,var(--card) 0%,var(--card-2) 100%);border:1px dashed #cbd5e1;border-radius:24px;padding:32px 24px;text-align:center;box-shadow:var(--shadow-sm);}
-.empty-state h3{margin:0 0 10px;color:var(--text);font-size:1.2rem;font-weight:800;}
-.empty-state p{margin:0;color:var(--text-soft);font-size:1rem;line-height:1.7;font-family:Arial,Helvetica,sans-serif;}
-.loading-box{padding:18px 16px;border-radius:18px;background:rgba(255,255,255,.08);border:1px solid rgba(148,163,184,.18);color:#e2e8f0;font-family:Arial,Helvetica,sans-serif;}
-.form-message{margin-top:16px;padding:12px 14px;border-radius:14px;font-family:Arial,Helvetica,sans-serif;font-weight:700;display:none;}
-.form-message.ok{display:block;background:#dcfce7;color:#166534;border:1px solid #bbf7d0;}
-.form-message.err{display:block;background:#fee2e2;color:#b91c1c;border:1px solid #fecaca;}
-.page-footer{margin-top:20px;color:#cbd5e1;text-align:center;font-size:.92rem;line-height:1.6;font-family:Arial,Helvetica,sans-serif;}
-@media (max-width:760px){.page-shell{padding:18px 14px 44px;}.topbar{padding:20px 18px 18px;border-radius:22px;}.brand-copy h1{font-size:1.6rem;}.review-item{padding:18px 16px;}.stats-grid{grid-template-columns:repeat(2,minmax(0,1fr));}.filter-select,.filter-input{min-width:100%;width:100%;}}
-@media (max-width:520px){.stats-grid{grid-template-columns:1fr;}.review-head{align-items:stretch;}.actions-row{width:100%;}.btn-secondary{width:100%;}}
-</style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certificados - Parecerista</title>
+  <link rel="icon" href="../assets/favicon.png">
+  <link rel="stylesheet" href="painel-base.css">
+  <script src="painel-base.js" defer></script>
+  <style>
+    .cert-list { max-width: 800px; margin: 20px auto; }
+    .cert-item { background: white; border-radius: 12px; padding: 16px; margin-bottom: 12px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 12px; }
+    .cert-info { flex: 1; }
+    .cert-titulo { font-weight: bold; margin-bottom: 5px; }
+    .cert-data { font-size: 0.75rem; color: #999; }
+    .cert-tipo { display: inline-block; padding: 2px 8px; border-radius: 12px; font-size: 0.7rem; margin-left: 8px; background: #e8f5e9; color: #2e7d32; }
+  </style>
 </head>
 <body>
 <div class="page-shell">
-<header class="topbar">
-<div class="brand-wrap">
-<div class="avatar-box">
-<img class="avatar-img" data-avatar-user alt="Foto do(a) usuário(a)">
-<img class="logo-inline" src="../logo-revista.png" alt="Logo da Revista Inquietações">
-</div>
-<div class="brand-copy">
-<h1 id="page-title">Pareceres por parecerista</h1>
-<p id="page-description">Histórico completo de avaliações por parecerista, com resumo por status, metadados editoriais, comentários e acesso à devolutiva anexada.</p>
-</div>
-</div>
-<div class="actions-row">
-<a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
-<button class="btn btn-secondary" data-action="logout" type="button">Sair</button>
-</div>
-</header>
+  <header class="topbar">
+    <div class="brand-wrap">
+      <div class="avatar-box"><img class="avatar-img" data-avatar-user alt="Avatar"><img class="logo-inline" src="../logo-revista.png" alt="Logo"></div>
+      <div class="brand-copy"><h1>Certificados do parecerista</h1><p>Área específica para certificados vinculados a pareceres realizados</p></div>
+    </div>
+    <div class="actions-row">
+      <div style="position: relative; margin-right: 10px;">
+        <button id="btn-notificacoes" style="background: none; border: none; font-size: 1.5rem; cursor: pointer;">🔔</button>
+        <span id="notificacao-badge" style="position: absolute; top: -5px; right: -10px; background: red; color: white; border-radius: 50%; padding: 2px 6px; font-size: 0.7rem; display: none;"></span>
+        <div id="notificacoes-dropdown" style="display: none; position: absolute; right: 0; top: 35px; background: white; border: 1px solid #ccc; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.2); z-index: 1000;"></div>
+      </div>
+      <a class="btn btn-secondary" href="javascript:history.back()">Voltar</a>
+      <button class="btn btn-soft" data-action="logout">Sair</button>
+    </div>
+  </header>
 
-<section class="panel">
-<div class="info-card">
-
-<div class="selector-wrap">
-<label class="selector-label" for="parecerista-select">Selecionar parecerista</label>
-<div class="selector-row">
-<select id="parecerista-select" class="filter-select">
-<option value="">Escolha um parecerista</option>
-</select>
-<button id="btn-ir-parecerista" class="btn btn-secondary" type="button">Carregar</button>
-</div>
-</div>
-
-<div class="identity-box">
-<div class="identity-name" id="reviewer-name">Carregando parecerista...</div>
-<div class="identity-email" id="reviewer-email"> </div>
-</div>
-
-<div class="stats-grid">
-<div class="stats-card"><span class="label">Total</span><span class="value" id="stat-total">0</span></div>
-<div class="stats-card"><span class="label">Em avaliação</span><span class="value" id="stat-em-avaliacao">0</span></div>
-<div class="stats-card"><span class="label">Concluídos</span><span class="value" id="stat-concluidos">0</span></div>
-<div class="stats-card"><span class="label">Não aceitos</span><span class="value" id="stat-nao-aceitos">0</span></div>
-<div class="stats-card"><span class="label">Aceitos</span><span class="value" id="stat-aceitos">0</span></div>
-</div>
-
-<div class="filters-row">
-<div class="filter-group">
-<label class="filter-label" for="status-filter">Filtrar por status</label>
-<select class="filter-select" id="status-filter">
-<option value="todos">Todos</option>
-<option value="em_avaliacao">Em avaliação</option>
-<option value="concluido">Concluídos</option>
-<option value="nao_aceito">Não aceitos</option>
-<option value="aceito">Aceitos</option>
-</select>
-</div>
-<div class="filter-group">
-<label class="filter-label" for="text-filter">Buscar por título</label>
-<input class="filter-input" id="text-filter" type="search" placeholder="Digite parte do título do trabalho">
-</div>
-</div>
-
-<div class="results-head">
-<div>
-<h2 class="results-title">Histórico de pareceres</h2>
-<p class="results-subtitle" id="results-subtitle">Carregando registros...</p>
-</div>
-</div>
-
-<div class="loading-box" id="loading-box">Buscando histórico do parecerista...</div>
-<div class="form-message" id="msg-box"></div>
-<div class="review-list" id="review-list" hidden></div>
-<div class="empty-state" id="empty-state" hidden>
-<h3>Nenhum parecer encontrado</h3>
-<p>Este parecerista ainda não possui registros que correspondam ao filtro aplicado.</p>
-</div>
-
-</div>
-</section>
-
-<footer class="page-footer">Revista Inquietações — acompanhamento editorial de pareceres por parecerista.</footer>
+  <div class="cert-list" id="cert-list">
+    <div style="text-align: center; padding: 40px;">Carregando certificados...</div>
+  </div>
+  <footer class="page-footer"></footer>
 </div>
 
 <script>
-document.addEventListener('DOMContentLoaded',async()=>{
-  const user=AppPanel.requireRole(['editor_chefe','editor_adjunto','editor']);
-  if(!user)return;
-
-  const params=new URLSearchParams(window.location.search);
-  const pareceristaId=params.get('pareceristaId')||params.get('parecerista')||params.get('id')||sessionStorage.getItem('pareceristaIdHistorico')||'';
-
-  const loadingBox=document.getElementById('loading-box');
-  const msgBox=document.getElementById('msg-box');
-  const reviewList=document.getElementById('review-list');
-  const emptyState=document.getElementById('empty-state');
-  const statusFilter=document.getElementById('status-filter');
-  const textFilter=document.getElementById('text-filter');
-  const subtitle=document.getElementById('results-subtitle');
-  const pareceristaSelect=document.getElementById('parecerista-select');
-  const btnIrParecerista=document.getElementById('btn-ir-parecerista');
-
-  let rawItems=[];
-
-  function normalizeText(v){
-    return String(v||'').normalize('NFD').replace(/[\u0300-\u036f]/g,'').toLowerCase().trim();
-  }
-
-  function statusKey(item){
-    const d=normalizeText(item.designacao_status||item.designacaoStatus);
-    const f=normalizeText(item.parecer_final||item.parecerFinal);
-    if(d.includes('recus'))return'nao_aceito';
-    if(d.includes('nao aceito'))return'nao_aceito';
-    if(d.includes('não aceito'))return'nao_aceito';
-    if(f.includes('recus'))return'nao_aceito';
-    if(f.includes('nao'))return'nao_aceito';
-    if(f.includes('não'))return'nao_aceito';
-    if(f.includes('aceitar'))return'aceito';
-    if(d.includes('conclu'))return'concluido';
-    if(d.includes('avali'))return'em_avaliacao';
-    if(d.includes('aceit'))return'aceito';
-    return'em_avaliacao';
-  }
-
-  function statusLabel(key){
-    if(key==='concluido')return'Concluído';
-    if(key==='aceito')return'Aceito';
-    if(key==='nao_aceito')return'Não aceito';
-    if(key==='em_avaliacao')return'Em avaliação';
-    return'Em avaliação';
-  }
-
-  function statusClass(key){
-    if(key==='concluido')return'badge badge-concluido';
-    if(key==='aceito')return'badge badge-aceito';
-    if(key==='nao_aceito')return'badge badge-nao-aceito';
-    if(key==='em_avaliacao')return'badge badge-em-avaliacao';
-    return'badge badge-default';
-  }
-
-  function safe(v){
-    return v?String(v):'—';
-  }
-
-  function formatDate(v){
-    if(!v)return'—';
-    try{
-      const d=new Date(v);
-      if(Number.isNaN(d.getTime()))return String(v);
-      return d.toLocaleString('pt-BR');
-    }catch{
-      return String(v);
+  async function carregarCertificados() {
+    try {
+      const data = await AppPanel.apiData('listar_certificados', { type: 'parecer' });
+      const container = document.getElementById('cert-list');
+      if (!data.certificados || data.certificados.length === 0) {
+        container.innerHTML = '<div style="text-align: center; padding: 40px;">Nenhum certificado de parecer encontrado.</div>';
+        return;
+      }
+      container.innerHTML = data.certificados.map(cert => `
+        <div class="cert-item">
+          <div class="cert-info">
+            <div class="cert-titulo">${escapeHtml(cert.titulo)} <span class="cert-tipo">${cert.tipo === 'parecer' ? 'Parecer' : 'Certificado'}</span></div>
+            <div class="cert-data">Enviado em: ${new Date(cert.criado_em).toLocaleDateString('pt-BR')}</div>
+          </div>
+          <div class="actions-row">
+            <a class="btn btn-soft" href="/.netlify/functions/get-my-certificate?id=${cert.id}&download=0" target="_blank">Visualizar</a>
+            <a class="btn btn-primary" href="/.netlify/functions/get-my-certificate?id=${cert.id}&download=1">Baixar PDF</a>
+          </div>
+        </div>
+      `).join('');
+    } catch (err) {
+      document.getElementById('cert-list').innerHTML = `<div style="text-align: center; padding: 40px; color: red;">Erro ao carregar certificados: ${err.message}</div>`;
     }
   }
 
-  function updateStats(items){
-    const counts={total:items.length,em_avaliacao:0,concluido:0,nao_aceito:0,aceito:0};
-    items.forEach(item=>{
-      const key=statusKey(item);
-      if(counts[key]!==undefined)counts[key]+=1;
-    });
-    document.getElementById('stat-total').textContent=String(counts.total);
-    document.getElementById('stat-em-avaliacao').textContent=String(counts.em_avaliacao);
-    document.getElementById('stat-concluidos').textContent=String(counts.concluido);
-    document.getElementById('stat-nao-aceitos').textContent=String(counts.nao_aceito);
-    document.getElementById('stat-aceitos').textContent=String(counts.aceito);
-  }
+  function escapeHtml(str) { if (!str) return ''; return str.replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;'); }
 
-  function noteBox(title,body){
-    if(!body)return'';
-    return`<div class="note-box"><span class="note-title">${title}</span><p class="note-body">${AppPanel.escapeHtml(String(body))}</p></div>`;
-  }
-
-  function fileBox(url){
-    if(!url)return'';
-    const safeUrl=AppPanel.escapeHtml(String(url));
-    return`<div class="file-box"><a class="file-link" href="${safeUrl}" target="_blank" rel="noopener noreferrer">Abrir devolutiva</a></div>`;
-  }
-
-  function render(items){
-    updateStats(rawItems);
-    reviewList.innerHTML='';
-    const query=normalizeText(textFilter.value);
-    const filter=statusFilter.value;
-    const filtered=items.filter(item=>{
-      const matchesStatus=filter==='todos'||statusKey(item)===filter;
-      const matchesText=!query||normalizeText(item.titulo).includes(query);
-      return matchesStatus&&matchesText;
-    });
-    subtitle.textContent=`${filtered.length} registro(s) encontrado(s).`;
-    loadingBox.hidden=true;
-    reviewList.hidden=filtered.length===0;
-    emptyState.hidden=filtered.length!==0;
-    if(filtered.length===0)return;
-    const html=filtered.map(item=>{
-      const key=statusKey(item);
-      return`<article class="review-item"><div class="review-head"><div class="review-head-main"><h3 class="review-title">${AppPanel.escapeHtml(safe(item.titulo))}</h3><p class="review-subtitle">Submissão #${AppPanel.escapeHtml(String(item.submissao_id||item.submissaoId||'—'))} • ${AppPanel.escapeHtml(safe(item.secao||item.tipoSubmissao||'Sem tipo informado'))}</p></div><span class="${statusClass(key)}">${statusLabel(key)}</span></div><div class="meta-grid"><div class="meta-card"><span class="meta-label">Status da designação</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.designacao_status||item.designacaoStatus||statusLabel(key)))}</span></div><div class="meta-card"><span class="meta-label">Autor(a)</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.autor_nome||item.autorNome))}</span></div><div class="meta-card"><span class="meta-label">Prazo do parecer</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.prazo_parecer_formatado||item.prazoParecer||item.prazo_parecer))}</span></div><div class="meta-card"><span class="meta-label">Última atualização</span><span class="meta-value">${AppPanel.escapeHtml(formatDate(item.atualizado_em||item.atualizadoEm||item.updatedAt||item.criadoEm||item.criado_em))}</span></div><div class="meta-card"><span class="meta-label">Parecer final</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.parecer_final||item.parecerFinal))}</span></div><div class="meta-card"><span class="meta-label">Tempo de avaliação</span><span class="meta-value">${AppPanel.escapeHtml(safe(item.tempo_avaliacao||item.tempoAvaliacao))}</span></div></div><div class="notes-grid">${noteBox('Comentário ao(à) autor(a)',item.comentario_autor||item.comentarioAutor)}${noteBox('Comentário interno à editoria',item.comentario_editor||item.comentarioEditor)}</div>${fileBox(item.devolutiva_url||item.devolutivaUrl||item.devolutivaDocUrl)}</article>`;
-    }).join('');
-    reviewList.innerHTML=html;
-  }
-
-  async function carregarPareceristas(){
-    const data=await AppPanel.apiData('reviewer_list_for_history');
-    const items=Array.isArray(data.items)?data.items:[];
-    pareceristaSelect.innerHTML=`<option value="">Escolha um parecerista</option>`+items.map(p=>`<option value="${p.id}">${AppPanel.escapeHtml(p.nome)}${p.email?` — ${AppPanel.escapeHtml(p.email)}`:''}</option>`).join('');
-    if(pareceristaId)pareceristaSelect.value=String(pareceristaId);
-  }
-
-  function bindPareceristaSelector(){
-    const go=()=>{
-      const id=pareceristaSelect.value;
-      if(!id)return;
-      sessionStorage.setItem('pareceristaIdHistorico',String(id));
-      location.href=`pareceres-parecerista.html?pareceristaId=${id}`;
-    };
-    btnIrParecerista.addEventListener('click',go);
-    pareceristaSelect.addEventListener('change',()=>{ if(pareceristaSelect.value)go(); });
-  }
-
-  function bindFilters(){
-    statusFilter.addEventListener('change',()=>render(rawItems));
-    textFilter.addEventListener('input',()=>render(rawItems));
-  }
-
-  bindFilters();
-
-  try{
-    await carregarPareceristas();
-    bindPareceristaSelector();
-  }catch(err){
-    msgBox.textContent=err.message||'Não foi possível carregar a lista de pareceristas.';
-    msgBox.className='form-message err';
-  }
-
-  if(!pareceristaId){
-    loadingBox.hidden=true;
-    document.getElementById('reviewer-name').textContent='Selecione um parecerista';
-    document.getElementById('reviewer-email').textContent='Escolha um nome no campo acima para carregar o histórico.';
-    reviewList.hidden=true;
-    emptyState.hidden=false;
-    emptyState.querySelector('h3').textContent='Nenhum parecerista selecionado';
-    emptyState.querySelector('p').textContent='Use o seletor acima para abrir o histórico de pareceres.';
-    subtitle.textContent='Selecione um parecerista para visualizar os registros.';
-    return;
-  }
-
-  try{
-    const data=await AppPanel.apiData('reviewer_review_history',{pareceristaId:Number(pareceristaId)});
-    const reviewer=data.parecerista||data.reviewer||{};
-    rawItems=Array.isArray(data.avaliacoes)?data.avaliacoes:(Array.isArray(data.items)?data.items:[]);
-    document.getElementById('reviewer-name').textContent=reviewer.nome||'Parecerista';
-    document.getElementById('reviewer-email').textContent=reviewer.email||' ';
-    document.getElementById('page-title').textContent=`Pareceres de ${reviewer.nome||'Parecerista'}`;
-    render(rawItems);
-  }catch(err){
-    loadingBox.hidden=true;
-    msgBox.textContent=err.message||'Não foi possível carregar os pareceres do parecerista.';
-    msgBox.className='form-message err';
-  }
-});
+  document.addEventListener('DOMContentLoaded', () => {
+    setTimeout(async () => {
+      if (typeof AppPanel === 'undefined') { console.error('AppPanel não carregado'); return; }
+      const user = AppPanel.requireRole(['parecerista']);
+      if (!user) return;
+      AppPanel.atualizarAvatares();
+      AppPanel.atualizarContadorNotificacoes();
+      AppPanel.iniciarPollingNotificacoes();
+      const btn = document.getElementById('btn-notificacoes');
+      if (btn) btn.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+      await carregarCertificados();
+    }, 100);
+  });
 </script>
 </body>
 </html>
