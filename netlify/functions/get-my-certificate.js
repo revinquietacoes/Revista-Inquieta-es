@@ -29,7 +29,8 @@ const main = async (req) => {
     const queryUserId = Number(url.searchParams.get('user_id') || 0)
     const tabelaParam = url.searchParams.get('tabela') || 'privado'
 
-    // Mapeia o parâmetro para o nome real da tabela
+    console.log(`📥 [get-my-certificate] id=${certificateId}, download=${download}, queryUserId=${queryUserId}, tabela=${tabelaParam}`)
+
     let tabelaReal
     if (tabelaParam === 'parecerista') {
       tabelaReal = 'certificados_parecerista'
@@ -41,45 +42,51 @@ const main = async (req) => {
       return new Response('Parâmetro id é obrigatório.', { status: 400 })
     }
 
-    // Obtém userId do header ou da query string
     let userId = getAuthenticatedUserId(req)
+    console.log(`🔑 userId do header: ${userId}`)
     if (!userId && queryUserId) {
       userId = queryUserId
+      console.log(`📌 userId da query string (fallback): ${userId}`)
     }
 
     if (!userId) {
+      console.log('❌ Nenhum userId encontrado')
       return new Response('Usuário não autenticado.', { status: 401 })
     }
 
-    // Usa sql.query para consultas com placeholders (porque o nome da tabela é dinâmico)
-    // Nota: isso evita o erro de tagged template com interpolação de identificador.
     const queryText = `SELECT id, titulo, blob_key, mime_type, nome_arquivo, usuario_id
                        FROM ${tabelaReal}
                        WHERE id = $1
                        LIMIT 1`
+    console.log(`🔍 SQL: ${queryText} [${certificateId}]`)
+
     const rows = await sql.query(queryText, [certificateId])
 
     if (!rows || rows.length === 0) {
+      console.log(`❌ Nenhum certificado encontrado com id=${certificateId} na tabela ${tabelaReal}`)
       return new Response('Certificado não encontrado.', { status: 404 })
     }
 
     const cert = rows[0]
+    console.log(`📦 Certificado encontrado: id=${cert.id}, usuario_id=${cert.usuario_id} (tipo: ${typeof cert.usuario_id}), blob_key=${cert.blob_key}`)
+    console.log(`👤 userId comparado: ${userId} (tipo: ${typeof userId})`)
 
-    if (cert.usuario_id !== userId) {
+    if (Number(cert.usuario_id) !== Number(userId)) {
+      console.log(`🚫 Acesso negado: usuario_id do cert (${cert.usuario_id}) !== userId (${userId})`)
       return new Response('Acesso negado a este certificado.', { status: 403 })
     }
 
     if (!cert.blob_key) {
+      console.log(`❌ blob_key vazio para certificado ${cert.id}`)
       return new Response('Certificado sem arquivo associado.', { status: 404 })
     }
 
-    // Download do Supabase Storage
     const { data, error } = await supabase.storage
       .from('certificados')
       .download(cert.blob_key)
 
     if (error || !data) {
-      console.error('Erro ao baixar do Supabase:', error)
+      console.error('❌ Erro no download do Supabase:', error)
       return new Response('Arquivo do certificado não encontrado.', { status: 404 })
     }
 
@@ -87,6 +94,7 @@ const main = async (req) => {
     const fileName = safeDownloadName(cert.nome_arquivo || cert.titulo || `certificado-${cert.id}.pdf`)
     const finalFileName = fileName.toLowerCase().endsWith('.pdf') ? fileName : `${fileName}.pdf`
 
+    console.log(`✅ Sucesso: entregando certificado ${cert.id} para usuário ${userId}`)
     return new Response(bytes, {
       status: 200,
       headers: {
@@ -96,7 +104,7 @@ const main = async (req) => {
       }
     })
   } catch (error) {
-    console.error('Erro interno em get-my-certificate:', error)
+    console.error('❌ Erro interno em get-my-certificate:', error)
     return new Response(`Erro interno: ${error.message}`, { status: 500 })
   }
 }
