@@ -142,30 +142,100 @@
   </div>
 
   <script>
-    function getTipoClass(tipo) { ... }
-    function getTipoLabel(tipo) { ... }
-    function escapeHtml(str) { ... }
-    function authHeaders() { ... }
+    function getTipoClass(tipo) {
+      if (tipo === 'evento') return 'cert-tipo-evento';
+      if (tipo === 'parecer' || tipo === 'parecerista') return 'cert-tipo-parecer';
+      if (tipo === 'equipe_editorial') return 'cert-tipo-equipe';
+      return '';
+    }
+    function getTipoLabel(tipo) {
+      if (tipo === 'evento') return 'Evento';
+      if (tipo === 'parecer' || tipo === 'parecerista') return 'Parecer';
+      if (tipo === 'equipe_editorial') return 'Equipe editorial';
+      return tipo || 'Certificado';
+    }
+    function escapeHtml(str) {
+      if (!str) return '';
+      return String(str).replace(/[&<>]/g, function (m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+      });
+    }
+    function authHeaders() {
+      var headers = AppPanel.currentUserHeaders ? AppPanel.currentUserHeaders() : {};
+      delete headers['Content-Type'];
+      delete headers['content-type'];
+      return headers;
+    }
 
     async function carregarCertificados() {
-      const container = document.getElementById('cert-list');
+      var container = document.getElementById('cert-list');
       try {
-        // ... conteúdo do try como acima
+        var response = await fetch('/.netlify/functions/list-my-certificates', {
+          headers: authHeaders()
+        });
+        var data = await response.json();
+        if (!response.ok) throw new Error(data.erro || data.detalhe || 'HTTP ' + response.status);
+
+        var certificados = data.certificados || [];
+        if (certificados.length === 0) {
+          container.innerHTML = '<div class="empty-state"><i class="fas fa-folder-open"></i> Nenhum certificado encontrado para o seu usuário.</div>';
+          return;
+        }
+
+        var usuarioLogado = AppPanel.currentUser();
+        var userId = usuarioLogado ? usuarioLogado.id : null;
+        if (!userId) throw new Error('Usuário não identificado.');
+
+        var html = '';
+        for (var i = 0; i < certificados.length; i++) {
+          var cert = certificados[i];
+          var visualizarUrl = '/.netlify/functions/get-my-certificate?id=' + cert.id + '&download=0&user_id=' + userId + '&tabela=' + cert.origem;
+          var baixarUrl = '/.netlify/functions/get-my-certificate?id=' + cert.id + '&download=1&user_id=' + userId + '&tabela=' + cert.origem;
+          html += `
+          <div class="cert-item">
+            <div class="cert-info">
+              <div class="cert-titulo">
+                ${escapeHtml(cert.titulo)}
+                <span class="cert-tipo ${getTipoClass(cert.tipo)}">${getTipoLabel(cert.tipo)}</span>
+              </div>
+              <div class="cert-data">
+                <i class="far fa-calendar-alt"></i> Enviado em: ${new Date(cert.criado_em).toLocaleDateString('pt-BR')}
+              </div>
+            </div>
+            <div class="actions-row">
+              <a class="btn btn-soft" href="${visualizarUrl}" target="_blank"><i class="fas fa-eye"></i> Visualizar</a>
+              <a class="btn btn-primary" href="${baixarUrl}"><i class="fas fa-download"></i> Baixar PDF</a>
+            </div>
+          </div>
+        `;
+        }
+        container.innerHTML = html;
       } catch (err) {
         console.error('Erro ao carregar certificados:', err);
-        container.innerHTML = `<div class="error-state"><i class="fas fa-exclamation-triangle"></i> Erro ao carregar certificados: ${escapeHtml(err.message)}</div>`;
+        container.innerHTML = '<div class="error-state"><i class="fas fa-exclamation-triangle"></i> Erro ao carregar certificados: ' + escapeHtml(err.message) + '</div>';
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      setTimeout(async () => {
+    document.addEventListener('DOMContentLoaded', function () {
+      setTimeout(async function () {
         if (typeof AppPanel === 'undefined') {
           document.getElementById('cert-list').innerHTML = '<div class="error-state">Sistema não inicializado. Recarregue a página.</div>';
           return;
         }
-        const usuario = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe', 'editor-chefe']);
+        var usuario = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe', 'editor-chefe']);
         if (!usuario) return;
-        // ... atualizações de avatar e notificações
+
+        if (typeof AppPanel.atualizarAvatares === 'function') AppPanel.atualizarAvatares();
+        if (typeof AppPanel.atualizarContadorNotificacoes === 'function') AppPanel.atualizarContadorNotificacoes();
+        if (typeof AppPanel.iniciarPollingNotificacoes === 'function') AppPanel.iniciarPollingNotificacoes();
+        var btnNotif = document.getElementById('btn-notificacoes');
+        if (btnNotif && typeof AppPanel.mostrarDropdownNotificacoes === 'function') {
+          btnNotif.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
+        }
+
         await carregarCertificados();
       }, 100);
     });
