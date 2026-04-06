@@ -1225,3 +1225,172 @@ hr.soft {
   gap: 10px;
   font-size: .9rem;
 }
+
+/* ========== REFINAMENTOS PARA A PÁGINA EVENTO ========== */
+/* Cores e variáveis suaves */
+:root {
+  --event-bg: #f9fcff;
+  --event-card-bg: #ffffff;
+  --event-border: rgba(30, 58, 138, 0.12);
+  --event-shadow: 0 12px 28px -8px rgba(0, 0, 0, 0.08);
+  --event-shadow-hover: 0 20px 32px -12px rgba(30, 58, 138, 0.15);
+  --event-transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+}
+
+/* Cards de 4 colunas responsivos */
+.event-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1.5rem;
+  margin: 1rem 0;
+}
+
+.event-card {
+  background: var(--event-card-bg);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  box-shadow: var(--event-shadow);
+  transition: var(--event-transition);
+  border: 1px solid var(--event-border);
+  backdrop-filter: blur(2px);
+}
+
+.event-card:hover {
+  transform: translateY(-6px);
+  box-shadow: var(--event-shadow-hover);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.event-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: #1e3a8a;
+  letter-spacing: -0.01em;
+}
+
+.event-card p {
+  margin: 0;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #334155;
+}
+
+/* Botões modernos e suaves */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  padding: 0.6rem 1.2rem;
+  border-radius: 2rem;
+  font-weight: 600;
+  font-size: 0.85rem;
+  text-decoration: none;
+  transition: var(--event-transition);
+  background: linear-gradient(105deg, #1e3a8a, #3b82f6);
+  color: white;
+  border: none;
+  cursor: pointer;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px -6px rgba(30, 58, 138, 0.3);
+  background: linear-gradient(105deg, #1e3a8a, #2563eb);
+}
+
+.btn.secondary {
+  background: linear-gradient(105deg, #334155, #475569);
+}
+
+.btn.secondary:hover {
+  background: linear-gradient(105deg, #1e293b, #334155);
+}
+
+/* Navegação lateral refinada */
+.side-nav-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.side-nav-link {
+  display: block;
+  text-decoration: none;
+  padding: 0.7rem 1rem;
+  border-radius: 1rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  color: #1e293b;
+  font-weight: 500;
+  font-size: 0.9rem;
+  transition: var(--event-transition);
+}
+
+.side-nav-link:hover {
+  background: #eef2ff;
+  transform: translateX(4px);
+  border-color: #a5c9ff;
+  color: #1e3a8a;
+}
+
+/* Bloco de ações (inscrições) */
+.course-actions-evento,
+.event-info-box {
+  background: #ffffff;
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  border: 1px solid #eef2ff;
+  box-shadow: 0 8px 20px -6px rgba(0, 0, 0, 0.05);
+}
+
+.columns-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 2rem;
+}
+
+/* Responsividade */
+@media (max-width: 1024px) {
+  .event-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .event-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .columns-2 {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .side-nav-link {
+    text-align: center;
+  }
+}
+
+/* Animação de entrada suave para cards */
+.event-card,
+.course-actions-evento,
+.event-info-box {
+  animation: fadeSlideUp 0.5s ease-out forwards;
+  opacity: 0;
+}
+
+@keyframes fadeSlideUp {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
