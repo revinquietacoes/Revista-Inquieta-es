@@ -1,9 +1,9 @@
 [build]
-  publish = "."
   command = "npm install"
+  publish = "."
 
 [functions]
-  node_bundler = "esbuild"
+  "*" = { node_bundler = "esbuild" }
   
 [build.environment]
   SUPABASE_URL = "https://seu-projeto.supabase.co"
@@ -14,3 +14,4 @@
   [headers.values]
     X-SUPABASE-URL = "{{ env.SUPABASE_URL }}"
     X-SUPABASE-ANON-KEY = "{{ env.SUPABASE_ANON_KEY }}"
+

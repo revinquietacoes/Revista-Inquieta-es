@@ -42,9 +42,11 @@ function getHeader(headers, name) {
   return headers[name] || headers[name.toLowerCase()] || null
 }
 
-function getAuthenticatedUserId(req, fallback = 0) {
-  const value = getHeader(req?.headers, 'x-user-id') || getHeader(req?.headers, 'X-User-Id') || fallback || 0
-  return Number(value || 0)
+function getAuthenticatedUserId(req) {
+  const headers = req.headers;
+  const userId = headers['x-user-id'] || headers['X-User-Id'] ||
+    (req.headers.get && (req.headers.get('x-user-id') || req.headers.get('X-User-Id')));
+  return userId ? Number(userId) : null;
 }
 
 function canAccess(user, allowed) {
