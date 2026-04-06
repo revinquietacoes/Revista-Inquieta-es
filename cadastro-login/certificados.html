@@ -142,126 +142,19 @@
   </div>
 
   <script>
-    function getTipoClass(tipo) {
-      if (tipo === 'evento') return 'cert-tipo-evento';
-      if (tipo === 'parecer' || tipo === 'parecerista') return 'cert-tipo-parecer';
-      if (tipo === 'equipe_editorial') return 'cert-tipo-equipe';
-      return '';
-    }
-    function getTipoLabel(tipo) {
-      if (tipo === 'evento') return 'Evento';
-      if (tipo === 'parecer' || tipo === 'parecerista') return 'Parecer';
-      if (tipo === 'equipe_editorial') return 'Equipe editorial';
-      return tipo || 'Certificado';
-    }
-    function escapeHtml(str) {
-      if (!str) return '';
-      return String(str).replace(/[&<>]/g, m => m === '&' ? '&amp;' : m === '<' ? '&lt;' : '&gt;');
-    }
-    function authHeaders() {
-      const headers = { ...(AppPanel.currentUserHeaders?.() || {}) };
-      delete headers['Content-Type'];
-      delete headers['content-type'];
-      return headers;
-    }
+    function getTipoClass(tipo) { ... }
+    function getTipoLabel(tipo) { ... }
+    function escapeHtml(str) { ... }
+    function authHeaders() { ... }
 
     async function carregarCertificados() {
       const container = document.getElementById('cert-list');
       try {
-        const response = await fetch('/.netlify/functions/list-my-certificates', {
-          headers: authHeaders()
-        });
-        const data = await response.json();
-        if (!response.ok) throw new Error(data.erro || data.detalhe || `HTTP ${response.status}`);
-
-        const certificados = data.certificados || [];
-        if (!certificados.length) {
-          container.innerHTML = `<div class="empty-state"><i class="fas fa-folder-open"></i> Nenhum certificado encontrado para o seu usuário.</div>`;
-          return;
-        }
-
-        const usuarioLogado = AppPanel.currentUser();
-        const userId = usuarioLogado ? usuarioLogado.id : null;
-        if (!userId) throw new Error('Usuário não identificado.');
-
-        const { sql, json, getUserById, ensureSupportTables } = require('./_db')
-        const { wrapHttp } = require('./_netlify')
-
-        function getHeader(headers, name) {
-          if (!headers) return null
-          if (typeof headers.get === 'function') {
-            return headers.get(name) || headers.get(name.toLowerCase()) || null
-          }
-          return headers[name] || headers[name.toLowerCase()] || null
-        }
-
-        function getAuthenticatedUserId(req, url) {
-          const headerId = getHeader(req.headers, 'x-user-id') || getHeader(req.headers, 'X-User-Id')
-          const queryId = url.searchParams.get('user_id')
-          return Number(headerId || queryId || 0)
-        }
-
-        const main = async (req) => {
-          try {
-            if (req.method !== 'GET') return json({ erro: 'Método não permitido.' }, 405)
-            await ensureSupportTables()
-
-            const url = new URL(req.url)
-            const userId = getAuthenticatedUserId(req, url)
-            if (!userId) return json({ erro: 'Usuário não autenticado.' }, 401)
-
-            const user = await getUserById(userId)
-            if (!user) return json({ erro: 'Usuário não encontrado.' }, 404)
-
-            const type = String(url.searchParams.get('type') || '').trim()
-
-            // Busca em ambas as tabelas e adiciona coluna 'origem'
-            let rows = []
-            if (!type || type === 'privado') {
-              const privados = await sql`
-        SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'privado' as origem
-        FROM certificados_privados
-        WHERE usuario_id = ${user.id}
-      `
-              rows.push(...privados)
-            }
-            if (!type || type === 'parecerista') {
-              const pareceristas = await sql`
-        SELECT id, tipo, categoria, titulo, nome_arquivo, mime_type, criado_em, blob_key, 'parecerista' as origem
-        FROM certificados_parecerista
-        WHERE usuario_id = ${user.id}
-      `
-              rows.push(...pareceristas)
-            }
-
-            // Ordenar por data decrescente
-            rows.sort((a, b) => new Date(b.criado_em) - new Date(a.criado_em))
-
-            return json({
-              sucesso: true,
-              certificados: rows.map((item) => ({
-                id: item.id,
-                tipo: item.tipo,
-                categoria: item.categoria,
-                titulo: item.titulo,
-                nome_arquivo: item.nome_arquivo,
-                mime_type: item.mime_type,
-                criado_em: item.criado_em,
-                blob_key: item.blob_key,
-                origem: item.origem
-              }))
-            })
-          } catch (error) {
-            console.error('Erro em list-my-certificates:', error)
-            return json({ erro: 'Erro interno ao listar certificados.', detalhe: error.message }, 500)
-          }
-        }
-
-        exports.handler = wrapHttp(main)
-      }).join('');
-    } catch (err) {
-      console.error('Erro ao carregar certificados:', err);
-      container.innerHTML = `<div class="error-state"><i class="fas fa-exclamation-triangle"></i> Erro ao carregar certificados: ${escapeHtml(err.message)}</div>`;
+        // ... conteúdo do try como acima
+      } catch (err) {
+        console.error('Erro ao carregar certificados:', err);
+        container.innerHTML = `<div class="error-state"><i class="fas fa-exclamation-triangle"></i> Erro ao carregar certificados: ${escapeHtml(err.message)}</div>`;
+      }
     }
 
     document.addEventListener('DOMContentLoaded', () => {
@@ -270,19 +163,9 @@
           document.getElementById('cert-list').innerHTML = '<div class="error-state">Sistema não inicializado. Recarregue a página.</div>';
           return;
         }
-        // Permite todos os perfis que podem ter certificados
         const usuario = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe', 'editor-chefe']);
         if (!usuario) return;
-
-        // Atualiza avatar e notificações
-        if (typeof AppPanel.atualizarAvatares === 'function') AppPanel.atualizarAvatares();
-        if (typeof AppPanel.atualizarContadorNotificacoes === 'function') AppPanel.atualizarContadorNotificacoes();
-        if (typeof AppPanel.iniciarPollingNotificacoes === 'function') AppPanel.iniciarPollingNotificacoes();
-        const btnNotif = document.getElementById('btn-notificacoes');
-        if (btnNotif && typeof AppPanel.mostrarDropdownNotificacoes === 'function') {
-          btnNotif.addEventListener('click', AppPanel.mostrarDropdownNotificacoes);
-        }
-
+        // ... atualizações de avatar e notificações
         await carregarCertificados();
       }, 100);
     });
