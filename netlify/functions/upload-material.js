@@ -1,5 +1,10 @@
-const { sql, json, ensureSupportTables, getUserById, getAuthenticatedUserId, canAccess } = require('./_db')
+const { createClient } = require('@supabase/supabase-js')
+const { sql, json, ensureSupportTables, getUserById, getAuthenticatedUserId } = require('./_db')
 const { wrapHttp } = require('./_netlify')
+
+const supabaseUrl = process.env.SUPABASE_URL
+const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
+const supabase = createClient(supabaseUrl, supabaseServiceKey)
 
 function sanitizarNome(nome = '') {
   return String(nome)
@@ -11,61 +16,29 @@ function sanitizarNome(nome = '') {
     .toLowerCase()
 }
 
-async function resolveActorAndTarget(req, form) {
-  // Obtém o usuário autenticado (via header X-User-Id)
-  const actorId = getAuthenticatedUserId(req)
-  // Se não autenticado, tenta pegar do campo usuario_id do formulário (fallback)
-  const targetUserId = Number(form.get('usuario_id') || actorId || 0)
-
-  if (!targetUserId) {
-    return { error: json({ erro: 'Usuário inválido para upload.' }, 403) }
-  }
-
-  const actor = actorId ? await getUserById(actorId) : null
-  if (actorId && !actor) {
-    return { error: json({ erro: 'Usuário autenticado não encontrado.' }, 404) }
-  }
-  if (actor && actor.status && actor.status !== 'ativo') {
-    return { error: json({ erro: 'Usuário autenticado inativo.' }, 403) }
-  }
-
-  const targetUser = await getUserById(targetUserId)
-  if (!targetUser) {
-    return { error: json({ erro: 'Usuário de destino não encontrado.' }, 404) }
-  }
-  if (targetUser.status && targetUser.status !== 'ativo') {
-    return { error: json({ erro: 'Usuário de destino inativo.' }, 403) }
-  }
-
-  const ownUpload = actorId === targetUserId || !actorId
-  const privileged = actor && canAccess(actor, ['editor_chefe', 'editor_adjunto'])
-
-  if (!ownUpload && !privileged) {
-    return { error: json({ erro: 'Você não pode enviar arquivo para outro usuário.' }, 403) }
-  }
-
-  return { actor, targetUser }
-}
-
 const main = async (req) => {
   try {
     if (req.method !== 'POST') return json({ erro: 'Método não permitido.' }, 405)
     await ensureSupportTables()
 
+    // Obtém o usuário autenticado
+    const userId = getAuthenticatedUserId(req)
+    if (!userId) return json({ erro: 'Usuário não autenticado.' }, 401)
+
+    const user = await getUserById(userId)
+    if (!user || user.status !== 'ativo') return json({ erro: 'Usuário inválido ou inativo.' }, 403)
+
     const form = await req.formData()
     const submissaoId = form.get('submissao_id') ? Number(form.get('submissao_id')) : null
-    const categoria = String(form.get('categoria') || 'outro')
+    const categoria = String(form.get('categoria') || 'geral')
     const arquivo = form.get('arquivo')
 
     if (!arquivo || typeof arquivo === 'string') {
-      return json({ erro: 'Selecione um arquivo válido.' }, 400)
+      return json({ erro: 'Nenhum arquivo enviado ou arquivo inválido.' }, 400)
     }
 
-    const roleInfo = await resolveActorAndTarget(req, form)
-    if (roleInfo.error) return roleInfo.error
-    const { targetUser } = roleInfo
-
-    const permitidos = [
+    // Validações de tipo e tamanho
+    const tiposPermitidos = [
       'application/pdf',
       'application/msword',
       'application/vnd.openxmlformats-officedocument.wordprocessingml.document',
@@ -73,69 +46,59 @@ const main = async (req) => {
       'audio/mpeg', 'audio/wav', 'audio/webm', 'audio/ogg',
       'video/mp4', 'video/webm'
     ]
-
-    if (!permitidos.includes(arquivo.type)) {
+    if (!tiposPermitidos.includes(arquivo.type)) {
       return json({ erro: 'Tipo de arquivo não permitido.' }, 400)
     }
     if (arquivo.size > 10_000_000) {
-      return json({ erro: 'Arquivo acima do limite de 10 MB.' }, 400)
-    }
-
-    const supabaseUrl = process.env.SUPABASE_URL
-    const supabaseServiceKey = process.env.SUPABASE_SERVICE_ROLE_KEY
-    if (!supabaseUrl || !supabaseServiceKey) {
-      console.error('❌ Variáveis SUPABASE_URL ou SUPABASE_SERVICE_ROLE_KEY não definidas')
-      return json({ erro: 'Configuração de armazenamento ausente.' }, 500)
+      return json({ erro: 'Arquivo muito grande (máx. 10 MB).' }, 400)
     }
 
     const timestamp = Date.now()
     const safeName = sanitizarNome(arquivo.name || 'arquivo')
-    const filePath = `chat/${targetUser.id}/${categoria}/${timestamp}-${safeName}`
-    const uploadUrl = `${supabaseUrl}/storage/v1/object/chat-anexos/${filePath}`
-    const bytes = Buffer.from(await arquivo.arrayBuffer())
+    const storagePath = `${categoria}/${userId}${submissaoId ? `/submissao_${submissaoId}` : ''}/${timestamp}-${safeName}`
+    const bucket = 'uploads'  // Usando um bucket único, crie-o no Supabase
 
-    console.log(`📤 Upload para Supabase: ${uploadUrl}, tamanho: ${bytes.length} bytes`)
+    console.log(`📤 Upload para bucket "${bucket}", caminho: ${storagePath}`)
 
-    const uploadResponse = await fetch(uploadUrl, {
-      method: 'PUT',
-      headers: {
-        'Authorization': `Bearer ${supabaseServiceKey}`,
-        'Content-Type': arquivo.type
-      },
-      body: bytes
-    })
+    const { data, error } = await supabase.storage
+      .from(bucket)
+      .upload(storagePath, Buffer.from(await arquivo.arrayBuffer()), {
+        contentType: arquivo.type,
+        cacheControl: '3600',
+        upsert: false
+      })
 
-    if (!uploadResponse.ok) {
-      const errorText = await uploadResponse.text()
-      console.error('❌ Erro no upload Supabase:', uploadResponse.status, errorText)
-      throw new Error(`Erro no upload Supabase: ${uploadResponse.status} - ${errorText}`)
+    if (error) {
+      console.error('❌ Erro no upload Supabase:', error)
+      return json({ erro: 'Falha ao salvar arquivo no armazenamento.', detalhe: error.message }, 500)
     }
 
-    const publicUrl = `${supabaseUrl}/storage/v1/object/public/chat-anexos/${filePath}`
+    const { data: urlData } = supabase.storage.from(bucket).getPublicUrl(storagePath)
+    const publicUrl = urlData.publicUrl
 
-    // Salvar no banco Neon (tabela arquivos_publicacao)
+    // Registra na tabela arquivos_publicacao
     const inserido = await sql`
       INSERT INTO arquivos_publicacao (
         usuario_id, submissao_id, categoria, nome_original, mime_type, tamanho_bytes, blob_key, blob_store, url_acesso, publico
       ) VALUES (
-        ${targetUser.id}, ${submissaoId}, ${categoria}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${filePath}, 'supabase', ${publicUrl}, TRUE
+        ${userId}, ${submissaoId}, ${categoria}, ${arquivo.name}, ${arquivo.type}, ${arquivo.size}, ${storagePath}, 'supabase', ${publicUrl}, TRUE
       ) RETURNING id, url_acesso, blob_key
     `
 
-    console.log('✅ Arquivo salvo com sucesso, URL:', publicUrl)
+    console.log('✅ Upload concluído, ID:', inserido[0].id)
 
     return json({
       sucesso: true,
       arquivo: {
         url_acesso: publicUrl,
-        storage_path: filePath,
+        storage_path: storagePath,
         id: inserido[0].id,
         nome_original: arquivo.name
       }
     })
-  } catch (erro) {
-    console.error('❌ upload-material erro:', erro)
-    return json({ erro: 'Erro ao enviar arquivo.', detalhe: erro.message }, 500)
+  } catch (err) {
+    console.error('❌ upload-material erro fatal:', err)
+    return json({ erro: 'Erro interno no upload.', detalhe: err.message }, 500)
   }
 }
 
