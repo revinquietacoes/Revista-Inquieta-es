@@ -421,6 +421,10 @@ const main = async (req) => {
       await sql`INSERT INTO solicitacoes_certificados_evento (usuario_id, nome_completo, email, certificado_minicurso, certificado_participacao_geral, certificado_comunicacao_oral, minicursos, autoriza_publicacao_texto, resumo_expandido, titulo_comunicacao_oral, autores_comunicacao_oral) VALUES (${user.id}, ${nomeCompleto}, ${email}, ${!!certificadoMinicurso}, ${!!certificadoParticipacaoGeral}, ${!!certificadoComunicacaoOral}, ${minicursos || null}, ${typeof autorizaPublicacaoTexto === 'boolean' ? autorizaPublicacaoTexto : null}, ${resumoExpandido || null}, ${tituloComunicacaoOral || null}, ${autoresComunicacaoOral || null})`
       return json({ sucesso: true })
     }
+    
+    if (!canAccess(user, ['autor', 'editor_adjunto', 'editor_chefe'])) {
+      return json({ erro: 'Acesso negado.' }, 403);
+    }
 
     // ---------- Deletar submissão ----------
     if (action === 'delete_submission') {
