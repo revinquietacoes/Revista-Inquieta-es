@@ -224,12 +224,19 @@
     </div>
 
     <script>
+        // Função auxiliar para mostrar mensagens (definida globalmente)
+        function showMessage(element, text, type = "loading") {
+            if (!element) return;
+            element.textContent = text;
+            element.className = `form-message ${type}`;
+        }
+
+        // Aguarda o carregamento do DOM e do AppPanel
         document.addEventListener('DOMContentLoaded', function () {
-            // Função para aguardar o AppPanel
             function esperarAppPanel(callback, tentativas = 0) {
                 if (typeof AppPanel !== 'undefined') {
                     callback();
-                } else if (tentativas < 20) {
+                } else if (tentativas < 20) { // 2 segundos (20 * 100ms)
                     setTimeout(() => esperarAppPanel(callback, tentativas + 1), 100);
                 } else {
                     console.error('AppPanel não carregado após 2 segundos');
@@ -238,15 +245,16 @@
                 }
             }
 
-            esperarAppPanel(() => {
-                // Agora AppPanel está disponível
-                const user = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
-                if (!user) return;
-
+            // Agora a callback é async, permitindo o uso de await
+            esperarAppPanel(async () => {
                 try {
-                    if (typeof AppPanel === 'undefined') throw new Error("AppPanel não carregado");
+                    // Verificar autenticação
+                    const user = AppPanel.requireRole(['autor', 'parecerista', 'editor_adjunto', 'editor_chefe']);
+                    if (!user) return;
+
+                    // Carregar dados do usuário
                     const data = await AppPanel.apiData("me");
-                    usuarioAtual = data.usuario;
+                    const usuarioAtual = data.usuario;
                     if (!usuarioAtual?.id) throw new Error("Usuário não encontrado");
                     console.log("✅ Dados do usuário carregados:", usuarioAtual);
 
@@ -263,12 +271,11 @@
                         form.telefone.value = usuarioAtual.telefone || "";
                     }
 
-                    // Avatar preview (usa URL pública do Supabase, se existir)
+                    // Avatar preview
                     const preview = document.getElementById("avatar-preview");
                     const defaultAvatar = "../assets/avatares/avatar-padrao.png";
                     if (usuarioAtual.foto_perfil_url && usuarioAtual.foto_perfil_url !== "null") {
                         let avatarUrl = usuarioAtual.foto_perfil_url;
-                        // Se a URL for antiga (do Netlify Blobs), converte? Não precisa mais.
                         preview.src = avatarUrl + "?t=" + Date.now();
                         document.querySelectorAll("[data-avatar-user]").forEach(el => {
                             if (el) el.src = avatarUrl + "?t=" + Date.now();
@@ -277,7 +284,7 @@
                         preview.src = defaultAvatar;
                     }
 
-                    // ========== UPLOAD DE AVATAR (chama função Netlify que salva no Supabase) ==========
+                    // ========== UPLOAD DE AVATAR ==========
                     const drop = document.getElementById("avatar-drop");
                     const previewClick = document.getElementById("avatar-preview-click");
                     const input = document.getElementById("avatar-input");
@@ -383,9 +390,8 @@
                                     const result = await response.json();
                                     if (!response.ok) throw new Error(result.erro || "Erro no upload");
 
-                                    // A função retorna a URL pública do Supabase
                                     const publicUrl = result.url;
-                                    const urlComTimestamp = publicUrl + "?t=" + Date.now();  // CORRIGIDO: use "?"
+                                    const urlComTimestamp = publicUrl + "?t=" + Date.now();
                                     preview.src = urlComTimestamp;
                                     document.querySelectorAll("[data-avatar-user]").forEach(el => el.src = urlComTimestamp);
 
@@ -415,7 +421,7 @@
                         };
                     }
 
-                    // ========== SALVAR DADOS DO PERFIL (Neon) ==========
+                    // ========== SALVAR DADOS DO PERFIL ==========
                     const perfilForm = document.getElementById("form-perfil");
                     const msgPerfil = document.getElementById("msg-perfil");
                     if (perfilForm) {
@@ -447,13 +453,16 @@
                         });
                     }
 
+                    // Atualiza avatares em todos os elementos da página
+                    AppPanel.atualizarAvatares();
+
                 } catch (err) {
                     console.error("❌ Erro fatal:", err);
                     const msg = document.getElementById("msg-avatar");
                     if (msg) showMessage(msg, "❌ Erro ao carregar dados. Recarregue a página.", "error");
                 }
-                AppPanel.atualizarAvatares(); // se necessário
             });
+        });
     </script>
 </body>
 
