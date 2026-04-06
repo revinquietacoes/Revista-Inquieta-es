@@ -1,0 +1,6 @@
+body{font-family:Arial,Helvetica,sans-serif;margin:40px;background:#f4f4f4}
+.container{background:white;padding:30px;border-radius:10px;max-width:900px;margin:auto}
+h1{margin-top:0}
+button{padding:10px 16px;border:0;background:#2b6cb0;color:white;border-radius:6px;cursor:pointer}
+input,textarea{width:100%;padding:8px;margin:6px 0 14px}
+a{color:#2b6cb0;text-decoration:none}
