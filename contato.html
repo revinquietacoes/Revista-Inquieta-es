@@ -15,7 +15,7 @@
     <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
     <script
         type="application/ld+json"> { "@context": "https://schema.org", "@type": "Organization", "name": "Revista Inquietações", "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/contato.html", "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" } </script>
-    
+
 </head>
 
 <body id="corpo-contato">
@@ -45,8 +45,8 @@
                             institucional</div>
                     </div>
                 </div>
-                <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="gif-logo.painel-azul.gif"
-                        alt="Logo da Revista Inquietações"></div>
+                <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png"
+                        src="gif-logo.painel-azul.gif" alt="Logo da Revista Inquietações"></div>
             </div>
         </header>
         <nav class="site-nav" id="navegacao-principal"><button id="button-site-nav-toggle"
@@ -134,9 +134,18 @@
                     com apoio de Netlify</a></div>
         </footer>
     </div>
-    <script> const navToggle = document.querySelector(".site-nav-toggle") const navMenu = document.querySelector(".site-nav-menu") if (navToggle) { navToggle.onclick = () => { navMenu.classList.toggle("is-open") } } </script>
-    <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async=""
-        src="//gc.zgo.at/count.js"></script>
+    <script>
+        const navToggle = document.querySelector(".site-nav-toggle");
+        const navMenu = document.querySelector(".site-nav-menu");
+        if (navToggle && navMenu) {
+            navToggle.onclick = () => {
+                navMenu.classList.toggle("is-open");
+            };
+        }
+    </script>
+
+    <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js">
+    </script>
 </body>
 
 </html>
