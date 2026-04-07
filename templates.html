@@ -1,16 +1,19 @@
 <!DOCTYPE html>
 <html id="pagina-templates" lang="pt-BR">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Templates e modelos de formatação da Revista Inquietações.">
-<meta name="author" content="Revista Inquietações">
-<title>Templates | Revista Inquietações</title>
-<link rel="stylesheet" href="styles.css">
-<link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48" type="image/png">
-<link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" type="image/png">
-<link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
-<script type="application/ld+json">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Templates e modelos de formatação da Revista Inquietações.">
+  <meta name="author" content="Revista Inquietações">
+  <title>Templates | Revista Inquietações</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48"
+    type="image/png">
+  <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
+    type="image/png">
+  <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
+  <script type="application/ld+json">
 {
   "@context": "https://schema.org",
   "@type": "Organization",
@@ -19,152 +22,140 @@
   "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
 }
 </script>
-<style>
-.template-grid{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:22px;
-margin-top:12px;
-}
 
-.template-card{
-position:relative;
-background:#fff;
-border:1px solid var(--line);
-border-radius:18px;
-padding:22px;
-box-shadow:var(--shadow-soft);
-transition:transform .18s ease, box-shadow .18s ease;
-overflow:hidden;
-}
-
-.template-card::before{
-content:"";
-position:absolute;
-top:0;
-left:0;
-right:0;
-height:6px;
-}
-
-.template-card:hover{
-transform:translateY(-2px);
-box-shadow:0 14px 28px rgba(16,35,63,0.08);
-}
-
-.template-card h3{
-margin-top:0;
-color:var(--brand);
-}
-
-.template-card p{
-margin:6px 0 14px 0;
-}
-
-.template-card .btn{
-margin-top:4px;
-}
-
-/* cores dos cards */
-
-.template-card.artigo{
-background:#eef5ff;
-border-color:#d7e6fb;
-}
-
-.template-card.artigo::before{
-background:#8cb8f5;
-}
-
-.template-card.resumo{
-background:#fff1f6;
-border-color:#f3d7e4;
-}
-
-.template-card.resumo::before{
-background:#e7a6c1;
-}
-
-.template-card.ensaio{
-background:#eefaf2;
-border-color:#d7ecdf;
-}
-
-.template-card.ensaio::before{
-background:#92c9a3;
-}
-
-.topbar{ display:flex; align-items:center; justify-content:space-between; gap:12px; flex-wrap:wrap; } .acesso-pill{ display:flex; align-items:center; gap:8px; padding:6px 8px; } .topbar-btn{ display:inline-flex; align-items:center; justify-content:center; padding:6px 14px; border-radius:999px; background:#1f3c88; color:#fff; text-decoration:none; font-size:.85rem; font-weight:600; transition:all .15s ease; } .topbar-btn.secondary{ background:#2c55a5; } .topbar-btn:hover{ transform:translateY(-1px); opacity:.95; }
-
-.template-card.relato{
-background:#fff8eb;
-border-color:#f3e5bf;
-}
-
-.template-card.relato::before{
-background:#e2c06f;
-}
-
-.template-note{
-padding:18px 20px;
-border-radius:18px;
-background:#f8fbff;
-border:1px solid rgba(18,45,82,0.08);
-}
-.site-nav-menu{
-display:flex;
-flex-wrap:nowrap;
-align-items:center;
-justify-content:center;
-gap:5px;
-overflow-x:auto;
-scrollbar-width:none;
-}
-
-.site-nav-menu::-webkit-scrollbar{
-display:none;
-}
-
-.site-nav-menu a{
-font-size:0.88rem;
-padding:8px 8px;
-white-space:nowrap;
-}
-</style>
 </head>
+
 <body id="corpo-templates">
-<div id="estrutura-do-site" class="site-shell">
-<nav id="links-de-salto" class="skip-links"><a id="link-conteudo-principal" href="#conteudo-principal">Ir para conteúdo</a><a id="link-navegacao-principal" href="#navegacao-principal">Ir para navegação</a><a id="link-barra-lateral" href="#barra-lateral">Ir para barra lateral</a></nav>
-<div id="barra-superior" class="topbar"><div id="div-pill" class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div><div id="div-pill-acesso-pill" class="pill acesso-pill"><a id="link-cadastro" href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a><a id="link-login" href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a></div></div>
-<header id="cabecalho-da-pagina" class="masthead"><div id="div-masthead-inner" class="masthead-inner"><div id="div-1"><p id="p-kicker" class="kicker">Portal científico</p><h1 id="h1-1">Templates</h1><p id="p-hero-text" class="hero-text">Os templates da Revista Inquietações foram elaborados para facilitar a padronização editorial dos textos submetidos ao periódico.</p><div id="div-masthead-meta" class="masthead-meta"><div id="div-masthead-card" class="masthead-card"><strong>Formato</strong>Documentos editáveis</div><div id="div-masthead-card-2" class="masthead-card"><strong>Objetivo</strong>Padronização editorial</div><div id="div-masthead-card-3" class="masthead-card"><strong>Uso</strong>Submissões acadêmicas</div></div></div><div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="logo-revista.png" alt="Logo da Revista Inquietações"></div></div></header>
-<nav class="site-nav" id="navegacao-principal"><button id="button-site-nav-toggle" class="site-nav-toggle">Menu</button><div id="div-site-nav-menu" class="site-nav-menu"><a id="link-index" href="index.html">Início</a><a id="link-edicao-atual" href="edicao-atual.html">Atual</a><a id="link-conteudos" href="conteudos.html">Conteúdos</a><a id="link-evento" href="evento.html">Evento</a><a id="link-index-2" href="Editora-Revista-Inquietacoes/index.html">Editora</a><a id="link-sobre" href="sobre.html">Sobre</a><a id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a><a id="link-noticias" href="noticias.html">Notícias</a><a id="link-politicas-editoriais" href="politicas-editoriais.html">Políticas</a><a id="link-diretrizes-autores" href="diretrizes-autores.html">Diretrizes</a><a id="link-submissoes" href="submissoes.html">Submissões</a><a id="link-templates" href="templates.html" class="active">Templates</a><a id="link-contato" href="contato.html">Contato</a><a id="link-homenagens" href="homenagens.html">Homenagens</a></div></nav>
-<div id="grade-do-portal" class="portal-grid sidebar-compact">
-<aside class="sidebar" id="barra-lateral"><section id="section-sidebar-block" class="sidebar-block"><h2 id="h2-1">Navegação da página</h2><ul id="ul-info-links" class="info-links"><li id="li-1"><a id="link-template-artigo" href="#template-artigo">Template de artigo</a></li><li id="li-2"><a id="link-template-resumo" href="#template-resumo">Template de resumo expandido</a></li><li id="li-3"><a id="link-template-ensaio" href="#template-ensaio">Template de ensaio</a></li><li id="li-4"><a id="link-template-relato" href="#template-relato">Relato de experiência</a></li></ul></section></aside>
-<main class="content" id="conteudo-principal">
-<section id="secao-panel" class="panel">
-<div id="div-panel-head" class="panel-head"><h2 id="h2-2">Templates disponíveis</h2><p id="p-1">Modelos para preparação dos textos submetidos à revista.</p></div>
-<div id="div-panel-body" class="panel-body">
-<div id="div-template-grid" class="template-grid"><div class="template-card artigo" id="template-artigo"><h3 id="h3-1">Template de Artigo</h3><p id="p-2">Modelo padrão para artigos científicos submetidos à Revista Inquietações. Inclui formatação de título, resumo, palavras-chave e referências.</p><a id="link-view" class="btn" href="https://drive.google.com/file/d/1Mhe6_JYAQgW9RujyZlPfL3gCmSXBXBEI/view?usp=drive_link" target="_blank" rel="noopener noreferrer">Baixar template</a></div><div class="template-card resumo" id="template-resumo"><h3 id="h3-2">Template de Resumo Expandido</h3><p id="p-3">Modelo específico para submissão de resumos expandidos e comunicações acadêmicas.</p><a id="link-edit" class="btn" href="https://docs.google.com/document/d/1R1_RXqTW1uiS5oOnK9QPbpHKyg0vOxHl/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">Baixar template</a></div><div class="template-card ensaio" id="template-ensaio"><h3 id="h3-3">Template de Ensaio</h3><p id="p-4">Modelo destinado à submissão de ensaios teóricos e textos reflexivos.</p><a id="link-edit-2" class="btn" href="https://docs.google.com/document/d/1wsjmOkjxZxksBNv5WuCPn1A5QthvNkcv/edit?usp=sharing&ouid=106454046870362039189&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">Baixar template</a></div><div class="template-card relato" id="template-relato"><h3 id="h3-4">Relato de Experiência</h3><p id="p-5">Modelo para submissão de relatos de experiência acadêmica ou pedagógica.</p><a id="link-edit-3" class="btn" href="https://docs.google.com/document/d/1jYV4ZzqAO1OGvELiMsHKNYTeWOYxBFPp/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true" target="_blank" rel="noopener noreferrer">Baixar template</a></div></div>
-</div>
-</section>
-<section id="secao-observacoes" class="panel"><div id="div-panel-head-2" class="panel-head"><h2 id="h2-3">Observações</h2></div><div id="div-panel-body-2" class="panel-body"><div id="div-template-note" class="template-note"><p id="p-6">Recomenda-se que os autores utilizem os templates disponibilizados para garantir a padronização editorial dos textos submetidos.</p><p id="p-7">O uso do template facilita o processo de avaliação e preparação editorial dos trabalhos publicados.</p></div></div></section>
-</main>
-</div>
-<footer id="rodape-principal" class="footer"><p id="p-8"><strong>Revista Inquietações</strong>— Portal institucional do periódico</p><div id="div-footer-meta" class="footer-meta"><a id="link-sobre-2" href="sobre.html">Sobre</a><a id="link-politicas-editoriais-2" href="politicas-editoriais.html">Políticas</a><a id="link-submissoes-2" href="submissoes.html">Submissões</a><a id="link-code-of-conduct-md" href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer">Código de Conduta</a><a id="link-www-netlify-com" href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div></footer>
-</div>
-<script>
+  <div id="estrutura-do-site" class="site-shell">
+    <nav id="links-de-salto" class="skip-links"><a id="link-conteudo-principal" href="#conteudo-principal">Ir para
+        conteúdo</a><a id="link-navegacao-principal" href="#navegacao-principal">Ir para navegação</a><a
+        id="link-barra-lateral" href="#barra-lateral">Ir para barra lateral</a></nav>
+    <div id="barra-superior" class="topbar">
+      <div id="div-pill" class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
+      <div id="div-pill-acesso-pill" class="pill acesso-pill"><a id="link-cadastro" href="cadastro-login/cadastro.html"
+          class="topbar-btn">Cadastrar-se</a><a id="link-login" href="cadastro-login/login.html"
+          class="topbar-btn secondary">Entrar</a></div>
+    </div>
+    <header id="cabecalho-da-pagina" class="masthead">
+      <div id="div-masthead-inner" class="masthead-inner">
+        <div id="div-1">
+          <p id="p-kicker" class="kicker">Portal científico</p>
+          <h1 id="h1-1">Templates</h1>
+          <p id="p-hero-text" class="hero-text">Os templates da Revista Inquietações foram elaborados para facilitar a
+            padronização editorial dos textos submetidos ao periódico.</p>
+          <div id="div-masthead-meta" class="masthead-meta">
+            <div id="div-masthead-card" class="masthead-card"><strong>Formato</strong>Documentos editáveis</div>
+            <div id="div-masthead-card-2" class="masthead-card"><strong>Objetivo</strong>Padronização editorial</div>
+            <div id="div-masthead-card-3" class="masthead-card"><strong>Uso</strong>Submissões acadêmicas</div>
+          </div>
+        </div>
+        <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="logo-revista.png"
+            alt="Logo da Revista Inquietações"></div>
+      </div>
+    </header>
+    <nav class="site-nav" id="navegacao-principal"><button id="button-site-nav-toggle"
+        class="site-nav-toggle">Menu</button>
+      <div id="div-site-nav-menu" class="site-nav-menu"><a id="link-index" href="index.html">Início</a><a
+          id="link-edicao-atual" href="edicao-atual.html">Atual</a><a id="link-conteudos"
+          href="conteudos.html">Conteúdos</a><a id="link-evento" href="evento.html">Evento</a><a id="link-index-2"
+          href="Editora-Revista-Inquietacoes/index.html">Editora</a><a id="link-sobre" href="sobre.html">Sobre</a><a
+          id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a><a id="link-noticias"
+          href="noticias.html">Notícias</a><a id="link-politicas-editoriais"
+          href="politicas-editoriais.html">Políticas</a><a id="link-diretrizes-autores"
+          href="diretrizes-autores.html">Diretrizes</a><a id="link-submissoes" href="submissoes.html">Submissões</a><a
+          id="link-templates" href="templates.html" class="active">Templates</a><a id="link-contato"
+          href="contato.html">Contato</a><a id="link-homenagens" href="homenagens.html">Homenagens</a></div>
+    </nav>
+    <div id="grade-do-portal" class="portal-grid sidebar-compact">
+      <aside class="sidebar" id="barra-lateral">
+        <section id="section-sidebar-block" class="sidebar-block">
+          <h2 id="h2-1">Navegação da página</h2>
+          <ul id="ul-info-links" class="info-links">
+            <li id="li-1"><a id="link-template-artigo" href="#template-artigo">Template de artigo</a></li>
+            <li id="li-2"><a id="link-template-resumo" href="#template-resumo">Template de resumo expandido</a></li>
+            <li id="li-3"><a id="link-template-ensaio" href="#template-ensaio">Template de ensaio</a></li>
+            <li id="li-4"><a id="link-template-relato" href="#template-relato">Relato de experiência</a></li>
+          </ul>
+        </section>
+      </aside>
+      <main class="content" id="conteudo-principal">
+        <section id="secao-panel" class="panel">
+          <div id="div-panel-head" class="panel-head">
+            <h2 id="h2-2">Templates disponíveis</h2>
+            <p id="p-1">Modelos para preparação dos textos submetidos à revista.</p>
+          </div>
+          <div id="div-panel-body" class="panel-body">
+            <div id="div-template-grid" class="template-grid">
+              <div class="template-card artigo" id="template-artigo">
+                <h3 id="h3-1">Template de Artigo</h3>
+                <p id="p-2">Modelo padrão para artigos científicos submetidos à Revista Inquietações. Inclui formatação
+                  de título, resumo, palavras-chave e referências.</p><a id="link-view" class="btn"
+                  href="https://drive.google.com/file/d/1Mhe6_JYAQgW9RujyZlPfL3gCmSXBXBEI/view?usp=drive_link"
+                  target="_blank" rel="noopener noreferrer">Baixar template</a>
+              </div>
+              <div class="template-card resumo" id="template-resumo">
+                <h3 id="h3-2">Template de Resumo Expandido</h3>
+                <p id="p-3">Modelo específico para submissão de resumos expandidos e comunicações acadêmicas.</p><a
+                  id="link-edit" class="btn"
+                  href="https://docs.google.com/document/d/1R1_RXqTW1uiS5oOnK9QPbpHKyg0vOxHl/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true"
+                  target="_blank" rel="noopener noreferrer">Baixar template</a>
+              </div>
+              <div class="template-card ensaio" id="template-ensaio">
+                <h3 id="h3-3">Template de Ensaio</h3>
+                <p id="p-4">Modelo destinado à submissão de ensaios teóricos e textos reflexivos.</p><a id="link-edit-2"
+                  class="btn"
+                  href="https://docs.google.com/document/d/1wsjmOkjxZxksBNv5WuCPn1A5QthvNkcv/edit?usp=sharing&ouid=106454046870362039189&rtpof=true&sd=true"
+                  target="_blank" rel="noopener noreferrer">Baixar template</a>
+              </div>
+              <div class="template-card relato" id="template-relato">
+                <h3 id="h3-4">Relato de Experiência</h3>
+                <p id="p-5">Modelo para submissão de relatos de experiência acadêmica ou pedagógica.</p><a
+                  id="link-edit-3" class="btn"
+                  href="https://docs.google.com/document/d/1jYV4ZzqAO1OGvELiMsHKNYTeWOYxBFPp/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true"
+                  target="_blank" rel="noopener noreferrer">Baixar template</a>
+              </div>
+            </div>
+          </div>
+        </section>
+        <section id="secao-observacoes" class="panel">
+          <div id="div-panel-head-2" class="panel-head">
+            <h2 id="h2-3">Observações</h2>
+          </div>
+          <div id="div-panel-body-2" class="panel-body">
+            <div id="div-template-note" class="template-note">
+              <p id="p-6">Recomenda-se que os autores utilizem os templates disponibilizados para garantir a
+                padronização editorial dos textos submetidos.</p>
+              <p id="p-7">O uso do template facilita o processo de avaliação e preparação editorial dos trabalhos
+                publicados.</p>
+            </div>
+          </div>
+        </section>
+      </main>
+    </div>
+    <footer id="rodape-principal" class="footer">
+      <p id="p-8"><strong>Revista Inquietações</strong>— Portal institucional do periódico</p>
+      <div id="div-footer-meta" class="footer-meta"><a id="link-sobre-2" href="sobre.html">Sobre</a><a
+          id="link-politicas-editoriais-2" href="politicas-editoriais.html">Políticas</a><a id="link-submissoes-2"
+          href="submissoes.html">Submissões</a><a id="link-code-of-conduct-md"
+          href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank"
+          rel="noopener noreferrer">Código de Conduta</a><a id="link-www-netlify-com" href="https://www.netlify.com"
+          target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div>
+    </footer>
+  </div>
+  <script>
 
-const navToggle=document.querySelector(".site-nav-toggle")
-const navMenu=document.querySelector(".site-nav-menu")
+    const navToggle = document.querySelector(".site-nav-toggle")
+    const navMenu = document.querySelector(".site-nav-menu")
 
-if(navToggle){
-navToggle.onclick=()=>{
-navMenu.classList.toggle("is-open")
-}
-}
+    if (navToggle) {
+      navToggle.onclick = () => {
+        navMenu.classList.toggle("is-open")
+      }
+    }
 
-</script>
-<script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js">
-</script>
+  </script>
+  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js">
+  </script>
 </body>
+
 </html>
