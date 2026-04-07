@@ -152,6 +152,26 @@
       background: #92c9a3;
     }
 
+    .template-card.relato {
+      background: #fff8eb;
+      border-color: #f3e5bf;
+    }
+
+    .template-card.relato::before {
+      background: #e2c06f;
+    }
+
+    /* NOVO: modificador para artigo de dossiê */
+    .template-card.artigo-dossie {
+      background: #e7ccba;
+      border-color: #d7ecdf;
+    }
+
+    /* Se desejar uma cor diferente para o traço superior, adicione: */
+    .template-card.artigo-dossie::before {
+      background: #b88a5c;
+    }
+
     .topbar {
       display: flex;
       align-items: center;
@@ -188,15 +208,6 @@
     .topbar-btn:hover {
       transform: translateY(-1px);
       opacity: .95;
-    }
-
-    .template-card.relato {
-      background: #fff8eb;
-      border-color: #f3e5bf;
-    }
-
-    .template-card.relato::before {
-      background: #e2c06f;
     }
 
     .template-note {
@@ -244,22 +255,6 @@
       background: rgba(255, 255, 255, 0.9);
       box-shadow: var(--shadow-soft);
     }
-
-    .template-card-artigo-dossie {
-      background: #e7ccba;
-      border-color: #d7ecdf;
-    }
-
-    .template-card-artigo-dossie {
-      position: relative;
-      background: #e7ccba;
-      border: 1px solid var(--line);
-      border-radius: 18px;
-      padding: 22px;
-      box-shadow: var(--shadow-soft);
-      transition: transform .18s ease, box-shadow .18s ease;
-      overflow: hidden;
-    }
   </style>
 </head>
 
@@ -288,8 +283,8 @@
           </div>
         </div>
         <div id="div-banner-card" class="banner-card">
-          <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
-          <img id="imagem-logo-revista-png" src="assets/favicon.png" alt="Logo da Revista Inquietações">
+          <!-- CAMINHO ATUALIZADO DO LOGO GIF (conforme solicitado) -->
+          <img id="imagem-logo-revista-png" src="assets/paineis/gif-logo.painel-azul.gif" alt="Logo da Revista Inquietações">
         </div>
       </div>
     </header>
@@ -354,7 +349,8 @@
                   href="https://docs.google.com/document/d/1jYV4ZzqAO1OGvELiMsHKNYTeWOYxBFPp/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true"
                   target="_blank" rel="noopener noreferrer">Baixar template</a>
               </div>
-              <div class="template-card-artigo-dossie" id="template-card-artigo-dossie">
+              <!-- CORREÇÃO: agora usando a classe padrão .template-card com modificador .artigo-dossie -->
+              <div class="template-card artigo-dossie" id="template-card-artigo-dossie">
                 <h3>Template de Artigo para Dossiê</h3>
                 <p>Modelo destinado à submissão de artigos para dossiês.</p><a id="link-edit-4" class="btn"
                   href="https://docs.google.com/document/d/1Z3vCTK6wAicnz8JgYidrEaKiIWDPpoAD/edit?usp=sharing&ouid=106454046870362039189&rtpof=true&sd=true"
