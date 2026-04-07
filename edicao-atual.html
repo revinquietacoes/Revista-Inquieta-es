@@ -362,6 +362,34 @@
         grid-template-columns: 1fr;
       }
     }
+
+    .btn,
+    .btn.secondary,
+    .reader-btn,
+    .read-more {
+      background: linear-gradient(105deg, #1e3a8a, #3b82f6) !important;
+      color: white !important;
+      border: none !important;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+      transition: all 0.2s ease;
+    }
+
+    .btn:hover,
+    .btn.secondary:hover,
+    .reader-btn:hover,
+    .read-more:hover {
+      background: linear-gradient(105deg, #1e3a8a, #2563eb) !important;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px -6px rgba(30, 58, 138, 0.4);
+      color: white;
+    }
+
+    /* Garantir que o botão "Ler conteúdos publicados" também tenha o mesmo estilo */
+    .btn.secondary {
+      background: linear-gradient(105deg, #1e3a8a, #3b82f6) !important;
+      color: white !important;
+      border: none;
+    }
   </style>
 </head>
 
@@ -547,7 +575,7 @@
                 class="">Abrir a seção de fotografia temática</span></a><a id="link-conteudos-11"
               class="edicao-menu-link" href="conteudos.html#relatos-experiencia"><strong class="">Relatos de
                 experiência</strong><span class="">Abrir a seção de relatos de experiência</span></a><a
-              id="link-conteudos-12" class="edicao-menu-link" href="conteudos.html#homenagens"><strong
+              id="link-conteudos-12" class="edicao-menu-link" href="homenagens.html"><strong
                 class="">Homenagens</strong><span class="">Abrir a seção de homenagens</span></a></div>
         </div>
       </section>
