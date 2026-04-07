@@ -458,8 +458,8 @@ a:hover {
 
 .btn.secondary {
   background: #edf3fb;
-  color: var(--brand);
   border: 1px solid #d5e2f4;
+  background: linear-gradient(105deg, #1e3a8a, #3b82f6);
 }
 
 .cta-row,
@@ -1299,10 +1299,6 @@ hr.soft {
   transform: translateY(-2px);
   box-shadow: 0 10px 20px -6px rgba(30, 58, 138, 0.3);
   background: linear-gradient(105deg, #1e3a8a, #2563eb);
-}
-
-.btn.secondary {
-  background: linear-gradient(105deg, #334155, #475569);
 }
 
 .btn.secondary:hover {
