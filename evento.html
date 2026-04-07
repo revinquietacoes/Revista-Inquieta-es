@@ -44,7 +44,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(18, 45, 82, 0.55); /* tom azul escuro com transparência */
+            background: rgba(18, 45, 82, 0.55);
+            /* tom azul escuro com transparência */
             backdrop-filter: blur(3px);
             -webkit-backdrop-filter: blur(3px);
             border-radius: inherit;
@@ -70,7 +71,7 @@
         .banner-card img {
             background: transparent;
             mix-blend-mode: normal;
-            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
         }
 
         /* ========== ESTILOS ADICIONAIS PARA A PÁGINA (garantia de consistência) ========== */
@@ -149,6 +150,36 @@
                 grid-template-columns: 1fr;
             }
         }
+
+        /* ========== BOTÕES DA TOPBAR (AZUIS COM TEXTO BRANCO) ========== */
+        .topbar-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: #1f3c88;
+            color: #ffffff !important;
+            /* força branco */
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: transform .15s ease, background .15s ease;
+            border: none;
+        }
+
+        .topbar-btn.secondary {
+            background: #2c55a5;
+        }
+
+        .topbar-btn:hover,
+        .topbar-btn:focus-visible {
+            transform: translateY(-1px);
+            opacity: .95;
+            text-decoration: none;
+            outline: none;
+            color: #ffffff !important;
+        }
     </style>
 </head>
 
@@ -163,7 +194,7 @@
         <div class="topbar" id="topbar-eventos">
             <div class="pill" id="topbar-pill">Revista Inquietações • Formação acadêmica contínua em Ciências Humanas
             </div>
-            <div class="pill acesso-pill" id="topbar-acesso">
+            <div class="pill-1 acesso-pill-1" id="topbar-acesso">
                 <a id="topbar-cadastro" href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a>
                 <a id="topbar-login" href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a>
             </div>
