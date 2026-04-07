@@ -22,6 +22,62 @@
 }
 </script>
   <style>
+    /* ========== SOBRESCRITA PARA O PAINEL PRINCIPAL COM GIF E EFEITO VIDRO ========== */
+    /* Remove os pseudo-elementos antigos do masthead (círculos decorativos) */
+    .masthead::before,
+    .masthead::after {
+      display: none !important;
+    }
+
+    /* Aplica o GIF de fundo no painel principal */
+    .masthead {
+      position: relative;
+      background: none !important;
+      background-image: url('https://media4.giphy.com/media/v1.Y2lkPTc5MGI3NjExam1kZ2g3dTRyZGdja2lqcG1raGUwczQwYXQ2YWY3YTJjZnk4d3F4ZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/BwuRmwdc6Xu12/giphy.gif') !important;
+      background-size: cover !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important;
+      isolation: isolate;
+    }
+
+    /* Overlay com efeito glassmorphism (vidro) - ocupa 100% do painel */
+    .masthead::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(18, 45, 82, 0.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border-radius: inherit;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Garante que todo o conteúdo do masthead fique acima do overlay */
+    .masthead .masthead-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Ajuste de contraste para o texto sobre o fundo com vidro */
+    .masthead .kicker,
+    .masthead h1,
+    .masthead .hero-text,
+    .masthead .masthead-card {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Estilo para o logo GIF – garante boa visibilidade */
+    .banner-card img {
+      background: transparent;
+      mix-blend-mode: normal;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+
+    /* ========== ESTILOS EXISTENTES (mantidos) ========== */
     .bio-links {
       display: flex;
       flex-wrap: wrap;
@@ -528,8 +584,10 @@
             <div id="div-masthead-card-3" class="masthead-card"><strong>Portal</strong>Revista Inquietações</div>
           </div>
         </div>
-        <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="gif-logo.painel-azul.gif"
-            alt="Logo da Revista Inquietações"></div>
+        <div id="div-banner-card" class="banner-card">
+          <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
+          <img id="imagem-logo-revista-png" src="assets/favicon.png" alt="Logo da Revista Inquietações">
+        </div>
       </div>
     </header>
     <nav class="site-nav" id="navegacao-principal"><button id="button-site-nav-toggle"
@@ -1000,3 +1058,5 @@
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js">
   </script>
 </body>
+
+</html>

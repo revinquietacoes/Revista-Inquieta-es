@@ -23,6 +23,62 @@
 }
 </script>
   <style>
+    /* ========== SOBRESCRITA PARA O PAINEL PRINCIPAL COM GIF E EFEITO VIDRO ========== */
+    /* Remove os pseudo-elementos antigos do masthead (círculos decorativos) */
+    .masthead::before,
+    .masthead::after {
+      display: none !important;
+    }
+
+    /* Aplica o GIF de fundo no painel principal */
+    .masthead {
+      position: relative;
+      background: none !important;
+      background-image: url('https://aquimerablog.wordpress.com/wp-content/uploads/2016/03/evolution_is_a_fascinating_subject-_i_love_anthropology_6899074441.gif') !important;
+      background-size: cover !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important;
+      isolation: isolate;
+    }
+
+    /* Overlay com efeito glassmorphism (vidro) - ocupa 100% do painel */
+    .masthead::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(18, 45, 82, 0.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border-radius: inherit;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Garante que todo o conteúdo do masthead fique acima do overlay */
+    .masthead .masthead-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Ajuste de contraste para o texto sobre o fundo com vidro */
+    .masthead .kicker,
+    .masthead h1,
+    .masthead .hero-text,
+    .masthead .masthead-card {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Estilo para o logo GIF – garante boa visibilidade */
+    .banner-card img {
+      background: transparent;
+      mix-blend-mode: normal;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+
+    /* ========== ESTILOS EXISTENTES DA PÁGINA (mantidos) ========== */
     .news-hero-note {
       margin-top: 16px;
       padding: 16px 18px;
@@ -292,8 +348,10 @@
           <div id="div-news-hero-note" class="news-hero-note">Consulte nesta página as atualizações editoriais da
             revista, chamadas abertas, lançamentos, divulgação de eventos e comunicados institucionais.</div>
         </div>
-        <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="gif-logo.painel-azul.gif"
-            alt="Logo da Revista Inquietações"></div>
+        <div id="div-banner-card" class="banner-card">
+          <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
+          <img id="imagem-logo-revista-png" src="assets/favicon.png" alt="Logo da Revista Inquietações">
+        </div>
       </div>
     </header>
     <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal"><button id="button-site-nav-toggle"
@@ -528,3 +586,5 @@
   </script>
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js"></script>
 </body>
+
+</html>

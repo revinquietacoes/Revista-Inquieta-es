@@ -51,6 +51,7 @@
 }
 </script>
   <style>
+    /* Estilos originais mantidos (apenas referência - não alterados) */
     .indexers-grid {
       display: grid;
       grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -158,114 +159,89 @@
       transform: translateY(-1px);
       opacity: .95;
     }
+
+    /* ========== NOVAS REGRAS PARA O PAINEL COM GIF DE FUNDO E EFEITO VIDRO ========== */
+    /* Substitui o gradiente original do masthead pelo GIF com overlay */
+    .masthead {
+      position: relative;
+      background: none !important;
+      /* Remove gradiente anterior */
+      background-image: url('https://s2.glbimg.com/FRyrYDBiOhDglCRobjP2Nxvg0Po=/e.glbimg.com/og/ed/f/original/2017/01/12/van-gogh.gif') !important;
+      background-size: cover !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important;
+      isolation: isolate;
+    }
+
+    /* Overlay com efeito glassmorphism */
+    .masthead::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: rgba(18, 45, 82, 0.55);
+      /* tom azul escuro com transparência */
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border-radius: inherit;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Remove os pseudo-elementos antigos que criavam círculos decorativos */
+    .masthead::after {
+      display: none;
+    }
+
+    /* Garante que todo conteúdo do masthead fique acima do overlay */
+    .masthead .masthead-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Ajuste opcional para melhor contraste do texto */
+    .masthead .kicker,
+    .masthead h1,
+    .masthead .hero-text,
+    .masthead .masthead-card {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Estilo para o logo GIF – garante boa visibilidade sobre o fundo */
+    .banner-card img {
+      background: transparent;
+      mix-blend-mode: normal;
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    }
+
+    /* Remove os pseudo-elementos antigos que criavam círculos */
+    .masthead::before,
+    .masthead::after {
+      display: none;
+    }
+
+    /* Cria um novo overlay com efeito vidro (pode ser ::after também) */
+    .masthead::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(18, 45, 82, 0.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border-radius: inherit;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Garante que o conteúdo fique acima do overlay */
+    .masthead .masthead-inner {
+      position: relative;
+      z-index: 2;
+    }
   </style>
 </head>
-<style>
-  /* 1. Estilização do GIF na capa da edição */
-  .issue-cover {
-    background: transparent;
-    /* remove fundo branco */
-    box-shadow: none;
-    padding: 0;
-  }
-
-  .issue-cover img {
-    mix-blend-mode: multiply;
-    /* torna fundo branco do GIF transparente (se o GIF tiver fundo branco) */
-    /* Caso o GIF já tenha fundo transparente, use apenas display: block; */
-    background: transparent;
-  }
-
-  /* 2. Cards da seção "Editorial, Artigos, Resenhas" – visual moderno */
-  .section-list {
-    display: grid;
-    gap: 1rem;
-    margin: 1.5rem 0;
-  }
-
-  .section-item {
-    background: #ffffff;
-    border: 1px solid #e2e8f0;
-    border-radius: 1rem;
-    padding: 1rem 1.2rem;
-    transition: all 0.2s ease;
-    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.03);
-  }
-
-  .section-item:hover {
-    transform: translateY(-2px);
-    border-color: #cbd5e1;
-    box-shadow: 0 8px 20px -8px rgba(0, 0, 0, 0.08);
-  }
-
-  .section-item h3 {
-    margin: 0 0 0.25rem;
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: #0f2b4d;
-    letter-spacing: -0.01em;
-  }
-
-  .section-item p {
-    margin: 0;
-    font-size: 0.9rem;
-    color: #475569;
-    line-height: 1.4;
-  }
-
-  /* 3. Botões com gradiente azul (unificado) */
-  .btn,
-  .btn.secondary,
-  .reader-btn,
-  .read-more {
-    background: linear-gradient(105deg, #1e3a8a, #3b82f6) !important;
-    color: white !important;
-    border: none !important;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    transition: all 0.2s ease;
-  }
-
-  .btn:hover,
-  .btn.secondary:hover,
-  .reader-btn:hover,
-  .read-more:hover {
-    background: linear-gradient(105deg, #1e3a8a, #2563eb) !important;
-    transform: translateY(-2px);
-    box-shadow: 0 10px 20px -6px rgba(30, 58, 138, 0.4);
-    color: white;
-  }
-
-  /* Garantir que o botão "Ler conteúdos publicados" também tenha o mesmo estilo */
-  .btn.secondary {
-    background: linear-gradient(105deg, #1e3a8a, #3b82f6) !important;
-    color: white !important;
-    border: none;
-  }
-
-  .edicao-capa-preview {
-    width: 100%;
-    max-width: 520px;
-    margin: 0 auto;
-    border-radius: 16px;
-    border: 1px solid var(--line);
-    box-shadow: var(--shadow-soft);
-    background: #fff;
-  }
-
-  img {
-    max-width: 100%;
-    display: block;
-  }
-
-  img,
-  svg {
-    vertical-align: middle;
-  }
-
-  * {
-    box-sizing: border-box;
-  }
-</style>
 
 <body id="corpo-index" class="journal-home">
   <div id="estrutura-do-site" class="site-shell ojs-shell">
@@ -291,8 +267,11 @@
             <div id="div-masthead-card-4" class="masthead-card"><strong>ISSN</strong>3086-4119</div>
           </div>
         </div>
-        <div id="div-banner-card-banner-card-ojs" class="banner-card banner-card-ojs"><img id="imagem-logo-revista-png"
-            src="gif-logo.painel-azul.gif" alt="Logo da Revista Inquietações"></div>
+        <div id="div-banner-card-banner-card-ojs" class="banner-card banner-card-ojs">
+          <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
+          <img id="imagem-logo-revista-png" src="assets/favicon.png"
+            alt="Logo da Revista Inquietações">
+        </div>
       </div>
     </header>
     <nav class="site-nav site-nav-ojs" id="navegacao-principal" aria-label="Navegação principal"><button
@@ -429,3 +408,5 @@
     </footer>
   </div>
 </body>
+
+</html>

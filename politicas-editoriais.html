@@ -16,6 +16,62 @@
   <script
     type="application/ld+json"> { "@context": "https://schema.org", "@type": "Organization", "name": "Revista Inquietações", "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/politicas-editoriais.html", "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" } </script>
   <style>
+    /* ========== SOBRESCRITA PARA O PAINEL PRINCIPAL COM GIF E EFEITO VIDRO ========== */
+    /* Remove os pseudo-elementos antigos do masthead (círculos decorativos) */
+    .masthead::before,
+    .masthead::after {
+      display: none !important;
+    }
+
+    /* Aplica o GIF de fundo no painel principal */
+    .masthead {
+      position: relative;
+      background: none !important;
+      background-image: url('https://i.pinimg.com/originals/4e/47/2a/4e472a4090810eeebea95c9be17948f7.gif') !important;
+      background-size: cover !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important;
+      isolation: isolate;
+    }
+
+    /* Overlay com efeito glassmorphism (vidro) - ocupa 100% do painel */
+    .masthead::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(18, 45, 82, 0.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border-radius: inherit;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Garante que todo o conteúdo do masthead fique acima do overlay */
+    .masthead .masthead-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Ajuste de contraste para o texto sobre o fundo com vidro */
+    .masthead .kicker,
+    .masthead h1,
+    .masthead .hero-text,
+    .masthead .masthead-card {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Estilo para o logo GIF – garante boa visibilidade */
+    .banner-card img {
+      background: transparent;
+      mix-blend-mode: normal;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+
+    /* ========== ESTILOS EXISTENTES DA PÁGINA (mantidos) ========== */
     .site-nav-menu {
       display: flex;
       flex-wrap: nowrap;
@@ -101,8 +157,10 @@
             <div id="div-masthead-card-3" class="masthead-card"><strong>Ética</strong>Boas práticas científicas</div>
           </div>
         </div>
-        <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="gif-logo.painel-azul.gif"
-            alt="Logo da Revista Inquietações"></div>
+        <div id="div-banner-card" class="banner-card">
+          <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
+          <img id="imagem-logo-revista-png" src="assets/favicon.png" alt="Logo da Revista Inquietações">
+        </div>
       </div>
     </header>
     <nav class="site-nav" id="navegacao-principal"><button id="button-site-nav-toggle"
@@ -221,3 +279,5 @@
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async=""
     src="//gc.zgo.at/count.js"> </script>
 </body>
+
+</html>

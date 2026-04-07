@@ -16,6 +16,207 @@
     <script
         type="application/ld+json"> { "@context": "https://schema.org", "@type": "Organization", "name": "Revista Inquietações", "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/contato.html", "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" } </script>
 
+    <style>
+        /* ========== SOBRESCRITA PARA O PAINEL PRINCIPAL COM GIF E EFEITO VIDRO ========== */
+        /* Remove os pseudo-elementos antigos do masthead (círculos decorativos) */
+        .masthead::before,
+        .masthead::after {
+            display: none !important;
+        }
+
+        /* Aplica a imagem de fundo no painel principal */
+        .masthead {
+            position: relative;
+            background: none !important;
+            background-image: url('https://emiliocalil.com/wp-content/uploads/2023/04/criacao-adao-michelangelo-03-1024x532.jpg') !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            isolation: isolate;
+        }
+
+        /* Overlay com efeito glassmorphism (vidro) - ocupa 100% do painel */
+        .masthead::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 45, 82, 0.55);
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border-radius: inherit;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Garante que todo o conteúdo do masthead fique acima do overlay */
+        .masthead .masthead-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Ajuste de contraste para o texto sobre o fundo com vidro */
+        .masthead .kicker,
+        .masthead h1,
+        .masthead .hero-text,
+        .masthead .masthead-card {
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilo para o logo GIF – garante boa visibilidade */
+        .banner-card img {
+            background: transparent;
+            mix-blend-mode: normal;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        /* ========== ESTILOS EXISTENTES DA PÁGINA (mantidos) ========== */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 22px;
+            margin-top: 12px;
+        }
+
+        .contact-card {
+            border: 1px solid var(--line);
+            border-radius: 20px;
+            padding: 22px;
+            background: #fff;
+            box-shadow: var(--shadow-soft);
+            transition: transform 0.18s ease, box-shadow 0.18s ease;
+        }
+
+        .contact-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 14px 28px rgba(16, 35, 63, 0.08);
+        }
+
+        .contact-card h3 {
+            margin-top: 0;
+            margin-bottom: 12px;
+            color: var(--brand);
+        }
+
+        .contact-card p {
+            margin: 0 0 14px;
+            color: #4f6178;
+            line-height: 1.65;
+        }
+
+        .contact-action {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 10px 16px;
+            border-radius: 999px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: transform 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+        }
+
+        .contact-action.email {
+            background: #1f3c88;
+            color: #fff;
+        }
+
+        .contact-action.instagram {
+            background: #c13584;
+            color: #fff;
+        }
+
+        .contact-action.editor {
+            background: #2c55a5;
+            color: #fff;
+        }
+
+        .contact-action:hover {
+            transform: translateY(-2px);
+            opacity: 0.95;
+        }
+
+        .topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .acesso-pill {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 8px;
+        }
+
+        .topbar-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 6px 14px;
+            border-radius: 999px;
+            background: #1f3c88;
+            color: #fff;
+            text-decoration: none;
+            font-size: .85rem;
+            font-weight: 600;
+            transition: all .15s ease;
+        }
+
+        .topbar-btn.secondary {
+            background: #2c55a5;
+        }
+
+        .topbar-btn:hover {
+            transform: translateY(-1px);
+            opacity: .95;
+        }
+
+        .site-nav-menu {
+            display: flex;
+            flex-wrap: nowrap;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
+            overflow-x: auto;
+            scrollbar-width: none;
+        }
+
+        .site-nav-menu::-webkit-scrollbar {
+            display: none;
+        }
+
+        .site-nav-menu a {
+            font-size: 0.88rem;
+            padding: 8px 8px;
+            white-space: nowrap;
+        }
+
+        .btn {
+            background: linear-gradient(105deg, #1e3a8a, #3b82f6) !important;
+            color: white !important;
+            border: none !important;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.2s ease;
+        }
+
+        .btn:hover {
+            background: linear-gradient(105deg, #1e3a8a, #2563eb) !important;
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px -6px rgba(30, 58, 138, 0.4);
+            color: white;
+        }
+
+        @media (max-width: 700px) {
+            .contact-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body id="corpo-contato">
@@ -45,8 +246,10 @@
                             institucional</div>
                     </div>
                 </div>
-                <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png"
-                        src="gif-logo.painel-azul.gif" alt="Logo da Revista Inquietações"></div>
+                <div id="div-banner-card" class="banner-card">
+                    <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
+                    <img id="imagem-logo-revista-png" src="assets/favicon.png" alt="Logo da Revista Inquietações">
+                </div>
             </div>
         </header>
         <nav class="site-nav" id="navegacao-principal"><button id="button-site-nav-toggle"
@@ -143,7 +346,6 @@
             };
         }
     </script>
-
     <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js">
     </script>
 </body>

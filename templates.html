@@ -23,6 +23,62 @@
 }
 </script>
   <style>
+    /* ========== SOBRESCRITA PARA O PAINEL PRINCIPAL COM GIF E EFEITO VIDRO ========== */
+    /* Remove os pseudo-elementos antigos do masthead (círculos decorativos) */
+    .masthead::before,
+    .masthead::after {
+      display: none !important;
+    }
+
+    /* Aplica o GIF de fundo no painel principal */
+    .masthead {
+      position: relative;
+      background: none !important;
+      background-image: url('https://mega.ibxk.com.br/2022/09/29/29105538714054.jpg?ims=fit-in/800x500') !important;
+      background-size: cover !important;
+      background-position: center center !important;
+      background-repeat: no-repeat !important;
+      isolation: isolate;
+    }
+
+    /* Overlay com efeito glassmorphism (vidro) - ocupa 100% do painel */
+    .masthead::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(18, 45, 82, 0.55);
+      backdrop-filter: blur(3px);
+      -webkit-backdrop-filter: blur(3px);
+      border-radius: inherit;
+      z-index: 0;
+      pointer-events: none;
+    }
+
+    /* Garante que todo o conteúdo do masthead fique acima do overlay */
+    .masthead .masthead-inner {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* Ajuste de contraste para o texto sobre o fundo com vidro */
+    .masthead .kicker,
+    .masthead h1,
+    .masthead .hero-text,
+    .masthead .masthead-card {
+      text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    /* Estilo para o logo GIF – garante boa visibilidade */
+    .banner-card img {
+      background: transparent;
+      mix-blend-mode: normal;
+      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+    }
+
+    /* ========== ESTILOS EXISTENTES DA PÁGINA (mantidos) ========== */
     .template-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -69,7 +125,6 @@
     }
 
     /* cores dos cards */
-
     .template-card.artigo {
       background: #eef5ff;
       border-color: #d7e6fb;
@@ -232,8 +287,10 @@
             <div id="div-masthead-card-3" class="masthead-card"><strong>Uso</strong>Submissões acadêmicas</div>
           </div>
         </div>
-        <div id="div-banner-card" class="banner-card"><img id="imagem-logo-revista-png" src="gif-logo.painel-azul.gif"
-            alt="Logo da Revista Inquietações"></div>
+        <div id="div-banner-card" class="banner-card">
+          <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
+          <img id="imagem-logo-revista-png" src="assets/favicon.png" alt="Logo da Revista Inquietações">
+        </div>
       </div>
     </header>
     <nav class="site-nav" id="navegacao-principal"><button id="button-site-nav-toggle"
@@ -297,9 +354,9 @@
                   href="https://docs.google.com/document/d/1jYV4ZzqAO1OGvELiMsHKNYTeWOYxBFPp/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true"
                   target="_blank" rel="noopener noreferrer">Baixar template</a>
               </div>
-              <div class="template-card-artigo-dossie" id=" template-card-artigo-dossie ">
+              <div class="template-card-artigo-dossie" id="template-card-artigo-dossie">
                 <h3>Template de Artigo para Dossiê</h3>
-                <p>Modelo destinado à submissão de artigos para dossiês.</p><a id="link-edit-2" class="btn"
+                <p>Modelo destinado à submissão de artigos para dossiês.</p><a id="link-edit-4" class="btn"
                   href="https://docs.google.com/document/d/1Z3vCTK6wAicnz8JgYidrEaKiIWDPpoAD/edit?usp=sharing&ouid=106454046870362039189&rtpof=true&sd=true"
                   target="_blank" rel="noopener noreferrer">Baixar template</a>
               </div>
@@ -332,7 +389,6 @@
     </footer>
   </div>
   <script>
-
     const navToggle = document.querySelector(".site-nav-toggle")
     const navMenu = document.querySelector(".site-nav-menu")
 
@@ -341,7 +397,6 @@
         navMenu.classList.toggle("is-open")
       }
     }
-
   </script>
   <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js">
   </script>

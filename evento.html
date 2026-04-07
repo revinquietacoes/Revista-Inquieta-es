@@ -17,6 +17,139 @@
     <script
         type="application/ld+json">{"@context":"https://schema.org","@type":"Organization","name":"Revista Inquietações","url":"https://revinquietacoes.github.io/Revista-Inquieta-es/evento.html","logo":"https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"}</script>
 
+    <style>
+        /* ========== SOBRESCRITA PARA O PAINEL PRINCIPAL COM GIF E EFEITO VIDRO ========== */
+        /* Remove os pseudo-elementos antigos do masthead (círculos decorativos) */
+        .masthead::before,
+        .masthead::after {
+            display: none !important;
+        }
+
+        /* Aplica o GIF de fundo no painel principal */
+        .masthead {
+            position: relative;
+            background: none !important;
+            background-image: url('https://64.media.tumblr.com/55c67eaa2f74a7b4e6f3df4ae5369b3c/746b836a155e26e3-50/s540x810/26455efef5db1f4c16d8ab8f85d8a5034fdabdce.gifv') !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            isolation: isolate;
+        }
+
+        /* Overlay com efeito glassmorphism (vidro) - ocupa 100% do painel */
+        .masthead::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(18, 45, 82, 0.55); /* tom azul escuro com transparência */
+            backdrop-filter: blur(3px);
+            -webkit-backdrop-filter: blur(3px);
+            border-radius: inherit;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Garante que todo o conteúdo do masthead fique acima do overlay */
+        .masthead .masthead-inner {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Ajuste de contraste para o texto sobre o fundo com vidro */
+        .masthead .kicker,
+        .masthead h1,
+        .masthead .hero-text,
+        .masthead .masthead-card {
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Estilo para o logo GIF – garante boa visibilidade */
+        .banner-card img {
+            background: transparent;
+            mix-blend-mode: normal;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+        }
+
+        /* ========== ESTILOS ADICIONAIS PARA A PÁGINA (garantia de consistência) ========== */
+        .event-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .event-card {
+            background: var(--event-card-bg, #ffffff);
+            border-radius: 1.5rem;
+            padding: 1.5rem;
+            box-shadow: var(--event-shadow, 0 12px 28px -8px rgba(0, 0, 0, 0.08));
+            transition: all 0.3s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(30, 58, 138, 0.12);
+        }
+
+        .event-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 32px -12px rgba(30, 58, 138, 0.15);
+            border-color: rgba(59, 130, 246, 0.3);
+        }
+
+        .event-card h3 {
+            margin: 0 0 0.5rem;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #1e3a8a;
+        }
+
+        .event-card p {
+            margin: 0;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            color: #334155;
+        }
+
+        .side-nav-card {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .side-nav-link {
+            display: block;
+            text-decoration: none;
+            padding: 0.7rem 1rem;
+            border-radius: 1rem;
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            color: #1e293b;
+            font-weight: 500;
+            font-size: 0.9rem;
+            transition: all 0.2s ease;
+        }
+
+        .side-nav-link:hover {
+            background: #eef2ff;
+            transform: translateX(4px);
+            border-color: #a5c9ff;
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        @media (max-width: 1024px) {
+            .event-grid {
+                grid-template-columns: repeat(2, 1fr);
+                gap: 1rem;
+            }
+        }
+
+        @media (max-width: 640px) {
+            .event-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
 
 <body>
@@ -53,7 +186,8 @@
                     </div>
                 </div>
                 <div class="banner-card" id="banner-eventos">
-                    <img id="banner-eventos-logo" src="gif-logo.painel-azul.gif" alt="Logo da Revista Inquietações">
+                    <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
+                    <img id="banner-eventos-logo" src="assets/favicon.png" alt="Logo da Revista Inquietações">
                 </div>
             </div>
         </header>
