@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Assistance to Black Bodies in Health Establishments | Revista Inquietações</title>
+    <!-- Font Awesome Icons (for modern icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts for refined typography -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, rgba(10, 25, 35, 0.95), rgba(2, 15, 22, 0.98));
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        /* main container – elegant glassmorphism */
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.97);
+            backdrop-filter: blur(2px);
+            border-radius: 2rem;
+            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            overflow: hidden;
+            transition: all 0.2s ease;
+        }
+
+        /* inner content padding */
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+
+        /* header styling */
+        .header {
+            border-bottom: 2px solid #e2e8f0;
+            margin-bottom: 1.8rem;
+        }
+        .journal-badge {
+            display: inline-block;
+            background: #1e3a5f;
+            color: white;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.7rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #0a2540;
+        }
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #2c5f7a;
+            font-weight: 500;
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            align-items: baseline;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f1f5f9;
+            color: #1e293b;
+            border: 1px solid #cbd5e1;
+        }
+        .btn-pdf {
+            background: #8b0000;
+            color: white;
+            border: none;
+        }
+        .btn-doi {
+            background: #004a7c;
+            color: white;
+            border: none;
+        }
+        .btn-submit {
+            background: #2c5f2d;
+            color: white;
+            border: none;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        /* panels */
+        .panel {
+            background: white;
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
+            border: 1px solid #edf2f7;
+        }
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            letter-spacing: -0.3px;
+            border-left: 5px solid #1e5a7a;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #0f3b4f;
+        }
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #1e2f3c;
+        }
+        .article-text p {
+            margin-bottom: 1.2rem;
+        }
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem 0;
+            color: #1c4e6c;
+        }
+        .article-text h4 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin: 1.2rem 0 0.5rem;
+            color: #2b6a4a;
+        }
+        /* wikilinks style */
+        a.wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #eef2ff 0%, #eef2ff 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #1e4a76;
+            font-weight: 500;
+            transition: all 0.1s ease;
+            border-bottom: 1px dotted #809ab3;
+        }
+        a.wikilink:hover {
+            background: #dfe9f5;
+            color: #0b3552;
+            border-bottom: 1px solid #1e4a76;
+        }
+        /* tooltip for books / authors with image simulation */
+        .book-tooltip {
+            position: relative;
+            cursor: help;
+            font-weight: 600;
+            color: #2c5a2e;
+            border-bottom: 1px dashed #2c5a2e;
+        }
+        .book-tooltip .tooltip-card {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 150%;
+            left: 0;
+            background: #fffef7;
+            box-shadow: 0 12px 28px rgba(0,0,0,0.2);
+            border-radius: 14px;
+            padding: 8px 12px;
+            width: 220px;
+            z-index: 100;
+            transition: 0.15s;
+            pointer-events: none;
+            font-weight: normal;
+            border: 1px solid #e2e8f0;
+            backdrop-filter: blur(4px);
+            font-size: 0.8rem;
+            color: #2d3e50;
+        }
+        .book-tooltip:hover .tooltip-card {
+            visibility: visible;
+            opacity: 1;
+        }
+        .tooltip-card img {
+            width: 100%;
+            max-height: 100px;
+            object-fit: contain;
+            margin-bottom: 6px;
+            border-radius: 8px;
+        }
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .ref-list li {
+            margin-bottom: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            border-left: 2px solid #cbd5e1;
+            padding-left: 1rem;
+        }
+        .ref-list a {
+            color: #2b6a8f;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .ref-list a:hover {
+            text-decoration: underline;
+        }
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+        .cite-btn {
+            background: #ecfdf5;
+            border: 1px solid #a7f3d0;
+            padding: 6px 14px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: 0.1s;
+        }
+        .cite-btn:hover {
+            background: #d1fae5;
+        }
+        /* iframe pdf */
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2e8f0;
+            background: #f8fafc;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2e8f0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #5b6e8c;
+        }
+        @media (max-width: 800px) {
+            body { padding: 1rem; }
+            .content-padding { padding: 1.2rem; }
+            .title { font-size: 1.9rem; }
+        }
+        /* subtle animated background for elegance */
+        .bg-accent {
+            background: radial-gradient(ellipse at 70% 30%, #fef9e6, #ffffff);
+        }
+        hr {
+            margin: 1rem 0;
+        }
+
+        /* ========== GERADOR DE CITAÇÕES ========== */
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #2d5a48;
+            border-left: none;
+            padding-left: 0;
+        }
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #2c3a2b;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .citation-select:focus {
+            outline: none;
+            border-color: #c28a4e;
+            box-shadow: 0 0 0 2px rgba(194,138,78,0.2);
+        }
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            color: #2a2a24;
+            margin-top: 1rem;
+            word-break: break-word;
+        }
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+        @media (max-width: 700px) {
+            .citation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .citation-actions {
+                justify-content: stretch;
+            }
+            .citation-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container bg-accent">
+    <div class="content-padding">
+        <!-- header -->
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1 n.1 • 2026</div>
+            <div class="title">Assistance to Black Bodies in Health Establishments:<br>Deconstructing Prejudices and Promoting an Ethics of Care</div>
+            <div class="author-line">
+                <span><i class="fas fa-user-pen"></i> <strong>Diego Vinicius Brito dos Santos</strong></span>
+                <span><i class="fas fa-globe"></i> Original translation by the author</span>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18841714</span>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Texto-do-artigo-em-inglês.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Baixar PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18841714" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissões</a>
+            </div>
+        </div>
+
+        <!-- Abstract panel -->
+        <div class="panel">
+            <h2><i class="fas fa-align-left"></i> Abstract</h2>
+            <p><strong>Introduction:</strong> This article explores the differential treatment of black bodies in health systems, highlighting the influence of structural racism and gender bias. The differentiated service faced by black individuals is the result of stereotypes rooted in skin color and ethnic origins, worsening when it comes to transgender people and transvestites.</p>
+            <p><strong>Objective:</strong> The study aims to analyze the approach to black bodies in health systems, highlighting the role of unconscious prejudices in the perpetuation of these disparities and proposing critical education as a fundamental step towards awareness.</p>
+            <p><strong>Method:</strong> Narrative review of the literature, analyzing books and articles in electronic journals to identify discriminatory patterns and prejudices.</p>
+            <p><strong>Results:</strong> Discrimination occurs not only consciously but also as a result of social normalization of racism and gender prejudice. Human and critical training is vital to sensitize health professionals.</p>
+            <p><strong>Conclusion:</strong> Urgency of promoting an ethics of care that values diversity. Transformation requires profound cultural change, involving education and critical reflection.</p>
+            <p><strong>Keywords:</strong> <a class="wikilink" href="#racism">Racism</a>; Health Care; Diversity; Critical Training.</p>
+        </div>
+
+        <!-- Full article with IDs and wikilinks -->
+        <div class="panel article-text">
+            <h2 id="artigo"><i class="fas fa-scroll"></i> Full Article</h2>
+            <h3 id="introducao">1. INTRODUCTION</h3>
+            <p>The scenario of health facilities is the scene of a worrying reality that crosses historical and cultural boundaries: the different treatment given to black bodies (<span class="book-tooltip">Almeida, 2019<span class="tooltip-card"><i class="fas fa-book"></i> <strong>Racismo Estrutural</strong><br>Silvio Almeida analisa as raízes do racismo como parte da estrutura social.<br><img src="https://books.google.com/books/content?id=8eWkDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" alt="capa ilustrativa" onerror="this.src='https://via.placeholder.com/100x140?text=Racismo+Estrutural'"></span></span>; Cidade de Jesus & Sa Neto, 2021; Paiva, 2008; Silva & Cruz, 2019). In the midst of the incessant search for equity in the provision of medical care, a complex web of inequalities and prejudices emerges that profoundly affect the experience and health outcomes of these individuals. This article aims to shed light on the issue of care for black bodies in health systems, exploring the origins of this differentiated treatment, its implications for the health of transgender and transvestite people, the presence of unconscious prejudices and the pressing need for a cultural change that promotes an <a class="wikilink" href="#etica">ethics of care</a>.</p>
+            <p>According to <span class="book-tooltip">Goffman (1963)<span class="tooltip-card"><i class="fas fa-id-card"></i> <strong>Stigma: Notes on the Management of Spoiled Identity</strong><br>Erving Goffman teoriza sobre estigma e identidade social.<img src="https://covers.openlibrary.org/b/id/10741616-L.jpg" alt="capa Stigma" onerror="this.src='https://via.placeholder.com/80x120?text=Stigma'"></span></span>, the historical stigma attributed to these bodies reverberates in the contemporary context of health care, challenging the fundamental notion of justice and equality. Furthermore, gender discrimination intertwines with racism, further compounding the experience of those belonging to both marginalized groups.</p>
+            <p>The intersectionality theory, coined by <strong>Kimberlé Crenshaw (2017)</strong> <a class="wikilink" href="https://en.wikipedia.org/wiki/Intersectionality" target="_blank">(intersectionality)</a>, represents a fundamental approach to understanding the complexity of human experiences and the impacts of social structures. Intersectionality recognizes that an individual’s identities and experiences are shaped not just by one dimension of their identity, such as gender, race, class or sexuality, but by multiple interconnected dimensions.</p>
+            <p>From the studies by <span class="book-tooltip">Almeida (2019)<span class="tooltip-card"><img src="https://images-na.ssl-images-amazon.com/images/I/41qV3qFkqTL._SX342_.jpg" alt="capa" onerror="this.src='https://placehold.co/100x140?text=Racismo+Estrutural'"><br><strong>Racismo Estrutural</strong> – o racismo é sistêmico e inconsciente.</span></span>, we will emphasize that some health professionals do not consciously employ racist and misogynistic attitudes. However, structural racism and gender bias are so deeply rooted in society that their manifestations often occur unconsciously.</p>
+            
+            <h3 id="metodologia">2. METHODOLOGY</h3>
+            <p>This study adopts a qualitative narrative review approach, examining the cutting edge of the topic. A bibliographical search was conducted in June 2023 across databases such as SCIELO, DOAJ, REDIB, LATINDEX, CAPES Portal. Time limit of 10 years, selecting 19 studies aligned with four analytical axes: 1) Differentiated health care for black bodies; 2) Impacts on black trans and transvestite bodies; 3) Unconscious prejudices; 4) Ethics of care.</p>
+            
+            <h3 id="resultados">3. RESULTS</h3>
+            <p>After filtering, 19 studies were selected: 5 on axis 1, 7 on axis 2, 4 on axis 3 and 3 on axis 4. The findings confirm that structural racism determines negative health outcomes for black populations, affecting access, quality of care, and emotional safety.</p>
+            
+            <h3 id="discussao">4. DISCUSSION</h3>
+            <h4>4.1 Differentiated health care for black people</h4>
+            <p>The differentiated care experienced by black bodies is a symptom of systemic problem: structural racism. According to Chehuen Neto et al. (2015), based on the Annual Report on Racial Inequalities in Brazil (2009-2010), there is a clear reduction in quality of life and increase in maternal/infant mortality among the black population. The <a class="wikilink" href="#fanon">zone of being and non-being</a>, proposed by Frantz Fanon and revisited by Thula Pires (2018), helps to understand how the health system legitimizes the humanity of white, cisheteronormative bodies while denying black bodies full rights. <span class="book-tooltip">Fanon, "Pele Negra, Máscaras Brancas"<span class="tooltip-card"><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Black_Skin_White_Masks.jpg" alt="capa Fanon" style="max-width:90px"><br>Fanon descreve a dualidade existencial do sujeito negro em sociedades coloniais.</span></span>.</p>
+            <p>Health as a fundamental human right is undermined when the "zone of being" dictates who deserves empathy and quality treatment.</p>
+            
+            <h4>4.2 Impacts on trans and transvestite black bodies</h4>
+            <p>According to Rigolon, Oliveira & Salim (2020), the absence of theoretical basis and dialogue during the training of health professionals results in the non-approach of topics related to trans bodies. Intersection of racism and transphobia creates barriers such as refusal of social name, pathologization, and lack of access to primary care. Oliveira (2020) highlights that sexual reassignment processes are often considered low priority, and disrespect for social name causes severe psychological distress.</p>
+            <p>Thus, black trans women experience simultaneous oppression: they are excluded both by racist structures and by transphobic protocols within health establishments.</p>
+            
+            <h4>4.3 Unconscious prejudices and the “normalization” of racism</h4>
+            <p>Unconscious racism (or "silent racism") is explored by Fernandes (2016) and Almeida (2019). Even well-intentioned professionals can reproduce stereotypes. Racial "jokes", recreational racism, and the naturalization of discriminatory practices are rooted in the collective unconscious inherited from the slavery past. Recognizing these biases is the first step. Critical training and continuing education are essential to deconstruct such mechanisms.</p>
+            
+            <h4 id="etica">4.4 For an ethics of care in the care of black bodies</h4>
+            <p>The National Policy for Comprehensive Health of the Black Population (NPCHBP) is a milestone. However, Werneck (2016) identified a scarcity of studies on black women's health in Brazilian databases – only six full texts in SciELO. This epistemic gap is also a consequence of unconscious racism. An ethics of care demands humanized, intersectional training, inclusive environments, and the recognition of social determinants of health. The biomedical model based on white, cisheteronormative bodies (Alonso, 2022) must be replaced by a practice that embraces diversity.</p>
+            
+            <h3 id="conclusao">5. CONCLUSION</h3>
+            <p>The care for black bodies in health establishments echoes the persistence of a system deeply rooted in racial and gender prejudices. Awareness, education, and promotion of an ethics of care emerge as essential pillars. It is necessary to reform professional curricula, implement anti-racist policies, and foster self-reflection. Only through systemic change can we achieve equitable and respectful health care for all, regardless of skin color, gender identity, or ethnic origin.</p>
+        </div>
+
+        <!-- PDF VIEWER -->
+        <div class="panel">
+            <h2><i class="fas fa-file-alt"></i> Complete Article (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/Texto-do-artigo-em-inglês.pdf" title="artigo completo"></iframe>
+            </div>
+        </div>
+
+        <!-- REFERENCES with citation generator -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> References & Citation Tools</h2>
+            
+            <!-- GERADOR DE CITAÇÕES (componente) -->
+            <div class="citation-generator" 
+                 data-authors='["VINICIUS, Diego"]' 
+                 data-title="Assistance to Black Bodies in Health Establishments: Deconstructing Prejudices and Promoting an Ethics of Care" 
+                 data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Traducoes/traducao-assistance-to-black-bodies.html" 
+                 data-volume="1" 
+                 data-issue="1" 
+                 data-pages="1-22" 
+                 data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> How to cite this work</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Select the desired citation style and generate the reference automatically.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Citation style</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copy reference</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyAbtn"><i class="fas fa-copy"></i> Copiar formatação ABNT</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+            </div>
+            <ul class="ref-list" id="referenceList">
+                <li id="ref-almeida">ALMEIDA, Silvio. <strong>Racismo Estrutural</strong>. São Paulo: Pólen, 2019. <a href="https://doi.org/10.5281/zenodo.11322576" target="_blank">DOI:10.5281/zenodo.11322576</a></li>
+                <li id="ref-crenshaw">CRENSHAW, Kimberlé W. <strong>On Intersectionality: Essential Writings</strong>. The New Press, 2017.</li>
+                <li id="ref-fanon">FANON, Frantz. <strong>Pele Negra, Máscaras Brancas</strong>. Salvador: EDUFBA, 2008. <a href="https://doi.org/10.7476/9788575413296" target="_blank">doi:10.7476/9788575413296</a></li>
+                <li id="ref-goffman">GOFFMAN, Erving. <strong>Stigma: Notes on the Management of Spoiled Identity</strong>. Prentice-Hall, 1963.</li>
+                <li id="ref-chehuen">CHEHUEN NETO, J. A. et al. Política Nacional de Saúde Integral da População Negra: implementação, conhecimento e aspectos socioeconômicos. <em>Ciência & Saúde Coletiva</em>, 20(6), 2015. <a href="https://www.scielo.br/j/csc/a/mNYPvyFtbp3bm3bc8S64b3j/" target="_blank">SciELO</a></li>
+                <li id="ref-rigolon">RIGOLON, M. et al. “A saúde não discute corpos trans”: História Oral de transexuais e travestis. <em>Revista Brasileira de Enfermagem</em>, 73, 2020. <a href="https://www.scielo.br/j/reben/a/x58YbB45vmkKFqh8zyhCCLC/" target="_blank">https://doi.org/10.1590/0034-7167-2019-0286</a></li>
+                <li id="ref-werneck">WERNECK, Jurema. Racismo institucional e saúde da população negra. <em>Saúde e Sociedade</em>, 25, 2016. <a href="https://www.scielo.br/j/sausoc/a/bJdS7R46GV7PB3wV54qW7vm/" target="_blank">https://doi.org/10.1590/S0104-12902016149244</a></li>
+                <li id="ref-oliveira">OLIVEIRA, G. S. de. TRANSfobia, RACISMO E SUAS IMPLICAÇÕES NA SAÚDE DE PESSOAS TRANSEXUAIS E NEGRAS. <em>Revista Feminismos</em>, 8(1), 2020. <a href="https://periodicos.ufba.br/index.php/feminismos/article/view/42405" target="_blank">link</a></li>
+                <li id="ref-alonso">ALONSO, L. O MODELO BIOMÉDICO DOS CORPOS BRANCOS... <em>Revista Estudos Libertários</em>, 4(10), 2022. <a href="https://doi.org/10.59488/rel.v4i10.49660" target="_blank">DOI</a></li>
+                <li id="ref-fernandes">FERNANDES, M. O Lugar do negro: o negro no seu lugar. <em>Anais do XVII Encontro de História da Anpuh</em>, 2016.</li>
+                <li id="ref-pires">THULA PIRES. Racionalizando o debate sobre direitos humanos. <em>Sur International Journal on Human Rights</em>, 15(28), 2018. <a href="https://sur.conectas.org/wp-content/uploads/2019/05/sur-28-portugues-thula-pires.pdf" target="_blank">PDF</a></li>
+            </ul>
+            <p><small><i class="fas fa-info-circle"></i> Clique nos DOIs ou links para acessar a fonte original. Use os botões acima para gerar citações.</small></p>
+        </div>
+        <footer>
+            <i class="fas fa-university"></i> Original article: Práticas e Cuidado: Revista de Saúde Coletiva (PC-RESC), UNEB. English version published by Revista Inquietações. This digital edition includes interactive references.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Gerador de referências ABNT (simples)
+    const refItems = [
+        "ALMEIDA, Silvio. Racismo Estrutural. São Paulo: Pólen, 2019.",
+        "CRENSHAW, Kimberlé W. On Intersectionality: Essential Writings. The New Press, 2017.",
+        "FANON, Frantz. Pele Negra, Máscaras Brancas. Salvador: EDUFBA, 2008.",
+        "GOFFMAN, Erving. Stigma: Notes on the Management of Spoiled Identity. Prentice-Hall, 1963.",
+        "CHEHUEN NETO, J. A. et al. Política Nacional de Saúde Integral da População Negra... Ciência & Saúde Coletiva, 20(6), 2015.",
+        "RIGOLON, M. et al. “A saúde não discute corpos trans”. Revista Brasileira de Enfermagem, v.73, 2020.",
+        "WERNECK, Jurema. Racismo institucional e saúde da população negra. Saúde e Sociedade, v.25, 2016.",
+        "OLIVEIRA, G. S. TRANSfobia, RACISMO E SUAS IMPLICAÇÕES... Revista Feminismos, 8(1), 2020.",
+        "ALONSO, L. O MODELO BIOMÉDICO DOS CORPOS BRANCOS... Revista Estudos Libertários, 4(10), 2022.",
+        "FERNANDES, M. O Lugar do negro: o negro no seu lugar. Anpuh-RJ, 2016.",
+        "THULA PIRES. Racionalizando o debate sobre direitos humanos. Sur, v.15 n.28, 2018."
+    ];
+
+    document.getElementById("copyAbtn").addEventListener("click", function() {
+        let abntText = "REFERÊNCIAS\n" + refItems.map((r, idx) => `${idx+1}. ${r}`).join("\n");
+        navigator.clipboard.writeText(abntText).then(() => {
+            alert("✅ Referências no formato ABNT copiadas para a área de transferência.");
+        }).catch(() => alert("Não foi possível copiar."));
+    });
+
+    document.getElementById("exportBibBtn").addEventListener("click", function() {
+        let bibtex = `@book{almeida2019,
+  title={Racismo Estrutural},
+  author={Almeida, Silvio},
+  year={2019},
+  publisher={Pólen}
+}
+@book{crenshaw2017,
+  title={On Intersectionality},
+  author={Crenshaw, Kimberlé W.},
+  year={2017}
+}
+@book{fanon2008,
+  title={Pele Negra, Máscaras Brancas},
+  author={Fanon, Frantz},
+  year={2008}
+}
+@article{chehuen2015,
+  title={Política Nacional de Saúde Integral da População Negra},
+  journal={Ciência & Saúde Coletiva},
+  year={2015}
+}`;
+        navigator.clipboard.writeText(bibtex).then(() => alert("BibTeX exportado (pré-visualização)."));
+    });
+
+    // SUBMISSÕES: simulação de login/redirecionamento
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        let logged = localStorage.getItem("inquietacoes_logged");
+        if (logged === "true") {
+            window.location.href = "cadastro-login/submissoes.html";
+        } else {
+            let userPrompt = prompt("🔐 Para submeter um artigo, faça login.\nDigite seu e-mail (simulação):");
+            if (userPrompt && userPrompt.includes("@")) {
+                localStorage.setItem("inquietacoes_logged", "true");
+                alert("Login simulado com sucesso! Redirecionando para submissões.");
+                window.location.href = "cadastro-login/submissoes.html";
+            } else {
+                alert("Acesso não autorizado. Cadastro/login necessário. (Simulação)");
+            }
+        }
+    });
+    
+    // Adicionar tooltips dinâmicos para links internos - suavidade extra
+    document.querySelectorAll('.wikilink').forEach(link => {
+        if(link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.querySelector(link.getAttribute('href'));
+                if(target) target.scrollIntoView({ behavior: 'smooth' });
+            });
+        }
+    });
+
+    // ========== GERADOR DE CITAÇÕES (script) ==========
+    (function() {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Revista Inquietações';
+        const accessDate = new Date().toLocaleDateString('pt-BR');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponível em: ${url}. Acesso em: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    feedback.textContent = '✓ Reference copied to clipboard.';
+                    setTimeout(() => { feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    feedback.textContent = '✗ Error copying. Try manually.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

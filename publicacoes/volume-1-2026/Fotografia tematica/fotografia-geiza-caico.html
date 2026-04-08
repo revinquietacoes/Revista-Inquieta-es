@@ -1,0 +1,618 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos | Geiza Venicia dos Santos | Revista Inquietações</title>
+    <meta name="description" content="Ensaio fotográfico publicado na Revista Inquietações sobre o patrimônio arquitetônico da cidade de Caicó, RN. Autora: Geiza Venicia dos Santos.">
+    <meta name="author" content="Geiza Venicia dos Santos">
+    <link rel="canonical" href="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/fotografia-geiza-caico.html">
+    <link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48" type="image/png">
+    <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" type="image/png">
+    <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
+    
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    
+    <!-- PDF.js para renderizar páginas -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+            overflow: hidden;
+        }
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+        .topbar {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+        .pill {
+            background: #ece1cd;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            font-size: 0.7rem;
+            color: #6b5a42;
+            display: inline-block;
+        }
+        .masthead {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+            padding-bottom: 1rem;
+        }
+        .masthead-inner {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .kicker {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #8b7355;
+            margin-bottom: 0.5rem;
+        }
+        .title-main {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            color: #3a2a1a;
+            margin-bottom: 0.8rem;
+        }
+        .author-inline {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin-top: 10px;
+        }
+        .author-inline img {
+            width: 70px;
+            height: 70px;
+            object-fit: cover;
+            border-radius: 50%;
+            border: 2px solid rgba(0,0,0,0.08);
+            box-shadow: 0 6px 18px rgba(16,35,63,0.10);
+            background: #fff;
+        }
+        .mini-meta {
+            font-size: 0.8rem;
+            color: #7a6b53;
+        }
+        .banner-card img {
+            max-height: 80px;
+        }
+        .panel {
+            background: rgba(255, 255, 252, 0.96);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
+        }
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #c28a4e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #4a3a2a;
+        }
+        .keywords-line {
+            margin-top: 10px;
+            line-height: 1.6;
+            font-size: 0.9rem;
+            color: #6b5a42;
+        }
+        
+        /* ===== FLIPBOOK READER ===== */
+        .flipbook-container {
+            background: #2c2a24;
+            border-radius: 1rem;
+            padding: 1.5rem;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.3), 0 10px 25px rgba(0,0,0,0.2);
+        }
+        .flipbook-viewer {
+            background: #1e1c18;
+            border-radius: 0.8rem;
+            padding: 1rem;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 600px;
+        }
+        .page-canvas {
+            background: #fff;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            border-radius: 4px;
+            transition: transform 0.25s ease, opacity 0.2s ease;
+            cursor: pointer;
+            max-width: 100%;
+            height: auto;
+        }
+        .page-canvas.flipping {
+            transform: scale(0.98) rotateY(3deg);
+            opacity: 0.9;
+        }
+        .flipbook-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+        .flip-btn {
+            background: #c28a4e;
+            border: none;
+            padding: 0.7rem 1.5rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: white;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .flip-btn:hover {
+            background: #a06e3a;
+            transform: translateY(-2px);
+        }
+        .flip-btn:disabled {
+            background: #b0a088;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .page-info {
+            font-size: 0.9rem;
+            background: #ece1cd;
+            padding: 0.5rem 1rem;
+            border-radius: 40px;
+            color: #4a3a2a;
+            font-weight: 500;
+        }
+        .loading {
+            text-align: center;
+            padding: 2rem;
+            color: #e0d6c0;
+            font-size: 1.2rem;
+        }
+        
+        /* Gerador de citações */
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin-top: 1.5rem;
+            overflow: hidden;
+        }
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #4a3a2a;
+            border-left: none;
+            padding-left: 0;
+        }
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #2c3a2b;
+            cursor: pointer;
+        }
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            color: #2a2a24;
+            margin-top: 1rem;
+        }
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+        @media (max-width: 700px) {
+            .content-padding { padding: 1.2rem; }
+            .title-main { font-size: 1.6rem; }
+            .flipbook-viewer { min-height: 400px; }
+        }
+        .footer {
+            text-align: center;
+            font-size: 0.7rem;
+            color: #7a6b53;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+        }
+        .reader-actions {
+            margin-bottom: 1rem;
+            text-align: right;
+        }
+        .reader-btn {
+            background: #c28a4e;
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 30px;
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div class="content-padding">
+        <div class="topbar">
+            <div class="pill">Revista Inquietações • Fotografia temática</div>
+            <div class="pill">v. 1, n. 1 (2026)</div>
+        </div>
+        
+        <div class="masthead">
+            <div class="masthead-inner">
+                <div>
+                    <p class="kicker">Portal científico • Revista Inquietações</p>
+                    <h1 class="title-main">Patrimônio Arquitetônico de Caicó – RN</h1>
+                    <div class="author-inline">
+                        <img alt="Foto da autora Geiza Venicia dos Santos" src="/assets/avatares/geiza.png"" onerror="this.src='https://via.placeholder.com/70x70?text=GV'">
+                        <div>
+                            <p><strong>Autora:</strong> Geiza Venicia dos Santos</p>
+                            <p class="mini-meta">Revista Inquietações • Fotografia temática • v.1, n.1 (2026)</p>
+                            <p class="mini-meta">DOI: <a href="https://dx.doi.org/10.5281/zenodo.18841135" target="_blank">10.5281/zenodo.18841135</a></p>
+                        </div>
+                    </div>
+                </div>
+                <div class="banner-card">
+                    <img alt="Logo da Revista Inquietações" src="../logo-revista.png" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </div>
+
+        <!-- Resumo -->
+        <div class="panel">
+            <h2><i class="fas fa-camera"></i> Sobre o ensaio</h2>
+            <p>Este ensaio fotográfico apresenta registros visuais do patrimônio arquitetônico da cidade de Caicó, no Rio Grande do Norte. A partir de uma abordagem estética e documental, o trabalho busca destacar elementos característicos da arquitetura urbana local, evidenciando edificações históricas, traços construtivos e paisagens que compõem a memória cultural da cidade. As fotografias funcionam como instrumento de registro e valorização do patrimônio material, contribuindo para reflexões sobre preservação histórica, identidade cultural e memória urbana.</p>
+            <p class="keywords-line"><strong>Palavras-chave:</strong> patrimônio arquitetônico; fotografia documental; memória urbana; Caicó; patrimônio cultural.</p>
+        </div>
+
+        <!-- Visualizador FLIPBOOK (virar páginas como revista) -->
+        <div class="panel">
+            <h2><i class="fas fa-book-open"></i> Ensaio fotográfico</h2>
+            <div class="reader-actions">
+                <a class="reader-btn" href="/arquivos/Fotos-Geiza-v.1-2026-Revista-Inquietacoes.pdf" target="_blank"><i class="fas fa-external-link-alt"></i> Abrir PDF completo</a>
+            </div>
+            <div class="flipbook-container">
+                <div class="flipbook-viewer" id="flipbookViewer">
+                    <div class="loading" id="loadingMsg"><i class="fas fa-spinner fa-pulse"></i> Carregando páginas...</div>
+                    <canvas id="pdfCanvas" class="page-canvas" style="display: none;"></canvas>
+                </div>
+                <div class="flipbook-controls">
+                    <button class="flip-btn" id="prevPageBtn" disabled><i class="fas fa-chevron-left"></i> Página anterior</button>
+                    <span class="page-info" id="pageInfo">Página 1 de ?</span>
+                    <button class="flip-btn" id="nextPageBtn" disabled>Próxima página <i class="fas fa-chevron-right"></i></button>
+                </div>
+                <p style="text-align: center; margin-top: 1rem; font-size: 0.75rem; color: #b0a088;">
+                    <i class="fas fa-mouse-pointer"></i> Clique na imagem para virar a página ou use os botões
+                </p>
+            </div>
+        </div>
+
+        <!-- Informações da publicação -->
+        <div class="panel">
+            <h2><i class="fas fa-info-circle"></i> Informações da publicação</h2>
+            <p><strong>Revista:</strong> Revista Inquietações</p>
+            <p><strong>Volume:</strong> 1 | <strong>Número:</strong> 1 | <strong>Ano:</strong> 2026</p>
+            <p><strong>ISSN:</strong> 3086-4119 | <strong>DOI:</strong> 10.5281/zenodo.18841135</p>
+            <p><strong>Seção:</strong> Fotografia Temática | <strong>Páginas:</strong> 31–37</p>
+        </div>
+
+        <!-- Gerador de referências -->
+        <div class="citation-generator" 
+             data-authors='["SANTOS, Geiza Venicia dos"]' 
+             data-doi="10.5281/zenodo.18841135" 
+             data-issue="1" 
+             data-pages="31–37" 
+             data-title="O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos" 
+             data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Fotografia tematica/fotografia-geiza-caico.html" 
+             data-volume="1" 
+             data-year="2026">
+            <div class="citation-generator-head">
+                <h2><i class="fas fa-quote-left"></i> Como citar este trabalho</h2>
+            </div>
+            <div class="citation-generator-body">
+                <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência bibliográfica.</p>
+                <div class="citation-controls">
+                    <div class="citation-field">
+                        <label for="citation-style">Estilo de referência</label>
+                        <select class="citation-select" id="citation-style">
+                            <option value="abnt">ABNT</option>
+                            <option value="apa">APA</option>
+                            <option value="mla">MLA</option>
+                            <option value="chicago">Chicago</option>
+                            <option value="harvard">Harvard</option>
+                            <option value="vancouver">Vancouver</option>
+                            <option value="ieee">IEEE</option>
+                        </select>
+                    </div>
+                    <div class="citation-actions">
+                        <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar referência</button>
+                    </div>
+                </div>
+                <div aria-live="polite" class="citation-output"></div>
+                <p class="citation-feedback"></p>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | ISSN: 3086-4119
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Configurar PDF.js worker
+    pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
+    
+    let pdfDoc = null;
+    let currentPage = 1;
+    let totalPages = 0;
+    let isRendering = false;
+    let canvas = document.getElementById('pdfCanvas');
+    let ctx = canvas.getContext('2d');
+    let viewer = document.getElementById('flipbookViewer');
+    let loadingMsg = document.getElementById('loadingMsg');
+    
+    const prevBtn = document.getElementById('prevPageBtn');
+    const nextBtn = document.getElementById('nextPageBtn');
+    const pageInfoSpan = document.getElementById('pageInfo');
+    
+    // Carregar o PDF
+    const pdfUrl = '/arquivos/Fotos-Geiza-v.1-2026-Revista-Inquietacoes.pdf';
+    
+    pdfjsLib.getDocument(pdfUrl).promise.then(function(doc) {
+        pdfDoc = doc;
+        totalPages = doc.numPages;
+        pageInfoSpan.textContent = `Página 1 de ${totalPages}`;
+        loadingMsg.style.display = 'none';
+        canvas.style.display = 'block';
+        renderPage(currentPage);
+        
+        prevBtn.disabled = true;
+        nextBtn.disabled = (currentPage >= totalPages);
+    }).catch(function(error) {
+        console.error('Erro ao carregar PDF:', error);
+        loadingMsg.innerHTML = '<i class="fas fa-exclamation-triangle"></i> Erro ao carregar o PDF. Verifique o arquivo.';
+        loadingMsg.style.color = '#c28a4e';
+    });
+    
+    function renderPage(num) {
+        if (!pdfDoc || isRendering) return;
+        isRendering = true;
+        
+        // Adicionar classe de animação de "virar"
+        canvas.classList.add('flipping');
+        setTimeout(() => canvas.classList.remove('flipping'), 200);
+        
+        pdfDoc.getPage(num).then(function(page) {
+            const viewport = page.getViewport({ scale: 1.2 });
+            const container = viewer.getBoundingClientRect();
+            const maxWidth = container.width - 40;
+            let scale = maxWidth / viewport.width;
+            if (scale > 1.5) scale = 1.5;
+            
+            const scaledViewport = page.getViewport({ scale: scale });
+            canvas.width = scaledViewport.width;
+            canvas.height = scaledViewport.height;
+            
+            const renderContext = {
+                canvasContext: ctx,
+                viewport: scaledViewport
+            };
+            page.render(renderContext).promise.then(function() {
+                isRendering = false;
+                pageInfoSpan.textContent = `Página ${num} de ${totalPages}`;
+                prevBtn.disabled = (num <= 1);
+                nextBtn.disabled = (num >= totalPages);
+            }).catch(function(err) {
+                console.error('Erro ao renderizar página:', err);
+                isRendering = false;
+            });
+        }).catch(function(err) {
+            console.error('Erro ao obter página:', err);
+            isRendering = false;
+        });
+    }
+    
+    function nextPage() {
+        if (pdfDoc && currentPage < totalPages && !isRendering) {
+            currentPage++;
+            renderPage(currentPage);
+        }
+    }
+    
+    function prevPage() {
+        if (pdfDoc && currentPage > 1 && !isRendering) {
+            currentPage--;
+            renderPage(currentPage);
+        }
+    }
+    
+    prevBtn.addEventListener('click', prevPage);
+    nextBtn.addEventListener('click', nextPage);
+    
+    // Clique na imagem também vira a página (efeito de "virar folha")
+    canvas.addEventListener('click', function(e) {
+        if (currentPage < totalPages) {
+            nextPage();
+        }
+    });
+    
+    // Teclado: seta direita e esquerda
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'ArrowRight') {
+            e.preventDefault();
+            nextPage();
+        } else if (e.key === 'ArrowLeft') {
+            e.preventDefault();
+            prevPage();
+        }
+    });
+    
+    // ========== GERADOR DE CITAÇÕES ==========
+    (function() {
+        const monthsPt = ['jan.','fev.','mar.','abr.','maio','jun.','jul.','ago.','set.','out.','nov.','dez.'];
+        const monthsEn = ['Jan.','Feb.','Mar.','Apr.','May','Jun.','Jul.','Aug.','Sep.','Oct.','Nov.','Dec.'];
+        function accessDatePt() { const d = new Date(); return d.getDate() + ' ' + monthsPt[d.getMonth()] + ' ' + d.getFullYear(); }
+        function accessDateEn() { const d = new Date(); return monthsEn[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); }
+        function normSpaces(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
+        
+        document.querySelectorAll('.citation-generator').forEach(function(box) {
+            const meta = {
+                authors: JSON.parse(box.dataset.authors || '[]'),
+                title: box.dataset.title || '',
+                url: box.dataset.url || window.location.href,
+                year: box.dataset.year || '2026',
+                volume: box.dataset.volume || '1',
+                issue: box.dataset.issue || '1',
+                pages: box.dataset.pages || '',
+                doi: box.dataset.doi || ''
+            };
+            const select = box.querySelector('.citation-select');
+            const output = box.querySelector('.citation-output');
+            const copyBtn = box.querySelector('.citation-copy');
+            const feedback = box.querySelector('.citation-feedback');
+            
+            function renderCitation(style) {
+                const authors = meta.authors.join('; ');
+                const url = meta.url;
+                const title = meta.title;
+                const doi = meta.doi ? 'https://doi.org/' + meta.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//, '') : '';
+                const pages = meta.pages;
+                const accessPt = accessDatePt();
+                const accessEn = accessDateEn();
+                if (style === 'abnt') return normSpaces(`${authors}. ${title}. <strong>Revista Inquietações</strong>, Caicó, RN, fluxo contínuo, v. ${meta.volume}, n. ${meta.issue}, ${pages ? 'p. '+pages+', ' : ''}${meta.year}. Disponível em: ${url}. Acesso em: ${accessPt}.${doi ? ' DOI: '+doi+'.' : ''}`);
+                if (style === 'apa') return normSpaces(`${authors}. (${meta.year}). ${title}. <strong>Revista Inquietações</strong>, ${meta.volume}(${meta.issue})${pages ? ', '+pages : ''}. ${url}${doi ? ' '+doi : ''}`);
+                if (style === 'mla') return normSpaces(`${authors}. “${title}.” <strong>Revista Inquietações</strong>, vol. ${meta.volume}, no. ${meta.issue}, ${meta.year}${pages ? ', pp. '+pages : ''}, ${url}. Accessed ${accessEn}.${doi ? ' DOI: '+doi+'.' : ''}`);
+                if (style === 'chicago') return normSpaces(`${authors}. “${title}.” <strong>Revista Inquietações</strong> ${meta.volume}, no. ${meta.issue} (${meta.year})${pages ? ': '+pages : ''}. Accessed ${accessEn}. ${url}.${doi ? ' DOI: '+doi+'.' : ''}`);
+                if (style === 'harvard') return normSpaces(`${authors} ${meta.year}, '${title}', <strong>Revista Inquietações</strong>, Caicó, RN, fluxo contínuo, v. ${meta.volume}, n. ${meta.issue}${pages ? ', p. '+pages : ''}, viewed ${accessEn}, &lt;${url}&gt;.${doi ? ' DOI: '+doi+'.' : ''}`);
+                if (style === 'vancouver') return normSpaces(`${authors}. ${title}. <strong>Revista Inquietações</strong>. ${meta.year};${meta.volume}(${meta.issue})${pages ? ':'+pages : ''}. Available from: ${url}.${doi ? ' DOI: '+doi+'.' : ''}`);
+                if (style === 'ieee') return normSpaces(`${authors}, “${title},” <strong>Revista Inquietações</strong>, vol. ${meta.volume}, no. ${meta.issue}${pages ? ', pp. '+pages : ''}, ${meta.year}. [Online]. Available: ${url}.${doi ? ' DOI: '+doi+'.' : ''}`);
+                return '';
+            }
+            
+            function update() {
+                output.innerHTML = renderCitation(select.value);
+            }
+            select.addEventListener('change', update);
+            copyBtn.addEventListener('click', async function() {
+                const temp = document.createElement('div');
+                temp.innerHTML = output.innerHTML;
+                const text = temp.textContent || temp.innerText || '';
+                try {
+                    await navigator.clipboard.writeText(text);
+                    feedback.textContent = '✓ Referência copiada para a área de transferência.';
+                    setTimeout(() => { feedback.textContent = ''; }, 3000);
+                } catch(e) {
+                    feedback.textContent = '✗ Não foi possível copiar automaticamente.';
+                }
+            });
+            update();
+        });
+    })();
+</script>
+</body>
+</html>

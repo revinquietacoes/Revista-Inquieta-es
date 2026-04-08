@@ -1,0 +1,716 @@
+<!DOCTYPE html>
+<html lang="pt">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Mensagem aos Autores e Leitores | Revista Inquietações</title>
+  <!-- Font Awesome & Google Fonts -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+    rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+      padding: 2rem 1.5rem;
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 1280px;
+      width: 100%;
+      background: rgba(255, 253, 245, 0.98);
+      border-radius: 2rem;
+      box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+      overflow: hidden;
+    }
+
+    .content-padding {
+      padding: 2rem 2.5rem;
+    }
+
+    .header {
+      border-bottom: 2px solid #e0d6c0;
+      margin-bottom: 1.8rem;
+    }
+
+    .journal-badge {
+      display: inline-block;
+      background: #6b4c2c;
+      color: #fef7e0;
+      font-size: 0.7rem;
+      letter-spacing: 1.5px;
+      padding: 0.25rem 0.9rem;
+      border-radius: 30px;
+      text-transform: uppercase;
+      font-weight: 600;
+    }
+
+    .title {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.2rem;
+      font-weight: 700;
+      line-height: 1.2;
+      margin-top: 1rem;
+      color: #3a2a1a;
+    }
+
+    .subtitle {
+      font-size: 1rem;
+      color: #7a5a3a;
+      margin-top: 0.3rem;
+      font-style: italic;
+    }
+
+    .author-line {
+      margin-top: 0.8rem;
+      font-size: 0.95rem;
+      color: #6b5a42;
+      font-weight: 500;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+    }
+
+    .action-buttons {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin: 1.5rem 0 1rem;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 0.65rem 1.4rem;
+      border-radius: 60px;
+      font-weight: 600;
+      font-size: 0.85rem;
+      text-decoration: none;
+      transition: 0.2s;
+      background: #f0ede5;
+      color: #2c3a2b;
+      border: 1px solid #d6cdb5;
+    }
+
+    .btn-pdf {
+      background: #8b4513;
+      color: white;
+      border: none;
+    }
+
+    .btn-doi {
+      background: #2c6e5c;
+      color: white;
+      border: none;
+    }
+
+    .btn-submit {
+      background: #b87c3a;
+      color: white;
+      border: none;
+    }
+
+    .btn:hover {
+      transform: translateY(-2px);
+      filter: brightness(1.05);
+      box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+    }
+
+    .panel {
+      background: rgba(255, 255, 252, 0.96);
+      border-radius: 1.2rem;
+      margin-bottom: 2rem;
+      padding: 1.6rem 2rem;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+      border: 1px solid #ece2d0;
+    }
+
+    .panel h2 {
+      font-size: 1.8rem;
+      font-weight: 600;
+      border-left: 5px solid #c28a4e;
+      padding-left: 1rem;
+      margin-bottom: 1.2rem;
+      color: #4a3a2a;
+    }
+
+    .article-text {
+      font-size: 1.02rem;
+      line-height: 1.7;
+      color: #2a2a24;
+    }
+
+    .article-text p {
+      margin-bottom: 1.2rem;
+      text-align: justify;
+    }
+
+    .article-text h3 {
+      font-size: 1.5rem;
+      font-weight: 600;
+      margin: 1.8rem 0 0.8rem;
+      color: #9b5e2c;
+    }
+
+    .article-text blockquote {
+      margin: 1rem 1.5rem;
+      padding-left: 1rem;
+      border-left: 3px solid #dbba8c;
+      color: #5a4a37;
+      font-style: italic;
+    }
+
+    .wikilink {
+      text-decoration: none;
+      background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
+      padding: 0 2px;
+      border-radius: 6px;
+      color: #8b5a2e;
+      font-weight: 500;
+      border-bottom: 1px dotted #b89a6a;
+      transition: 0.1s;
+    }
+
+    .wikilink:hover {
+      background: #e0d4bc;
+      color: #4e3a22;
+    }
+
+    .ref-list {
+      list-style: none;
+      margin-top: 1rem;
+    }
+
+    .ref-list li {
+      margin-bottom: 0.9rem;
+      font-size: 0.85rem;
+      border-left: 2px solid #dccfaf;
+      padding-left: 1rem;
+    }
+
+    .ref-list a {
+      color: #8b5a2e;
+      text-decoration: none;
+      word-break: break-all;
+    }
+
+    .citation-actions {
+      margin: 1rem 0 0.5rem;
+      display: flex;
+      gap: 12px;
+    }
+
+    .cite-btn {
+      background: #f4efdf;
+      border: 1px solid #cfc2a0;
+      padding: 6px 16px;
+      border-radius: 40px;
+      font-size: 0.7rem;
+      cursor: pointer;
+    }
+
+    .pdf-frame {
+      border-radius: 1rem;
+      overflow: hidden;
+      border: 1px solid #e2dccf;
+    }
+
+    iframe {
+      width: 100%;
+      height: 700px;
+      border: none;
+    }
+
+    footer {
+      font-size: 0.7rem;
+      text-align: center;
+      border-top: 1px solid #e2d6c0;
+      padding-top: 1.5rem;
+      margin-top: 1rem;
+      color: #7a6b53;
+    }
+
+    @media (max-width: 800px) {
+      body {
+        padding: 1rem;
+      }
+
+      .content-padding {
+        padding: 1.2rem;
+      }
+
+      .title {
+        font-size: 1.8rem;
+      }
+    }
+
+    .bg-warm {
+      background: #fefaf0;
+    }
+
+    /* Gerador de citações */
+    .citation-generator {
+      background: #fefaf0;
+      border: 1px solid #e2dac8;
+      border-radius: 1.2rem;
+      margin: 1.5rem 0 1rem 0;
+      overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+    }
+
+    .citation-generator-head {
+      background: #f4efe2;
+      padding: 1rem 1.5rem;
+      border-bottom: 1px solid #e2d6c0;
+    }
+
+    .citation-generator-head h2 {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 0;
+      color: #4a3a2a;
+      border-left: none;
+      padding-left: 0;
+    }
+
+    .citation-generator-body {
+      padding: 1.2rem 1.5rem;
+    }
+
+    .citation-generator-note {
+      font-size: 0.85rem;
+      color: #6b5a42;
+      margin-bottom: 1rem;
+      font-style: italic;
+    }
+
+    .citation-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      align-items: flex-end;
+      margin-bottom: 1.2rem;
+    }
+
+    .citation-field {
+      flex: 2;
+      min-width: 180px;
+    }
+
+    .citation-field label {
+      display: block;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      color: #8b7355;
+      margin-bottom: 0.3rem;
+    }
+
+    .citation-select {
+      width: 100%;
+      padding: 0.6rem 0.8rem;
+      background: white;
+      border: 1px solid #d6cdb5;
+      border-radius: 2rem;
+      font-family: 'Inter', sans-serif;
+      font-size: 0.85rem;
+      color: #2c3a2b;
+      cursor: pointer;
+    }
+
+    .citation-select:focus {
+      outline: none;
+      border-color: #c28a4e;
+      box-shadow: 0 0 0 2px rgba(194, 138, 78, 0.2);
+    }
+
+    .citation-actions {
+      flex: 1;
+      display: flex;
+      justify-content: flex-end;
+    }
+
+    .citation-btn {
+      background: #2c5a4a;
+      border: none;
+      padding: 0.6rem 1.2rem;
+      border-radius: 2rem;
+      font-weight: 600;
+      font-size: 0.8rem;
+      color: white;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .citation-btn:hover {
+      background: #1f4538;
+      transform: translateY(-1px);
+    }
+
+    .citation-output {
+      background: #ffffff;
+      border: 1px solid #e2dac8;
+      border-radius: 1rem;
+      padding: 1rem;
+      font-size: 0.85rem;
+      line-height: 1.5;
+      font-family: 'Inter', monospace;
+      color: #2a2a24;
+      margin-top: 1rem;
+    }
+
+    .citation-feedback {
+      font-size: 0.75rem;
+      margin-top: 0.5rem;
+      color: #9b5e2c;
+      min-height: 1.8rem;
+    }
+
+    @media (max-width: 700px) {
+      .citation-controls {
+        flex-direction: column;
+        align-items: stretch;
+      }
+
+      .citation-actions {
+        justify-content: stretch;
+      }
+
+      .citation-btn {
+        justify-content: center;
+      }
+    }
+
+    .signature {
+      margin-top: 2rem;
+      padding-top: 1rem;
+      border-top: 1px solid #e2d6c0;
+      font-style: italic;
+      text-align: right;
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container bg-warm">
+    <div class="content-padding">
+      <div class="header">
+        <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1, n.1 • Mensagem
+          Editorial • 2026</div>
+        <div class="title">Mensagem aos(às) Autores(as) e Leitores(as)<br>da Revista Inquietações</div>
+        <div class="author-line">
+          <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+          <span><i class="fas fa-calendar-alt"></i> Caicó, RN, 2026</span>
+        </div>
+        <div class="action-buttons">
+          <a class="btn btn-pdf" href="/arquivos/Mensagem_Autores_Leitores.pdf" target="_blank"><i
+              class="fas fa-file-pdf"></i> Baixar PDF</a>
+          <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissões</a>
+        </div>
+      </div>
+
+      <!-- Texto completo da mensagem -->
+      <div class="panel article-text">
+        <p>Sejam todos(as) calorosamente bem-vindos(as) à <strong>Revista Inquietações</strong>. Recebê-los(as) neste
+          espaço é afirmar, antes de tudo, que o saber precisa circular. Que a reflexão crítica precisa encontrar
+          morada. Que o pensamento não pode ser contido por barreiras formais quando nasce do compromisso ético com a
+          pesquisa, com a escrita responsável e com o diálogo público.</p>
+
+        <p>A <strong>Revista Inquietações</strong> surge como um espaço de democratização do saber, de escuta atenta e
+          de trocas intelectuais organizadas, publicizadas e compartilhadas. Fundamenta-se nos princípios
+          constitucionais que garantem a educação como direito de todos (art. 205 da <a class="wikilink"
+            href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm" target="_blank">Constituição
+            Federal</a>), a liberdade de aprender, ensinar, pesquisar e divulgar o pensamento (art. 206), bem como a
+          liberdade de expressão da atividade intelectual, científica e de comunicação (art. 5º, IX). Esses dispositivos
+          não são apenas normas jurídicas; são compromissos civilizatórios.</p>
+
+        <p>Acreditamos que o direito de pesquisar, escrever e divulgar conhecimento não deve estar condicionado
+          exclusivamente a marcadores formais de titulação. O saber é construção histórica, coletiva e social. Ele se
+          faz na universidade, mas também nos territórios, nas escolas, nos movimentos sociais, nas experiências vividas
+          e refletidas com rigor e responsabilidade.</p>
+
+        <p>Como editor e organizador da <em>Revista Inquietações</em>, informo que estamos providenciando os últimos
+          ajustes técnicos e institucionais junto ao <a class="wikilink" href="https://www.ibict.br/"
+            target="_blank">Instituto Brasileiro de Informação em Ciência e Tecnologia (IBICT)</a> para a solicitação do
+          ISSN (International Standard Serial Number) da <em>Revista Inquietações</em>. Este é um passo importante para
+          consolidar a inserção da revista no campo dos periódicos científicos, ampliando sua visibilidade e garantindo
+          maior alcance às produções aqui publicadas.</p>
+
+        <p>Entretanto, mais importante que um número identificador é o propósito que nos move: criar um espaço editorial
+          comprometido com a qualidade, com a pluralidade teórica e metodológica e com o respeito às diferentes
+          perspectivas das Ciências Humanas e Sociais.</p>
+
+        <p>Nossa política editorial pauta-se pelo respeito à diversidade de abordagens, pelo diálogo interdisciplinar e
+          pela avaliação responsável das submissões. Os textos submetidos serão apreciados com critérios acadêmicos,
+          ética e compromisso com a integridade intelectual, buscando fortalecer um ambiente de produção séria, crítica
+          e transformadora.</p>
+
+        <p>Convidamos todos(as) a participarem ativamente deste projeto. Convidamos pesquisadores(as), professores(as),
+          poetas, fotógrafos(as), estudantes, intelectuais independentes e autores(as) comprometidos(as) com o
+          pensamento crítico a partilharem seus saberes no universo dos periódicos acadêmicos — sem que lhes seja
+          exigido, como filtro excludente, um título que, como o tempo, inevitavelmente se desfaz. O que permanece é a
+          consistência do argumento, a honestidade intelectual e a coragem de pensar.</p>
+
+        <p>Convidamos também todos(as) para o evento de lançamento da revista. Haverá emissão de certificado de
+          participação em curso livre, válido conforme a Lei nº 9.394/1996 (<a class="wikilink"
+            href="https://www.planalto.gov.br/ccivil_03/leis/l9394.htm" target="_blank">Lei de Diretrizes e Bases da
+            Educação Nacional</a>), especialmente no que dispõe o art. 43 acerca das atividades de extensão e formação
+          complementar no ensino superior.</p>
+
+        <p>Acreditamos na formação continuada como prática permanente e no reconhecimento das experiências formativas
+          que ampliam horizontes intelectuais.</p>
+
+        <p>Os resumos expandidos serão avaliados e publicados em fluxo contínuo até o final do ano, garantindo dinamismo
+          e constante atualização das seções. As regras de participação no evento e as orientações para a escrita do
+          resumo expandido encontram-se detalhadas na edição anterior da revista. O formulário para envio do material
+          permanece disponível no seguinte link: <a class="wikilink" href="https://forms.gle/9JT9RkX2Gdf5vSmEA"
+            target="_blank">https://forms.gle/9JT9RkX2Gdf5vSmEA</a></p>
+
+        <p>Para as demais seções, recomendamos a leitura atenta da aba “Orientações aos(às) Autores(as)”, onde constam
+          as diretrizes editoriais, critérios de formatação e informações importantes para a submissão.</p>
+
+        <h3>Seções da Revista</h3>
+        <p>Nesta segunda edição, em fluxo contínuo, contamos com as seguintes seções:</p>
+        <ul style="margin-left: 2rem; margin-bottom: 1.2rem;">
+          <li>Resumos Expandidos</li>
+          <li>Ensaios</li>
+          <li>Resenhas</li>
+          <li>Traduções</li>
+          <li>Fotografias Temáticas</li>
+          <li>Relatos de Experiência</li>
+          <li>Homenagens</li>
+        </ul>
+
+        <p>A seção de <strong>Fotografias Temáticas</strong> será dedicada à cidade de <strong>Caicó/RN</strong>. Nossa
+          finalidade é preservar e valorizar as belezas arquitetônicas e culturais de nossa cidade, constituindo um
+          acervo histórico de suas paisagens, de seu céu claro, de seus pores do sol inesquecíveis, de seu povo e de sua
+          cultura. Mais do que registros visuais, buscamos narrativas imagéticas: novos olhares sobre velhas histórias,
+          memórias que dialogam com o presente e imagens que nos ajudem a compreender quem somos.</p>
+
+        <p>A <strong>Revista Inquietações</strong> é, acima de tudo, um projeto coletivo. Ela só existirá plenamente com
+          o engajamento de seus autores(as), leitores(as), pareceristas e colaboradores(as). Cada texto submetido, cada
+          leitura realizada, cada debate provocado é parte da construção deste espaço.</p>
+
+        <p>Que esta edição seja início — ou continuidade — de um movimento intelectual inquieto, comprometido e
+          generoso. Que seja um ano de muitas inquietações: teóricas, metodológicas, políticas e humanidades.</p>
+
+        <div class="signature">
+          <p>Com estima e compromisso,<br>
+            <strong>Vinícius</strong><br>
+            Editor e Organizador<br>
+            <em>Revista Inquietações</em>
+          </p>
+        </div>
+      </div>
+
+      <!-- PDF Viewer (substituindo o iframe) -->
+      <div class="panel">
+        <h2><i class="fas fa-file-pdf"></i> Mensagem completa (PDF)</h2>
+        <div class="pdf-frame">
+          <object data="/arquivos/Mensagem_Autores_Leitores.pdf" type="application/pdf" width="100%" height="700px">
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355; text-align: center;">
+              <i class="fas fa-info-circle"></i>
+              <a href="/arquivos/Mensagem_Autores_Leitores.pdf" target="_blank">Clique aqui para baixar o PDF</a>.
+            </p>
+          </object>
+        </div>
+      </div>
+
+      <!-- Referências com gerador de citações -->
+      <div class="panel" id="references-panel">
+        <h2><i class="fas fa-quote-right"></i> Como citar esta mensagem</h2>
+
+        <!-- GERADOR DE CITAÇÕES -->
+        <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]'
+          data-title="Mensagem aos(às) Autores(as) e Leitores(as) da Revista Inquietações"
+          data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Mensagem/mensagem-autores-leitores.html"
+          data-volume="1" data-issue="1" data-pages="01-07" data-year="2026">
+          <div class="citation-generator-head">
+            <h2><i class="fas fa-quote-left"></i> Gerador de referências</h2>
+          </div>
+          <div class="citation-generator-body">
+            <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência
+              bibliográfica.</p>
+            <div class="citation-controls">
+              <div class="citation-field">
+                <label for="citation-style">Estilo de referência</label>
+                <select id="citation-style" class="citation-select">
+                  <option value="abnt">ABNT</option>
+                  <option value="apa">APA</option>
+                  <option value="mla">MLA</option>
+                  <option value="chicago">Chicago</option>
+                  <option value="harvard">Harvard</option>
+                  <option value="vancouver">Vancouver</option>
+                  <option value="ieee">IEEE</option>
+                </select>
+              </div>
+              <div class="citation-actions">
+                <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar
+                  referência</button>
+              </div>
+            </div>
+            <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+            <p class="citation-feedback"></p>
+          </div>
+        </div>
+
+        <div class="citation-actions">
+          <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
+          <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+        </div>
+        <ul class="ref-list">
+          <li><strong>SANTOS, Diego Vinícius Brito dos.</strong> Mensagem aos(às) Autores(as) e Leitores(as) da Revista
+            Inquietações. <em>Revista Inquietações</em>, v. 1, n. 1, p. 01–07, 2026.</li>
+          <li><strong>BRASIL.</strong> <a href="https://www.planalto.gov.br/ccivil_03/constituicao/constituicao.htm"
+              target="_blank">Constituição da República Federativa do Brasil de 1988</a>. Brasília, DF: Presidência da
+            República, 1988.</li>
+          <li><strong>BRASIL.</strong> <a href="https://www.planalto.gov.br/ccivil_03/leis/l9394.htm"
+              target="_blank">Lei nº 9.394, de 20 de dezembro de 1996</a>. Estabelece as diretrizes e bases da educação
+            nacional. Brasília, DF: Presidência da República, 1996.</li>
+        </ul>
+        <p><small><i class="fas fa-info-circle"></i> Utilize o gerador acima para citar esta mensagem em diferentes
+            estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+      </div>
+
+      <!-- Sobre o autor / Editor -->
+      <div class="panel">
+        <h2><i class="fas fa-user-circle"></i> Sobre o editor / Organizador</h2>
+        <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo, com
+          experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui mestrado em
+          Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada na obra e
+          filosofia de Friedrich Nietzsche. É graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte
+          (UERN, 2018) e em Pedagogia pelo Centro Universitário Internacional (UNINTER, 2022). É autor do livro
+          <em>Nietzsche e os valores modernos</em> (2022). Dedica-se à formação continuada em áreas como Psicopedagogia,
+          Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional Especializado (AEE) e Educação de Jovens e
+          Adultos (EJA).</p>
+        <p><i class="fas fa-envelope"></i> E-mail: diego_svt@hotmail.com.br<br>
+          <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663"
+            target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+          <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811"
+            target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+        </p>
+      </div>
+
+      <footer>
+        <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | Mensagem Editorial<br>
+        Acesso aberto sob licença Creative Commons. Convidamos pesquisadores, professores, estudantes e intelectuais
+        independentes a submeterem seus trabalhos.
+      </footer>
+    </div>
+  </div>
+
+  <script>
+    // Submissões com simulação de login
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.addEventListener("click", (e) => {
+      e.preventDefault();
+      let logged = localStorage.getItem("inquietacoes_logged");
+      if (logged === "true") {
+        window.location.href = "cadastro-login/submissoes.html";
+      } else {
+        let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
+        if (email && email.includes("@")) {
+          localStorage.setItem("inquietacoes_logged", "true");
+          alert("Login simulado com sucesso! Redirecionando para submissões.");
+          window.location.href = "cadastro-login/submissoes.html";
+        } else {
+          alert("Acesso não autorizado. Cadastro/login necessário.");
+        }
+      }
+    });
+
+    // Gerador de referências simples (ABNT e BibTeX)
+    document.getElementById("copyRefBtn").addEventListener("click", () => {
+      const refs = [
+        "SANTOS, Diego Vinícius Brito dos. Mensagem aos(às) Autores(as) e Leitores(as) da Revista Inquietações. Revista Inquietações, v. 1, n. 1, p. 01-07, 2026."
+      ];
+      navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
+    });
+    document.getElementById("exportBibBtn").addEventListener("click", () => {
+      let bib = `@article{santos2026mensagem,
+  title={Mensagem aos(às) Autores(as) e Leitores(as) da Revista Inquietações},
+  author={Santos, Diego Vinícius Brito dos},
+  journal={Revista Inquietações},
+  volume={1},
+  number={1},
+  pages={01--07},
+  year={2026}
+}`;
+      navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
+    });
+
+    // ========== GERADOR DE CITAÇÕES (script automático) ==========
+    (function () {
+      const generator = document.querySelector('.citation-generator');
+      if (!generator) return;
+      const authors = JSON.parse(generator.dataset.authors || '[]');
+      const title = generator.dataset.title || '';
+      const url = generator.dataset.url || '';
+      const volume = generator.dataset.volume || '';
+      const issue = generator.dataset.issue || '';
+      const pages = generator.dataset.pages || '';
+      const year = generator.dataset.year || '';
+      const journal = 'Revista Inquietações';
+      const accessDate = new Date().toLocaleDateString('pt-BR');
+
+      const styles = {
+        abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponível em: ${url}. Acesso em: ${accessDate}.`,
+        apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+        mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+        chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+        harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+        vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+        ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+      };
+
+      const select = document.getElementById('citation-style');
+      const outputDiv = document.getElementById('citationOutput');
+      const copyBtn = document.querySelector('.citation-copy');
+      const feedback = document.querySelector('.citation-feedback');
+
+      function updateCitation() {
+        const style = select.value;
+        const generatorFn = styles[style];
+        if (generatorFn) {
+          outputDiv.innerHTML = generatorFn();
+        } else {
+          outputDiv.innerHTML = styles.abnt();
+        }
+      }
+
+      if (select && outputDiv) {
+        select.addEventListener('change', updateCitation);
+        updateCitation();
+      }
+
+      if (copyBtn) {
+        copyBtn.addEventListener('click', () => {
+          const citationText = outputDiv.innerText;
+          navigator.clipboard.writeText(citationText).then(() => {
+            feedback.textContent = '✓ Referência copiada para a área de transferência.';
+            setTimeout(() => { feedback.textContent = ''; }, 3000);
+          }).catch(() => {
+            feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
+          });
+        });
+      }
+    })();
+  </script>
+</body>
+
+</html>

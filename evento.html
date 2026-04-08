@@ -151,6 +151,15 @@
             }
         }
 
+        .site-nav-menu {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2px;
+            padding: 8px;
+            justify-content: center;
+            /* centraliza os itens horizontalmente */
+        }
+
         /* ========== BOTÕES DA TOPBAR (AZUIS COM TEXTO BRANCO) ========== */
         .topbar-btn {
             display: inline-flex;
@@ -222,25 +231,24 @@
                 </div>
             </div>
         </header>
-        <nav class="site-nav" id="navegacao-principal">
-            <button class="site-nav-toggle" id="botao-menu-principal" type="button" aria-expanded="false"
-                aria-controls="site-menu">Menu</button>
-            <div class="site-nav-menu" id="site-menu">
-                <a id="nav-inicio" href="index.html">Início</a>
-                <a id="nav-atual" href="edicao-atual.html">Atual</a>
-                <a id="nav-conteudos" href="conteudos.html">Conteúdos</a>
-                <a id="nav-evento" href="evento.html" class="active">Evento</a>
-                <a id="nav-editora" href="Editora-Revista-Inquietacoes/index.html">Editora</a>
-                <a id="nav-sobre" href="sobre.html">Sobre</a>
-                <a id="nav-equipe" href="equipe-editorial.html">Equipe Editorial</a>
-                <a id="nav-noticias" href="noticias.html">Notícias</a>
-                <a id="nav-politicas" href="politicas-editoriais.html">Políticas</a>
-                <a id="nav-diretrizes" href="diretrizes-autores.html">Diretrizes</a>
-                <a id="nav-submissoes" href="submissoes.html">Submissões</a>
-                <a id="nav-templates" href="templates.html">Templates</a>
-                <a id="nav-contato" href="contato.html">Contato</a>
-                <a id="nav-homenagens" href="homenagens.html">Homenagens</a>
+        <nav class="site-nav site-nav-ojs" id="navegacao-principal" aria-label="Navegação principal">
+            <button id="button-site-nav-toggle" class="site-nav-toggle" type="button">Menu</button>
+            <div id="div-site-nav-menu" class="site-nav-menu">
+                <a id="link-index" href="index.html">Início</a>
+                <a id="link-conteudos" href="conteudos.html">Conteúdos</a>
+                <a id="link-edicao-atual" href="edicao-atual.html">Atual</a>
+                <a id="link-evento" href="evento.html" class="active">Cursos</a>
+                <a id="link-sobre" href="sobre.html">Sobre</a>
+                <a id="link-submissoes" href="submissoes.html">Submissões</a>
+                <a id="link-templates" href="templates.html">Templates</a>
+                <a id="link-politicas-editoriais" href="politicas-editoriais.html">Políticas</a>
+                <a id="link-diretrizes-autores" href="diretrizes-autores.html">Diretrizes</a>
+                <a id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a>
+                <a id="link-homenagens" href="homenagens.html">Homenagens</a>
+                <a id="link-contato" href="contato.html">Contato</a>
+                <a id="link-noticias" href="noticias.html">Notícias</a>
             </div>
+        </nav>
         </nav>
         <div class="portal-grid sidebar-compact" id="grid-eventos">
             <aside class="sidebar" id="barra-lateral">

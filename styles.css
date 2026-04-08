@@ -232,6 +232,7 @@ a:hover {
   flex-wrap: wrap;
   gap: 2px;
   padding: 8px;
+  justify-content: center; /* centraliza os itens horizontalmente */
 }
 
 .site-nav-menu a {

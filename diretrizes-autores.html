@@ -75,7 +75,7 @@
     .banner-card img {
       background: transparent;
       mix-blend-mode: normal;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
     }
 
     /* ========== ESTILOS EXISTENTES DA PÁGINA (mantidos) ========== */
@@ -419,12 +419,11 @@
 
     .site-nav-menu {
       display: flex;
-      flex-wrap: nowrap;
-      align-items: center;
+      flex-wrap: wrap;
+      gap: 2px;
+      padding: 8px;
       justify-content: center;
-      gap: 5px;
-      overflow-x: auto;
-      scrollbar-width: none;
+      /* centraliza os itens horizontalmente */
     }
 
     .site-nav-menu::-webkit-scrollbar {
@@ -480,18 +479,23 @@
         </div>
       </div>
     </header>
-    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal"><button id="button-site-nav-toggle"
-        class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
-      <div id="div-site-nav-menu" class="site-nav-menu"><a id="link-index" href="index.html">Início</a><a
-          id="link-edicao-atual" href="edicao-atual.html">Atual</a><a id="link-conteudos"
-          href="conteudos.html">Conteúdos</a><a id="link-evento" href="evento.html">Evento</a><a id="link-index-2"
-          href="Editora-Revista-Inquietacoes/index.html">Editora</a><a id="link-sobre" href="sobre.html">Sobre</a><a
-          id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a><a id="link-noticias"
-          href="noticias.html">Notícias</a><a id="link-politicas-editoriais"
-          href="politicas-editoriais.html">Políticas</a><a id="link-diretrizes-autores" href="diretrizes-autores.html"
-          class="active">Diretrizes</a><a id="link-submissoes" href="submissoes.html">Submissões</a><a
-          id="link-templates" href="templates.html">Templates</a><a id="link-contato" href="contato.html">Contato</a><a
-          id="link-homenagens" href="homenagens.html">Homenagens</a></div>
+    <nav class="site-nav site-nav-ojs" id="navegacao-principal" aria-label="Navegação principal">
+      <button id="button-site-nav-toggle" class="site-nav-toggle" type="button">Menu</button>
+      <div id="div-site-nav-menu" class="site-nav-menu">
+        <a id="link-index" href="index.html">Início</a>
+        <a id="link-conteudos" href="conteudos.html">Conteúdos</a>
+        <a id="link-edicao-atual" href="edicao-atual.html">Atual</a>
+        <a id="link-evento" href="evento.html">Cursos</a>
+        <a id="link-sobre" href="sobre.html">Sobre</a>
+        <a id="link-submissoes" href="submissoes.html">Submissões</a>
+        <a id="link-templates" href="templates.html">Templates</a>
+        <a id="link-politicas-editoriais" href="politicas-editoriais.html">Políticas</a>
+        <a id="link-diretrizes-autores" href="diretrizes-autores.html" class="active">Diretrizes</a>
+        <a id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a>
+        <a id="link-homenagens" href="homenagens.html">Homenagens</a>
+        <a id="link-contato" href="contato.html">Contato</a>
+        <a id="link-noticias" href="noticias.html">Notícias</a>
+      </div>
     </nav>
     <div id="grade-do-portal" class="portal-grid sidebar-compact">
       <aside class="sidebar" id="barra-lateral">

@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Memória, justiça e transição democrática | Comissão Nacional da Verdade | Revista Inquietações</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+            overflow: hidden;
+        }
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+        .header {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+        }
+        .journal-badge {
+            display: inline-block;
+            background: #6b4c2c;
+            color: #fef7e0;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #3a2a1a;
+        }
+        .subtitle {
+            font-size: 1rem;
+            color: #7a5a3a;
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6b5a42;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f0ede5;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+        }
+        .btn-pdf { background: #8b4513; color: white; border: none; }
+        .btn-doi { background: #2c6e5c; color: white; border: none; }
+        .btn-submit { background: #b87c3a; color: white; border: none; }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+
+        .panel {
+            background: rgba(255, 255, 252, 0.96);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
+        }
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #c28a4e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #4a3a2a;
+        }
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #2a2a24;
+        }
+        .article-text p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+            color: #9b5e2c;
+        }
+        .article-text h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+            color: #b47c48;
+        }
+        .wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #8b5a2e;
+            font-weight: 500;
+            border-bottom: 1px dotted #b89a6a;
+            transition: 0.1s;
+        }
+        .wikilink:hover { background: #e0d4bc; color: #4e3a22; }
+        /* Notas de rodapé opcionais (caso queira adicionar) */
+        .footnote-ref {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 0.75rem;
+            vertical-align: super;
+            line-height: 1;
+            margin: 0 1px;
+        }
+        .footnote-ref a {
+            text-decoration: none;
+            background: #e9e0cf;
+            padding: 0 4px;
+            border-radius: 20px;
+            color: #9b5e2c;
+            font-weight: bold;
+            font-size: 0.7rem;
+        }
+        .footnote-ref .tooltip-card {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 150%;
+            left: 0;
+            background: #fffaf2;
+            border-left: 4px solid #c28a4e;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 10px 14px;
+            width: 280px;
+            z-index: 200;
+            transition: 0.15s;
+            pointer-events: none;
+            font-weight: normal;
+            font-size: 0.8rem;
+            color: #2f3e2c;
+            line-height: 1.5;
+        }
+        .footnote-ref:hover .tooltip-card {
+            visibility: visible;
+            opacity: 1;
+        }
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .ref-list li {
+            margin-bottom: 0.9rem;
+            font-size: 0.85rem;
+            border-left: 2px solid #dccfaf;
+            padding-left: 1rem;
+        }
+        .ref-list a {
+            color: #8b5a2e;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+        }
+        .cite-btn {
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2dccf;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #7a6b53;
+        }
+        @media (max-width: 800px) {
+            body { padding: 1rem; }
+            .content-padding { padding: 1.2rem; }
+            .title { font-size: 1.9rem; }
+        }
+        .bg-warm {
+            background: #fefaf0;
+        }
+        .review-meta {
+            background: #f7f2e4;
+            padding: 1rem;
+            border-radius: 16px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        /* Gerador de citações */
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #4a3a2a;
+            border-left: none;
+            padding-left: 0;
+        }
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #2c3a2b;
+            cursor: pointer;
+        }
+        .citation-select:focus {
+            outline: none;
+            border-color: #c28a4e;
+            box-shadow: 0 0 0 2px rgba(194,138,78,0.2);
+        }
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            color: #2a2a24;
+            margin-top: 1rem;
+        }
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+        @media (max-width: 700px) {
+            .citation-controls { flex-direction: column; align-items: stretch; }
+            .citation-actions { justify-content: stretch; }
+            .citation-btn { justify-content: center; }
+        }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1, n.1 • Seção: Resenhas • 2026</div>
+            <div class="title">Memória, justiça e transição democrática</div>
+            <div class="subtitle">uma leitura sobre a Comissão Nacional da Verdade</div>
+            <div class="author-line">
+                <span><i class="fas fa-user-pen"></i> <strong>Resenhista: Diego Vinícius Brito dos Santos</strong></span>
+                <span><i class="fas fa-book"></i> Obra resenhada: BRASIL. Relatório da Comissão Nacional da Verdade (Vol. 1). Brasília: CNV, 2014.</span>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18845488</span>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Resenha_CNV.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Baixar PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18845488" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissões</a>
+            </div>
+        </div>
+
+        <!-- Apresentação da obra -->
+        <div class="panel">
+            <h2><i class="fas fa-info-circle"></i> Apresentação da obra</h2>
+            <p>O <strong>Relatório da Comissão Nacional da Verdade (CNV)</strong>, publicado em 2014, constitui um dos principais documentos oficiais produzidos no contexto da justiça de transição brasileira. Criada pela Lei nº 12.528/2011, a CNV teve como objetivo investigar e esclarecer graves violações de direitos humanos ocorridas entre 1946 e 1988, com especial atenção ao período da ditadura civil-militar (1964–1985). A obra apresenta fundamentos legais, estrutura organizacional, metodologias investigativas e resultados alcançados ao longo de dois anos e sete meses de trabalho, consolidando-se como instrumento institucional de memória e reparação histórica.</p>
+        </div>
+
+        <!-- Síntese do conteúdo -->
+        <div class="panel">
+            <h2><i class="fas fa-align-left"></i> Síntese do conteúdo</h2>
+            <p>A resenha destaca o contexto político que envolveu a criação da CNV, especialmente o debate iniciado durante o governo Luiz Inácio Lula da Silva e efetivado no mandato da presidenta Dilma Rousseff. A recomendação de criação da comissão emergiu da 11ª Conferência Nacional de Direitos Humanos (2009), sendo posteriormente formalizada pela Lei nº 12.528/2011. O texto evidencia as tensões políticas que marcaram o processo de institucionalização da CNV, sobretudo as resistências de setores militares e os ajustes realizados no Programa Nacional de Direitos Humanos (PNDH-3), especialmente quanto à terminologia utilizada — substituindo “apurar” por “examinar” — para evitar questionamentos à Lei de Anistia (1979).</p>
+            <p>O Relatório final organiza-se em três volumes: o primeiro apresenta fundamentos jurídicos e a descrição das violações; o segundo analisa impactos em diferentes segmentos sociais; o terceiro reúne perfis de mortos e desaparecidos políticos, totalizando 434 vítimas reconhecidas como responsabilidade do Estado brasileiro. Destacam-se, ainda, as práticas investigadas: detenções arbitrárias, tortura, execuções extrajudiciais e desaparecimentos forçados.</p>
+        </div>
+
+        <!-- Texto completo da resenha -->
+        <div class="panel article-text">
+            <h2>Desenvolvimento</h2>
+            <p>É deveras simbólico tomar ciência que redijo as linhas desta apequenada redação na data de aniversário de cinquenta e sete anos do golpe de 1964. O noticiário que circulou, desde o alvorecer do dia, repercutiu a mensagem alusiva ao 31 de março daquele ano assinalada pelo recém empossado Ministro da Defesa, Walter Souza Braga Netto, que direciona, com saudosas lembranças, honras e condecorações ao lapso temporal no qual o Brasil, com apoio de determinados setores e classes sociais, embarcou numa (pseudo-)luta contra o famigerado e midiático espectro do comunismo.</p>
+            <p>És ora cômico, ora trágico, pensar que o apetite de combater um regime dito autoritário terminou por seduzir toda uma nação à ideologia de um regime tão quão ou mais autoritário que, marcado pelas atrocidades que, por certo, não cessaram de machucar as inúmeras vítimas deste regime e as gerações descendentes. Andréia da Silva Daltoé (2016, p.153) afirma-nos inequivocamente que as ditaduras que marcaram a história da América Latina a partir da década de 60 não aconteceram sem que houvesse forte enfrentamento contra aqueles que, em nome de uma determinada Segurança Nacional, prometiam ‘nos defender’ da ameaça do comunismo.</p>
+            <p>Sem embargo, tomarei, por evidente, a mais sensata das certezas que as palavras, aqui redigidas, ecoar-se-ão no pensamento de alguém com boa ou alguma instrução histórica. Proponho-me unicamente tornar textual comentários a respeito da criação de nossa <strong>Comissão Nacional da Verdade (CNV)</strong> a qual, nas palavras do então ex-presidente da República, Luiz Inácio Lula da Silva, fora criada com o escopo claro de assegurar o resgate da memória e da verdade sobre as graves violações de direitos humanos ocorridas no período anteriormente mencionado [1946-1988] (BRASIL, 2014, p. 20).</p>
+            <p>Assim como ratifica-se no Relatório, o debate a respeito da criação, implantação e legalização da referida comissão assentou-se na passagem do término do mandato do então presidente Lula da Silva ao início do mandato da primeira mulher presidenta do Brasil, Dilma Rousseff. Em dezembro de 2009, por ocasião da 11ª Conferência Nacional de Direitos Humanos, reuniram-se em Brasília cerca de 1.200 delegados de conferências estaduais, convocadas pela Secretaria de Direitos Humanos na gestão do ministro Paulo de Tarso Vannuchi, para revisar e atualizar o Programa Nacional de Direitos Humanos (PNDH). A conferência recomendou a criação da CNV, com a tarefa de promover o esclarecimento público das violações de direitos humanos por agentes do Estado na repressão aos opositores (BRASIL, 2014, p. 20).</p>
+            <p>No ano seguinte, Caio Queiro (2010) afirmou que, embora o Programa Nacional de Direitos Humanos (PNDH-3) tenha sido bem recebido por entidades defensoras dos direitos humanos, as propostas em relação ao período militar causaram grande desconforto, principalmente entre os membros das Forças Armadas. Para atenuar possíveis conflitos, Lula foi levado a realizar ajustes na proposta, substituindo o termo “apurar” por “examinar”, visando evitar alterações na Lei de Anistia (Lei nº 6.683/1979).</p>
+            <p>A Lei nº 12.528 foi sancionada pela presidenta Dilma Rousseff em 18 de novembro de 2011, e a instalação da CNV ocorreu em 16 de maio de 2012, com cerimônia que contou com a presença de ex-presidentes e diversas autoridades. A comissão foi constituída inicialmente por sete membros: Cláudio Lemos Fonteles, Gilson Lagaro Dipp, José Carlos Dias, José Paulo Cavalcante Filho, Maria Rita Kehl, Paulo Sérgio Pinheiro e Rosa Maria Cardoso da Cunha. Após a renúncia de Fonteles em 2013, sua vaga foi ocupada por Pedro Bohomoletz de Abreu Dallari.</p>
+            <p>A Lei de Acesso à Informação (LAI), sancionada em 2011, conferiu base normativa para o tratamento do vasto repertório documental sobre a ditadura militar disponível no Arquivo Nacional. Além disso, a CNV contou com a cooperação de comissões da verdade estaduais, municipais, universitárias e sindicais, realizando audiências públicas e diligências em unidades militares onde ocorreram violações, produzindo investigações e laudos periciais.</p>
+            <p>Na terceira parte do primeiro volume do Relatório, a CNV relata as práticas de agentes do Estado que violaram direitos humanos: detenção ilegal ou arbitrária; tortura; execução sumária, arbitrária ou extrajudicial; e desaparecimento forçado e ocultação de cadáver. As atividades da comissão, que duraram dois anos e sete meses, originaram três volumes. O primeiro volume traz fundamentos legais e listagem de violações; o segundo explicita violações em diferentes setores da sociedade; o terceiro volume apresenta perfis de 434 mortos e desaparecidos políticos por responsabilidade do Estado brasileiro. Em 10 de dezembro de 2014, a presidenta Dilma Rousseff recebeu o relatório final em cerimônia transmitida pela TV Brasil.</p>
+
+            <h3>Análise crítica</h3>
+            <p>A leitura evidencia uma interpretação consistente do pensamento de Sérgio Buarque de Holanda, destacando a modernização como processo lento e contraditório. A articulação com o Estado Novo permite relacionar heranças coloniais com manifestações autoritárias do século XX. São apontadas características fascistas no período varguista, como centralização do poder, fechamento do Congresso, censura e repressão política. A obra permanece atual ao problematizar a permanência de estruturas coloniais na sociedade brasileira. A noção de revolução inconclusa oferece uma chave interpretativa potente para compreender tensões contemporâneas.</p>
+        </div>
+
+        <!-- PDF Viewer -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Resenha completa (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/Resenha_CNV.pdf" title="Resenha - Comissão Nacional da Verdade"></iframe>
+            </div>
+        </div>
+
+        <!-- Referências com gerador de citações -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> Referências & Citação</h2>
+
+            <!-- GERADOR DE CITAÇÕES -->
+            <div class="citation-generator" 
+                 data-authors='["SANTOS, Diego Vinícius Brito dos"]' 
+                 data-title="Memória, justiça e transição democrática: uma leitura sobre a Comissão Nacional da Verdade" 
+                 data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Resenhas/resenha-comissao-nacional-da-verdade.html" 
+                 data-volume="1" 
+                 data-issue="1" 
+                 data-pages="06-10" 
+                 data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> Como citar esta resenha</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência bibliográfica.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Estilo de referência</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar referência</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+            </div>
+            <ul class="ref-list">
+                <li><strong>BRASIL.</strong> <em>Relatório da Comissão Nacional da Verdade</em> (Vol. 1). Brasília: CNV, 2014. Disponível em: <a href="http://cnv.memoriasreveladas.gov.br" target="_blank">cnv.memoriasreveladas.gov.br</a>.</li>
+                <li><strong>DALTOÉ, Andréia da Silva.</strong> A comissão nacional da verdade e suas ressonâncias nos documentários Verdade 12.528 e Em busca da verdade. <em>Linguagem em (Dis)curso – LemD</em>, Tubarão, SC, v. 16, n. 1, p. 153-167, jan./abr. 2016.</li>
+                <li><strong>QUEIRO, Caio.</strong> Entenda a polêmica sobre a Comissão Nacional da Verdade. <em>BBC News Brasil</em> [on-line], São Paulo, 2010. Disponível em: <a href="https://www.bbc.com/portuguese/noticias/2010/01/100112_comissao_qanda_cq" target="_blank">https://www.bbc.com/portuguese/noticias/2010/01/100112_comissao_qanda_cq</a>.</li>
+                <li><strong>BRASIL.</strong> Lei nº 12.528, de 18 de novembro de 2011. Cria a Comissão Nacional da Verdade. <em>Diário Oficial da União</em>, Brasília, 2011.</li>
+            </ul>
+            <p><small><i class="fas fa-info-circle"></i> Clique nos links para acessar as fontes originais. Utilize o gerador acima para citar esta resenha em diferentes estilos.</small></p>
+        </div>
+
+        <!-- Sobre o autor -->
+        <div class="panel">
+            <h2><i class="fas fa-user-circle"></i> Sobre o autor / Resenhista</h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo, com experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui mestrado em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada na obra e filosofia de Friedrich Nietzsche. É graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro Universitário Internacional (UNINTER, 2022). É autor do livro <em>Nietzsche e os valores modernos</em> (2022). Dedica-se à formação continuada em áreas como Psicopedagogia, Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional Especializado (AEE) e Educação de Jovens e Adultos (EJA).</p>
+            <p><i class="fas fa-envelope"></i> E-mail: diego_svt@hotmail.com.br<br>
+            <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+            <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></p>
+        </div>
+
+        <footer>
+            <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | Seção: Resenhas | DOI: 10.5281/zenodo.18845488<br>
+            Acesso aberto sob licença Creative Commons.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Submissões com simulação de login
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        let logged = localStorage.getItem("inquietacoes_logged");
+        if (logged === "true") {
+            window.location.href = "cadastro-login/submissoes.html";
+        } else {
+            let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
+            if (email && email.includes("@")) {
+                localStorage.setItem("inquietacoes_logged", "true");
+                alert("Login simulado com sucesso! Redirecionando para submissões.");
+                window.location.href = "cadastro-login/submissoes.html";
+            } else {
+                alert("Acesso não autorizado. Cadastro/login necessário.");
+            }
+        }
+    });
+
+    // Gerador de referências simples (ABNT e BibTeX) para os botões auxiliares
+    document.getElementById("copyRefBtn").addEventListener("click", () => {
+        const refs = [
+            "BRASIL. Relatório da Comissão Nacional da Verdade (Vol. 1). Brasília: CNV, 2014.",
+            "DALTOÉ, Andréia da Silva. A comissão nacional da verdade... Linguagem em (Dis)curso, v.16, n.1, p.153-167, 2016.",
+            "QUEIRO, Caio. Entenda a polêmica sobre a Comissão Nacional da Verdade. BBC News Brasil, 2010."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
+    });
+    document.getElementById("exportBibBtn").addEventListener("click", () => {
+        let bib = `@book{brasil2014,
+  title={Relatório da Comissão Nacional da Verdade},
+  author={Brasil},
+  volume={1},
+  year={2014},
+  publisher={CNV}
+}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
+    });
+
+    // ========== GERADOR DE CITAÇÕES (script automático) ==========
+    (function() {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Revista Inquietações';
+        const accessDate = new Date().toLocaleDateString('pt-BR');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponível em: ${url}. Acesso em: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    feedback.textContent = '✓ Referência copiada para a área de transferência.';
+                    setTimeout(() => { feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

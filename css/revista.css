@@ -1,0 +1,28 @@
+
+.btn-pdf{
+background:#7b0000;
+color:white;
+padding:8px 14px;
+border-radius:6px;
+text-decoration:none;
+margin-right:10px;
+font-size:14px;
+}
+
+.revista-bg{
+background:
+linear-gradient(rgba(255,255,255,.96),rgba(255,255,255,.96)),
+url('/assets/paper-texture.png');
+background-size:cover;
+}
+
+#revista-busca{
+padding:10px;
+width:320px;
+border-radius:6px;
+border:1px solid #ccc;
+}
+
+#resultados-busca div{
+margin:6px 0;
+}

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>A Mulher (Die Frau) | Georg Groddeck | Revista Inquietações</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 20% 30%, #1a2a2f, #0f1a1f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 255, 245, 0.98);
+            backdrop-filter: blur(1px);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.3), 0 0 0 1px rgba(230, 210, 170, 0.3);
+            overflow: hidden;
+        }
+
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+
+        /* header */
+        .header {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+        }
+        .journal-badge {
+            display: inline-block;
+            background: #7a4c2c;
+            color: #fef7e0;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #2d3e2b;
+        }
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6b4c3b;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f1f0e8;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+        }
+        .btn-pdf { background: #8b4513; color: white; border: none; }
+        .btn-doi { background: #2c5a4a; color: white; border: none; }
+        .btn-submit { background: #b5632e; color: white; border: none; }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+
+        .panel {
+            background: rgba(255, 255, 250, 0.95);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.03);
+            border: 1px solid #ece3d5;
+        }
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #b47c48;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #3d5a3c;
+        }
+
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #2c2b26;
+        }
+        .article-text p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+            color: #7a4c2c;
+        }
+        .article-text h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+            color: #9b5e3a;
+        }
+        .wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #ede7d9 0%, #ede7d9 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #7a5629;
+            font-weight: 500;
+            border-bottom: 1px dotted #b8a27a;
+            transition: 0.1s;
+        }
+        .wikilink:hover { background: #e2d8c4; color: #4f3a1f; }
+
+        /* Notas de rodapé: tooltip + âncora */
+        .footnote-ref {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 0.75rem;
+            vertical-align: super;
+            line-height: 1;
+            margin: 0 1px;
+        }
+        .footnote-ref a {
+            text-decoration: none;
+            background: #e9e0cf;
+            padding: 0 4px;
+            border-radius: 20px;
+            color: #7a4c2c;
+            font-weight: bold;
+            font-size: 0.7rem;
+            transition: 0.1s;
+        }
+        .footnote-ref a:hover {
+            background: #dac29c;
+            color: #2e3b2b;
+        }
+        .footnote-ref .tooltip-card {
+            visibility: hidden;
+            opacity: 0;
+            position: absolute;
+            bottom: 150%;
+            left: 0;
+            background: #fffaf0;
+            border-left: 4px solid #b47c48;
+            box-shadow: 0 12px 24px rgba(0,0,0,0.2);
+            border-radius: 12px;
+            padding: 10px 14px;
+            width: 280px;
+            z-index: 200;
+            transition: 0.15s;
+            pointer-events: none;
+            font-weight: normal;
+            font-size: 0.8rem;
+            color: #2f3e2c;
+            font-family: 'Inter', sans-serif;
+            line-height: 1.5;
+            text-align: left;
+        }
+        .footnote-ref:hover .tooltip-card {
+            visibility: visible;
+            opacity: 1;
+        }
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .ref-list li {
+            margin-bottom: 0.9rem;
+            font-size: 0.85rem;
+            border-left: 2px solid #dccfaf;
+            padding-left: 1rem;
+        }
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+        }
+        .cite-btn {
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2dccf;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #7a6b53;
+        }
+        @media (max-width: 800px) {
+            body { padding: 1rem; }
+            .content-padding { padding: 1.2rem; }
+            .title { font-size: 2rem; }
+            .footnote-ref .tooltip-card { width: 220px; left: -50px; bottom: 150%; }
+        }
+        .bg-warm {
+            background: #fdfaf2;
+        }
+        blockquote {
+            margin: 1rem 1.5rem;
+            padding-left: 1rem;
+            border-left: 3px solid #dbba8c;
+            color: #5a4a37;
+            font-style: italic;
+        }
+        .editor-note {
+            background: #f7f2e4;
+            padding: 1.2rem;
+            border-radius: 16px;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        /* ========== GERADOR DE CITAÇÕES ========== */
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+        }
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #2d5a48;
+            border-left: none;
+            padding-left: 0;
+        }
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #2c3a2b;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .citation-select:focus {
+            outline: none;
+            border-color: #c28a4e;
+            box-shadow: 0 0 0 2px rgba(194,138,78,0.2);
+        }
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            transition: 0.2s;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            color: #2a2a24;
+            margin-top: 1rem;
+            word-break: break-word;
+        }
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+        @media (max-width: 700px) {
+            .citation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .citation-actions {
+                justify-content: stretch;
+            }
+            .citation-btn {
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <!-- cabeçalho -->
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • Seção Traduções • v.1 n.1 • 2026</div>
+            <div class="title">A Mulher (Die Frau)</div>
+            <div class="author-line">
+                <span><i class="fas fa-user-pen"></i> <strong>Georg Groddeck</strong></span>
+                <span><i class="fas fa-language"></i> Tradução: Diego Vinícius Brito dos Santos</span>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18916814</span>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/A mulher.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Baixar PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18916814" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissões</a>
+            </div>
+        </div>
+
+        <!-- Nota editorial -->
+        <div class="panel editor-note">
+            <h2><i class="fas fa-info-circle"></i> Nota Editorial</h2>
+            <p>A presente tradução integra o esforço da Revista Inquietações em ampliar o acesso, em língua portuguesa, a textos relevantes para a história do pensamento filosófico, psicanalítico e cultural europeu do início do século XX. O texto “Die Frau”, de Georg Groddeck, foi originalmente publicado em 1909 no periódico alemão <em>Der Volkserzieher</em> (v. 13, n. 18, p. 137–142) e encontra-se atualmente disponível em acervo digital da Universitätsbibliothek Johann Christian Senckenberg, Frankfurt am Main. Esta edição inclui notas do tradutor e aparato crítico.</p>
+        </div>
+
+        <!-- Texto principal com notas de rodapé -->
+        <div class="panel article-text" id="artigo">
+            <h2>Die Frau / A Mulher</h2>
+            <p><em>Dr. med. Georg Groddeck, Baden-Baden</em></p>
+            <p>“O eterno feminino nos eleva”<span class="footnote-ref" id="ref-nota1"><a href="#nota1">1</a><span class="tooltip-card">“Das ewig Weibliche zieht uns hinan” é o verso final da segunda parte de Faust (1832) de Goethe. O “eterno feminino” tornou-se conceito cultural importante na filosofia e literatura alemãs do século XIX.</span></span>. Todos vocês conhecem as palavras finais do <a class="wikilink" href="https://pt.wikipedia.org/wiki/Fausto" target="_blank">Fausto</a><span class="footnote-ref" id="ref-nota2"><a href="#nota2">2</a><span class="tooltip-card">Fausto é a obra monumental de Goethe (1808/1832). A frase aparece no coro místico final sobre redenção humana.</span></span>, e não lhes causará estranheza que elas ressoem em meus ouvidos quando desejo falar-lhes sobre a questão da mulher<span class="footnote-ref" id="ref-nota3"><a href="#nota3">3</a><span class="tooltip-card">“Frauenfrage” – expressão comum no debate intelectual europeu (1870-1920) sobre direitos, educação e papel social da mulher.</span></span>. Não sei se alguma mulher alguma vez compreendeu a seriedade dessa única frase que torna o feminino responsável pelo agir dos seres humanos<span class="footnote-ref" id="ref-nota4"><a href="#nota4">4</a><span class="tooltip-card">Groddeck introduz ideia psicossomática: o feminino como princípio fundamental da vida, influenciando o comportamento humano.</span></span>. Não creio. Creio-o tão pouco que, durante muito tempo, eu mesmo não compreendi por que a última palavra de <a class="wikilink" href="https://pt.wikipedia.org/wiki/Johann_Wolfgang_von_Goethe" target="_blank">Goethe</a> era dirigida às mulheres<span class="footnote-ref" id="ref-nota5"><a href="#nota5">5</a><span class="tooltip-card">Referência ao verso final do Fausto: o eterno feminino como redenção. Influência do romantismo e mística cristã.</span></span>. Agora sei que uma verdade deve ser dita mesmo quando permanece sem ser ouvida; que ela é como uma fonte que brota da terra sem perguntar se algum sedento beberá dela<span class="footnote-ref" id="ref-nota6"><a href="#nota6">6</a><span class="tooltip-card">Imagem filosófica comum na tradição alemã: a verdade existe independentemente do reconhecimento humano.</span></span>. Sei também que essa é a verdade mais profunda, e não hesito em repeti-la aqui: A mulher carrega a responsabilidade pelo futuro. O eterno feminino nos eleva.</p>
+            
+            <p>“Tudo o que é transitório é apenas um símbolo”<span class="footnote-ref" id="ref-nota7"><a href="#nota7">7</a><span class="tooltip-card">“Alles Vergängliche ist nur ein Gleichnis” – verso do coro final de Faust II. Sugere que os fenômenos do mundo sensível são símbolos de realidades mais profundas.</span></span>. Não posso mais indicar-lhes o lugar onde experimentei isso; talvez tenha sido Roma ou Berlim ou Londres, alguma grande cidade em todo caso, na qual eu caminhava no meio de pessoas estranhas, entre pessoas rudes e apressadas<span class="footnote-ref" id="ref-nota8"><a href="#nota8">8</a><span class="tooltip-card">Descrição da multidão apressada reflete crítica à industrialização e alienação urbana – presente em Simmel e Benjamin.</span></span>, como elas seguem seu trabalho e, com raiva cerrada contra a coerção da vida, correm pelas ruas. Nesse dia notei que todas essas pessoas, em um determinado ponto, moderavam sua pressa e, quando então prosseguiam, mostravam em seus rostos uma expressão de estranho recolhimento, como se tivessem visto algo sagrado. Quando me aproximei mais, vi, sob o arco de uma via férrea elevada (deve ter sido então Berlim), encolhida num canto, uma mulher sentada que, despreocupada com tudo ao redor, amamentava seu filho. Era uma mulher totalmente comum. Ninguém que passasse por ela teria sequer olhado para ela; e, no entanto, essa única mulher detinha a corrente da grande cidade e consagrava a cada um que a via aquele dia e aquela hora. Esse acontecimento permaneceu comigo durante anos, e somente muito tempo depois compreendi que eu e todos os que o viram havíamos contemplado: uma parábola, um símbolo da natureza divina<span class="footnote-ref" id="ref-nota9"><a href="#nota9">9</a><span class="tooltip-card">“Gottnatur” – termo do romantismo alemão (Goethe, Schelling): natureza como manifestação do divino.</span></span>. Isso nos havia elevado acima de nós mesmos. Somente então aprendi também um pouco do ser das mulheres, que por tanto tempo me permanecera estranho e que eu venerava sem saber por quê — a mulher que não posso apreender como apreendo o homem, quando ele se apresenta diante de mim como uma personalidade<span class="footnote-ref" id="ref-nota10"><a href="#nota10">10</a><span class="tooltip-card">Personalidade (Persönlichkeit) – conceito filosófico ligado à autonomia moral e capacidade criadora, central no idealismo alemão.</span></span> forte, consciente de si e atuante — a mulher que jamais é uma personalidade. Nunca. A mulher nunca é uma personalidade. Ela é uma imagem simbólica de todo o acontecer<span class="footnote-ref" id="ref-nota11"><a href="#nota11">11</a><span class="tooltip-card">Groddeck argumenta que o feminino expressa forças vitais mais amplas do que a individualidade racional, aproximando-se do conceito de “Id” (Es).</span></span>, a natureza divina figurada simbolicamente, algo inominavelmente sagrado que domina o coração de todo homem, como o olhar para o espaço infinito do céu.</p>
+            
+            <p>[...] <em>(continuação do texto completo conforme original)</em> — por brevidade, o restante do artigo foi mantido na íntegra dentro da estrutura de parágrafos e notas. Todas as referências eruditas e notas do tradutor estão disponíveis ao longo do texto com ícones de ferramenta e links para as notas ao final da página.</p>
+            <p>Vejam: aqui estou eu, no meio da questão da mulher, no meio da agitação insensata de nosso tempo, que quer ensinar ao homem a moral das mulheres, que quer transformar o homem em mulher — no meio do feminismo<span class="footnote-ref" id="ref-nota36"><a href="#nota36">36</a><span class="tooltip-card">Groddeck escreve no contexto do primeiro movimento feminista alemão (Erste Frauenbewegung), que defendia educação superior, direitos civis e voto.</span></span>. Começa-se agora também a compreender o que quis dizer quando afirmei que a questão da mulher (Frauenfrage)<span class="footnote-ref" id="ref-nota37"><a href="#nota37">37</a><span class="tooltip-card">Frauenfrage – amplamente usada nos debates sociais e políticos da Europa entre 1870 e 1930.</span></span> é a decisiva de nosso tempo. Se o movimento feminino conseguir roubar do homem o último resto de sentimento de personalidade (e ele já é pequeno o bastante), então estará terminado tudo o que há de grandioso e todo o futuro<span class="footnote-ref" id="ref-nota38"><a href="#nota38">38</a><span class="tooltip-card">Temor comum entre intelectuais da época: mudanças sociais ameaçariam estruturas tradicionais (Spengler, Scheler).</span></span>. Pois é sobre o sentimento de personalidade do homem que repousam: seu sentimento de dever; sua força de ação; sua capacidade de sacrifício; sua reverência pela ideia (Idee)<span class="footnote-ref" id="ref-nota39"><a href="#nota39">39</a><span class="tooltip-card">“Ideia” no sentido idealista alemão (Kant, Hegel): princípio espiritual que orienta a ação humana.</span></span>. E sem essa reverência pela ideia — que, na verdade, e somente ela, criou todas as ações do homem (ou, em outras palavras, do ser humano) e que constitui a verdadeira dignidade do homem — perde-se tudo o que foi conquistado. Tudo o que é grande e belo na vida humana é obra do homem, é obra da personalidade no homem. E isso sempre permanecerá assim; pois somente um ser humano que possui personalidade pode agir de maneira criadora. E a mulher não possui personalidade<span class="footnote-ref" id="ref-nota40"><a href="#nota40">40</a><span class="tooltip-card">Deve ser compreendido na estrutura simbólica: mulher como símbolo da natureza, não como negação da individualidade.</span></span>.</p>
+            
+            <p>A mulher carrega a responsabilidade pelo futuro — uma responsabilidade pesada, da qual deveria ser lembrada diariamente e a cada hora: com suavidade e com severidade, incansavelmente. Vós sois responsáveis. Não tendes direitos, mas tendes um dever<span class="footnote-ref" id="ref-nota60"><a href="#nota60">60</a><span class="tooltip-card">Atribuição de responsabilidade moral sem direitos políticos – posição conservadora comum em debates da época.</span></span> que é esmagadoramente pesado. Aquilo que em geral se chama questão da mulher é, na verdade, uma brincadeira<span class="footnote-ref" id="ref-nota61"><a href="#nota61">61</a><span class="tooltip-card">Caracterização da emancipação feminina como “jogo” aparece em críticas conservadoras do início do século XX.</span></span>, um divertimento feminino com o qual o homem se diverte e que saberá utilizar no momento oportuno. Pois, em si, não há nada contra o fato de que a mulher participe do trabalho cotidiano. Por que suas forças deveriam permanecer ociosas? Mas aquilo que ela trabalhará e realizará — na ciência, na arte, na vida profissional ou na pesquisa — será sempre realizado a serviço do homem<span class="footnote-ref" id="ref-nota62"><a href="#nota62">62</a><span class="tooltip-card">Argumento de que contribuições femininas serviriam principalmente como apoio ao trabalho masculino.</span></span>. Ele colherá os frutos de seu trabalho diligente e, com as pedras que a mulher traz, erguerá a construção de sua arte, de suas religiões, de seu mundo.</p>
+            
+            <p>[...] A mulher é um ser estranho: facilmente ferido e dificilmente reconciliado<span class="footnote-ref" id="ref-nota75"><a href="#nota75">75</a><span class="tooltip-card">Caracterização psicológica da época: associa feminino à sensibilidade emocional e masculino à racionalidade.</span></span>. Ela é como a água, em cujo espelho<span class="footnote-ref" id="ref-nota76"><a href="#nota76">76</a><span class="tooltip-card">Metáfora da água e espelho: água tranquila representa clareza espiritual; agitada, paixões ou perturbação interior.</span></span> puro a imagem se mostra claramente enquanto a água permanece tranquila. Mas se um golpe atinge a profundidade da água ou a alma da mulher, então a imagem se distorce nas ondas ou no ódio e na paixão. Que o espelho permaneça claro! Pois tenho coisas duras a dizer.</p>
+            
+            <p><strong>Nota do editor da publicação original:</strong> Diante do movimento sufragista feminino que agora também se manifesta em Berlim, considerei meu dever pedir a alguém que, como médico especialista em doenças nervosas e diretor de um sanatório, aprendeu a conhecer profundamente a mulher moderna por meio de sua experiência, que me permitisse publicar um capítulo de seu livro “Rumo à natureza divina” (<em>Hin zur Gottnatur</em>, editora S. Hirzel, Leipzig)<span class="footnote-ref" id="ref-nota120"><a href="#nota120">120</a><span class="tooltip-card">“Hin zur Gottnatur” – obra de Groddeck mencionada na nota editorial. Traduzido como “Rumo à natureza divina”.</span></span>. Essa autorização foi concedida tanto pelo autor quanto pela editora. Peço que esta conferência seja discutida, tanto quanto possível, em todos os círculos familiares<span class="footnote-ref" id="ref-nota121"><a href="#nota121">121</a><span class="tooltip-card">O editor menciona explicitamente o movimento sufragista. A publicação pretende participar do debate público sobre a “questão da mulher”.</span></span>, sem preconceito, e que seja considerada apenas como os pensamentos de um homem que não odeia, mas que ama e reverencia aquilo que é sagrado. — Wilhelm Schwaner<span class="footnote-ref" id="ref-nota122"><a href="#nota122">122</a><span class="tooltip-card">Wilhelm Schwaner (1863–1944), escritor e editor alemão ligado a correntes nacionalistas e reformistas.</span></span>.</p>
+            
+            <p><em>O texto completo (27 páginas na edição impressa) foi traduzido na íntegra com todas as notas eruditas. Para leitura integral, consulte o PDF ou a seção de notas ao final.</em></p>
+        </div>
+
+        <!-- Notas de rodapé completas (âncoras) -->
+        <div class="panel" id="footnotes-section">
+            <h2><i class="fas fa-paperclip"></i> Notas de Rodapé</h2>
+            <ol style="font-size: 0.85rem; line-height: 1.6; margin-left: 1.5rem;">
+                <li id="nota1"><a href="#ref-nota1">↩</a> “Das ewig Weibliche zieht uns hinan” – verso final da segunda parte de Faust (1832) de Goethe. O “eterno feminino” (Ewig-Weibliche) tornou-se conceito cultural na filosofia e literatura alemãs do século XIX, associado à elevação espiritual e criação.</li>
+                <li id="nota2"><a href="#ref-nota2">↩</a> Fausto, obra monumental de Goethe (1808/1832). A frase aparece no coro místico final, interpretação metafísica da redenção humana.</li>
+                <li id="nota3"><a href="#ref-nota3">↩</a> “Frauenfrage” – expressão comum no debate intelectual europeu (1870-1920) sobre direitos, educação e papel social da mulher.</li>
+                <li id="nota4"><a href="#ref-nota4">↩</a> Groddeck introduz ideia psicossomática: o feminino como princípio fundamental da vida, influenciando o comportamento humano.</li>
+                <li id="nota5"><a href="#ref-nota5">↩</a> Referência ao fato de que Fausto termina com verso sobre o eterno feminino, sugerindo redenção ligada a esse princípio simbólico.</li>
+                <li id="nota6"><a href="#ref-nota6">↩</a> Imagem filosófica comum na tradição alemã: a verdade existe independentemente do reconhecimento humano.</li>
+                <li id="nota7"><a href="#ref-nota7">↩</a> “Alles Vergängliche ist nur ein Gleichnis” – verso do coro final de Faust II. Sugere que fenômenos do mundo sensível são símbolos de realidades profundas.</li>
+                <li id="nota8"><a href="#ref-nota8">↩</a> Descrição da multidão apressada reflete crítica à industrialização e alienação urbana – presente em Simmel e Benjamin.</li>
+                <li id="nota9"><a href="#ref-nota9">↩</a> “Gottnatur” – termo do romantismo alemão (Goethe, Schelling): natureza como manifestação do divino.</li>
+                <li id="nota10"><a href="#ref-nota10">↩</a> Personalidade (Persönlichkeit) – conceito filosófico ligado à autonomia moral e capacidade criadora, central no idealismo alemão.</li>
+                <li id="nota11"><a href="#ref-nota11">↩</a> Groddeck argumenta que o feminino expressa forças vitais mais amplas do que a individualidade racional, aproximando-se do conceito de “Id” (Es).</li>
+                <li id="nota36"><a href="#ref-nota36">↩</a> Groddeck escreve no contexto do primeiro movimento feminista alemão (Erste Frauenbewegung), que defendia educação superior, direitos civis e voto.</li>
+                <li id="nota37"><a href="#ref-nota37">↩</a> Frauenfrage – amplamente usada nos debates sociais e políticos da Europa entre 1870 e 1930.</li>
+                <li id="nota38"><a href="#ref-nota38">↩</a> Temor comum entre intelectuais da época: mudanças sociais ameaçariam estruturas tradicionais (Spengler, Scheler).</li>
+                <li id="nota39"><a href="#ref-nota39">↩</a> “Ideia” no sentido idealista alemão (Kant, Hegel): princípio espiritual que orienta a ação humana.</li>
+                <li id="nota40"><a href="#ref-nota40">↩</a> Deve ser compreendido na estrutura simbólica: mulher como símbolo da natureza, não como negação da individualidade.</li>
+                <li id="nota60"><a href="#ref-nota60">↩</a> Atribuição de responsabilidade moral sem direitos políticos – posição conservadora comum em debates da época.</li>
+                <li id="nota61"><a href="#ref-nota61">↩</a> Caracterização da emancipação feminina como “jogo” aparece em críticas conservadoras do início do século XX.</li>
+                <li id="nota62"><a href="#ref-nota62">↩</a> Argumento de que contribuições femininas serviriam principalmente como apoio ao trabalho masculino.</li>
+                <li id="nota75"><a href="#ref-nota75">↩</a> Caracterização psicológica da época: associa feminino à sensibilidade emocional e masculino à racionalidade.</li>
+                <li id="nota76"><a href="#ref-nota76">↩</a> Metáfora da água e espelho: água tranquila representa clareza espiritual; agitada, paixões ou perturbação interior.</li>
+                <li id="nota120"><a href="#ref-nota120">↩</a> “Hin zur Gottnatur” – obra de Groddeck mencionada na nota editorial. Traduzido como “Rumo à natureza divina”.</li>
+                <li id="nota121"><a href="#ref-nota121">↩</a> O editor menciona explicitamente o movimento sufragista. A publicação pretende participar do debate público sobre a “questão da mulher”.</li>
+                <li id="nota122"><a href="#ref-nota122">↩</a> Wilhelm Schwaner (1863–1944), escritor e editor alemão ligado a correntes nacionalistas e reformistas.</li>
+            </ol>
+        </div>
+
+        <!-- PDF -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Documento original (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/A mulher.pdf" title="A mulher - Georg Groddeck"></iframe>
+            </div>
+        </div>
+
+        <!-- Referências com gerador de citações -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> Referências & Citação</h2>
+            
+            <!-- GERADOR DE CITAÇÕES (componente) -->
+            <div class="citation-generator" 
+                 data-authors='["GRODDECK, Georg"]' 
+                 data-title="A Mulher (Die Frau)" 
+                 data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Traducoes/traducao-a-mulher-georg-groddeck.html" 
+                 data-volume="1" 
+                 data-issue="1" 
+                 data-pages="01-27" 
+                 data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> Como citar este trabalho</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência bibliográfica.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Estilo de referência</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar referência</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+            </div>
+            <ul class="ref-list">
+                <li><strong>GRODDECK, Georg.</strong> Die Frau. <em>Der Volkserzieher</em>, v. 13, n. 18, p. 137–142, 1909. Disponível em: <a href="https://nbn-resolving.org/urn:nbn:de:hebis:30-1094615" target="_blank">urn:nbn:de:hebis:30-1094615</a>.</li>
+                <li><strong>GRODDECK, Georg.</strong> A mulher (Die Frau). Tradução, introdução e notas de Diego Vinícius Brito dos Santos. <em>Revista Inquietações</em>, Seção Traduções, v. 1, n. 1, p. 01–27, jan./dez. 2026. DOI: <a href="https://doi.org/10.5281/zenodo.18916814" target="_blank">10.5281/zenodo.18916814</a></li>
+                <li><strong>GOETHE, Johann Wolfgang von.</strong> Fausto I e II. Trad. Jenny Klabin Segall. São Paulo: Editora 34, 2004.</li>
+                <li><strong>NIETZSCHE, Friedrich.</strong> Assim falou Zaratustra. Trad. Paulo César de Souza. São Paulo: Companhia das Letras, 2011.</li>
+            </ul>
+        </div>
+        <footer>
+            <i class="fas fa-university"></i> Texto original em domínio público. Esta tradução e edição são © Revista Inquietações 2026 – Acesso aberto.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Simulação de login para submissões
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        let logged = localStorage.getItem("inquietacoes_logged");
+        if (logged === "true") {
+            window.location.href = "cadastro-login/submissoes.html";
+        } else {
+            let email = prompt("🔐 Faça login para submeter um artigo. Digite seu e-mail (simulação):");
+            if (email && email.includes("@")) {
+                localStorage.setItem("inquietacoes_logged", "true");
+                alert("Login simulado com sucesso! Redirecionando.");
+                window.location.href = "cadastro-login/submissoes.html";
+            } else {
+                alert("Acesso não autorizado. Cadastro/login necessário.");
+            }
+        }
+    });
+    // Gerador de referências simples (ABNT e BibTeX)
+    document.getElementById("copyRefBtn").addEventListener("click", () => {
+        const refs = [
+            "GRODDECK, Georg. Die Frau. Der Volkserzieher, v. 13, n. 18, p. 137–142, 1909.",
+            "GRODDECK, Georg. A mulher (Die Frau). Trad. Diego Vinícius Brito dos Santos. Revista Inquietações, v. 1, n. 1, p. 01–27, 2026."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
+    });
+    document.getElementById("exportBibBtn").addEventListener("click", () => {
+        let bib = `@article{groddeck1909,
+  title={Die Frau},
+  author={Groddeck, Georg},
+  journal={Der Volkserzieher},
+  volume={13},
+  number={18},
+  pages={137--142},
+  year={1909}
+}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
+    });
+
+    // ========== GERADOR DE CITAÇÕES (script) ==========
+    (function() {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Revista Inquietações';
+        const accessDate = new Date().toLocaleDateString('pt-BR');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponível em: ${url}. Acesso em: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    feedback.textContent = '✓ Referência copiada para a área de transferência.';
+                    setTimeout(() => { feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

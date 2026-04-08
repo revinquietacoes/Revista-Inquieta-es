@@ -51,7 +51,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(18, 45, 82, 0.55); /* tom azul escuro com transparência */
+      background: rgba(18, 45, 82, 0.55);
+      /* tom azul escuro com transparência */
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
       border-radius: inherit;
@@ -77,7 +78,7 @@
     .banner-card img {
       background: transparent;
       mix-blend-mode: normal;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
     }
 
     /* ========== ESTILOS EXISTENTES (mantidos) ========== */
@@ -151,12 +152,11 @@
 
     .site-nav-menu {
       display: flex;
-      flex-wrap: nowrap;
-      align-items: center;
+      flex-wrap: wrap;
+      gap: 2px;
+      padding: 8px;
       justify-content: center;
-      gap: 5px;
-      overflow-x: auto;
-      scrollbar-width: none;
+      /* centraliza os itens horizontalmente */
     }
 
     .site-nav-menu::-webkit-scrollbar {
@@ -501,44 +501,48 @@
         </div>
       </div>
     </header>
-    <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal">
-      <button id="button-site-nav-toggle" class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
+    <nav class="site-nav site-nav-ojs" id="navegacao-principal" aria-label="Navegação principal">
+      <button id="button-site-nav-toggle" class="site-nav-toggle" type="button">Menu</button>
       <div id="div-site-nav-menu" class="site-nav-menu">
         <a id="link-index" href="index.html">Início</a>
-        <a id="link-edicao-atual" href="edicao-atual.html" class="active">Atual</a>
         <a id="link-conteudos" href="conteudos.html">Conteúdos</a>
-        <a id="link-evento" href="evento.html">Evento</a>
-        <a id="link-index-2" href="Editora-Revista-Inquietacoes/index.html">Editora</a>
+        <a id="link-edicao-atual" href="edicao-atual.html" class="active">Atual</a>
+        <a id="link-evento" href="evento.html">Cursos</a>
         <a id="link-sobre" href="sobre.html">Sobre</a>
-        <a id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a>
-        <a id="link-noticias" href="noticias.html">Notícias</a>
-        <a id="link-politicas-editoriais" href="politicas-editoriais.html">Políticas</a>
-        <a id="link-diretrizes-autores" href="diretrizes-autores.html">Diretrizes</a>
         <a id="link-submissoes" href="submissoes.html">Submissões</a>
         <a id="link-templates" href="templates.html">Templates</a>
-        <a id="link-contato" href="contato.html">Contato</a>
+        <a id="link-politicas-editoriais" href="politicas-editoriais.html">Políticas</a>
+        <a id="link-diretrizes-autores" href="diretrizes-autores.html">Diretrizes</a>
+        <a id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a>
         <a id="link-homenagens" href="homenagens.html">Homenagens</a>
+        <a id="link-contato" href="contato.html">Contato</a>
+        <a id="link-noticias" href="noticias.html">Notícias</a>
       </div>
     </nav>
 
     <div class="system-access-modal" id="system-access-modal" aria-hidden="true">
-      <div id="div-system-access-dialog" class="system-access-dialog" role="dialog" aria-modal="true" aria-labelledby="system-access-title">
+      <div id="div-system-access-dialog" class="system-access-dialog" role="dialog" aria-modal="true"
+        aria-labelledby="system-access-title">
         <div id="div-system-access-head" class="system-access-head">
           <h3 id="system-access-title">Acesso ao sistema editorial</h3>
-          <button id="button-system-access-close" type="button" class="system-access-close" data-close-system-modal aria-label="Fechar">×</button>
+          <button id="button-system-access-close" type="button" class="system-access-close" data-close-system-modal
+            aria-label="Fechar">×</button>
         </div>
         <div id="div-system-access-body" class="system-access-body">
           <div id="system-access-login-view" hidden>
             <p id="p-1">Entre para acompanhar submissões, pareceres e atividades editoriais da Revista Inquietações.</p>
             <form class="system-access-form" id="system-login-form">
               <label>E-mail<input id="input-email" type="email" name="email" autocomplete="email" required></label>
-              <label>Senha<input id="input-senha" type="password" name="senha" autocomplete="current-password" required></label>
-              <button id="button-system-access-btn-primary" type="submit" class="system-access-btn primary">Entrar no sistema</button>
+              <label>Senha<input id="input-senha" type="password" name="senha" autocomplete="current-password"
+                  required></label>
+              <button id="button-system-access-btn-primary" type="submit" class="system-access-btn primary">Entrar no
+                sistema</button>
               <div class="system-access-message" id="system-login-message" aria-live="polite"></div>
             </form>
           </div>
           <div id="system-access-cadastro-view" hidden>
-            <p id="p-2">Crie seu cadastro para submeter trabalhos ou solicitar acesso como parecerista. Editores e editores adjuntos devem ser habilitados pela administração.</p>
+            <p id="p-2">Crie seu cadastro para submeter trabalhos ou solicitar acesso como parecerista. Editores e
+              editores adjuntos devem ser habilitados pela administração.</p>
             <form class="system-access-form" id="system-cadastro-form">
               <div id="div-system-access-grid" class="system-access-grid">
                 <label>Nome completo<input id="input-nome" type="text" name="nome" autocomplete="name" required></label>
@@ -549,10 +553,13 @@
                     <option value="autor">Autor</option>
                     <option value="parecerista">Parecerista</option>
                   </select></label>
-                <label>Senha<input id="input-senha-2" type="password" name="senha" autocomplete="new-password" minlength="6" required></label>
+                <label>Senha<input id="input-senha-2" type="password" name="senha" autocomplete="new-password"
+                    minlength="6" required></label>
               </div>
-              <div id="div-system-access-note" class="system-access-note">Ao concluir o cadastro, o sistema enviará os dados para as funções configuradas na Netlify.</div>
-              <button id="button-system-access-btn-primary-2" type="submit" class="system-access-btn primary">Criar cadastro</button>
+              <div id="div-system-access-note" class="system-access-note">Ao concluir o cadastro, o sistema enviará os
+                dados para as funções configuradas na Netlify.</div>
+              <button id="button-system-access-btn-primary-2" type="submit" class="system-access-btn primary">Criar
+                cadastro</button>
               <div class="system-access-message" id="system-cadastro-message" aria-live="polite"></div>
             </form>
           </div>
@@ -571,7 +578,8 @@
             <div id="div-info-card" class="info-card"><strong>Edição atual</strong>Jan./Dez. de 2026</div>
             <div id="div-info-card-2" class="info-card"><strong>e-ISSN</strong>ISSN: 3086-4119</div>
             <div id="div-info-card-3" class="info-card"><strong>Status</strong>Primeira edição</div>
-            <div id="div-info-card-4" class="info-card"><strong>Identificação</strong>International Standard Serial Number</div>
+            <div id="div-info-card-4" class="info-card"><strong>Identificação</strong>International Standard Serial
+              Number</div>
           </div>
         </div>
       </section>
@@ -586,11 +594,16 @@
             <div id="div-2">
               <img id="imagem-556376290-a0fd9bc4-9ce3-40af-a47b-180bca6a6241-png"
                 src="arquivos/556376290-a0fd9bc4-9ce3-40af-a47b-180bca6a6241.png"
-                alt="Capa da edição v. 1, n. 1 (2026) da Revista Inquietações" class="edicao-capa-preview" loading="lazy">
+                alt="Capa da edição v. 1, n. 1 (2026) da Revista Inquietações" class="edicao-capa-preview"
+                loading="lazy">
             </div>
             <div id="div-3">
-              <div id="div-notice" class="notice">A edição atual organiza os materiais principais da Revista Inquietações em fluxo contínuo, com acesso por seções editoriais e leitura integrada na página de conteúdos.</div>
-              <div id="div-small-note" class="small-note"><strong>Seções disponíveis nesta edição:</strong><br>capa da edição, mensagem aos(às) autores(as) e leitores(as), artigos, resumos expandidos, ensaios, resenhas, traduções, fotografia temática, relatos de experiência e homenagens.</div>
+              <div id="div-notice" class="notice">A edição atual organiza os materiais principais da Revista
+                Inquietações em fluxo contínuo, com acesso por seções editoriais e leitura integrada na página de
+                conteúdos.</div>
+              <div id="div-small-note" class="small-note"><strong>Seções disponíveis nesta edição:</strong><br>capa da
+                edição, mensagem aos(às) autores(as) e leitores(as), artigos, resumos expandidos, ensaios, resenhas,
+                traduções, fotografia temática, relatos de experiência e homenagens.</div>
               <div id="div-cta-row" class="cta-row" style="margin-top: 16px;">
                 <a id="link-conteudos-2" class="btn" href="conteudos.html">Abrir página de conteúdos</a>
                 <a id="link-index-3" class="btn secondary" href="index.html">Voltar ao portal</a>
@@ -603,20 +616,33 @@
       <section class="panel" id="menu-edicao">
         <div id="div-panel-head-3" class="panel-head">
           <h2 id="h2-3">Menu interativo da edição</h2>
-          <p id="p-5">Ao clicar em uma seção, o leitor será direcionado para a página de conteúdos em sua respectiva área.</p>
+          <p id="p-5">Ao clicar em uma seção, o leitor será direcionado para a página de conteúdos em sua respectiva
+            área.</p>
         </div>
         <div id="div-panel-body-3" class="panel-body">
           <div id="div-edicao-menu-lista" class="edicao-menu-lista">
-            <a id="link-conteudos-3" class="edicao-menu-link" href="conteudos.html#capa-edicao"><strong>Capa da edição — v. 1, n. 1 (2026)</strong><span>Abrir a seção da capa na página Conteúdos</span></a>
-            <a id="link-conteudos-4" class="edicao-menu-link" href="conteudos.html#mensagem-autores-leitores"><strong>Mensagem aos(às) autores(as) e leitores(as)</strong><span>Abrir a mensagem editorial</span></a>
-            <a id="link-conteudos-5" class="edicao-menu-link" href="conteudos.html#artigos"><strong>Artigos</strong><span>Abrir a seção de artigos</span></a>
-            <a id="link-conteudos-6" class="edicao-menu-link" href="conteudos.html#resumos-expandidos"><strong>Resumos expandidos</strong><span>Abrir a seção de resumos expandidos</span></a>
-            <a id="link-conteudos-7" class="edicao-menu-link" href="conteudos.html#ensaios"><strong>Ensaios</strong><span>Abrir a seção de ensaios</span></a>
-            <a id="link-conteudos-8" class="edicao-menu-link" href="conteudos.html#resenhas"><strong>Resenhas</strong><span>Abrir a seção de resenhas</span></a>
-            <a id="link-conteudos-9" class="edicao-menu-link" href="conteudos.html#traducoes"><strong>Traduções</strong><span>Abrir a seção de traduções</span></a>
-            <a id="link-conteudos-10" class="edicao-menu-link" href="conteudos.html#fotografia-tematica"><strong>Fotografia temática</strong><span>Abrir a seção de fotografia temática</span></a>
-            <a id="link-conteudos-11" class="edicao-menu-link" href="conteudos.html#relatos-experiencia"><strong>Relatos de experiência</strong><span>Abrir a seção de relatos de experiência</span></a>
-            <a id="link-conteudos-12" class="edicao-menu-link" href="homenagens.html"><strong>Homenagens</strong><span>Abrir a seção de homenagens</span></a>
+            <a id="link-conteudos-3" class="edicao-menu-link" href="conteudos.html#capa-edicao"><strong>Capa da edição —
+                v. 1, n. 1 (2026)</strong><span>Abrir a seção da capa na página Conteúdos</span></a>
+            <a id="link-conteudos-4" class="edicao-menu-link"
+              href="conteudos.html#mensagem-autores-leitores"><strong>Mensagem aos(às) autores(as) e
+                leitores(as)</strong><span>Abrir a mensagem editorial</span></a>
+            <a id="link-conteudos-5" class="edicao-menu-link"
+              href="conteudos.html#artigos"><strong>Artigos</strong><span>Abrir a seção de artigos</span></a>
+            <a id="link-conteudos-6" class="edicao-menu-link" href="conteudos.html#resumos-expandidos"><strong>Resumos
+                expandidos</strong><span>Abrir a seção de resumos expandidos</span></a>
+            <a id="link-conteudos-7" class="edicao-menu-link"
+              href="conteudos.html#ensaios"><strong>Ensaios</strong><span>Abrir a seção de ensaios</span></a>
+            <a id="link-conteudos-8" class="edicao-menu-link"
+              href="conteudos.html#resenhas"><strong>Resenhas</strong><span>Abrir a seção de resenhas</span></a>
+            <a id="link-conteudos-9" class="edicao-menu-link"
+              href="conteudos.html#traducoes"><strong>Traduções</strong><span>Abrir a seção de traduções</span></a>
+            <a id="link-conteudos-10" class="edicao-menu-link"
+              href="conteudos.html#fotografia-tematica"><strong>Fotografia temática</strong><span>Abrir a seção de
+                fotografia temática</span></a>
+            <a id="link-conteudos-11" class="edicao-menu-link" href="conteudos.html#relatos-experiencia"><strong>Relatos
+                de experiência</strong><span>Abrir a seção de relatos de experiência</span></a>
+            <a id="link-conteudos-12" class="edicao-menu-link"
+              href="homenagens.html"><strong>Homenagens</strong><span>Abrir a seção de homenagens</span></a>
           </div>
         </div>
       </section>
@@ -628,8 +654,10 @@
         </div>
         <div id="div-panel-body-4" class="panel-body">
           <div id="div-columns-2" class="columns-2">
-            <div id="div-entry" class="entry"><span class="entry-title">Página Edição Atual</span>Reúne os dados gerais do número, sua identificação institucional e o menu de navegação por seções.</div>
-            <div id="div-entry-2" class="entry"><span class="entry-title">Página Conteúdos</span>Exibe os materiais efetivamente publicados, com leitores de PDF incorporados e acesso acadêmico por publicação.</div>
+            <div id="div-entry" class="entry"><span class="entry-title">Página Edição Atual</span>Reúne os dados gerais
+              do número, sua identificação institucional e o menu de navegação por seções.</div>
+            <div id="div-entry-2" class="entry"><span class="entry-title">Página Conteúdos</span>Exibe os materiais
+              efetivamente publicados, com leitores de PDF incorporados e acesso acadêmico por publicação.</div>
           </div>
           <div id="div-panel-body-5" class="panel-body">
             <p id="p-7"><strong>Revista Inquietações</strong></p>
@@ -649,8 +677,11 @@
       <a id="link-sobre-2" href="sobre.html">Sobre</a>
       <a id="link-politicas-editoriais-2" href="politicas-editoriais.html">Políticas</a>
       <a id="link-submissoes-2" href="submissoes.html">Submissões</a>
-      <a id="link-code-of-conduct-md" href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank" rel="noopener noreferrer">Código de Conduta</a>
-      <a id="link-www-netlify-com" href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a>
+      <a id="link-code-of-conduct-md"
+        href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank"
+        rel="noopener noreferrer">Código de Conduta</a>
+      <a id="link-www-netlify-com" href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é
+        desenvolvido com apoio de Netlify</a>
     </div>
   </footer>
 
