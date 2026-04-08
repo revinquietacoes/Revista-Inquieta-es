@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Humanos, animais e redes de existência | Ensaio | Revista Inquietações</title>
     <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Inter', sans-serif;
             background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
@@ -21,6 +25,7 @@
             justify-content: center;
             min-height: 100vh;
         }
+
         .container {
             max-width: 1280px;
             width: 100%;
@@ -29,13 +34,16 @@
             box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
             overflow: hidden;
         }
+
         .content-padding {
             padding: 2rem 2.5rem;
         }
+
         .header {
             border-bottom: 2px solid #e0d6c0;
             margin-bottom: 1.8rem;
         }
+
         .journal-badge {
             display: inline-block;
             background: #6b4c2c;
@@ -47,6 +55,7 @@
             text-transform: uppercase;
             font-weight: 600;
         }
+
         .title {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.2rem;
@@ -55,6 +64,7 @@
             margin-top: 1rem;
             color: #3a2a1a;
         }
+
         .author-line {
             margin-top: 0.8rem;
             font-size: 0.95rem;
@@ -62,7 +72,27 @@
             font-weight: 500;
             display: flex;
             flex-wrap: wrap;
-            gap: 1rem;
+            align-items: center;
+            gap: 1.5rem;
+        }
+        .author-item {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .avatar-circle {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .action-buttons {
             display: flex;
@@ -70,6 +100,7 @@
             gap: 1rem;
             margin: 1.5rem 0 1rem;
         }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -84,10 +115,58 @@
             color: #2c3a2b;
             border: 1px solid #d6cdb5;
         }
-        .btn-pdf { background: #8b4513; color: white; border: none; }
-        .btn-doi { background: #2c6e5c; color: white; border: none; }
-        .btn-submit { background: #b87c3a; color: white; border: none; }
-        .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+
+        .btn-pdf {
+            background: #8b4513;
+            color: white;
+            border: none;
+        }
+
+        .btn-doi {
+            background: #2c6e5c;
+            color: white;
+            border: none;
+        }
+
+        .btn-submit {
+            background: #b87c3a;
+            color: white;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Botões de tradução */
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+            color: #4a3a2a;
+        }
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+        }
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
 
         .panel {
             background: rgba(255, 255, 252, 0.96);
@@ -97,6 +176,7 @@
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
             border: 1px solid #ece2d0;
         }
+
         .panel h2 {
             font-size: 1.8rem;
             font-weight: 600;
@@ -105,26 +185,31 @@
             margin-bottom: 1.2rem;
             color: #4a3a2a;
         }
+
         .article-text {
             font-size: 1.02rem;
             line-height: 1.7;
             color: #2a2a24;
         }
+
         .article-text p {
             margin-bottom: 1.2rem;
             text-align: justify;
         }
+
         .article-text h3 {
             font-size: 1.5rem;
             font-weight: 600;
             margin: 1.8rem 0 0.8rem;
             color: #9b5e2c;
         }
+
         .article-text h4 {
             font-size: 1.2rem;
             margin: 1rem 0 0.5rem;
             color: #b47c48;
         }
+
         .wikilink {
             text-decoration: none;
             background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
@@ -135,27 +220,36 @@
             border-bottom: 1px dotted #b89a6a;
             transition: 0.1s;
         }
-        .wikilink:hover { background: #e0d4bc; color: #4e3a22; }
+
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
+        }
+
         .ref-list {
             list-style: none;
             margin-top: 1rem;
         }
+
         .ref-list li {
             margin-bottom: 0.9rem;
             font-size: 0.85rem;
             border-left: 2px solid #dccfaf;
             padding-left: 1rem;
         }
+
         .ref-list a {
             color: #8b5a2e;
             text-decoration: none;
             word-break: break-all;
         }
+
         .citation-actions {
             margin: 1rem 0 0.5rem;
             display: flex;
             gap: 12px;
         }
+
         .cite-btn {
             background: #f4efdf;
             border: 1px solid #cfc2a0;
@@ -164,16 +258,19 @@
             font-size: 0.7rem;
             cursor: pointer;
         }
+
         .pdf-frame {
             border-radius: 1rem;
             overflow: hidden;
             border: 1px solid #e2dccf;
         }
+
         iframe {
             width: 100%;
             height: 700px;
             border: none;
         }
+
         footer {
             font-size: 0.7rem;
             text-align: center;
@@ -182,14 +279,25 @@
             margin-top: 1rem;
             color: #7a6b53;
         }
+
         @media (max-width: 800px) {
-            body { padding: 1rem; }
-            .content-padding { padding: 1.2rem; }
-            .title { font-size: 1.8rem; }
+            body {
+                padding: 1rem;
+            }
+
+            .content-padding {
+                padding: 1.2rem;
+            }
+
+            .title {
+                font-size: 1.8rem;
+            }
         }
+
         .bg-warm {
             background: #fefaf0;
         }
+
         /* Gerador de citações */
         .citation-generator {
             background: #fefaf0;
@@ -197,13 +305,15 @@
             border-radius: 1.2rem;
             margin: 1.5rem 0 1rem 0;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
+
         .citation-generator-head {
             background: #f4efe2;
             padding: 1rem 1.5rem;
             border-bottom: 1px solid #e2d6c0;
         }
+
         .citation-generator-head h2 {
             font-size: 1.3rem;
             font-weight: 600;
@@ -212,15 +322,18 @@
             border-left: none;
             padding-left: 0;
         }
+
         .citation-generator-body {
             padding: 1.2rem 1.5rem;
         }
+
         .citation-generator-note {
             font-size: 0.85rem;
             color: #6b5a42;
             margin-bottom: 1rem;
             font-style: italic;
         }
+
         .citation-controls {
             display: flex;
             flex-wrap: wrap;
@@ -228,10 +341,12 @@
             align-items: flex-end;
             margin-bottom: 1.2rem;
         }
+
         .citation-field {
             flex: 2;
             min-width: 180px;
         }
+
         .citation-field label {
             display: block;
             font-size: 0.75rem;
@@ -241,6 +356,7 @@
             color: #8b7355;
             margin-bottom: 0.3rem;
         }
+
         .citation-select {
             width: 100%;
             padding: 0.6rem 0.8rem;
@@ -252,16 +368,19 @@
             color: #2c3a2b;
             cursor: pointer;
         }
+
         .citation-select:focus {
             outline: none;
             border-color: #c28a4e;
-            box-shadow: 0 0 0 2px rgba(194,138,78,0.2);
+            box-shadow: 0 0 0 2px rgba(194, 138, 78, 0.2);
         }
+
         .citation-actions {
             flex: 1;
             display: flex;
             justify-content: flex-end;
         }
+
         .citation-btn {
             background: #2c5a4a;
             border: none;
@@ -275,10 +394,12 @@
             align-items: center;
             gap: 6px;
         }
+
         .citation-btn:hover {
             background: #1f4538;
             transform: translateY(-1px);
         }
+
         .citation-output {
             background: #ffffff;
             border: 1px solid #e2dac8;
@@ -290,280 +411,904 @@
             color: #2a2a24;
             margin-top: 1rem;
         }
+
         .citation-feedback {
             font-size: 0.75rem;
             margin-top: 0.5rem;
             color: #9b5e2c;
             min-height: 1.8rem;
         }
+
         @media (max-width: 700px) {
-            .citation-controls { flex-direction: column; align-items: stretch; }
-            .citation-actions { justify-content: stretch; }
-            .citation-btn { justify-content: center; }
+            .citation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .citation-actions {
+                justify-content: stretch;
+            }
+
+            .citation-btn {
+                justify-content: center;
+            }
         }
+
         .author-bio {
             margin-top: 1rem;
             padding-top: 1rem;
             border-top: 1px solid #e2d6c0;
         }
+
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Ocultar elementos padrão do Google Translate */
+        .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget { display: none; }
     </style>
 </head>
+
 <body>
-<div class="container bg-warm">
-    <div class="content-padding">
-        <div class="header">
-            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1, n.1 • Seção: Ensaios • Fluxo contínuo • 2026</div>
-            <div class="title">Humanos, animais e redes de existência:<br>repensando o humanismo na era do Antropoceno</div>
-            <div class="author-line">
-                <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong> & <strong>Taisa Maria Brito dos Santos</strong></span>
-                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.19012745</span>
-            </div>
-            <div class="action-buttons">
-                <a class="btn btn-pdf" href="/arquivos/Humanos_Animais_Redes.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Baixar PDF</a>
-                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.19012745" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
-                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissões</a>
-            </div>
-        </div>
-
-        <!-- Resumo -->
-        <div class="panel">
-            <h2><i class="fas fa-align-left"></i> Resumo</h2>
-            <p>Este ensaio analisa a distinção entre humanos e animais na tradição filosófica ocidental, tomando como ponto de partida o debate contemporâneo conhecido como virada animal nas ciências sociais e humanas. Historicamente, o humanismo moderno fundamentou-se na oposição entre natureza e cultura, atribuindo aos seres humanos capacidades consideradas exclusivas, como racionalidade, linguagem e moralidade. A partir dessa perspectiva, os animais foram frequentemente definidos como entidades naturais e instintivas, funcionando como referência negativa para a definição da humanidade. Contudo, nas últimas décadas, diferentes campos do conhecimento — especialmente a filosofia, a antropologia e a biologia — têm colocado essa divisão em questão. Nesse contexto, o artigo discute as contribuições de autores como Bruno Latour, Donna Haraway, Tim Ingold e Philippe Descola, cujas reflexões problematizam o antropocentrismo moderno e enfatizam as relações de interdependência entre humanos e não humanos. Metodologicamente, o trabalho baseia-se em pesquisa bibliográfica de natureza qualitativa, envolvendo a análise de textos clássicos da filosofia e de obras contemporâneas relacionadas à virada animal. Argumenta-se que as abordagens recentes apontam para a necessidade de reformular o humanismo em termos relacionais, reconhecendo que humanos e animais participam de redes ecológicas e sociais compartilhadas. Conclui-se que repensar as relações entre humanos e outras espécies constitui um passo fundamental para compreender os desafios éticos, filosóficos e políticos colocados pela crise ambiental contemporânea e pela era do Antropoceno.</p>
-            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Humanismo</span>
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Antropocentrismo</span>
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Virada animal</span>
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Relações humano-animal</span>
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Filosofia contemporânea</span>
-            </div>
-        </div>
-
-        <!-- Texto completo do ensaio -->
-        <div class="panel article-text">
-            <h2>Introdução</h2>
-            <p>A distinção entre humanos e animais ocupa um lugar central na história do pensamento ocidental. Desde a filosofia antiga até as formulações modernas do humanismo, a definição do humano foi frequentemente construída a partir de uma oposição ontológica em relação à animalidade. Atribuiu-se aos seres humanos características consideradas exclusivas — como razão, linguagem simbólica, moralidade e capacidade política — enquanto os animais foram compreendidos como entidades essencialmente naturais, governadas por instintos e destituídas de interioridade reflexiva. Essa distinção estruturou não apenas a tradição filosófica ocidental, mas também a organização das ciências modernas e das instituições sociais que dela derivaram (AGAMBEN, 2002; DESCOLA, 2005).</p>
-            <p>No interior dessa tradição, consolidou-se um modelo de pensamento fundado na separação entre natureza e cultura. Os animais passaram a ser associados ao domínio da natureza, enquanto os humanos foram definidos como seres pertencentes ao domínio da cultura ou da sociedade. Tal dualismo tornou-se uma das bases epistemológicas da modernidade, sustentando tanto a filosofia humanista quanto a divisão disciplinar entre ciências naturais e ciências humanas (LATOUR, 1994). Como observa Bruno Latour, a modernidade construiu-se precisamente sobre essa “constituição moderna”, que separa radicalmente o mundo natural do mundo social, ao mesmo tempo em que produz incessantemente híbridos entre esses domínios (LATOUR, 1994).</p>
-            <p>Entretanto, nas últimas décadas, essa estrutura conceitual tem sido amplamente questionada por diferentes campos do conhecimento. Na filosofia, na antropologia e nos estudos sobre ciência e tecnologia, emergiu um conjunto de debates que passou a ser frequentemente identificado como “virada animal” (animal turn). Esse movimento intelectual procura reconsiderar o estatuto dos animais nas ciências humanas e nas reflexões filosóficas, problematizando a centralidade ontológica e epistemológica atribuída ao humano. Em vez de tratar os animais apenas como objeto de comparação ou contraste, essas abordagens buscam compreender as relações entre humanos e não humanos como redes de interdependência e co-constituição (MARRAS, 2014; HARAWAY, 2003).</p>
-            <p>Nesse contexto, diversos autores contemporâneos têm contribuído para redefinir os termos do debate. Philippe Descola (2005), por exemplo, argumenta que a distinção moderna entre natureza e cultura não é universal, mas apenas uma entre várias formas possíveis de organizar as relações entre humanos e não humanos. Tim Ingold (2000), por sua vez, propõe compreender organismos e ambientes como processos interdependentes, dissolvendo a separação rígida entre sujeito e mundo. Donna Haraway (2003) introduz a noção de “espécies companheiras”, enfatizando que humanos e animais se constituem mutuamente ao longo de processos históricos e evolutivos compartilhados. Já Bruno Latour (2012) sugere que o social deve ser entendido como uma rede de associações entre humanos e não humanos, o que implica ampliar a própria noção de coletividade.</p>
-            <p>Essas transformações conceituais tornam-se particularmente relevantes no contexto contemporâneo, marcado pela crescente discussão sobre o Antropoceno. A noção de Antropoceno refere-se à ideia de que as atividades humanas passaram a exercer impacto significativo sobre os sistemas planetários, alterando profundamente o equilíbrio ecológico da Terra. Paradoxalmente, esse conceito evidencia simultaneamente o poder transformador da ação humana e a dependência radical dos humanos em relação a múltiplas formas de vida e processos naturais. Nesse cenário, torna-se cada vez mais difícil sustentar uma concepção de humanidade isolada do restante do mundo vivo (INGOLD, 2012).</p>
-            <p>Diante desse quadro, o presente ensaio parte do seguinte problema de pesquisa: o humanismo moderno foi historicamente construído a partir de uma separação radical entre humanidade e animalidade, sustentada pela oposição entre natureza e cultura; entretanto, diferentes correntes contemporâneas da filosofia, da antropologia e da biologia têm colocado essa divisão em questão. Assim, torna-se necessário investigar de que maneira essas novas abordagens reconfiguram o lugar do humano no mundo.</p>
-            <p>A partir desse problema, formula-se a seguinte pergunta de pesquisa: como a chamada “virada animal” nas ciências humanas e na filosofia contemporânea contribui para repensar o humanismo moderno e redefinir as relações entre humanos e animais? Essa questão desdobra-se em outras indagações complementares: de que modo a tradição filosófica ocidental construiu a separação entre humanos e animais? Como autores contemporâneos, como Bruno Latour, Donna Haraway, Tim Ingold e Philippe Descola, criticam o antropocentrismo moderno? E, finalmente, quais implicações éticas e epistemológicas emergem dessa redefinição das relações entre humanos e não humanos?</p>
-            <p>A hipótese que orienta este ensaio é que a virada animal revela o caráter historicamente situado e conceitualmente frágil da separação moderna entre natureza e cultura. Ao questionar essa divisão, tais perspectivas apontam para a necessidade de formular um novo humanismo relacional, no qual humanos e não humanos sejam compreendidos como agentes interdependentes em redes de existência compartilhadas. Dessa forma, o objetivo geral deste trabalho consiste em analisar criticamente a separação entre humanos e animais na tradição filosófica ocidental e discutir como a virada animal propõe novas formas de compreender essa relação. Para alcançar esse objetivo, estabelecem-se três objetivos específicos: examinar a construção filosófica da diferença entre humanos e animais na tradição ocidental; apresentar as principais críticas contemporâneas ao antropocentrismo; e discutir propostas teóricas que apontam para uma redefinição do humanismo.</p>
-            <p>Do ponto de vista metodológico, o ensaio baseia-se em pesquisa bibliográfica de natureza qualitativa, centrada na análise de obras filosóficas e antropológicas que abordam as relações entre humanos e animais. O procedimento metodológico envolve três etapas principais. Primeiramente, realiza-se o levantamento e a análise de textos clássicos da filosofia ocidental que contribuíram para a formulação da distinção entre humano e animal, como os escritos de Thomas Hobbes e Jean-Jacques Rousseau. Em seguida, procede-se à revisão de literatura contemporânea relacionada à virada animal, com destaque para as contribuições de Bruno Latour, Donna Haraway, Tim Ingold e Philippe Descola. Por fim, desenvolve-se uma interpretação crítica dessas abordagens, buscando identificar suas implicações para a compreensão do humanismo e para a redefinição das relações entre humanos e não humanos.</p>
-            <p>A estrutura do ensaio organiza-se em quatro momentos principais. Após esta introdução, examina-se a construção histórica da distinção entre humanos e animais na tradição filosófica ocidental. Em seguida, apresentam-se as críticas contemporâneas ao antropocentrismo e à separação entre natureza e cultura. Posteriormente, discute-se o papel da virada animal na redefinição das relações entre humanos e não humanos. Por fim, são apresentadas algumas considerações sobre a possibilidade de um humanismo relacional capaz de responder aos desafios éticos e epistemológicos colocados pela era do Antropoceno.</p>
-
-            <h3>A separação entre humanos e animais na tradição filosófica ocidental</h3>
-            <p>A distinção entre humanos e animais constitui um dos eixos estruturantes da tradição filosófica ocidental. Ao longo de séculos, diferentes correntes de pensamento elaboraram concepções que estabeleceram fronteiras entre humanidade e animalidade, geralmente atribuindo aos humanos características consideradas exclusivas, como racionalidade, linguagem, moralidade e capacidade política. Nesse contexto, os animais passaram a funcionar como uma espécie de alteridade constitutiva, isto é, como o termo negativo a partir do qual a identidade humana se definia. Em outras palavras, a filosofia ocidental frequentemente construiu a noção de humanidade por meio de uma diferenciação sistemática em relação ao animal.</p>
-            <p>Essa forma de pensamento consolidou-se particularmente no interior do humanismo clássico, que tomou a razão como atributo distintivo do humano. Tal perspectiva estabeleceu um esquema hierárquico no qual os humanos ocupavam o topo da ordem dos seres, enquanto os animais eram situados em níveis inferiores, associados à natureza, ao instinto e à irracionalidade. Como observa Giorgio Agamben (2002), grande parte da história da filosofia ocidental pode ser compreendida como uma tentativa de definir o humano por meio daquilo que ele denomina “máquina antropológica”, isto é, um dispositivo conceitual que produz a diferença entre homem e animal ao mesmo tempo em que a mantém em constante tensão.</p>
-            
-            <h4>Humanismo clássico e a hierarquia dos seres</h4>
-            <p>Desde a filosofia antiga, a definição do humano esteve vinculada à ideia de uma hierarquia natural entre os seres vivos. Em Aristóteles, por exemplo, os diferentes tipos de vida são classificados segundo suas capacidades: plantas possuem apenas a alma vegetativa, responsável pela nutrição e crescimento; animais possuem também a alma sensitiva, que lhes permite percepção e movimento; já os humanos possuem, além dessas faculdades, a alma racional, que os distingue de todas as demais formas de vida (ARISTÓTELES, 2006).</p>
-            <p>Essa concepção não implica uma separação absoluta entre humanos e animais, mas estabelece uma gradação hierárquica na qual o humano aparece como a forma mais elevada de vida. Ainda assim, Aristóteles já introduz um princípio que será amplamente desenvolvido pela tradição posterior: a ideia de que a racionalidade constitui o critério fundamental para distinguir o humano do animal. Durante a Idade Média, essa perspectiva foi reinterpretada à luz da teologia cristã. Pensadores como Tomás de Aquino reafirmaram a superioridade humana com base na posse de uma alma racional imortal, criada à imagem de Deus. Os animais, por sua vez, passaram a ser concebidos como criaturas privadas de razão e destinadas ao uso humano. Essa interpretação reforçou a hierarquia ontológica entre humanos e não humanos, ao mesmo tempo em que conferiu fundamento teológico ao domínio humano sobre a natureza.</p>
-            <p>Na modernidade, essa hierarquia assumiu uma forma ainda mais radical, especialmente na filosofia cartesiana. René Descartes sustentou que os animais deveriam ser compreendidos como máquinas naturais, desprovidas de consciência ou pensamento. Para Descartes, apenas os humanos possuem res cogitans, isto é, uma substância pensante capaz de reflexão e linguagem. Os animais, por outro lado, seriam meros autômatos governados por mecanismos corporais (DESCARTES, 2001). Essa concepção exerceu grande influência sobre o desenvolvimento das ciências modernas, contribuindo para consolidar uma visão mecanicista da natureza. Ao mesmo tempo, reforçou a ideia de uma ruptura ontológica entre humanos e animais, na qual a racionalidade aparece como marca distintiva da humanidade.</p>
-            
-            <h4>A razão como critério distintivo do humano</h4>
-            <p>A centralidade da razão na definição do humano tornou-se um dos pilares do humanismo moderno. A racionalidade foi frequentemente concebida como aquilo que permite aos humanos transcender sua condição natural e construir instituições sociais, sistemas morais e formas complexas de conhecimento. Nesse sentido, a razão passou a ser vista como fundamento da liberdade humana e da organização da vida coletiva. Essa concepção encontra expressão particularmente clara nas teorias políticas modernas, que associam a racionalidade à capacidade de estabelecer contratos sociais e organizar a vida em comunidade. A ideia de que os humanos são capazes de deliberar racionalmente sobre suas ações tornou-se um elemento central na definição do sujeito político.</p>
-            <p>Entretanto, essa valorização da racionalidade também teve como consequência a marginalização dos animais, frequentemente caracterizados como seres incapazes de pensamento reflexivo. Como observa Frans de Waal (2005), a tradição filosófica ocidental frequentemente descreveu os animais como entidades guiadas exclusivamente por instintos, negando-lhes qualquer forma significativa de inteligência ou sociabilidade complexa. Nos últimos anos, pesquisas em etologia e cognição animal têm colocado essa visão em questão, demonstrando que diversas espécies possuem capacidades cognitivas sofisticadas, incluindo formas de comunicação, cooperação e resolução de problemas. Ainda assim, a herança conceitual do humanismo racionalista continua a exercer forte influência sobre a maneira como se pensa a relação entre humanos e animais.</p>
-            
-            <h4>O animal como “outro” do humano</h4>
-            <p>Ao longo da tradição ocidental, o animal frequentemente desempenhou o papel de outro constitutivo da humanidade. Em termos filosóficos, isso significa que a identidade humana foi frequentemente definida por oposição à animalidade. O animal representava aquilo que o humano não deveria ser: irracional, instintivo, incapaz de linguagem ou moralidade. Esse processo de diferenciação foi fundamental para a consolidação do humanismo moderno. Ao definir o humano como um ser essencialmente distinto dos demais animais, a filosofia moderna estabeleceu as bases para uma visão antropocêntrica do mundo. Nesse modelo, os humanos aparecem como sujeitos dotados de valor intrínseco, enquanto os animais são frequentemente tratados como recursos ou objetos de uso.</p>
-            <p>Bruno Latour (1994) argumenta que essa distinção está diretamente ligada à constituição da modernidade. Segundo o autor, a modernidade construiu-se sobre uma separação radical entre natureza e sociedade, que permitiu aos humanos posicionarem-se como observadores e controladores do mundo natural. Os animais, nesse contexto, foram frequentemente situados no lado da natureza, enquanto os humanos eram associados ao domínio da cultura. Entretanto, essa separação tem sido cada vez mais questionada por diferentes correntes contemporâneas de pensamento. Autores como Philippe Descola (2005) argumentam que a oposição entre natureza e cultura não é universal, mas apenas uma entre várias formas possíveis de organizar as relações entre humanos e não humanos.</p>
-            
-            <h4>Rousseau, Hobbes e a construção do contrato social</h4>
-            <p>A oposição entre humanos e animais também desempenha papel central nas teorias modernas do contrato social. Pensadores como Thomas Hobbes e Jean-Jacques Rousseau utilizaram comparações entre humanos e animais para refletir sobre a origem da sociedade e das instituições políticas. Em Leviatã, Hobbes afirma explicitamente que os animais não podem participar de contratos sociais porque são incapazes de compreender leis ou compromissos racionais. Para o filósofo, o pacto social exige a capacidade de deliberar e reconhecer obrigações mútuas, algo que, segundo ele, apenas os humanos possuem. Como escreve Hobbes, “é impossível fazer pacto com os animais, porque eles não compreendem nossa linguagem” (HOBBES, 1985, p. 197).</p>
-            <p>Rousseau, por sua vez, oferece uma perspectiva mais ambígua sobre a relação entre humanos e animais. Em seu Discurso sobre a origem da desigualdade, ele reconhece que humanos e animais compartilham certas capacidades, como sensibilidade e autopreservação. Entretanto, Rousseau sustenta que os humanos possuem uma característica singular que os distingue dos animais: a perfectibilidade, isto é, a capacidade de transformar a si mesmos ao longo do tempo (ROUSSEAU, 1999). Apesar de suas diferenças, tanto Hobbes quanto Rousseau utilizam os animais como referência conceitual para definir o ser humano. Em ambos os casos, a comparação com a animalidade serve para esclarecer aquilo que torna os humanos singulares. O animal funciona, assim, como um espelho negativo, através do qual a filosofia moderna delineia os contornos da humanidade.</p>
-            
-            <h4>O animal como referência negativa da humanidade</h4>
-            <p>A análise da tradição filosófica ocidental revela que a distinção entre humanos e animais não é apenas uma questão biológica, mas também um problema profundamente filosófico e político. Ao longo da história do pensamento ocidental, o animal foi frequentemente mobilizado como uma figura conceitual destinada a delimitar as fronteiras da humanidade. Essa estratégia permitiu à filosofia moderna consolidar uma visão antropocêntrica do mundo, na qual o humano aparece como sujeito privilegiado de conhecimento, moralidade e ação política. Entretanto, como sugerem autores contemporâneos, essa concepção tem se mostrado cada vez mais insuficiente para compreender as complexas relações entre humanos e não humanos. Nesse sentido, a crítica ao antropocentrismo constitui um dos principais pontos de partida para a chamada virada animal nas ciências humanas. Ao questionar a centralidade ontológica do humano, essa abordagem abre espaço para novas formas de pensar a coexistência entre espécies e para repensar os próprios fundamentos do humanismo.</p>
-
-            <h3>Crise do antropocentrismo moderno</h3>
-            <p>A consolidação do humanismo moderno esteve profundamente associada à ideia de que os seres humanos ocupam uma posição privilegiada no mundo natural. Essa concepção antropocêntrica pressupõe que os humanos constituem o centro de valor e significado do universo, sendo capazes de conhecer, dominar e transformar a natureza por meio da razão e da técnica. Entretanto, nas últimas décadas, esse modelo de pensamento tem sido amplamente questionado, sobretudo diante da crescente percepção de que as atividades humanas exercem impactos profundos e muitas vezes irreversíveis sobre os sistemas ecológicos do planeta. Nesse contexto, diferentes correntes da filosofia e da antropologia têm contribuído para problematizar os fundamentos do antropocentrismo moderno, propondo novas formas de compreender as relações entre humanos e não humanos.</p>
-            
-            <h4>Antropoceno e crise ambiental</h4>
-            <p>A noção de Antropoceno evidencia uma transformação radical na maneira como se compreende a relação entre humanidade e natureza. Ao reconhecer que a atividade humana passou a influenciar processos geológicos e climáticos em escala planetária, esse conceito desafia a visão moderna que separava claramente o domínio humano do domínio natural. Como observa Bruno Latour (2017), a crise ecológica contemporânea revela que os humanos nunca estiveram realmente fora da natureza, mas sempre fizeram parte de redes complexas de interações envolvendo múltiplos agentes humanos e não humanos. Nesse sentido, o Antropoceno não representa apenas uma mudança na história geológica da Terra, mas também uma crise das categorias conceituais que estruturaram o pensamento moderno. A ideia de uma natureza passiva e manipulável por sujeitos humanos autônomos torna-se cada vez mais difícil de sustentar diante das evidências de que os sistemas naturais possuem dinâmicas próprias e respondem de maneira imprevisível às intervenções humanas. Além disso, a crise ambiental contemporânea evidencia a interdependência radical entre diferentes formas de vida. Mudanças climáticas, perda de biodiversidade e degradação de ecossistemas demonstram que as ações humanas repercutem diretamente sobre a sobrevivência de inúmeras espécies, incluindo a própria humanidade. Nesse contexto, torna-se necessário reconsiderar os pressupostos antropocêntricos que sustentaram o projeto moderno de dominação da natureza.</p>
-            
-            <h4>A crítica ao dualismo natureza × cultura</h4>
-            <p>Um dos principais alvos das críticas contemporâneas ao antropocentrismo é o dualismo entre natureza e cultura que marcou profundamente o pensamento moderno. Esse dualismo estabeleceu uma divisão conceitual entre dois domínios distintos: de um lado, a natureza, entendida como um conjunto de processos físicos e biológicos regidos por leis naturais; de outro, a cultura ou sociedade, associada às atividades humanas, à linguagem e às instituições sociais. Bruno Latour (1994) argumenta que essa divisão constitui um dos fundamentos da modernidade. Segundo o autor, a modernidade instituiu uma constituição moderna que separa radicalmente natureza e sociedade, permitindo aos humanos posicionarem-se simultaneamente como sujeitos que produzem conhecimento científico sobre a natureza e como agentes capazes de transformá-la por meio da tecnologia. Entretanto, Latour sustenta que essa separação nunca correspondeu efetivamente à realidade, pois o mundo moderno sempre produziu híbridos que misturam elementos naturais e sociais, como tecnologias, organismos modificados e sistemas ecológicos complexos. Para Latour, reconhecer essa condição híbrida implica abandonar a ideia de que a natureza e a sociedade constituem domínios completamente distintos. Em vez disso, ele propõe compreender o mundo como uma rede de associações entre diferentes entidades humanas e não humanas. Nesse modelo, os não humanos, incluindo animais, objetos técnicos e fenômenos naturais, passam a ser considerados participantes ativos das redes que compõem a realidade social.</p>
-            
-            <h4>Contribuições da antropologia contemporânea</h4>
-            <p>Além da filosofia, a antropologia contemporânea também desempenhou papel fundamental na crítica ao dualismo natureza–cultura e ao antropocentrismo moderno. Entre os autores que mais contribuíram para esse debate destacam-se Philippe Descola e Tim Ingold, cujas obras propõem novas formas de compreender as relações entre humanos e não humanos. Philippe Descola (2005), em sua obra Par-delà nature et culture, argumenta que a distinção entre natureza e cultura não é uma característica universal do pensamento humano, mas uma particularidade da tradição ocidental moderna. A partir de pesquisas etnográficas realizadas entre povos amazônicos, Descola demonstra que muitas sociedades não estabelecem uma separação rígida entre humanos e não humanos. Em diversos contextos indígenas, por exemplo, animais, plantas e espíritos são frequentemente concebidos como entidades dotadas de intencionalidade e capacidade de interação social.</p>
-            <p>Tim Ingold (2000), por sua vez, desenvolve uma crítica semelhante a partir de uma perspectiva ecológica da antropologia. Para Ingold, a oposição entre organismo e ambiente, que também está associada ao dualismo natureza–cultura, deve ser substituída por uma concepção relacional da vida. Segundo o autor, os seres vivos não existem como entidades isoladas que interagem ocasionalmente com o ambiente, mas como processos que se desenvolvem continuamente em relação com o mundo ao seu redor. Essa perspectiva leva Ingold a propor uma compreensão da vida baseada em linhas de relações que conectam organismos, ambientes e práticas sociais. Nesse modelo, humanos e animais não são categorias ontologicamente separadas, mas participantes de um mesmo campo de relações ecológicas e sociais. As contribuições de Descola e Ingold, juntamente com as reflexões de Latour, indicam uma transformação significativa nas ciências humanas contemporâneas. Em vez de tratar os humanos como sujeitos isolados que dominam uma natureza passiva, essas abordagens enfatizam a interdependência entre diferentes formas de vida e os múltiplos vínculos que conectam humanos e não humanos.</p>
-            
-            <h4>Para além do antropocentrismo</h4>
-            <p>A crítica ao antropocentrismo moderno não implica necessariamente negar as especificidades da experiência humana, mas questionar a ideia de que os humanos ocupam uma posição ontologicamente superior em relação às demais formas de vida. Em vez disso, as perspectivas contemporâneas sugerem que os humanos devem ser compreendidos como participantes de redes complexas de relações ecológicas, sociais e tecnológicas. Nesse sentido, a crise do antropocentrismo abre espaço para novas formas de pensar a coexistência entre espécies e para reconsiderar os fundamentos éticos e epistemológicos do humanismo. Ao reconhecer a interdependência entre humanos e não humanos, essas abordagens apontam para a necessidade de construir modelos de pensamento capazes de lidar com a complexidade das relações que constituem o mundo contemporâneo. Essa transformação conceitual prepara o terreno para o desenvolvimento da chamada virada animal nas ciências humanas, que procura repensar o estatuto dos animais e explorar as múltiplas formas de interação entre humanos e outras espécies. É nesse contexto que se torna possível discutir novas formas de humanismo, nas quais o humano deixa de ser concebido como centro absoluto do mundo e passa a ser entendido como parte de um conjunto mais amplo de existências interconectadas.</p>
-
-            <h3>A virada animal nas ciências humanas</h3>
-            <p>Nas últimas décadas, as ciências humanas têm experimentado um movimento teórico frequentemente descrito como virada animal (animal turn). Esse conjunto de debates envolve diferentes áreas do conhecimento: filosofia, antropologia, sociologia, história e estudos culturais, e tem como objetivo reconsiderar o lugar dos animais nas reflexões acadêmicas, bem como nas práticas sociais. Diferentemente das abordagens tradicionais, que frequentemente tratavam os animais apenas como objetos de análise ou metáforas para a compreensão do comportamento humano, a virada animal procura compreender os animais como agentes relevantes nas redes de relações que constituem o mundo social.</p>
-            <p>Esse movimento emerge, em grande medida, como uma resposta às limitações do antropocentrismo moderno. Ao questionar a centralidade exclusiva do humano, a virada animal propõe ampliar o campo das ciências humanas de modo a incluir também as relações entre diferentes espécies. Como observa Stélio Marras (2014), trata-se de uma mudança epistemológica significativa: em vez de considerar os animais apenas como pano de fundo da história humana, passa-se a reconhecê-los como participantes ativos em processos ecológicos, sociais, culturais e históricos.</p>
-            
-            <h4>Animal studies e a ampliação do campo das ciências humanas</h4>
-            <p>Os chamados animal studies constituem um campo interdisciplinar que busca investigar as relações entre humanos e animais a partir de perspectivas críticas. Surgido inicialmente no contexto das humanidades anglo-saxônicas, esse campo reúne contribuições da filosofia, da sociologia, da literatura e da antropologia, procurando analisar as formas históricas e culturais pelas quais os animais têm sido representados, utilizados e compreendidos nas sociedades humanas. Uma das principais características dos animal studies é a tentativa de superar a visão instrumental dos animais. Em vez de tratá-los apenas como recursos ou objetos de estudo, essas abordagens procuram reconhecer os animais como sujeitos de experiência e participantes de redes sociais complexas. Essa mudança de perspectiva implica também repensar categorias tradicionais das ciências humanas, como sociedade, cultura e agência.</p>
-            <p>Donna Haraway (2003) desempenha papel central nesse debate ao propor a noção de espécies companheiras (companion species). Em sua análise das relações entre humanos e cães, a autora argumenta que humanos e animais não devem ser compreendidos como entidades separadas que ocasionalmente interagem, mas como seres que se constituem mutuamente ao longo de processos históricos compartilhados. Segundo Haraway, a convivência entre diferentes espécies produz formas específicas de sociabilidade, conhecimento e afetividade que desafiam as fronteiras tradicionais entre natureza e cultura. Ao enfatizar essas relações de coevolução e coabitação, Haraway contribui para deslocar o foco da análise das identidades fixas para os processos de interação entre espécies. Nesse sentido, a autora sugere que humanos e animais formam coletivos híbridos, nos quais múltiplas formas de vida participam da produção do mundo social.</p>
-            
-            <h4>Novas abordagens da animalidade</h4>
-            <p>A virada animal também envolve uma reconsideração da própria noção de animalidade. Durante muito tempo, os animais foram definidos principalmente por aquilo que lhes faltaria em relação aos humanos: razão, linguagem, moralidade ou consciência reflexiva. Essa forma de definição negativa contribuiu para consolidar a ideia de que os animais ocupam uma posição inferior na hierarquia dos seres. Entretanto, diferentes autores têm questionado essa concepção. Em vez de definir os animais a partir de sua suposta ausência de capacidades humanas, essas abordagens procuram compreender as formas específicas de existência e experiência próprias das diferentes espécies. Nesse sentido, Tim Ingold (2000) propõe uma perspectiva ecológica que enfatiza o caráter relacional da vida. Para Ingold, os seres vivos não podem ser compreendidos como entidades isoladas que simplesmente interagem com um ambiente externo. Ao contrário, organismos e ambientes constituem-se mutuamente ao longo de processos contínuos de interação. Essa perspectiva dissolve a separação rígida entre humanos e animais, enfatizando que todos os seres vivos participam de processos semelhantes de habitação e envolvimento com o mundo.</p>
-            
-            <h4>Redes entre humanos e não humanos</h4>
-            <p>Um dos aspectos mais inovadores da virada animal consiste na tentativa de compreender as relações entre humanos e animais em termos de redes de interdependência. Em vez de tratar humanos e animais como categorias ontológicas separadas, diversos autores têm enfatizado as múltiplas formas de interação que conectam diferentes espécies. Essa perspectiva dialoga diretamente com abordagens contemporâneas da sociologia e da antropologia que procuram ampliar o conceito de coletivo. Inspiradas, em parte, nas reflexões de Bruno Latour, essas abordagens sugerem que a realidade social é constituída por redes que incluem tanto humanos quanto não humanos. Donna Haraway (2008) enfatiza que essas interações não devem ser compreendidas apenas em termos de dominação ou instrumentalização. Embora relações de poder estejam frequentemente presentes nas interações entre espécies, essas relações também envolvem processos de cooperação, adaptação e aprendizagem mútua. Ao destacar essas redes de interdependência, a virada animal contribui para deslocar a análise das identidades fixas para os processos relacionais que constituem a vida social. Nesse sentido, humanos e animais aparecem como participantes de sistemas ecológicos e sociais compartilhados.</p>
-            
-            <h4>Cognição animal e etologia</h4>
-            <p>Outro elemento importante da virada animal está relacionado aos avanços recentes nas ciências do comportamento animal. Pesquisas em etologia e cognição animal têm demonstrado que muitas espécies possuem capacidades cognitivas muito mais complexas do que tradicionalmente se supunha. Frans de Waal (2005), por exemplo, argumenta que diversos primatas apresentam comportamentos que podem ser interpretados como formas rudimentares de empatia, cooperação e moralidade. Estudos sobre chimpanzés, bonobos e outros primatas revelam a existência de estruturas sociais sofisticadas, nas quais indivíduos estabelecem alianças, resolvem conflitos e demonstram comportamentos de cuidado em relação aos membros do grupo. Essas descobertas desafiam a ideia tradicional de que a moralidade constitui uma característica exclusivamente humana. Para De Waal, muitas das bases emocionais da moralidade humana, como empatia e senso de justiça, possuem raízes evolutivas compartilhadas com outros primatas. Isso sugere que as diferenças entre humanos e animais podem ser melhor compreendidas como diferenças de grau, e não como rupturas absolutas.</p>
-            
-            <h4>Implicações para as ciências humanas</h4>
-            <p>A virada animal tem profundas implicações para as ciências humanas. Ao reconhecer os animais como participantes ativos das redes que constituem o mundo social, essa abordagem desafia a centralidade exclusiva do humano nas análises sociológicas, antropológicas e filosóficas. Em vez de compreender a sociedade como um domínio exclusivamente humano, torna-se necessário considerar as múltiplas interações entre diferentes formas de vida. Essa perspectiva contribui para ampliar o escopo das ciências humanas, permitindo uma compreensão mais abrangente das relações ecológicas, sociais e culturais que estruturam o mundo contemporâneo. Nesse sentido, a virada animal não representa apenas um novo campo de estudos, mas também uma transformação mais ampla na maneira como se pensa a relação entre humanos e não humanos. Ao enfatizar a interdependência entre espécies e a complexidade das redes que conectam diferentes formas de vida, essa abordagem abre caminho para novas reflexões sobre ética, política e coexistência no contexto do Antropoceno.</p>
-
-            <h3>Para um novo humanismo</h3>
-            <p>As transformações conceituais discutidas nas seções anteriores, particularmente a crítica ao antropocentrismo moderno e a emergência da chamada virada animal nas ciências humanas, colocam em questão alguns dos fundamentos centrais do humanismo clássico. Ao longo da tradição filosófica ocidental, o humanismo foi frequentemente construído a partir da ideia de que os seres humanos ocupam uma posição singular e superior no conjunto da vida, definida por atributos como racionalidade, linguagem e capacidade moral. Essa concepção contribuiu para consolidar uma visão do humano como sujeito autônomo e separado do restante do mundo natural. Entretanto, as reflexões contemporâneas em filosofia, antropologia e biologia têm evidenciado os limites dessa perspectiva. A crescente consciência das interdependências ecológicas, bem como os avanços no estudo da cognição animal e das relações entre espécies, sugerem que a separação rígida entre humanos e não humanos não corresponde adequadamente à complexidade do mundo vivo. Nesse contexto, torna-se necessário reconsiderar os pressupostos do humanismo tradicional e explorar novas formas de compreender o lugar do humano no mundo.</p>
-            
-            <h4>Crítica ao humanismo clássico</h4>
-            <p>O humanismo clássico, particularmente em suas formulações modernas, baseou-se em uma concepção de humanidade definida por oposição à animalidade. Como discutido anteriormente, a filosofia ocidental frequentemente atribuiu aos humanos qualidades consideradas exclusivas: razão, linguagem e moralidade, enquanto os animais eram caracterizados como seres instintivos e desprovidos de interioridade reflexiva. Segundo Giorgio Agamben (2002), a tradição filosófica ocidental construiu o humano por meio de um processo contínuo de exclusão da animalidade. Para o autor, a definição do humano depende de uma operação conceitual que separa aquilo que é considerado propriamente humano daquilo que é identificado como animal. Essa operação não apenas estabelece fronteiras ontológicas entre seres humanos e seres animais, mas também influencia profundamente as formas pelas quais as sociedades humanas organizam suas relações com o mundo natural e vivo. Ao posicionar os humanos como sujeitos autônomos e superiores aos “animais”, o humanismo clássico contribuiu para legitimar práticas de exploração e dominação da natureza. Além disso, a crise ambiental contemporânea evidencia os limites desse modelo de pensamento. A ideia de que os humanos podem dominar a natureza sem considerar as consequências ecológicas de suas ações revelou-se cada vez mais insustentável. Nesse sentido, a crítica ao antropocentrismo não implica necessariamente abandonar a noção de humanismo, mas repensá-la de maneira mais ampla e inclusiva.</p>
-            
-            <h4>A proposta de um humanismo relacional</h4>
-            <p>Diante dessas transformações conceituais, diversos autores têm proposto reformular o humanismo em termos mais relacionais. Em vez de compreender o humano como uma entidade isolada que se distingue radicalmente do restante da natureza, essas abordagens enfatizam a interdependência entre diferentes formas de vida. Essa perspectiva pode ser descrita como um humanismo relacional, no qual o humano é concebido não como centro absoluto do mundo, mas como participante de redes complexas que envolvem humanos, animais, plantas, ecossistemas e tecnologias. Nesse modelo, a identidade humana não é definida por oposição à animalidade, mas emerge das múltiplas relações que conectam diferentes formas de existência. Tim Ingold (2000) contribui para essa perspectiva ao propor uma concepção da vida baseada em processos de habitação e envolvimento com o ambiente. Segundo o autor, os seres vivos não existem como entidades separadas que interagem ocasionalmente com o mundo, mas como processos que se desenvolvem continuamente em relação com outros organismos e com o ambiente. De maneira semelhante, Donna Haraway (2008) sugere que as relações entre humanos e animais devem ser pensadas em termos de coexistência e coevolução. Ao enfatizar a noção de espécies companheiras, Haraway destaca que diferentes espécies têm compartilhado histórias evolutivas e sociais que moldaram tanto os humanos quanto os animais com os quais convivem. Essas perspectivas sugerem que o humanismo pode ser reformulado não como uma filosofia da superioridade humana, mas como uma reflexão sobre as formas de coexistência entre diferentes espécies.</p>
-            
-            <h4>Ética multiespécies</h4>
-            <p>A reformulação do humanismo em termos relacionais também possui importantes implicações éticas. Se humanos e animais participam de redes de interdependência ecológica e social, torna-se necessário reconsiderar os fundamentos das relações morais entre espécies. Nesse contexto, diferentes autores têm desenvolvido propostas que podem ser descritas como ética multiespécies. Essa abordagem procura ampliar o horizonte da reflexão moral de modo a incluir não apenas os interesses humanos, mas também os interesses de outras formas de vida. Frans de Waal (2005), por exemplo, argumenta que as bases emocionais da moralidade humana possuem raízes evolutivas compartilhadas com outros primatas. A empatia, que desempenha papel central na ética humana, pode ser observada em diversas espécies animais, sugerindo que a moralidade não constitui um fenômeno exclusivamente humano. A partir dessa perspectiva, torna-se possível conceber a ética não como um sistema de normas exclusivamente humano, mas como um conjunto de práticas que emergem das relações entre diferentes seres vivos. Essa abordagem não implica necessariamente atribuir os mesmos direitos ou responsabilidades a todas as espécies, mas reconhece que as decisões humanas têm consequências significativas para outros organismos e ecossistemas. Assim, uma ética multiespécies procura orientar as relações entre humanos e não humanos de maneira mais responsável e sensível às interdependências que caracterizam o mundo contemporâneo.</p>
-            
-            <h4>Implicações filosóficas e políticas</h4>
-            <p>A emergência de um humanismo relacional e de uma ética multiespécies possui importantes implicações filosóficas e políticas. Em primeiro lugar, essas perspectivas desafiam as concepções tradicionais de sujeito, agência e comunidade que estruturaram grande parte da filosofia moderna. Se a realidade social é composta por redes que incluem tanto humanos quanto não humanos, torna-se necessário repensar a própria noção de coletivo. Bruno Latour (2012) sugere que os coletivos contemporâneos devem ser compreendidos como assembleias que reúnem múltiplos tipos de agentes, incluindo organismos vivos, objetos técnicos e processos naturais. Além disso, a crise ecológica contemporânea exige novas formas de organização política capazes de lidar com os desafios colocados pelas mudanças ambientais globais. Questões como mudanças climáticas, conservação da biodiversidade e gestão de recursos naturais não podem ser adequadamente enfrentadas a partir de perspectivas estritamente antropocêntricas. Nesse contexto, a reflexão sobre as relações entre humanos e não humanos torna-se parte fundamental dos debates sobre sustentabilidade, justiça ambiental e governança global. Ao reconhecer a interdependência entre diferentes formas de vida, torna-se possível desenvolver abordagens mais abrangentes para enfrentar os desafios do Antropoceno. Em síntese, a crítica ao antropocentrismo e a emergência da virada animal nas ciências humanas apontam para a necessidade de repensar os fundamentos do humanismo. Longe de implicar o abandono da reflexão sobre a condição humana, esse movimento sugere a possibilidade de um humanismo renovado, capaz de reconhecer a complexidade das relações que conectam humanos, animais e ambientes no mundo contemporâneo.</p>
-
-            <h3>Considerações finais</h3>
-            <p>O presente ensaio partiu da constatação de que a tradição filosófica ocidental construiu, ao longo de séculos, uma distinção profunda entre humanos e animais. Essa distinção, frequentemente sustentada pela oposição entre natureza e cultura, tornou-se um dos fundamentos centrais do humanismo moderno. A racionalidade, a linguagem e a capacidade moral foram historicamente mobilizadas como critérios que permitiriam diferenciar os humanos das demais formas de vida, contribuindo para consolidar uma visão antropocêntrica do mundo. Nesse modelo, os animais foram frequentemente definidos por meio de uma referência negativa, isto é, como aquilo que os humanos não seriam.</p>
-            <p>Diante desse contexto, o ensaio buscou responder à seguinte pergunta de pesquisa: de que maneira a chamada virada animal nas ciências humanas e na filosofia contemporânea contribui para repensar o humanismo moderno e redefinir as relações entre humanos e animais? A análise desenvolvida ao longo do texto indicou que essa virada representa uma transformação significativa no modo como se compreendem as relações entre humanos e não humanos.</p>
-            <p>Na primeira parte do trabalho, examinou-se como a tradição filosófica ocidental contribuiu para consolidar a separação entre humanidade e animalidade. A análise mostrou que autores clássicos frequentemente utilizaram os animais como referência conceitual para delimitar aquilo que tornaria os humanos singulares. A racionalidade e a capacidade de organização política foram apresentadas como atributos distintivos da humanidade, enquanto os animais eram frequentemente associados ao domínio da natureza e do instinto. Em seguida, discutiu-se a crise contemporânea do antropocentrismo moderno. A emergência da noção de Antropoceno e a crescente percepção da crise ambiental global evidenciam os limites da concepção que separa radicalmente humanos e natureza. As contribuições de autores como Bruno Latour, Philippe Descola e Tim Ingold demonstram que o dualismo entre natureza e cultura constitui uma construção histórica específica da modernidade ocidental, e não uma característica universal da experiência humana. Essas perspectivas enfatizam a existência de redes complexas de interdependência entre diferentes formas de vida, questionando a centralidade exclusiva do humano na organização do mundo.</p>
-            <p>Posteriormente, analisou-se a chamada virada animal nas ciências humanas, destacando o papel dos animal studies, das novas abordagens antropológicas sobre as relações entre espécies e dos avanços na etologia e na ciência da cognição animal. As contribuições de autores como Donna Haraway, Frans de Waal e Tim Ingold indicam que os animais não podem mais ser compreendidos apenas como entidades passivas ou meramente instintivas. Ao contrário, diferentes espécies demonstram capacidades cognitivas e formas de sociabilidade complexas, participando ativamente das redes ecológicas e sociais que constituem o mundo contemporâneo.</p>
-            <p>Por fim, discutiu-se a possibilidade de reformular o humanismo a partir de uma perspectiva relacional. Em vez de compreender o humano como uma entidade isolada e superior às demais formas de vida, o humanismo relacional propõe reconhecer a interdependência entre diferentes espécies. Essa perspectiva abre espaço para o desenvolvimento de uma ética multiespécies, capaz de considerar as implicações morais das interações entre humanos, animais e ambientes.</p>
-            <p>A análise realizada neste ensaio sugere que repensar o lugar do humano no mundo constitui um dos desafios centrais da reflexão filosófica contemporânea. A crise ecológica global, bem como os avanços no conhecimento científico sobre outras formas de vida, indicam que a concepção tradicional de humanidade como centro absoluto da realidade tornou-se cada vez mais problemática. Nesse sentido, a virada animal não deve ser compreendida como uma tentativa de negar a especificidade da experiência humana, mas como um esforço para situar essa experiência dentro de um quadro mais amplo de relações ecológicas e sociais. Ao reconhecer a complexidade das interações entre diferentes espécies, torna-se possível desenvolver formas mais abrangentes de reflexão ética e política capazes de responder aos desafios do Antropoceno. Assim, a reflexão sobre as relações entre humanos e animais não diz respeito apenas ao estatuto dos animais, mas também à própria compreensão da condição humana. Repensar essas relações significa, em última instância, reconsiderar os fundamentos do humanismo e explorar novas possibilidades de coexistência entre humanos e não humanos em um mundo cada vez mais marcado pela interdependência entre diferentes formas de vida.</p>
-        </div>
-
-        <!-- PDF Viewer -->
-        <div class="panel">
-            <h2><i class="fas fa-file-pdf"></i> Ensaio completo (PDF)</h2>
-            <div class="pdf-frame">
-                <iframe src="/arquivos/Humanos_Animais_Redes.pdf" title="Humanos, animais e redes de existência"></iframe>
-            </div>
-            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> Caso o PDF não seja exibido, <a href="arquivos/Humanos_Animais_Redes.pdf" target="_blank">clique aqui para baixar</a>.</p>
-        </div>
-
-        <!-- Referências com gerador de citações -->
-        <div class="panel" id="references-panel">
-            <h2><i class="fas fa-quote-right"></i> Referências & Citação</h2>
-
-            <!-- GERADOR DE CITAÇÕES -->
-            <div class="citation-generator" 
-                 data-authors='["SANTOS, Diego Vinícius Brito dos", "SANTOS, Taisa Maria Brito dos"]' 
-                 data-title="Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno" 
-                 data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Ensaios/humanos-animais-e-redes-de-existencia.html" 
-                 data-volume="1" 
-                 data-issue="1" 
-                 data-pages="09-27" 
-                 data-year="2026">
-                <div class="citation-generator-head">
-                    <h2><i class="fas fa-quote-left"></i> Como citar este ensaio</h2>
-                </div>
-                <div class="citation-generator-body">
-                    <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência bibliográfica.</p>
-                    <div class="citation-controls">
-                        <div class="citation-field">
-                            <label for="citation-style">Estilo de referência</label>
-                            <select id="citation-style" class="citation-select">
-                                <option value="abnt">ABNT</option>
-                                <option value="apa">APA</option>
-                                <option value="mla">MLA</option>
-                                <option value="chicago">Chicago</option>
-                                <option value="harvard">Harvard</option>
-                                <option value="vancouver">Vancouver</option>
-                                <option value="ieee">IEEE</option>
-                            </select>
+    <div class="container bg-warm">
+        <div class="content-padding">
+            <div class="header">
+                <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1, n.1 • Seção:
+                    Ensaios • Fluxo contínuo • 2026</div>
+                <div class="title">Humanos, animais e redes de existência:<br>repensando o humanismo na era do
+                    Antropoceno</div>
+                <div class="author-line">
+                    <div class="author-item">
+                        <div class="avatar-circle">
+                            <img src="/corpo%20editorial/diego.png" alt="Foto de Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:42px; width:100%; text-align:center; font-size:20px;\'></i>'">
                         </div>
-                        <div class="citation-actions">
-                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar referência</button>
-                        </div>
+                        <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
                     </div>
-                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
-                    <p class="citation-feedback"></p>
+                    <span style="font-size: 1.2rem;">&</span>
+                    <div class="author-item">
+                        <div class="avatar-circle">
+                            <img src="corpo%20editorial/taisa.png" alt="Foto de Taisa Maria Brito dos Santos" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:42px; width:100%; text-align:center; font-size:20px;\'></i>'">
+                        </div>
+                        <span><strong>Taisa Maria Brito dos Santos</strong></span>
+                    </div>
+                    <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.19012745</span>
+                </div>
+
+                <!-- Botões de tradução -->
+                <div class="lang-buttons">
+                    <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
+                    <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
+                    <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+                </div>
+
+                <div class="action-buttons">
+                    <a class="btn btn-pdf" href="/arquivos/Humanos_Animais_Redes.pdf" target="_blank"><i
+                            class="fas fa-file-pdf"></i> Baixar PDF</a>
+                    <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.19012745" target="_blank"><i
+                            class="fas fa-external-link-alt"></i> DOI</a>
+                    <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissões</a>
                 </div>
             </div>
 
-            <div class="citation-actions">
-                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
-                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+            <!-- Resumo -->
+            <div class="panel">
+                <h2><i class="fas fa-align-left"></i> Resumo</h2>
+                <p>Este ensaio analisa a distinção entre humanos e animais na tradição filosófica ocidental, tomando
+                    como ponto de partida o debate contemporâneo conhecido como virada animal nas ciências sociais e
+                    humanas. Historicamente, o humanismo moderno fundamentou-se na oposição entre natureza e cultura,
+                    atribuindo aos seres humanos capacidades consideradas exclusivas, como racionalidade, linguagem e
+                    moralidade. A partir dessa perspectiva, os animais foram frequentemente definidos como entidades
+                    naturais e instintivas, funcionando como referência negativa para a definição da humanidade.
+                    Contudo, nas últimas décadas, diferentes campos do conhecimento — especialmente a filosofia, a
+                    antropologia e a biologia — têm colocado essa divisão em questão. Nesse contexto, o artigo discute
+                    as contribuições de autores como Bruno Latour, Donna Haraway, Tim Ingold e Philippe Descola, cujas
+                    reflexões problematizam o antropocentrismo moderno e enfatizam as relações de interdependência entre
+                    humanos e não humanos. Metodologicamente, o trabalho baseia-se em pesquisa bibliográfica de natureza
+                    qualitativa, envolvendo a análise de textos clássicos da filosofia e de obras contemporâneas
+                    relacionadas à virada animal. Argumenta-se que as abordagens recentes apontam para a necessidade de
+                    reformular o humanismo em termos relacionais, reconhecendo que humanos e animais participam de redes
+                    ecológicas e sociais compartilhadas. Conclui-se que repensar as relações entre humanos e outras
+                    espécies constitui um passo fundamental para compreender os desafios éticos, filosóficos e políticos
+                    colocados pela crise ambiental contemporânea e pela era do Antropoceno.</p>
+                <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> Humanismo</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> Antropocentrismo</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> Virada animal</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> Relações humano-animal</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> Filosofia contemporânea</span>
+                </div>
             </div>
-            <ul class="ref-list">
-                <li><strong>AGAMBEN, Giorgio.</strong> <em>O aberto: o homem e o animal</em>. Tradução de Pedro Mendes. Rio de Janeiro: Civilização Brasileira, 2002.</li>
-                <li><strong>ARISTÓTELES.</strong> <em>De anima</em>. Tradução de Maria Cecília Gomes dos Reis. São Paulo: Editora 34, 2006.</li>
-                <li><strong>DESCARTES, René.</strong> <em>Discurso do método</em>. Tradução de J. Guinsburg e Bento Prado Júnior. São Paulo: Nova Cultural, 2001.</li>
-                <li><strong>DESCOLA, Philippe.</strong> <em>Par-delà nature et culture</em>. Paris: Gallimard, 2005.</li>
-                <li><strong>HARAWAY, Donna.</strong> <em>The companion species manifesto: dogs, people, and significant otherness</em>. Chicago: Prickly Paradigm Press, 2003.</li>
-                <li><strong>HARAWAY, Donna.</strong> <em>When species meet</em>. Minneapolis: University of Minnesota Press, 2008.</li>
-                <li><strong>HOBBES, Thomas.</strong> <em>Leviatã ou matéria, forma e poder de um Estado eclesiástico e civil</em>. São Paulo: Abril Cultural, 1985.</li>
-                <li><strong>INGOLD, Tim.</strong> <em>The perception of the environment: essays on livelihood, dwelling and skill</em>. London: Routledge, 2000.</li>
-                <li><strong>INGOLD, Tim.</strong> <em>Being alive: essays on movement, knowledge and description</em>. London: Routledge, 2011.</li>
-                <li><strong>LATOUR, Bruno.</strong> <em>Jamais fomos modernos: ensaio de antropologia simétrica</em>. Rio de Janeiro: Editora 34, 1994.</li>
-                <li><strong>LATOUR, Bruno.</strong> <em>Reagregando o social: uma introdução à teoria do ator-rede</em>. Salvador: EDUFBA; Bauru: EDUSC, 2012.</li>
-                <li><strong>LATOUR, Bruno.</strong> <em>Diante de Gaia: oito conferências sobre a natureza no Antropoceno</em>. São Paulo: Ubu Editora, 2017.</li>
-                <li><strong>MARRAS, Stélio.</strong> <em>Virada animal, virada humana: outro pacto</em>. São Paulo: Editora Ubu, 2014.</li>
-                <li><strong>ROUSSEAU, Jean-Jacques.</strong> <em>Discurso sobre a origem e os fundamentos da desigualdade entre os homens</em>. São Paulo: Nova Cultural, 1999.</li>
-                <li><strong>WAAL, Frans de.</strong> <em>Eu, primata: por que somos como somos</em>. São Paulo: Companhia das Letras, 2005.</li>
-            </ul>
-            <p><small><i class="fas fa-info-circle"></i> Utilize o gerador acima para citar este ensaio em diferentes estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
-        </div>
 
-        <!-- Sobre os autores -->
-        <div class="panel">
-            <h2><i class="fas fa-user-circle"></i> Sobre os autores</h2>
-            
-            <div class="author-bio">
-                <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo, com experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui mestrado em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada na obra e filosofia de Friedrich Nietzsche. É graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro Universitário Internacional (UNINTER, 2022). É autor do livro <em>Nietzsche e os valores modernos</em> (2022). Dedica-se à formação continuada em áreas como Psicopedagogia, Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional Especializado (AEE) e Educação de Jovens e Adultos (EJA).</p>
-                <p><i class="fas fa-envelope"></i> E-mail: diego_svt@hotmail.com.br<br>
-                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
-                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></p>
-            </div>
-            
-            <div class="author-bio">
-                <p><strong>Taisa Maria Brito dos Santos</strong> é graduada em Licenciatura em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN) e atualmente cursa Bacharelado em Geografia, dando continuidade à sua formação acadêmica em perspectiva interdisciplinar. Em sua trajetória na Filosofia, dedicou-se ao estudo da filosofia de Santo Agostinho, com ênfase na problemática da origem do mal, além de desenvolver pesquisas relacionadas à mística medieval, ao cristianismo e à antropologia. Atuou como voluntária no Programa Institucional de Bolsa de Iniciação à Docência (PIBID/Filosofia/UERN) e como assistente de professora no Instituto Euvaldo Lodi (IEL). No campo da educação, volta-se especialmente para temas como ensino inclusivo, direitos humanos, metodologias pedagógicas e Educação 4.0, em diálogo com a pedagogia de Paulo Freire. Atualmente, seus estudos concentram-se nas relações entre território, sociedade e natureza, com interesse em oceanografia e dinâmica espacial.</p>
-                <p><i class="fas fa-envelope"></i> E-mail: taisamaria9090@gmail.com<br>
-                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-8766-5683" target="_blank">https://orcid.org/0000-0002-8766-5683</a><br>
-                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/6216572061896584" target="_blank">http://lattes.cnpq.br/6216572061896584</a></p>
-            </div>
-        </div>
+            <!-- Texto completo do ensaio (conteúdo original mantido) -->
+            <div class="panel article-text">
+                <h2>Introdução</h2>
+                <p>A distinção entre humanos e animais ocupa um lugar central na história do pensamento ocidental. Desde
+                    a filosofia antiga até as formulações modernas do humanismo, a definição do humano foi
+                    frequentemente construída a partir de uma oposição ontológica em relação à animalidade. Atribuiu-se
+                    aos seres humanos características consideradas exclusivas — como razão, linguagem simbólica,
+                    moralidade e capacidade política — enquanto os animais foram compreendidos como entidades
+                    essencialmente naturais, governadas por instintos e destituídas de interioridade reflexiva. Essa
+                    distinção estruturou não apenas a tradição filosófica ocidental, mas também a organização das
+                    ciências modernas e das instituições sociais que dela derivaram (AGAMBEN, 2002; DESCOLA, 2005).</p>
+                <p>No interior dessa tradição, consolidou-se um modelo de pensamento fundado na separação entre natureza
+                    e cultura. Os animais passaram a ser associados ao domínio da natureza, enquanto os humanos foram
+                    definidos como seres pertencentes ao domínio da cultura ou da sociedade. Tal dualismo tornou-se uma
+                    das bases epistemológicas da modernidade, sustentando tanto a filosofia humanista quanto a divisão
+                    disciplinar entre ciências naturais e ciências humanas (LATOUR, 1994). Como observa Bruno Latour, a
+                    modernidade construiu-se precisamente sobre essa “constituição moderna”, que separa radicalmente o
+                    mundo natural do mundo social, ao mesmo tempo em que produz incessantemente híbridos entre esses
+                    domínios (LATOUR, 1994).</p>
+                <p>Entretanto, nas últimas décadas, essa estrutura conceitual tem sido amplamente questionada por
+                    diferentes campos do conhecimento. Na filosofia, na antropologia e nos estudos sobre ciência e
+                    tecnologia, emergiu um conjunto de debates que passou a ser frequentemente identificado como “virada
+                    animal” (animal turn). Esse movimento intelectual procura reconsiderar o estatuto dos animais nas
+                    ciências humanas e nas reflexões filosóficas, problematizando a centralidade ontológica e
+                    epistemológica atribuída ao humano. Em vez de tratar os animais apenas como objeto de comparação ou
+                    contraste, essas abordagens buscam compreender as relações entre humanos e não humanos como redes de
+                    interdependência e co-constituição (MARRAS, 2014; HARAWAY, 2003).</p>
+                <p>Nesse contexto, diversos autores contemporâneos têm contribuído para redefinir os termos do debate.
+                    Philippe Descola (2005), por exemplo, argumenta que a distinção moderna entre natureza e cultura não
+                    é universal, mas apenas uma entre várias formas possíveis de organizar as relações entre humanos e
+                    não humanos. Tim Ingold (2000), por sua vez, propõe compreender organismos e ambientes como
+                    processos interdependentes, dissolvendo a separação rígida entre sujeito e mundo. Donna Haraway
+                    (2003) introduz a noção de “espécies companheiras”, enfatizando que humanos e animais se constituem
+                    mutuamente ao longo de processos históricos e evolutivos compartilhados. Já Bruno Latour (2012)
+                    sugere que o social deve ser entendido como uma rede de associações entre humanos e não humanos, o
+                    que implica ampliar a própria noção de coletividade.</p>
+                <p>Essas transformações conceituais tornam-se particularmente relevantes no contexto contemporâneo,
+                    marcado pela crescente discussão sobre o Antropoceno. A noção de Antropoceno refere-se à ideia de
+                    que as atividades humanas passaram a exercer impacto significativo sobre os sistemas planetários,
+                    alterando profundamente o equilíbrio ecológico da Terra. Paradoxalmente, esse conceito evidencia
+                    simultaneamente o poder transformador da ação humana e a dependência radical dos humanos em relação
+                    a múltiplas formas de vida e processos naturais. Nesse cenário, torna-se cada vez mais difícil
+                    sustentar uma concepção de humanidade isolada do restante do mundo vivo (INGOLD, 2012).</p>
+                <p>Diante desse quadro, o presente ensaio parte do seguinte problema de pesquisa: o humanismo moderno
+                    foi historicamente construído a partir de uma separação radical entre humanidade e animalidade,
+                    sustentada pela oposição entre natureza e cultura; entretanto, diferentes correntes contemporâneas
+                    da filosofia, da antropologia e da biologia têm colocado essa divisão em questão. Assim, torna-se
+                    necessário investigar de que maneira essas novas abordagens reconfiguram o lugar do humano no mundo.
+                </p>
+                <p>A partir desse problema, formula-se a seguinte pergunta de pesquisa: como a chamada “virada animal”
+                    nas ciências humanas e na filosofia contemporânea contribui para repensar o humanismo moderno e
+                    redefinir as relações entre humanos e animais? Essa questão desdobra-se em outras indagações
+                    complementares: de que modo a tradição filosófica ocidental construiu a separação entre humanos e
+                    animais? Como autores contemporâneos, como Bruno Latour, Donna Haraway, Tim Ingold e Philippe
+                    Descola, criticam o antropocentrismo moderno? E, finalmente, quais implicações éticas e
+                    epistemológicas emergem dessa redefinição das relações entre humanos e não humanos?</p>
+                <p>A hipótese que orienta este ensaio é que a virada animal revela o caráter historicamente situado e
+                    conceitualmente frágil da separação moderna entre natureza e cultura. Ao questionar essa divisão,
+                    tais perspectivas apontam para a necessidade de formular um novo humanismo relacional, no qual
+                    humanos e não humanos sejam compreendidos como agentes interdependentes em redes de existência
+                    compartilhadas. Dessa forma, o objetivo geral deste trabalho consiste em analisar criticamente a
+                    separação entre humanos e animais na tradição filosófica ocidental e discutir como a virada animal
+                    propõe novas formas de compreender essa relação. Para alcançar esse objetivo, estabelecem-se três
+                    objetivos específicos: examinar a construção filosófica da diferença entre humanos e animais na
+                    tradição ocidental; apresentar as principais críticas contemporâneas ao antropocentrismo; e discutir
+                    propostas teóricas que apontam para uma redefinição do humanismo.</p>
+                <p>Do ponto de vista metodológico, o ensaio baseia-se em pesquisa bibliográfica de natureza qualitativa,
+                    centrada na análise de obras filosóficas e antropológicas que abordam as relações entre humanos e
+                    animais. O procedimento metodológico envolve três etapas principais. Primeiramente, realiza-se o
+                    levantamento e a análise de textos clássicos da filosofia ocidental que contribuíram para a
+                    formulação da distinção entre humano e animal, como os escritos de Thomas Hobbes e Jean-Jacques
+                    Rousseau. Em seguida, procede-se à revisão de literatura contemporânea relacionada à virada animal,
+                    com destaque para as contribuições de Bruno Latour, Donna Haraway, Tim Ingold e Philippe Descola.
+                    Por fim, desenvolve-se uma interpretação crítica dessas abordagens, buscando identificar suas
+                    implicações para a compreensão do humanismo e para a redefinição das relações entre humanos e não
+                    humanos.</p>
+                <p>A estrutura do ensaio organiza-se em quatro momentos principais. Após esta introdução, examina-se a
+                    construção histórica da distinção entre humanos e animais na tradição filosófica ocidental. Em
+                    seguida, apresentam-se as críticas contemporâneas ao antropocentrismo e à separação entre natureza e
+                    cultura. Posteriormente, discute-se o papel da virada animal na redefinição das relações entre
+                    humanos e não humanos. Por fim, são apresentadas algumas considerações sobre a possibilidade de um
+                    humanismo relacional capaz de responder aos desafios éticos e epistemológicos colocados pela era do
+                    Antropoceno.</p>
 
-        <footer>
-            <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | Seção: Ensaios | DOI: 10.5281/zenodo.19012745<br>
-            Acesso aberto sob licença Creative Commons.
-        </footer>
+                <h3>A separação entre humanos e animais na tradição filosófica ocidental</h3>
+                <p>A distinção entre humanos e animais constitui um dos eixos estruturantes da tradição filosófica
+                    ocidental. Ao longo de séculos, diferentes correntes de pensamento elaboraram concepções que
+                    estabeleceram fronteiras entre humanidade e animalidade, geralmente atribuindo aos humanos
+                    características consideradas exclusivas, como racionalidade, linguagem, moralidade e capacidade
+                    política. Nesse contexto, os animais passaram a funcionar como uma espécie de alteridade
+                    constitutiva, isto é, como o termo negativo a partir do qual a identidade humana se definia. Em
+                    outras palavras, a filosofia ocidental frequentemente construiu a noção de humanidade por meio de
+                    uma diferenciação sistemática em relação ao animal.</p>
+                <p>Essa forma de pensamento consolidou-se particularmente no interior do humanismo clássico, que tomou a
+                    razão como atributo distintivo do humano. Tal perspectiva estabeleceu um esquema hierárquico no qual
+                    os humanos ocupavam o topo da ordem dos seres, enquanto os animais eram situados em níveis
+                    inferiores, associados à natureza, ao instinto e à irracionalidade. Como observa Giorgio Agamben
+                    (2002), grande parte da história da filosofia ocidental pode ser compreendida como uma tentativa de
+                    definir o humano por meio daquilo que ele denomina “máquina antropológica”, isto é, um dispositivo
+                    conceitual que produz a diferença entre homem e animal ao mesmo tempo em que a mantém em constante
+                    tensão.</p>
+
+                <h4>Humanismo clássico e a hierarquia dos seres</h4>
+                <p>Desde a filosofia antiga, a definição do humano esteve vinculada à ideia de uma hierarquia natural
+                    entre os seres vivos. Em Aristóteles, por exemplo, os diferentes tipos de vida são classificados
+                    segundo suas capacidades: plantas possuem apenas a alma vegetativa, responsável pela nutrição e
+                    crescimento; animais possuem também a alma sensitiva, que lhes permite percepção e movimento; já os
+                    humanos possuem, além dessas faculdades, a alma racional, que os distingue de todas as demais formas
+                    de vida (ARISTÓTELES, 2006).</p>
+                <p>Essa concepção não implica uma separação absoluta entre humanos e animais, mas estabelece uma
+                    gradação hierárquica na qual o humano aparece como a forma mais elevada de vida. Ainda assim,
+                    Aristóteles já introduz um princípio que será amplamente desenvolvido pela tradição posterior: a
+                    ideia de que a racionalidade constitui o critério fundamental para distinguir o humano do animal.
+                    Durante a Idade Média, essa perspectiva foi reinterpretada à luz da teologia cristã. Pensadores como
+                    Tomás de Aquino reafirmaram a superioridade humana com base na posse de uma alma racional imortal,
+                    criada à imagem de Deus. Os animais, por sua vez, passaram a ser concebidos como criaturas privadas
+                    de razão e destinadas ao uso humano. Essa interpretação reforçou a hierarquia ontológica entre
+                    humanos e não humanos, ao mesmo tempo em que conferiu fundamento teológico ao domínio humano sobre a
+                    natureza.</p>
+                <p>Na modernidade, essa hierarquia assumiu uma forma ainda mais radical, especialmente na filosofia
+                    cartesiana. René Descartes sustentou que os animais deveriam ser compreendidos como máquinas
+                    naturais, desprovidas de consciência ou pensamento. Para Descartes, apenas os humanos possuem res
+                    cogitans, isto é, uma substância pensante capaz de reflexão e linguagem. Os animais, por outro lado,
+                    seriam meros autômatos governados por mecanismos corporais (DESCARTES, 2001). Essa concepção exerceu
+                    grande influência sobre o desenvolvimento das ciências modernas, contribuindo para consolidar uma
+                    visão mecanicista da natureza. Ao mesmo tempo, reforçou a ideia de uma ruptura ontológica entre
+                    humanos e animais, na qual a racionalidade aparece como marca distintiva da humanidade.</p>
+
+                <h4>A razão como critério distintivo do humano</h4>
+                <p>A centralidade da razão na definição do humano tornou-se um dos pilares do humanismo moderno. A
+                    racionalidade foi frequentemente concebida como aquilo que permite aos humanos transcender sua
+                    condição natural e construir instituições sociais, sistemas morais e formas complexas de
+                    conhecimento. Nesse sentido, a razão passou a ser vista como fundamento da liberdade humana e da
+                    organização da vida coletiva. Essa concepção encontra expressão particularmente clara nas teorias
+                    políticas modernas, que associam a racionalidade à capacidade de estabelecer contratos sociais e
+                    organizar a vida em comunidade. A ideia de que os humanos são capazes de deliberar racionalmente
+                    sobre suas ações tornou-se um elemento central na definição do sujeito político.</p>
+                <p>Entretanto, essa valorização da racionalidade também teve como consequência a marginalização dos
+                    animais, frequentemente caracterizados como seres incapazes de pensamento reflexivo. Como observa
+                    Frans de Waal (2005), a tradição filosófica ocidental frequentemente descreveu os animais como
+                    entidades guiadas exclusivamente por instintos, negando-lhes qualquer forma significativa de
+                    inteligência ou sociabilidade complexa. Nos últimos anos, pesquisas em etologia e cognição animal
+                    têm colocado essa visão em questão, demonstrando que diversas espécies possuem capacidades
+                    cognitivas sofisticadas, incluindo formas de comunicação, cooperação e resolução de problemas. Ainda
+                    assim, a herança conceitual do humanismo racionalista continua a exercer forte influência sobre a
+                    maneira como se pensa a relação entre humanos e animais.</p>
+
+                <h4>O animal como “outro” do humano</h4>
+                <p>Ao longo da tradição ocidental, o animal frequentemente desempenhou o papel de outro constitutivo da
+                    humanidade. Em termos filosóficos, isso significa que a identidade humana foi frequentemente
+                    definida por oposição à animalidade. O animal representava aquilo que o humano não deveria ser:
+                    irracional, instintivo, incapaz de linguagem ou moralidade. Esse processo de diferenciação foi
+                    fundamental para a consolidação do humanismo moderno. Ao definir o humano como um ser essencialmente
+                    distinto dos demais animais, a filosofia moderna estabeleceu as bases para uma visão antropocêntrica
+                    do mundo. Nesse modelo, os humanos aparecem como sujeitos dotados de valor intrínseco, enquanto os
+                    animais são frequentemente tratados como recursos ou objetos de uso.</p>
+                <p>Bruno Latour (1994) argumenta que essa distinção está diretamente ligada à constituição da
+                    modernidade. Segundo o autor, a modernidade construiu-se sobre uma separação radical entre natureza
+                    e sociedade, que permitiu aos humanos posicionarem-se como observadores e controladores do mundo
+                    natural. Os animais, nesse contexto, foram frequentemente situados no lado da natureza, enquanto os
+                    humanos eram associados ao domínio da cultura. Entretanto, essa separação tem sido cada vez mais
+                    questionada por diferentes correntes contemporâneas de pensamento. Autores como Philippe Descola
+                    (2005) argumentam que a oposição entre natureza e cultura não é universal, mas apenas uma entre
+                    várias formas possíveis de organizar as relações entre humanos e não humanos.</p>
+
+                <h4>Rousseau, Hobbes e a construção do contrato social</h4>
+                <p>A oposição entre humanos e animais também desempenha papel central nas teorias modernas do contrato
+                    social. Pensadores como Thomas Hobbes e Jean-Jacques Rousseau utilizaram comparações entre humanos e
+                    animais para refletir sobre a origem da sociedade e das instituições políticas. Em Leviatã, Hobbes
+                    afirma explicitamente que os animais não podem participar de contratos sociais porque são incapazes
+                    de compreender leis ou compromissos racionais. Para o filósofo, o pacto social exige a capacidade de
+                    deliberar e reconhecer obrigações mútuas, algo que, segundo ele, apenas os humanos possuem. Como
+                    escreve Hobbes, “é impossível fazer pacto com os animais, porque eles não compreendem nossa
+                    linguagem” (HOBBES, 1985, p. 197).</p>
+                <p>Rousseau, por sua vez, oferece uma perspectiva mais ambígua sobre a relação entre humanos e animais.
+                    Em seu Discurso sobre a origem da desigualdade, ele reconhece que humanos e animais compartilham
+                    certas capacidades, como sensibilidade e autopreservação. Entretanto, Rousseau sustenta que os
+                    humanos possuem uma característica singular que os distingue dos animais: a perfectibilidade, isto
+                    é, a capacidade de transformar a si mesmos ao longo do tempo (ROUSSEAU, 1999). Apesar de suas
+                    diferenças, tanto Hobbes quanto Rousseau utilizam os animais como referência conceitual para definir
+                    o ser humano. Em ambos os casos, a comparação com a animalidade serve para esclarecer aquilo que
+                    torna os humanos singulares. O animal funciona, assim, como um espelho negativo, através do qual a
+                    filosofia moderna delineia os contornos da humanidade.</p>
+
+                <h4>O animal como referência negativa da humanidade</h4>
+                <p>A análise da tradição filosófica ocidental revela que a distinção entre humanos e animais não é
+                    apenas uma questão biológica, mas também um problema profundamente filosófico e político. Ao longo
+                    da história do pensamento ocidental, o animal foi frequentemente mobilizado como uma figura
+                    conceitual destinada a delimitar as fronteiras da humanidade. Essa estratégia permitiu à filosofia
+                    moderna consolidar uma visão antropocêntrica do mundo, na qual o humano aparece como sujeito
+                    privilegiado de conhecimento, moralidade e ação política. Entretanto, como sugerem autores
+                    contemporâneos, essa concepção tem se mostrado cada vez mais insuficiente para compreender as
+                    complexas relações entre humanos e não humanos. Nesse sentido, a crítica ao antropocentrismo
+                    constitui um dos principais pontos de partida para a chamada virada animal nas ciências humanas. Ao
+                    questionar a centralidade ontológica do humano, essa abordagem abre espaço para novas formas de
+                    pensar a coexistência entre espécies e para repensar os próprios fundamentos do humanismo.</p>
+
+                <h3>Crise do antropocentrismo moderno</h3>
+                <p>A consolidação do humanismo moderno esteve profundamente associada à ideia de que os seres humanos
+                    ocupam uma posição privilegiada no mundo natural. Essa concepção antropocêntrica pressupõe que os
+                    humanos constituem o centro de valor e significado do universo, sendo capazes de conhecer, dominar e
+                    transformar a natureza por meio da razão e da técnica. Entretanto, nas últimas décadas, esse modelo
+                    de pensamento tem sido amplamente questionado, sobretudo diante da crescente percepção de que as
+                    atividades humanas exercem impactos profundos e muitas vezes irreversíveis sobre os sistemas
+                    ecológicos do planeta. Nesse contexto, diferentes correntes da filosofia e da antropologia têm
+                    contribuído para problematizar os fundamentos do antropocentrismo moderno, propondo novas formas de
+                    compreender as relações entre humanos e não humanos.</p>
+
+                <h4>Antropoceno e crise ambiental</h4>
+                <p>A noção de Antropoceno evidencia uma transformação radical na maneira como se compreende a relação
+                    entre humanidade e natureza. Ao reconhecer que a atividade humana passou a influenciar processos
+                    geológicos e climáticos em escala planetária, esse conceito desafia a visão moderna que separava
+                    claramente o domínio humano do domínio natural. Como observa Bruno Latour (2017), a crise ecológica
+                    contemporânea revela que os humanos nunca estiveram realmente fora da natureza, mas sempre fizeram
+                    parte de redes complexas de interações envolvendo múltiplos agentes humanos e não humanos. Nesse
+                    sentido, o Antropoceno não representa apenas uma mudança na história geológica da Terra, mas também
+                    uma crise das categorias conceituais que estruturaram o pensamento moderno. A ideia de uma natureza
+                    passiva e manipulável por sujeitos humanos autônomos torna-se cada vez mais difícil de sustentar
+                    diante das evidências de que os sistemas naturais possuem dinâmicas próprias e respondem de maneira
+                    imprevisível às intervenções humanas. Além disso, a crise ambiental contemporânea evidencia a
+                    interdependência radical entre diferentes formas de vida. Mudanças climáticas, perda de
+                    biodiversidade e degradação de ecossistemas demonstram que as ações humanas repercutem diretamente
+                    sobre a sobrevivência de inúmeras espécies, incluindo a própria humanidade. Nesse contexto, torna-se
+                    necessário reconsiderar os pressupostos antropocêntricos que sustentaram o projeto moderno de
+                    dominação da natureza.</p>
+
+                <h4>A crítica ao dualismo natureza × cultura</h4>
+                <p>Um dos principais alvos das críticas contemporâneas ao antropocentrismo é o dualismo entre natureza e
+                    cultura que marcou profundamente o pensamento moderno. Esse dualismo estabeleceu uma divisão
+                    conceitual entre dois domínios distintos: de um lado, a natureza, entendida como um conjunto de
+                    processos físicos e biológicos regidos por leis naturais; de outro, a cultura ou sociedade,
+                    associada às atividades humanas, à linguagem e às instituições sociais. Bruno Latour (1994)
+                    argumenta que essa divisão constitui um dos fundamentos da modernidade. Segundo o autor, a
+                    modernidade instituiu uma constituição moderna que separa radicalmente natureza e sociedade,
+                    permitindo aos humanos posicionarem-se simultaneamente como sujeitos que produzem conhecimento
+                    científico sobre a natureza e como agentes capazes de transformá-la por meio da tecnologia.
+                    Entretanto, Latour sustenta que essa separação nunca correspondeu efetivamente à realidade, pois o
+                    mundo moderno sempre produziu híbridos que misturam elementos naturais e sociais, como tecnologias,
+                    organismos modificados e sistemas ecológicos complexos. Para Latour, reconhecer essa condição
+                    híbrida implica abandonar a ideia de que a natureza e a sociedade constituem domínios completamente
+                    distintos. Em vez disso, ele propõe compreender o mundo como uma rede de associações entre
+                    diferentes entidades humanas e não humanas. Nesse modelo, os não humanos, incluindo animais, objetos
+                    técnicos e fenômenos naturais, passam a ser considerados participantes ativos das redes que compõem
+                    a realidade social.</p>
+
+                <h4>Contribuições da antropologia contemporânea</h4>
+                <p>Além da filosofia, a antropologia contemporânea também desempenhou papel fundamental na crítica ao
+                    dualismo natureza–cultura e ao antropocentrismo moderno. Entre os autores que mais contribuíram para
+                    esse debate destacam-se Philippe Descola e Tim Ingold, cujas obras propõem novas formas de
+                    compreender as relações entre humanos e não humanos. Philippe Descola (2005), em sua obra Par-delà
+                    nature et culture, argumenta que a distinção entre natureza e cultura não é uma característica
+                    universal do pensamento humano, mas uma particularidade da tradição ocidental moderna. A partir de
+                    pesquisas etnográficas realizadas entre povos amazônicos, Descola demonstra que muitas sociedades
+                    não estabelecem uma separação rígida entre humanos e não humanos. Em diversos contextos indígenas,
+                    por exemplo, animais, plantas e espíritos são frequentemente concebidos como entidades dotadas de
+                    intencionalidade e capacidade de interação social.</p>
+                <p>Tim Ingold (2000), por sua vez, desenvolve uma crítica semelhante a partir de uma perspectiva
+                    ecológica da antropologia. Para Ingold, a oposição entre organismo e ambiente, que também está
+                    associada ao dualismo natureza–cultura, deve ser substituída por uma concepção relacional da vida.
+                    Segundo o autor, os seres vivos não existem como entidades isoladas que interagem ocasionalmente com
+                    o ambiente, mas como processos que se desenvolvem continuamente em relação com o mundo ao seu redor.
+                    Essa perspectiva leva Ingold a propor uma compreensão da vida baseada em linhas de relações que
+                    conectam organismos, ambientes e práticas sociais. Nesse modelo, humanos e animais não são
+                    categorias ontologicamente separadas, mas participantes de um mesmo campo de relações ecológicas e
+                    sociais. As contribuições de Descola e Ingold, juntamente com as reflexões de Latour, indicam uma
+                    transformação significativa nas ciências humanas contemporâneas. Em vez de tratar os humanos como
+                    sujeitos isolados que dominam uma natureza passiva, essas abordagens enfatizam a interdependência
+                    entre diferentes formas de vida e os múltiplos vínculos que conectam humanos e não humanos.</p>
+
+                <h4>Para além do antropocentrismo</h4>
+                <p>A crítica ao antropocentrismo moderno não implica necessariamente negar as especificidades da
+                    experiência humana, mas questionar a ideia de que os humanos ocupam uma posição ontologicamente
+                    superior em relação às demais formas de vida. Em vez disso, as perspectivas contemporâneas sugerem
+                    que os humanos devem ser compreendidos como participantes de redes complexas de relações ecológicas,
+                    sociais e tecnológicas. Nesse sentido, a crise do antropocentrismo abre espaço para novas formas de
+                    pensar a coexistência entre espécies e para reconsiderar os fundamentos éticos e epistemológicos do
+                    humanismo. Ao reconhecer a interdependência entre humanos e não humanos, essas abordagens apontam
+                    para a necessidade de construir modelos de pensamento capazes de lidar com a complexidade das
+                    relações que constituem o mundo contemporâneo. Essa transformação conceitual prepara o terreno para
+                    o desenvolvimento da chamada virada animal nas ciências humanas, que procura repensar o estatuto dos
+                    animais e explorar as múltiplas formas de interação entre humanos e outras espécies. É nesse
+                    contexto que se torna possível discutir novas formas de humanismo, nas quais o humano deixa de ser
+                    concebido como centro absoluto do mundo e passa a ser entendido como parte de um conjunto mais amplo
+                    de existências interconectadas.</p>
+
+                <h3>A virada animal nas ciências humanas</h3>
+                <p>Nas últimas décadas, as ciências humanas têm experimentado um movimento teórico frequentemente
+                    descrito como virada animal (animal turn). Esse conjunto de debates envolve diferentes áreas do
+                    conhecimento: filosofia, antropologia, sociologia, história e estudos culturais, e tem como objetivo
+                    reconsiderar o lugar dos animais nas reflexões acadêmicas, bem como nas práticas sociais.
+                    Diferentemente das abordagens tradicionais, que frequentemente tratavam os animais apenas como
+                    objetos de análise ou metáforas para a compreensão do comportamento humano, a virada animal procura
+                    compreender os animais como agentes relevantes nas redes de relações que constituem o mundo social.
+                </p>
+                <p>Esse movimento emerge, em grande medida, como uma resposta às limitações do antropocentrismo moderno.
+                    Ao questionar a centralidade exclusiva do humano, a virada animal propõe ampliar o campo das
+                    ciências humanas de modo a incluir também as relações entre diferentes espécies. Como observa Stélio
+                    Marras (2014), trata-se de uma mudança epistemológica significativa: em vez de considerar os animais
+                    apenas como pano de fundo da história humana, passa-se a reconhecê-los como participantes ativos em
+                    processos ecológicos, sociais, culturais e históricos.</p>
+
+                <h4>Animal studies e a ampliação do campo das ciências humanas</h4>
+                <p>Os chamados animal studies constituem um campo interdisciplinar que busca investigar as relações
+                    entre humanos e animais a partir de perspectivas críticas. Surgido inicialmente no contexto das
+                    humanidades anglo-saxônicas, esse campo reúne contribuições da filosofia, da sociologia, da
+                    literatura e da antropologia, procurando analisar as formas históricas e culturais pelas quais os
+                    animais têm sido representados, utilizados e compreendidos nas sociedades humanas. Uma das
+                    principais características dos animal studies é a tentativa de superar a visão instrumental dos
+                    animais. Em vez de tratá-los apenas como recursos ou objetos de estudo, essas abordagens procuram
+                    reconhecer os animais como sujeitos de experiência e participantes de redes sociais complexas. Essa
+                    mudança de perspectiva implica também repensar categorias tradicionais das ciências humanas, como
+                    sociedade, cultura e agência.</p>
+                <p>Donna Haraway (2003) desempenha papel central nesse debate ao propor a noção de espécies companheiras
+                    (companion species). Em sua análise das relações entre humanos e cães, a autora argumenta que
+                    humanos e animais não devem ser compreendidos como entidades separadas que ocasionalmente interagem,
+                    mas como seres que se constituem mutuamente ao longo de processos históricos compartilhados. Segundo
+                    Haraway, a convivência entre diferentes espécies produz formas específicas de sociabilidade,
+                    conhecimento e afetividade que desafiam as fronteiras tradicionais entre natureza e cultura. Ao
+                    enfatizar essas relações de coevolução e coabitação, Haraway contribui para deslocar o foco da
+                    análise das identidades fixas para os processos de interação entre espécies. Nesse sentido, a autora
+                    sugere que humanos e animais formam coletivos híbridos, nos quais múltiplas formas de vida
+                    participam da produção do mundo social.</p>
+
+                <h4>Novas abordagens da animalidade</h4>
+                <p>A virada animal também envolve uma reconsideração da própria noção de animalidade. Durante muito
+                    tempo, os animais foram definidos principalmente por aquilo que lhes faltaria em relação aos
+                    humanos: razão, linguagem, moralidade ou consciência reflexiva. Essa forma de definição negativa
+                    contribuiu para consolidar a ideia de que os animais ocupam uma posição inferior na hierarquia dos
+                    seres. Entretanto, diferentes autores têm questionado essa concepção. Em vez de definir os animais a
+                    partir de sua suposta ausência de capacidades humanas, essas abordagens procuram compreender as
+                    formas específicas de existência e experiência próprias das diferentes espécies. Nesse sentido, Tim
+                    Ingold (2000) propõe uma perspectiva ecológica que enfatiza o caráter relacional da vida. Para
+                    Ingold, os seres vivos não podem ser compreendidos como entidades isoladas que simplesmente
+                    interagem com um ambiente externo. Ao contrário, organismos e ambientes constituem-se mutuamente ao
+                    longo de processos contínuos de interação. Essa perspectiva dissolve a separação rígida entre
+                    humanos e animais, enfatizando que todos os seres vivos participam de processos semelhantes de
+                    habitação e envolvimento com o mundo.</p>
+
+                <h4>Redes entre humanos e não humanos</h4>
+                <p>Um dos aspectos mais inovadores da virada animal consiste na tentativa de compreender as relações
+                    entre humanos e animais em termos de redes de interdependência. Em vez de tratar humanos e animais
+                    como categorias ontológicas separadas, diversos autores têm enfatizado as múltiplas formas de
+                    interação que conectam diferentes espécies. Essa perspectiva dialoga diretamente com abordagens
+                    contemporâneas da sociologia e da antropologia que procuram ampliar o conceito de coletivo.
+                    Inspiradas, em parte, nas reflexões de Bruno Latour, essas abordagens sugerem que a realidade social
+                    é constituída por redes que incluem tanto humanos quanto não humanos. Donna Haraway (2008) enfatiza
+                    que essas interações não devem ser compreendidas apenas em termos de dominação ou
+                    instrumentalização. Embora relações de poder estejam frequentemente presentes nas interações entre
+                    espécies, essas relações também envolvem processos de cooperação, adaptação e aprendizagem mútua. Ao
+                    destacar essas redes de interdependência, a virada animal contribui para deslocar a análise das
+                    identidades fixas para os processos relacionais que constituem a vida social. Nesse sentido, humanos
+                    e animais aparecem como participantes de sistemas ecológicos e sociais compartilhados.</p>
+
+                <h4>Cognição animal e etologia</h4>
+                <p>Outro elemento importante da virada animal está relacionado aos avanços recentes nas ciências do
+                    comportamento animal. Pesquisas em etologia e cognição animal têm demonstrado que muitas espécies
+                    possuem capacidades cognitivas muito mais complexas do que tradicionalmente se supunha. Frans de
+                    Waal (2005), por exemplo, argumenta que diversos primatas apresentam comportamentos que podem ser
+                    interpretados como formas rudimentares de empatia, cooperação e moralidade. Estudos sobre
+                    chimpanzés, bonobos e outros primatas revelam a existência de estruturas sociais sofisticadas, nas
+                    quais indivíduos estabelecem alianças, resolvem conflitos e demonstram comportamentos de cuidado em
+                    relação aos membros do grupo. Essas descobertas desafiam a ideia tradicional de que a moralidade
+                    constitui uma característica exclusivamente humana. Para De Waal, muitas das bases emocionais da
+                    moralidade humana, como empatia e senso de justiça, possuem raízes evolutivas compartilhadas com
+                    outros primatas. Isso sugere que as diferenças entre humanos e animais podem ser melhor
+                    compreendidas como diferenças de grau, e não como rupturas absolutas.</p>
+
+                <h4>Implicações para as ciências humanas</h4>
+                <p>A virada animal tem profundas implicações para as ciências humanas. Ao reconhecer os animais como
+                    participantes ativos das redes que constituem o mundo social, essa abordagem desafia a centralidade
+                    exclusiva do humano nas análises sociológicas, antropológicas e filosóficas. Em vez de compreender a
+                    sociedade como um domínio exclusivamente humano, torna-se necessário considerar as múltiplas
+                    interações entre diferentes formas de vida. Essa perspectiva contribui para ampliar o escopo das
+                    ciências humanas, permitindo uma compreensão mais abrangente das relações ecológicas, sociais e
+                    culturais que estruturam o mundo contemporâneo. Nesse sentido, a virada animal não representa apenas
+                    um novo campo de estudos, mas também uma transformação mais ampla na maneira como se pensa a relação
+                    entre humanos e não humanos. Ao enfatizar a interdependência entre espécies e a complexidade das
+                    redes que conectam diferentes formas de vida, essa abordagem abre caminho para novas reflexões sobre
+                    ética, política e coexistência no contexto do Antropoceno.</p>
+
+                <h3>Para um novo humanismo</h3>
+                <p>As transformações conceituais discutidas nas seções anteriores, particularmente a crítica ao
+                    antropocentrismo moderno e a emergência da chamada virada animal nas ciências humanas, colocam em
+                    questão alguns dos fundamentos centrais do humanismo clássico. Ao longo da tradição filosófica
+                    ocidental, o humanismo foi frequentemente construído a partir da ideia de que os seres humanos
+                    ocupam uma posição singular e superior no conjunto da vida, definida por atributos como
+                    racionalidade, linguagem e capacidade moral. Essa concepção contribuiu para consolidar uma visão do
+                    humano como sujeito autônomo e separado do restante do mundo natural. Entretanto, as reflexões
+                    contemporâneas em filosofia, antropologia e biologia têm evidenciado os limites dessa perspectiva. A
+                    crescente consciência das interdependências ecológicas, bem como os avanços no estudo da cognição
+                    animal e das relações entre espécies, sugerem que a separação rígida entre humanos e não humanos não
+                    corresponde adequadamente à complexidade do mundo vivo. Nesse contexto, torna-se necessário
+                    reconsiderar os pressupostos do humanismo tradicional e explorar novas formas de compreender o lugar
+                    do humano no mundo.</p>
+
+                <h4>Crítica ao humanismo clássico</h4>
+                <p>O humanismo clássico, particularmente em suas formulações modernas, baseou-se em uma concepção de
+                    humanidade definida por oposição à animalidade. Como discutido anteriormente, a filosofia ocidental
+                    frequentemente atribuiu aos humanos qualidades consideradas exclusivas: razão, linguagem e
+                    moralidade, enquanto os animais eram caracterizados como seres instintivos e desprovidos de
+                    interioridade reflexiva. Segundo Giorgio Agamben (2002), a tradição filosófica ocidental construiu o
+                    humano por meio de um processo contínuo de exclusão da animalidade. Para o autor, a definição do
+                    humano depende de uma operação conceitual que separa aquilo que é considerado propriamente humano
+                    daquilo que é identificado como animal. Essa operação não apenas estabelece fronteiras ontológicas
+                    entre seres humanos e seres animais, mas também influencia profundamente as formas pelas quais as
+                    sociedades humanas organizam suas relações com o mundo natural e vivo. Ao posicionar os humanos como
+                    sujeitos autônomos e superiores aos “animais”, o humanismo clássico contribuiu para legitimar
+                    práticas de exploração e dominação da natureza. Além disso, a crise ambiental contemporânea
+                    evidencia os limites desse modelo de pensamento. A ideia de que os humanos podem dominar a natureza
+                    sem considerar as consequências ecológicas de suas ações revelou-se cada vez mais insustentável.
+                    Nesse sentido, a crítica ao antropocentrismo não implica necessariamente abandonar a noção de
+                    humanismo, mas repensá-la de maneira mais ampla e inclusiva.</p>
+
+                <h4>A proposta de um humanismo relacional</h4>
+                <p>Diante dessas transformações conceituais, diversos autores têm proposto reformular o humanismo em
+                    termos mais relacionais. Em vez de compreender o humano como uma entidade isolada que se distingue
+                    radicalmente do restante da natureza, essas abordagens enfatizam a interdependência entre diferentes
+                    formas de vida. Essa perspectiva pode ser descrita como um humanismo relacional, no qual o humano é
+                    concebido não como centro absoluto do mundo, mas como participante de redes complexas que envolvem
+                    humanos, animais, plantas, ecossistemas e tecnologias. Nesse modelo, a identidade humana não é
+                    definida por oposição à animalidade, mas emerge das múltiplas relações que conectam diferentes
+                    formas de existência. Tim Ingold (2000) contribui para essa perspectiva ao propor uma concepção da
+                    vida baseada em processos de habitação e envolvimento com o ambiente. Segundo o autor, os seres
+                    vivos não existem como entidades separadas que interagem ocasionalmente com o mundo, mas como
+                    processos que se desenvolvem continuamente em relação com outros organismos e com o ambiente. De
+                    maneira semelhante, Donna Haraway (2008) sugere que as relações entre humanos e animais devem ser
+                    pensadas em termos de coexistência e coevolução. Ao enfatizar a noção de espécies companheiras,
+                    Haraway destaca que diferentes espécies têm compartilhado histórias evolutivas e sociais que
+                    moldaram tanto os humanos quanto os animais com os quais convivem. Essas perspectivas sugerem que o
+                    humanismo pode ser reformulado não como uma filosofia da superioridade humana, mas como uma reflexão
+                    sobre as formas de coexistência entre diferentes espécies.</p>
+
+                <h4>Ética multiespécies</h4>
+                <p>A reformulação do humanismo em termos relacionais também possui importantes implicações éticas. Se
+                    humanos e animais participam de redes de interdependência ecológica e social, torna-se necessário
+                    reconsiderar os fundamentos das relações morais entre espécies. Nesse contexto, diferentes autores
+                    têm desenvolvido propostas que podem ser descritas como ética multiespécies. Essa abordagem procura
+                    ampliar o horizonte da reflexão moral de modo a incluir não apenas os interesses humanos, mas também
+                    os interesses de outras formas de vida. Frans de Waal (2005), por exemplo, argumenta que as bases
+                    emocionais da moralidade humana possuem raízes evolutivas compartilhadas com outros primatas. A
+                    empatia, que desempenha papel central na ética humana, pode ser observada em diversas espécies
+                    animais, sugerindo que a moralidade não constitui um fenômeno exclusivamente humano. A partir dessa
+                    perspectiva, torna-se possível conceber a ética não como um sistema de normas exclusivamente humano,
+                    mas como um conjunto de práticas que emergem das relações entre diferentes seres vivos. Essa
+                    abordagem não implica necessariamente atribuir os mesmos direitos ou responsabilidades a todas as
+                    espécies, mas reconhece que as decisões humanas têm consequências significativas para outros
+                    organismos e ecossistemas. Assim, uma ética multiespécies procura orientar as relações entre humanos
+                    e não humanos de maneira mais responsável e sensível às interdependências que caracterizam o mundo
+                    contemporâneo.</p>
+
+                <h4>Implicações filosóficas e políticas</h4>
+                <p>A emergência de um humanismo relacional e de uma ética multiespécies possui importantes implicações
+                    filosóficas e políticas. Em primeiro lugar, essas perspectivas desafiam as concepções tradicionais
+                    de sujeito, agência e comunidade que estruturaram grande parte da filosofia moderna. Se a realidade
+                    social é composta por redes que incluem tanto humanos quanto não humanos, torna-se necessário
+                    repensar a própria noção de coletivo. Bruno Latour (2012) sugere que os coletivos contemporâneos
+                    devem ser compreendidos como assembleias que reúnem múltiplos tipos de agentes, incluindo organismos
+                    vivos, objetos técnicos e processos naturais. Além disso, a crise ecológica contemporânea exige
+                    novas formas de organização política capazes de lidar com os desafios colocados pelas mudanças
+                    ambientais globais. Questões como mudanças climáticas, conservação da biodiversidade e gestão de
+                    recursos naturais não podem ser adequadamente enfrentadas a partir de perspectivas estritamente
+                    antropocêntricas. Nesse contexto, a reflexão sobre as relações entre humanos e não humanos torna-se
+                    parte fundamental dos debates sobre sustentabilidade, justiça ambiental e governança global. Ao
+                    reconhecer a interdependência entre diferentes formas de vida, torna-se possível desenvolver
+                    abordagens mais abrangentes para enfrentar os desafios do Antropoceno. Em síntese, a crítica ao
+                    antropocentrismo e a emergência da virada animal nas ciências humanas apontam para a necessidade de
+                    repensar os fundamentos do humanismo. Longe de implicar o abandono da reflexão sobre a condição
+                    humana, esse movimento sugere a possibilidade de um humanismo renovado, capaz de reconhecer a
+                    complexidade das relações que conectam humanos, animais e ambientes no mundo contemporâneo.</p>
+
+                <h3>Considerações finais</h3>
+                <p>O presente ensaio partiu da constatação de que a tradição filosófica ocidental construiu, ao longo de
+                    séculos, uma distinção profunda entre humanos e animais. Essa distinção, frequentemente sustentada
+                    pela oposição entre natureza e cultura, tornou-se um dos fundamentos centrais do humanismo moderno.
+                    A racionalidade, a linguagem e a capacidade moral foram historicamente mobilizadas como critérios
+                    que permitiriam diferenciar os humanos das demais formas de vida, contribuindo para consolidar uma
+                    visão antropocêntrica do mundo. Nesse modelo, os animais foram frequentemente definidos por meio de
+                    uma referência negativa, isto é, como aquilo que os humanos não seriam.</p>
+                <p>Diante desse contexto, o ensaio buscou responder à seguinte pergunta de pesquisa: de que maneira a
+                    chamada virada animal nas ciências humanas e na filosofia contemporânea contribui para repensar o
+                    humanismo moderno e redefinir as relações entre humanos e animais? A análise desenvolvida ao longo
+                    do texto indicou que essa virada representa uma transformação significativa no modo como se
+                    compreendem as relações entre humanos e não humanos.</p>
+                <p>Na primeira parte do trabalho, examinou-se como a tradição filosófica ocidental contribuiu para
+                    consolidar a separação entre humanidade e animalidade. A análise mostrou que autores clássicos
+                    frequentemente utilizaram os animais como referência conceitual para delimitar aquilo que tornaria
+                    os humanos singulares. A racionalidade e a capacidade de organização política foram apresentadas
+                    como atributos distintivos da humanidade, enquanto os animais eram frequentemente associados ao
+                    domínio da natureza e do instinto. Em seguida, discutiu-se a crise contemporânea do antropocentrismo
+                    moderno. A emergência da noção de Antropoceno e a crescente percepção da crise ambiental global
+                    evidenciam os limites da concepção que separa radicalmente humanos e natureza. As contribuições de
+                    autores como Bruno Latour, Philippe Descola e Tim Ingold demonstram que o dualismo entre natureza e
+                    cultura constitui uma construção histórica específica da modernidade ocidental, e não uma
+                    característica universal da experiência humana. Essas perspectivas enfatizam a existência de redes
+                    complexas de interdependência entre diferentes formas de vida, questionando a centralidade exclusiva
+                    do humano na organização do mundo.</p>
+                <p>Posteriormente, analisou-se a chamada virada animal nas ciências humanas, destacando o papel dos
+                    animal studies, das novas abordagens antropológicas sobre as relações entre espécies e dos avanços
+                    na etologia e na ciência da cognição animal. As contribuições de autores como Donna Haraway, Frans
+                    de Waal e Tim Ingold indicam que os animais não podem mais ser compreendidos apenas como entidades
+                    passivas ou meramente instintivas. Ao contrário, diferentes espécies demonstram capacidades
+                    cognitivas e formas de sociabilidade complexas, participando ativamente das redes ecológicas e
+                    sociais que constituem o mundo contemporâneo.</p>
+                <p>Por fim, discutiu-se a possibilidade de reformular o humanismo a partir de uma perspectiva
+                    relacional. Em vez de compreender o humano como uma entidade isolada e superior às demais formas de
+                    vida, o humanismo relacional propõe reconhecer a interdependência entre diferentes espécies. Essa
+                    perspectiva abre espaço para o desenvolvimento de uma ética multiespécies, capaz de considerar as
+                    implicações morais das interações entre humanos, animais e ambientes.</p>
+                <p>A análise realizada neste ensaio sugere que repensar o lugar do humano no mundo constitui um dos
+                    desafios centrais da reflexão filosófica contemporânea. A crise ecológica global, bem como os
+                    avanços no conhecimento científico sobre outras formas de vida, indicam que a concepção tradicional
+                    de humanidade como centro absoluto da realidade tornou-se cada vez mais problemática. Nesse sentido,
+                    a virada animal não deve ser compreendida como uma tentativa de negar a especificidade da
+                    experiência humana, mas como um esforço para situar essa experiência dentro de um quadro mais amplo
+                    de relações ecológicas e sociais. Ao reconhecer a complexidade das interações entre diferentes
+                    espécies, torna-se possível desenvolver formas mais abrangentes de reflexão ética e política capazes
+                    de responder aos desafios do Antropoceno. Assim, a reflexão sobre as relações entre humanos e
+                    animais não diz respeito apenas ao estatuto dos animais, mas também à própria compreensão da
+                    condição humana. Repensar essas relações significa, em última instância, reconsiderar os fundamentos
+                    do humanismo e explorar novas possibilidades de coexistência entre humanos e não humanos em um mundo
+                    cada vez mais marcado pela interdependência entre diferentes formas de vida.</p>
+            </div>
+
+            <!-- PDF Viewer -->
+            <div class="panel">
+                <h2><i class="fas fa-file-pdf"></i> Ensaio completo (PDF)</h2>
+                <div class="pdf-frame">
+                    <iframe src="/arquivos/Humanos_Animais_Redes.pdf"
+                        title="Humanos, animais e redes de existência"></iframe>
+                </div>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i>
+                    Caso o PDF não seja exibido, <a href="arquivos/Humanos_Animais_Redes.pdf" target="_blank">clique
+                        aqui para baixar</a>.</p>
+            </div>
+
+            <!-- Referências com gerador de citações -->
+            <div class="panel" id="references-panel">
+                <h2><i class="fas fa-quote-right"></i> Referências & Citação</h2>
+
+                <!-- GERADOR DE CITAÇÕES -->
+                <div class="citation-generator"
+                    data-authors='["SANTOS, Diego Vinícius Brito dos", "SANTOS, Taisa Maria Brito dos"]'
+                    data-title="Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno"
+                    data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Ensaios/humanos-animais-e-redes-de-existencia.html"
+                    data-volume="1" data-issue="1" data-pages="09-27" data-year="2026">
+                    <div class="citation-generator-head">
+                        <h2><i class="fas fa-quote-left"></i> Como citar este ensaio</h2>
+                    </div>
+                    <div class="citation-generator-body">
+                        <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a
+                            referência bibliográfica.</p>
+                        <div class="citation-controls">
+                            <div class="citation-field">
+                                <label for="citation-style">Estilo de referência</label>
+                                <select id="citation-style" class="citation-select">
+                                    <option value="abnt">ABNT</option>
+                                    <option value="apa">APA</option>
+                                    <option value="mla">MLA</option>
+                                    <option value="chicago">Chicago</option>
+                                    <option value="harvard">Harvard</option>
+                                    <option value="vancouver">Vancouver</option>
+                                    <option value="ieee">IEEE</option>
+                                </select>
+                            </div>
+                            <div class="citation-actions">
+                                <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i>
+                                    Copiar referência</button>
+                            </div>
+                        </div>
+                        <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                        <p class="citation-feedback"></p>
+                    </div>
+                </div>
+
+                <div class="citation-actions">
+                    <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
+                    <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+                </div>
+                <ul class="ref-list">
+                    <li><strong>AGAMBEN, Giorgio.</strong> <em>O aberto: o homem e o animal</em>. Tradução de Pedro
+                        Mendes. Rio de Janeiro: Civilização Brasileira, 2002.</li>
+                    <li><strong>ARISTÓTELES.</strong> <em>De anima</em>. Tradução de Maria Cecília Gomes dos Reis. São
+                        Paulo: Editora 34, 2006.</li>
+                    <li><strong>DESCARTES, René.</strong> <em>Discurso do método</em>. Tradução de J. Guinsburg e Bento
+                        Prado Júnior. São Paulo: Nova Cultural, 2001.</li>
+                    <li><strong>DESCOLA, Philippe.</strong> <em>Par-delà nature et culture</em>. Paris: Gallimard, 2005.
+                    </li>
+                    <li><strong>HARAWAY, Donna.</strong> <em>The companion species manifesto: dogs, people, and
+                            significant otherness</em>. Chicago: Prickly Paradigm Press, 2003.</li>
+                    <li><strong>HARAWAY, Donna.</strong> <em>When species meet</em>. Minneapolis: University of
+                        Minnesota Press, 2008.</li>
+                    <li><strong>HOBBES, Thomas.</strong> <em>Leviatã ou matéria, forma e poder de um Estado eclesiástico
+                            e civil</em>. São Paulo: Abril Cultural, 1985.</li>
+                    <li><strong>INGOLD, Tim.</strong> <em>The perception of the environment: essays on livelihood,
+                            dwelling and skill</em>. London: Routledge, 2000.</li>
+                    <li><strong>INGOLD, Tim.</strong> <em>Being alive: essays on movement, knowledge and
+                            description</em>. London: Routledge, 2011.</li>
+                    <li><strong>LATOUR, Bruno.</strong> <em>Jamais fomos modernos: ensaio de antropologia
+                            simétrica</em>. Rio de Janeiro: Editora 34, 1994.</li>
+                    <li><strong>LATOUR, Bruno.</strong> <em>Reagregando o social: uma introdução à teoria do
+                            ator-rede</em>. Salvador: EDUFBA; Bauru: EDUSC, 2012.</li>
+                    <li><strong>LATOUR, Bruno.</strong> <em>Diante de Gaia: oito conferências sobre a natureza no
+                            Antropoceno</em>. São Paulo: Ubu Editora, 2017.</li>
+                    <li><strong>MARRAS, Stélio.</strong> <em>Virada animal, virada humana: outro pacto</em>. São Paulo:
+                        Editora Ubu, 2014.</li>
+                    <li><strong>ROUSSEAU, Jean-Jacques.</strong> <em>Discurso sobre a origem e os fundamentos da
+                            desigualdade entre os homens</em>. São Paulo: Nova Cultural, 1999.</li>
+                    <li><strong>WAAL, Frans de.</strong> <em>Eu, primata: por que somos como somos</em>. São Paulo:
+                        Companhia das Letras, 2005.</li>
+                </ul>
+                <p><small><i class="fas fa-info-circle"></i> Utilize o gerador acima para citar este ensaio em
+                        diferentes estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+            </div>
+
+            <!-- Sobre os autores -->
+            <div class="panel">
+                <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto do autor Diego Vinícius"
+                        class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre o autor </h2>
+
+                <div class="author-bio">
+                    <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo,
+                        com experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui
+                        mestrado em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com
+                        pesquisa focada na obra e filosofia de Friedrich Nietzsche. É graduado em Filosofia pela
+                        Universidade do Estado do Rio Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro
+                        Universitário Internacional (UNINTER, 2022). É autor do livro <em>Nietzsche e os valores
+                            modernos</em> (2022). Dedica-se à formação continuada em áreas como Psicopedagogia,
+                        Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional Especializado (AEE) e Educação
+                        de Jovens e Adultos (EJA).</p>
+                    <p><i class="fas fa-envelope"></i> E-mail: diego_svt@hotmail.com.br<br>
+                        <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663"
+                            target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                        <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811"
+                            target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+                    </p>
+                    <br>
+                </div>
+                <h2 class="autor-titulo"> <img src="/corpo editorial/taisa.png"
+                        alt="Foto da autora Taisa Maria Brito dos Santos " class="autor-foto"
+                        onerror="this.onerror=null; this.style.display='none';"> Sobre o autor </h2>
+
+                <div class="author-bio">
+                    <p><strong>Taisa Maria Brito dos Santos</strong> é graduada em Licenciatura em Filosofia pela
+                        Universidade do Estado do Rio Grande do Norte (UERN) e atualmente cursa Bacharelado em
+                        Geografia, dando continuidade à sua formação acadêmica em perspectiva interdisciplinar. Em sua
+                        trajetória na Filosofia, dedicou-se ao estudo da filosofia de Santo Agostinho, com ênfase na
+                        problemática da origem do mal, além de desenvolver pesquisas relacionadas à mística medieval, ao
+                        cristianismo e à antropologia. Atuou como voluntária no Programa Institucional de Bolsa de
+                        Iniciação à Docência (PIBID/Filosofia/UERN) e como assistente de professora no Instituto Euvaldo
+                        Lodi (IEL). No campo da educação, volta-se especialmente para temas como ensino inclusivo,
+                        direitos humanos, metodologias pedagógicas e Educação 4.0, em diálogo com a pedagogia de Paulo
+                        Freire. Atualmente, seus estudos concentram-se nas relações entre território, sociedade e
+                        natureza, com interesse em oceanografia e dinâmica espacial.</p>
+                    <p><i class="fas fa-envelope"></i> E-mail: taisamaria9090@gmail.com<br>
+                        <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-8766-5683"
+                            target="_blank">https://orcid.org/0000-0002-8766-5683</a><br>
+                        <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/6216572061896584"
+                            target="_blank">http://lattes.cnpq.br/6216572061896584</a>
+                    </p>
+                </div>
+            </div>
+
+
+            <footer>
+                <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | Seção: Ensaios |
+                DOI: 10.5281/zenodo.19012745<br>
+                Acesso aberto sob licença Creative Commons.
+            </footer>
+        </div>
     </div>
-</div>
 
-<script>
-    // Submissões com simulação de login
-    const submitBtn = document.getElementById("submitBtn");
-    submitBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        let logged = localStorage.getItem("inquietacoes_logged");
-        if (logged === "true") {
-            window.location.href = "cadastro-login/submissoes.html";
-        } else {
-            let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
-            if (email && email.includes("@")) {
-                localStorage.setItem("inquietacoes_logged", "true");
-                alert("Login simulado com sucesso! Redirecionando para submissões.");
+    <!-- Google Translate Widget -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'pt',
+                includedLanguages: 'pt,en,es',
+                autoDisplay: false,
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+            document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <div id="google_translate_element" style="display:none;"></div>
+
+    <script>
+        // Botões de tradução manuais via Google Translate API
+        (function() {
+            const langBtns = document.querySelectorAll('.lang-btn');
+            let currentLang = 'pt';
+
+            function triggerGoogleTranslate(lang) {
+                const selectElem = document.querySelector('.goog-te-combo');
+                if (selectElem) {
+                    selectElem.value = lang;
+                    selectElem.dispatchEvent(new Event('change'));
+                } else {
+                    setTimeout(() => {
+                        const select = document.querySelector('.goog-te-combo');
+                        if (select) {
+                            select.value = lang;
+                            select.dispatchEvent(new Event('change'));
+                        }
+                    }, 500);
+                }
+            }
+
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang');
+                    if (lang === currentLang) return;
+                    
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    let googleCode = '';
+                    if (lang === 'pt') googleCode = 'pt';
+                    else if (lang === 'en') googleCode = 'en';
+                    else if (lang === 'es') googleCode = 'es';
+                    
+                    triggerGoogleTranslate(googleCode);
+                    currentLang = lang;
+                });
+            });
+            
+            const observer = new MutationObserver(() => {
+                const combo = document.querySelector('.goog-te-combo');
+                if (combo && !combo._listenerAdded) {
+                    combo._listenerAdded = true;
+                    const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
+                    let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
+                    if (combo.value !== code) {
+                        combo.value = code;
+                        combo.dispatchEvent(new Event('change'));
+                    }
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        })();
+
+        // Submissões com simulação de login
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
                 window.location.href = "cadastro-login/submissoes.html";
             } else {
-                alert("Acesso não autorizado. Cadastro/login necessário.");
+                let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Login simulado com sucesso! Redirecionando para submissões.");
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    alert("Acesso não autorizado. Cadastro/login necessário.");
+                }
             }
-        }
-    });
+        });
 
-    // Gerador de referências simples (ABNT e BibTeX)
-    document.getElementById("copyRefBtn").addEventListener("click", () => {
-        const refs = [
-            "SANTOS, Diego Vinícius Brito dos; SANTOS, Taisa Maria Brito dos. Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno. Revista Inquietações, v. 1, n. 1, p. 09-27, 2026."
-        ];
-        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
-    });
-    document.getElementById("exportBibBtn").addEventListener("click", () => {
-        let bib = `@article{santos2026humanos,
+        // Gerador de referências simples (ABNT e BibTeX)
+        document.getElementById("copyRefBtn").addEventListener("click", () => {
+            const refs = [
+                "SANTOS, Diego Vinícius Brito dos; SANTOS, Taisa Maria Brito dos. Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno. Revista Inquietações, v. 1, n. 1, p. 09-27, 2026."
+            ];
+            navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
+        });
+        document.getElementById("exportBibBtn").addEventListener("click", () => {
+            let bib = `@article{santos2026humanos,
   title={Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno},
   author={Santos, Diego Vinícius Brito dos and Santos, Taisa Maria Brito dos},
   journal={Revista Inquietações},
@@ -572,65 +1317,66 @@
   pages={09--27},
   year={2026}
 }`;
-        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
-    });
+            navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
+        });
 
-    // ========== GERADOR DE CITAÇÕES (script automático) ==========
-    (function() {
-        const generator = document.querySelector('.citation-generator');
-        if (!generator) return;
-        const authors = JSON.parse(generator.dataset.authors || '[]');
-        const title = generator.dataset.title || '';
-        const url = generator.dataset.url || '';
-        const volume = generator.dataset.volume || '';
-        const issue = generator.dataset.issue || '';
-        const pages = generator.dataset.pages || '';
-        const year = generator.dataset.year || '';
-        const journal = 'Revista Inquietações';
-        const accessDate = new Date().toLocaleDateString('pt-BR');
+        // ========== GERADOR DE CITAÇÕES (script automático) ==========
+        (function () {
+            const generator = document.querySelector('.citation-generator');
+            if (!generator) return;
+            const authors = JSON.parse(generator.dataset.authors || '[]');
+            const title = generator.dataset.title || '';
+            const url = generator.dataset.url || '';
+            const volume = generator.dataset.volume || '';
+            const issue = generator.dataset.issue || '';
+            const pages = generator.dataset.pages || '';
+            const year = generator.dataset.year || '';
+            const journal = 'Revista Inquietações';
+            const accessDate = new Date().toLocaleDateString('pt-BR');
 
-        const styles = {
-            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponível em: ${url}. Acesso em: ${accessDate}.`,
-            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
-            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
-            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
-            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
-            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
-            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
-        };
+            const styles = {
+                abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponível em: ${url}. Acesso em: ${accessDate}.`,
+                apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+                mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+                chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+                harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+                vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+                ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+            };
 
-        const select = document.getElementById('citation-style');
-        const outputDiv = document.getElementById('citationOutput');
-        const copyBtn = document.querySelector('.citation-copy');
-        const feedback = document.querySelector('.citation-feedback');
+            const select = document.getElementById('citation-style');
+            const outputDiv = document.getElementById('citationOutput');
+            const copyBtn = document.querySelector('.citation-copy');
+            const feedback = document.querySelector('.citation-feedback');
 
-        function updateCitation() {
-            const style = select.value;
-            const generatorFn = styles[style];
-            if (generatorFn) {
-                outputDiv.innerHTML = generatorFn();
-            } else {
-                outputDiv.innerHTML = styles.abnt();
+            function updateCitation() {
+                const style = select.value;
+                const generatorFn = styles[style];
+                if (generatorFn) {
+                    outputDiv.innerHTML = generatorFn();
+                } else {
+                    outputDiv.innerHTML = styles.abnt();
+                }
             }
-        }
 
-        if (select && outputDiv) {
-            select.addEventListener('change', updateCitation);
-            updateCitation();
-        }
+            if (select && outputDiv) {
+                select.addEventListener('change', updateCitation);
+                updateCitation();
+            }
 
-        if (copyBtn) {
-            copyBtn.addEventListener('click', () => {
-                const citationText = outputDiv.innerText;
-                navigator.clipboard.writeText(citationText).then(() => {
-                    feedback.textContent = '✓ Referência copiada para a área de transferência.';
-                    setTimeout(() => { feedback.textContent = ''; }, 3000);
-                }).catch(() => {
-                    feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    const citationText = outputDiv.innerText;
+                    navigator.clipboard.writeText(citationText).then(() => {
+                        feedback.textContent = '✓ Referência copiada para a área de transferência.';
+                        setTimeout(() => { feedback.textContent = ''; }, 3000);
+                    }).catch(() => {
+                        feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
+                    });
                 });
-            });
-        }
-    })();
-</script>
+            }
+        })();
+    </script>
 </body>
+
 </html>

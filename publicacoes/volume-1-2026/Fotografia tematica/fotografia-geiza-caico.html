@@ -83,24 +83,67 @@
             color: #3a2a1a;
             margin-bottom: 0.8rem;
         }
-        .author-inline {
+        /* Estilo do autor com círculo */
+        .author-avatar {
             display: flex;
             align-items: center;
             gap: 16px;
             margin-top: 10px;
         }
-        .author-inline img {
-            width: 70px;
-            height: 70px;
-            object-fit: cover;
+        .avatar-circle {
+            width: 60px;
+            height: 60px;
             border-radius: 50%;
-            border: 2px solid rgba(0,0,0,0.08);
-            box-shadow: 0 6px 18px rgba(16,35,63,0.10);
-            background: #fff;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .author-name {
+            font-size: 1.1rem;
+            font-weight: 700;
+            color: #4a3a2a;
+        }
+        .author-name i {
+            margin-right: 6px;
+            color: #c28a4e;
         }
         .mini-meta {
             font-size: 0.8rem;
             color: #7a6b53;
+            margin-top: 4px;
+        }
+        /* Botões de tradução */
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+            color: #4a3a2a;
+        }
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+        }
+        .lang-btn:hover {
+            background: #e0d4bc;
         }
         .banner-card img {
             max-height: 80px;
@@ -308,6 +351,7 @@
             .content-padding { padding: 1.2rem; }
             .title-main { font-size: 1.6rem; }
             .flipbook-viewer { min-height: 400px; }
+            .avatar-circle { width: 48px; height: 48px; }
         }
         .footer {
             text-align: center;
@@ -332,6 +376,10 @@
             align-items: center;
             gap: 6px;
         }
+        /* Ocultar elementos padrão do Google Translate */
+        .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget { display: none; }
     </style>
 </head>
 <body>
@@ -347,13 +395,22 @@
                 <div>
                     <p class="kicker">Portal científico • Revista Inquietações</p>
                     <h1 class="title-main">Patrimônio Arquitetônico de Caicó – RN</h1>
-                    <div class="author-inline">
-                        <img alt="Foto da autora Geiza Venicia dos Santos" src="/assets/avatares/geiza.png"" onerror="this.src='https://via.placeholder.com/70x70?text=GV'">
-                        <div>
-                            <p><strong>Autora:</strong> Geiza Venicia dos Santos</p>
-                            <p class="mini-meta">Revista Inquietações • Fotografia temática • v.1, n.1 (2026)</p>
-                            <p class="mini-meta">DOI: <a href="https://dx.doi.org/10.5281/zenodo.18841135" target="_blank">10.5281/zenodo.18841135</a></p>
+                    <!-- Autor com foto em círculo ao lado do nome -->
+                    <div class="author-avatar">
+                        <div class="avatar-circle">
+                            <img src="/corpo%20editorial/geiza.png" alt="Foto da autora Geiza Venicia dos Santos" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:60px; width:100%; text-align:center; font-size:28px;\'></i>'">
                         </div>
+                        <div>
+                            <div class="author-name"><i class="fas fa-user-pen"></i> Geiza Venicia dos Santos</div>
+                            <div class="mini-meta">Revista Inquietações • Fotografia temática • v.1, n.1 (2026)</div>
+                            <div class="mini-meta">DOI: <a href="https://dx.doi.org/10.5281/zenodo.18841135" target="_blank">10.5281/zenodo.18841135</a></div>
+                        </div>
+                    </div>
+                    <!-- Botões de tradução -->
+                    <div class="lang-buttons">
+                        <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
+                        <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
+                        <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
                     </div>
                 </div>
                 <div class="banner-card">
@@ -443,7 +500,76 @@
     </div>
 </div>
 
+<!-- Google Translate Widget -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'pt',
+            includedLanguages: 'pt,en,es',
+            autoDisplay: false,
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+        document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<div id="google_translate_element" style="display:none;"></div>
+
 <script>
+    // Botões de tradução manuais via Google Translate API
+    (function() {
+        const langBtns = document.querySelectorAll('.lang-btn');
+        let currentLang = 'pt';
+
+        function triggerGoogleTranslate(lang) {
+            const selectElem = document.querySelector('.goog-te-combo');
+            if (selectElem) {
+                selectElem.value = lang;
+                selectElem.dispatchEvent(new Event('change'));
+            } else {
+                setTimeout(() => {
+                    const select = document.querySelector('.goog-te-combo');
+                    if (select) {
+                        select.value = lang;
+                        select.dispatchEvent(new Event('change'));
+                    }
+                }, 500);
+            }
+        }
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang === currentLang) return;
+                
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                let googleCode = '';
+                if (lang === 'pt') googleCode = 'pt';
+                else if (lang === 'en') googleCode = 'en';
+                else if (lang === 'es') googleCode = 'es';
+                
+                triggerGoogleTranslate(googleCode);
+                currentLang = lang;
+            });
+        });
+        
+        const observer = new MutationObserver(() => {
+            const combo = document.querySelector('.goog-te-combo');
+            if (combo && !combo._listenerAdded) {
+                combo._listenerAdded = true;
+                const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
+                let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
+                if (combo.value !== code) {
+                    combo.value = code;
+                    combo.dispatchEvent(new Event('change'));
+                }
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    })();
+
     // Configurar PDF.js worker
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
     

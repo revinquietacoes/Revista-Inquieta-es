@@ -72,9 +72,28 @@
             color: #2c5f7a;
             font-weight: 500;
             display: flex;
-            gap: 1rem;
             flex-wrap: wrap;
-            align-items: baseline;
+            align-items: center;
+            gap: 1rem;
+        }
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .action-buttons {
             display: flex;
@@ -115,6 +134,34 @@
             transform: translateY(-2px);
             filter: brightness(1.05);
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Botões de tradução */
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+            color: #4a3a2a;
+        }
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+        }
+        .lang-btn:hover {
+            background: #e0d4bc;
         }
 
         /* panels */
@@ -402,6 +449,24 @@
                 justify-content: center;
             }
         }
+
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Ocultar elementos padrão do Google Translate */
+        .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget { display: none; }
     </style>
 </head>
 <body>
@@ -412,10 +477,23 @@
             <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1 n.1 • 2026</div>
             <div class="title">Assistance to Black Bodies in Health Establishments:<br>Deconstructing Prejudices and Promoting an Ethics of Care</div>
             <div class="author-line">
-                <span><i class="fas fa-user-pen"></i> <strong>Diego Vinicius Brito dos Santos</strong></span>
+                <div class="author-avatar">
+                    <div class="avatar-circle">
+                        <img src="/corpo%20editorial/diego.png" alt="Foto do autor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                    </div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinicius Brito dos Santos</strong></span>
+                </div>
                 <span><i class="fas fa-globe"></i> Original translation by the author</span>
                 <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18841714</span>
             </div>
+
+            <!-- Botões de tradução -->
+            <div class="lang-buttons">
+                <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
+                <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
+                <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+            </div>
+
             <div class="action-buttons">
                 <a class="btn btn-pdf" href="/arquivos/Texto-do-artigo-em-inglês.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Baixar PDF</a>
                 <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18841714" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
@@ -541,7 +619,76 @@
     </div>
 </div>
 
+<!-- Google Translate Widget -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'pt',
+            includedLanguages: 'pt,en,es',
+            autoDisplay: false,
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+        document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<div id="google_translate_element" style="display:none;"></div>
+
 <script>
+    // Botões de tradução manuais via Google Translate API
+    (function() {
+        const langBtns = document.querySelectorAll('.lang-btn');
+        let currentLang = 'pt';
+
+        function triggerGoogleTranslate(lang) {
+            const selectElem = document.querySelector('.goog-te-combo');
+            if (selectElem) {
+                selectElem.value = lang;
+                selectElem.dispatchEvent(new Event('change'));
+            } else {
+                setTimeout(() => {
+                    const select = document.querySelector('.goog-te-combo');
+                    if (select) {
+                        select.value = lang;
+                        select.dispatchEvent(new Event('change'));
+                    }
+                }, 500);
+            }
+        }
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang === currentLang) return;
+                
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                let googleCode = '';
+                if (lang === 'pt') googleCode = 'pt';
+                else if (lang === 'en') googleCode = 'en';
+                else if (lang === 'es') googleCode = 'es';
+                
+                triggerGoogleTranslate(googleCode);
+                currentLang = lang;
+            });
+        });
+        
+        const observer = new MutationObserver(() => {
+            const combo = document.querySelector('.goog-te-combo');
+            if (combo && !combo._listenerAdded) {
+                combo._listenerAdded = true;
+                const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
+                let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
+                if (combo.value !== code) {
+                    combo.value = code;
+                    combo.dispatchEvent(new Event('change'));
+                }
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    })();
+
     // Gerador de referências ABNT (simples)
     const refItems = [
         "ALMEIDA, Silvio. Racismo Estrutural. São Paulo: Pólen, 2019.",

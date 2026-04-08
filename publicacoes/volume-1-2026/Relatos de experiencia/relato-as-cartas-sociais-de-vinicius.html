@@ -1,18 +1,22 @@
 <!DOCTYPE html>
 <html lang="pt">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>As Cartas Sociais de Vinícius | Relato de Experiência | Revista Inquietações</title>
     <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet">
     <style>
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
+
         body {
             font-family: 'Inter', sans-serif;
             background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
@@ -21,6 +25,7 @@
             justify-content: center;
             min-height: 100vh;
         }
+
         .container {
             max-width: 1280px;
             width: 100%;
@@ -29,13 +34,16 @@
             box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
             overflow: hidden;
         }
+
         .content-padding {
             padding: 2rem 2.5rem;
         }
+
         .header {
             border-bottom: 2px solid #e0d6c0;
             margin-bottom: 1.8rem;
         }
+
         .journal-badge {
             display: inline-block;
             background: #6b4c2c;
@@ -47,6 +55,7 @@
             text-transform: uppercase;
             font-weight: 600;
         }
+
         .title {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.5rem;
@@ -55,6 +64,7 @@
             margin-top: 1rem;
             color: #3a2a1a;
         }
+
         .author-line {
             margin-top: 0.8rem;
             font-size: 0.95rem;
@@ -62,14 +72,39 @@
             font-weight: 500;
             display: flex;
             flex-wrap: wrap;
+            align-items: center;
             gap: 1rem;
         }
+
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .action-buttons {
             display: flex;
             flex-wrap: wrap;
             gap: 1rem;
             margin: 1.5rem 0 1rem;
         }
+
         .btn {
             display: inline-flex;
             align-items: center;
@@ -84,10 +119,61 @@
             color: #2c3a2b;
             border: 1px solid #d6cdb5;
         }
-        .btn-pdf { background: #8b4513; color: white; border: none; }
-        .btn-doi { background: #2c6e5c; color: white; border: none; }
-        .btn-submit { background: #b87c3a; color: white; border: none; }
-        .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+
+        .btn-pdf {
+            background: #8b4513;
+            color: white;
+            border: none;
+        }
+
+        .btn-doi {
+            background: #2c6e5c;
+            color: white;
+            border: none;
+        }
+
+        .btn-submit {
+            background: #b87c3a;
+            color: white;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Botões de tradução */
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+            color: #4a3a2a;
+        }
+
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+        }
+
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
 
         .panel {
             background: rgba(255, 255, 252, 0.96);
@@ -97,6 +183,7 @@
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
             border: 1px solid #ece2d0;
         }
+
         .panel h2 {
             font-size: 1.8rem;
             font-weight: 600;
@@ -105,26 +192,31 @@
             margin-bottom: 1.2rem;
             color: #4a3a2a;
         }
+
         .article-text {
             font-size: 1.02rem;
             line-height: 1.7;
             color: #2a2a24;
         }
+
         .article-text p {
             margin-bottom: 1.2rem;
             text-align: justify;
         }
+
         .article-text h3 {
             font-size: 1.5rem;
             font-weight: 600;
             margin: 1.8rem 0 0.8rem;
             color: #9b5e2c;
         }
+
         .article-text h4 {
             font-size: 1.2rem;
             margin: 1rem 0 0.5rem;
             color: #b47c48;
         }
+
         .wikilink {
             text-decoration: none;
             background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
@@ -135,27 +227,36 @@
             border-bottom: 1px dotted #b89a6a;
             transition: 0.1s;
         }
-        .wikilink:hover { background: #e0d4bc; color: #4e3a22; }
+
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
+        }
+
         .ref-list {
             list-style: none;
             margin-top: 1rem;
         }
+
         .ref-list li {
             margin-bottom: 0.9rem;
             font-size: 0.85rem;
             border-left: 2px solid #dccfaf;
             padding-left: 1rem;
         }
+
         .ref-list a {
             color: #8b5a2e;
             text-decoration: none;
             word-break: break-all;
         }
+
         .citation-actions {
             margin: 1rem 0 0.5rem;
             display: flex;
             gap: 12px;
         }
+
         .cite-btn {
             background: #f4efdf;
             border: 1px solid #cfc2a0;
@@ -164,16 +265,19 @@
             font-size: 0.7rem;
             cursor: pointer;
         }
+
         .pdf-frame {
             border-radius: 1rem;
             overflow: hidden;
             border: 1px solid #e2dccf;
         }
+
         iframe {
             width: 100%;
             height: 700px;
             border: none;
         }
+
         footer {
             font-size: 0.7rem;
             text-align: center;
@@ -182,14 +286,25 @@
             margin-top: 1rem;
             color: #7a6b53;
         }
+
         @media (max-width: 800px) {
-            body { padding: 1rem; }
-            .content-padding { padding: 1.2rem; }
-            .title { font-size: 1.9rem; }
+            body {
+                padding: 1rem;
+            }
+
+            .content-padding {
+                padding: 1.2rem;
+            }
+
+            .title {
+                font-size: 1.9rem;
+            }
         }
+
         .bg-warm {
             background: #fefaf0;
         }
+
         /* Gerador de citações */
         .citation-generator {
             background: #fefaf0;
@@ -197,13 +312,15 @@
             border-radius: 1.2rem;
             margin: 1.5rem 0 1rem 0;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
+
         .citation-generator-head {
             background: #f4efe2;
             padding: 1rem 1.5rem;
             border-bottom: 1px solid #e2d6c0;
         }
+
         .citation-generator-head h2 {
             font-size: 1.3rem;
             font-weight: 600;
@@ -212,15 +329,18 @@
             border-left: none;
             padding-left: 0;
         }
+
         .citation-generator-body {
             padding: 1.2rem 1.5rem;
         }
+
         .citation-generator-note {
             font-size: 0.85rem;
             color: #6b5a42;
             margin-bottom: 1rem;
             font-style: italic;
         }
+
         .citation-controls {
             display: flex;
             flex-wrap: wrap;
@@ -228,10 +348,12 @@
             align-items: flex-end;
             margin-bottom: 1.2rem;
         }
+
         .citation-field {
             flex: 2;
             min-width: 180px;
         }
+
         .citation-field label {
             display: block;
             font-size: 0.75rem;
@@ -241,6 +363,7 @@
             color: #8b7355;
             margin-bottom: 0.3rem;
         }
+
         .citation-select {
             width: 100%;
             padding: 0.6rem 0.8rem;
@@ -252,16 +375,19 @@
             color: #2c3a2b;
             cursor: pointer;
         }
+
         .citation-select:focus {
             outline: none;
             border-color: #c28a4e;
-            box-shadow: 0 0 0 2px rgba(194,138,78,0.2);
+            box-shadow: 0 0 0 2px rgba(194, 138, 78, 0.2);
         }
+
         .citation-actions {
             flex: 1;
             display: flex;
             justify-content: flex-end;
         }
+
         .citation-btn {
             background: #2c5a4a;
             border: none;
@@ -275,10 +401,12 @@
             align-items: center;
             gap: 6px;
         }
+
         .citation-btn:hover {
             background: #1f4538;
             transform: translateY(-1px);
         }
+
         .citation-output {
             background: #ffffff;
             border: 1px solid #e2dac8;
@@ -290,17 +418,29 @@
             color: #2a2a24;
             margin-top: 1rem;
         }
+
         .citation-feedback {
             font-size: 0.75rem;
             margin-top: 0.5rem;
             color: #9b5e2c;
             min-height: 1.8rem;
         }
+
         @media (max-width: 700px) {
-            .citation-controls { flex-direction: column; align-items: stretch; }
-            .citation-actions { justify-content: stretch; }
-            .citation-btn { justify-content: center; }
+            .citation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .citation-actions {
+                justify-content: stretch;
+            }
+
+            .citation-btn {
+                justify-content: center;
+            }
         }
+
         .diary-title {
             font-size: 1.4rem;
             font-weight: 600;
@@ -309,227 +449,766 @@
             border-left: 3px solid #c28a4e;
             padding-left: 1rem;
         }
+
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Ocultar elementos padrão do Google Translate */
+        .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget { display: none; }
     </style>
 </head>
+
 <body>
-<div class="container bg-warm">
-    <div class="content-padding">
-        <div class="header">
-            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1, n.1 • Relato de Experiência • 2026</div>
-            <div class="title">As Cartas Sociais de Vinícius</div>
-            <div class="author-line">
-                <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
-                <span><i class="fas fa-university"></i> Prefeitura Municipal de Carnaúba dos Dantas, RN</span>
-                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18844651</span>
-            </div>
-            <div class="action-buttons">
-                <a class="btn btn-pdf" href="/arquivos/Cartas_Sociais_Vinicius.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Baixar PDF</a>
-                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18844651" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
-                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissões</a>
-            </div>
-        </div>
-
-        <!-- Resumo -->
-        <div class="panel">
-            <h2><i class="fas fa-align-left"></i> Resumo</h2>
-            <p>O presente relato de experiência reúne diários de bordo produzidos no contexto da disciplina Introdução à Sociologia, ofertada no curso de Licenciatura em Ciências Sociais da Universidade Federal do Rio Grande do Norte (UFRN), durante o período de ensino remoto emergencial em 2020. Cada diário aborda temáticas específicas discutidas em aula, tais como modernidade, imaginação sociológica, neutralidade científica, construção social da realidade, identidade, indústria cultural e os fundamentos históricos da sociologia. Os registros articulam vivências pessoais, reflexões teóricas e problematizações acerca do processo formativo em contexto pandêmico, evidenciando os impactos da mediação tecnológica, da reorganização do tempo social e das transformações nas dinâmicas pedagógicas. Metodologicamente, trata-se de uma escrita reflexiva de caráter autobiográfico-formativo, na qual a experiência individual é tensionada à luz de categorias sociológicas trabalhadas em aula, especialmente a partir de autores como C. Wright Mills, Berger e Luckmann, Marx e Weber. O conjunto dos diários evidencia a potência do exercício narrativo como instrumento de aprendizagem crítica, revelando que a formação em Ciências Sociais não se limita à assimilação conceitual, mas envolve a reelaboração subjetiva da experiência social. Conclui-se que o diário de bordo, enquanto prática pedagógica, favorece a consolidação da imaginação sociológica ao permitir que o(a) estudante relacione biografia e história, experiência pessoal e estrutura social, especialmente em contextos de crise e transição, tal qual a experiência vivenciada na pandemia.</p>
-            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> formação docente</span>
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> ensino remoto</span>
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> imaginação sociológica</span>
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> diário de bordo</span>
-                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> experiência formativa</span>
-            </div>
-        </div>
-
-        <!-- Texto completo dos diários -->
-        <div class="panel article-text">
-            <h2>Diários de Bordo</h2>
-            
-            <div class="diary-title">DIÁRIO DE BORDO – 01/10/2020</div>
-            <p>Amigo, antes de apertar minha memória como um limão para fazer este diário, algo paira em minha mente, preciso compartilhar com você (who are you?). Pode ser a última vez que terei a chance. Lembra que eu falei que a plataforma caiu e que haveria novas mudanças a partir do dia 1º deste mês? Bem, nessa aula, que marcou o início dessas mudanças, o professor fez algo inusitado, não por ser algo novo, mas por ser algo que não fazíamos há muito tempo: a chamada oral.</p>
-            <p>Nesta disciplina em particular, não tivemos chamadas de frequência desde o primeiro dia de aula virtual, combinamos que a frequência seria aferida pelos diários de bordo e por meio de um boa noite no chat da plataforma, mas a plataforma não registra mais os boas noites, então temo que esses diários possam estar com os dias contados ou possam ser usados com notas complementares, como será usado nesta primeira unidade.</p>
-            <p>Porém, lembro bem que o professor falou que na segunda unidade vamos inovar novamente, que a primeira unidade foi um teste, então, se esse diário for o último, quero deixar claro que foi um prazer ter você como leitor.</p>
-            <p>Vamos para a aula? Foi um lindo dia, início de um novo mês, pelo meu calendário, faltam 822 dias para encerrar o mandato do presidente do Brasil. Estamos quase lá. Entrei na aula com cinco minutos restantes para começar a aula. Éramos apenas eu e meu amigo na sala. Ele estava com sono e eu cansado, tínhamos saído de outra aula e estávamos prestes a começar outra. Enquanto ninguém chegava, pedi a ele para vencer um pouco o sono e tocar uma música no violão. Ele começou com um que eu conhecia, mas não lembrava do nome, ele tocou wind of change, sim amigo, eu tenho um amigo talentoso, ao final, ele começou a tocar stairway to heaven, mais então o professor chegou e pediu still loving you. Sempre que meu amigo começa a tocar antes das aulas, é como se o ambiente fosse purificado para que possamos iniciar os trabalhos. E mesmo com sono e tudo, ele tocou majestosamente.</p>
-            <p>Após aquele momento de descontração, o professor abriu a aula com a chamada oral, como já lhe falei, e então iniciamos as apresentações. É bom não perder muito tempo, pois a segunda aula é sempre mais curta que a primeira. E tempo, bem, tempo é algo que não poderia passar despercebido nesta aula. Você logo entenderá. Como de costume, me ofereci e todo o meu grupo para iniciar as apresentações, em algum outro diário já dei os motivos pelos quais gosto de ser o primeiro em uma apresentação, inclusive, após a apresentação, outro estudante disse que seria difícil ser original após esta apresentação. Acho que não sou paranoico de preferir começar, mas, sem querer ser bajulador, meu grupo estava em sintonia muito boa, estou todo orgulhoso das amizades que estou construindo neste curso, são bons amigos, e essas apresentações nos aproximaram, entraram no meu dia a dia e meu cotidiano se tornou um ótimo cotidiano. Alguns podem não gostar da rotina e do cotidiano, mas eu gosto do meu.</p>
-            <p>Vou deixar nosso mapa mental abaixo, caso você queira ler o livro em que trabalhamos. Acho que tocamos em pontos-chave no texto, então o mapa pode ser um ótimo guia de leitura. O ponto central é exatamente a realidade da vida cotidiana. O autor chega a dizer que ela é a realidade par excellence. Talvez para nossa modernidade esta afirmação seja válida. Às 21:13 nossa apresentação acabou, a segunda começou logo e havia outro grupo na sequência. Após as apresentações, um aluno do segundo grupo questionou o professor sobre o face a face, um dos conceitos que permeou as apresentações e o debate. O face a face é se colocar na frente do outro. O professor falou algo que me chamou a atenção, não consigo reproduzir com as mesmas palavras, mas foi mais ou menos assim: na metrópole, onde as pessoas não se conhecem, os indivíduos podem, neste face a face, vivenciar todas as suas potencialidades. Digamos que eu não te conheço e você não me conhece, somos anônimos um para o outro. Então imagine uma situação do dia a dia, em que me coloco face a face com você, neste cenário, posso usar a máscara que (Eu) quiser, assumir outra personalidade e agir a partir de forças diferentes. Mas, se (Eu e Você) começarmos a viver juntos, naturalmente você vai me conhecer, meus gostos, meus comportamentos, meus hábitos, preferências etc.</p>
-            <p>Sim, quanto à temporalidade, a realidade cotidiana tem temporalidades diferentes e é composta por realidades múltiplas. Por exemplo, a temporalidade social é cronológica, mas dentro da realidade podemos experimentar outras temporalidades. Eu disse na aula que quando fui ao shopping foi como se o tempo cronológico fosse momentaneamente suspenso e eu entrasse em um novo tempo. Sim, amigo, eu nunca fui ao shopping, não é algo acessível ao meu contexto e ambiente, então a experiência de entrar naquele ambiente inédito até então suspendeu minha atenção e vigilância com o cotidiano que me esperava fora daquele ambiente. Sim, mencionei também a temporalidade do teatro, das redes sociais, etc. Porém, outra temporalidade que mencionei na apresentação foi a da criança. A criança não tem uma vida cronometrada como nós, ela vive no deleite do presente, porém, ela vai sendo gradualmente afastada do tempo da natureza quando ela é disciplinada para o modo de viver em sociedade, ou seja, quando ela é introduzida no cotidiano social e na temporalidade cronometrada.</p>
-            <p>Amigo, houve outras questões importantes, que peço desculpas por não compartilhar com você, mas preciso ir para a minha prova de sociologia, sim, já estamos em período de provas, o tempo passou tão rápido, não concorda?</p>
-            <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.</p>
-            <p>At.te., seu amigo, Vinícius</p>
-
-            <div class="diary-title">DIÁRIO DE BORDO – 08/09/2020 – Primeira Aula</div>
-            <p>Começo de um semestre, de uma disciplina, de uma formação, de novas e velhas relações sociais, etc. não escreverei sobre um novo começo de ano, porque este semestre é peculiar. Leitor, após meu ponto final, você realmente esperava que eu lhe dissesse por que seria um semestre peculiar? Você deveria saber, pois acho que você, como eu, está vivendo o fim dos tempos e do normal; estamos vivendo 2020 e você não precisa saber porque algo se tornou peculiar, porque tudo está peculiar: as nossas relações, nossos corpos, nossos sentimentos, nossos medos, nossos hábitos e comportamentos, enfim, tudo que antes pensávamos banal ou rotineiro, agora nos parece peculiar. Afirmar essa peculiaridade significa que estamos experimentando algo novo? Tudo mudou? Finalmente saímos de alguma matriz ou das ilusões da caverna, como nos disse Platão em algum momento da história?</p>
-            <p>Antes que você diga que a pandemia pela qual estamos passando ser alguma espécie de caixa de Pandora que proporcionou essa peculiaridade, devo avisar que não, pois, se de fato temos uma conexão histórica com aqueles que nos precederam, certamente já passamos por outras pandemias, mas esta é diferente, não acham? Na época em que vivemos, uma pandemia pode ser vista de vários ângulos, um desses ângulos é sociológico, porque não se pode pensar em uma pandemia sem uma perspectiva sociológica. A pandemia, vista por um(a) sociólogo(a), veio mostrar algumas coisas que foram banalizadas por muito tempo: divisões de classes; saúde precária, pesquisa e tecnologia, cultura e outros setores da sociedade; relações de trabalho e suas novas configurações no contexto neoliberal; o negacionismo e o obscurantismo; relações de poder; o imediatismo imagístico; etc. A pandemia não provocou peculiaridades, ela veio para mostrar as ferrugens da engrenagem do normal. A sociedade esteve em uma letargia institucional por muito tempo. O peculiar é nossa antítese à tese do normal, para que possamos encontrar alguma síntese nesse processo vital e dialético.</p>
-            <p>Durante o início da nova disciplina, que mencionei antes, o professor, em seu quadrado virtual e projetado virtualmente na tela de meu smartphone, se lembrou de uma pergunta difícil de responder: para que servem as ciências sociais? Prefiro tirar água da pedra do que encontrar uma resposta para essa pergunta. Se eu chegasse a responder ela, eu teria motivos suficientes para fugir das ciências sociais, porque responder a algo essencial é limitar a essência de algo. Falar sobre a utilidade das ciências sociais implica saber o que são ciências sociais. Enfatizei o “são” para não cair na armadilha gramatical em que me colocaram.</p>
-            <p>Não quero me estender muito, caro leitor. O professor, utilizando novos recursos tecnológicos, gravou toda a aula. Minha voz, minha imagem, meu tempo, algumas coisas minhas foram, por ele e sua tecnologia, capturadas em pixels, mas será que ele me capturou? Penso que não. Caso queira rever aquele passado, aquela aula, está gravado. Isso não te lembra a magia do cinema? Mas ele pediu para fazer esse diário, professores(as) gostam de dá trabalho pros estudantes, não é? Então vamos ver se a memória me ajuda. A aula, no geral, foi muito boa. “Muito boa” é pretensioso? Tudo bem, foi legal. Ainda estamos no começo. Se eu fosse resumir o tema da aula, poderia dizer que foi uma aula introdutória. Introdução a quê? - você me pergunta - às três unidades que trabalharemos neste semestre.</p>
-            <p>Ele, o professor, pediu para dizer qual tópico chamou minha atenção. No momento da aula, acho que a questão dos clássicos e da cultura industrial. Ele falou que um(a) autor(a) clássico(a) é clássico(a) porque ainda hoje o(a) autor(a) é importante para resolução de alguma questão. Ele mencionou Marx, da filosofia e Beethoven e Luiz Gonzaga da música; mas, em minha mente, fiquei pensando se o clássico é realmente importante, será que existe um clássico mais clássico por trás do clássico que se tornou um clássico importante? Ficou confuso? Perdoa meus delírios, por favor. Mas dei-me a chame de explicar. Por exemplo, K. Marx, ele é um clássico, certo? Mas para ele se tornar um clássico importante, ele deve ter lido e aprendido algo com algum clássico, o que lhe permitiu se tornar um clássico também. Atrás de Marx, os clássicos que vêm à mente são Hegel e Epicuro, acho que esses clássicos acabaram produzindo um clássico importante para nós contemporâneos, então eles são também clássicos importantes?</p>
-            <p>Mas vamos esquecer esses devaneios, caro leitor. Sobre a indústria cultural, perguntei ao professor, durante a transmissão, se ele usaria o texto intitulado O riso e o trágico na indústria cultural - a catarse administrada do Adorno, ele disse que esse texto era mais complicado de usar, talvez devido ao tempo e formato do semestre, mas que veríamos o Adorno. Se você me conhece bem, caro leitor, quando Adorno usa o Nietzsche neste texto, ele me conquista, seria uma espécie de sapiofilia? Não sei, considero os dois autores muito inteligentes.</p>
-            <p>Para encerrar a aula, ele fez os seguintes três pedidos: em uma palavra, diga um sentimento, um desejo imediato e um desejo futuro! A maioria, quanto ao primeiro pedido, disse paz, posteriormente, ele pediu para falarmos da paz. Eu não gosto muito da paz, teremos tempo de sobra para experimentar alguma paz, mas imersos na vitalidade da vida, paz gera água parada, conformismo, estanca o fluxo trágico da vida. O conflito, o oposto da paz, gera superação, elevação, potencialização, a paz destrói o conflite, mas o conflite é importante ao viver. Agora, deixando de enrolação, minhas palavras foram: relicarium, impeachment e doutorado. Destrinchando-as: relicarium porque tenho saudades de um passado que só vive na minha memória; impeachment é o meu desejo mais imediato, as razões são óbvias, exceto se você, meu leitor, for de direita, fascista ou algo assim; o doutorado foi a única coisa que me veio para o futuro. O futuro é tão incerto que eu nem ia responder, mas coloquei o doutorado para preencher tabela. Acho perigoso ficar projetando expectativas para o futuro, com certeza a decepção irá chegar em seguida, por isso, sou muito pé no chão.</p>
-            <p><strong>MAPA MENTAL DA AULA</strong><br>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.tt., seu amigo, Vinícius</p>
-
-            <div class="diary-title">DIÁRIO DE BORDO – 10/09/2020</div>
-            <p>Caro leitor, escrever depois de uma aula como a de hoje pode acabar se tornando um problema. O professor deve entender isso, pois durante a aula ele afirmou que depois das aulas a cabeça dele gira como um CD. Para não copiar o que ele disse, vou parafrasear: minha cabeça parece uma fita cassete sendo rebobinada. Obviamente devido a esse esforço de lembrar a aula, organizar o volume de informações e absorver algo que um amigo meu fez antes da aula, mas eu te contarei isso noutro momento. Talvez eu comece a escrever os diários um dia depois da aula, se estiver tudo bem para você, leitor. Não que eu esteja com sono nem nada, mas nessas últimas horas, quando outros dormem, eu só quero ficar aqui, perdido em meus pensamentos.</p>
-            <p>Na aula de hoje aconteceu uma coisa legal, o professor tocou em alguns pontos que já escrevi para você, sobre as características dessa pandemia, sobre o nosso despreparo para enfrentá-la, embora tenhamos muito conhecimento sobre outras pandemias históricas. Ele citou a pandemia que a gripe espanhola (1918-1919) causou no passado. Levantando, a meu ver, aquele ponto, que antes lhe havia confiado, que a sociedade estava em uma letargia social, e, com a chegada do covid-19, o cotidiano, nas palavras do professor, foi para as nuvens. Queria até que as nuvens tivessem um sentido poético e positivo, mas as nuvens querem significar novas plataformas de clouds, de interações simultâneas, embora virtuais. Se você deseja colocar os pontos positivos e negativos dessas novas formas de interação em perspectiva ou analise, vá em frente. Nesse assunto, estou atuando como a Suíça, ou seja, neutro e na minha.</p>
-            <p>Neutralidade é nosso próximo ponto. Em determinado momento da aula, o professor disse que para se obter uma análise dos fatos sociais do cotidiano é preciso fazer parte do cotidiano e fazer parte do senso comum. Tenho algumas advertências sobre esta questão: como ser imparcial estando no senso comum? Como renunciar a valores e conceitos que configuram a subjetividade do indivíduo para obter uma análise imparcial? Um tempo atrás eu estava entre certas pessoas e vi claramente que esse estar junto ou pertencer a um grupo estava me reformando. Com isso quero dizer que um indivíduo ou uma subjetividade é uma construção das pessoas e dos fatores que o envolvem. A probabilidade de que alguém que vive em um ambiente com pessoas sexistas/racistas/misóginas, etc., adquirir esses traços para si mesmo é maior em relação a uma pessoa que vive junto com outras subjetividades sem tais características. Leitor, com isso quero dizer que uma análise, por mais imparcial que possa ser proposta, sempre carregará traços da subjetividade daquele que se propõe a tarefa de analisar.</p>
-            <p>Numa sentença, que será proferida em tribunal, me pergunto se o juiz é realmente o símbolo da imparcialidade como nos fazem crer. Você já parou para refletir sobre como é o julgamento entre ricos e pobres, negros e brancos, homens e mulheres, cidadãos e políticos, etc. são diferentes. Como se uma forma de tratamento desses casos já estivesse institucionalizada, sem o devido respeito ao devido processo legal. Outro dia, se não me engano, uma magistrada, ao proferir uma condenação de um ex-presidente aí, simplesmente copiou e colou (ctrl+c e ctrl+v) a sentença de outro juiz para fundamentar sua própria sentença. Será que houve uma análise parcial nesse caso? É difícil para mim dizer que o sociólogo tem que ser parcial em sua análise. O próprio desejo de analisar algo, a princípio, já supõe que há um interesse por trás da análise. Mas não vou me alongar nisso, vou refletir mais e depois posso acrescentar algo mais.</p>
-            <p>Leitor, estou caminhando esse relato para o fim, mas não posso deixar de enfatizar alguns pontos, por isso peço-lhe um pouco de paciência, que hoje está em falta. Eu sinto que não estou prestando a devida atenção as questões que o professor falou na aula. Portanto, preciso expô-las neste momento. Preciso ser consistente no que falo, porque o professor tem uma bola de cristal. Talvez ele esteja olhando para nós agora. Então, “Oi professor. Como vai o senhor?” Brincadeiras à parte, professor, vou te contar, se a sua bola de cristal estiver com uma boa recepção, coisas que você falou na aula. Serei pontual para eu não virar um papagaio.</p>
-            <p>As falas do professor foram direcionadas ao entendimento da modernidade ou dos tempos modernos, como no filme de Charlie Chaplin. O que me chamou a atenção é o fato de que, ao contrário dos filósofos que teorizam ideias, os sociólogos teorizam o cotidiano. O cotidiano apresenta os pontos e contrapontos, além dos dados sociais de que o sociólogo precisa para suas pesquisas, foi mais ou menos assim que ele falou. Compreender a vida cotidiana, é esse o propósito da sociologia? Ou há algo mais? Você não espera que eu diga, não é? Você esqueceu que hoje sou a Suíça em questões complicadas como essa? Acho que o professor não gostaria de uma resposta, pois estaria tentando limitar o objeto da sociologia.</p>
-            <p>Ah, quase esqueci, tanto o professor desta aula quanto o professor da aula anterior, numa sincronia sociológica, que só um Marx psicólogo poderia explicar, afirmaram que a sociologia de Weber era compreensiva, ou seja, busca entender a sociedade ou o cotidiano, mas de forma parcial, acho que isso está ligado naquela questão anterior sobre neutralidade.</p>
-            <p>Outro ponto tocado foi sobre o consumismo na era moderna, não vou falar muito sobre isso, porque esse fator é muito evidente hoje, ouso dizer que ele é cristalino.</p>
-            <p>Ao final da aula, o professor apontou três princípios explicativos sobre um texto de Ianni Octavio, intitulados Sociologia e o Mundo Moderno, os princípios são: causalidade funcional, causas que criam novas atitudes na sociedade; conexão de sentidos, onde se questiona porque as coisas adquirem certos sentidos, também tem a ver com comportamentos sociais, caso queira saber; contradição, porque a sociedade está em constante mudança, o momento dessas mudanças pode ser lento ou rápido.</p>
-            <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo, Vinícius</p>
-
-            <div class="diary-title">DIÁRIO DE BORDO – 15/09/2020</div>
-            <p>Caro leitor, creio que já estamos próximos o suficiente para que eu o chame de amigo. Então, deixe-me começar de novo. Caro amigo, depois de um dia difícil, tudo que eu quero é um pouco de calma e um bom diálogo. Ontem à tarde tive uma reunião com os membros do grupo de sociologia, sinto que estão a dar o seu melhor, mesmo com dificuldades adversas, como trabalho e pouco tempo. Procuro entendê-los, sei que o início de uma graduação pode ser complicado, são muitos textos, atividades, seminários, apresentações e outras coisas. Tentar organizar tudo isso é difícil. Um amigo meu já desistiu de dois componentes curriculares. Por um lado, eu entendo, sabe? Quando algo te consome muito, você precisa decidir se quer deixar que seja consumido ou se esse algo pode ser resolvido em outro momento. Vejo os professores, de maneiras diferentes, tentando se adaptar ao novo contexto, mas, será que eles estão levando em consideração os contextos dos jovens por trás das telas? Desculpe esse desabafo.</p>
-            <p>Amigo, até então eu estava um pouco desmotivado, mas o professor dessa disciplina tem algo que proporciona uma vontade de continuar. Ele trabalhou questões que eu prezo muito, por exemplo, o renascimento. Se fosse uma aula de história típica, eu pediria a ele para comentar um pouco mais sobre a relação entre o renascimento, Lutero e o papado, acho que é uma discussão que preciso ter com alguém que entende bem do assunto. Parece que o professor é esse alguém. Ele trouxe características do Renascimento, como, por exemplo, o resgate que o Renascimento fez do termo cidadão cunhado na Grécia Antiga; a reviravolta copernicana entre Deus e o homem, onde o homem está no centro; etc., todas as características históricas que o professor apresentou estão voltadas para a compreensão do surgimento da sociologia. Esse também foi o ponto que norteou as reflexões da turma. Se você me conhece bem, amigo, você sabe que eu, por trabalhar filósofos da modernidade e da contemporaneidade, sou fascinado pelos contextos históricos desses períodos. Aí a aula acabou ficando leve, quase dançante.</p>
-            <p>Durante a aula, pude trocar algumas ideias com o professor, embora fosse melhor ouvi-lo. Ele trouxe fatores sobre a vida nas cidades, os meios de transporte de mercadorias, a mudança na forma de trabalhar entre o período feudal e o moderno, a acumulação primitiva de capital, trabalhada por Marx, aliás, Marx estava presente, não de forma carnal, mas algo essencial dele pairava naquele momento virtual, suas ideias, seus pensamentos, seus diagnósticos sociais e outras coisas. Amigo, você não acha incrível essa ideia de que Marx venceu a morte se tornando um clássico? Porém, podemos ter essa conversa em outro momento.</p>
-            <p>Amigo, não quero me estender hoje, pode culpar a astrologia ou algum mal funcionamento psicofísico meu, mas, em resumo, a aula trabalhou os pontos principais do texto que lhe falei antes, o professor até pediu que fizéssemos um mapa mental dele, vou deixá-lo aqui, caso sinta curiosidade literária para apreciar o texto. Na próxima aula, vou apresentá-lo aos outros colegas. Eu gostaria de ver você lá.</p>
-            <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo, Vinícius</p>
-
-            <div class="diary-title">DIÁRIO DE BORDO – 17/09/2020</div>
-            <p>Caro leitor, você estava na aula? Desculpe por não interagir com você, muita coisa aconteceu. No início da aula, o professor disse que o texto que eu ia apresentar já estava fechado. Sim, aquele texto que prometi, no último diário de bordo, apresentar. Aparentemente, boa parte da turma não entendeu bem o que o professor havia falado e aconteceu esse desencontro de informações. Mas o professor explicou tudo e combinamos coisas novas. Afinal, amigo, tudo é muito novo. Esse ensino remoto não fazia parte da vida dos discentes. Fomos lançados ao devir da realidade social abruptamente e sem muita experiência. Mas acredito que estamos fazendo o nosso melhor com os meios e ferramentas de que dispomos.</p>
-            <p>Como falei, havia esse desencontro de informações, então o início da aula foi um momento muito importante para conversarmos e esclarecermos detalhes para as próximas aulas. Você deve ter percebido que não estou lhe enviando este diário no dia seguinte às aulas, porque isso se deve ao fato de termos negociado os prazos de entrega dos diários com o professor. Acontece que combinamos que o prazo era muito estreito, então o professor sugeriu, assim como sugeriu aos estudantes do bacharelado, que o prazo fosse estendido até uma semana após a aula, ou seja, se a aula é na quinta, temos até a próxima quinta para enviar nossos diários de bordo. Consequências? Claro! Precisarei colocar mais esforço na memória para lembrar as questões da aula. Na verdade, tendo colocado esses relatos iniciais, preciso falar com vocês sobre a memória. - A memória não é um pew-drive onde você armazena dados! Algum homem sábio disse. Ele está realmente na era digital. Eu não usaria o pew-drive para fazer essa semelhança. Eu sou mais velho. Mas como ele disse o que a memória não é, vou lhe dizer o que ela é: a memória é uma escumadeira de cozinha - eu disse que eu era mais velho. Mas por que? Você me pergunta. Porque a escumadeira de massa, por exemplo, deixa o que é importante (a massa) e escoa o que “não é importante (a água)”. A memória funciona da mesma maneira. Quando passamos por algo que nos marca muito, essa experiência passa a ser uma lembrança consciente, porém, ao andar numa rua, no dia a dia, se você não for estimulado diretamente pelos detalhes daquela rua, você não irá lembrar desses detalhes, mesmo eles estando lá. Você vai lá mil vezes e um dia vai dizer: eu estive aqui a minha vida toda e nunca notei esse detalhe. Lá, quando você perceber algo, um detalhe, esse algo se tornará uma memória. Então, nesses diários que escrevo para você, procuro contar o que me marcou nas aulas, o que se tornou consciente e o que na minha consciência foi tatuado.</p>
-            <p>Depois de acordos bilaterais e políticos, lembro que três grupos fizeram a apresentação do texto. Sim, quase me esqueci de dizer que o texto é de Mills, intitulado The Promise. Vou falar sobre ele no próximo diário. Bem, os grupos apresentaram, embora tenham dito que fizeram mapas mentais do texto, nenhum deles apresentou, o que foi frustrante para mim, esses mapas são excelentes para compreender os conceitos-chave de um texto, assunto, tema, questão, etc. Alguns membros disseram que pegaram o texto pouco antes da aula, por isso é admirável o esforço que eles devem ter feito para sintetizar as principais questões do texto em um curto espaço de tempo. Se não me engano, todos os grupos disseram que a questão central do texto era a imaginação sociológica e focaram nesse ponto, já que era de fato o ponto principal. Sério, amigo, vou te contar sobre o texto e seus pontos no próximo diário, prometo. Espere um pouco mais. Durante as apresentações, o professor dialogou com os grupos sobre os pontos levantados durante as apresentações, mas nas apresentações da aula seguinte, assim como irei te contar, ele meio que deixou as considerações para o fim da aula, mas direi isso mais tarde.</p>
-            <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo, Vinícius</p>
-
-            <div class="diary-title">DIÁRIO DE BORDO – 22/09/2020</div>
-            <p>Amigo, hoje foi nossa apresentação. Ficamos apreensivos como sempre, uns mais que outros, pois apresentar é estar diante do outro e ao mesmo tempo abrir-se para o outro. Alguns tremem na base, outros apenas vão, vão enfrente. Normalmente imagino um teatro vazio onde posso dançar livremente. O que é confuso no EaD já que fico na dúvida se a internet não caiu, se eu não fui desconectado da sala, se o microfone está funcionando, se os latidos dos cachorros do vizinho não incomodam muito, são muitas as preocupações para o meu processo de apresentação ocorrer normalmente.</p>
-            <p>Na hora eu estava calmo, nenhuma preocupação pairava sobre minha mente, somente as corriqueiras: é esse o caminho certo? Que conceito vem depois desse que apresentei? Falar mais um exemplo, esclareceria melhor a ideia? Haverá alguma dúvida? Qual a profundidade que devo escolher para cada conceito? etc. Apresentar é uma espécie de performance, pensei nisso ao defender o meu TCC, o coração tem que ficar calmo; a adrenalina não pode subir; os pensamentos vêm e vão como as ondas do mar e você deve ser apenas um observador deles; o público calado, a falta de questionamentos, o ruído ambiental, o ar pesado, tudo isso serão obstáculos à sua frente, cabe a você encontrar o fio de Ariadna e saber como sair dessa situação.</p>
-            <p>Não pense que não percebi você durante a apresentação. Seus gestos, sua expressão, como se você estivesse fazendo cálculos mentais complexos, tomando nota do que eu digo, estamos em sincronia ou isso é anacrônico? Enfim, obrigado por estar ali naquele momento, mentalmente, eu estava sem plateia, as poltronas do teatro foram entregues ao vazio da sala, porém, um pouco distante, perto da entrada ou da saída, vi você de relance, em uma luz amarelada, seu semblante era inconfundível.</p>
-            <p>Geralmente eu gosto de apresentar primeiro, não por egocentrismo ou coisa parecida, é muito mais fácil lidar com a apresentação sem tanta informação na cabeça, por exemplo, depois que a gente apresentou, os grupos começaram a me citar em suas apresentações, ou seja, eles se desviaram do que planejaram originalmente porque foram afetados pelo que eu disse inicialmente. Isso poderia acontecer comigo. Eu podia ouvi-los e depois citá-los. Há riscos nisso, por exemplo, se o professor tivesse iniciado as apresentações falando sobre a diferença entre biografia e identidade, na minha apresentação eu seria forçado a não expor essa ideia. O certo, a meu ver, é reter as informações das apresentações. Por exemplo, agora que sei que em sociologia, segundo o professor, biografia não se confunde com identidade, posso pensar e pesquisar melhor sobre isso em outras oportunidades. Mas levar esse assunto para o debate ou usar essa informação sem algum domínio sobre o assunto, seria um erro. Eu precisaria saber quais autores o professor leu para chegar a essa conclusão.</p>
-            <p>“Certo”, “errado”, “talvez” e “mais ou menos”, uma apresentação costuma ser guiada por esses valores. O que você diz pode estar errado, certo, mais ou menos certo ou errado, talvez você esteja certo e/ou errado, e, sobretudo, tudo o que você disser pode e será usado contra você. É por isso que o silêncio deveria ser mais valorizado. As apresentações devem ser curtas, quanto menos informação sair de sua boca, menos reclamação a outra pessoa terá. Se for certo ou errado o outro dirá, se você der muita informação, a outra pessoa terá mais material para julgar, você está com as rédeas da questão. Cabe ao indivíduo conhecer seus próprios limites e saber por si mesmo quantas críticas ele é capaz de aguentar, pois nenhuma apresentação vai ser boa o bastante para o outro, você não é o outro, você não viveu o que o outro viveu, suas vidas são únicas, somos exemplares únicos entre pessoas que afirmam serem iguais.</p>
-            <p>Se eu tivesse lido os livros que o professor leu, vivido as experiências que ele teve, tivesse passado as noites de sono ruim que ele deve ter tido, passado pelos amores, as dores, os conflitos, etc., com certeza eu teria desenvolvido algo que buscamos hoje, a resposta para a pergunta: como se colocar no lugar do outro? O outro é um território inexplorado, é um desconhecido por onde eu me reconheço.</p>
-            <p>Sei que não sou o outro, sei que não sou o professor, então sei que, por mais que me esforce, nunca poderei atender às expectativas de ninguém. Se a apresentação fosse em um curso de ciências exatas onde tudo é lógico e ordenado, 1 + 1 = 2, eu poderia atender parcialmente a expectativa seguindo a lógica da instrução, mas em um curso de humanas, como instruir o pensamento a pensar de maneira semelhante a todos os outros envolvidos?</p>
-            <p>Você já deve estar farto das minhas filosofias de boteco, não vou mais te incomodar com elas. Pelo menos por enquanto. Como escrevi para você, fomos o primeiro grupo a apresentar o texto A promessa de Mills. Ao ler o texto, acho que encontrei a linha divisória que separa a filosofia da sociologia. Ambas vêm do mundo, são irmãs, eu acho. Eles compartilham o mesmo cordão umbilical, mas como eu já disse, estamos em um mundo de singularidades. Depois do parto socrático, a filosofia cresceu e desejou o conhecimento do todo, sua ambição de saber parece não ter limites. Kant tentou encontrar os limites do conhecimento, mas acho que ele não poderia afirmar que havia um limite para o desejo de conhecimento da filosofia. Schopenhauer e Nietzsche chegaram perto, creio eu, ao afirmar que tudo é vontade, os dois tentaram explicar de onde vem a ânsia da filosofia pelo conhecimento. A sociologia, por outro lado, era a desajustada da família, curiosa na infância, rebelde na juventude e revolucionária na maior idade. Conhecimento é algo que ela também busca, mas ela quer mais. Ela se cansou da observação passiva da filosofia. Seu sangue está quente, ferve e pulsa como a vida. Ela decidiu falar, rasgou o verbo e começou a cantar: muda agora! mudança já!</p>
-            <p>Tentei procurar semelhanças entre as duas, mas elas eram como Janus, eram dois rostos, um calmo e tranquilo, o outro, não sei o que ele expressava, seus olhos ardiam, seu sorriso era desavergonhado, seu rosto era rosado, mas a expressão era enigmática. A sociologia parecia estar pensando ou bolando um plano mental, sua imaginação era tanta que ela não viu o garoto de testa franzina na sua frente. Depois de um tempo pensando, calculando e analisando, ela apontou o dedo para algo que estava atrás do garoto, era um valor antigo, aquele ligado ao solo com raízes profundas. Suas raízes sustentavam a estrutura do valor, eram chamadas de raízes estruturais, nas quais o valor retirava a seiva da terra para se fortalecer.</p>
-            <p>Em meio àquele momento, o menino pensava que a sociologia queria erradicar o valor, queria dar à paz aquele antigo valor. Será este o início de um novo momento histórico? Novos valores emergirão dessa atitude? Como nos encaixaremos em um mundo onde nossos valores estão sujeitos a ataques? Onde a história não se estabelece fixa e imutável? Onde a estrutura pode e será derrubada pela vontade de mudar?</p>
-            <p>Mais do que você, eu também queria respostas para essas perguntas. Gosto de pensar que o sentido da vida é a mudança, por isso sou cauteloso, assim não serei afetado pelo novo. O novo à frente pode ser assustador, mas se permitirmos que ele chegue, ele pode ser uma boa visita de vez em quando. Preparo a casa ou minha vida para quando ele chegar? Açúcar ou adoçante, de qual ele vai gostar? Só espero que ele não demore a chegar.</p>
-            <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo, Vinícius</p>
-
-            <div class="diary-title">DIÁRIO DE BORDO – 24/09/2020</div>
-            <p>Amigo, lendo as páginas que te enviei antes, percebi que nunca perguntei se você está bem, como foi seu dia, se leu algum livro interessante ou essas perguntas de amigos. Fica mais complicado se pararmos para pensar que você não me responde ou me dá feedback sobre o que eu mando. Eu estava me perguntando a real necessidade de escrever esses diários para você. Nada chamou sua atenção? Nenhuma das questões? Você não gostaria de falar sobre alguma ideia? Dê um sinal de vida, mas no seu tempo, sem pressão.</p>
-            <p>Vou quebrar um pouco o padrão da escrita hoje, sem reflexões sobre as aulas, terei que ser pontual e direto. Se eu estivesse matriculado apenas na aula de sociologia, teria tido mais tempo para elaborar algo que valesse a pena ler ou quase isso, mas tem sido dias difíceis deste lado da tela. Já faz um tempo desde que li um livro voluntariamente. Estou ao lado de alguns livros que comprei no sebo e de alguns que ganhei recentemente, olho para eles com alguma dor, aquela angústia de não ter tempo de ler. Acordo cada vez mais tarde, pois durmo depois das 3 da madrugada, quando acordo, todas as manhãs me pergunto: que atividade tenho que terminar hoje? A partir dela, surgiram outras: que atividade posso fazer ou concluir um pouco mais à frente? Haverá uma apresentação em grupo e o professor explicará o conteúdo? Que disciplinas não estou conseguindo acompanhar? Devo trancar um para aliviar essa pressão? Outros já o trancaram e isso não é sinal de fraqueza, é a constatação de que estamos gastando muita energia psíquica; estamos a 100% da nossa capacidade de trabalho e de assimilação.</p>
-            <p>Se você se lembra do texto de Mills, The Promise, no momento, essas questões aparecem como uma perturbação individual, são minhas preocupações com o sistema remoto. Mas, navegando nas redes um dia desses, percebi que essas questões não são tão individuais assim, outras pessoas já estão começando a falar das dificuldades deles nesse modelo remoto, a gente não estava preparado para isso, professores muito menos e quiçá a faculdade. Se estamos aprendendo esse “novo” modelo, estamos aprendendo do jeito errado. Continuamos o assemelhando com o modelo tradicional e rezando para ser a mesma coisa, porém amigo, em algum momento vai ser preciso colocar o pé no freio e entender que o tradicional morreu, algo novo nasceu, o tradicional está esfarelado e não pode suportar ou estruturar o novo. O novo chegou e estamos lidando com ele com os olhos no passado. Haverá consequências a curto ou longo prazo e só então seremos levados a repensar nossas práticas.</p>
-            <p>Após esse breve desabafo, para não perder esse nosso costume cotidiano, destacarei os pontos que anotei durante a aula:<br>Inicialmente, o professor voltou à questão da identidade, depois afirmou que a sociologia não trata da identidade, talvez a antropologia seja a que mais se interessa pelo assunto. Sobre o texto de Mills, por ser o fechamento do livro, falamos de liberdade, juventude, valores pessoais, livre arbítrio, idealidade e escolhas - lembrando que as escolhas têm limites ou são limitadas na sociedade. Nossa liberdade muda com a história. A sociologia entra em jogo ou “desce pro play”, como dizem os jovens, quando há uma questão social. Há questões em ato (por exemplo, aquela que eu mencionei no começo), quando essas questões se tornam potenciais, a sociologia entra em cena. A sociologia é exercida e atuada, por isso ganhou importância no século XIX. Então o professor perguntou qual laboratório de ciências sociais. Ele não é físico, porque é a própria sociedade. A sociologia analisa os processos sociais do mundo. Segundo o professor, as humanidades são capazes de compreender as mudanças. A arte, por exemplo, questiona questões sociais, mas não reflete ou indica soluções. O professor falou sobre as tendências analíticas da sociologia. São três tendências ou talvez possamos pensar em outras hoje. I) Quantitativo (análise de dados), II) Pesquisa clássica (construção de teoria) e III) Refinamento de métodos (método).<br>Primeira tendência: Explicar a história por fios conectores, por exemplo, na teoria da totalidade da sociedade, Weber queria explicar a racionalização da sociedade (trajetória racional), Marx com base na contradição (sempre houve conflitos de classes), A. Conte, teoria do paraíso (a sociedade caminha para o paraíso, uma alta civilização) resultado: duas guerras mundiais. Marx estava errado: só a classe não resolve. Weber: a sociedade caminha para a burocratização, este acertou!<br>Tendência dois: teoria sistemática: criando conceitos para classificar as relações sociais. A sociedade está em constante construção, não é possível fixar e conceituar, pois tudo e todas as relações sociais estão mudando.<br>O professor explicaria a última tendência, mas o remoto vem com defeitos, a plataforma que deveria simular uma sala de aula física saiu do ar para todos os participantes. Amigo, nunca confie na tecnologia, confie em mim.</p>
-            <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo, Vinícius</p>
-
-            <div class="diary-title">DIÁRIO DE BORDO – 29/09/2020</div>
-            <p>Amigo, como falei no último diário, o Google Meet, a plataforma de reuniões que usamos como salas de aula virtuais, caiu na última aula. Achei que tinha sido um evento isolado, mas então, quando entrei nas tendências do Twitter, percebi que era um apagão geral. A plataforma ficou ipsi literis fora do ar. Talvez, naquele momento, ela estivesse mudando para se adequar ao que virá no futuro. A partir de 1º de novembro não teremos mais aulas gravadas, inclusive, muitos sites de tecnologia afirmam que o tempo disponível para as reuniões será limitado a uma hora na versão free. Vamos esperar para ver os desdobramentos desse assunto.</p>
-            <p>Como a plataforma estava indisponível ao final da última aula, o professor iniciou a aula deste dia, 29/09, com a última tendência do texto de Mills. Aí depois ele comentou um pouco sobre filosofia e sociologia. Parece que ele buscava a linha divisória entre elas, assim como fiz em um diário anterior. Ao contrário da minha linha de pensamento, ele apontou o seguinte: a sociologia é mais pragmática, enquanto a filosofia seria mais existencial.</p>
-            <p>Depois disso, ele voltou brevemente às três tendências, afirmando que teoria e análise estão interligadas, creio que ele pretendeu oferecer subsídios para o próximo texto que leríamos a seguir. Um amigo meu, durante a fala da professora, perguntou o que era práxis. Aí o professor disse que veríamos esse conceito mais tarde, mas que daria um spoiler sobre o assunto, ele usou como exemplo o preparo de um bolo, confesso que estava com fome naquele momento, ainda não tinha jantado, mas eu aguentei firme. Claro que não tinha bolo na aula, nem nada comestível, mas olha que interessante, o professor fala bolo e só a palavra, sem o objeto próximo que essa palavra designa, me despertou a sensação de fome. Que loucura, não acha?</p>
-            <p>Depois de algumas outras perguntas, um pouco de conteúdo filosófico colocado por um menino que não me lembro bem, mas que acabou indo do Fedro de Platão às palavras de Heráclito, encerramos o primeiro momento da aula e o texto de Mills. No segundo momento da aula, começaram as apresentações do novo texto, trata-se de A Construção Social da Realidade de Peter L. Berger e Thomas Luckmann. Se não me engano, foram dois ou três grupos que apresentaram nesta aula. Em ordem sequencial, o segundo grupo colocou uma questão interessante: é necessário colocar face a face com o outro para conhecer o outro? Acho que a partir das apresentações desta aula, essa foi a pergunta que pairou no ar virtual da sala também virtual. Claro que tentarei refletir sobre isso com você, mas somente no próximo diário, onde contarei como foi minha apresentação, pois nesta aula não houve tempo para todos os grupos se apresentarem.</p>
-            <p>Por hoje é isso, meu caro leitor. Não sei se, em breve, escreverei outras páginas para você.<br>At.te., seu amigo, Vinícius</p>
-            <p><strong>Fim dos Diários</strong></p>
-        </div>
-
-        <!-- PDF Viewer -->
-        <div class="panel">
-            <h2><i class="fas fa-file-pdf"></i> Relato completo (PDF)</h2>
-            <div class="pdf-frame">
-                <iframe src="/arquivos/Cartas_Sociais_Vinicius.pdf" title="As Cartas Sociais de Vinícius - Relato de Experiência"></iframe>
-            </div>
-        </div>
-
-        <!-- Referências com gerador de citações -->
-        <div class="panel" id="references-panel">
-            <h2><i class="fas fa-quote-right"></i> Referências & Citação</h2>
-
-            <!-- GERADOR DE CITAÇÕES -->
-            <div class="citation-generator" 
-                 data-authors='["VINÍCIUS, Diego"]' 
-                 data-title="As Cartas Sociais de Vinícius" 
-                 data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/relatos-de-experiencia/relato-as-cartas-sociais-de-vinicius.html" 
-                 data-volume="1" 
-                 data-issue="1" 
-                 data-pages="01-23" 
-                 data-year="2026">
-                <div class="citation-generator-head">
-                    <h2><i class="fas fa-quote-left"></i> Como citar este trabalho</h2>
-                </div>
-                <div class="citation-generator-body">
-                    <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência bibliográfica.</p>
-                    <div class="citation-controls">
-                        <div class="citation-field">
-                            <label for="citation-style">Estilo de referência</label>
-                            <select id="citation-style" class="citation-select">
-                                <option value="abnt">ABNT</option>
-                                <option value="apa">APA</option>
-                                <option value="mla">MLA</option>
-                                <option value="chicago">Chicago</option>
-                                <option value="harvard">Harvard</option>
-                                <option value="vancouver">Vancouver</option>
-                                <option value="ieee">IEEE</option>
-                            </select>
+    <div class="container bg-warm">
+        <div class="content-padding">
+            <div class="header">
+                <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1, n.1 • Relato
+                    de Experiência • 2026</div>
+                <div class="title">As Cartas Sociais de Vinícius</div>
+                <div class="author-line">
+                    <div class="author-avatar">
+                        <div class="avatar-circle">
+                            <img src="/corpo%20editorial/diego.png" alt="Foto do autor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
                         </div>
-                        <div class="citation-actions">
-                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar referência</button>
-                        </div>
+                        <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
                     </div>
-                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
-                    <p class="citation-feedback"></p>
+                    <span><i class="fas fa-university"></i> Prefeitura Municipal de Carnaúba dos Dantas, RN</span>
+                    <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18844651</span>
+                </div>
+
+                <!-- Botões de tradução -->
+                <div class="lang-buttons">
+                    <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
+                    <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
+                    <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+                </div>
+
+                <div class="action-buttons">
+                    <a class="btn btn-pdf" href="/arquivos/Cartas_Sociais_Vinicius.pdf" target="_blank"><i
+                            class="fas fa-file-pdf"></i> Baixar PDF</a>
+                    <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18844651" target="_blank"><i
+                            class="fas fa-external-link-alt"></i> DOI</a>
+                    <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissões</a>
                 </div>
             </div>
 
-            <div class="citation-actions">
-                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
-                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+            <!-- Resumo -->
+            <div class="panel">
+                <h2><i class="fas fa-align-left"></i> Resumo</h2>
+                <p>O presente relato de experiência reúne diários de bordo produzidos no contexto da disciplina
+                    Introdução à Sociologia, ofertada no curso de Licenciatura em Ciências Sociais da Universidade
+                    Federal do Rio Grande do Norte (UFRN), durante o período de ensino remoto emergencial em 2020. Cada
+                    diário aborda temáticas específicas discutidas em aula, tais como modernidade, imaginação
+                    sociológica, neutralidade científica, construção social da realidade, identidade, indústria cultural
+                    e os fundamentos históricos da sociologia. Os registros articulam vivências pessoais, reflexões
+                    teóricas e problematizações acerca do processo formativo em contexto pandêmico, evidenciando os
+                    impactos da mediação tecnológica, da reorganização do tempo social e das transformações nas
+                    dinâmicas pedagógicas. Metodologicamente, trata-se de uma escrita reflexiva de caráter
+                    autobiográfico-formativo, na qual a experiência individual é tensionada à luz de categorias
+                    sociológicas trabalhadas em aula, especialmente a partir de autores como C. Wright Mills, Berger e
+                    Luckmann, Marx e Weber. O conjunto dos diários evidencia a potência do exercício narrativo como
+                    instrumento de aprendizagem crítica, revelando que a formação em Ciências Sociais não se limita à
+                    assimilação conceitual, mas envolve a reelaboração subjetiva da experiência social. Conclui-se que o
+                    diário de bordo, enquanto prática pedagógica, favorece a consolidação da imaginação sociológica ao
+                    permitir que o(a) estudante relacione biografia e história, experiência pessoal e estrutura social,
+                    especialmente em contextos de crise e transição, tal qual a experiência vivenciada na pandemia.</p>
+                <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> formação docente</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> ensino remoto</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> imaginação sociológica</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> diário de bordo</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> experiência formativa</span>
+                </div>
             </div>
-            <ul class="ref-list">
-                <li><strong>VINÍCIUS, Diego.</strong> As Cartas Sociais de Vinícius. <em>Revista Inquietações</em>, v. 1, n. 1, p. 01–23, 2026. DOI: <a href="https://doi.org/10.5281/zenodo.18844651" target="_blank">10.5281/zenodo.18844651</a></li>
-                <li><strong>BERGER, Peter L.; LUCKMANN, Thomas.</strong> <em>A construção social da realidade</em>. Petrópolis: Vozes, 2014.</li>
-                <li><strong>MILLS, C. Wright.</strong> <em>A imaginação sociológica</em>. Rio de Janeiro: Zahar, 1982.</li>
-                <li><strong>MARX, Karl; ENGELS, Friedrich.</strong> <em>Manifesto do Partido Comunista</em>. São Paulo: Boitempo, 2010.</li>
-                <li><strong>WEBER, Max.</strong> <em>A ética protestante e o espírito do capitalismo</em>. São Paulo: Companhia das Letras, 2004.</li>
-            </ul>
-            <p><small><i class="fas fa-info-circle"></i> Clique nos links para acessar as fontes originais. Utilize o gerador acima para citar este relato em diferentes estilos.</small></p>
-        </div>
 
-        <!-- Sobre o autor -->
-        <div class="panel">
-            <h2><i class="fas fa-user-circle"></i> Sobre o autor</h2>
-            <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo, com experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui mestrado em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada na obra e filosofia de Friedrich Nietzsche. É graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro Universitário Internacional (UNINTER, 2022). É autor do livro <em>Nietzsche e os valores modernos</em> (2022). Dedica-se à formação continuada em áreas como Psicopedagogia, Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional Especializado (AEE) e Educação de Jovens e Adultos (EJA).</p>
-            <p><i class="fas fa-envelope"></i> E-mail: diego_svt@hotmail.com.br<br>
-            <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
-            <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></p>
-        </div>
+            <!-- Texto completo dos diários -->
+            <div class="panel article-text">
+                <h2>Diários de Bordo</h2>
 
-        <footer>
-            <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | Relato de Experiência | DOI: 10.5281/zenodo.18844651<br>
-            Acesso aberto sob licença Creative Commons.
-        </footer>
+                <div class="diary-title">DIÁRIO DE BORDO – 01/10/2020</div>
+                <p>Amigo, antes de apertar minha memória como um limão para fazer este diário, algo paira em minha
+                    mente, preciso compartilhar com você (who are you?). Pode ser a última vez que terei a chance.
+                    Lembra que eu falei que a plataforma caiu e que haveria novas mudanças a partir do dia 1º deste mês?
+                    Bem, nessa aula, que marcou o início dessas mudanças, o professor fez algo inusitado, não por ser
+                    algo novo, mas por ser algo que não fazíamos há muito tempo: a chamada oral.</p>
+                <p>Nesta disciplina em particular, não tivemos chamadas de frequência desde o primeiro dia de aula
+                    virtual, combinamos que a frequência seria aferida pelos diários de bordo e por meio de um boa noite
+                    no chat da plataforma, mas a plataforma não registra mais os boas noites, então temo que esses
+                    diários possam estar com os dias contados ou possam ser usados com notas complementares, como será
+                    usado nesta primeira unidade.</p>
+                <p>Porém, lembro bem que o professor falou que na segunda unidade vamos inovar novamente, que a primeira
+                    unidade foi um teste, então, se esse diário for o último, quero deixar claro que foi um prazer ter
+                    você como leitor.</p>
+                <p>Vamos para a aula? Foi um lindo dia, início de um novo mês, pelo meu calendário, faltam 822 dias para
+                    encerrar o mandato do presidente do Brasil. Estamos quase lá. Entrei na aula com cinco minutos
+                    restantes para começar a aula. Éramos apenas eu e meu amigo na sala. Ele estava com sono e eu
+                    cansado, tínhamos saído de outra aula e estávamos prestes a começar outra. Enquanto ninguém chegava,
+                    pedi a ele para vencer um pouco o sono e tocar uma música no violão. Ele começou com um que eu
+                    conhecia, mas não lembrava do nome, ele tocou wind of change, sim amigo, eu tenho um amigo
+                    talentoso, ao final, ele começou a tocar stairway to heaven, mais então o professor chegou e pediu
+                    still loving you. Sempre que meu amigo começa a tocar antes das aulas, é como se o ambiente fosse
+                    purificado para que possamos iniciar os trabalhos. E mesmo com sono e tudo, ele tocou
+                    majestosamente.</p>
+                <p>Após aquele momento de descontração, o professor abriu a aula com a chamada oral, como já lhe falei,
+                    e então iniciamos as apresentações. É bom não perder muito tempo, pois a segunda aula é sempre mais
+                    curta que a primeira. E tempo, bem, tempo é algo que não poderia passar despercebido nesta aula.
+                    Você logo entenderá. Como de costume, me ofereci e todo o meu grupo para iniciar as apresentações,
+                    em algum outro diário já dei os motivos pelos quais gosto de ser o primeiro em uma apresentação,
+                    inclusive, após a apresentação, outro estudante disse que seria difícil ser original após esta
+                    apresentação. Acho que não sou paranoico de preferir começar, mas, sem querer ser bajulador, meu
+                    grupo estava em sintonia muito boa, estou todo orgulhoso das amizades que estou construindo neste
+                    curso, são bons amigos, e essas apresentações nos aproximaram, entraram no meu dia a dia e meu
+                    cotidiano se tornou um ótimo cotidiano. Alguns podem não gostar da rotina e do cotidiano, mas eu
+                    gosto do meu.</p>
+                <p>Vou deixar nosso mapa mental abaixo, caso você queira ler o livro em que trabalhamos. Acho que
+                    tocamos em pontos-chave no texto, então o mapa pode ser um ótimo guia de leitura. O ponto central é
+                    exatamente a realidade da vida cotidiana. O autor chega a dizer que ela é a realidade par
+                    excellence. Talvez para nossa modernidade esta afirmação seja válida. Às 21:13 nossa apresentação
+                    acabou, a segunda começou logo e havia outro grupo na sequência. Após as apresentações, um aluno do
+                    segundo grupo questionou o professor sobre o face a face, um dos conceitos que permeou as
+                    apresentações e o debate. O face a face é se colocar na frente do outro. O professor falou algo que
+                    me chamou a atenção, não consigo reproduzir com as mesmas palavras, mas foi mais ou menos assim: na
+                    metrópole, onde as pessoas não se conhecem, os indivíduos podem, neste face a face, vivenciar todas
+                    as suas potencialidades. Digamos que eu não te conheça e você não me conhece, somos anônimos um para
+                    o outro. Então imagine uma situação do dia a dia, em que me coloco face a face com você, neste
+                    cenário, posso usar a máscara que (Eu) quiser, assumir outra personalidade e agir a partir de forças
+                    diferentes. Mas, se (Eu e Você) começarmos a viver juntos, naturalmente você vai me conhecer, meus
+                    gostos, meus comportamentos, meus hábitos, preferências etc.</p>
+                <p>Sim, quanto à temporalidade, a realidade cotidiana tem temporalidades diferentes e é composta por
+                    realidades múltiplas. Por exemplo, a temporalidade social é cronológica, mas dentro da realidade
+                    podemos experimentar outras temporalidades. Eu disse na aula que quando fui ao shopping foi como se
+                    o tempo cronológico fosse momentaneamente suspenso e eu entrasse em um novo tempo. Sim, amigo, eu
+                    nunca fui ao shopping, não é algo acessível ao meu contexto e ambiente, então a experiência de
+                    entrar naquele ambiente inédito até então suspendeu minha atenção e vigilância com o cotidiano que
+                    me esperava fora daquele ambiente. Sim, mencionei também a temporalidade do teatro, das redes
+                    sociais, etc. Porém, outra temporalidade que mencionei na apresentação foi a da criança. A criança
+                    não tem uma vida cronometrada como nós, ela vive no deleite do presente, porém, ela vai sendo
+                    gradualmente afastada do tempo da natureza quando ela é disciplinada para o modo de viver em
+                    sociedade, ou seja, quando ela é introduzida no cotidiano social e na temporalidade cronometrada.
+                </p>
+                <p>Amigo, houve outras questões importantes, que peço desculpas por não compartilhar com você, mas
+                    preciso ir para a minha prova de sociologia, sim, já estamos em período de provas, o tempo passou
+                    tão rápido, não concorda?</p>
+                <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.</p>
+                <p>At.te., seu amigo, Vinícius</p>
+
+                <div class="diary-title">DIÁRIO DE BORDO – 08/09/2020 – Primeira Aula</div>
+                <p>Começo de um semestre, de uma disciplina, de uma formação, de novas e velhas relações sociais, etc.
+                    não escreverei sobre um novo começo de ano, porque este semestre é peculiar. Leitor, após meu ponto
+                    final, você realmente esperava que eu lhe dissesse por que seria um semestre peculiar? Você deveria
+                    saber, pois acho que você, como eu, está vivendo o fim dos tempos e do normal; estamos vivendo 2020
+                    e você não precisa saber porque algo se tornou peculiar, porque tudo está peculiar: as nossas
+                    relações, nossos corpos, nossos sentimentos, nossos medos, nossos hábitos e comportamentos, enfim,
+                    tudo que antes pensávamos banal ou rotineiro, agora nos parece peculiar. Afirmar essa peculiaridade
+                    significa que estamos experimentando algo novo? Tudo mudou? Finalmente saímos de alguma matriz ou
+                    das ilusões da caverna, como nos disse Platão em algum momento da história?</p>
+                <p>Antes que você diga que a pandemia pela qual estamos passando ser alguma espécie de caixa de Pandora
+                    que proporcionou essa peculiaridade, devo avisar que não, pois, se de fato temos uma conexão
+                    histórica com aqueles que nos precederam, certamente já passamos por outras pandemias, mas esta é
+                    diferente, não acham? Na época em que vivemos, uma pandemia pode ser vista de vários ângulos, um
+                    desses ângulos é sociológico, porque não se pode pensar em uma pandemia sem uma perspectiva
+                    sociológica. A pandemia, vista por um(a) sociólogo(a), veio mostrar algumas coisas que foram
+                    banalizadas por muito tempo: divisões de classes; saúde precária, pesquisa e tecnologia, cultura e
+                    outros setores da sociedade; relações de trabalho e suas novas configurações no contexto neoliberal;
+                    o negacionismo e o obscurantismo; relações de poder; o imediatismo imagístico; etc. A pandemia não
+                    provocou peculiaridades, ela veio para mostrar as ferrugens da engrenagem do normal. A sociedade
+                    esteve em uma letargia institucional por muito tempo. O peculiar é nossa antítese à tese do normal,
+                    para que possamos encontrar alguma síntese nesse processo vital e dialético.</p>
+                <p>Durante o início da nova disciplina, que mencionei antes, o professor, em seu quadrado virtual e
+                    projetado virtualmente na tela de meu smartphone, se lembrou de uma pergunta difícil de responder:
+                    para que servem as ciências sociais? Prefiro tirar água da pedra do que encontrar uma resposta para
+                    essa pergunta. Se eu chegasse a responder ela, eu teria motivos suficientes para fugir das ciências
+                    sociais, porque responder a algo essencial é limitar a essência de algo. Falar sobre a utilidade das
+                    ciências sociais implica saber o que são ciências sociais. Enfatizei o “são” para não cair na
+                    armadilha gramatical em que me colocaram.</p>
+                <p>Não quero me estender muito, caro leitor. O professor, utilizando novos recursos tecnológicos, gravou
+                    toda a aula. Minha voz, minha imagem, meu tempo, algumas coisas minhas foram, por ele e sua
+                    tecnologia, capturadas em pixels, mas será que ele me capturou? Penso que não. Caso queira rever
+                    aquele passado, aquela aula, está gravado. Isso não te lembra a magia do cinema? Mas ele pediu para
+                    fazer esse diário, professores(as) gostam de dá trabalho pros estudantes, não é? Então vamos ver se
+                    a memória me ajuda. A aula, no geral, foi muito boa. “Muito boa” é pretensioso? Tudo bem, foi legal.
+                    Ainda estamos no começo. Se eu fosse resumir o tema da aula, poderia dizer que foi uma aula
+                    introdutória. Introdução a quê? - você me pergunta - às três unidades que trabalharemos neste
+                    semestre.</p>
+                <p>Ele, o professor, pediu para dizer qual tópico chamou minha atenção. No momento da aula, acho que a
+                    questão dos clássicos e da cultura industrial. Ele falou que um(a) autor(a) clássico(a) é
+                    clássico(a) porque ainda hoje o(a) autor(a) é importante para resolução de alguma questão. Ele
+                    mencionou Marx, da filosofia e Beethoven e Luiz Gonzaga da música; mas, em minha mente, fiquei
+                    pensando se o clássico é realmente importante, será que existe um clássico mais clássico por trás do
+                    clássico que se tornou um clássico importante? Ficou confuso? Perdoa meus delírios, por favor. Mas
+                    dei-me a chame de explicar. Por exemplo, K. Marx, ele é um clássico, certo? Mas para ele se tornar
+                    um clássico importante, ele deve ter lido e aprendido algo com algum clássico, o que lhe permitiu se
+                    tornar um clássico também. Atrás de Marx, os clássicos que vêm à mente são Hegel e Epicuro, acho que
+                    esses clássicos acabaram produzindo um clássico importante para nós contemporâneos, então eles são
+                    também clássicos importantes?</p>
+                <p>Mas vamos esquecer esses devaneios, caro leitor. Sobre a indústria cultural, perguntei ao professor,
+                    durante a transmissão, se ele usaria o texto intitulado O riso e o trágico na indústria cultural - a
+                    catarse administrada do Adorno, ele disse que esse texto era mais complicado de usar, talvez devido
+                    ao tempo e formato do semestre, mas que veríamos o Adorno. Se você me conhece bem, caro leitor,
+                    quando Adorno usa o Nietzsche neste texto, ele me conquista, seria uma espécie de sapiofilia? Não
+                    sei, considero os dois autores muito inteligentes.</p>
+                <p>Para encerrar a aula, ele fez os seguintes três pedidos: em uma palavra, diga um sentimento, um
+                    desejo imediato e um desejo futuro! A maioria, quanto ao primeiro pedido, disse paz, posteriormente,
+                    ele pediu para falarmos da paz. Eu não gosto muito da paz, teremos tempo de sobra para experimentar
+                    alguma paz, mas imersos na vitalidade da vida, paz gera água parada, conformismo, estanca o fluxo
+                    trágico da vida. O conflito, o oposto da paz, gera superação, elevação, potencialização, a paz
+                    destrói o conflite, mas o conflite é importante ao viver. Agora, deixando de enrolação, minhas
+                    palavras foram: relicarium, impeachment e doutorado. Destrinchando-as: relicarium porque tenho
+                    saudades de um passado que só vive na minha memória; impeachment é o meu desejo mais imediato, as
+                    razões são óbvias, exceto se você, meu leitor, for de direita, fascista ou algo assim; o doutorado
+                    foi a única coisa que me veio para o futuro. O futuro é tão incerto que eu nem ia responder, mas
+                    coloquei o doutorado para preencher tabela. Acho perigoso ficar projetando expectativas para o
+                    futuro, com certeza a decepção irá chegar em seguida, por isso, sou muito pé no chão.</p>
+                <p><strong>MAPA MENTAL DA AULA</strong><br>Por hoje é isso, meu caro leitor. Em breve escreverei outras
+                    páginas para você.<br>At.tt., seu amigo, Vinícius</p>
+
+                <div class="diary-title">DIÁRIO DE BORDO – 10/09/2020</div>
+                <p>Caro leitor, escrever depois de uma aula como a de hoje pode acabar se tornando um problema. O
+                    professor deve entender isso, pois durante a aula ele afirmou que depois das aulas a cabeça dele
+                    gira como um CD. Para não copiar o que ele disse, vou parafrasear: minha cabeça parece uma fita
+                    cassete sendo rebobinada. Obviamente devido a esse esforço de lembrar a aula, organizar o volume de
+                    informações e absorver algo que um amigo meu fez antes da aula, mas eu te contarei isso noutro
+                    momento. Talvez eu comece a escrever os diários um dia depois da aula, se estiver tudo bem para
+                    você, leitor. Não que eu esteja com sono nem nada, mas nessas últimas horas, quando outros dormem,
+                    eu só quero ficar aqui, perdido em meus pensamentos.</p>
+                <p>Na aula de hoje aconteceu uma coisa legal, o professor tocou em alguns pontos que já escrevi para
+                    você, sobre as características dessa pandemia, sobre o nosso despreparo para enfrentá-la, embora
+                    tenhamos muito conhecimento sobre outras pandemias históricas. Ele citou a pandemia que a gripe
+                    espanhola (1918-1919) causou no passado. Levantando, a meu ver, aquele ponto, que antes lhe havia
+                    confiado, que a sociedade estava em uma letargia social, e, com a chegada do covid-19, o cotidiano,
+                    nas palavras do professor, foi para as nuvens. Queria até que as nuvens tivessem um sentido poético
+                    e positivo, mas as nuvens querem significar novas plataformas de clouds, de interações simultâneas,
+                    embora virtuais. Se você deseja colocar os pontos positivos e negativos dessas novas formas de
+                    interação em perspectiva ou análise, vá em frente. Nesse assunto, estou atuando como a Suíça, ou
+                    seja, neutro e na minha.</p>
+                <p>Neutralidade é nosso próximo ponto. Em determinado momento da aula, o professor disse que para se
+                    obter uma análise dos fatos sociais do cotidiano é preciso fazer parte do cotidiano e fazer parte do
+                    senso comum. Tenho algumas advertências sobre esta questão: como ser imparcial estando no senso
+                    comum? Como renunciar a valores e conceitos que configuram a subjetividade do indivíduo para obter
+                    uma análise imparcial? Um tempo atrás eu estava entre certas pessoas e vi claramente que esse estar
+                    junto ou pertencer a um grupo estava me reformando. Com isso quero dizer que um indivíduo ou uma
+                    subjetividade é uma construção das pessoas e dos fatores que o envolvem. A probabilidade de que
+                    alguém que vive em um ambiente com pessoas sexistas/racistas/misóginas, etc., adquirir esses traços
+                    para si mesmo é maior em relação a uma pessoa que vive junto com outras subjetividades sem tais
+                    características. Leitor, com isso quero dizer que uma análise, por mais imparcial que possa ser
+                    proposta, sempre carregará traços da subjetividade daquele que se propõe a tarefa de analisar.</p>
+                <p>Numa sentença, que será proferida em tribunal, me pergunto se o juiz é realmente o símbolo da
+                    imparcialidade como nos fazem crer. Você já parou para refletir sobre como é o julgamento entre
+                    ricos e pobres, negros e brancos, homens e mulheres, cidadãos e políticos, etc. são diferentes. Como
+                    se uma forma de tratamento desses casos já estivesse institucionalizada, sem o devido respeito ao
+                    devido processo legal. Outro dia, se não me engano, uma magistrada, ao proferir uma condenação de um
+                    ex-presidente aí, simplesmente copiou e colou (ctrl+c e ctrl+v) a sentença de outro juiz para
+                    fundamentar sua própria sentença. Será que houve uma análise parcial nesse caso? É difícil para mim
+                    dizer que o sociólogo tem que ser parcial em sua análise. O próprio desejo de analisar algo, a
+                    princípio, já supõe que há um interesse por trás da análise. Mas não vou me alongar nisso, vou
+                    refletir mais e depois posso acrescentar algo mais.</p>
+                <p>Leitor, estou caminhando esse relato para o fim, mas não posso deixar de enfatizar alguns pontos, por
+                    isso peço-lhe um pouco de paciência, que hoje está em falta. Eu sinto que não estou prestando a
+                    devida atenção as questões que o professor falou na aula. Portanto, preciso expô-las neste momento.
+                    Preciso ser consistente no que falo, porque o professor tem uma bola de cristal. Talvez ele esteja
+                    olhando para nós agora. Então, “Oi professor. Como vai o senhor?” Brincadeiras à parte, professor,
+                    vou te contar, se a sua bola de cristal estiver com uma boa recepção, coisas que você falou na aula.
+                    Serei pontual para eu não virar um papagaio.</p>
+                <p>As falas do professor foram direcionadas ao entendimento da modernidade ou dos tempos modernos, como
+                    no filme de Charlie Chaplin. O que me chamou a atenção é o fato de que, ao contrário dos filósofos
+                    que teorizam ideias, os sociólogos teorizam o cotidiano. O cotidiano apresenta os pontos e
+                    contrapontos, além dos dados sociais de que o sociólogo precisa para suas pesquisas, foi mais ou
+                    menos assim que ele falou. Compreender a vida cotidiana, é esse o propósito da sociologia? Ou há
+                    algo mais? Você não espera que eu diga, não é? Você esqueceu que hoje sou a Suíça em questões
+                    complicadas como essa? Acho que o professor não gostaria de uma resposta, pois estaria tentando
+                    limitar o objeto da sociologia.</p>
+                <p>Ah, quase esqueci, tanto o professor desta aula quanto o professor da aula anterior, numa sincronia
+                    sociológica, que só um Marx psicólogo poderia explicar, afirmaram que a sociologia de Weber era
+                    compreensiva, ou seja, busca entender a sociedade ou o cotidiano, mas de forma parcial, acho que
+                    isso está ligado naquela questão anterior sobre neutralidade.</p>
+                <p>Outro ponto tocado foi sobre o consumismo na era moderna, não vou falar muito sobre isso, porque esse
+                    fator é muito evidente hoje, ouso dizer que ele é cristalino.</p>
+                <p>Ao final da aula, o professor apontou três princípios explicativos sobre um texto de Ianni Octavio,
+                    intitulados Sociologia e o Mundo Moderno, os princípios são: causalidade funcional, causas que criam
+                    novas atitudes na sociedade; conexão de sentidos, onde se questiona porque as coisas adquirem certos
+                    sentidos, também tem a ver com comportamentos sociais, caso queira saber; contradição, porque a
+                    sociedade está em constante mudança, o momento dessas mudanças pode ser lento ou rápido.</p>
+                <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo,
+                    Vinícius</p>
+
+                <div class="diary-title">DIÁRIO DE BORDO – 15/09/2020</div>
+                <p>Caro leitor, creio que já estamos próximos o suficiente para que eu o chame de amigo. Então, deixe-me
+                    começar de novo. Caro amigo, depois de um dia difícil, tudo que eu quero é um pouco de calma e um
+                    bom diálogo. Ontem à tarde tive uma reunião com os membros do grupo de sociologia, sinto que estão a
+                    dar o seu melhor, mesmo com dificuldades adversas, como trabalho e pouco tempo. Procuro entendê-los,
+                    sei que o início de uma graduação pode ser complicado, são muitos textos, atividades, seminários,
+                    apresentações e outras coisas. Tentar organizar tudo isso é difícil. Um amigo meu já desistiu de
+                    dois componentes curriculares. Por um lado, eu entendo, sabe? Quando algo te consome muito, você
+                    precisa decidir se quer deixar que seja consumido ou se esse algo pode ser resolvido em outro
+                    momento. Vejo os professores, de maneiras diferentes, tentando se adaptar ao novo contexto, mas,
+                    será que eles estão levando em consideração os contextos dos jovens por trás das telas? Desculpe
+                    esse desabafo.</p>
+                <p>Amigo, até então eu estava um pouco desmotivado, mas o professor dessa disciplina tem algo que
+                    proporciona uma vontade de continuar. Ele trabalhou questões que eu prezo muito, por exemplo, o
+                    renascimento. Se fosse uma aula de história típica, eu pediria a ele para comentar um pouco mais
+                    sobre a relação entre o renascimento, Lutero e o papado, acho que é uma discussão que preciso ter
+                    com alguém que entende bem do assunto. Parece que o professor é esse alguém. Ele trouxe
+                    características do Renascimento, como, por exemplo, o resgate que o Renascimento fez do termo
+                    cidadão cunhado na Grécia Antiga; a reviravolta copernicana entre Deus e o homem, onde o homem está
+                    no centro; etc., todas as características históricas que o professor apresentou estão voltadas para
+                    a compreensão do surgimento da sociologia. Esse também foi o ponto que norteou as reflexões da
+                    turma. Se você me conhece bem, amigo, você sabe que eu, por trabalhar filósofos da modernidade e da
+                    contemporaneidade, sou fascinado pelos contextos históricos desses períodos. Aí a aula acabou
+                    ficando leve, quase dançante.</p>
+                <p>Durante a aula, pude trocar algumas ideias com o professor, embora fosse melhor ouvi-lo. Ele trouxe
+                    fatores sobre a vida nas cidades, os meios de transporte de mercadorias, a mudança na forma de
+                    trabalhar entre o período feudal e o moderno, a acumulação primitiva de capital, trabalhada por
+                    Marx, aliás, Marx estava presente, não de forma carnal, mas algo essencial dele pairava naquele
+                    momento virtual, suas ideias, seus pensamentos, seus diagnósticos sociais e outras coisas. Amigo,
+                    você não acha incrível essa ideia de que Marx venceu a morte se tornando um clássico? Porém, podemos
+                    ter essa conversa em outro momento.</p>
+                <p>Amigo, não quero me estender hoje, pode culpar a astrologia ou algum mal funcionamento psicofísico
+                    meu, mas, em resumo, a aula trabalhou os pontos principais do texto que lhe falei antes, o professor
+                    até pediu que fizéssemos um mapa mental dele, vou deixá-lo aqui, caso sinta curiosidade literária
+                    para apreciar o texto. Na próxima aula, vou apresentá-lo aos outros colegas. Eu gostaria de ver você
+                    lá.</p>
+                <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo,
+                    Vinícius</p>
+
+                <div class="diary-title">DIÁRIO DE BORDO – 17/09/2020</div>
+                <p>Caro leitor, você estava na aula? Desculpe por não interagir com você, muita coisa aconteceu. No
+                    início da aula, o professor disse que o texto que eu ia apresentar já estava fechado. Sim, aquele
+                    texto que prometi, no último diário de bordo, apresentar. Aparentemente, boa parte da turma não
+                    entendeu bem o que o professor havia falado e aconteceu esse desencontro de informações. Mas o
+                    professor explicou tudo e combinamos coisas novas. Afinal, amigo, tudo é muito novo. Esse ensino
+                    remoto não fazia parte da vida dos discentes. Fomos lançados ao devir da realidade social
+                    abruptamente e sem muita experiência. Mas acredito que estamos fazendo o nosso melhor com os meios e
+                    ferramentas de que dispomos.</p>
+                <p>Como falei, havia esse desencontro de informações, então o início da aula foi um momento muito
+                    importante para conversarmos e esclarecermos detalhes para as próximas aulas. Você deve ter
+                    percebido que não estou lhe enviando este diário no dia seguinte às aulas, porque isso se deve ao
+                    fato de termos negociado os prazos de entrega dos diários com o professor. Acontece que combinamos
+                    que o prazo era muito estreito, então o professor sugeriu, assim como sugeriu aos estudantes do
+                    bacharelado, que o prazo fosse estendido até uma semana após a aula, ou seja, se a aula é na quinta,
+                    temos até a próxima quinta para enviar nossos diários de bordo. Consequências? Claro! Precisarei
+                    colocar mais esforço na memória para lembrar as questões da aula. Na verdade, tendo colocado esses
+                    relatos iniciais, preciso falar com vocês sobre a memória. - A memória não é um pew-drive onde você
+                    armazena dados! Algum homem sábio disse. Ele está realmente na era digital. Eu não usaria o
+                    pew-drive para fazer essa semelhança. Eu sou mais velho. Mas como ele disse o que a memória não é,
+                    vou lhe dizer o que ela é: a memória é uma escumadeira de cozinha - eu disse que eu era mais velho.
+                    Mas por que? Você me pergunta. Porque a escumadeira de massa, por exemplo, deixa o que é importante
+                    (a massa) e escoa o que “não é importante (a água)”. A memória funciona da mesma maneira. Quando
+                    passamos por algo que nos marca muito, essa experiência passa a ser uma lembrança consciente, porém,
+                    ao andar numa rua, no dia a dia, se você não for estimulado diretamente pelos detalhes daquela rua,
+                    você não irá lembrar desses detalhes, mesmo eles estando lá. Você vai lá mil vezes e um dia vai
+                    dizer: eu estive aqui a minha vida toda e nunca notei esse detalhe. Lá, quando você perceber algo,
+                    um detalhe, esse algo se tornará uma memória. Então, nesses diários que escrevo para você, procuro
+                    contar o que me marcou nas aulas, o que se tornou consciente e o que na minha consciência foi
+                    tatuado.</p>
+                <p>Depois de acordos bilaterais e políticos, lembro que três grupos fizeram a apresentação do texto.
+                    Sim, quase me esqueci de dizer que o texto é de Mills, intitulado The Promise. Vou falar sobre ele
+                    no próximo diário. Bem, os grupos apresentaram, embora tenham dito que fizeram mapas mentais do
+                    texto, nenhum deles apresentou, o que foi frustrante para mim, esses mapas são excelentes para
+                    compreender os conceitos-chave de um texto, assunto, tema, questão, etc. Alguns membros disseram que
+                    pegaram o texto pouco antes da aula, por isso é admirável o esforço que eles devem ter feito para
+                    sintetizar as principais questões do texto em um curto espaço de tempo. Se não me engano, todos os
+                    grupos disseram que a questão central do texto era a imaginação sociológica e focaram nesse ponto,
+                    já que era de fato o ponto principal. Sério, amigo, vou te contar sobre o texto e seus pontos no
+                    próximo diário, prometo. Espere um pouco mais. Durante as apresentações, o professor dialogou com os
+                    grupos sobre os pontos levantados durante as apresentações, mas nas apresentações da aula seguinte,
+                    assim como irei te contar, ele meio que deixou as considerações para o fim da aula, mas direi isso
+                    mais tarde.</p>
+                <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo,
+                    Vinícius</p>
+
+                <div class="diary-title">DIÁRIO DE BORDO – 22/09/2020</div>
+                <p>Amigo, hoje foi nossa apresentação. Ficamos apreensivos como sempre, uns mais que outros, pois
+                    apresentar é estar diante do outro e ao mesmo tempo abrir-se para o outro. Alguns tremem na base,
+                    outros apenas vão, vão enfrente. Normalmente imagino um teatro vazio onde posso dançar livremente. O
+                    que é confuso no EaD já que fico na dúvida se a internet não caiu, se eu não fui desconectado da
+                    sala, se o microfone está funcionando, se os latidos dos cachorros do vizinho não incomodam muito,
+                    são muitas as preocupações para o meu processo de apresentação ocorrer normalmente.</p>
+                <p>Na hora eu estava calmo, nenhuma preocupação pairava sobre minha mente, somente as corriqueiras: é
+                    esse o caminho certo? Que conceito vem depois desse que apresentei? Falar mais um exemplo,
+                    esclareceria melhor a ideia? Haverá alguma dúvida? Qual a profundidade que devo escolher para cada
+                    conceito? etc. Apresentar é uma espécie de performance, pensei nisso ao defender o meu TCC, o
+                    coração tem que ficar calmo; a adrenalina não pode subir; os pensamentos vêm e vão como as ondas do
+                    mar e você deve ser apenas um observador deles; o público calado, a falta de questionamentos, o
+                    ruído ambiental, o ar pesado, tudo isso serão obstáculos à sua frente, cabe a você encontrar o fio
+                    de Ariadna e saber como sair dessa situação.</p>
+                <p>Não pense que não percebi você durante a apresentação. Seus gestos, sua expressão, como se você
+                    estivesse fazendo cálculos mentais complexos, tomando nota do que eu digo, estamos em sincronia ou
+                    isso é anacrônico? Enfim, obrigado por estar ali naquele momento, mentalmente, eu estava sem
+                    plateia, as poltronas do teatro foram entregues ao vazio da sala, porém, um pouco distante, perto da
+                    entrada ou da saída, vi você de relance, em uma luz amarelada, seu semblante era inconfundível.</p>
+                <p>Geralmente eu gosto de apresentar primeiro, não por egocentrismo ou coisa parecida, é muito mais
+                    fácil lidar com a apresentação sem tanta informação na cabeça, por exemplo, depois que a gente
+                    apresentou, os grupos começaram a me citar em suas apresentações, ou seja, eles se desviaram do que
+                    planejaram originalmente porque foram afetados pelo que eu disse inicialmente. Isso poderia
+                    acontecer comigo. Eu podia ouvi-los e depois citá-los. Há riscos nisso, por exemplo, se o professor
+                    tivesse iniciado as apresentações falando sobre a diferença entre biografia e identidade, na minha
+                    apresentação eu seria forçado a não expor essa ideia. O certo, a meu ver, é reter as informações das
+                    apresentações. Por exemplo, agora que sei que em sociologia, segundo o professor, biografia não se
+                    confunde com identidade, posso pensar e pesquisar melhor sobre isso em outras oportunidades. Mas
+                    levar esse assunto para o debate ou usar essa informação sem algum domínio sobre o assunto, seria um
+                    erro. Eu precisaria saber quais autores o professor leu para chegar a essa conclusão.</p>
+                <p>“Certo”, “errado”, “talvez” e “mais ou menos”, uma apresentação costuma ser guiada por esses valores.
+                    O que você diz pode estar errado, certo, mais ou menos certo ou errado, talvez você esteja certo
+                    e/ou errado, e, sobretudo, tudo o que você disser pode e será usado contra você. É por isso que o
+                    silêncio deveria ser mais valorizado. As apresentações devem ser curtas, quanto menos informação
+                    sair de sua boca, menos reclamação a outra pessoa terá. Se for certo ou errado o outro dirá, se você
+                    der muita informação, a outra pessoa terá mais material para julgar, você está com as rédeas da
+                    questão. Cabe ao indivíduo conhecer seus próprios limites e saber por si mesmo quantas críticas ele
+                    é capaz de aguentar, pois nenhuma apresentação vai ser boa o bastante para o outro, você não é o
+                    outro, você não viveu o que o outro viveu, suas vidas são únicas, somos exemplares únicos entre
+                    pessoas que afirmam serem iguais.</p>
+                <p>Se eu tivesse lido os livros que o professor leu, vivido as experiências que ele teve, tivesse
+                    passado as noites de sono ruim que ele deve ter tido, passado pelos amores, as dores, os conflitos,
+                    etc., com certeza eu teria desenvolvido algo que buscamos hoje, a resposta para a pergunta: como se
+                    colocar no lugar do outro? O outro é um território inexplorado, é um desconhecido por onde eu me
+                    reconheço.</p>
+                <p>Sei que não sou o outro, sei que não sou o professor, então sei que, por mais que me esforce, nunca
+                    poderei atender às expectativas de ninguém. Se a apresentação fosse em um curso de ciências exatas
+                    onde tudo é lógico e ordenado, 1 + 1 = 2, eu poderia atender parcialmente a expectativa seguindo a
+                    lógica da instrução, mas em um curso de humanas, como instruir o pensamento a pensar de maneira
+                    semelhante a todos os outros envolvidos?</p>
+                <p>Você já deve estar farto das minhas filosofias de boteco, não vou mais te incomodar com elas. Pelo
+                    menos por enquanto. Como escrevi para você, fomos o primeiro grupo a apresentar o texto A promessa
+                    de Mills. Ao ler o texto, acho que encontrei a linha divisória que separa a filosofia da sociologia.
+                    Ambas vêm do mundo, são irmãs, eu acho. Eles compartilham o mesmo cordão umbilical, mas como eu já
+                    disse, estamos em um mundo de singularidades. Depois do parto socrático, a filosofia cresceu e
+                    desejou o conhecimento do todo, sua ambição de saber parece não ter limites. Kant tentou encontrar
+                    os limites do conhecimento, mas acho que ele não poderia afirmar que havia um limite para o desejo
+                    de conhecimento da filosofia. Schopenhauer e Nietzsche chegaram perto, creio eu, ao afirmar que tudo
+                    é vontade, os dois tentaram explicar de onde vem a ânsia da filosofia pelo conhecimento. A
+                    sociologia, por outro lado, era a desajustada da família, curiosa na infância, rebelde na juventude
+                    e revolucionária na maior idade. Conhecimento é algo que ela também busca, mas ela quer mais. Ela se
+                    cansou da observação passiva da filosofia. Seu sangue está quente, ferve e pulsa como a vida. Ela
+                    decidiu falar, rasgou o verbo e começou a cantar: muda agora! mudança já!</p>
+                <p>Tentei procurar semelhanças entre as duas, mas elas eram como Janus, eram dois rostos, um calmo e
+                    tranquilo, o outro, não sei o que ele expressava, seus olhos ardiam, seu sorriso era desavergonhado,
+                    seu rosto era rosado, mas a expressão era enigmática. A sociologia parecia estar pensando ou bolando
+                    um plano mental, sua imaginação era tanta que ela não viu o garoto de testa franzina na sua frente.
+                    Depois de um tempo pensando, calculando e analisando, ela apontou o dedo para algo que estava atrás
+                    do garoto, era um valor antigo, aquele ligado ao solo com raízes profundas. Suas raízes sustentavam
+                    a estrutura do valor, eram chamadas de raízes estruturais, nas quais o valor retirava a seiva da
+                    terra para se fortalecer.</p>
+                <p>Em meio àquele momento, o menino pensava que a sociologia queria erradicar o valor, queria dar à paz
+                    aquele antigo valor. Será este o início de um novo momento histórico? Novos valores emergirão dessa
+                    atitude? Como nos encaixaremos em um mundo onde nossos valores estão sujeitos a ataques? Onde a
+                    história não se estabelece fixa e imutável? Onde a estrutura pode e será derrubada pela vontade de
+                    mudar?</p>
+                <p>Mais do que você, eu também queria respostas para essas perguntas. Gosto de pensar que o sentido da
+                    vida é a mudança, por isso sou cauteloso, assim não serei afetado pelo novo. O novo à frente pode
+                    ser assustador, mas se permitirmos que ele chegue, ele pode ser uma boa visita de vez em quando.
+                    Preparo a casa ou minha vida para quando ele chegar? Açúcar ou adoçante, de qual ele vai gostar? Só
+                    espero que ele não demore a chegar.</p>
+                <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo,
+                    Vinícius</p>
+
+                <div class="diary-title">DIÁRIO DE BORDO – 24/09/2020</div>
+                <p>Amigo, lendo as páginas que te enviei antes, percebi que nunca perguntei se você está bem, como foi
+                    seu dia, se leu algum livro interessante ou essas perguntas de amigos. Fica mais complicado se
+                    pararmos para pensar que você não me responde ou me dá feedback sobre o que eu mando. Eu estava me
+                    perguntando a real necessidade de escrever esses diários para você. Nada chamou sua atenção? Nenhuma
+                    das questões? Você não gostaria de falar sobre alguma ideia? Dê um sinal de vida, mas no seu tempo,
+                    sem pressão.</p>
+                <p>Vou quebrar um pouco o padrão da escrita hoje, sem reflexões sobre as aulas, terei que ser pontual e
+                    direto. Se eu estivesse matriculado apenas na aula de sociologia, teria tido mais tempo para
+                    elaborar algo que valesse a pena ler ou quase isso, mas tem sido dias difíceis deste lado da tela.
+                    Já faz um tempo desde que li um livro voluntariamente. Estou ao lado de alguns livros que comprei no
+                    sebo e de alguns que ganhei recentemente, olho para eles com alguma dor, aquela angústia de não ter
+                    tempo de ler. Acordo cada vez mais tarde, pois durmo depois das 3 da madrugada, quando acordo, todas
+                    as manhãs me pergunto: que atividade tenho que terminar hoje? A partir dela, surgiram outras: que
+                    atividade posso fazer ou concluir um pouco mais à frente? Haverá uma apresentação em grupo e o
+                    professor explicará o conteúdo? Que disciplinas não estou conseguindo acompanhar? Devo trancar um
+                    para aliviar essa pressão? Outros já o trancaram e isso não é sinal de fraqueza, é a constatação de
+                    que estamos gastando muita energia psíquica; estamos a 100% da nossa capacidade de trabalho e de
+                    assimilação.</p>
+                <p>Se você se lembra do texto de Mills, The Promise, no momento, essas questões aparecem como uma
+                    perturbação individual, são minhas preocupações com o sistema remoto. Mas, navegando nas redes um
+                    dia desses, percebi que essas questões não são tão individuais assim, outras pessoas já estão
+                    começando a falar das dificuldades deles nesse modelo remoto, a gente não estava preparado para
+                    isso, professores muito menos e quiçá a faculdade. Se estamos aprendendo esse “novo” modelo, estamos
+                    aprendendo do jeito errado. Continuamos o assemelhando com o modelo tradicional e rezando para ser a
+                    mesma coisa, porém amigo, em algum momento vai ser preciso colocar o pé no freio e entender que o
+                    tradicional morreu, algo novo nasceu, o tradicional está esfarelado e não pode suportar ou
+                    estruturar o novo. O novo chegou e estamos lidando com ele com os olhos no passado. Haverá
+                    consequências a curto ou longo prazo e só então seremos levados a repensar nossas práticas.</p>
+                <p>Após esse breve desabafo, para não perder esse nosso costume cotidiano, destacarei os pontos que
+                    anotei durante a aula:<br>Inicialmente, o professor voltou à questão da identidade, depois afirmou
+                    que a sociologia não trata da identidade, talvez a antropologia seja a que mais se interessa pelo
+                    assunto. Sobre o texto de Mills, por ser o fechamento do livro, falamos de liberdade, juventude,
+                    valores pessoais, livre arbítrio, idealidade e escolhas - lembrando que as escolhas têm limites ou
+                    são limitadas na sociedade. Nossa liberdade muda com a história. A sociologia entra em jogo ou
+                    “desce pro play”, como dizem os jovens, quando há uma questão social. Há questões em ato (por
+                    exemplo, aquela que eu mencionei no começo), quando essas questões se tornam potenciais, a
+                    sociologia entra em cena. A sociologia é exercida e atuada, por isso ganhou importância no século
+                    XIX. Então o professor perguntou qual laboratório de ciências sociais. Ele não é físico, porque é a
+                    própria sociedade. A sociologia analisa os processos sociais do mundo. Segundo o professor, as
+                    humanidades são capazes de compreender as mudanças. A arte, por exemplo, questiona questões sociais,
+                    mas não reflete ou indica soluções. O professor falou sobre as tendências analíticas da sociologia.
+                    São três tendências ou talvez possamos pensar em outras hoje. I) Quantitativo (análise de dados),
+                    II) Pesquisa clássica (construção de teoria) e III) Refinamento de métodos (método).<br>Primeira
+                    tendência: Explicar a história por fios conectores, por exemplo, na teoria da totalidade da
+                    sociedade, Weber queria explicar a racionalização da sociedade (trajetória racional), Marx com base
+                    na contradição (sempre houve conflitos de classes), A. Conte, teoria do paraíso (a sociedade caminha
+                    para o paraíso, uma alta civilização) resultado: duas guerras mundiais. Marx estava errado: só a
+                    classe não resolve. Weber: a sociedade caminha para a burocratização, este acertou!<br>Tendência
+                    dois: teoria sistemática: criando conceitos para classificar as relações sociais. A sociedade está
+                    em constante construção, não é possível fixar e conceituar, pois tudo e todas as relações sociais
+                    estão mudando.<br>O professor explicaria a última tendência, mas o remoto vem com defeitos, a
+                    plataforma que deveria simular uma sala de aula física saiu do ar para todos os participantes.
+                    Amigo, nunca confie na tecnologia, confie em mim.</p>
+                <p>Por hoje é isso, meu caro leitor. Em breve escreverei outras páginas para você.<br>At.te., seu amigo,
+                    Vinícius</p>
+
+                <div class="diary-title">DIÁRIO DE BORDO – 29/09/2020</div>
+                <p>Amigo, como falei no último diário, o Google Meet, a plataforma de reuniões que usamos como salas de
+                    aula virtuais, caiu na última aula. Achei que tinha sido um evento isolado, mas então, quando entrei
+                    nas tendências do Twitter, percebi que era um apagão geral. A plataforma ficou ipsi literis fora do
+                    ar. Talvez, naquele momento, ela estivesse mudando para se adequar ao que virá no futuro. A partir
+                    de 1º de novembro não teremos mais aulas gravadas, inclusive, muitos sites de tecnologia afirmam que
+                    o tempo disponível para as reuniões será limitado a uma hora na versão free. Vamos esperar para ver
+                    os desdobramentos desse assunto.</p>
+                <p>Como a plataforma estava indisponível ao final da última aula, o professor iniciou a aula deste dia,
+                    29/09, com a última tendência do texto de Mills. Aí depois ele comentou um pouco sobre filosofia e
+                    sociologia. Parece que ele buscava a linha divisória entre elas, assim como fiz em um diário
+                    anterior. Ao contrário da minha linha de pensamento, ele apontou o seguinte: a sociologia é mais
+                    pragmática, enquanto a filosofia seria mais existencial.</p>
+                <p>Depois disso, ele voltou brevemente às três tendências, afirmando que teoria e análise estão
+                    interligadas, creio que ele pretendeu oferecer subsídios para o próximo texto que leríamos a seguir.
+                    Um amigo meu, durante a fala da professora, perguntou o que era práxis. Aí o professor disse que
+                    veríamos esse conceito mais tarde, mas que daria um spoiler sobre o assunto, ele usou como exemplo o
+                    preparo de um bolo, confesso que estava com fome naquele momento, ainda não tinha jantado, mas eu
+                    aguentei firme. Claro que não tinha bolo na aula, nem nada comestível, mas olha que interessante, o
+                    professor fala bolo e só a palavra, sem o objeto próximo que essa palavra designa, me despertou a
+                    sensação de fome. Que loucura, não acha?</p>
+                <p>Depois de algumas outras perguntas, um pouco de conteúdo filosófico colocado por um menino que não me
+                    lembro bem, mas que acabou indo do Fedro de Platão às palavras de Heráclito, encerramos o primeiro
+                    momento da aula e o texto de Mills. No segundo momento da aula, começaram as apresentações do novo
+                    texto, trata-se de A Construção Social da Realidade de Peter L. Berger e Thomas Luckmann. Se não me
+                    engano, foram dois ou três grupos que apresentaram nesta aula. Em ordem sequencial, o segundo grupo
+                    colocou uma questão interessante: é necessário colocar face a face com o outro para conhecer o
+                    outro? Acho que a partir das apresentações desta aula, essa foi a pergunta que pairou no ar virtual
+                    da sala também virtual. Claro que tentarei refletir sobre isso com você, mas somente no próximo
+                    diário, onde contarei como foi minha apresentação, pois nesta aula não houve tempo para todos os
+                    grupos se apresentarem.</p>
+                <p>Por hoje é isso, meu caro leitor. Não sei se, em breve, escreverei outras páginas para
+                    você.<br>At.te., seu amigo, Vinícius</p>
+                <p><strong>Fim dos Diários</strong></p>
+            </div>
+
+            <!-- PDF Viewer -->
+            <div class="panel">
+                <h2><i class="fas fa-file-pdf"></i> Relato completo (PDF)</h2>
+                <div class="pdf-frame">
+                    <iframe src="/arquivos/Cartas_Sociais_Vinicius.pdf"
+                        title="As Cartas Sociais de Vinícius - Relato de Experiência"></iframe>
+                </div>
+            </div>
+
+            <!-- Referências com gerador de citações -->
+            <div class="panel" id="references-panel">
+                <h2><i class="fas fa-quote-right"></i> Referências & Citação</h2>
+
+                <!-- GERADOR DE CITAÇÕES -->
+                <div class="citation-generator" data-authors='["VINÍCIUS, Diego"]'
+                    data-title="As Cartas Sociais de Vinícius"
+                    data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/relatos-de-experiencia/relato-as-cartas-sociais-de-vinicius.html"
+                    data-volume="1" data-issue="1" data-pages="01-23" data-year="2026">
+                    <div class="citation-generator-head">
+                        <h2><i class="fas fa-quote-left"></i> Como citar este trabalho</h2>
+                    </div>
+                    <div class="citation-generator-body">
+                        <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a
+                            referência bibliográfica.</p>
+                        <div class="citation-controls">
+                            <div class="citation-field">
+                                <label for="citation-style">Estilo de referência</label>
+                                <select id="citation-style" class="citation-select">
+                                    <option value="abnt">ABNT</option>
+                                    <option value="apa">APA</option>
+                                    <option value="mla">MLA</option>
+                                    <option value="chicago">Chicago</option>
+                                    <option value="harvard">Harvard</option>
+                                    <option value="vancouver">Vancouver</option>
+                                    <option value="ieee">IEEE</option>
+                                </select>
+                            </div>
+                            <div class="citation-actions">
+                                <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i>
+                                    Copiar referência</button>
+                            </div>
+                        </div>
+                        <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                        <p class="citation-feedback"></p>
+                    </div>
+                </div>
+
+                <div class="citation-actions">
+                    <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
+                    <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+                </div>
+                <ul class="ref-list">
+                    <li><strong>VINÍCIUS, Diego.</strong> As Cartas Sociais de Vinícius. <em>Revista Inquietações</em>,
+                        v. 1, n. 1, p. 01–23, 2026. DOI: <a href="https://doi.org/10.5281/zenodo.18844651"
+                            target="_blank">10.5281/zenodo.18844651</a></li>
+                    <li><strong>BERGER, Peter L.; LUCKMANN, Thomas.</strong> <em>A construção social da realidade</em>.
+                        Petrópolis: Vozes, 2014.</li>
+                    <li><strong>MILLS, C. Wright.</strong> <em>A imaginação sociológica</em>. Rio de Janeiro: Zahar,
+                        1982.</li>
+                    <li><strong>MARX, Karl; ENGELS, Friedrich.</strong> <em>Manifesto do Partido Comunista</em>. São
+                        Paulo: Boitempo, 2010.</li>
+                    <li><strong>WEBER, Max.</strong> <em>A ética protestante e o espírito do capitalismo</em>. São
+                        Paulo: Companhia das Letras, 2004.</li>
+                </ul>
+                <p><small><i class="fas fa-info-circle"></i> Clique nos links para acessar as fontes originais. Utilize
+                        o gerador acima para citar este relato em diferentes estilos.</small></p>
+            </div>
+
+            <!-- Sobre o autor -->
+            <div class="panel">
+                <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto do autor Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre o autor </h2>
+                <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo, com
+                    experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui mestrado
+                    em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada na
+                    obra e filosofia de Friedrich Nietzsche. É graduado em Filosofia pela Universidade do Estado do Rio
+                    Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro Universitário Internacional (UNINTER, 2022).
+                    É autor do livro <em>Nietzsche e os valores modernos</em> (2022). Dedica-se à formação continuada em
+                    áreas como Psicopedagogia, Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional
+                    Especializado (AEE) e Educação de Jovens e Adultos (EJA).</p>
+                <p><i class="fas fa-envelope"></i> E-mail: diego_svt@hotmail.com.br<br>
+                    <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663"
+                        target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                    <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811"
+                        target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+                </p>
+            </div>
+
+            <footer>
+                <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | Relato de
+                Experiência | DOI: 10.5281/zenodo.18844651<br>
+                Acesso aberto sob licença Creative Commons.
+            </footer>
+        </div>
     </div>
-</div>
 
-<script>
-    // Submissões com simulação de login
-    const submitBtn = document.getElementById("submitBtn");
-    submitBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        let logged = localStorage.getItem("inquietacoes_logged");
-        if (logged === "true") {
-            window.location.href = "cadastro-login/submissoes.html";
-        } else {
-            let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
-            if (email && email.includes("@")) {
-                localStorage.setItem("inquietacoes_logged", "true");
-                alert("Login simulado com sucesso! Redirecionando para submissões.");
+    <!-- Google Translate Widget -->
+    <script type="text/javascript">
+        function googleTranslateElementInit() {
+            new google.translate.TranslateElement({
+                pageLanguage: 'pt',
+                includedLanguages: 'pt,en,es',
+                autoDisplay: false,
+                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+            }, 'google_translate_element');
+            document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
+        }
+    </script>
+    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+    <div id="google_translate_element" style="display:none;"></div>
+
+    <script>
+        // Botões de tradução manuais via Google Translate API
+        (function() {
+            const langBtns = document.querySelectorAll('.lang-btn');
+            let currentLang = 'pt';
+
+            function triggerGoogleTranslate(lang) {
+                const selectElem = document.querySelector('.goog-te-combo');
+                if (selectElem) {
+                    selectElem.value = lang;
+                    selectElem.dispatchEvent(new Event('change'));
+                } else {
+                    setTimeout(() => {
+                        const select = document.querySelector('.goog-te-combo');
+                        if (select) {
+                            select.value = lang;
+                            select.dispatchEvent(new Event('change'));
+                        }
+                    }, 500);
+                }
+            }
+
+            langBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const lang = btn.getAttribute('data-lang');
+                    if (lang === currentLang) return;
+                    
+                    langBtns.forEach(b => b.classList.remove('active'));
+                    btn.classList.add('active');
+                    
+                    let googleCode = '';
+                    if (lang === 'pt') googleCode = 'pt';
+                    else if (lang === 'en') googleCode = 'en';
+                    else if (lang === 'es') googleCode = 'es';
+                    
+                    triggerGoogleTranslate(googleCode);
+                    currentLang = lang;
+                });
+            });
+            
+            const observer = new MutationObserver(() => {
+                const combo = document.querySelector('.goog-te-combo');
+                if (combo && !combo._listenerAdded) {
+                    combo._listenerAdded = true;
+                    const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
+                    let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
+                    if (combo.value !== code) {
+                        combo.value = code;
+                        combo.dispatchEvent(new Event('change'));
+                    }
+                }
+            });
+            observer.observe(document.body, { childList: true, subtree: true });
+        })();
+
+        // Submissões com simulação de login
+        const submitBtn = document.getElementById("submitBtn");
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
                 window.location.href = "cadastro-login/submissoes.html";
             } else {
-                alert("Acesso não autorizado. Cadastro/login necessário.");
+                let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Login simulado com sucesso! Redirecionando para submissões.");
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    alert("Acesso não autorizado. Cadastro/login necessário.");
+                }
             }
-        }
-    });
+        });
 
-    // Gerador de referências simples (ABNT e BibTeX)
-    document.getElementById("copyRefBtn").addEventListener("click", () => {
-        const refs = [
-            "VINÍCIUS, Diego. As Cartas Sociais de Vinícius. Revista Inquietações, v. 1, n. 1, p. 01-23, 2026."
-        ];
-        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
-    });
-    document.getElementById("exportBibBtn").addEventListener("click", () => {
-        let bib = `@article{vinicius2026,
+        // Gerador de referências simples (ABNT e BibTeX)
+        document.getElementById("copyRefBtn").addEventListener("click", () => {
+            const refs = [
+                "VINÍCIUS, Diego. As Cartas Sociais de Vinícius. Revista Inquietações, v. 1, n. 1, p. 01-23, 2026."
+            ];
+            navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
+        });
+        document.getElementById("exportBibBtn").addEventListener("click", () => {
+            let bib = `@article{vinicius2026,
   title={As Cartas Sociais de Vinícius},
   author={Vinícius, Diego},
   journal={Revista Inquietações},
@@ -538,65 +1217,66 @@
   pages={01--23},
   year={2026}
 }`;
-        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
-    });
+            navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
+        });
 
-    // ========== GERADOR DE CITAÇÕES (script automático) ==========
-    (function() {
-        const generator = document.querySelector('.citation-generator');
-        if (!generator) return;
-        const authors = JSON.parse(generator.dataset.authors || '[]');
-        const title = generator.dataset.title || '';
-        const url = generator.dataset.url || '';
-        const volume = generator.dataset.volume || '';
-        const issue = generator.dataset.issue || '';
-        const pages = generator.dataset.pages || '';
-        const year = generator.dataset.year || '';
-        const journal = 'Revista Inquietações';
-        const accessDate = new Date().toLocaleDateString('pt-BR');
+        // ========== GERADOR DE CITAÇÕES (script automático) ==========
+        (function () {
+            const generator = document.querySelector('.citation-generator');
+            if (!generator) return;
+            const authors = JSON.parse(generator.dataset.authors || '[]');
+            const title = generator.dataset.title || '';
+            const url = generator.dataset.url || '';
+            const volume = generator.dataset.volume || '';
+            const issue = generator.dataset.issue || '';
+            const pages = generator.dataset.pages || '';
+            const year = generator.dataset.year || '';
+            const journal = 'Revista Inquietações';
+            const accessDate = new Date().toLocaleDateString('pt-BR');
 
-        const styles = {
-            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponível em: ${url}. Acesso em: ${accessDate}.`,
-            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
-            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
-            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
-            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
-            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
-            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
-        };
+            const styles = {
+                abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponível em: ${url}. Acesso em: ${accessDate}.`,
+                apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+                mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+                chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+                harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+                vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+                ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+            };
 
-        const select = document.getElementById('citation-style');
-        const outputDiv = document.getElementById('citationOutput');
-        const copyBtn = document.querySelector('.citation-copy');
-        const feedback = document.querySelector('.citation-feedback');
+            const select = document.getElementById('citation-style');
+            const outputDiv = document.getElementById('citationOutput');
+            const copyBtn = document.querySelector('.citation-copy');
+            const feedback = document.querySelector('.citation-feedback');
 
-        function updateCitation() {
-            const style = select.value;
-            const generatorFn = styles[style];
-            if (generatorFn) {
-                outputDiv.innerHTML = generatorFn();
-            } else {
-                outputDiv.innerHTML = styles.abnt();
+            function updateCitation() {
+                const style = select.value;
+                const generatorFn = styles[style];
+                if (generatorFn) {
+                    outputDiv.innerHTML = generatorFn();
+                } else {
+                    outputDiv.innerHTML = styles.abnt();
+                }
             }
-        }
 
-        if (select && outputDiv) {
-            select.addEventListener('change', updateCitation);
-            updateCitation();
-        }
+            if (select && outputDiv) {
+                select.addEventListener('change', updateCitation);
+                updateCitation();
+            }
 
-        if (copyBtn) {
-            copyBtn.addEventListener('click', () => {
-                const citationText = outputDiv.innerText;
-                navigator.clipboard.writeText(citationText).then(() => {
-                    feedback.textContent = '✓ Referência copiada para a área de transferência.';
-                    setTimeout(() => { feedback.textContent = ''; }, 3000);
-                }).catch(() => {
-                    feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    const citationText = outputDiv.innerText;
+                    navigator.clipboard.writeText(citationText).then(() => {
+                        feedback.textContent = '✓ Referência copiada para a área de transferência.';
+                        setTimeout(() => { feedback.textContent = ''; }, 3000);
+                    }).catch(() => {
+                        feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
+                    });
                 });
-            });
-        }
-    })();
-</script>
+            }
+        })();
+    </script>
 </body>
+
 </html>

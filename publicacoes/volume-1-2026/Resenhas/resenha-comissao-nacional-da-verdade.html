@@ -68,7 +68,27 @@
             font-weight: 500;
             display: flex;
             flex-wrap: wrap;
+            align-items: center;
             gap: 1rem;
+        }
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
         }
         .action-buttons {
             display: flex;
@@ -94,6 +114,34 @@
         .btn-doi { background: #2c6e5c; color: white; border: none; }
         .btn-submit { background: #b87c3a; color: white; border: none; }
         .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+
+        /* Botões de tradução */
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.1s;
+            color: #4a3a2a;
+        }
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+        }
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
 
         .panel {
             background: rgba(255, 255, 252, 0.96);
@@ -142,7 +190,6 @@
             transition: 0.1s;
         }
         .wikilink:hover { background: #e0d4bc; color: #4e3a22; }
-        /* Notas de rodapé opcionais (caso queira adicionar) */
         .footnote-ref {
             position: relative;
             display: inline-block;
@@ -358,6 +405,24 @@
             .citation-actions { justify-content: stretch; }
             .citation-btn { justify-content: center; }
         }
+
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+
+        /* Ocultar elementos padrão do Google Translate */
+        .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
+        body { top: 0 !important; }
+        .goog-te-gadget { display: none; }
     </style>
 </head>
 <body>
@@ -368,10 +433,23 @@
             <div class="title">Memória, justiça e transição democrática</div>
             <div class="subtitle">uma leitura sobre a Comissão Nacional da Verdade</div>
             <div class="author-line">
-                <span><i class="fas fa-user-pen"></i> <strong>Resenhista: Diego Vinícius Brito dos Santos</strong></span>
+                <div class="author-avatar">
+                    <div class="avatar-circle">
+                        <img src="/corpo%20editorial/diego.png" alt="Foto do autor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                    </div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Resenhista: Diego Vinícius Brito dos Santos</strong></span>
+                </div>
                 <span><i class="fas fa-book"></i> Obra resenhada: BRASIL. Relatório da Comissão Nacional da Verdade (Vol. 1). Brasília: CNV, 2014.</span>
                 <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18845488</span>
             </div>
+
+            <!-- Botões de tradução -->
+            <div class="lang-buttons">
+                <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
+                <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
+                <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+            </div>
+
             <div class="action-buttons">
                 <a class="btn btn-pdf" href="/arquivos/Resenha_CNV.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Baixar PDF</a>
                 <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18845488" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
@@ -471,7 +549,7 @@
 
         <!-- Sobre o autor -->
         <div class="panel">
-            <h2><i class="fas fa-user-circle"></i> Sobre o autor / Resenhista</h2>
+            <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto do autor Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre o autor </h2>
             <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo, com experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui mestrado em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada na obra e filosofia de Friedrich Nietzsche. É graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro Universitário Internacional (UNINTER, 2022). É autor do livro <em>Nietzsche e os valores modernos</em> (2022). Dedica-se à formação continuada em áreas como Psicopedagogia, Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional Especializado (AEE) e Educação de Jovens e Adultos (EJA).</p>
             <p><i class="fas fa-envelope"></i> E-mail: diego_svt@hotmail.com.br<br>
             <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
@@ -485,7 +563,76 @@
     </div>
 </div>
 
+<!-- Google Translate Widget -->
+<script type="text/javascript">
+    function googleTranslateElementInit() {
+        new google.translate.TranslateElement({
+            pageLanguage: 'pt',
+            includedLanguages: 'pt,en,es',
+            autoDisplay: false,
+            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
+        }, 'google_translate_element');
+        document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
+    }
+</script>
+<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
+<div id="google_translate_element" style="display:none;"></div>
+
 <script>
+    // Botões de tradução manuais via Google Translate API
+    (function() {
+        const langBtns = document.querySelectorAll('.lang-btn');
+        let currentLang = 'pt';
+
+        function triggerGoogleTranslate(lang) {
+            const selectElem = document.querySelector('.goog-te-combo');
+            if (selectElem) {
+                selectElem.value = lang;
+                selectElem.dispatchEvent(new Event('change'));
+            } else {
+                setTimeout(() => {
+                    const select = document.querySelector('.goog-te-combo');
+                    if (select) {
+                        select.value = lang;
+                        select.dispatchEvent(new Event('change'));
+                    }
+                }, 500);
+            }
+        }
+
+        langBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                const lang = btn.getAttribute('data-lang');
+                if (lang === currentLang) return;
+                
+                langBtns.forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                
+                let googleCode = '';
+                if (lang === 'pt') googleCode = 'pt';
+                else if (lang === 'en') googleCode = 'en';
+                else if (lang === 'es') googleCode = 'es';
+                
+                triggerGoogleTranslate(googleCode);
+                currentLang = lang;
+            });
+        });
+        
+        const observer = new MutationObserver(() => {
+            const combo = document.querySelector('.goog-te-combo');
+            if (combo && !combo._listenerAdded) {
+                combo._listenerAdded = true;
+                const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
+                let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
+                if (combo.value !== code) {
+                    combo.value = code;
+                    combo.dispatchEvent(new Event('change'));
+                }
+            }
+        });
+        observer.observe(document.body, { childList: true, subtree: true });
+    })();
+
     // Submissões com simulação de login
     const submitBtn = document.getElementById("submitBtn");
     submitBtn.addEventListener("click", (e) => {
