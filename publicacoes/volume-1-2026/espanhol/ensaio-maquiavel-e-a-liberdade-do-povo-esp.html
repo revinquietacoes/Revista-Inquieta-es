@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Maquiavelo y la libertad del pueblo | Ensayo | Revista Inquietaciones</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f); padding: 2rem 1.5rem; display: flex; justify-content: center; min-height: 100vh; }
+        .container { max-width: 1280px; width: 100%; background: rgba(255, 253, 245, 0.98); border-radius: 2rem; box-shadow: 0 30px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(180,150,100,0.3); overflow: hidden; }
+        .content-padding { padding: 2rem 2.5rem; }
+        .header { border-bottom: 2px solid #e0d6c0; margin-bottom: 1.8rem; }
+        .journal-badge { display: inline-block; background: #6b4c2c; color: #fef7e0; font-size: 0.7rem; letter-spacing: 1.5px; padding: 0.25rem 0.9rem; border-radius: 30px; text-transform: uppercase; font-weight: 600; }
+        .title { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; line-height: 1.2; margin-top: 1rem; color: #3a2a1a; }
+        .author-line { margin-top: 0.8rem; font-size: 0.95rem; color: #6b5a42; font-weight: 500; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+        .author-avatar { display: flex; align-items: center; gap: 12px; }
+        .avatar-circle { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: #dcd0b8; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid #c28a4e; }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .action-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0 1rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.65rem 1.4rem; border-radius: 60px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: 0.2s; background: #f0ede5; color: #2c3a2b; border: 1px solid #d6cdb5; cursor: pointer; }
+        .btn-pdf { background: #8b4513; color: white; border: none; }
+        .btn-doi { background: #2c6e5c; color: white; border: none; }
+        .btn-submit { background: #b87c3a; color: white; border: none; }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+        .lang-buttons { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1rem 0 0.5rem; justify-content: flex-start; }
+        .lang-btn { background: #f4efe2; border: 1px solid #c2b697; padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 600; text-decoration: none; color: #4a3a2a; display: inline-block; transition: 0.1s; cursor: pointer; }
+        .lang-btn.active { background: #c28a4e; border-color: #8b5a2e; color: white; cursor: default; pointer-events: none; }
+        .lang-btn:hover { background: #e0d4bc; }
+        .panel { background: rgba(255,255,252,0.96); border-radius: 1.2rem; margin-bottom: 2rem; padding: 1.6rem 2rem; box-shadow: 0 6px 18px rgba(0,0,0,0.02); border: 1px solid #ece2d0; }
+        .panel h2 { font-size: 1.8rem; font-weight: 600; border-left: 5px solid #c28a4e; padding-left: 1rem; margin-bottom: 1.2rem; color: #4a3a2a; }
+        .article-text { font-size: 1.02rem; line-height: 1.7; color: #2a2a24; }
+        .article-text p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-text h3 { font-size: 1.5rem; font-weight: 600; margin: 1.8rem 0 0.8rem; color: #9b5e2c; }
+        .article-text h4 { font-size: 1.2rem; margin: 1rem 0 0.5rem; color: #b47c48; }
+        .wikilink { text-decoration: none; background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%); padding: 0 2px; border-radius: 6px; color: #8b5a2e; font-weight: 500; border-bottom: 1px dotted #b89a6a; transition: 0.1s; }
+        .wikilink:hover { background: #e0d4bc; color: #4e3a22; }
+        .ref-list { list-style: none; margin-top: 1rem; }
+        .ref-list li { margin-bottom: 0.9rem; font-size: 0.85rem; border-left: 2px solid #dccfaf; padding-left: 1rem; }
+        .citation-actions { margin: 1rem 0 0.5rem; display: flex; gap: 12px; }
+        .cite-btn { background: #f4efdf; border: 1px solid #cfc2a0; padding: 6px 16px; border-radius: 40px; font-size: 0.7rem; cursor: pointer; }
+        .pdf-frame { border-radius: 1rem; overflow: hidden; border: 1px solid #e2dccf; }
+        iframe { width: 100%; height: 700px; border: none; }
+        footer { font-size: 0.7rem; text-align: center; border-top: 1px solid #e2d6c0; padding-top: 1.5rem; margin-top: 1rem; color: #7a6b53; }
+        @media (max-width: 800px) { body { padding: 1rem; } .content-padding { padding: 1.2rem; } .title { font-size: 1.9rem; } }
+        .bg-warm { background: #fefaf0; }
+        .citation-generator { background: #fefaf0; border: 1px solid #e2dac8; border-radius: 1.2rem; margin: 1.5rem 0 1rem 0; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .citation-generator-head { background: #f4efe2; padding: 1rem 1.5rem; border-bottom: 1px solid #e2d6c0; }
+        .citation-generator-head h2 { font-size: 1.3rem; font-weight: 600; margin: 0; color: #4a3a2a; border-left: none; padding-left: 0; }
+        .citation-generator-body { padding: 1.2rem 1.5rem; }
+        .citation-generator-note { font-size: 0.85rem; color: #6b5a42; margin-bottom: 1rem; font-style: italic; }
+        .citation-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; margin-bottom: 1.2rem; }
+        .citation-field { flex: 2; min-width: 180px; }
+        .citation-field label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #8b7355; margin-bottom: 0.3rem; }
+        .citation-select { width: 100%; padding: 0.6rem 0.8rem; background: white; border: 1px solid #d6cdb5; border-radius: 2rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; cursor: pointer; }
+        .citation-btn { background: #2c5a4a; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; font-weight: 600; font-size: 0.8rem; color: white; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .citation-btn:hover { background: #1f4538; transform: translateY(-1px); }
+        .citation-output { background: #ffffff; border: 1px solid #e2dac8; border-radius: 1rem; padding: 1rem; font-size: 0.85rem; line-height: 1.5; font-family: 'Inter', monospace; margin-top: 1rem; }
+        .citation-feedback { font-size: 0.75rem; margin-top: 0.5rem; color: #9b5e2c; min-height: 1.8rem; }
+        @media (max-width: 700px) { .citation-controls { flex-direction: column; align-items: stretch; } .citation-actions { justify-content: stretch; } .citation-btn { justify-content: center; } }
+        .footnote { font-size: 0.85rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2d6c0; }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietaciones • v.1, n.1 • Sección: Ensayos • Flujo continuo • 2026</div>
+            <div class="title">Maquiavelo y la libertad del pueblo</div>
+            <div class="author-line">
+                <div class="author-avatar">
+                    <div class="avatar-circle">
+                        <img src="/corpo editorial/diego.png" alt="Foto del autor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                    </div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-university"></i> Municipio de Carnaúba dos Dantas, RN, Brasil</span>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18846061</span>
+            </div>
+            <!-- Botones de idioma (enlaces estáticos) -->
+            <div class="lang-buttons">
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/Ensaios/ensaio-maquiavel-e-a-liberdade-do-povo.html">🇧🇷 Portugués</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/ingles/ensaio-maquiavel-e-a-liberdade-do-povo-en.html">🇺🇸 Inglés</a>
+                <a class="lang-btn active" href="#">🇪🇸 Español</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Maquiavel_liberdade_povo.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Descargar PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18846061" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Envíos</a>
+            </div>
+        </div>
+
+        <!-- Resumen -->
+        <div class="panel">
+            <h2><i class="fas fa-align-left"></i> Resumen</h2>
+            <p>El presente ensayo analiza el concepto de libertad en la obra de Nicolás Maquiavelo, especialmente a partir del contraste entre <em>El Príncipe</em> y los <em>Comentarios sobre la primera década de Tito Livio</em>. Se sostiene que la interpretación tradicional que comprende a Maquiavelo como consejero de tiranos no encuentra respaldo en una lectura sistemática de su obra. Al contrario, se argumenta que el autor ofrece instrumentos teóricos para que el pueblo comprenda los mecanismos del poder y, por medio del conflicto político, reclame su libertad.</p>
+            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Maquiavelo</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> libertad</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> conflicto</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> república</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> poder político</span>
+            </div>
+        </div>
+
+        <!-- Texto completo del ensayo en español (traducción completa) -->
+        <div class="panel article-text">
+            <h2>Introducción</h2>
+            <p>El presente ensayo tiene como objetivo evidenciar la mala comprensión que se tiene del pensamiento de Nicolás Maquiavelo, dado que, históricamente, el pensador florentino es visto como un consejero de tiranos. Nuestra hipótesis es que tal perspectiva no posee, efectivamente, fundamento teórico dentro de la obra del pensador, ya que una lectura profunda del conjunto de obras dejadas por Maquiavelo retrata factualmente lo opuesto, es decir, Maquiavelo, lejos de desperdiciar su tiempo y conocimiento en pro de la conservación y mantenimiento del poder de cualquier gobernante en ejercicio, ofrece un rico armazón teórico de donde el pueblo puede extraer enseñanzas que le orienten a una postura crítica frente al querer‑dominar de tiranos en contraste con su propio querer, el querer‑ser‑libre. En este sentido, al rescatar los consejos políticos de Maquiavelo, tan mal comprendidos por algunos, procuraremos mostrar que Maquiavelo es un pensador del pueblo, su consejero político.</p>
+            <p>Para alcanzar tal objetivo, rescataremos los consejos maquiavélicos contenidos en <em>El Príncipe</em><span class="footnote-ref" style="position: relative; display: inline-block; cursor: pointer; font-size: 0.75rem; vertical-align: super; margin: 0 1px;"><a href="#nota1" style="text-decoration: none; background: #e9e0cf; padding: 0 4px; border-radius: 20px; color: #9b5e2c; font-weight: bold; font-size: 0.7rem;">1</a></span> en contraste con los comentarios sobre el régimen republicano contenidos en los <em>Comentarios sobre la primera década de Tito Livio</em>.</p>
+            <p>Sin embargo, para realizar este rescate en ambas obras, elegimos el concepto de libertad como concepto‑guía de lectura y análisis que, al entrar en contraste con el pensamiento maquiavélico, nos proporcionará comprender el objetivo intelectual del autor, el cual puede ser entendido como el deseo de mostrar al pueblo que, por medio del conflicto, es posible que este se vea libre de cualquier poder autoritario.</p>
+
+            <h3>Consejos maquiavélicos sobre libertad, poder y conflicto</h3>
+            <p>En <em>El Príncipe</em>, la cuestión sobre la libertad se manifiesta ya en el primer párrafo del primer capítulo, donde Maquiavelo escribe lo siguiente: "Los dominios así ocupados son o acostumbrados a vivir bajo [la autoridad de] un príncipe, o acostumbrados a ser libres [de dicho]" (I:1 – añadimos). En este párrafo, Maquiavelo se refiere a los tipos de principados, pudiendo ser estos "hereditario, en que la sangre del señor actual haya sido príncipe por largos años, o son nuevos" (I:1), es decir: los principados, esto es, territorios gobernados por príncipes, o pertenecen al linaje sanguíneo de la familia real, siendo pasado de generación en generación, o son conquistados por nobles de la realeza. Cuando un territorio es conquistado, es absolutamente normal que el príncipe llegue a tener algún infortunio para establecer plenamente su poder, si aquel territorio nunca antes ha sido gobernado por miembros de la realeza (príncipes, reyes, reinas, etc.). Sería necesario usar la fuerza del ejército real para enraizar el poder en aquel lugar. Sin embargo, ya en el capítulo siguiente, Maquiavelo, entendiendo la necesidad de métodos más astutos para establecer y mantener el poder del príncipe sobre tales principados, se ocupará de versar sobre cómo los "principados pueden ser ocupados y mantenidos" (II:1). En vista de ello, Maquiavelo dará mayor atención a los principados nuevos, habida cuenta que en "Estados hereditarios y acostumbrados a la sangre de su príncipe son menores las dificultades de mantenerlos que los nuevos" (II:2), bastando solo que el príncipe oriente su actuar con base en los presupuestos de la tradición y de sus antecesores. Por tanto, desde que el príncipe sea querido y amado por sus súbditos, nada debe temer, visto que con la voluntad popular a su lado, nadie puede destituirlo del sagrado poder que le ha sido conferido de gobernar aquel territorio.</p>
+            <p>Este factor no es válido para todo caso, ya que en principados mixtos, esto es, territorios anexados a algún principado hereditario, puede haber rebeliones del pueblo que quiera un nuevo príncipe que les ofrezca ventajas personales. Pero, en todo caso, si tales ventajas no son ofrecidas por el nuevo príncipe, la población volverá a rebelarse y apoyará la reconquista del príncipe destituido. Un príncipe bien conocido es mejor que un desconocido: esta máxima podría representar el pensamiento egoísta de los sucesores de un principado. Es bien probable que, dada la naturaleza del hombre – como veremos a continuación –, tales súbditos no renunciarían a sus libertades por un príncipe que no ofreciera nada ventajoso a cambio. Si ocurre que el príncipe destituido recupera su lugar por derecho, el principado que se rebeló una vez no volverá a hacerlo otra vez, ya que el príncipe deberá estar consciente y más cauto.</p>
+            <p>La segunda ocurrencia sobre la libertad se da en el capítulo tercero. En él, Maquiavelo proporciona medios para que el príncipe mantenga el poder en principados mixtos o en principados conquistados. Un elemento interesante que facilita la conquista de un nuevo principado es la lengua. Es interesante que el príncipe conquiste o anexe a su principado hereditario o conquistado otro territorio donde la población hable la misma lengua, pues la lengua establece un vínculo de unión entre los súbditos del principado original con los del nuevo territorio conquistado. Además de ello, es provechoso conquistar territorios ya gobernados por otros príncipes, pues la población ya está acostumbrada a vivir bajo tal régimen. Por tanto, he aquí los factores para conquistar y mantener el poder en un nuevo principado: si los principados "son de la misma provincia y tienen la misma lengua, entonces grande es la facilidad para mantenerlos, sobre todo cuando no están acostumbrados a vivir libres" (III:3) del régimen monárquico.</p>
+            <p>Sin embargo, después de conquistar, teniendo en cuenta estos factores, es preciso de <em>virtù</em> para mantener el poder sobre el nuevo principado. Maquiavelo aconseja lo siguiente para "Quien los ocupa [...] [y que quiere] mantenerlos, debe tomar dos providencias: que la sangre del príncipe antiguo se extinga; la otra, no alterar ni su ley ni sus impuestos" (III:3 – añadimos y suprimimos), pues, como ya se ha afirmado, el príncipe debe tener para sí que la población no quiere sufrir infortunios ni males algunos. Si alguna decisión del príncipe lleva a la población a tener algún infortunio, estos se volverán contra el príncipe.</p>
+            <p>Después de algunas alusiones históricas y enseñanzas en el cuarto capítulo, Maquiavelo volverá a la cuestión de la libertad solo en el quinto capítulo, en el cual presenta tres principios para que el príncipe mantenga el poder sobre territorios libres del poder de algún príncipe. Tales principios son: "arruinarlos; el otro, habitarlos personalmente; el tercero, dejarlos vivir con sus leyes, cobrándoles tributo y creando un Estado de pocos que te conserven amigo" (V:1). Realmente es laborioso habituar a un pueblo a servir y obedecer al poder de un príncipe, cuando este pueblo vivía libre de tal poder. El príncipe no puede usar de la fuerza ni de sus ejércitos para imponer la sujeción social, pues tal acto llevaría a revoluciones que fácilmente lo destituirían del poder. Lo ideal sería mantener el orden previo ya establecido por el antiguo gobernador, ya que el pueblo está acostumbrado y no aceptará de inmediato una alteración abrupta en sus costumbres. En ese modelo de gobierno ya existente, el príncipe debe reconstruirlo con sus amigos cercanos; aquellos que no buscarán robarle el poder, ya sea en pro de la amistad cultivada entre ambas partes, ya sea por temor de las consecuencias. Está vedado al príncipe ofrecer poderes a aquellos en quienes no confía plenamente y que podrían llegar a convertirse en enemigo al ganar la facción del pueblo.</p>
+            <p>Sin embargo, entre las enseñanzas, lo más ventajoso y propicio para mantener el poder en territorios no gobernados por príncipes es destruirlos y reconstruirlos a continuación bajo los preceptos de un auténtico principado, pues si no lo hace, el príncipe correrá mayores riesgos de sucumbir junto con su conquista, por medio de rebeliones populares que puedan emerger y reivindicar la libertad de antaño y el restablecimiento de las antiguas instituciones que ofrecían beneficios populares.</p>
+            <p>Si el príncipe no destruye el nuevo territorio conquistado para imponer un nuevo orden, lo más seguro es habitarlo, para que el pueblo tenga la sensación de que su nuevo gobernante es accesible y para poder percibir, con cierta anticipación, posibles levantamientos populares, con el fin de sortearlos antes de que entren en curso, pues una vez efectivizado un levantamiento popular, las posibilidades de resolverlo caen drásticamente en desfavor del príncipe.</p>
+            <p>Aunque no sea una cuestión ligada, aparentemente, a la libertad, Maquiavelo introduce en el sexto capítulo los conceptos de <em>virtù</em> y <em>fortuna</em>. Ambos conceptos son indispensables cuando consideramos la conquista de un nuevo territorio y el mantenimiento del poder del príncipe. Hasta la apertura de este capítulo, nuestro autor venía introduciendo cautelosamente su concepto de <em>virtù</em>, pero solo en este capítulo ambos, <em>virtù</em> y <em>fortuna</em>, son colocados lado a lado. De ahí la necesidad de ofrecer algún destaque a los conceptos, ya que ellos guían la osamenta de la obra.</p>
+            <p>Maquiavelo, al considerar la toma de un territorio por parte del príncipe, comprende que la <em>virtù</em> y la <em>fortuna</em> atenúan las dificultades de mantener tal territorio bajo el dominio del príncipe. Sin embargo, el príncipe "que depende menos de fortuna se ha mantenido más largamente" (VI:2) en el poder de aquel territorio conquistado o no, pues la fortuna es volátil e imprevisible, correspondiendo al príncipe poseer la <em>virtù</em> necesaria para tomar para sí cualquier territorio y mantenerlo. Maquiavelo advierte que "Aquellos que, por el camino de la virtù [...] se hacen príncipes, ocupan el principado con mayor dificultad, pero con facilidad lo mantienen" (VI:4 – suprimimos), pues la <em>virtù</em> permite que el príncipe delibere y tome las mejores decisiones posibles para mantener su poder sobre un principado conquistado o heredado.</p>
+            <p>Si el príncipe posee <em>virtù</em>, él, sabiamente, sabrá deliberar sobre el uso o no de sus ejércitos para mantenerse en el poder, pero si la <em>virtù</em> le falta, este no conseguirá mantenerse en pie por mucho tiempo, siendo que, con dificultad, mantendrá algún apoyo a su favor, al ser atacado tanto por el pueblo, cuanto por aquellos que desean apoderarse. Por tanto, es preciso que el príncipe posea <em>virtù</em> y no dependa exclusivamente de la fortuna, pues, "Aquellos que solamente por la fortuna se hacen, de persona privada, príncipe, con poca fatiga ocupan el principado, pero con mucha lo mantienen" (VII:1), ya que, aquellos que llegan al poder fácilmente, con igual o mayor facilidad lo dejan. Es preciso cierto equilibrio entre fortuna y <em>virtù</em> para mantenerse en el poder en un principado y, si hay carencia de fortuna, es preciso que, al menos, el príncipe posea una buena <em>virtù</em>.</p>
+            <p>Al final del primer párrafo del capítulo noveno, Maquiavelo presenta la inclinación del pueblo y la del príncipe: "el pueblo no desea ser comandado ni oprimido por los grandes, y los grandes desean comandar y oprimir al pueblo" (IX:2). Respecto a este capítulo, somos llevados a pensar que Maquiavelo no escribió consejos para ningún príncipe, sino más bien al pueblo que necesita tomar conciencia de su poder ante el poder de los grandes. El mensaje que este capítulo revela llevaría algún tiempo para ser comprendido.</p>
+            <p>Las palabras de Maquiavelo nos muestran que es posible que el pueblo (re)conquiste su libertad tomada por el príncipe, desde que se insurja contra el príncipe y establezca un sistema político en el cual pueda elegir un representante que no quiera comandar y oprimir al pueblo, sino que comparta los mismos intereses del pueblo, esto es, que proporcione ventajas para la población. Aquel que llega a ganar el poder del principado con la ayuda del pueblo puede instituir un principado civil, donde la voluntad del pueblo se convierte en gobernante por medio de la representación y elección de un gobernador popular. Esto es posible dentro de una república, entendida por Maquiavelo como forma virtuosa de gobierno. Para Maquiavelo, "Feliz es la república a la cual el destino otorga un legislador prudente, cuyas leyes se combinan de modo a asegurar la tranquilidad de todos" (<em>Discursos</em>, Libro 1, II:2).</p>
+            <p>Según Maquiavelo, "hay tres especies de gobierno: el monárquico, el aristocrático y el popular; los que pretenden establecer el orden en una ciudad deben escoger, entre estas tres especies, la que mejor conviene a sus objetivos" (<em>Discursos</em>, Libro 1, II:5). Sin embargo, estas tres formas de gobiernos pueden y tienden a degenerar y a convertirse respectivamente en despotismo, oligarquía y permisividad. Para haber un sistema de gobierno fuerte y que no llegue a degenerar en algún vicio, se hace necesario que las tres partes (aristocracia, monarquía y el pueblo) compongan un único sistema político. Maquiavelo utiliza, como ejemplo, la república romana que, después de destituir a los reyes, creó dos órganos de Estado: cónsules y senado. Estos eran gestionados por miembros de la nobleza que monopolizaban el poder gubernamental de Roma y este factor llevó a la población romana a insurgir contra ellos, buscando obligarlos a ceder parte del poder al pueblo. A partir de este levantamiento, se encuentra "las causas que originaron los tribunos del pueblo, institución que debilitó la república porque cada uno de los tres elementos del gobierno recibió una porción de su autoridad" (<em>Discursos</em>, Libro 1, II:20). Sin embargo, dado "el equilibrio de los tres poderes hizo así que naciera una república perfecta" (<em>Discursos</em>, Libro 1, II:20).</p>
+            <p>En el capítulo cuarto, Maquiavelo muestra que "la desunión entre el pueblo y el Senado fue la causa de la grandeza y de la libertad de la república romana" (<em>Discursos</em>, Libro 1, IV). Al parecer, es en la tensión, conflicto y embate entre los que quieren dominar y oprimir contra los que no quieren ser dominados que hay posibilidad de alcanzar un desarrollo en la jurisprudencia sobre la libertad, pues, al "examinarse con atención el modo como tales desórdenes terminaron, ver‑se‑á que nunca provocaron el exilio, o violencia perjudiciales a las libertades de todos" (<em>Discursos</em>, Libro 1, IV:3). Cuando en una sociedad no hay conflicto entre los que dominan y los que son dominados, entonces no se puede hablar de libertad, sino tan solo de sumisión a la voluntad del dominador. Por tanto, para haber libertad es necesario haber conflictos que generen o mejoren leyes que garanticen el mantenimiento de los intereses de aquellos que no quieren ser dominados. Dentro de un ordenamiento civil, debe sonar extraño al hombre oír que su condición natural es la libertad – <em>absurdité existentielle</em> –, el hombre no es libre, sino forzado a luchar por la libertad. Por tanto, vosotros debéis luchar o sucumbir ante los reveses de aquellos que quieren‑dominar, pues libertad no puede ser otra cosa sino querer ser libre del querer de un no‑yo.</p>
+
+            <h3>Consideraciones finales</h3>
+            <p>A la luz de los hechos narrados en este ensayo, podemos concluir que Maquiavelo no redactó su <em>Príncipe</em> para enseñar o instruir a gobernantes a mantenerse en el poder de sus principados mixtos o heredados, sino más bien para instruir al pueblo sobre cómo luchar por su libertad. Para llegar a este entendimiento, además de mapear las ocurrencias del debate sobre libertad en <em>El Príncipe</em>, fue de suma importancia detener atención y aprecio a los <em>Comentarios sobre la primera década de Tito Livio</em>, obra en la cual Maquiavelo devela su afición al gobierno republicano y no más a los principados.</p>
+            <p>Haciendo el contraste entre ambas obras, notamos que la primera, <em>El Príncipe</em>, en verdad tiene como objetivo revelar todas las maniobras que el príncipe utiliza para mantenerse en el poder y someter a sus súbditos a su antojo y querer. ¿Pero por qué Maquiavelo evidencia esto? Los príncipes saben lo que hacen, cómo lo hacen y, cuando se da el caso de no saber proceder por carencia de <em>virtù</em>, los príncipes aún pueden recurrir a sus consejeros estrategas. Por tanto, el príncipe no carece de un manual didáctico de cómo proceder, pero el pueblo necesita saber cómo procede el príncipe, por eso, Maquiavelo, aficionado a la República, escribe <em>El Príncipe</em>, para alertar de forma indirecta, es decir, que pueda pasar desapercibido por el gobernante, para que llegue al público que realmente fue destinado a las palabras simbólicas de la obra. Ese público objetivo, no cabe duda, es el propio pueblo. Por tanto, el pensador, que vivió su juventud a la luz de la República Florentina y que sufrió persecuciones cuando esta misma república cayó, sintió la necesidad de usar su intelectualidad y los años acumulados sobre el funcionamiento político del Estado a favor del pueblo, no solo para mostrarle cómo actúa el príncipe o un gobernante, sino también para alertarlo de los males opresores que pueden manifestarse en gobiernos monárquicos y oligárquicos.</p>
+        </div>
+
+        <!-- Nota al pie -->
+        <div class="panel" id="notas">
+            <h2><i class="fas fa-paperclip"></i> Notas</h2>
+            <ol style="font-size: 0.85rem; line-height: 1.6; margin-left: 1.5rem;">
+                <li id="nota1">En el presente ensayo, usamos el método de diagramación, tan en boga en tiempos pasados. La diagramación a ser manejada a continuación posee la siguiente regla general: para referirnos a los capítulos de <em>El Príncipe</em>, usaremos números romanos (i, ii, iii, iv, etc.) seguidos, por medio de un número arábigo (1, 2, 3, 4, etc.), del número del párrafo de donde procedió la cita. En ese sentido: la indicación IV:1 corresponde al primer párrafo del capítulo titulado <em>Por qué motivo el reino de Darío, ocupado por Alejandro, no se rebeló contra sus sucesores después de la muerte de Alejandro</em> de <em>El Príncipe</em>. Acogemos la traducción de <em>El Príncipe</em> propuesta por Hingo Weder (6. ed. Petrópolis, RJ: Editora Vozes, 2015). La misma regla de diagramación servirá también para la obra <em>Comentarios sobre la primera década de Tito Livio</em>, donde <em>Discursos</em>, Libro 1, II:5 se refiere, en la obra mencionada, al quinto párrafo del segundo capítulo del primer libro. Manejamos la traducción propuesta por Sérgio Bath (3. ed. Brasília: Editora Universidade de Brasília, 1994).</li>
+            </ol>
+        </div>
+
+        <!-- Visor PDF -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Ensayo completo (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/Maquiavel_liberdade_povo.pdf" title="Maquiavelo y la libertad del pueblo"></iframe>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> Si el PDF no se muestra, <a href="/arquivos/Maquiavel_liberdade_povo.pdf" target="_blank">haga clic aquí para descargar</a>.</p>
+        </div>
+
+        <!-- Referencias y generador de citas -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> Referencias & Cita</h2>
+            <div class="citation-generator" 
+                 data-authors='["SANTOS, Diego Vinícius Brito dos"]' 
+                 data-title="Maquiavelo y la libertad del pueblo" 
+                 data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/espanhol/ensaio-maquiavel-e-a-liberdade-do-povo-esp.html" 
+                 data-volume="1" 
+                 data-issue="1" 
+                 data-pages="01-07" 
+                 data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> Cómo citar este ensayo</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Seleccione el estilo deseado y genere automáticamente la referencia bibliográfica.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Estilo de referencia</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar referencia</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+            </div>
+            <ul class="ref-list">
+                <li><strong>MAQUIAVELO, Nicolás.</strong> <em>Comentarios sobre la primera década de Tito Livio</em>. Traducción de Sérgio Bath. 3. ed. Brasília: Editora Universidade de Brasília, 1994.</li>
+                <li><strong>MAQUIAVELO, Nicolás.</strong> <em>El Príncipe</em>. Traducción de Hingo Weder. 6. ed. Petrópolis: Vozes, 2015.</li>
+                <li><strong>SANTOS, Diego Vinícius Brito dos.</strong> Maquiavelo y la libertad del pueblo. <em>Revista Inquietaciones</em>, v. 1, n. 1, p. 01–07, 2026. DOI: <a href="https://doi.org/10.5281/zenodo.18846061" target="_blank">10.5281/zenodo.18846061</a></li>
+            </ul>
+            <p><small><i class="fas fa-info-circle"></i> Utilice el generador de arriba para citar este ensayo en diferentes estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <!-- Sobre el autor -->
+        <div class="panel">
+            <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto del autor Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre el autor </h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> es pedagogo y servidor público efectivo, con experiencia docente en los primeros años de la educación primaria y educación infantil. Posee una maestría en Filosofía por la Universidad Federal de Rio Grande do Norte (UFRN, 2022), con investigación centrada en la obra y filosofía de Friedrich Nietzsche. Es licenciado en Filosofía por la Universidad del Estado de Rio Grande do Norte (UERN, 2018) y en Pedagogía por el Centro Universitario Internacional (UNINTER, 2022). Es autor del libro <em>Nietzsche e os valores modernos</em> (2022). Se dedica a la formación continua en áreas como Psicopedagogía, Neuropsicopedagogía, Educación Inclusiva, Atención Educativa Especializada (AEE) y Educación de Jóvenes y Adultos (EJA).</p>
+            <p><i class="fas fa-envelope"></i> Correo electrónico: diego_svt@hotmail.com.br<br>
+            <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+            <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></p>
+        </div>
+
+        <footer>
+            <i class="fas fa-university"></i> Revista Inquietaciones – Caicó, RN | v.1, n.1, 2026 | Sección: Ensayos | DOI: 10.5281/zenodo.18846061<br>
+            Acceso abierto bajo licencia Creative Commons.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Envíos con simulación de login
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "/cadastro-login/submissoes.html";
+            } else {
+                let email = prompt("🔐 Para enviar un artículo, inicie sesión. Ingrese su correo electrónico (simulación):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Inicio de sesión exitoso. Redirigiendo a envíos.");
+                    window.location.href = "/cadastro-login/submissoes.html";
+                } else {
+                    alert("Acceso no autorizado. Registro/inicio de sesión requerido.");
+                }
+            }
+        });
+    }
+
+    // Copiar referencia ABNT manual
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = [
+            "MAQUIAVELO, Nicolás. El Príncipe. Petrópolis: Vozes, 2015.",
+            "MAQUIAVELO, Nicolás. Comentarios sobre la primera década de Tito Livio. Brasília: UnB, 1994.",
+            "SANTOS, Diego Vinícius Brito dos. Maquiavelo y la libertad del pueblo. Revista Inquietaciones, v. 1, n. 1, p. 01-07, 2026."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referencias ABNT copiadas."));
+    });
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@book{maquiavelo2015,
+  title={El Príncipe},
+  author={Maquiavelo, Nicolás},
+  year={2015},
+  publisher={Vozes}
+}
+@article{santos2026,
+  title={Maquiavelo y la libertad del pueblo},
+  author={Santos, Diego Vinícius Brito dos},
+  journal={Revista Inquietaciones},
+  volume={1},
+  number={1},
+  pages={01--07},
+  year={2026}
+}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (ejemplo)."));
+    });
+
+    // Generador de citas
+    (function() {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Revista Inquietaciones';
+        const accessDate = new Date().toLocaleDateString('es-ES');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponible en: ${url}. Acceso: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    feedback.textContent = '✓ Referencia copiada al portapapeles.';
+                    setTimeout(() => { feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    feedback.textContent = '✗ Error al copiar. Intente manualmente.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

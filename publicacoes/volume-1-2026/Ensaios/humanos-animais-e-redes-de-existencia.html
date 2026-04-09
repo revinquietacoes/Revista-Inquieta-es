@@ -5,7 +5,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
     <title>Humanos, animais e redes de existência | Ensaio | Revista Inquietações</title>
-    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
@@ -75,25 +74,29 @@
             align-items: center;
             gap: 1.5rem;
         }
+
         .author-item {
             display: flex;
             align-items: center;
             gap: 10px;
         }
+
         .avatar-circle {
             width: 42px;
             height: 42px;
             border-radius: 50%;
             overflow: hidden;
             background: #dcd0b8;
-            box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
             border: 2px solid #c28a4e;
         }
+
         .avatar-circle img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+
         .action-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -114,6 +117,7 @@
             background: #f0ede5;
             color: #2c3a2b;
             border: 1px solid #d6cdb5;
+            cursor: pointer;
         }
 
         .btn-pdf {
@@ -140,7 +144,6 @@
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
         }
 
-        /* Botões de tradução */
         .lang-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -148,6 +151,7 @@
             margin: 1rem 0 0.5rem;
             justify-content: flex-start;
         }
+
         .lang-btn {
             background: #f4efe2;
             border: 1px solid #c2b697;
@@ -155,15 +159,20 @@
             border-radius: 40px;
             font-size: 0.8rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: 0.1s;
+            text-decoration: none;
             color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
         }
+
         .lang-btn.active {
             background: #c28a4e;
             border-color: #8b5a2e;
             color: white;
+            cursor: default;
+            pointer-events: none;
         }
+
         .lang-btn:hover {
             background: #e0d4bc;
         }
@@ -238,12 +247,6 @@
             padding-left: 1rem;
         }
 
-        .ref-list a {
-            color: #8b5a2e;
-            text-decoration: none;
-            word-break: break-all;
-        }
-
         .citation-actions {
             margin: 1rem 0 0.5rem;
             display: flex;
@@ -298,14 +301,12 @@
             background: #fefaf0;
         }
 
-        /* Gerador de citações */
         .citation-generator {
             background: #fefaf0;
             border: 1px solid #e2dac8;
             border-radius: 1.2rem;
             margin: 1.5rem 0 1rem 0;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
 
         .citation-generator-head {
@@ -365,20 +366,7 @@
             border-radius: 2rem;
             font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
-            color: #2c3a2b;
             cursor: pointer;
-        }
-
-        .citation-select:focus {
-            outline: none;
-            border-color: #c28a4e;
-            box-shadow: 0 0 0 2px rgba(194, 138, 78, 0.2);
-        }
-
-        .citation-actions {
-            flex: 1;
-            display: flex;
-            justify-content: flex-end;
         }
 
         .citation-btn {
@@ -408,7 +396,6 @@
             font-size: 0.85rem;
             line-height: 1.5;
             font-family: 'Inter', monospace;
-            color: #2a2a24;
             margin-top: 1rem;
         }
 
@@ -452,11 +439,6 @@
             border-radius: 50%;
             object-fit: cover;
         }
-
-        /* Ocultar elementos padrão do Google Translate */
-        .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
-        body { top: 0 !important; }
-        .goog-te-gadget { display: none; }
     </style>
 </head>
 
@@ -470,28 +452,31 @@
                     Antropoceno</div>
                 <div class="author-line">
                     <div class="author-item">
-                        <div class="avatar-circle">
-                            <img src="/corpo%20editorial/diego.png" alt="Foto de Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:42px; width:100%; text-align:center; font-size:20px;\'></i>'">
+                        <div class="avatar-circle"><img src="/corpo%20editorial/diego.png" alt="Foto de Diego Vinícius"
+                                onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:42px; width:100%; text-align:center; font-size:20px;\'></i>'">
                         </div>
                         <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
                     </div>
                     <span style="font-size: 1.2rem;">&</span>
                     <div class="author-item">
-                        <div class="avatar-circle">
-                            <img src="corpo%20editorial/taisa.png" alt="Foto de Taisa Maria Brito dos Santos" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:42px; width:100%; text-align:center; font-size:20px;\'></i>'">
+                        <div class="avatar-circle"><img src="/corpo editorial/taisa.png"
+                                alt="Foto de Taisa Maria Brito dos Santos"
+                                onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:42px; width:100%; text-align:center; font-size:20px;\'></i>'">
                         </div>
                         <span><strong>Taisa Maria Brito dos Santos</strong></span>
                     </div>
                     <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.19012745</span>
                 </div>
-
-                <!-- Botões de tradução -->
+                <!-- Botões de tradução estáticos (links) -->
                 <div class="lang-buttons">
-                    <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
-                    <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
-                    <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+                    <a class="lang-btn active" href="#">🇧🇷 PT-BR</a>
+                    <a class="lang-btn"
+                        href="/publicacoes/volume-1-2026/ingles/humanos-animais-e-redes-de-existencia-en.html">🇺🇸
+                        Inglês</a>
+                    <a class="lang-btn"
+                        href="/publicacoes/volume-1-2026/espanhol/humanos-animais-e-redes-de-existencia-esp.html">🇪🇸
+                        Espanhol</a>
                 </div>
-
                 <div class="action-buttons">
                     <a class="btn btn-pdf" href="/arquivos/Humanos_Animais_Redes.pdf" target="_blank"><i
                             class="fas fa-file-pdf"></i> Baixar PDF</a>
@@ -1063,23 +1048,10 @@
                     cada vez mais marcado pela interdependência entre diferentes formas de vida.</p>
             </div>
 
-            <!-- PDF Viewer -->
-            <div class="panel">
-                <h2><i class="fas fa-file-pdf"></i> Ensaio completo (PDF)</h2>
-                <div class="pdf-frame">
-                    <iframe src="/arquivos/Humanos_Animais_Redes.pdf"
-                        title="Humanos, animais e redes de existência"></iframe>
-                </div>
-                <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i>
-                    Caso o PDF não seja exibido, <a href="arquivos/Humanos_Animais_Redes.pdf" target="_blank">clique
-                        aqui para baixar</a>.</p>
-            </div>
 
-            <!-- Referências com gerador de citações -->
+            <!-- Referências e gerador de citações -->
             <div class="panel" id="references-panel">
                 <h2><i class="fas fa-quote-right"></i> Referências & Citação</h2>
-
-                <!-- GERADOR DE CITAÇÕES -->
                 <div class="citation-generator"
                     data-authors='["SANTOS, Diego Vinícius Brito dos", "SANTOS, Taisa Maria Brito dos"]'
                     data-title="Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno"
@@ -1092,9 +1064,8 @@
                         <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a
                             referência bibliográfica.</p>
                         <div class="citation-controls">
-                            <div class="citation-field">
-                                <label for="citation-style">Estilo de referência</label>
-                                <select id="citation-style" class="citation-select">
+                            <div class="citation-field"><label for="citation-style">Estilo de referência</label><select
+                                    id="citation-style" class="citation-select">
                                     <option value="abnt">ABNT</option>
                                     <option value="apa">APA</option>
                                     <option value="mla">MLA</option>
@@ -1102,73 +1073,66 @@
                                     <option value="harvard">Harvard</option>
                                     <option value="vancouver">Vancouver</option>
                                     <option value="ieee">IEEE</option>
-                                </select>
-                            </div>
-                            <div class="citation-actions">
-                                <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i>
-                                    Copiar referência</button>
-                            </div>
+                                </select></div>
+                            <div class="citation-actions"><button class="citation-btn citation-copy" type="button"><i
+                                        class="fas fa-copy"></i> Copiar referência</button></div>
                         </div>
                         <div aria-live="polite" class="citation-output" id="citationOutput"></div>
                         <p class="citation-feedback"></p>
                     </div>
                 </div>
-
-                <div class="citation-actions">
-                    <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
-                    <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
-                </div>
+                <div class="citation-actions"><button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i>
+                        Copiar ABNT (manual)</button><button class="cite-btn" id="exportBibBtn"><i
+                            class="fas fa-download"></i> Exportar BibTeX</button></div>
                 <ul class="ref-list">
-                    <li><strong>AGAMBEN, Giorgio.</strong> <em>O aberto: o homem e o animal</em>. Tradução de Pedro
-                        Mendes. Rio de Janeiro: Civilização Brasileira, 2002.</li>
-                    <li><strong>ARISTÓTELES.</strong> <em>De anima</em>. Tradução de Maria Cecília Gomes dos Reis. São
-                        Paulo: Editora 34, 2006.</li>
-                    <li><strong>DESCARTES, René.</strong> <em>Discurso do método</em>. Tradução de J. Guinsburg e Bento
-                        Prado Júnior. São Paulo: Nova Cultural, 2001.</li>
+                    <li><strong>AGAMBEN, Giorgio.</strong> <em>O aberto: o homem e o animal</em>. Rio de Janeiro:
+                        Civilização Brasileira, 2002.</li>
+                    <li><strong>ARISTÓTELES.</strong> <em>De anima</em>. São Paulo: Editora 34, 2006.</li>
+                    <li><strong>DESCARTES, René.</strong> <em>Discurso do método</em>. São Paulo: Nova Cultural, 2001.
+                    </li>
                     <li><strong>DESCOLA, Philippe.</strong> <em>Par-delà nature et culture</em>. Paris: Gallimard, 2005.
                     </li>
-                    <li><strong>HARAWAY, Donna.</strong> <em>The companion species manifesto: dogs, people, and
-                            significant otherness</em>. Chicago: Prickly Paradigm Press, 2003.</li>
+                    <li><strong>HARAWAY, Donna.</strong> <em>The companion species manifesto</em>. Chicago: Prickly
+                        Paradigm Press, 2003.</li>
                     <li><strong>HARAWAY, Donna.</strong> <em>When species meet</em>. Minneapolis: University of
                         Minnesota Press, 2008.</li>
-                    <li><strong>HOBBES, Thomas.</strong> <em>Leviatã ou matéria, forma e poder de um Estado eclesiástico
-                            e civil</em>. São Paulo: Abril Cultural, 1985.</li>
-                    <li><strong>INGOLD, Tim.</strong> <em>The perception of the environment: essays on livelihood,
-                            dwelling and skill</em>. London: Routledge, 2000.</li>
-                    <li><strong>INGOLD, Tim.</strong> <em>Being alive: essays on movement, knowledge and
-                            description</em>. London: Routledge, 2011.</li>
-                    <li><strong>LATOUR, Bruno.</strong> <em>Jamais fomos modernos: ensaio de antropologia
-                            simétrica</em>. Rio de Janeiro: Editora 34, 1994.</li>
-                    <li><strong>LATOUR, Bruno.</strong> <em>Reagregando o social: uma introdução à teoria do
-                            ator-rede</em>. Salvador: EDUFBA; Bauru: EDUSC, 2012.</li>
-                    <li><strong>LATOUR, Bruno.</strong> <em>Diante de Gaia: oito conferências sobre a natureza no
-                            Antropoceno</em>. São Paulo: Ubu Editora, 2017.</li>
-                    <li><strong>MARRAS, Stélio.</strong> <em>Virada animal, virada humana: outro pacto</em>. São Paulo:
-                        Editora Ubu, 2014.</li>
-                    <li><strong>ROUSSEAU, Jean-Jacques.</strong> <em>Discurso sobre a origem e os fundamentos da
-                            desigualdade entre os homens</em>. São Paulo: Nova Cultural, 1999.</li>
-                    <li><strong>WAAL, Frans de.</strong> <em>Eu, primata: por que somos como somos</em>. São Paulo:
-                        Companhia das Letras, 2005.</li>
+                    <li><strong>HOBBES, Thomas.</strong> <em>Leviatã</em>. São Paulo: Abril Cultural, 1985.</li>
+                    <li><strong>INGOLD, Tim.</strong> <em>The perception of the environment</em>. London: Routledge,
+                        2000.</li>
+                    <li><strong>LATOUR, Bruno.</strong> <em>Jamais fomos modernos</em>. Rio de Janeiro: Editora 34,
+                        1994.</li>
+                    <li><strong>LATOUR, Bruno.</strong> <em>Reagregando o social</em>. Salvador: EDUFBA, 2012.</li>
+                    <li><strong>LATOUR, Bruno.</strong> <em>Diante de Gaia</em>. São Paulo: Ubu Editora, 2017.</li>
+                    <li><strong>MARRAS, Stélio.</strong> <em>Virada animal, virada humana</em>. São Paulo: Ubu, 2014.
+                    </li>
+                    <li><strong>ROUSSEAU, Jean-Jacques.</strong> <em>Discurso sobre a desigualdade</em>. São Paulo: Nova
+                        Cultural, 1999.</li>
+                    <li><strong>WAAL, Frans de.</strong> <em>Eu, primata</em>. São Paulo: Companhia das Letras, 2005.
+                    </li>
                 </ul>
                 <p><small><i class="fas fa-info-circle"></i> Utilize o gerador acima para citar este ensaio em
-                        diferentes estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+                        diferentes estilos.</small></p>
             </div>
 
             <!-- Sobre os autores -->
             <div class="panel">
-                <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto do autor Diego Vinícius"
-                        class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre o autor </h2>
-
+                <h2 class="autor-titulo"><img src="/corpo editorial/diego.png" alt="Foto do autor Diego Vinícius"
+                        class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre o autor</h2>
                 <div class="author-bio">
                     <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo,
-                        com experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui
-                        mestrado em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com
-                        pesquisa focada na obra e filosofia de Friedrich Nietzsche. É graduado em Filosofia pela
-                        Universidade do Estado do Rio Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro
-                        Universitário Internacional (UNINTER, 2022). É autor do livro <em>Nietzsche e os valores
-                            modernos</em> (2022). Dedica-se à formação continuada em áreas como Psicopedagogia,
-                        Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional Especializado (AEE) e Educação
-                        de Jovens e Adultos (EJA).</p>
+                        com
+                        experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui
+                        mestrado
+                        em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada
+                        na
+                        obra e filosofia de Friedrich Nietzsche. É graduado em Filosofia pela Universidade do Estado do
+                        Rio
+                        Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro Universitário Internacional (UNINTER,
+                        2022).
+                        É autor do livro <em>Nietzsche e os valores modernos</em> (2022). Dedica-se à formação
+                        continuada em
+                        áreas como Psicopedagogia, Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional
+                        Especializado (AEE) e Educação de Jovens e Adultos (EJA).</p>
                     <p><i class="fas fa-envelope"></i> E-mail: diego_svt@hotmail.com.br<br>
                         <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663"
                             target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
@@ -1202,85 +1166,12 @@
                 </div>
             </div>
 
-
-            <footer>
-                <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | Seção: Ensaios |
-                DOI: 10.5281/zenodo.19012745<br>
-                Acesso aberto sob licença Creative Commons.
-            </footer>
+            <footer><i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | Seção: Ensaios
+                | DOI: 10.5281/zenodo.19012745<br>Acesso aberto sob licença Creative Commons.</footer>
         </div>
     </div>
 
-    <!-- Google Translate Widget -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'pt',
-                includedLanguages: 'pt,en,es',
-                autoDisplay: false,
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-            document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <div id="google_translate_element" style="display:none;"></div>
-
     <script>
-        // Botões de tradução manuais via Google Translate API
-        (function() {
-            const langBtns = document.querySelectorAll('.lang-btn');
-            let currentLang = 'pt';
-
-            function triggerGoogleTranslate(lang) {
-                const selectElem = document.querySelector('.goog-te-combo');
-                if (selectElem) {
-                    selectElem.value = lang;
-                    selectElem.dispatchEvent(new Event('change'));
-                } else {
-                    setTimeout(() => {
-                        const select = document.querySelector('.goog-te-combo');
-                        if (select) {
-                            select.value = lang;
-                            select.dispatchEvent(new Event('change'));
-                        }
-                    }, 500);
-                }
-            }
-
-            langBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const lang = btn.getAttribute('data-lang');
-                    if (lang === currentLang) return;
-                    
-                    langBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    let googleCode = '';
-                    if (lang === 'pt') googleCode = 'pt';
-                    else if (lang === 'en') googleCode = 'en';
-                    else if (lang === 'es') googleCode = 'es';
-                    
-                    triggerGoogleTranslate(googleCode);
-                    currentLang = lang;
-                });
-            });
-            
-            const observer = new MutationObserver(() => {
-                const combo = document.querySelector('.goog-te-combo');
-                if (combo && !combo._listenerAdded) {
-                    combo._listenerAdded = true;
-                    const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
-                    let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
-                    if (combo.value !== code) {
-                        combo.value = code;
-                        combo.dispatchEvent(new Event('change'));
-                    }
-                }
-            });
-            observer.observe(document.body, { childList: true, subtree: true });
-        })();
-
         // Submissões com simulação de login
         const submitBtn = document.getElementById("submitBtn");
         submitBtn.addEventListener("click", (e) => {
@@ -1300,27 +1191,17 @@
             }
         });
 
-        // Gerador de referências simples (ABNT e BibTeX)
+        // Copiar ABNT manual
         document.getElementById("copyRefBtn").addEventListener("click", () => {
-            const refs = [
-                "SANTOS, Diego Vinícius Brito dos; SANTOS, Taisa Maria Brito dos. Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno. Revista Inquietações, v. 1, n. 1, p. 09-27, 2026."
-            ];
+            const refs = ["SANTOS, Diego Vinícius Brito dos; SANTOS, Taisa Maria Brito dos. Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno. Revista Inquietações, v. 1, n. 1, p. 09-27, 2026."];
             navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
         });
         document.getElementById("exportBibBtn").addEventListener("click", () => {
-            let bib = `@article{santos2026humanos,
-  title={Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno},
-  author={Santos, Diego Vinícius Brito dos and Santos, Taisa Maria Brito dos},
-  journal={Revista Inquietações},
-  volume={1},
-  number={1},
-  pages={09--27},
-  year={2026}
-}`;
+            let bib = `@article{santos2026humanos,\n  title={Humanos, animais e redes de existência: repensando o humanismo na era do Antropoceno},\n  author={Santos, Diego Vinícius Brito dos and Santos, Taisa Maria Brito dos},\n  journal={Revista Inquietações},\n  volume={1},\n  number={1},\n  pages={09--27},\n  year={2026}\n}`;
             navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
         });
 
-        // ========== GERADOR DE CITAÇÕES (script automático) ==========
+        // Gerador de citações
         (function () {
             const generator = document.querySelector('.citation-generator');
             if (!generator) return;
@@ -1333,7 +1214,6 @@
             const year = generator.dataset.year || '';
             const journal = 'Revista Inquietações';
             const accessDate = new Date().toLocaleDateString('pt-BR');
-
             const styles = {
                 abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponível em: ${url}. Acesso em: ${accessDate}.`,
                 apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
@@ -1343,36 +1223,18 @@
                 vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
                 ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
             };
-
             const select = document.getElementById('citation-style');
             const outputDiv = document.getElementById('citationOutput');
             const copyBtn = document.querySelector('.citation-copy');
             const feedback = document.querySelector('.citation-feedback');
-
-            function updateCitation() {
-                const style = select.value;
-                const generatorFn = styles[style];
-                if (generatorFn) {
-                    outputDiv.innerHTML = generatorFn();
-                } else {
-                    outputDiv.innerHTML = styles.abnt();
-                }
-            }
-
-            if (select && outputDiv) {
-                select.addEventListener('change', updateCitation);
-                updateCitation();
-            }
-
+            function updateCitation() { outputDiv.innerHTML = styles[select.value](); }
+            if (select && outputDiv) { select.addEventListener('change', updateCitation); updateCitation(); }
             if (copyBtn) {
                 copyBtn.addEventListener('click', () => {
-                    const citationText = outputDiv.innerText;
-                    navigator.clipboard.writeText(citationText).then(() => {
+                    navigator.clipboard.writeText(outputDiv.innerText).then(() => {
                         feedback.textContent = '✓ Referência copiada para a área de transferência.';
                         setTimeout(() => { feedback.textContent = ''; }, 3000);
-                    }).catch(() => {
-                        feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
-                    });
+                    }).catch(() => { feedback.textContent = '✗ Erro ao copiar.'; });
                 });
             }
         })();

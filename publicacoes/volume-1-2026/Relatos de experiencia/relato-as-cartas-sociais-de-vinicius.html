@@ -88,7 +88,7 @@
             border-radius: 50%;
             overflow: hidden;
             background: #dcd0b8;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             border: 2px solid #c28a4e;
         }
 
@@ -118,6 +118,7 @@
             background: #f0ede5;
             color: #2c3a2b;
             border: 1px solid #d6cdb5;
+            cursor: pointer;
         }
 
         .btn-pdf {
@@ -144,7 +145,7 @@
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
         }
 
-        /* Botões de tradução */
+        /* Botões de tradução estáticos */
         .lang-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -160,15 +161,18 @@
             border-radius: 40px;
             font-size: 0.8rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: 0.1s;
+            text-decoration: none;
             color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
         }
 
         .lang-btn.active {
             background: #c28a4e;
             border-color: #8b5a2e;
             color: white;
+            cursor: default;
+            pointer-events: none;
         }
 
         .lang-btn:hover {
@@ -462,11 +466,6 @@
             border-radius: 50%;
             object-fit: cover;
         }
-
-        /* Ocultar elementos padrão do Google Translate */
-        .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
-        body { top: 0 !important; }
-        .goog-te-gadget { display: none; }
     </style>
 </head>
 
@@ -480,7 +479,8 @@
                 <div class="author-line">
                     <div class="author-avatar">
                         <div class="avatar-circle">
-                            <img src="/corpo%20editorial/diego.png" alt="Foto do autor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                            <img src="/corpo%20editorial/diego.png" alt="Foto do autor Diego Vinícius"
+                                onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
                         </div>
                         <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
                     </div>
@@ -488,11 +488,15 @@
                     <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18844651</span>
                 </div>
 
-                <!-- Botões de tradução -->
+                <!-- Botões de tradução estáticos -->
                 <div class="lang-buttons">
-                    <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
-                    <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
-                    <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+                    <a class="lang-btn active" href="#">🇧🇷 PT-BR</a>
+                    <a class="lang-btn"
+                        href="/publicacoes/volume-1-2026/ingles/relato-as-cartas-sociais-de-vinicius-en.html">🇺🇸
+                        Inglês</a>
+                    <a class="lang-btn"
+                        href="/publicacoes/volume-1-2026/espanhol/relato-as-cartas-sociais-de-vinicius-esp.html">🇪🇸
+                        Espanhol</a>
                 </div>
 
                 <div class="action-buttons">
@@ -1030,9 +1034,9 @@
                 <h2><i class="fas fa-quote-right"></i> Referências & Citação</h2>
 
                 <!-- GERADOR DE CITAÇÕES -->
-                <div class="citation-generator" data-authors='["VINÍCIUS, Diego"]'
+                <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]'
                     data-title="As Cartas Sociais de Vinícius"
-                    data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/relatos-de-experiencia/relato-as-cartas-sociais-de-vinicius.html"
+                    data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Relatos de experiencia/relato-as-cartas-sociais-de-vinicius.html"
                     data-volume="1" data-issue="1" data-pages="01-23" data-year="2026">
                     <div class="citation-generator-head">
                         <h2><i class="fas fa-quote-left"></i> Como citar este trabalho</h2>
@@ -1068,7 +1072,8 @@
                     <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
                 </div>
                 <ul class="ref-list">
-                    <li><strong>VINÍCIUS, Diego.</strong> As Cartas Sociais de Vinícius. <em>Revista Inquietações</em>,
+                    <li><strong>SANTOS, Diego Vinícius Brito dos.</strong> As Cartas Sociais de Vinícius. <em>Revista
+                            Inquietações</em>,
                         v. 1, n. 1, p. 01–23, 2026. DOI: <a href="https://doi.org/10.5281/zenodo.18844651"
                             target="_blank">10.5281/zenodo.18844651</a></li>
                     <li><strong>BERGER, Peter L.; LUCKMANN, Thomas.</strong> <em>A construção social da realidade</em>.
@@ -1086,7 +1091,8 @@
 
             <!-- Sobre o autor -->
             <div class="panel">
-                <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto do autor Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre o autor </h2>
+                <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto do autor Diego Vinícius"
+                        class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre o autor </h2>
                 <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo, com
                     experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui mestrado
                     em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada na
@@ -1111,106 +1117,39 @@
         </div>
     </div>
 
-    <!-- Google Translate Widget -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'pt',
-                includedLanguages: 'pt,en,es',
-                autoDisplay: false,
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-            document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <div id="google_translate_element" style="display:none;"></div>
-
     <script>
-        // Botões de tradução manuais via Google Translate API
-        (function() {
-            const langBtns = document.querySelectorAll('.lang-btn');
-            let currentLang = 'pt';
-
-            function triggerGoogleTranslate(lang) {
-                const selectElem = document.querySelector('.goog-te-combo');
-                if (selectElem) {
-                    selectElem.value = lang;
-                    selectElem.dispatchEvent(new Event('change'));
+        // Submissões com simulação de login
+        const submitBtn = document.getElementById("submitBtn");
+        if (submitBtn) {
+            submitBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                let logged = localStorage.getItem("inquietacoes_logged");
+                if (logged === "true") {
+                    window.location.href = "cadastro-login/submissoes.html";
                 } else {
-                    setTimeout(() => {
-                        const select = document.querySelector('.goog-te-combo');
-                        if (select) {
-                            select.value = lang;
-                            select.dispatchEvent(new Event('change'));
-                        }
-                    }, 500);
-                }
-            }
-
-            langBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const lang = btn.getAttribute('data-lang');
-                    if (lang === currentLang) return;
-                    
-                    langBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    let googleCode = '';
-                    if (lang === 'pt') googleCode = 'pt';
-                    else if (lang === 'en') googleCode = 'en';
-                    else if (lang === 'es') googleCode = 'es';
-                    
-                    triggerGoogleTranslate(googleCode);
-                    currentLang = lang;
-                });
-            });
-            
-            const observer = new MutationObserver(() => {
-                const combo = document.querySelector('.goog-te-combo');
-                if (combo && !combo._listenerAdded) {
-                    combo._listenerAdded = true;
-                    const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
-                    let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
-                    if (combo.value !== code) {
-                        combo.value = code;
-                        combo.dispatchEvent(new Event('change'));
+                    let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
+                    if (email && email.includes("@")) {
+                        localStorage.setItem("inquietacoes_logged", "true");
+                        alert("Login simulado com sucesso! Redirecionando para submissões.");
+                        window.location.href = "cadastro-login/submissoes.html";
+                    } else {
+                        alert("Acesso não autorizado. Cadastro/login necessário.");
                     }
                 }
             });
-            observer.observe(document.body, { childList: true, subtree: true });
-        })();
-
-        // Submissões com simulação de login
-        const submitBtn = document.getElementById("submitBtn");
-        submitBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            let logged = localStorage.getItem("inquietacoes_logged");
-            if (logged === "true") {
-                window.location.href = "cadastro-login/submissoes.html";
-            } else {
-                let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
-                if (email && email.includes("@")) {
-                    localStorage.setItem("inquietacoes_logged", "true");
-                    alert("Login simulado com sucesso! Redirecionando para submissões.");
-                    window.location.href = "cadastro-login/submissoes.html";
-                } else {
-                    alert("Acesso não autorizado. Cadastro/login necessário.");
-                }
-            }
-        });
+        }
 
         // Gerador de referências simples (ABNT e BibTeX)
-        document.getElementById("copyRefBtn").addEventListener("click", () => {
+        document.getElementById("copyRefBtn")?.addEventListener("click", () => {
             const refs = [
-                "VINÍCIUS, Diego. As Cartas Sociais de Vinícius. Revista Inquietações, v. 1, n. 1, p. 01-23, 2026."
+                "SANTOS, Diego Vinícius Brito dos. As Cartas Sociais de Vinícius. Revista Inquietações, v. 1, n. 1, p. 01-23, 2026."
             ];
             navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
         });
-        document.getElementById("exportBibBtn").addEventListener("click", () => {
-            let bib = `@article{vinicius2026,
+        document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+            let bib = `@article{santos2026cartas,
   title={As Cartas Sociais de Vinícius},
-  author={Vinícius, Diego},
+  author={Santos, Diego Vinícius Brito dos},
   journal={Revista Inquietações},
   volume={1},
   number={1},
@@ -1268,10 +1207,10 @@
                 copyBtn.addEventListener('click', () => {
                     const citationText = outputDiv.innerText;
                     navigator.clipboard.writeText(citationText).then(() => {
-                        feedback.textContent = '✓ Referência copiada para a área de transferência.';
-                        setTimeout(() => { feedback.textContent = ''; }, 3000);
+                        if (feedback) feedback.textContent = '✓ Referência copiada para a área de transferência.';
+                        setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
                     }).catch(() => {
-                        feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
+                        if (feedback) feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
                     });
                 });
             }

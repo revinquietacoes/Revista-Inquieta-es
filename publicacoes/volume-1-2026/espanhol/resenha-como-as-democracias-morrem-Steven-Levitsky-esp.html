@@ -1,0 +1,843 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Cuando las democracias se desgastan: una relectura de Levitsky y Ziblatt | Reseña | Revista Inquietaciones
+    </title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Mismo estilo que las reseñas anteriores */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+            overflow: hidden;
+        }
+
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+
+        .header {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+        }
+
+        .journal-badge {
+            display: inline-block;
+            background: #6b4c2c;
+            color: #fef7e0;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #3a2a1a;
+        }
+
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6b5a42;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            border: 2px solid #c28a4e;
+        }
+
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f0ede5;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+            cursor: pointer;
+        }
+
+        .btn-pdf {
+            background: #8b4513;
+            color: white;
+            border: none;
+        }
+
+        .btn-doi {
+            background: #2c6e5c;
+            color: white;
+            border: none;
+        }
+
+        .btn-submit {
+            background: #b87c3a;
+            color: white;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
+        }
+
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
+
+        .panel {
+            background: rgba(255, 255, 252, 0.96);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
+        }
+
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #c28a4e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #4a3a2a;
+        }
+
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #2a2a24;
+        }
+
+        .article-text p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+            color: #9b5e2c;
+        }
+
+        .article-text h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+            color: #b47c48;
+        }
+
+        .wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #8b5a2e;
+            font-weight: 500;
+            border-bottom: 1px dotted #b89a6a;
+            transition: 0.1s;
+        }
+
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
+        }
+
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .ref-list li {
+            margin-bottom: 0.9rem;
+            font-size: 0.85rem;
+            border-left: 2px solid #dccfaf;
+            padding-left: 1rem;
+        }
+
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+        }
+
+        .cite-btn {
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2dccf;
+        }
+
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #7a6b53;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                padding: 1rem;
+            }
+
+            .content-padding {
+                padding: 1.2rem;
+            }
+
+            .title {
+                font-size: 1.8rem;
+            }
+        }
+
+        .bg-warm {
+            background: #fefaf0;
+        }
+
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+        }
+
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #4a3a2a;
+            border-left: none;
+            padding-left: 0;
+        }
+
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            margin-top: 1rem;
+        }
+
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+
+        @media (max-width: 700px) {
+            .citation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .citation-actions {
+                justify-content: stretch;
+            }
+
+            .citation-btn {
+                justify-content: center;
+            }
+        }
+
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container bg-warm">
+        <div class="content-padding">
+            <div class="header">
+                <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietaciones • v.1, n.1 •
+                    Sección: Reseñas • 2026</div>
+                <div class="title">Cuando las democracias se desgastan:<br>una relectura de Levitsky y Ziblatt</div>
+                <div class="author-line">
+                    <div class="author-avatar">
+                        <div class="avatar-circle">
+                            <img src="/corpo%20editorial/diego.png" alt="Foto del autor Diego Vinícius"
+                                onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                        </div>
+                        <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                    </div>
+                    <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18945739</span>
+                </div>
+                <!-- Botones de idioma estáticos -->
+                <div class="lang-buttons">
+                    <a class="lang-btn"
+                        href="/publicacoes/volume-1-2026/Resenhas/resenha-como-as-democracias-morrem-Steven-Levitsky.html">🇧🇷
+                        Portugués</a>
+                    <a class="lang-btn"
+                        href="/publicacoes/volume-1-2026/ingles/resenha-como-as-democracias-morrem-Steven-Levitsky-en.html">🇺🇸
+                        Inglés</a>
+                    <a class="lang-btn active" href="#">🇪🇸 Español</a>
+                </div>
+                <div class="action-buttons">
+                    <a class="btn btn-pdf" href="/arquivos/Resenha_Levitsky_Ziblatt.pdf" target="_blank"><i
+                            class="fas fa-file-pdf"></i> Descargar PDF</a>
+                    <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18945739" target="_blank"><i
+                            class="fas fa-external-link-alt"></i> DOI</a>
+                    <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Envíos</a>
+                </div>
+            </div>
+
+            <!-- Cuerpo de la reseña (traducción completa al español) -->
+            <div class="panel article-text">
+                <h2>Introducción</h2>
+                <p>Publicado originalmente en 2018, <em>Cómo mueren las democracias</em>, de Steven Levitsky y Daniel
+                    Ziblatt, se convirtió rápidamente en una de las obras más influyentes del debate contemporáneo sobre
+                    la crisis de las democracias liberales. En un contexto internacional marcado por el ascenso de
+                    liderazgos populistas, el aumento de la polarización política y la creciente desconfianza en las
+                    instituciones representativas, el libro propone una interpretación provocativa acerca de los
+                    procesos mediante los cuales los regímenes democráticos pueden entrar en una trayectoria de
+                    deterioro institucional. A diferencia de la imagen clásica del colapso democrático —frecuentemente
+                    asociada a golpes militares o rupturas abruptas del orden constitucional— los autores sostienen que,
+                    en el mundo contemporáneo, las democracias tienden a debilitarse de forma gradual, a través de
+                    procesos internos de erosión de las instituciones y de las normas políticas que sostienen el
+                    régimen.</p>
+                <p>Partiendo de un enfoque comparativo que combina análisis histórico y reflexión teórica, Levitsky y
+                    Ziblatt investigan episodios emblemáticos de deterioro democrático ocurridos a lo largo del siglo XX
+                    y establecen paralelismos con procesos políticos recientes observados en diferentes países. Al
+                    examinar casos como el ascenso de regímenes autoritarios en Europa durante el período de
+                    entreguerras y compararlos con transformaciones contemporáneas de la política democrática, los
+                    autores buscan identificar patrones recurrentes en la trayectoria de democracias que entran en
+                    proceso de fragilización institucional. En ese recorrido analítico, la obra enfatiza el papel
+                    desempeñado por actores políticos electos que, al llegar al poder por vías institucionales
+                    legítimas, comienzan gradualmente a debilitar mecanismos de control y a tensar normas democráticas
+                    fundamentales.</p>
+                <p>Uno de los aspectos centrales de la argumentación desarrollada por los autores consiste en la
+                    distinción entre instituciones formales y normas informales que estructuran el funcionamiento de las
+                    democracias. Aunque las constituciones, los sistemas electorales y los mecanismos de separación de
+                    poderes constituyen la base jurídica del régimen democrático, Levitsky y Ziblatt argumentan que la
+                    estabilidad de esas instituciones depende también de prácticas políticas basadas en el
+                    reconocimiento de la legitimidad de los adversarios y en la moderación en el ejercicio del poder. La
+                    erosión de esas normas —particularmente de la tolerancia mutua entre competidores políticos y de la
+                    contención institucional— aparece, en el análisis de los autores, como uno de los signos más
+                    evidentes de fragilidad democrática.</p>
+                <p>En ese sentido, <em>Cómo mueren las democracias</em> se inscribe en un amplio campo de debates de la
+                    ciencia política contemporánea que busca comprender las transformaciones recientes de las
+                    democracias representativas. Junto a otros estudios dedicados al fenómeno de la erosión democrática,
+                    la obra contribuye a desplazar el análisis del colapso institucional hacia procesos más sutiles y
+                    graduales de deterioro político, en los cuales la apariencia formal de la democracia puede
+                    preservarse incluso cuando su funcionamiento efectivo se encuentra comprometido.</p>
+                <p>Ante la relevancia de estas cuestiones para el debate político contemporáneo, la presente reseña
+                    tiene como objetivo examinar críticamente los principales argumentos desarrollados por Levitsky y
+                    Ziblatt a lo largo de la obra. Para ello, se busca presentar un análisis sistemático de los
+                    capítulos del libro, destacando sus conceptos centrales, sus contribuciones al debate sobre la
+                    crisis de las democracias y también algunas de sus limitaciones interpretativas. Al revisitar los
+                    principales elementos de la argumentación de los autores, se pretende ofrecer al lector una
+                    evaluación crítica del alcance analítico de la obra y de su importancia para la comprensión de los
+                    desafíos enfrentados por las democracias a comienzos del siglo XXI.</p>
+
+                <h2>Cómo mueren las democracias</h2>
+                <p>El primer capítulo de <em>Cómo mueren las democracias</em> establece el punto de partida analítico de
+                    la obra al cuestionar una percepción común en la historia política del siglo XX: la idea de que las
+                    democracias suelen morir por medio de golpes militares abruptos o rupturas institucionales
+                    violentas. Para Steven Levitsky y Daniel Ziblatt, esa interpretación corresponde solo parcialmente a
+                    la realidad histórica. En diversos casos contemporáneos, la erosión democrática no ocurre por medio
+                    de tanques en las calles o de la suspensión inmediata del orden constitucional, sino a través de
+                    procesos graduales en los que líderes autoritarios llegan al poder por vías institucionales
+                    aparentemente legítimas.</p>
+                <p>En ese contexto, el capítulo sostiene una tesis central que atraviesa toda la obra: la democracia
+                    frecuentemente se debilita cuando las elites políticas tradicionales abren espacio para líderes con
+                    inclinaciones autoritarias, creyendo que podrán controlarlos o utilizarlos estratégicamente. En
+                    otras palabras, la destrucción de las instituciones democráticas rara vez ocurre sin la colaboración
+                    —explícita o implícita— de actores políticos que forman parte del propio sistema democrático. Esta
+                    perspectiva desplaza el foco del análisis de la democracia hacia el papel desempeñado por los
+                    partidos políticos y las elites institucionales. En lugar de comprender el colapso democrático
+                    exclusivamente como resultado de movimientos revolucionarios o golpes militares, Levitsky y Ziblatt
+                    enfatizan los procesos internos mediante los cuales los sistemas políticos permiten el ascenso de
+                    líderes que posteriormente subvierten las reglas del juego democrático.</p>
+                <p>Para desarrollar este argumento, los autores recurren a ejemplos históricos emblemáticos,
+                    particularmente el ascenso de regímenes autoritarios en Europa durante el período de entreguerras.
+                    El caso más destacado es el de la Alemania nazi. Aunque el Partido Nazi había alcanzado un expresivo
+                    crecimiento electoral a principios de la década de 1930, Adolf Hitler no llegó al poder
+                    exclusivamente por medio de una victoria electoral directa. Su nombramiento como canciller en enero
+                    de 1933 resultó de negociaciones políticas conducidas por las elites conservadoras alemanas, que
+                    creían poder utilizar a Hitler como instrumento para contener el ascenso de las fuerzas de
+                    izquierda.</p>
+                <p>Ese cálculo político resultó profundamente equivocado. Una vez en el poder, Hitler consolidó
+                    rápidamente mecanismos autoritarios que llevarían a la destrucción de las instituciones democráticas
+                    de la República de Weimar. El episodio ilustra, según Levitsky y Ziblatt, un patrón recurrente en la
+                    historia política: las elites tradicionales a menudo creen que los líderes radicales pueden ser
+                    domesticados dentro del sistema institucional, cuando en realidad terminan contribuyendo a su propia
+                    marginación.</p>
+                <p>Una situación similar ocurrió en Italia con Benito Mussolini, cuyo ascenso al poder fue facilitado
+                    por la colaboración de elites políticas conservadoras y por la percepción de que su movimiento
+                    podría restaurar el orden político ante la inestabilidad social y el temor a revoluciones
+                    socialistas. Mussolini fue inicialmente incorporado al sistema político italiano mediante alianzas
+                    parlamentarias y compromisos institucionales que buscaban estabilizar el país. Sin embargo, esas
+                    alianzas terminaron permitiendo la consolidación de un régimen autoritario. Al movilizar estos
+                    ejemplos históricos, Levitsky y Ziblatt demuestran que los líderes autoritarios raramente conquistan
+                    el poder de forma aislada. En cambio, su ascenso depende a menudo de alianzas políticas estratégicas
+                    con sectores del <em>establishment</em> político. Estas alianzas son motivadas, en general, por
+                    cálculos electorales de corto plazo o por percepciones de amenaza política provenientes de otros
+                    grupos ideológicos.</p>
+                <p>En este punto, el capítulo introduce una reflexión fundamental sobre el papel de los partidos
+                    políticos en la preservación de la democracia. Según los autores, los partidos desempeñan
+                    históricamente la función de “porteros de la democracia”, responsables de filtrar candidatos e
+                    impedir que figuras antidemocráticas ocupen posiciones de poder. Este mecanismo informal de
+                    protección institucional constituye una de las principales barreras contra el ascenso de regímenes
+                    autoritarios. La literatura clásica de la ciencia política ya había destacado la importancia de las
+                    elites partidarias para el funcionamiento de la democracia representativa. Joseph Schumpeter, en su
+                    formulación del modelo competitivo de democracia, argumentaba que los sistemas democráticos dependen
+                    de la competencia organizada entre elites políticas estructuradas en partidos. En ese contexto, la
+                    estabilidad institucional está directamente asociada a la disposición de esas elites a respetar
+                    reglas procedimentales y a excluir a actores que rechacen los principios fundamentales del orden
+                    democrático.</p>
+                <p>Levitsky y Ziblatt retoman esa perspectiva, pero enfatizan que este mecanismo institucional puede
+                    fallar cuando las elites políticas optan por alianzas estratégicas con líderes radicales. En
+                    momentos de crisis política o polarización ideológica intensa, los partidos tradicionales pueden ver
+                    en esos líderes una oportunidad para fortalecer su posición electoral o neutralizar a adversarios
+                    políticos considerados más peligrosos. Esta dinámica evidencia una paradoja fundamental de las
+                    democracias modernas. Al mismo tiempo que los sistemas democráticos presuponen competencia política
+                    abierta, esa apertura puede ser explotada por actores que no están comprometidos con la preservación
+                    de las reglas del juego democrático.</p>
+                <p>El capítulo también destaca que los líderes autoritarios raramente se presentan inicialmente como
+                    enemigos declarados de la democracia. En muchos casos, adoptan discursos ambiguos que combinan
+                    retórica populista, críticas a las instituciones existentes y promesas de restauración del orden
+                    político. Este tipo de discurso permite que tales líderes obtengan legitimidad política sin revelar
+                    plenamente sus intenciones autoritarias. Este fenómeno puede ser comprendido a la luz de debates
+                    clásicos de la teoría política sobre los límites de la tolerancia democrática. Karl Popper, en
+                    <em>La sociedad abierta y sus enemigos</em>, formuló la llamada “paradoja de la tolerancia”, según
+                    la cual una sociedad completamente tolerante puede terminar permitiendo el ascenso de fuerzas que
+                    destruirán la propia tolerancia. Para Popper, la preservación de sociedades abiertas exige que se
+                    establezcan ciertos límites para impedir el ascenso de movimientos intolerantes.</p>
+                <p>Aunque Levitsky y Ziblatt no adoptan explícitamente el argumento filosófico de Popper, su análisis
+                    sugiere una preocupación similar: las democracias necesitan desarrollar mecanismos institucionales
+                    capaces de identificar y contener a líderes que demuestran inclinaciones autoritarias antes de que
+                    adquieran poder político significativo.</p>
+                <p>Otro elemento importante discutido en el capítulo es la relación entre crisis políticas y el ascenso
+                    de liderazgos autoritarios. Momentos de inestabilidad institucional, polarización política o crisis
+                    económica a menudo crean condiciones favorables para la emergencia de líderes que prometen restaurar
+                    el orden y la estabilidad mediante soluciones radicales. Esta interpretación encuentra respaldo en
+                    análisis clásicos sobre el ascenso de regímenes autoritarios en el siglo XX. Hannah Arendt, en
+                    <em>Los orígenes del totalitarismo</em>, destacó cómo los contextos de desintegración social y
+                    descrédito institucional pueden favorecer movimientos políticos que prometen reorganizar
+                    radicalmente el orden político existente.</p>
+                <p>Sin embargo, Levitsky y Ziblatt enfatizan que las crisis políticas, por sí solas, no explican el
+                    colapso de las democracias. El factor decisivo reside en la forma en que las elites políticas
+                    responden a esas crisis. Cuando los partidos tradicionales se niegan a colaborar con líderes
+                    autoritarios y mantienen su compromiso con las normas democráticas, las instituciones políticas
+                    pueden resistir incluso en contextos de intensa inestabilidad. Por otro lado, cuando las elites
+                    políticas optan por alianzas oportunistas con líderes radicales, el sistema democrático se vuelve
+                    significativamente más vulnerable. En ese sentido, el capítulo sugiere que la supervivencia de las
+                    democracias depende menos de sus reglas formales y más del comportamiento de los actores políticos
+                    que operan dentro de esas reglas.</p>
+                <p>Este enfoque permite comprender la democracia no solo como un conjunto de instituciones jurídicas,
+                    sino como un sistema político sustentado por normas informales, prácticas institucionales y
+                    compromisos compartidos entre las elites políticas. Al final del capítulo, Levitsky y Ziblatt dejan
+                    claro que la historia política demuestra repetidamente los riesgos asociados a la normalización de
+                    líderes autoritarios dentro del sistema democrático. Cuando los partidos políticos abandonan su
+                    papel de guardianes institucionales y pasan a priorizar ganancias electorales inmediatas, el sistema
+                    democrático puede volverse vulnerable a procesos de erosión gradual. Esta interpretación ofrece un
+                    punto de partida fundamental para los capítulos siguientes de la obra, en los cuales los autores
+                    examinan de forma más detallada los mecanismos institucionales y normativos que permiten la
+                    preservación —o el deterioro— de las democracias contemporáneas.</p>
+
+            </div>
+
+            <!-- Visor PDF -->
+            <div class="panel">
+                <h2><i class="fas fa-file-pdf"></i> Reseña completa (PDF)</h2>
+                <div class="pdf-frame">
+                    <iframe src="/arquivos/Resenha_Levitsky_Ziblatt.pdf"
+                        title="Cuando las democracias se desgastan"></iframe>
+                </div>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> Si
+                    el PDF no se muestra, <a href="/arquivos/Resenha_Levitsky_Ziblatt.pdf" target="_blank">haga clic
+                        aquí para descargar</a>.</p>
+            </div>
+
+            <!-- Referencias y generador de citas -->
+            <div class="panel" id="references-panel">
+                <h2><i class="fas fa-quote-right"></i> Referencias & Cita</h2>
+
+                <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]'
+                    data-title="Cuando las democracias se desgastan: una relectura de Levitsky y Ziblatt"
+                    data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/espanhol/resenha-como-as-democracias-morrem-Steven-Levitsky-esp.html"
+                    data-volume="1" data-issue="1" data-pages="11-45" data-year="2026">
+                    <div class="citation-generator-head">
+                        <h2><i class="fas fa-quote-left"></i> Cómo citar esta reseña</h2>
+                    </div>
+                    <div class="citation-generator-body">
+                        <p class="citation-generator-note">Seleccione el estilo deseado y genere automáticamente la
+                            referencia bibliográfica.</p>
+                        <div class="citation-controls">
+                            <div class="citation-field">
+                                <label for="citation-style">Estilo de referencia</label>
+                                <select id="citation-style" class="citation-select">
+                                    <option value="abnt">ABNT</option>
+                                    <option value="apa">APA</option>
+                                    <option value="mla">MLA</option>
+                                    <option value="chicago">Chicago</option>
+                                    <option value="harvard">Harvard</option>
+                                    <option value="vancouver">Vancouver</option>
+                                    <option value="ieee">IEEE</option>
+                                </select>
+                            </div>
+                            <div class="citation-actions">
+                                <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i>
+                                    Copiar referencia</button>
+                            </div>
+                        </div>
+                        <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                        <p class="citation-feedback"></p>
+                    </div>
+                </div>
+
+                <div class="citation-actions">
+                    <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
+                    <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+                </div>
+                <ul class="ref-list">
+                    <li><strong>LEVITSKY, Steven; ZIBLATT, Daniel.</strong> <em>How Democracies Die</em>. 1ª ed. New
+                        York: Crown Publishing Group, 2018.</li>
+                    <li><strong>ARENDT, Hannah.</strong> <em>Los orígenes del totalitarismo</em>. Madrid: Alianza, 2012.
+                    </li>
+                    <li><strong>DAHL, Robert A.</strong> <em>La poliarquía: participación y oposición</em>. Madrid:
+                        Tecnos, 1997.</li>
+                    <li><strong>POPPER, Karl.</strong> <em>La sociedad abierta y sus enemigos</em>. Barcelona: Paidós,
+                        2010.</li>
+                    <li><strong>SCHUMPETER, Joseph A.</strong> <em>Capitalismo, socialismo y democracia</em>. Barcelona:
+                        Folio, 1996.</li>
+                    <li><strong>TOCQUEVILLE, Alexis de.</strong> <em>La democracia en América</em>. México: Fondo de
+                        Cultura Económica, 2014.</li>
+                    <li><strong>WEBER, Max.</strong> <em>Economía y sociedad</em>. México: Fondo de Cultura Económica,
+                        2014.</li>
+                </ul>
+                <p><small><i class="fas fa-info-circle"></i> Utilice el generador de arriba para citar esta reseña en
+                        diferentes estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+            </div>
+
+            <!-- Sobre el autor -->
+            <div class="panel">
+                <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto del autor Diego Vinícius"
+                        class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre el autor </h2>
+                <p><strong>Diego Vinícius Brito dos Santos</strong> es pedagogo y servidor público efectivo, con
+                    experiencia docente en los primeros años de la educación primaria y educación infantil. Posee una
+                    maestría en Filosofía por la Universidad Federal de Rio Grande do Norte (UFRN, 2022), con
+                    investigación centrada en la obra y filosofía de Friedrich Nietzsche. Es licenciado en Filosofía por
+                    la Universidad del Estado de Rio Grande do Norte (UERN, 2018) y en Pedagogía por el Centro
+                    Universitario Internacional (UNINTER, 2022). Es autor del libro <em>Nietzsche e os valores
+                        modernos</em> (2022). Se dedica a la formación continua en áreas como Psicopedagogía,
+                    Neuropsicopedagogía, Educación Inclusiva, Atención Educativa Especializada (AEE) y Educación de
+                    Jóvenes y Adultos (EJA).</p>
+                <p><i class="fas fa-envelope"></i> Correo electrónico: diego_svt@hotmail.com.br<br>
+                    <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663"
+                        target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                    <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811"
+                        target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+                </p>
+            </div>
+
+            <footer>
+                <i class="fas fa-university"></i> Revista Inquietaciones – Caicó, RN | v.1, n.1, 2026 | Sección: Reseñas
+                | DOI: 10.5281/zenodo.18945739<br>
+                Acceso abierto bajo licencia Creative Commons.
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Envíos con simulación de login
+        const submitBtn = document.getElementById("submitBtn");
+        if (submitBtn) {
+            submitBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                let logged = localStorage.getItem("inquietacoes_logged");
+                if (logged === "true") {
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    let email = prompt("🔐 Para enviar un artículo, inicie sesión. Ingrese su correo electrónico (simulación):");
+                    if (email && email.includes("@")) {
+                        localStorage.setItem("inquietacoes_logged", "true");
+                        alert("Inicio de sesión exitoso. Redirigiendo a envíos.");
+                        window.location.href = "cadastro-login/submissoes.html";
+                    } else {
+                        alert("Acceso no autorizado. Registro/inicio de sesión requerido.");
+                    }
+                }
+            });
+        }
+
+        // Copiar ABNT manual (español)
+        document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+            const refs = [
+                "SANTOS, Diego Vinícius Brito dos. Cuando las democracias se desgastan: una relectura de Levitsky y Ziblatt. Revista Inquietaciones, v. 1, n. 1, p. 11-45, 2026."
+            ];
+            navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referencias ABNT copiadas."));
+        });
+        document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+            let bib = `@article{santos2026democracias,
+  title={Cuando las democracias se desgastan: una relectura de Levitsky y Ziblatt},
+  author={Santos, Diego Vinícius Brito dos},
+  journal={Revista Inquietaciones},
+  volume={1},
+  number={1},
+  pages={11--45},
+  year={2026}
+}`;
+            navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (ejemplo)."));
+        });
+
+        // ========== GENERADOR DE CITAS (script automático) ==========
+        (function () {
+            const generator = document.querySelector('.citation-generator');
+            if (!generator) return;
+            const authors = JSON.parse(generator.dataset.authors || '[]');
+            const title = generator.dataset.title || '';
+            const url = generator.dataset.url || '';
+            const volume = generator.dataset.volume || '';
+            const issue = generator.dataset.issue || '';
+            const pages = generator.dataset.pages || '';
+            const year = generator.dataset.year || '';
+            const journal = 'Revista Inquietaciones';
+            const accessDate = new Date().toLocaleDateString('es-ES');
+
+            const styles = {
+                abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponible en: ${url}. Acceso: ${accessDate}.`,
+                apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+                mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+                chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+                harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+                vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+                ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+            };
+
+            const select = document.getElementById('citation-style');
+            const outputDiv = document.getElementById('citationOutput');
+            const copyBtn = document.querySelector('.citation-copy');
+            const feedback = document.querySelector('.citation-feedback');
+
+            function updateCitation() {
+                const style = select.value;
+                const generatorFn = styles[style];
+                if (generatorFn) {
+                    outputDiv.innerHTML = generatorFn();
+                } else {
+                    outputDiv.innerHTML = styles.abnt();
+                }
+            }
+
+            if (select && outputDiv) {
+                select.addEventListener('change', updateCitation);
+                updateCitation();
+            }
+
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    const citationText = outputDiv.innerText;
+                    navigator.clipboard.writeText(citationText).then(() => {
+                        if (feedback) feedback.textContent = '✓ Referencia copiada al portapapeles.';
+                        setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                    }).catch(() => {
+                        if (feedback) feedback.textContent = '✗ Error al copiar. Intente manualmente.';
+                    });
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,797 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>The Social Letters of Vinícius | Experience Report | Inquietações Journal</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
+        rel="stylesheet">
+    <style>
+        /* Mesmo estilo do original */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+            overflow: hidden;
+        }
+
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+
+        .header {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+        }
+
+        .journal-badge {
+            display: inline-block;
+            background: #6b4c2c;
+            color: #fef7e0;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.5rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #3a2a1a;
+        }
+
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6b5a42;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f0ede5;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+            cursor: pointer;
+        }
+
+        .btn-pdf {
+            background: #8b4513;
+            color: white;
+            border: none;
+        }
+
+        .btn-doi {
+            background: #2c6e5c;
+            color: white;
+            border: none;
+        }
+
+        .btn-submit {
+            background: #b87c3a;
+            color: white;
+            border: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Static language buttons */
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
+        }
+
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+            cursor: default;
+            pointer-events: none;
+        }
+
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
+
+        .panel {
+            background: rgba(255, 255, 252, 0.96);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
+        }
+
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #c28a4e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #4a3a2a;
+        }
+
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #2a2a24;
+        }
+
+        .article-text p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+            color: #9b5e2c;
+        }
+
+        .article-text h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+            color: #b47c48;
+        }
+
+        .wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #8b5a2e;
+            font-weight: 500;
+            border-bottom: 1px dotted #b89a6a;
+            transition: 0.1s;
+        }
+
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
+        }
+
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+
+        .ref-list li {
+            margin-bottom: 0.9rem;
+            font-size: 0.85rem;
+            border-left: 2px solid #dccfaf;
+            padding-left: 1rem;
+        }
+
+        .ref-list a {
+            color: #8b5a2e;
+            text-decoration: none;
+            word-break: break-all;
+        }
+
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+        }
+
+        .cite-btn {
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2dccf;
+        }
+
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #7a6b53;
+        }
+
+        @media (max-width: 800px) {
+            body {
+                padding: 1rem;
+            }
+
+            .content-padding {
+                padding: 1.2rem;
+            }
+
+            .title {
+                font-size: 1.9rem;
+            }
+        }
+
+        .bg-warm {
+            background: #fefaf0;
+        }
+
+        /* Citation generator */
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #4a3a2a;
+            border-left: none;
+            padding-left: 0;
+        }
+
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #2c3a2b;
+            cursor: pointer;
+        }
+
+        .citation-select:focus {
+            outline: none;
+            border-color: #c28a4e;
+            box-shadow: 0 0 0 2px rgba(194, 138, 78, 0.2);
+        }
+
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            color: #2a2a24;
+            margin-top: 1rem;
+        }
+
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+
+        @media (max-width: 700px) {
+            .citation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .citation-actions {
+                justify-content: stretch;
+            }
+
+            .citation-btn {
+                justify-content: center;
+            }
+        }
+
+        .diary-title {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin: 1.5rem 0 1rem;
+            color: #8b5a2e;
+            border-left: 3px solid #c28a4e;
+            padding-left: 1rem;
+        }
+
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container bg-warm">
+        <div class="content-padding">
+            <div class="header">
+                <div class="journal-badge"><i class="fas fa-feather-alt"></i> Inquietações Journal • v.1, n.1 • Experience Report • 2026</div>
+                <div class="title">The Social Letters of Vinícius</div>
+                <div class="author-line">
+                    <div class="author-avatar">
+                        <div class="avatar-circle">
+                            <img src="/corpo%20editorial/diego.png" alt="Author photo Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                        </div>
+                        <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                    </div>
+                    <span><i class="fas fa-university"></i> Municipality of Carnaúba dos Dantas, RN, Brazil</span>
+                    <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18844651</span>
+                </div>
+
+                <!-- Static language buttons -->
+                <div class="lang-buttons">
+                    <a class="lang-btn" href="/publicacoes/volume-1-2026/Relatos de experiencia/relato-as-cartas-sociais-de-vinicius.html">🇧🇷 Portuguese</a>
+                    <a class="lang-btn active" href="#">🇺🇸 English</a>
+                    <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/relato-as-cartas-sociais-de-vinicius-esp.html">🇪🇸 Spanish</a>
+                </div>
+
+                <div class="action-buttons">
+                    <a class="btn btn-pdf" href="/arquivos/Cartas_Sociais_Vinicius.pdf" target="_blank"><i
+                            class="fas fa-file-pdf"></i> Download PDF</a>
+                    <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18844651" target="_blank"><i
+                            class="fas fa-external-link-alt"></i> DOI</a>
+                    <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissions</a>
+                </div>
+            </div>
+
+            <!-- Abstract (English) -->
+            <div class="panel">
+                <h2><i class="fas fa-align-left"></i> Abstract</h2>
+                <p>This experience report brings together logbooks produced in the context of the Introduction to Sociology course, offered in the Social Sciences Teaching Degree program at the Federal University of Rio Grande do Norte (UFRN), during the emergency remote teaching period in 2020. Each logbook addresses specific topics discussed in class, such as modernity, sociological imagination, scientific neutrality, social construction of reality, identity, cultural industry, and the historical foundations of sociology. The records articulate personal experiences, theoretical reflections, and problematizations about the formative process in a pandemic context, highlighting the impacts of technological mediation, the reorganization of social time, and the transformations in pedagogical dynamics. Methodologically, this is a reflective writing of an autobiographical-formative nature, in which the individual experience is tensioned in light of sociological categories worked in class, especially based on authors such as C. Wright Mills, Berger and Luckmann, Marx, and Weber. The set of logbooks reveals the power of narrative exercise as an instrument of critical learning, showing that education in Social Sciences is not limited to conceptual assimilation but involves the subjective re-elaboration of social experience. It is concluded that the logbook, as a pedagogical practice, favors the consolidation of sociological imagination by allowing the student to relate biography and history, personal experience and social structure, especially in contexts of crisis and transition, such as the experience lived during the pandemic.</p>
+                <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> teacher education</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> remote teaching</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> sociological imagination</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> logbook</span>
+                    <span class="keyword"
+                        style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i
+                            class="fas fa-tag"></i> formative experience</span>
+                </div>
+            </div>
+
+            <!-- Full text of the logbooks (English translation) -->
+            <div class="panel article-text">
+                <h2>Logbooks</h2>
+
+                <div class="diary-title">LOGBOOK – 10/01/2020</div>
+                <p>Friend, before squeezing my memory like a lemon to write this diary, something lingers in my mind, I need to share it with you (who are you?). This might be the last chance I get. Remember I told you the platform went down and there would be new changes starting on the 1st of this month? Well, in this class, which marked the beginning of those changes, the professor did something unusual, not because it was new, but because it was something we hadn't done in a long time: oral roll call.</p>
+                <p>In this particular course, we hadn't had attendance calls since the first day of virtual class; we agreed that attendance would be measured by the logbooks and by a "good evening" in the platform's chat, but the platform no longer records the good evenings, so I fear these diaries may be numbered or may be used as supplementary notes, as will be used in this first unit.</p>
+                <p>However, I remember well that the professor said that in the second unit we will innovate again, that the first unit was a test, so if this diary is the last, I want to make it clear that it was a pleasure to have you as a reader.</p>
+                <p>Shall we go to class? It was a beautiful day, the start of a new month; by my calendar, there are 822 days left until the end of the Brazilian president's term. We're almost there. I entered the class with five minutes left to start. It was just me and my friend in the room. He was sleepy and I was tired; we had just left another class and were about to start another. While no one arrived, I asked him to overcome his sleep a bit and play a song on the guitar. He started with one I knew, but didn't remember the name; he played "Wind of Change." Yes, friend, I have a talented friend. In the end, he started playing "Stairway to Heaven," but then the professor arrived and asked for "Still Loving You." Whenever my friend starts playing before class, it's as if the environment is purified so we can start our work. And even with sleep and all, he played majestically.</p>
+                <p>After that moment of relaxation, the professor opened the class with oral roll call, as I told you, and then we began the presentations. It's good not to waste too much time, because the second class is always shorter than the first. And time, well, time is something that could not go unnoticed in this class. You'll understand soon. As usual, I offered myself and my entire group to start the presentations; in another diary I already gave the reasons why I like to be first in a presentation. Even after the presentation, another student said it would be hard to be original after this one. I don't think I'm paranoid about preferring to start, but without wanting to flatter, my group was in very good harmony; I'm very proud of the friendships I'm building in this course. They are good friends, and these presentations brought us closer, entered my daily life, and my everyday life became a great everyday life. Some may not like routine and the everyday, but I like mine.</p>
+                <p>I'll leave our mind map below, in case you want to read the book we worked on. I think we touched on key points in the text, so the map can be a great reading guide. The central point is exactly the reality of everyday life. The author even says it is the reality par excellence. Perhaps for our modernity this statement is valid. At 9:13 PM our presentation ended, the second one started right away and there was another group in sequence. After the presentations, a student from the second group asked the professor about face‑to‑face interaction, one of the concepts that permeated the presentations and the debate. Face‑to‑face is putting yourself in front of the other. The professor said something that caught my attention; I can't reproduce it with the same words, but it went something like this: in the metropolis, where people don't know each other, individuals can, in this face‑to‑face interaction, experience all their potentialities. Let's say I don't know you and you don't know me; we are anonymous to each other. So imagine a daily situation where I put myself face‑to‑face with you; in this scenario, I can wear whatever mask (I) want, assume another personality and act from different forces. But if (I and You) start living together, naturally you will get to know me, my tastes, my behaviors, my habits, preferences, etc.</p>
+                <p>Yes, regarding temporality, everyday reality has different temporalities and is composed of multiple realities. For example, social temporality is chronological, but within reality we can experience other temporalities. I said in class that when I went to the shopping mall, it was as if chronological time was momentarily suspended and I entered a new time. Yes, friend, I had never been to a shopping mall; it's not something accessible to my context and environment, so the experience of entering that unprecedented environment up to that point suspended my attention and vigilance with the everyday that awaited me outside that environment. Yes, I also mentioned the temporality of theater, social media, etc. However, another temporality I mentioned in the presentation was that of the child. The child does not have a timed life like us; they live in the delight of the present, but they are gradually removed from the time of nature when they are disciplined for the way of living in society, that is, when they are introduced into the social everyday and into timed temporality.</p>
+                <p>Friend, there were other important issues, for which I apologize for not sharing with you, but I need to go to my sociology exam. Yes, we're already in exam period; time passed so quickly, don't you agree?</p>
+                <p>That's it for today, my dear reader. I'll write other pages for you soon.</p>
+                <p>Sincerely, your friend, Vinícius</p>
+
+                <div class="diary-title">LOGBOOK – 09/08/2020 – First Class</div>
+                <p>Beginning of a semester, of a course, of a formation, of new and old social relations, etc. I won't write about a new beginning of the year, because this semester is peculiar. Reader, after my period, did you really expect me to tell you why it would be a peculiar semester? You should know, because I think you, like me, are living the end of times and the end of normal; we are living in 2020 and you don't need to know why something became peculiar, because everything is peculiar: our relationships, our bodies, our feelings, our fears, our habits and behaviors, in short, everything we once thought banal or routine now seems peculiar. Does affirming this peculiarity mean we are experiencing something new? Has everything changed? Have we finally left some matrix or the illusions of the cave, as Plato told us at some point in history?</p>
+                <p>Before you say that the pandemic we are going through is some kind of Pandora's box that provided this peculiarity, I must warn you that no, because if we indeed have a historical connection with those who preceded us, we have certainly gone through other pandemics, but this one is different, don't you think? In the time we live in, a pandemic can be seen from various angles; one of these angles is sociological, because one cannot think of a pandemic without a sociological perspective. The pandemic, seen by a sociologist, came to show some things that were trivialized for a long time: class divisions; precarious health, research and technology, culture and other sectors of society; labor relations and their new configurations in the neoliberal context; denialism and obscurantism; power relations; image immediatism; etc. The pandemic did not cause peculiarities; it came to show the rust in the gears of the normal. Society has been in institutional lethargy for a long time. The peculiar is our antithesis to the thesis of the normal, so that we can find some synthesis in this vital and dialectical process.</p>
+                <p>During the beginning of the new course, which I mentioned earlier, the professor, in his virtual square projected virtually on my smartphone screen, remembered a difficult question to answer: what are the social sciences for? I'd rather get water from a stone than find an answer to that question. If I were to answer it, I would have enough reasons to run away from the social sciences, because answering something essential is limiting the essence of something. Talking about the usefulness of the social sciences implies knowing what the social sciences are. I emphasized the "are" to avoid falling into the grammatical trap they set for me.</p>
+                <p>I don't want to go on too long, dear reader. The professor, using new technological resources, recorded the entire class. My voice, my image, my time, some things of mine were, by him and his technology, captured in pixels, but did he capture me? I think not. If you want to revisit that past, that class, it's recorded. Doesn't that remind you of the magic of cinema? But he asked for this diary; professors like to give students work, don't they? So let's see if memory helps me. The class, in general, was very good. Is "very good" pretentious? Alright, it was nice. We're still at the beginning. If I were to summarize the class theme, I could say it was an introductory class. Introduction to what? — you ask me — to the three units we will work on this semester.</p>
+                <p>He, the professor, asked me to say which topic caught my attention. At the time of class, I think it was the issue of classics and industrial culture. He said that a classic author is classic because even today that author is important for solving some question. He mentioned Marx, from philosophy, and Beethoven and Luiz Gonzaga from music; but in my mind, I kept thinking whether the classic is really important; is there a more classic classic behind the classic that became an important classic? Confusing? Forgive my ramblings, please. But let me try to explain. For example, K. Marx, he is a classic, right? But for him to become an important classic, he must have read and learned something from some classic, which allowed him to become a classic as well. Behind Marx, the classics that come to mind are Hegel and Epicurus; I think those classics ended up producing an important classic for us contemporaries, so are they also important classics?</p>
+                <p>But let's forget these daydreams, dear reader. About cultural industry, I asked the professor, during the broadcast, if he would use the text titled "Laughter and the Tragic in Cultural Industry - The Administered Catharsis" by Adorno; he said that text was more complicated to use, perhaps due to the time and format of the semester, but that we would see Adorno. If you know me well, dear reader, when Adorno uses Nietzsche in this text, he wins me over; would it be a kind of sapiofilia? I don't know, I consider both authors very intelligent.</p>
+                <p>To close the class, he made the following three requests: in one word, say a feeling, an immediate desire, and a future desire. Most, regarding the first request, said "peace"; later, he asked us to talk about peace. I don't like peace very much; we'll have plenty of time to experience some peace, but immersed in the vitality of life, peace generates stagnant water, conformism, it stops the tragic flow of life. Conflict, the opposite of peace, generates overcoming, elevation, potentiation; peace destroys conflict, but conflict is important for living. Now, enough procrastination, my words were: relicarium, impeachment, and doctorate. Breaking them down: relicarium because I miss a past that only lives in my memory; impeachment is my most immediate desire, the reasons are obvious, unless you, my reader, are right-wing, fascist, or something like that; the doctorate was the only thing that came to mind for the future. The future is so uncertain that I wasn't even going to answer, but I put the doctorate to fill the table. I think it's dangerous to project expectations into the future; certainly disappointment will follow, that's why I'm very down‑to‑earth.</p>
+                <p><strong>CLASS MIND MAP</strong><br>That's it for today, my dear reader. I'll write other pages for you soon.<br>Sincerely, your friend, Vinícius</p>
+
+                <div class="diary-title">LOGBOOK – 09/10/2020</div>
+                <p>Dear reader, writing after a class like today's can become a problem. The professor must understand this, because during class he said that after classes his head spins like a CD. Not to copy what he said, I'll paraphrase: my head looks like a cassette tape being rewound. Obviously due to the effort of remembering the class, organizing the volume of information, and absorbing something a friend of mine did before class, but I'll tell you that another time. Maybe I'll start writing the diaries a day after class, if that's okay with you, reader. It's not that I'm sleepy or anything, but in these last hours, when others sleep, I just want to stay here, lost in my thoughts.</p>
+                <p>In today's class, something nice happened: the professor touched on some points I already wrote to you about, about the characteristics of this pandemic, about our unpreparedness to face it, although we have a lot of knowledge about other historical pandemics. He mentioned the pandemic that the Spanish flu (1918‑1919) caused in the past. Raising, in my view, that point, which I had previously confided to you, that society was in social lethargy, and with the arrival of covid‑19, everyday life, in the professor's words, went to the clouds. I wish the clouds had a poetic and positive meaning, but the clouds mean new cloud platforms, simultaneous interactions, albeit virtual. If you wish to put the positive and negative points of these new forms of interaction into perspective or analysis, go ahead. On this subject, I'm acting like Switzerland, that is, neutral and minding my own business.</p>
+                <p>Neutrality is our next point. At a certain moment in class, the professor said that to obtain an analysis of the social facts of everyday life, one must be part of everyday life and part of common sense. I have some warnings about this issue: how can one be impartial while being in common sense? How to renounce values and concepts that configure the individual's subjectivity to obtain an impartial analysis? Some time ago I was among certain people and I clearly saw that being together or belonging to a group was reforming me. By this I mean that an individual or a subjectivity is a construction of the people and factors that surround them. The probability that someone who lives in an environment with sexist/racist/misogynistic people, etc., will acquire those traits for themselves is greater than for a person who lives with other subjectivities without such characteristics. Reader, by this I mean that an analysis, however impartial it may be proposed, will always carry traces of the subjectivity of the one who proposes the task of analyzing.</p>
+                <p>In a sentence to be pronounced in court, I wonder if the judge is really the symbol of impartiality as we are led to believe. Have you ever stopped to reflect on how judgments between rich and poor, blacks and whites, men and women, citizens and politicians, etc., are different? As if a way of treating those cases were already institutionalized, without due respect for due process of law. The other day, if I'm not mistaken, a magistrate, when pronouncing a conviction of a former president, simply copied and pasted (ctrl+c and ctrl+v) another judge's sentence to support her own sentence. Was there a partial analysis in that case? It's hard for me to say that the sociologist must be partial in their analysis. The very desire to analyze something, in principle, already presupposes that there is an interest behind the analysis. But I won't dwell on this; I'll reflect more and later I can add something else.</p>
+                <p>Reader, I'm bringing this account to a close, but I cannot fail to emphasize some points, so I ask for a little patience, which is in short supply today. I feel that I am not paying due attention to the issues the professor spoke about in class. Therefore, I need to expose them now. I need to be consistent in what I say, because the professor has a crystal ball. Maybe he's looking at us now. So, "Hello professor. How are you?" Jokes aside, professor, I'll tell you, if your crystal ball has good reception, things you said in class. I'll be punctual so I don't become a parrot.</p>
+                <p>The professor's statements were directed toward understanding modernity or modern times, as in the Charlie Chaplin film. What caught my attention is the fact that, unlike philosophers who theorize ideas, sociologists theorize everyday life. Everyday life presents the points and counterpoints, besides the social data that the sociologist needs for their research; it was more or less like that that he spoke. Understanding everyday life, is that the purpose of sociology? Or is there something more? You don't expect me to say, do you? Did you forget that today I'm Switzerland on complicated issues like this? I think the professor wouldn't like an answer, because he would be trying to limit the object of sociology.</p>
+                <p>Oh, I almost forgot, both the professor of this class and the professor of the previous class, in a sociological synchrony that only a psychologist Marx could explain, stated that Weber's sociology was comprehensive, that is, it seeks to understand society or everyday life, but in a partial way; I think that is linked to that previous question about neutrality.</p>
+                <p>Another point touched upon was consumerism in the modern era; I won't talk much about that, because this factor is very evident today; I dare say it's crystal clear.</p>
+                <p>At the end of class, the professor pointed out three explanatory principles about a text by Ianni Octavio, titled "Sociology and the Modern World." The principles are: functional causality, causes that create new attitudes in society; connection of meanings, where one questions why things acquire certain meanings, also related to social behaviors, in case you want to know; contradiction, because society is constantly changing; the moment of these changes can be slow or fast.</p>
+                <p>That's it for today, my dear reader. I'll write other pages for you soon.<br>Sincerely, your friend, Vinícius</p>
+
+                <div class="diary-title">LOGBOOK – 09/15/2020</div>
+                <p>Dear reader, I think we are close enough now for me to call you friend. So let me start over. Dear friend, after a hard day, all I want is a little calm and a good conversation. Yesterday afternoon I had a meeting with the members of the sociology group; I feel they are doing their best, even with adverse difficulties like work and little time. I try to understand them; I know the beginning of a degree can be complicated, there are many texts, activities, seminars, presentations, and other things. Trying to organize all that is hard. A friend of mine has already dropped two course components. On one hand, I understand, you know? When something consumes you too much, you need to decide whether to let yourself be consumed or if that something can be resolved at another time. I see teachers, in different ways, trying to adapt to the new context, but are they taking into account the contexts of the young people behind the screens? Sorry for this outburst.</p>
+                <p>Friend, until then I was a little unmotivated, but the professor of this course has something that provides a desire to continue. He worked on issues that I value greatly, for example, the Renaissance. If it were a typical history class, I would ask him to comment a little more on the relationship between the Renaissance, Luther, and the papacy; I think that's a discussion I need to have with someone who understands the subject well. It seems the professor is that someone. He brought characteristics of the Renaissance, such as, for example, the rescue that the Renaissance made of the term "citizen" coined in Ancient Greece; the Copernican turn between God and man, where man is at the center; etc., all the historical characteristics the professor presented are aimed at understanding the emergence of sociology. That was also the point that guided the class's reflections. If you know me well, friend, you know that, because I work with philosophers of modernity and contemporaneity, I am fascinated by the historical contexts of those periods. Then the class became light, almost danceable.</p>
+                <p>During class, I was able to exchange some ideas with the professor, although it was better to listen to him. He brought factors about life in cities, means of transporting goods, the change in the way of working between the feudal period and the modern period, primitive accumulation of capital, worked by Marx. By the way, Marx was present, not carnally, but something essential of him hovered in that virtual moment: his ideas, his thoughts, his social diagnoses, and other things. Friend, don't you think it's incredible that Marx conquered death by becoming a classic? However, we can have this conversation another time.</p>
+                <p>Friend, I don't want to go on too long today; you can blame astrology or some psychophysical malfunction of mine, but in summary, the class worked on the main points of the text I mentioned before. The professor even asked us to make a mind map of it; I'll leave it here, in case you feel literary curiosity to appreciate the text. In the next class, I'll present it to the other colleagues. I'd like to see you there.</p>
+                <p>That's it for today, my dear reader. I'll write other pages for you soon.<br>Sincerely, your friend, Vinícius</p>
+
+                <div class="diary-title">LOGBOOK – 09/17/2020</div>
+                <p>Dear reader, were you in class? Sorry for not interacting with you, a lot happened. At the beginning of class, the professor said that the text I was going to present was already closed. Yes, that text I promised, in the last logbook, to present. Apparently, a good part of the class did not understand well what the professor had said, and that mismatch of information happened. But the professor explained everything and we agreed on new things. After all, friend, everything is very new. This remote teaching was not part of the students' lives. We were thrown into the becoming of social reality abruptly and without much experience. But I believe we are doing our best with the means and tools we have.</p>
+                <p>As I said, there was that mismatch of information, so the beginning of class was a very important moment for us to talk and clarify details for the upcoming classes. You must have noticed that I am not sending you this diary the day after class, because that is due to the fact that we negotiated the submission deadlines for the diaries with the professor. It turns out we agreed that the deadline was too tight, so the professor suggested, as he also suggested to the bachelor's students, that the deadline be extended to one week after class, that is, if the class is on Thursday, we have until the following Thursday to send our logbooks. Consequences? Of course! I will need to put more effort into memory to remember the issues from class. Actually, having written these initial reports, I need to talk to you about memory. —Memory is not a USB drive where you store data! Some wise man said. He is truly in the digital age. I wouldn't use the USB drive to make that analogy. I'm older. But since he said what memory is not, I'll tell you what it is: memory is a kitchen skimmer —I said I was older. But why? You ask me. Because the skimmer, for example, leaves what is important (the dough) and drains what is "not important (the water)". Memory works the same way. When we go through something that marks us deeply, that experience becomes a conscious memory. However, when walking down a street, day to day, if you are not directly stimulated by the details of that street, you will not remember those details, even though they are there. You go there a thousand times and one day you say: I've been here my whole life and never noticed that detail. There, when you notice something, a detail, that something becomes a memory. So, in these diaries I write for you, I try to tell what marked me in the classes, what became conscious, and what was tattooed on my consciousness.</p>
+                <p>After bilateral and political agreements, I remember that three groups presented the text. Yes, I almost forgot to say that the text is by Mills, entitled "The Promise". I'll talk about it in the next diary. Well, the groups presented, although they said they made mind maps of the text, none of them presented them, which was frustrating for me; those maps are excellent for understanding the key concepts of a text, subject, theme, issue, etc. Some members said they got the text shortly before class, so it is admirable the effort they must have made to synthesize the main issues of the text in a short time. If I'm not mistaken, all groups said the central issue of the text was the sociological imagination and focused on that point, as it was indeed the main point. Seriously, friend, I'll tell you about the text and its points in the next diary, I promise. Wait a little longer. During the presentations, the professor dialogued with the groups about the points raised during the presentations, but in the presentations of the following class, as I will tell you, he kind of left the considerations for the end of the class, but I'll say that later.</p>
+                <p>That's it for today, my dear reader. I'll write other pages for you soon.<br>Sincerely, your friend, Vinícius</p>
+
+                <div class="diary-title">LOGBOOK – 09/22/2020</div>
+                <p>Friend, today was our presentation. We were apprehensive as always, some more than others, because presenting is being in front of the other and at the same time opening up to the other. Some tremble at the base, others just go, go ahead. I usually imagine an empty theater where I can dance freely. What is confusing in distance learning is that I wonder if the internet hasn't crashed, if I haven't been disconnected from the room, if the microphone is working, if the neighbor's dog barking isn't too annoying; there are many concerns for my presentation process to proceed normally.</p>
+                <p>At the moment I was calm, no concern hovered over my mind, only the usual ones: is this the right path? Which concept comes after this one I presented? Would giving one more example clarify the idea better? Will there be any questions? What depth should I choose for each concept? etc. Presenting is a kind of performance; I thought about that when defending my final undergraduate thesis. The heart has to be calm; adrenaline cannot rise; thoughts come and go like the waves of the sea and you must be just an observer of them; the silent audience, the lack of questions, the ambient noise, the heavy air, all that will be obstacles in front of you; it's up to you to find Ariadne's thread and know how to get out of this situation.</p>
+                <p>Don't think I didn't notice you during the presentation. Your gestures, your expression, as if you were making complex mental calculations, taking note of what I say; are we in sync or is that anachronistic? Anyway, thank you for being there at that moment. Mentally, I had no audience; the theater seats were given over to the emptiness of the room. However, a little further away, near the entrance or the exit, I saw you out of the corner of my eye, in a yellowish light; your countenance was unmistakable.</p>
+                <p>Generally, I like to present first, not out of egocentrism or anything like that; it's much easier to handle the presentation without so much information in the head. For example, after we presented, the groups started citing me in their presentations, that is, they deviated from what they originally planned because they were affected by what I said initially. That could happen to me. I could listen to them and then cite them. There are risks in that; for example, if the professor had started the presentations talking about the difference between biography and identity, in my presentation I would be forced not to expose that idea. The right thing, in my view, is to retain the information from the presentations. For example, now that I know that in sociology, according to the professor, biography is not confused with identity, I can think and research better about that on other occasions. But bringing that topic to the debate or using that information without some mastery of the subject would be a mistake. I would need to know which authors the professor read to reach that conclusion.</p>
+                <p>"Right", "wrong", "maybe", and "more or less", a presentation is usually guided by these values. What you say may be wrong, right, more or less right or wrong; maybe you are right and/or wrong; and, above all, everything you say can and will be used against you. That is why silence should be more valued. Presentations should be short; the less information that comes out of your mouth, the less complaint the other person will have. If it's right or wrong, the other will say; if you give too much information, the other person will have more material to judge. You are holding the reins of the issue. It is up to the individual to know their own limits and know for themselves how much criticism they can handle, because no presentation will be good enough for the other; you are not the other, you haven't lived what the other lived; your lives are unique; we are unique specimens among people who claim to be equal.</p>
+                <p>If I had read the books the professor read, lived the experiences he had, gone through the bad nights of sleep he must have had, gone through the loves, the pains, the conflicts, etc., certainly I would have developed something we seek today: the answer to the question: how to put yourself in someone else's shoes? The other is an unexplored territory; it is an unknown through which I recognize myself.</p>
+                <p>I know I am not the other, I know I am not the professor, so I know that no matter how hard I try, I can never meet anyone's expectations. If the presentation were in an exact sciences course where everything is logical and ordered, 1 + 1 = 2, I could partially meet the expectation by following the logic of instruction, but in a humanities course, how do you instruct thought to think similarly to all the others involved?</p>
+                <p>You must be fed up with my barroom philosophies; I won't bother you with them anymore. At least for now. As I wrote to you, we were the first group to present Mills' text "The Promise". Upon reading the text, I think I found the dividing line that separates philosophy from sociology. Both come from the world, they are sisters, I think. They share the same umbilical cord, but as I said, we are in a world of singularities. After the Socratic birth, philosophy grew and desired knowledge of the whole; its ambition for knowledge seems limitless. Kant tried to find the limits of knowledge, but I think he could not affirm that there was a limit to philosophy's desire for knowledge. Schopenhauer and Nietzsche came close, I believe, by affirming that everything is will; both tried to explain where philosophy's yearning for knowledge comes from. Sociology, on the other hand, was the misfit of the family, curious in childhood, rebellious in youth, and revolutionary in adulthood. Knowledge is something it also seeks, but it wants more. It tired of philosophy's passive observation. Its blood is hot, it boils and pulses like life. It decided to speak, tore the verb, and began to sing: change now! change already!</p>
+                <p>I tried to find similarities between the two, but they were like Janus, two faces, one calm and tranquil, the other, I don't know what it expressed; its eyes burned, its smile was shameless, its face was rosy, but the expression was enigmatic. Sociology seemed to be thinking or hatching a mental plan; its imagination was so great that it didn't see the boy with the furrowed brow in front of it. After a while thinking, calculating, and analyzing, it pointed its finger at something behind the boy; it was an old value, one tied to the soil with deep roots. Its roots supported the structure of the value; they were called structural roots, from which the value drew the sap from the earth to strengthen itself.</p>
+                <p>In the midst of that moment, the boy thought that sociology wanted to eradicate the value, wanted to give peace that old value. Is this the beginning of a new historical moment? Will new values emerge from this attitude? How will we fit into a world where our values are subject to attack? Where history is not fixed and immutable? Where the structure can and will be overthrown by the will to change?</p>
+                <p>More than you, I also wanted answers to these questions. I like to think that the meaning of life is change, so I am cautious, thus I won't be affected by the new. The new ahead can be frightening, but if we allow it to come, it can be a good visitor from time to time. Do I prepare the house or my life for when it arrives? Sugar or sweetener, which one will it like? I just hope it doesn't take long to arrive.</p>
+                <p>That's it for today, my dear reader. I'll write other pages for you soon.<br>Sincerely, your friend, Vinícius</p>
+
+                <div class="diary-title">LOGBOOK – 09/24/2020</div>
+                <p>Friend, reading the pages I sent you before, I realized that I never asked if you're okay, how your day was, if you read any interesting book, or those friend questions. It gets more complicated if we stop to think that you don't answer me or give me feedback on what I send. I was asking myself the real need to write these diaries for you. Didn't anything catch your attention? None of the issues? Wouldn't you like to talk about some idea? Give a sign of life, but in your own time, no pressure.</p>
+                <p>I'm going to break the writing pattern a bit today, without reflections on the classes; I'll have to be punctual and direct. If I were enrolled only in the sociology class, I would have had more time to elaborate something worth reading or almost, but it's been difficult days on this side of the screen. It's been a while since I voluntarily read a book. I'm next to some books I bought at a used bookstore and some I recently received; I look at them with some pain, that anguish of not having time to read. I wake up later and later, as I sleep after 3 AM; when I wake up, every morning I ask myself: what activity do I have to finish today? From there, others arose: what activity can I do or finish a little later? Will there be a group presentation and the professor will explain the content? Which courses am I not able to keep up with? Should I drop one to relieve this pressure? Others have already dropped, and that is not a sign of weakness; it is the realization that we are spending a lot of psychic energy; we are at 100% of our work and assimilation capacity.</p>
+                <p>If you remember Mills' text, "The Promise", at the moment, these issues appear as an individual disturbance, they are my concerns with the remote system. But browsing social media the other day, I realized that these issues are not so individual; other people are already starting to talk about their difficulties in this remote model. We were not prepared for this, teachers even less so, and perhaps the university. If we are learning this "new" model, we are learning it the wrong way. We keep likening it to the traditional model and praying it's the same thing. But friend, at some point we will have to put the brakes on and understand that the traditional is dead, something new has been born; the traditional is crumbled and cannot support or structure the new. The new has arrived, and we are dealing with it with our eyes on the past. There will be consequences in the short or long term, and only then will we be led to rethink our practices.</p>
+                <p>After this brief outburst, so as not to lose our daily custom, I will highlight the points I noted during the class:<br>Initially, the professor returned to the issue of identity, then stated that sociology does not deal with identity; perhaps anthropology is the one most interested in the subject. Regarding Mills' text, as it is the closing of the book, we talked about freedom, youth, personal values, free will, ideality, and choices — remembering that choices have limits or are limited in society. Our freedom changes with history. Sociology comes into play or "gets into the game," as young people say, when there is a social issue. There are issues in act (for example, the one I mentioned at the beginning); when those issues become potential, sociology enters the scene. Sociology is exercised and acted upon, which is why it gained importance in the 19th century. Then the professor asked what the social sciences laboratory is. It is not physical, because it is society itself. Sociology analyzes the social processes of the world. According to the professor, the humanities are capable of understanding changes. Art, for example, questions social issues but does not reflect or indicate solutions. The professor spoke about the analytical tendencies of sociology. There are three tendencies or perhaps we can think of others today. I) Quantitative (data analysis), II) Classical research (theory construction), and III) Method refinement (method).<br>First tendency: Explaining history through connecting threads. For example, in the theory of the totality of society, Weber wanted to explain the rationalization of society (rational trajectory); Marx based on contradiction (there were always class conflicts); A. Comte, paradise theory (society walks toward paradise, a high civilization); result: two world wars. Marx was wrong: class alone doesn't solve it. Weber: society moves toward bureaucratization; he got it right!<br>Second tendency: systematic theory: creating concepts to classify social relations. Society is in constant construction; it is not possible to fix and conceptualize, because everything and all social relations are changing.<br>The professor would explain the last tendency, but remote learning comes with defects; the platform that was supposed to simulate a physical classroom went offline for all participants. Friend, never trust technology, trust me.</p>
+                <p>That's it for today, my dear reader. I'll write other pages for you soon.<br>Sincerely, your friend, Vinícius</p>
+
+                <div class="diary-title">LOGBOOK – 09/29/2020</div>
+                <p>Friend, as I said in the last diary, Google Meet, the meeting platform we use as virtual classrooms, crashed in the last class. I thought it was an isolated event, but when I looked at Twitter trends, I realized it was a general blackout. The platform was literally offline. Perhaps, at that moment, it was changing to adapt to what will come in the future. As of November 1st, we will no longer have recorded classes; in fact, many tech sites say that the available time for meetings will be limited to one hour in the free version. We'll wait to see the developments of this issue.</p>
+                <p>Since the platform was unavailable at the end of the last class, the professor began this day's class, 09/29, with the last tendency of Mills' text. Then he commented a bit about philosophy and sociology. It seemed he was looking for the dividing line between them, just as I did in an earlier diary. Contrary to my line of thought, he pointed out the following: sociology is more pragmatic, while philosophy would be more existential.</p>
+                <p>After that, he briefly returned to the three tendencies, stating that theory and analysis are interconnected; I think he intended to provide subsidies for the next text we would read. A friend of mine, during the professor's speech, asked what praxis was. Then the professor said we would see that concept later, but that he would give a spoiler on the subject; he used the example of making a cake. I confess I was hungry at that moment, I hadn't had dinner yet, but I held on. Of course there was no cake in class, nothing edible, but how interesting: the professor says "cake" and just the word, without the object close by that the word designates, awakened in me the feeling of hunger. How crazy, don't you think?</p>
+                <p>After some other questions, a bit of philosophical content put forward by a boy I don't remember well, but which ended up going from Plato's "Phaedrus" to the words of Heraclitus, we closed the first part of the class and Mills' text. In the second part of the class, presentations of the new text began; it's "The Social Construction of Reality" by Peter L. Berger and Thomas Luckmann. If I'm not mistaken, two or three groups presented in this class. In sequential order, the second group raised an interesting question: is it necessary to put yourself face‑to‑face with the other to know the other? I think that from the presentations of this class, that was the question that hung in the virtual air of the also virtual classroom. Of course I will try to reflect on this with you, but only in the next diary, where I will tell you how my presentation went, because in this class there was no time for all groups to present.</p>
+                <p>That's it for today, my dear reader. I don't know if I'll write other pages for you soon.<br>Sincerely, your friend, Vinícius</p>
+                <p><strong>End of Diaries</strong></p>
+            </div>
+
+            <!-- PDF Viewer -->
+            <div class="panel">
+                <h2><i class="fas fa-file-pdf"></i> Complete report (PDF)</h2>
+                <div class="pdf-frame">
+                    <iframe src="/arquivos/Cartas_Sociais_Vinicius.pdf"
+                        title="The Social Letters of Vinícius - Experience Report"></iframe>
+                </div>
+            </div>
+
+            <!-- References and citation generator -->
+            <div class="panel" id="references-panel">
+                <h2><i class="fas fa-quote-right"></i> References & Citation</h2>
+
+                <!-- CITATION GENERATOR -->
+                <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]'
+                    data-title="The Social Letters of Vinícius"
+                    data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/ingles/relato-as-cartas-sociais-de-vinicius-en.html"
+                    data-volume="1" data-issue="1" data-pages="01-23" data-year="2026">
+                    <div class="citation-generator-head">
+                        <h2><i class="fas fa-quote-left"></i> How to cite this work</h2>
+                    </div>
+                    <div class="citation-generator-body">
+                        <p class="citation-generator-note">Select the desired style and automatically generate the bibliographic reference.</p>
+                        <div class="citation-controls">
+                            <div class="citation-field">
+                                <label for="citation-style">Reference style</label>
+                                <select id="citation-style" class="citation-select">
+                                    <option value="abnt">ABNT</option>
+                                    <option value="apa">APA</option>
+                                    <option value="mla">MLA</option>
+                                    <option value="chicago">Chicago</option>
+                                    <option value="harvard">Harvard</option>
+                                    <option value="vancouver">Vancouver</option>
+                                    <option value="ieee">IEEE</option>
+                                </select>
+                            </div>
+                            <div class="citation-actions">
+                                <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i>
+                                    Copy reference</button>
+                            </div>
+                        </div>
+                        <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                        <p class="citation-feedback"></p>
+                    </div>
+                </div>
+
+                <div class="citation-actions">
+                    <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copy ABNT (manual)</button>
+                    <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Export BibTeX</button>
+                </div>
+                <ul class="ref-list">
+                    <li><strong>SANTOS, Diego Vinícius Brito dos.</strong> The Social Letters of Vinícius. <em>Inquietações Journal</em>,
+                        v. 1, n. 1, p. 01–23, 2026. DOI: <a href="https://doi.org/10.5281/zenodo.18844651"
+                            target="_blank">10.5281/zenodo.18844651</a></li>
+                    <li><strong>BERGER, Peter L.; LUCKMANN, Thomas.</strong> <em>The Social Construction of Reality</em>.
+                        New York: Anchor Books, 1966.</li>
+                    <li><strong>MILLS, C. Wright.</strong> <em>The Sociological Imagination</em>. New York: Oxford University Press,
+                        1959.</li>
+                    <li><strong>MARX, Karl; ENGELS, Friedrich.</strong> <em>The Communist Manifesto</em>. London: Penguin,
+                        2002.</li>
+                    <li><strong>WEBER, Max.</strong> <em>The Protestant Ethic and the Spirit of Capitalism</em>. London:
+                        Routledge, 2001.</li>
+                </ul>
+                <p><small><i class="fas fa-info-circle"></i> Click on the links to access the original sources. Use the
+                        generator above to cite this report in different styles.</small></p>
+            </div>
+
+            <!-- About the author -->
+            <div class="panel">
+                <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> About the author </h2>
+                <p><strong>Diego Vinícius Brito dos Santos</strong> is a pedagogue and effective public servant, with experience teaching in early elementary school and early childhood education. He holds a Master’s degree in Philosophy from the Federal University of Rio Grande do Norte (UFRN, 2022), with research focused on the work and philosophy of Friedrich Nietzsche. He holds a Bachelor’s degree in Philosophy from the State University of Rio Grande do Norte (UERN, 2018) and a Bachelor’s degree in Pedagogy from the International University Center (UNINTER, 2022). He is the author of the book <em>Nietzsche e os valores modernos</em> (2022). He is dedicated to continuing education in areas such as Psychopedagogy, Neuropsicopedagogy, Inclusive Education, Specialized Educational Assistance (AEE), and Youth and Adult Education (EJA).</p>
+                <p><i class="fas fa-envelope"></i> Email: diego_svt@hotmail.com.br<br>
+                    <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663"
+                        target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                    <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811"
+                        target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+                </p>
+            </div>
+
+            <footer>
+                <i class="fas fa-university"></i> Inquietações Journal – Caicó, RN | v.1, n.1, 2026 | Experience Report | DOI: 10.5281/zenodo.18844651<br>
+                Open access under a Creative Commons license.
+            </footer>
+        </div>
+    </div>
+
+    <script>
+        // Submissions with login simulation
+        const submitBtn = document.getElementById("submitBtn");
+        if (submitBtn) {
+            submitBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                let logged = localStorage.getItem("inquietacoes_logged");
+                if (logged === "true") {
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    let email = prompt("🔐 To submit an article, please log in. Enter your email (simulation):");
+                    if (email && email.includes("@")) {
+                        localStorage.setItem("inquietacoes_logged", "true");
+                        alert("Login successful! Redirecting to submissions.");
+                        window.location.href = "cadastro-login/submissoes.html";
+                    } else {
+                        alert("Unauthorized access. Registration/login required.");
+                    }
+                }
+            });
+        }
+
+        // Copy ABNT manual (English)
+        document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+            const refs = [
+                "SANTOS, Diego Vinícius Brito dos. The Social Letters of Vinícius. Inquietações Journal, v. 1, n. 1, p. 01-23, 2026."
+            ];
+            navigator.clipboard.writeText(refs.join("\n")).then(() => alert("ABNT references copied."));
+        });
+        document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+            let bib = `@article{santos2026letters,
+  title={The Social Letters of Vinícius},
+  author={Santos, Diego Vinícius Brito dos},
+  journal={Inquietações Journal},
+  volume={1},
+  number={1},
+  pages={01--23},
+  year={2026}
+}`;
+            navigator.clipboard.writeText(bib).then(() => alert("BibTeX copied (example)."));
+        });
+
+        // ========== CITATION GENERATOR (script automático) ==========
+        (function () {
+            const generator = document.querySelector('.citation-generator');
+            if (!generator) return;
+            const authors = JSON.parse(generator.dataset.authors || '[]');
+            const title = generator.dataset.title || '';
+            const url = generator.dataset.url || '';
+            const volume = generator.dataset.volume || '';
+            const issue = generator.dataset.issue || '';
+            const pages = generator.dataset.pages || '';
+            const year = generator.dataset.year || '';
+            const journal = 'Inquietações Journal';
+            const accessDate = new Date().toLocaleDateString('en-US');
+
+            const styles = {
+                abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Available at: ${url}. Accessed: ${accessDate}.`,
+                apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+                mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+                chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+                harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+                vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+                ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+            };
+
+            const select = document.getElementById('citation-style');
+            const outputDiv = document.getElementById('citationOutput');
+            const copyBtn = document.querySelector('.citation-copy');
+            const feedback = document.querySelector('.citation-feedback');
+
+            function updateCitation() {
+                const style = select.value;
+                const generatorFn = styles[style];
+                if (generatorFn) {
+                    outputDiv.innerHTML = generatorFn();
+                } else {
+                    outputDiv.innerHTML = styles.abnt();
+                }
+            }
+
+            if (select && outputDiv) {
+                select.addEventListener('change', updateCitation);
+                updateCitation();
+            }
+
+            if (copyBtn) {
+                copyBtn.addEventListener('click', () => {
+                    const citationText = outputDiv.innerText;
+                    navigator.clipboard.writeText(citationText).then(() => {
+                        if (feedback) feedback.textContent = '✓ Citation copied to clipboard.';
+                        setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                    }).catch(() => {
+                        if (feedback) feedback.textContent = '✗ Error copying. Please try manually.';
+                    });
+                });
+            }
+        })();
+    </script>
+</body>
+
+</html>

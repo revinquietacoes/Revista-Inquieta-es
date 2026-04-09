@@ -1,0 +1,613 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Paulo Freire 4.0: el ChatGPT y la materialización de la educación bancaria | Resumen Expandido | Revista Inquietaciones</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Mismo estilo que la versión en portugués */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+            overflow: hidden;
+        }
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+        .header {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+        }
+        .journal-badge {
+            display: inline-block;
+            background: #6b4c2c;
+            color: #fef7e0;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #3a2a1a;
+        }
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6b5a42;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+        }
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f0ede5;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+            cursor: pointer;
+        }
+        .btn-pdf {
+            background: #8b4513;
+            color: white;
+            border: none;
+        }
+        .btn-doi {
+            background: #2c6e5c;
+            color: white;
+            border: none;
+        }
+        .btn-submit {
+            background: #b87c3a;
+            color: white;
+            border: none;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
+        }
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+            cursor: default;
+            pointer-events: none;
+        }
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
+        .panel {
+            background: rgba(255, 255, 252, 0.96);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
+        }
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #c28a4e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #4a3a2a;
+        }
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #2a2a24;
+        }
+        .article-text p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+            color: #9b5e2c;
+        }
+        .article-text h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+            color: #b47c48;
+        }
+        .wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #8b5a2e;
+            font-weight: 500;
+            border-bottom: 1px dotted #b89a6a;
+            transition: 0.1s;
+        }
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
+        }
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .ref-list li {
+            margin-bottom: 0.9rem;
+            font-size: 0.85rem;
+            border-left: 2px solid #dccfaf;
+            padding-left: 1rem;
+        }
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+        }
+        .cite-btn {
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2dccf;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #7a6b53;
+        }
+        @media (max-width: 800px) {
+            body { padding: 1rem; }
+            .content-padding { padding: 1.2rem; }
+            .title { font-size: 1.8rem; }
+        }
+        .bg-warm { background: #fefaf0; }
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+        }
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #4a3a2a;
+            border-left: none;
+            padding-left: 0;
+        }
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            margin-top: 1rem;
+        }
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+        @media (max-width: 700px) {
+            .citation-controls { flex-direction: column; align-items: stretch; }
+            .citation-actions { justify-content: stretch; }
+            .citation-btn { justify-content: center; }
+        }
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietaciones • v.1, n.1 • Sección: Resúmenes Expandidos • Flujo Continuo • 2026</div>
+            <div class="title">Paulo Freire 4.0: el ChatGPT y la<br>materialización de la educación bancaria</div>
+            <div class="author-line">
+                <div class="author-avatar">
+                    <div class="avatar-circle">
+                        <img src="/corpo%20editorial/diego.png" alt="Foto del autor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                    </div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18820608</span>
+            </div>
+            <!-- Botones de idioma estáticos -->
+            <div class="lang-buttons">
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/Resumos%20expandidos/resumo-paulo-freire-4-0.html">🇧🇷 Portugués</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/ingles/resumo-paulo-freire-4-0-en.html">🇺🇸 Inglés</a>
+                <a class="lang-btn active" href="#">🇪🇸 Español</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Resumo_Expandido_Revista_Inquietacoes_Edicao1-pp.1-5.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Descargar PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18820608" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Envíos</a>
+            </div>
+        </div>
+
+        <!-- Resumen estructurado -->
+        <div class="panel">
+            <h2><i class="fas fa-align-left"></i> Resumen</h2>
+            <p>Este resumen expandido analiza el uso de ChatGPT en el contexto educativo a la luz de la crítica de Paulo Freire a la llamada “educación bancaria”. Se parte de la hipótesis de que, aunque la inteligencia artificial amplía el acceso a la información, su uso acrítico puede reproducir prácticas pedagógicas unidireccionales. La metodología adoptada fue el análisis bibliográfico con levantamiento de producciones académicas publicadas después del lanzamiento de ChatGPT. Los resultados indican que la herramienta puede reforzar dinámicas pasivas cuando se utiliza sin mediación crítica, pero también presenta potencial emancipador cuando se integra a prácticas dialógicas. Se concluye que la tecnología no determina el modelo educativo, siendo esencial la mediación docente.</p>
+            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Paulo Freire</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> ChatGPT</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Educación bancaria</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Inteligencia artificial</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Educación crítica</span>
+            </div>
+        </div>
+
+        <!-- Texto completo del resumen expandido (traducción al español) -->
+        <div class="panel article-text">
+            <h3>Introducción</h3>
+            <p>La revolución digital ha traído consigo una serie de innovaciones que han transformado diversos sectores, incluida la educación, como señalan Souza, Souza y Santos (2024). Entre esas innovaciones, destaca ChatGPT, una herramienta basada en inteligencia artificial que promete revolucionar la forma en que accedemos y compartimos información. Sin embargo, esta nueva forma de interacción tecnológica plantea importantes preguntas sobre la naturaleza de la educación y el papel de educadores y educandos. Este resumen expandido busca explorar esas preguntas a la luz de la crítica de Paulo Freire a la “educación bancaria”, analizando si ChatGPT representa una modernización de ese enfoque o si ofrece nuevas oportunidades para la educación crítica.</p>
+            <p>Paulo Freire, uno de los educadores y filósofos de la educación más influyentes del siglo XX, desarrolló una profunda crítica a lo que denominó “educación bancaria”. Según Freire (1996), ese modelo educativo trata el conocimiento como un depósito, donde el profesor deposita información en los alumnos, que son vistos como recipientes pasivos. En ese contexto, los alumnos no son incentivados a cuestionar, reflexionar o interactuar de manera crítica con el contenido. En cambio, según Harasim (2015), los estudiantes son entrenados para memorizar y reproducir información, perpetuando una dinámica de poder que mantiene el <em>status quo</em> y desestimula la creatividad y la autonomía.</p>
+            <p>Con el advenimiento de las nuevas tecnologías, especialmente la inteligencia artificial, la educación ha experimentado una transformación significativa. Herramientas como ChatGPT, desarrolladas por OpenAI, están siendo incorporadas en diversos contextos educativos. Según Santos et al. (2024), ChatGPT es un modelo de lenguaje natural que utiliza algoritmos avanzados para generar respuestas a partir de grandes volúmenes de datos textuales, ofreciendo una nueva manera de acceder y diseminar conocimiento. Sin embargo, la introducción de esta tecnología suscita preguntas críticas: ¿estaría ChatGPT reforzando el modelo de educación bancaria criticado en la literatura freiriana, al proporcionar información de manera unidireccional y sin criticidad? ¿O podría esta herramienta integrarse de manera que promueva una educación más dialógica y crítica?</p>
+            <p>El objetivo de este resumen expandido es investigar cómo ChatGPT puede ser visto como una materialización de la educación bancaria en la era digital. Para ello, se explorará cómo el uso de esta tecnología puede reflejar los aspectos del modelo criticado por Freire, al mismo tiempo que se discutirán las potencialidades y limitaciones de ChatGPT en el contexto educativo. El resumen expandido buscará también reflexionar sobre cómo es posible integrar esta tecnología de manera que complemente las prácticas pedagógicas críticas, promoviendo un aprendizaje más significativo y transformador. Al explorar estas preguntas, esperamos contribuir a una comprensión más profunda de las implicaciones del uso de tecnologías avanzadas en la educación y proponer caminos para que estas herramientas puedan ser utilizadas de forma que promuevan una educación más inclusiva, crítica y emancipadora.</p>
+
+            <h3>Metodología</h3>
+            <p>Para realizar el análisis sobre la materialización de la educación bancaria a través de ChatGPT en la era digital, el presente resumen expandido utilizará la metodología de análisis bibliográfico, conforme a los preceptos de Prodanov y Freitas (2013). Este método permitirá una comprensión detallada de los conceptos y teorías relacionadas con el tema, así como una evaluación crítica de las fuentes bibliográficas disponibles. El análisis bibliográfico, también conocido como revisión de literatura, se estructurará en dos caminos distintos: el análisis de la concepción de educación bancaria y el análisis del uso de ChatGPT en la educación.</p>
+            <p>En el primer camino, que trata la concepción de educación bancaria, la selección de fuentes se concentrará en obras y resúmenes expandidos académicos publicados en los últimos dos años. El enfoque estará en textos que hagan una relación directa con la revolución digital y las herramientas digitales en sus títulos. Este enfoque permitirá una actualización de las teorías freireanas en el contexto contemporáneo, donde la tecnología desempeña un papel central en la educación. Para garantizar la relevancia y actualidad de los materiales, se incluirán solo resúmenes expandidos recientes, mientras que los textos más antiguos o que no traten explícitamente la relación con la revolución digital serán excluidos.</p>
+            <p>El segundo camino de análisis estará dedicado a ChatGPT y su uso en la educación. Se considerarán resúmenes expandidos académicos publicados a partir de la fecha de lanzamiento de ChatGPT, con un enfoque especial en textos que relacionen directamente esta tecnología con el contexto educativo. Además, solo se incluirán en el análisis resúmenes expandidos disponibles íntegramente y en español, garantizando así la accesibilidad y la comprensión completa de los contenidos. Los resúmenes expandidos publicados antes del lanzamiento de ChatGPT, que no aborden su uso en la educación o que no estén disponibles en español serán excluidos.</p>
+            <p>La principal base de datos utilizada para la selección del material de análisis será Google Académico. Esta plataforma ofrece una amplia gama de resúmenes expandidos académicos y otras fuentes científicas, proporcionando acceso a investigaciones recientes y relevantes. La elección de Google Académico como base de datos asegura la diversidad y calidad de las fuentes seleccionadas para el análisis. Para garantizar un análisis robusto y abarcador, se utilizará el método analítico con triangulación de fuentes. Este método permitirá la identificación y comparación de diferentes perspectivas y enfoques presentes en los resúmenes expandidos seleccionados. Los resúmenes expandidos se clasificarán en dos grupos principales: aquellos que destacan las potencialidades de las nuevas tecnologías en la educación y aquellos que presentan preocupaciones o críticas en relación con su uso. Esta clasificación facilitará la organización de la información y la identificación de patrones en las discusiones.</p>
+            <p>Se elaborará un cuadro sistemático para presentar los resultados de forma organizada y clara. Este cuadro facilitará la visualización de las diferentes perspectivas y la identificación de patrones y tendencias en las discusiones sobre educación bancaria y el uso de ChatGPT en la educación. La presentación sistemática de los datos permitirá un análisis más preciso y detallado de la información recolectada. Finalmente, se realizará un análisis crítico de los datos encontrados. Este análisis buscará integrar los conocimientos obtenidos a partir de las fuentes seleccionadas, reflexionando sobre las implicaciones del uso de ChatGPT en la educación y su relación con la concepción de educación bancaria criticada por Paulo Freire. Se discutirán las posibilidades de integrar la tecnología de forma que promueva una educación crítica y emancipadora, alineada con los principios de la pedagogía freireana. A través de esta metodología, se espera proporcionar una visión abarcadora y crítica sobre el impacto de las tecnologías digitales en la educación contemporánea, así como proponer caminos para una integración armoniosa entre innovación tecnológica y prácticas pedagógicas críticas.</p>
+
+            <h3>Desarrollo del contenido</h3>
+            <p>La revolución digital ha traído consigo una serie de innovaciones que han transformado diversos sectores, incluida la educación. Entre esas innovaciones, destaca ChatGPT, una herramienta basada en inteligencia artificial que promete revolucionar la forma en que accedemos y compartimos conocimiento. Sin embargo, esta nueva forma de interacción tecnológica plantea importantes preguntas sobre la naturaleza de la educación y el papel de educadores y educandos. Este resumen expandido busca explorar esas preguntas a la luz de la crítica de Paulo Freire a la “educación bancaria”, analizando si ChatGPT representa una modernización de ese enfoque o si ofrece nuevas oportunidades para la educación crítica.</p>
+            <p>Paulo Freire, uno de los más grandes educadores del siglo XX, criticó duramente lo que llamó “educación bancaria”. En ese modelo, los alumnos son vistos como recipientes vacíos que necesitan ser llenados con el conocimiento transmitido por el profesor. Ese proceso, según Freire, deshumaniza a los alumnos e impide el desarrollo del pensamiento crítico y la autonomía. Freire propuso una pedagogía basada en el diálogo y la concientización, donde profesores y alumnos se involucran en un proceso de aprendizaje mutuo. La educación, para Freire, debería ser una práctica de libertad, donde los alumnos son alentados a cuestionar, reflexionar y transformar el mundo que los rodea.</p>
+            <p>ChatGPT, desarrollado por OpenAI, es un modelo de lenguaje natural que utiliza algoritmos avanzados para generar respuestas a partir de grandes volúmenes de datos textuales. Puede ser utilizado en diversos contextos educativos, desde responder preguntas de alumnos hasta ayudar en la creación de materiales didácticos personalizados. Sin embargo, ChatGPT, por su propia naturaleza, puede reproducir un modelo de enseñanza unidireccional. Aunque puede proporcionar respuestas rápidas y precisas, no facilita el diálogo crítico y la reflexión profunda que Freire consideraba esenciales para la educación. ChatGPT puede ser visto como una herramienta que, en muchos aspectos, refleja el enfoque de la educación bancaria. Proporciona información de forma rápida y eficiente, pero sin el involucramiento crítico necesario para transformar esa información en conocimiento significativo. Los alumnos que usan ChatGPT pueden convertirse en receptores pasivos de información, en lugar de participantes activos en el proceso de aprendizaje.</p>
+            <p>Sin embargo, ChatGPT también posee el potencial de personalizar el aprendizaje y hacerlo más accesible. Puede adaptarse a las necesidades individuales de los alumnos, ofreciendo apoyo continuo. El desafío es integrar esta tecnología de manera que complemente, en lugar de sustituir, las prácticas pedagógicas críticas. La introducción de tecnologías digitales en la educación no necesita, necesariamente, reforzar prácticas tradicionales y pasivas. Cuando se utilizan bien, estas tecnologías pueden abrir nuevas posibilidades para el aprendizaje colaborativo y crítico. Lo importante es garantizar que el uso de estas herramientas esté alineado con los principios de una educación emancipadora, como defendía Paulo Freire.</p>
+
+            <h3>Consideraciones finales</h3>
+            <p>El análisis desarrollado a lo largo de este trabajo buscó investigar si el uso de ChatGPT en el contexto educativo representa una actualización de la llamada educación bancaria, tal como fue criticada por Paulo Freire, o si puede ser incorporado a prácticas pedagógicas críticas y emancipadoras. Los resultados indican que la tecnología, por sí sola, no determina el modelo educativo adoptado. Cuando se utiliza como mera proveedora de respuestas listas, sin problematización y mediación docente, la herramienta puede, de hecho, reforzar prácticas informacionales unidireccionales, acercándose a la lógica bancaria de transmisión de contenidos. En esos casos, el estudiante asume un papel predominantemente pasivo, limitándose a la recepción y reproducción de información.</p>
+            <p>Sin embargo, la investigación también evidenció que, cuando se integra a metodologías dialógicas y orientada por una intencionalidad pedagógica crítica, la inteligencia artificial puede actuar como recurso de apoyo al aprendizaje, ampliando posibilidades de investigación, sistematización de ideas y profundización conceptual. Así, el riesgo no reside en la existencia de la tecnología, sino en la forma en que es incorporada pedagógicamente.</p>
+            <p>Se concluye, por tanto, que ChatGPT no configura necesariamente la materialización de la educación bancaria, pero puede contribuir a su reproducción si se utiliza de modo acrítico. La mediación docente y el compromiso con una educación problematizadora permanecen como elementos centrales para que las tecnologías digitales sean apropiadas como instrumentos de emancipación y no de automatización del pensamiento. La pedagogía freireana, en ese sentido, mantiene su actualidad al ofrecer fundamentos para una integración ética, crítica y transformadora de las innovaciones tecnológicas en el campo educativo.</p>
+
+            <h3>Referencias</h3>
+            <ul class="ref-list" style="list-style: none; margin-top: 1rem;">
+                <li><strong>FREIRE, Paulo.</strong> <em>Pedagogía de la autonomía: saberes necesarios para la práctica educativa</em>. 25. ed. São Paulo: Paz e Terra, 1996. (Colección Lectura)</li>
+                <li><strong>HARASIM, Linda.</strong> Educación online y las implicaciones de la inteligencia artificial. <em>Revista da FAEEBA: Educação e Contemporaneidade</em>, Salvador, v. 24, n. 44, p. 25-39, jul. 2015.</li>
+                <li><strong>SANTOS, V. S. dos; SOUSA, S. J. A. de; SANTOS, L. M. L.; MENDES FILHO, L. A. M.; PORTE, M. de S.; TAVEIRA, M. da S.; ALEXANDRE, M. L. de O.</strong> Inteligencia Artificial en los estudios e investigaciones en Turismo en Brasil. <em>Revista Brasileira de Pesquisa em Turismo</em>, [S. l.], v. 18, p. 2896, 2024.</li>
+                <li><strong>SOUZA, Zelandia Maria dos Santos; SOUZA, Alexandrino José dos Santos; SANTOS, Maria Pricila Miranda dos.</strong> OPORTUNIDADES Y DESAFÍOS CREADOS POR LA TECNOLOGÍA EN LOS PROCEDIMIENTOS PEDAGÓGICOS EN TIEMPOS DE LA PANDEMIA DE COVID-19. <em>Revista Ibero-Americana de Humanidades, Ciências e Educação</em>, [S. l.], v. 10, n. 3, p. 1124–1149, 2024.</li>
+                <li><strong>PRODANOV, Cleber Cristiano; FREITAS, Ernani Cesar de.</strong> <em>METODOLOGÍA DEL TRABAJO CIENTÍFICO: métodos y técnicas de la investigación y del trabajo académico</em>. 2. ed. Novo Hamburgo: Feevale, 2013.</li>
+            </ul>
+        </div>
+
+        <!-- Visor PDF -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Resumen expandido completo (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/Resumo_Expandido_Revista_Inquietacoes_Edicao1-pp.1-5.pdf" title="Paulo Freire 4.0: el ChatGPT y la materialización de la educación bancaria"></iframe>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> Si el PDF no se muestra, <a href="/arquivos/Resumo_Expandido_Revista_Inquietacoes_Edicao1-pp.1-5.pdf" target="_blank">haga clic aquí para descargar</a>.</p>
+        </div>
+
+        <!-- Generador de citas -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> Cómo citar este resumen expandido</h2>
+            <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]'
+                data-title="Paulo Freire 4.0: el ChatGPT y la materialización de la educación bancaria"
+                data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/espanhol/resumo-paulo-freire-4-0-esp.html"
+                data-volume="1" data-issue="1" data-pages="1-5" data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> Generador de referencias</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Seleccione el estilo deseado y genere automáticamente la referencia bibliográfica.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Estilo de referencia</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar referencia</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+            </div>
+            <p><small><i class="fas fa-info-circle"></i> Utilice el generador de arriba para citar este resumen expandido en diferentes estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <!-- Sobre el autor -->
+        <div class="panel">
+            <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto del autor Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre el autor </h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> es pedagogo y servidor público efectivo, con experiencia docente en los primeros años de la educación primaria y educación infantil. Posee una maestría en Filosofía por la Universidad Federal de Rio Grande do Norte (UFRN, 2022), con investigación centrada en la obra y filosofía de Friedrich Nietzsche. Es licenciado en Filosofía por la Universidad del Estado de Rio Grande do Norte (UERN, 2018) y en Pedagogía por el Centro Universitario Internacional (UNINTER, 2022). Es autor del libro <em>Nietzsche e os valores modernos</em> (2022). Se dedica a la formación continua en áreas como Psicopedagogía, Neuropsicopedagogía, Educación Inclusiva, Atención Educativa Especializada (AEE) y Educación de Jóvenes y Adultos (EJA).</p>
+            <p><i class="fas fa-envelope"></i> Correo electrónico: diego_svt@hotmail.com.br<br>
+                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+            </p>
+        </div>
+
+        <footer>
+            <i class="fas fa-university"></i> Revista Inquietaciones – Caicó, RN | v.1, n.1, 2026 | Sección: Resúmenes Expandidos | DOI: 10.5281/zenodo.18820608<br>
+            Acceso abierto bajo licencia Creative Commons.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Envíos con simulación de login
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "cadastro-login/submissoes.html";
+            } else {
+                let email = prompt("🔐 Para enviar un artículo, inicie sesión. Ingrese su correo electrónico (simulación):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Inicio de sesión exitoso. Redirigiendo a envíos.");
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    alert("Acceso no autorizado. Registro/inicio de sesión requerido.");
+                }
+            }
+        });
+    }
+
+    // Copiar ABNT manual (español)
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = [
+            "SANTOS, Diego Vinícius Brito dos. Paulo Freire 4.0: el ChatGPT y la materialización de la educación bancaria. Revista Inquietaciones, v. 1, n. 1, p. 1-5, 2026."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referencias ABNT copiadas."));
+    });
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@article{santos2026freire,
+  title={Paulo Freire 4.0: el ChatGPT y la materialización de la educación bancaria},
+  author={Santos, Diego Vinícius Brito dos},
+  journal={Revista Inquietaciones},
+  volume={1},
+  number={1},
+  pages={1--5},
+  year={2026}
+}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (ejemplo)."));
+    });
+
+    // ========== GENERADOR DE CITAS (script automático) ==========
+    (function () {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Revista Inquietaciones';
+        const accessDate = new Date().toLocaleDateString('es-ES');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponible en: ${url}. Acceso: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    if (feedback) feedback.textContent = '✓ Referencia copiada al portapapeles.';
+                    setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    if (feedback) feedback.textContent = '✗ Error al copiar. Intente manualmente.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

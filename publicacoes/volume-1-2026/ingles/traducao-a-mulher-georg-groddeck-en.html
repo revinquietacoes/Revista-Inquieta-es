@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>The Woman (Die Frau) | Georg Groddeck | Translation | Inquietações Journal</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Same style as previous versions */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+            overflow: hidden;
+        }
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+        .header {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+        }
+        .journal-badge {
+            display: inline-block;
+            background: #6b4c2c;
+            color: #fef7e0;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #3a2a1a;
+        }
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6b5a42;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+        }
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f0ede5;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+            cursor: pointer;
+        }
+        .btn-pdf {
+            background: #8b4513;
+            color: white;
+            border: none;
+        }
+        .btn-doi {
+            background: #2c6e5c;
+            color: white;
+            border: none;
+        }
+        .btn-submit {
+            background: #b87c3a;
+            color: white;
+            border: none;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
+        }
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+            cursor: default;
+            pointer-events: none;
+        }
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
+        .panel {
+            background: rgba(255, 255, 252, 0.96);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
+        }
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #c28a4e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #4a3a2a;
+        }
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #2a2a24;
+        }
+        .article-text p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+            color: #9b5e2c;
+        }
+        .article-text h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+            color: #b47c48;
+        }
+        .wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #8b5a2e;
+            font-weight: 500;
+            border-bottom: 1px dotted #b89a6a;
+            transition: 0.1s;
+        }
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
+        }
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .ref-list li {
+            margin-bottom: 0.9rem;
+            font-size: 0.85rem;
+            border-left: 2px solid #dccfaf;
+            padding-left: 1rem;
+        }
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+        }
+        .cite-btn {
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2dccf;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #7a6b53;
+        }
+        @media (max-width: 800px) {
+            body { padding: 1rem; }
+            .content-padding { padding: 1.2rem; }
+            .title { font-size: 1.8rem; }
+        }
+        .bg-warm { background: #fefaf0; }
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+        }
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #4a3a2a;
+            border-left: none;
+            padding-left: 0;
+        }
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            margin-top: 1rem;
+        }
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+        @media (max-width: 700px) {
+            .citation-controls { flex-direction: column; align-items: stretch; }
+            .citation-actions { justify-content: stretch; }
+            .citation-btn { justify-content: center; }
+        }
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .footnote-ref {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 0.75rem;
+            vertical-align: super;
+            margin: 0 1px;
+        }
+        .footnote-ref a {
+            text-decoration: none;
+            background: #e9e0cf;
+            padding: 0 4px;
+            border-radius: 20px;
+            color: #9b5e2c;
+            font-weight: bold;
+            font-size: 0.7rem;
+        }
+        .footnotes {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2d6c0;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .footnotes ol {
+            margin-left: 1.5rem;
+        }
+        .footnotes li {
+            margin-bottom: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Inquietações Journal • v.1, n.1 • Section: Translations • 2026</div>
+            <div class="title">The Woman (Die Frau)</div>
+            <div class="author-line">
+                <div class="author-avatar">
+                    <div class="avatar-circle">
+                        <img src="/corpo%20editorial/diego.png" alt="Translator photo Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                    </div>
+                    <span><i class="fas fa-language"></i> Translator: <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18916814</span>
+            </div>
+            <!-- Static language buttons -->
+            <div class="lang-buttons">
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/Traducoes/traducao-a-mulher-georg-groddeck.html">🇧🇷 Portuguese</a>
+                <a class="lang-btn active" href="#">🇺🇸 English</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/traducao-a-mulher-georg-groddeck-esp.html">🇪🇸 Spanish</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/A%20mulher.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Download PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18916814" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissions</a>
+            </div>
+        </div>
+
+        <!-- Editorial Note -->
+        <div class="panel article-text">
+            <h3>Editorial Note</h3>
+            <p>This translation is part of the effort of Inquietações Journal to broaden access, in English, to texts relevant to the history of European philosophical, psychoanalytic, and cultural thought of the early twentieth century. The text “Die Frau” by Georg Groddeck was originally published in 1909 in the German periodical <em>Der Volkserzieher</em> (v. 13, n. 18, p. 137–142) and is currently available in the digital collection of the Universitätsbibliothek Johann Christian Senckenberg in Frankfurt am Main.</p>
+            <p>Despite Groddeck’s intellectual relevance — he is often recognized as one of the thinkers who influenced the development of psychoanalysis and psychosomatic medicine — his work remains relatively little translated into English. Given this editorial and academic gap, Inquietações Journal commits itself to contributing to the circulation of his texts in English, promoting translations accompanied by critical apparatus and historical contextualization. This situation is not new. When commenting on the reception of Groddeck in Brazil, José Teixeira, translator of <em>The Book of the It</em> (Editora Perspectiva), observed that even decades after the author’s international rediscovery, his works were still hardly accessible in the country. In his account, the translator states:</p>
+            <blockquote style="margin: 1rem 1.5rem; padding-left: 1rem; border-left: 3px solid #dbba8c; color: #5a4a37; font-style: italic;">
+                “About four years ago, while writing a newspaper article on Groddeck, I was curious to know whether the library of the Institute of Psychology at the University of São Paulo had any of his books in its collection. It did not. When one observes that the first commercial editions of Groddeck’s books outside Germany, which began to spread his name on this side (to Brazil, but England and France could also be included), date from the early 1960s, it is not surprising that by the late 1970s this material had still not arrived here. This delay, for us, as always, means the train is on time. Still, it is a considerable delay. After all, <em>The Book of the It</em> is from 1923.”
+            </blockquote>
+            <p>The observation remains pertinent today. Many works by foreign authors of great intellectual importance remain difficult for readers and researchers to access, especially when it comes to historical texts published in periodicals or rare editions. In this sense, we agree with José Teixeira’s assessment and reiterate the importance of broadening access to these authors’ works. The translation and dissemination of these texts help strengthen international academic dialogue and provide important material for researchers who need this material in English. Thus, by publishing this translation, Inquietações Journal seeks not only to make a little‑known historical text available in English but also to encourage new research on Georg Groddeck’s work, promoting its critical reading in the contemporary context.</p>
+        </div>
+
+        <!-- Translation text -->
+        <div class="panel article-text">
+            <h2>THE WOMAN (DIE FRAU)</h2>
+            <p><strong>Dr. med. Georg Groddeck, Baden-Baden</strong></p>
+
+            <p>“The eternal feminine draws us upward”<span class="footnote-ref"><a href="#nota1">1</a></span>. You all know the final words of <em>Faust</em><span class="footnote-ref"><a href="#nota2">2</a></span>, and it will not surprise you that they sound in my ears when I wish to speak to you about the woman question<span class="footnote-ref"><a href="#nota3">3</a></span>. I do not know whether any woman has ever understood the seriousness of that single phrase that makes the feminine responsible for the actions of human beings<span class="footnote-ref"><a href="#nota4">4</a></span>. I do not think so. I believe it so little that for a long time I myself did not understand why Goethe’s last word was addressed to women<span class="footnote-ref"><a href="#nota5">5</a></span>. Now I know that a truth must be spoken even when it remains unheard; that it is like a spring that wells up from the earth without asking whether any thirsty person will drink from it<span class="footnote-ref"><a href="#nota6">6</a></span>. I also know that this is the deepest truth, and I do not hesitate to repeat it here: Woman bears the responsibility for the future. The eternal feminine draws us upward.</p>
+
+            <p>“All that is transitory is only a symbol”<span class="footnote-ref"><a href="#nota7">7</a></span>. I can no longer tell you the place where I experienced this; perhaps it was Rome or Berlin or London, some great city in any case, in which I walked among strange people, among rude and hurried people<span class="footnote-ref"><a href="#nota8">8</a></span>, as they go about their work and, with clenched anger against the coercion of life, rush through the streets. That day I noticed that all these people, at a certain point, moderated their haste and, when they then proceeded, showed on their faces an expression of strange composure, as if they had seen something sacred. When I came closer, I saw, under the arch of an elevated railway (it must have been Berlin then), huddled in a corner, a seated woman who, unconcerned with everything around her, was nursing her child. She was a perfectly ordinary woman. No one passing by would have even looked at her; and yet this single woman held the current of the great city and consecrated to each one who saw her that day and that hour.</p>
+
+            <p>This event stayed with me for years, and only much later did I understand that I and all those who saw it had contemplated: a parable, a symbol of divine nature<span class="footnote-ref"><a href="#nota9">9</a></span>. That had lifted us above ourselves. Only then did I also learn a little of the being of women, which had remained strange to me for so long and which I revered without knowing why — the woman whom I cannot grasp as I grasp a man, when he stands before me as a strong, self‑conscious, active personality<span class="footnote-ref"><a href="#nota10">10</a></span> — the woman who is never a personality. Never. Woman is never a personality. She is a symbolic image of all becoming<span class="footnote-ref"><a href="#nota11">11</a></span>, the divine nature symbolically figured, something ineffably sacred that dominates the heart of every man, like the gaze into the infinite space of the sky. No personality, but divine nature, a being from which resounds, in the words:</p>
+
+            <p style="font-style: italic; margin-left: 2rem;">All that is transitory<br>is only a symbol<span class="footnote-ref"><a href="#nota12">12</a></span>.</p>
+
+            <p>And if you do not possess this:<br>This dying and becoming<span class="footnote-ref"><a href="#nota13">13</a></span>,<br>then you are only a gloomy guest<br>upon the beautiful earth.</p>
+
+            <p>…an understanding, seeking and struggling and fighting to the end of life, only to finally, tired and aged, hear from death: “Yes, you, human being, are only a part of the world; in you too lives divine nature; you too are eternal — not an ego, not an earthly god, not a personality; but you are more than that, for you are a symbol<span class="footnote-ref"><a href="#nota14">14</a></span>; and all that is transitory is only a symbol”<span class="footnote-ref"><a href="#nota15">15</a></span>. That is the end of a long life, the goal of life: a quiet and grave word, a deep understanding, followed by renunciation (Entsagung)<span class="footnote-ref"><a href="#nota16">16</a></span> and yet blessed. And beside us, we who struggle, lives a being that knows not this combat, to whom was already placed in the cradle what appears to us only as an ideal: a being completely imbued and animated by the forces of nature, always and incessantly sanctified as the bearer of the highest symbol<span class="footnote-ref"><a href="#nota17">17</a></span>, a symbol of how life feeds on death<span class="footnote-ref"><a href="#nota18">18</a></span>, a being not closed in itself but embracing everything in itself — past and future — a symbol of all that is transitory.</p>
+
+            <p>Should we not then love this being?<br>Should we not love woman?</p>
+
+            <p>But, naturally, this love presents itself in a totally different way in man and in woman; and for that reason the moral law of man is different from that of woman<span class="footnote-ref"><a href="#nota19">19</a></span>. The content of feminine life is love; and thus her morality is a morality of love, of reciprocal relationship between man and woman, a morality of feeling (Gefühlsmoral)<span class="footnote-ref"><a href="#nota20">20</a></span>. The content of masculine life is action; his morality is intellectual, a morality of understanding (Verstandesmoral)<span class="footnote-ref"><a href="#nota21">21</a></span>. Woman loves the personality of a single man; she loves this particular man, his ego, his individuality; she cannot act otherwise: for from the moment she gives herself to him, she becomes part of him, a creature of his<span class="footnote-ref"><a href="#nota22">22</a></span>. She belongs to him; she must be faithful to him. It is a law of nature; and if she is not, she sins against her own essence, against herself<span class="footnote-ref"><a href="#nota23">23</a></span>. Woman’s faithfulness is not a matter of morality: it is a physiological coercion<span class="footnote-ref"><a href="#nota24">24</a></span>. For man, however, faithfulness is a free act of his will; he must master himself to be faithful; his faithfulness is, in truth, a moral action, a testimony of his self‑control and his strength<span class="footnote-ref"><a href="#nota25">25</a></span>. For man does not love personality in his woman (how could he, since no woman has ever possessed personality, nor ever will?)<span class="footnote-ref"><a href="#nota26">26</a></span>. In his woman he loves divine nature; she is for him the symbol of the Whole, certainly the most sublime that he knows<span class="footnote-ref"><a href="#nota27">27</a></span>. There is reverence in his love, much more than in his wife’s love. Perhaps he himself does not know it; but the woman he possesses is the highest idea of his life, the image of what was and what will be, the symbol of divine nature. He is not, like woman, forced by his love to be faithful. Only the idea constrains him — the idea to which he sacrificed his instinct, and which he can sacrifice again if he wishes<span class="footnote-ref"><a href="#nota28">28</a></span>.</p>
+
+            <p>But is it always, for man, a sign of moral greatness when he is faithful? The more insignificant the man, the more narrowly he thinks, the more easily he can be faithful; indeed, for many men this hardly requires effort. However, the greater the man’s personality, the higher his spirit and his being aspire, the more difficult fidelity is for him; for just as he demands more of himself, he also demands more of his woman, this transitory symbol of God and the world (Vergängliches Gleichnis von Gott und Welt)<span class="footnote-ref"><a href="#nota29">29</a></span>. Only under three conditions can he then remain faithful. Either he recognized already in his youth, correctly and truly, that this one woman he chose is for him divine nature — certainly the rarest case; for who, at the time of courtship, would have enough discernment to judge as a wise man? The rarest case, certainly; one might say: a happy accident. The second possibility is that he says to himself: “yes, I was mistaken; she whom I chose is only a fragile vessel of God, and if I searched I might perhaps find another woman who would mean more to me. But why should I search? This first woman I met taught me to contemplate divine nature. She was once for me the symbol of the world, and I made her mine, put her at my service; in a certain sense she is my work. Now my eyes are open, and wherever I look I see the eternal world, the dying and becoming. I see right here a woman who shows the image of God more perfectly; but why should I make her mine? What she can teach me, I take from her without touching her, reverently and carefully, mastering my impulses with quiet strength; for this I can do, if I wish”<span class="footnote-ref"><a href="#nota30">30</a></span>. This is the second case, the case of great men, of true men — the case of Goethe<span class="footnote-ref"><a href="#nota31">31</a></span>. There is still a third possibility that a significant man, a personality — which even among men are rare — can be faithful. An extremely sad possibility, which seems to me too frequent and by which these personalities end up ruining themselves. They are the transgressors against what they possess best, those who, out of stubborn vanity or fanatical religious devotion to the once‑chosen ideal, deliberately close their eyes before divine nature. And because they can no longer contemplate divine nature in their own woman, they no longer want to look at any other. They fear the power of their own impulses and their own weakness. They possess feminine morality, not masculine: morality of feeling, but not morality of the intellect. They are the cowards, the men who lie against the holy spirit; they are not at all moral men, but evil men, liars against themselves. These three possibilities exist for the fidelity of the man who possesses personality. The men of the masses, however, are faithful only because it is moral to be so, or unfaithful because they have the opportunity for it — both contemptible nullities. But he who possesses personality and sufficient strength and yet does not maintain fidelity must answer for it before himself; for only he can judge for what cause he harms himself. Only he has the right and the duty to judge himself, to absolve or condemn himself; for only he knows what led him to adultery<span class="footnote-ref"><a href="#nota34">34</a></span>. A universal morality that would enslave man to fidelity does not exist and must never exist. That would mean imposing a law upon nature<span class="footnote-ref"><a href="#nota35">35</a></span>, which — given to the feminine — would prescribe to man something that would paralyze his innermost forces.</p>
+
+            <p>See: here I am, in the midst of the woman question, in the midst of the senseless agitation of our time, which wants to teach man the morality of women, which wants to transform man into woman — in the midst of feminism<span class="footnote-ref"><a href="#nota36">36</a></span>. Now one is also beginning to understand what I meant when I affirmed that the woman question (Frauenfrage)<span class="footnote-ref"><a href="#nota37">37</a></span> is the decisive one of our time. If the feminist movement succeeds in stealing from man the last remnant of the feeling of personality (and it is already small enough), then everything that is great and all future will be finished<span class="footnote-ref"><a href="#nota38">38</a></span>. For on man’s feeling of personality rest: his sense of duty; his strength of action; his capacity for sacrifice; his reverence for the idea (Idee)<span class="footnote-ref"><a href="#nota39">39</a></span>. And without this reverence for the idea — which in truth, and it alone, created all of man’s actions (or, in other words, of the human being) and which constitutes the true dignity of man — everything that has been conquered is lost. Everything great and beautiful in human life is the work of man, is the work of personality in man. And this will always remain so; for only a human being who possesses personality can act creatively. And woman does not possess personality<span class="footnote-ref"><a href="#nota40">40</a></span>.</p>
+
+            <p>I know that this statement will meet with opposition; nevertheless I must maintain it. It is by no means a product of my imagination, but a law of nature. I have already said it before: woman is closer to divine nature than man; or, to express it another way: she is much more closely bound to nature; she is an instrument of a different nature for different ends — not an inferior instrument, but an instrument<span class="footnote-ref"><a href="#nota41">41</a></span> that is used for other things and therefore does not have as many possibilities of movement. It is the same with other things. An animal can move freely; it is less trapped than the tree rooted in the earth. But for that reason the animal is not more valuable than the tree. With an automobile I can travel halfway around the world; but for that reason it is not more valuable than the steam engine<span class="footnote-ref"><a href="#nota42">42</a></span> that remains fixed in the power plant and supplies light to hundreds of houses. The dispute about whether man or woman is more highly organized is foolish. They should not be compared with each other, for they serve different ends, and one can say calmly: both are perfect<span class="footnote-ref"><a href="#nota43">43</a></span>. Woman’s purpose, however — the vocation of motherhood — can only be achieved if woman is limited in her freedom of movement. If she were to carry out externally, in a creative manner, what man does, then the development of the child would be hindered. Moreover, nature itself has already placed in woman, through her body, a limit that restricts her everywhere. The healthy and normal woman is, at regular intervals, paralyzed by nature<span class="footnote-ref"><a href="#nota44">44</a></span>, and with that a limit is set to her strength, which the female sex cannot surpass. In feminist circles today, one deliberately avoids hearing this warning of nature. But that will not help. At a certain point the feminist movement will have to stop. It is not just a matter of purely bodily conditions, although these alone suffice to diminish woman’s performance capacity. Woman — even the healthiest — in these periods is always, to a greater or lesser degree, intellectually incapable of judgment. Her being then enters, with inevitable necessity, into complete disturbance, which recalls the time of the child’s development into a girl; she becomes, as it were, again a girl, with ideas proper to youth, and falls under the pressure of a force that dominates her, instead of being dominated by her. Woman depends, to the highest degree, on her feminine condition, and never, never will be able to overcome it<span class="footnote-ref"><a href="#nota45">45</a></span>. For that reason, she will also never be able to carry out externally what man does. Faced with this part of the woman question, man remains very calm. Woman will remain a dilettante in creation. She is destined for other things<span class="footnote-ref"><a href="#nota46">46</a></span>.</p>
+
+            <p>Nature worked admirably to preserve woman from turning away from her destiny, to keep her away from man’s field of activity and to make any creative activity impossible for her. It was not enough that it made woman physically weaker; not enough that it reminded woman, at regular intervals, that she is in the service of the species; just as it also gave her, as a visible sign of this submission to sexuality, the breasts, which make her incapable of performing all heavy work. That was not enough: it also formed woman’s character and being in such a way that she is not capable of solving intellectual problems. It hardly granted her the impulse of man’s personality; and what it gave her was not the desire to accomplish something, but the desire to be happy and to make happy, those two driving impulses of feminine action<span class="footnote-ref"><a href="#nota47">47</a></span>. No matter how elevated a woman may be, no matter how much she may achieve, she always sees things from the point of view of happiness. This incessant impulse toward happiness and making happy she also needs to have; it was given to her with full intention. For otherwise she would be incapable of fulfilling her maternal vocation; more than that, she would be incapable of becoming a mother, since only the desire for happiness leads woman to give herself to man and to assume the sufferings of childbirth. Thus, she sees things from the start in a mistaken or at least one‑sided way. But added to this is the fact that prudent nature, always concerned with achieving its main purpose in a thousand ways and with using each thing within determined limits for determined ends, has restricted woman’s being to the limits of immediate proximity, both bodily and spiritually. Just as the female body is not capable of enduring the efforts of dangerous movements, and just as at least nature’s warning interrupts any prolonged movement for months — which in itself is enough to prevent the danger of discoveries — so too the female spirit is hindered, by the same means, from making great discoveries, for continuous intellectual work is regularly interrupted by the onset of the menstrual period. Woman is denied the chance to wander far with her spirit, to embrace millennia, to work forgetful of the world on deep and difficult problems. Divine nature has tied her to the ground: to her man, to her child, to her sexuality. How seriously nature takes woman’s vocation it shows twice with evident clarity: in the years of development; in the time of transition<span class="footnote-ref"><a href="#nota48">48</a></span>. Woman’s body and spirit are, in both periods, completely disturbed and thrown into tumult. They are processes for which no parallels are found in man’s life. Nature does not want woman’s creative activity. It has set limits to the feminist movement. And that is why man can observe that movement with tranquility; yes, he can and must even support it<span class="footnote-ref"><a href="#nota49">49</a></span>.</p>
+
+            <p>Nature does not want woman’s activity. Or does it not happen that, from the moment woman conceives, any other spiritual activity is absorbed by the sole certainty of the growing child?<span class="footnote-ref"><a href="#nota50">50</a></span> The most intelligent, most educated woman — yes, even a genius, if such existed among women — is forced by conception to abandon her work or to carry it out imperfectly, whether it be study, art, or anything else. She is deprived of the free disposal of her spiritual and bodily forces; she becomes, as it were, indifferent or incapable of everything that constitutes the happening of the world, insofar as it does not refer to her child. And now the curious fact: this woman suddenly becomes beautiful. And if beauty is the harmony of qualities with the end, the fulfillment of a purpose — which is certainly a correct definition — then this becoming beautiful of woman is the evident proof that woman’s being resides in motherhood and that everything else is only substitute or ornament<span class="footnote-ref"><a href="#nota51">51</a></span>. Woman is the symbol of divine nature, the symbol of the eternally creative, which acts without consciousness and without intention, without all human weaknesses and additions, and which shapes the future<span class="footnote-ref"><a href="#nota52">52</a></span>. She acts like the sun or like the earth, far beyond the limits of human understanding; she exercises a function that cannot be measured by human criteria. And to grant her this elevation above the intrigues and human judgments, God reduced in her what is the characteristic sign of the human condition — the greatness and also the smallness of the human condition: personality, with all its achievements and also its limitations.</p>
+
+            <p>For woman is not a personality. As a girl, this will be admitted without great difficulty. In woman, however, a peculiar law operates, which naturally one does not want to recognize, but which nonetheless remains in force. Woman’s being is transformed by contact with man. Woman does not only receive the child; by conception her whole existence, body and spirit, is modified and impregnated by man’s being: she becomes like man; one might even say that she becomes a part, a member of man<span class="footnote-ref"><a href="#nota53">53</a></span>. From the first child onward, woman is no longer what she was before; she is then a mixture of girl and man. This is a scientifically founded and incontestable fact<span class="footnote-ref"><a href="#nota54">54</a></span>. Hence the outward resemblance between spouses, hence woman’s unshakeable love for her husband, which survives everything. Hence also the incontestable validity of the phrase: “Woman be subject to man”<span class="footnote-ref"><a href="#nota55">55</a></span>. Incontestable — though violently contested. Nothing in the relation of submission will be altered by the feminist movement. Man serves the world; woman, however, serves man. To serve and serve again — that is feminine wisdom from beginning to end. Man is and remains woman’s lord; she will always obey him: she cannot act otherwise, just as the hand obeys the brain<span class="footnote-ref"><a href="#nota56">56</a></span>. And just as it is a sign of serious illness when the hand ceases to obey the will, so too is it a sign of serious illness when woman emancipates herself<span class="footnote-ref"><a href="#nota57">57</a></span>. She will achieve nothing with that. For so‑called women’s liberation is not proof of strength, but only proof of man’s weakness, of his degeneration or at least of his illness. Sooner or later woman will fall back into dependence. And the only result of this curious movement — which is based on the degeneration of man — will be that woman’s future lord will be less worthy than the one against whom she now struggles. And she will have to obey that future lord, although she despises him, while before she submitted to man with reverence<span class="footnote-ref"><a href="#nota58">58</a></span>.</p>
+
+            <p>For here lies the seriousness of the woman question: only in the way woman shapes the future, in the way she exercises her office of mother; not in the right to vote, nor in the freedom to study, nor in the disposal of property<span class="footnote-ref"><a href="#nota59">59</a></span>. Woman bears the responsibility for the future — a heavy responsibility, of which she should be reminded daily and hourly: gently and severely, tirelessly. You are responsible. You have no rights, but you have a duty<span class="footnote-ref"><a href="#nota60">60</a></span> that is crushingly heavy. What is generally called the woman question is, in truth, a joke<span class="footnote-ref"><a href="#nota61">61</a></span>, a feminine amusement with which man entertains himself and which he will know how to use at the right moment. For in itself there is nothing against woman participating in daily work. Why should her forces remain idle? But what she will work and accomplish — in science, in art, in professional life or in research — will always be done in the service of man<span class="footnote-ref"><a href="#nota62">62</a></span>. He will harvest the fruits of her diligent work and, with the stones that woman brings, he will erect the building of his art, of his religions, of his world. Even as an educated and cultured woman, she will be only, in another form, what she was for the ancient German, what she always was and must be: the maid (Magd) who does the heavy work<span class="footnote-ref"><a href="#nota63">63</a></span>. If she likes it, she — the symbol of divine nature — may do it. At least she thus helps again, while in the last century she was only an obstacle to culture. The woman question, in this sense, is in truth a masculine question. And men should promote woman’s development as much as possible, for thus they perfect their best instrument. Their best instrument. For woman not only possesses a much higher power of intuition than man; she not only understands a situation, a value, a thought much more quickly — she is above all the great inspirer of everything that man creates<span class="footnote-ref"><a href="#nota64">64</a></span>. She — who is divine nature — is the one who unleashes all forces in man and who, in a certain sense, is again mistress and goal of man. There are goals for woman that no man can achieve. But she does not yet know that. And yet she must aspire to them, if everything is not to perish. For woman bears the responsibility for the future. For building the present — but not for creating — woman is incapable. She lacks personality<span class="footnote-ref"><a href="#nota65">65</a></span>.</p>
+
+            <p>Woman is not a personality. Very characteristically, one of my patients expressed this when, in a melancholic state, he expressed the wish to live long enough to meet his grandson. “And are you not interested in what kind of daughter‑in‑law your son will bring you?”, he was asked. “No,” he answered, “the daughter‑in‑law is only a passing phenomenon”<span class="footnote-ref"><a href="#nota66">66</a></span>. Here a deep meaning is hidden. Here we stand before the measure of value by which the goodness or inferiority of woman is decided. From herself alone one cannot recognize her value or disvalue; for she is only a passing phenomenon. Her value is demonstrated by her children. Man’s value is demonstrated by his action; for he is a person who has turned away from divine nature — and must turn away from it; he possesses this impulse. Woman’s value is shown by her fruit, exactly as the tree is known by its fruits<span class="footnote-ref"><a href="#nota67">67</a></span>. For she is close to divine nature, as close as the tree: she is turned toward the Whole, a passing appearance, not a personality, not a being that creates values or transforms the world — at least not by her own strength<span class="footnote-ref"><a href="#nota68">68</a></span>. But she possesses instruments through which she can exert influence, and it is in her power to use these instruments one way or another, to shape them this way or that. These instruments are: the man to whom she belongs and her children, to whom she belongs. Woman is, in a much stricter sense than man, a force of nature. She acts like the sun, which creates by its own existence, by its light and by its life; she acts without intention. She is like the forest, whose charm impresses a certain mark on the human being<span class="footnote-ref"><a href="#nota69">69</a></span>. Just as the mountain shapes the mountain dweller, and the plain shapes the valley dweller differently, and the sea yet another type of man, so too does woman act. She is close to divine nature; hence comes her demonic power<span class="footnote-ref"><a href="#nota70">70</a></span>, the sudden flash of spiritual light never found in man, the artistic nature of woman, the nature of the muse, the being that constitutes a goal. But in this also lies her responsibility, her duty. She must not turn away from divine nature. If she does, she will destroy the future<span class="footnote-ref"><a href="#nota71">71</a></span>.</p>
+
+            <p>How then does woman stand before this responsibility, how does she fulfill her duty, how does she care for the future? That is the woman question. Only that. The woman question is a question of duty, not of right. In truth, no human being has rights; and woman least of all. For she has done nothing for the human being; she can do nothing for the human being: that contradicts nature<span class="footnote-ref"><a href="#nota72">72</a></span>. She did not fell the forests nor exterminate the animals; she built no house nor composed any song; she remained completely alien to man’s conquest of the world<span class="footnote-ref"><a href="#nota73">73</a></span>. But she is the only one who can conquer man for the world: and that is her duty. There is no feminine right; there is only a feminine duty<span class="footnote-ref"><a href="#nota74">74</a></span>.</p>
+
+            <p>And now, once more: how does woman stand before this duty? So far, not at all; for she does not even know it yet. And one may ask whether she will understand this duty when it is shown to her. For woman is a strange being: easily wounded and hardly reconciled<span class="footnote-ref"><a href="#nota75">75</a></span>. She is like water, in whose pure mirror<span class="footnote-ref"><a href="#nota76">76</a></span> the image shows itself clearly while the water remains still. But if a blow strikes the depth of the water or the soul of woman, then the image distorts in the waves or in hatred and passion. May the mirror remain clear! For I have hard things to say.</p>
+
+            <p>First, therefore, the record of guilt of men; for, to say it at once, it was not women who created the unsustainable conditions behind which lurks the ruin of nations<span class="footnote-ref"><a href="#nota77">77</a></span>, but men. However, to lead us out of these conditions cannot again be men, but only women. It is a matter of the decision whether we will indeed enter the path of divine nature, and this decision can only be made by woman, who is closer to the essence of the world, who carries within herself the dying and becoming.</p>
+
+            <p>Every human being knows — and whoever does not know yet will soon learn it — that man oppressed the female sex for centuries<span class="footnote-ref"><a href="#nota78">78</a></span>, that he treated it as a toy and as a work animal, and at the same time deliberately deprived it of all possibility of keeping pace with the stages of human development. All knowledge and all thought were taken from woman; she was artificially educated to be a doll and in her was cultivated “gracious femininity”, an ingenuous schoolgirl frivolity that many men still consider the desirable quality in a woman<span class="footnote-ref"><a href="#nota79">79</a></span>. This is now changing, not by the work of men — for as men they are no longer worth much, serving only as professionals<span class="footnote-ref"><a href="#nota80">80</a></span> — but by the force of women themselves. Undoubtedly a significant achievement, an effort that will have the approval of every man. But that is not the central point of the question; and with girls’ high schools, campaigns for the right to vote, and associations for the moral elevation of men (for that is what it all ends up being) one will by no means reach the core of the problem. What women lack is consciousness of duty. It was taken from them by men, slowly and deeply; and now — it must be said — now women have become forgetful of their duties<span class="footnote-ref"><a href="#nota81">81</a></span>.</p>
+
+            <p>I have already told you that the feeling of personality<span class="footnote-ref"><a href="#nota82">82</a></span> of the human being, his self‑consciousness, has diminished: his pride in supporting himself and in accomplishing great things from himself. At the same time, knowledge of divine nature has not yet become common patrimony; and even the few who suspect it have not yet managed, nor even tried, to put their lives in harmony<span class="footnote-ref"><a href="#nota83">83</a></span> with that knowledge. The harmony of the human being with the universe has not yet been achieved. Instead, the concept of humanity<span class="footnote-ref"><a href="#nota84">84</a></span> was constructed, into which the individual integrates as a serving member, before whom the individual has obligations. This humanity took, in a certain way, the place of the personal God; promoting it, helping it, became the highest task. And one cannot deny that, in a certain sense, the religion of love of neighbor<span class="footnote-ref"><a href="#nota85">85</a></span> has now become reality. Starting from the divinity of this concept of humanity, rights were attributed to this new god — the famous human rights, which receive now one name, now another: right to work, right to free development, right to food, and so on. All our social institutions are built on that, and all our modern thought and action are impregnated by the law of love of neighbor, by devotion to the new god humanity. Curiously — and in a contradiction that clearly reveals the confusion of concepts, but which is explicable by human nature itself — at the very time when the feeling of personality was weakening and personalities were withering, a discourse arose about free personality<span class="footnote-ref"><a href="#nota86">86</a></span>, about living oneself fully, about the right to personality. And this discourse is believed. Woman also believes in it; yes, above all this idea was inculcated in her, and then she, with her lively imagination, began to fantasize about it. Right to personality: with that she could do nothing. For she does not possess personality, she is a passing appearance, a part of man and a mother, a symbol<span class="footnote-ref"><a href="#nota87">87</a></span>. For woman, the expression personality is an incomprehensible phrase. To bring it closer to her understanding it was necessary to add something. That something was the word happiness. So that now one says: the right to happiness<span class="footnote-ref"><a href="#nota88">88</a></span> of personality. Naturally this was not explicitly formulated that way; but inwardly it occurred in that manner, for woman cannot imagine anything else under the idea of personality but happiness and making happy. Living oneself fully, being a personality, is for her an expression that awakens strange ideas. The living oneself fully of woman was once a fashion, and still is in certain circles, and everyone knows from experience what fruits this view of life produces. Libertine women show only the excess<span class="footnote-ref"><a href="#nota89">89</a></span>. In truth, no woman is free from the idea that she possesses a right to personality. That means: a right to happiness. And here begins what I call forgetfulness of duty<span class="footnote-ref"><a href="#nota90">90</a></span>, woman’s lack of moral consciousness.</p>
+
+            <p>Becoming happy and making happy: these are the fundamental impulses of woman<span class="footnote-ref"><a href="#nota91">91</a></span>. They need to exist; the ends that nature pursues with this gift given to woman are clearly recognizable. If any natural law has been demonstrated, it is that of the preservation of the species: nature employs all forces to ensure reproduction. The means, among human beings, is woman’s hunger for happiness<span class="footnote-ref"><a href="#nota92">92</a></span>. It drives her repeatedly into the arms of man; and however many times the illusion of happiness is destroyed (for it is an illusion), just as many times it awakens again. No more children would be born if this insatiable desire for happiness were not planted in the deepest being of woman. This natural impulse must not be artificially fed; if one does not want it to suffocate and oppress all other inclinations, it must be contained and, when necessary, pruned<span class="footnote-ref"><a href="#nota93">93</a></span>. No harm can be caused by that. The strength of this impulse is so great that it overcomes even the greatest obstacles. Until very recent times, this desire for happiness, this natural impulse of woman, was kept within adequate limits by woman’s peculiar position and by her education. But since man lost his self‑confidence, since he is no longer a personality and also does not live in harmony with the universe, since he no longer dares to keep woman in submission and obedience, because he imagines that she possesses human rights, since he no longer manages to dominate woman, because he has become weak — for that is how things now stand — since then woman’s impulse for happiness has grown exuberantly and suffocated her natural consciousness, or at least numbed it — but I fear it has suffocated it.</p>
+
+            <p>The most important thing in woman’s life is marriage. Not only in her own conception is this the most important; also for acting nature it is the most important, for marriage is the means to the end that nature pursues. When thinking about it, woman asks first: will I be happy with this man, or can I at least make him happy if I myself have to renounce happiness? Thus thinks the young woman during courtship<span class="footnote-ref"><a href="#nota94">94</a></span>; thus thinks the mother when she must give away her daughter. But this is simply a crime. Is happiness the goal of marriage? Certainly not. That would be thinking too low of this sacrament<span class="footnote-ref"><a href="#nota95">95</a></span>. You hear that I call it sacrament, although I am Protestant in the strictest sense of the word. For millennia people did not think so about marriage; and the true man still today does not think so low. And even less so nature. What does nature care about the happiness of woman — or of the human being in general?<span class="footnote-ref"><a href="#nota96">96</a></span> For nature, the stone or the river are as close as the human being. Both are only instruments<span class="footnote-ref"><a href="#nota97">97</a></span>; and happiness too is only a means to its inscrutable purpose. For one who knows divine nature, marriage has only one meaning: the meaning that Nietzsche places in his words about the “garden of marriage”<span class="footnote-ref"><a href="#nota98">98</a></span>, that is, that the child may grow well and surpass the parents. That is divine nature. But what happens if woman — that symbol of divine nature, that mother whose name is pronounced only with reverence, that model for mother earth, for mother sun, for mother nature, for mother of God — if that mother seeks happiness instead of fulfilling her office? If she gives herself to the man she likes, little caring whether he is ill, little caring whether he belongs to her race or not, whether he is a North or South German, a count or a pastor, an Italian or a Germanic, as long as she loves him?</p>
+
+            <p>The love of a young woman! The experienced man laughs when he hears that. So the love of a young woman, that blind and unreflective impulse, has become judge of the future! On the impulse of a little fool depends the fate of the world! Right to love? Can every woman follow her love? Can one only marry for love, otherwise the woman is humiliated, marriage becomes prostitution? Truly, I feel disgust when I hear these empty phrases, these perverse phrases. The right to marry for love belongs only to the greatest among human beings<span class="footnote-ref"><a href="#nota99">99</a></span>, to the few who know divine nature and to whom a woman truly appears who is for them divine nature; for all others this right is an injustice. Above all, however, this right belongs only to man; for only man can love impersonally<span class="footnote-ref"><a href="#nota100">100</a></span>, can venerate divine nature in woman; woman, however, loves personality. And that love is very human. Believe me: here you have before you the woman question, here is woman’s office of judge, woman’s responsibility.</p>
+
+            <p>The love of a young woman! One should not be deceived by such ideas. Such love simply does not exist. It is only a lie. Woman’s love begins only with marriage; only when she becomes man’s property can a woman love: until then it is an impulse as low as hunger or thirst. But when she becomes man’s property, then she must love him; she cannot act otherwise. Love then arises by itself. Nature is not an inept artisan. It did its work well and forces woman’s love through marriage; for, by conception, woman becomes a part of man: she then lives in him, because she lives herself in him. She has become him, her body becomes his body, her spirit becomes his spirit. That is the meaning of the phrase: “You shall be one flesh and one blood”<span class="footnote-ref"><a href="#nota101">101</a></span>. Only that.</p>
+
+            <p>Woman bears the responsibility for the future. The guilt that the most noble race in the world, the only truly noble one, is miserably perishing falls upon women. That is my answer to the woman question. Or, if you prefer it in another form: modern woman is not yet capable of governing herself, but lets herself be governed by her impulse for happiness. She has no consciousness of duty. And this lack of consciousness of duty also explains another fact that is often presented as an important argument in the discussion of the woman question: the large number of unmarried women. Woman has the duty to marry: she must try, by all means, to win a man, by all means that feminine cunning has already invented and imagined; for only as man’s companion, as mother, does she fulfill her first natural task. That is the first thing one must demand of a young woman: that she, with clear and lucid eyes, not blinded by passion, seek the one who will be her lord and who can make her become fully human. That should be the goal of feminine education<span class="footnote-ref"><a href="#nota102">102</a></span>. She who considers herself too elevated to walk alone through the world must at least know that she deprives this world of its future, that she is guilty if a whole generation, which rests in her, does not come to flower, that she suffocates life. And if she still has the audacity to remain single for the sake of her own happiness (there are also other reasons for remaining single that I fully recognize and respect); but if she does so for the sake of her happiness, then let her do it. For such a young woman does not deserve to have children<span class="footnote-ref"><a href="#nota103">103</a></span>. She is unworthy of governing the future.</p>
+
+            <p>That is woman’s desire for happiness, the great danger that corrupts the race, that mixed Slavic and Latin blood with ours and that now delivers European blood even to Japanese, Chinese, and blacks, in India, in America, and in Africa. That danger leaves almost no hope for the future<span class="footnote-ref"><a href="#nota104">104</a></span>.</p>
+
+            <p>The second fundamental impulse of the feminine being — to help everything that is defenseless, to support everything that is weak and to elevate it, to make it happy — doubles the danger. This impulse too is deeply planted in woman’s being and must act in her; for in it is rooted maternal love, that greatest of all miracles, which alone makes possible the continuity of humanity. This impulse too has grown excessively; in it too it is shown that woman does not know her duty. One can forgive when a mother raises her weak child with all care; one can even understand when she keeps even the idiot child alive. But when she prides herself, in foolish ostentation, on her charitable activity among the sick and invalids, among drunkards and epileptics, when she supports and leads the madness of our time, which seeks to keep alive everything that is weak, participating in everything that harms the future of the race, that is no less condemnable than her negligence in choosing a marriage. In this too she shows that she cannot master herself, that she is dominated by her impulses, that she needs a lord who keeps her firmly in divine nature.</p>
+
+            <p>What then should woman do? There is also an answer to that. She must educate the lord whom she can serve with honor and reverence. Unfortunately, this answer contradicts the spirit of the time. The present generation is far from culture and harmony with divine nature. Of man one can no longer even speak. I have already told you: he has become a professional slave and, in three quarters of his nature, has become feminine. All the ideals of our time are feminine ideals, ideals of happiness and peace on earth<span class="footnote-ref"><a href="#nota105">105</a></span>, certainly not objectives that exercise man’s strength. Thus he has also lost his dominion. And woman? She too, as a seeker of happiness, is not capable of leading to divine nature. But she holds in her hands the means by which she can shape the future: the education of children. Slowly and almost imperceptibly the father’s influence has diminished; and wherever one looks, it is always the mother who educates.</p>
+
+            <p>Only man can transform the world; only he possesses the strength of personality to achieve something lasting; only he is creator of culture. Thus, the first concern must be the education of the boy to become a man. That means: for struggle, for danger, for action<span class="footnote-ref"><a href="#nota106">106</a></span>. The boy does not belong in the children’s room: he belongs to the street, to human life, and that from earliest childhood. He does not belong to school either, but to nature, to contact with elementary forces, to friendship and hostility with his brothers in the tree and in the rock, in the sea and in the sun, in the animal and in the sky<span class="footnote-ref"><a href="#nota107">107</a></span>. Let him at last be freed from that stupid accumulation of things to memorize; let him be given tasks of action and creation; let him be hardened against himself and against the world; let him be taught to love danger<span class="footnote-ref"><a href="#nota108">108</a></span>; let him be taught that he is a game, that he is the highest in life. Let him be taught to obey, so that he may command; for he is the born lord among human beings. Let him be taught self‑mastery. The great renunciation of which he is capable must not be repressed; free course should be given to his impulses and moods; but one should not help him when he seems to be sinking. Physician, help yourself<span class="footnote-ref"><a href="#nota109">109</a></span>: that is the motto of masculine life, the motto of education. Let all sentimentality be mercilessly torn out; healthy feeling will remain anyway. Let him be taught from childhood reverence before divine nature and before its symbol, woman; let him be taught that he cannot blindly take a woman where desire attracts him, that he is the founder of a lineage, that he must be strong in body and soul to be able to beget children, that his first and most sacred duty is to contract marriage, not in heaven, but on earth, with full consciousness of responsibility, but that he must renounce all love if he is not strong in body and soul. Limit the number of children. That is very good. Why so many human beings? But the child that is born must be good<span class="footnote-ref"><a href="#nota110">110</a></span>. The boy must be released from the mother’s reins. The mother must educate him to become the future lord of woman. She must make all feminine ideals contemptible to him<span class="footnote-ref"><a href="#nota111">111</a></span>. She must teach him to despise happiness. She must teach him to understand that he has duties and not rights, that he is an instrument in the hand of divine nature. She must teach him to see the whole in the fragment, to restrain his egoism, to tie him to the earth, to show him: you are not more than woman, but you are different. You are not more than the tree, but you are different. You are not nobler than any being beside you, but you are different. Your danger is no greater than that of the bird in the air, and your life is not worth more. Despise it. Do not seek happiness. You are not woman. May happiness remain distant from you. Relate yourself to divine nature. Learn to understand it. Respect in yourself divine nature. Have reverence before woman; she too is divine nature. Have reverence before every thing that exists and before the whole; learn to admire and to marvel; and, above all, learn to act. You bear the responsibility for everything that happens.</p>
+
+            <p>But where are now the mothers who send the son into danger? Who rejoice in his audacity and in his contempt for happiness? Where is the feminist movement that breaks the power of schools? Where are the women who teach the boy divine nature? Who show him: you are a human being, not an immortal being with an immortal soul? Of you nothing will remain more than of the leaf that the wind tears from the branch; of you nothing will remain besides your deeds. You suffer no more, when you are wounded in body and soul, than the river into which you throw a stone; your suffering is nothing, your wounds are nothing, your dangers are nothing. Every creature has the same suffering as you; each silently bears its destiny and silently accomplishes its work; and only you, a man, would weep? Hear the song that the tree sings when the storm envelops it! That is the joy of danger. Hear the noisy surge of the brook that struggles with the rock! That is the joy of danger. Rejoice before life, struggle, joy, ruin<span class="footnote-ref"><a href="#nota112">112</a></span>! Where is the mother who shows him, in the symbol of nature, the hierarchy of the world, who tells him: your skill does not matter, but that you must be capable, even if you perish for it? The tree is not asked whether its branches break under the fruits; it must bear them. Do you likewise. Learn to obey. Every creature must obey; all nature obeys eternal laws. Adjust to your destiny and live it. Everywhere there is high and low<span class="footnote-ref"><a href="#nota113">113</a></span>; examine yourself to know whether you have been called to be lord; examine yourself without ceasing, and if you do not have the strength, then be a servant of good will, with joy and without envy.</p>
+
+            <p>Thus should be the education of boys. The mother should master in herself the ape‑like love<span class="footnote-ref"><a href="#nota114">114</a></span>, should recognize that an eternal value has been entrusted to her. Should say to herself, if the boy has an accident: well, he was dear to me; but better that he have perished with honor than live cowardly. Nature has millions of germs in her bosom. The dead child is buried, but over there another is born, and over there another; and perhaps he is worth more than yours. The tree gives its fruits, its children; the grass does it and the rock too; all suffer as you do, yet they do it. That is your destiny: love your destiny, submit to it. No more pain happens to you than to all others, and you are not a whole: you are only a part in the Whole, a servant of divine nature. Recognize the dying and becoming, and then your pain will be bearable. Recognize that, and have reverence before eternity.</p>
+
+            <p>These are hard demands; I know it. But they are necessary; they are necessary, although they contradict everything that today the human being calls elevated and sacred, everything that woman feels and holds as her best, everything she shows to her daughters and teaches them as exemplary; for daughters too must be educated differently, in an entirely different way. And they are easy to educate; for in them dwells divine nature. A single impulse suffices, and the girl will find what is in her: the creative force of the future. But, of course, that impulse needs to be given. She must know what she is in the world for. She must learn that she was born to be a mother<span class="footnote-ref"><a href="#nota115">115</a></span>. She must learn that talk about the one and only love is only talk, not truth. She must learn that the pain and pleasure of love are absolutely nothing extraordinary, nothing to be cultivated as a rarity, but that they are something everyday. She must learn that her feelings are not sacred in themselves, although they are declared sacred — for what is not said about the delicate feelings of a young woman? — but that they are impulses of nature, exactly the same impulses that make the flower blossom, the bird sing, and the rock wear away, that it is not a privilege of the human being to love, and that he, the most magnificent of all, is no exception at all, that love is not at all something sacred, but a duty, and that woman was born to endure, carry, and serve, and for nothing else, that happiness is only a decoy of nature, and that this same will‑o’‑the‑wisp of happiness will always reappear before her eyes as long as she is a woman, just as the tree, every year, adorns its will‑o’‑the‑wisp of happiness<span class="footnote-ref"><a href="#nota116">116</a></span>. But where is the mother who, in the midst of her daughter’s foolish girlish dreams, shows her the butterfly and says to her: see, that is you. That is the dying and becoming. A few days, and the colorful summer butterfly will have died, died of its love, died so that something may come to be; and so are you. You are worth nothing. Only the fruit makes you valuable. You are beautiful like the flower on the tree; but of you nothing remains besides the fruit. You yourself perish. Have reverence before your vocation. Do not look to your happiness, but to your duty. Look into the interior of nature: everywhere you will find the same as in you, the same love, the same happiness, the same pain. They are only means to an end, they are not sacred feelings, they are instruments of divine nature, just as you yourself are an instrument. Have reverence before your end, and do not blindly give yourself to your love. Your love is not love; it is longing, but not loving. One can only love what one possesses; what one does not have, one desires. And this longing that you call love is something you share with all beings of your spring‑like age. It is not a personal feeling, but a general one, that is not directed at this man, whom you do not even know, but that you possess so that you may come to flowering, exactly as the lilac and the rosebush possess it. You are a flower; the fruit, however, is what ennobles you. Do not seek happiness, but understand that you are a symbol of the world, a figurative image of everything that is transitory, a member close to the heart of divine nature, a being that dies and becomes.</p>
+
+            <p>A symbol of God: that is woman. In her man loves the past and the future; from her flows to him the creative force<span class="footnote-ref"><a href="#nota117">117</a></span>, the will, the striving that aspires and rises. Woman is, in truth, the source of the most beautiful that exists on earth, a being whose praise will never cease, a symbol that elevates us, in truth a mother of God<span class="footnote-ref"><a href="#nota118">118</a></span>.</p>
+
+            <!-- Note from the original editor -->
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2d6c0; font-size: 0.85rem; font-style: italic;">
+                <p><strong>Note from the editor of the original publication:</strong> In view of the feminist suffragist movement that now also manifests itself in Berlin, I considered it my duty to ask someone who, as a medical specialist in nervous diseases and director of a sanatorium, learned to know modern woman deeply through his experience, to allow me to publish a chapter from his book <em>“Toward Divine Nature”</em> (<em>Hin zur Gottnatur</em>, publisher S. Hirzel, Leipzig)<span class="footnote-ref"><a href="#nota119">119</a></span>. This authorization was granted both by the author and the publisher. I ask that this lecture be discussed, as far as possible, in all family circles<span class="footnote-ref"><a href="#nota120">120</a></span>, without prejudice, and that it be considered only as the thoughts of a man who does not hate, but who loves and reveres what is sacred.<br><strong>Wilhelm Schwaner</strong><span class="footnote-ref"><a href="#nota121">121</a></span>.</p>
+            </div>
+
+            <!-- Footnotes -->
+            <div class="footnotes">
+                <h3>Notes</h3>
+                <ol>
+                    <li id="nota1">“Das ewig Weibliche zieht uns hinan” is the final verse of the second part of <em>Faust</em> (1832) by Johann Wolfgang von Goethe. The expression “eternal feminine” (<em>Ewig-Weibliche</em>) became an important cultural concept in 19th‑century German philosophy and literature. It generally refers to a symbolic principle associated with spiritual elevation, creation, and the transformation of life.</li>
+                    <li id="nota2"><em>Faust</em> is Goethe’s monumental work, published in two parts (1808 and 1832). The phrase appears in the final mystical chorus, which concludes the work with a metaphysical interpretation of human redemption.</li>
+                    <li id="nota3">“<em>Frauenfrage</em>” (woman question) is a very common expression in European intellectual debate between 1870 and 1920. It refers to discussions about: women’s rights; female education; women’s work; women’s social role. In Germany, this debate was linked to the first German feminist movement (<em>erste Frauenbewegung</em>).</li>
+                    <li id="nota4">Groddeck here introduces an idea typical of his psychosomatic view: the feminine is not merely a social category but a fundamental principle of life and nature, influencing human behavior.</li>
+                    <li id="nota5">The reference is to the fact that <em>Faust</em> ends with the verse about the eternal feminine, suggesting that the protagonist’s redemption is linked to this symbolic principle. Many interpreters see in it: influence of German Romanticism; elements of Christian mysticism; Marian symbolism.</li>
+                    <li id="nota6">The image of truth as a spring welling from the earth appears frequently in the German philosophical tradition and refers to the idea that: truth exists independently of being recognized; the thinker merely expresses it.</li>
+                    <li id="nota7">“<em>Alles Vergängliche ist nur ein Gleichnis</em>” is a verse from the final chorus of <em>Faust II</em> (1832) by Johann Wolfgang von Goethe. The full passage belongs to the mystical conclusion of the work and became one of the most influential philosophical formulations of German Romanticism. The verse suggests that the phenomena of the sensible world are symbols of deeper realities.</li>
+                    <li id="nota8">The description of the hurried crowd in the big city reflects common critiques in early‑20th‑century European culture of: industrialization; urban alienation; the rhythm of modern life. Authors like Simmel and Benjamin developed similar reflections on the experience of the metropolis.</li>
+                    <li id="nota9">“<em>Gottnatur</em>” (divine nature) is a term characteristic of the 19th‑century German philosophical tradition, related to Romantic pantheism. In authors like Goethe, Schelling, and Novalis, nature is conceived as a manifestation of the divine. Groddeck uses the term to indicate that woman represents a symbolic expression of universal vital force.</li>
+                    <li id="nota10">In 19th‑ and early‑20th‑century German thought, the concept of personality had a strong philosophical meaning, linked to moral autonomy and the creative capacity of the individual. German idealist philosophy often considered personality as the culmination of human development.</li>
+                    <li id="nota11">This statement must be interpreted within the context of Groddeck’s thought. He does not intend to deny feminine individuality, but argues that the feminine expresses vital forces broader than rational individuality, approaching the later psychoanalytic concept of the “Id”.</li>
+                    <li id="nota12">Goethean symbolism. By quoting Goethe, Groddeck inserts his reflection into a German cultural tradition that interprets reality as a system of symbols. For Goethe, the symbol (<em>Symbol</em>) is not mere metaphor but a concrete manifestation of a universal truth.</li>
+                    <li id="nota13">“<em>Stirb und werde</em>” (die and become) is a famous expression from Goethe’s poem “Selige Sehnsucht” (1814), included in the cycle <em>West-östlicher Divan</em>. The concept indicates the spiritual process of continuous transformation of the human being. In German philosophy, this idea was associated with: spiritual transformation; inner rebirth; the dynamics of life.</li>
+                    <li id="nota14">The text anticipates ideas that Groddeck would later develop in his main work: <em>Das Buch vom Es</em> (1923). In that work, Groddeck argues that the human being is not governed by the “ego” but by an unconscious force he calls “Es” (Id).</li>
+                    <li id="nota15">Repetition of the famous phrase from the final chorus of Goethe’s <em>Faust II</em> (1832). The central concept is that the phenomena of the sensible world are symbolic representations of a deeper reality. In German Romanticism, the symbol (<em>Symbol</em>) expresses a unity between: nature; spirit; the divine.</li>
+                    <li id="nota16">The idea of renunciation has a strong presence in the German philosophical tradition, especially in: Schopenhauer (renunciation of the will); Goethe (wisdom acquired at the end of life); Protestant Christian spirituality. Groddeck here associates the final wisdom of life with acceptance of the human being’s symbolic condition.</li>
+                    <li id="nota17">In Groddeck’s thought, the feminine appears as a privileged manifestation of nature’s vital force. This theme has parallels in: German Romanticism; philosophy of nature (<em>Naturphilosophie</em>); 19th‑century symbolic anthropology.</li>
+                    <li id="nota18">The phrase expresses a fundamental biological and philosophical principle: life depends on death for its continuity. This theme appears in several intellectual traditions: evolutionary biology; philosophy of nature; Nietzsche’s dialectic of life.</li>
+                    <li id="nota19">The distinction between masculine and feminine morality was common in European thought between the late 19th and early 20th centuries. Authors such as Nietzsche, Weininger, and Schopenhauer developed similar theories, associating: woman → affective and relational sphere; man → intellectual and active sphere.</li>
+                    <li id="nota20">The term indicates a morality based on emotions and personal relationships, in contrast to a morality based on abstract or rational principles. In German philosophy, the opposition between feeling and reason appears in debates from Kant and Schiller onward.</li>
+                    <li id="nota21">Refers to a morality founded on intellect and rational reflection. This distinction between feeling and reason also appears in Simmel and in German sociology of the period.</li>
+                    <li id="nota22">The idea that woman becomes “part of man” after the loving union reflects traditional conceptions of marriage and sexuality at the beginning of the 20th century. However, in Groddeck this formulation also has a symbolic meaning linked to his theory of nature’s vital unity.</li>
+                    <li id="nota23">The reference to nature indicates that Groddeck interprets human behavior not only in social or moral terms but also biological and psychological. This approach anticipates his psychosomatic theory.</li>
+                    <li id="nota24">This statement reflects medical and biological conceptions widespread in the early 20th century, according to which female instincts would be more oriented toward the stability of the relationship and reproduction. Today this interpretation is considered historically situated and culturally conditioned.</li>
+                    <li id="nota25">For Groddeck, man needs to control his impulses to remain faithful, which transforms fidelity into a conscious moral act. This argument echoes ideas of the ethics of self‑discipline present in the European philosophical tradition.</li>
+                    <li id="nota26">This extreme statement must be understood within the symbolic context of Groddeck’s argument. He does not intend to deny feminine individuality, but to maintain that woman represents, in his view, something more universal than individuality, that is, nature’s own force. Even so, this position reflects controversial gender debates in the intellectual culture of the period.</li>
+                    <li id="nota27">The idea that the feminine symbolizes the whole of nature refers to the tradition of German Romanticism and the Goethean concept of <em>Ewig-Weibliche</em> (the eternal feminine).</li>
+                    <li id="nota28">Groddeck suggests that man can sacrifice his instinct in the name of an idea — that is, a moral or spiritual ideal. This opposition between instinct and ideal also appears in: Nietzsche; Freud; modern moral philosophy.</li>
+                    <li id="nota29">The expression combines two Goethean references: the idea of symbol (<em>Gleichnis</em>) and the conception of divine nature (<em>Gottnatur</em>). Groddeck interprets woman as a symbolic manifestation of the totality of the world.</li>
+                    <li id="nota30">The idea of dominating impulses without completely repressing them appears in several 19th‑century German thinkers, especially Goethe and Nietzsche. It is an ethics of spiritual self‑discipline.</li>
+                    <li id="nota31">Groddeck mentions Goethe as an example of a man who would have achieved this second form of fidelity. Goethe maintained various love relationships throughout his life, but also reflected deeply on love and human nature in his literary work.</li>
+                    <li id="nota34">Expression of biblical origin (Matthew 12:31). In the religious context, it means consciously denying spiritual truth. Groddeck uses the expression metaphorically to indicate the denial of vital nature.</li>
+                    <li id="nota35">Groddeck rejects the idea of a universal morality that would oblige all men to absolute fidelity. For him, such a rule would ignore the diversity of human nature.</li>
+                    <li id="nota36">Groddeck writes this text in the context of the early decades of the 20th century, when the European feminist movement was rapidly expanding. In Germany, the so‑called first feminist movement (<em>Erste Frauenbewegung</em>) advocated: women’s access to higher education; civil and political rights; participation in the labor market. Groddeck’s text should be understood as part of the male intellectual reactions to that movement.</li>
+                    <li id="nota37">The expression <em>Frauenfrage</em> was widely used in social and political debates in Europe between 1870 and 1930.</li>
+                    <li id="nota38">Groddeck’s concern reflects a common fear among intellectuals of the time that rapid social changes might threaten traditional structures of society. This type of criticism also appears in thinkers such as: Oswald Spengler; Max Scheler; Nietzsche (in a different sense).</li>
+                    <li id="nota39">The term “idea” here has a philosophical meaning inherited from the German idealist tradition. In authors like Kant, Hegel, and Goethe, the idea represents a spiritual or rational principle that guides human action. Groddeck associates man’s creative action with fidelity to an idea.</li>
+                    <li id="nota40">This statement must be understood within the symbolic framework of Groddeck’s argument. Throughout the article, he describes woman as: a symbol of nature; a manifestation of vital force; a representation of the whole of life. Even so, this position reflects gender conceptions characteristic of the early 20th century and is today the object of historical critique.</li>
+                    <li id="nota41">Groddeck here uses a functional metaphor: man and woman would be distinct instruments for different functions within the natural order.</li>
+                    <li id="nota42">The comparison between automobile and steam engine reveals the influence of the technical imaginary of the Second Industrial Revolution, a period in which mechanical technologies were often used as philosophical metaphors.</li>
+                    <li id="nota43">Although Groddeck attributes different functions to the sexes, he insists that it is not a matter of superiority or inferiority, but of functional difference. This argument was common in conservative discourses of the time.</li>
+                    <li id="nota44">The “periodic paralysis” mentioned by Groddeck refers to the menstrual cycle, often interpreted by 19th‑ and early‑20th‑century physicians as a limiting factor in female activity. Today this interpretation is considered historically conditioned.</li>
+                    <li id="nota45">Groddeck here assumes a position of biological determinism, according to which certain social characteristics would derive directly from biology. This type of argument was common in scientific debates of the time.</li>
+                    <li id="nota46">The claim that woman would be a “dilettante” in creative activities reflects predominant cultural conceptions of gender at the time. Today, historians and sociologists interpret such statements as expressions of a specific social context and not as objective descriptions of reality.</li>
+                    <li id="nota47">Groddeck interprets female motivation mainly in emotional and relational terms, in contrast to male motivation oriented toward action and creation.</li>
+                    <li id="nota48">The “years of development” refer to puberty, and the “time of transition” to menopause.</li>
+                    <li id="nota49">Despite his criticisms of the feminist movement, Groddeck states that man may even support female emancipation, because he believes that nature itself would impose inevitable limits on that movement.</li>
+                    <li id="nota50">Groddeck interprets pregnancy as an event that completely reorganizes the psychic life of the woman.</li>
+                    <li id="nota51">The definition of beauty as harmony between form and purpose recalls classical conceptions of aesthetics, present since Aristotle and taken up in German philosophy, especially in Schiller and Goethe.</li>
+                    <li id="nota52">The idea that nature creates without consciousness brings Groddeck close to the tradition of the philosophy of nature (<em>Naturphilosophie</em>) of German Romanticism, present in thinkers like Schelling.</li>
+                    <li id="nota53">This conception has roots in ancient cultural and religious traditions, especially in the biblical narrative of Genesis 2:23, where woman is created from man.</li>
+                    <li id="nota54">Groddeck uses the language of science to support his position, although many of the statements presented do not correspond to current scientific knowledge. This rhetorical device was common in scientific and philosophical texts of the period.</li>
+                    <li id="nota55">This phrase echoes passages from the New Testament, especially: Ephesians 5:22; Colossians 3:18. These texts were often used in debates about gender roles in European society.</li>
+                    <li id="nota56">The comparison between the man‑woman relationship and the brain‑hand relationship expresses a hierarchical view of the social organism.</li>
+                    <li id="nota57">Some early‑20th‑century intellectuals interpreted social movements as symptoms of cultural crisis. This view also appears in authors like Oswald Spengler and Gustave Le Bon.</li>
+                    <li id="nota58">Groddeck suggests that female emancipation could result in the replacement of a masculine authority considered legitimate by another considered inferior.</li>
+                    <li id="nota59">The author mentions three central demands of early‑20th‑century European feminism: women’s right to vote; access to higher education; economic autonomy. These demands were at the center of political debate in Germany and other European countries before the First World War.</li>
+                    <li id="nota60">The idea of assigning moral responsibility to women without granting them political rights reflects a conservative position common in many social debates of the period.</li>
+                    <li id="nota61">The characterization of female emancipation as a “game” or “amusement” appears frequently in conservative critiques of the feminist movement in the early 20th century.</li>
+                    <li id="nota62">Groddeck argues that women’s contributions in science or art would serve primarily as support for male work.</li>
+                    <li id="nota63">The reference to woman as a servant (<em>Magd</em>) evokes traditional models of domestic organization present in rural and bourgeois German culture.</li>
+                    <li id="nota64">Despite his criticisms, Groddeck attributes to woman a central role as inspirer of male creativity. This idea also appears in several European cultural traditions, in which the feminine is associated with artistic or spiritual inspiration.</li>
+                    <li id="nota65">Groddeck here takes up a central concept of German philosophy: <em>Persönlichkeit</em> (personality), understood as the capacity to act autonomously and to create values. According to his interpretation, only man would fully possess this characteristic.</li>
+                    <li id="nota66">The German expression <em>vorübergehende Erscheinung</em> suggests something transitory or contingent. Groddeck uses this idea to support his thesis that woman is not a permanent individuality, but a phenomenon linked to the continuity of life.</li>
+                    <li id="nota67">The comparison between tree and fruit appears frequently in the biblical tradition (e.g., Matthew 7:16: “By their fruits you will know them”). Groddeck uses this metaphor to assert that woman’s value would be evaluated by her children.</li>
+                    <li id="nota68">This conception refers to the tradition of German Romanticism, especially to the idea that nature expresses unconscious creative forces.</li>
+                    <li id="nota69">The comparison with mountains, forests, and seas reveals a deterministic conception of the formation of human character, common in 19th‑century geographical and anthropological theories.</li>
+                    <li id="nota70">The term “demonic” (<em>dämonisch</em>) appears frequently in the German literary tradition to indicate a mysterious creative or inspirational force. The reference to the “muse” associates the feminine with male artistic inspiration.</li>
+                    <li id="nota71">This idea appears repeatedly in the text: woman would be responsible for the continuity of life and society through motherhood and the formation of new generations.</li>
+                    <li id="nota72">“<em>Natur</em>” (nature) – Groddeck uses the term within the tradition of German <em>Naturphilosophie</em>, where nature means not only biology but a vital order that structures the world.</li>
+                    <li id="nota73">“<em>Eroberung der Welt</em>” (conquest of the world) – A typical expression of 19th‑ and early‑20th‑century European cultural discourse to designate the technical, scientific, and political advance of modern societies.</li>
+                    <li id="nota74">“<em>Frauenpflicht</em>” (woman’s duty) – The term indicates that Groddeck replaces the political language of “rights” with the moral language of “duty”, reflecting European debates about feminism in the early 20th century.</li>
+                    <li id="nota75">Woman as a “sensitive being” – This characterization appears in many psychological theories of the period, which associated the feminine with emotional sensitivity and the masculine with rationality.</li>
+                    <li id="nota76">Metaphor of water and mirror – A common image in German literature to describe psychic states. Still water represents spiritual clarity; agitated water represents passions or inner disturbance.</li>
+                    <li id="nota77">“Ruin of nations” – Reference to a cultural crisis perceived by many European intellectuals in the early 20th century, marked by critiques of industrialization, materialism, and modern politics.</li>
+                    <li id="nota78">Groddeck explicitly recognizes that women were historically deprived of education and social participation.</li>
+                    <li id="nota79">“<em>holde Weiblichkeit</em>” (gracious femininity) – A 19th‑century cultural expression associated with the bourgeois ideal of femininity: delicacy, passivity, and docility.</li>
+                    <li id="nota80">The author suggests that men have lost their traditional role, becoming only specialists or technical professionals.</li>
+                    <li id="nota81">“<em>Pflichtbewusstsein</em>” (consciousness of duty) – A central moral concept in German culture, associated with the ethics of duty developed by Immanuel Kant.</li>
+                    <li id="nota82"><em>Persönlichkeitsgefühl</em> – a philosophical term common in 19th‑century German culture, linked to the idea of moral individuality and autonomy.</li>
+                    <li id="nota83"><em>Gottnatur</em> – a recurring concept in Groddeck’s text that combines ideas from German Romanticism and the philosophy of nature, indicating a vital or divine order present in nature.</li>
+                    <li id="nota84">“Humanity” as a moral entity – critique of modern humanitarian ethics and social universalism.</li>
+                    <li id="nota85">Religion of love of neighbor – indirect reference to the Christian tradition reinterpreted in social terms.</li>
+                    <li id="nota86">Free personality – allusion to the modern individualist ideal disseminated in the 19th century.</li>
+                    <li id="nota87">Woman as “symbol” – central idea of Groddeck: the feminine represents forces of nature and not rational individuality.</li>
+                    <li id="nota88"><em>Glück</em> (happiness) – central concept in Groddeck’s interpretation of female psychology.</li>
+                    <li id="nota89">“<em>Frauen der Übertreibung</em>” – critical reference to women considered libertine or emancipated.</li>
+                    <li id="nota90"><em>Pflichtvergessenheit</em> – literally “forgetfulness of duty”.</li>
+                    <li id="nota91">Female instinct – Groddeck interprets female motivation in biological terms.</li>
+                    <li id="nota92"><em>Glückshunger</em> – literally “hunger for happiness”.</li>
+                    <li id="nota93">Containment of instinct – moral view typical of conservative European thought of the period.</li>
+                    <li id="nota94">Courtship and marriage – reference to traditional matrimonial practices.</li>
+                    <li id="nota95">Marriage as sacrament – metaphorical use, even though the author is Protestant.</li>
+                    <li id="nota96">Nature indifferent to human happiness – view close to philosophical naturalism.</li>
+                    <li id="nota97">Instrumentality of the human being – idea that the individual serves natural processes.</li>
+                    <li id="nota98">Reference to Nietzsche – allusion to the text “Of the Garden of Marriage” in <em>Thus Spoke Zarathustra</em>.</li>
+                    <li id="nota99">Love reserved for “great men” – elitist argument present in several philosophical texts of the period.</li>
+                    <li id="nota100">Impersonal male love – symbolic opposition between universal masculine and individual feminine.</li>
+                    <li id="nota101">“One flesh and one blood” – reference to Genesis 2:24 and also to Christian traditions on marriage.</li>
+                    <li id="nota102">Female education – the author understands women’s education mainly as preparation for marriage and motherhood.</li>
+                    <li id="nota103">Groddeck considers that refusal of marriage for personal reasons would be a moral failure.</li>
+                    <li id="nota104">Racial mixing – reference to eugenicist discourse common in some European intellectual circles in the early 20th century.</li>
+                    <li id="nota105">“Feminine” ideals of peace – criticism of modern values such as pacifism and the pursuit of collective happiness.</li>
+                    <li id="nota106">“<em>Tat</em>” is translated as action, and not merely “deed”, because the term carries here an ethical and heroic sense, close to the German idealist and vitalist tradition.</li>
+                    <li id="nota107">The sequence “in tree and rock, in sea and sun, in animal and sky” has been kept with strong literalness because the text makes a kind of naturalist catechism of male formation.</li>
+                    <li id="nota108">The expression “<em>die Lust der Gefahr</em>” has been translated as “love of danger”, preserving the affirmative tone. It could also be “the pleasure of danger”, but “love” fits better with the solemn style of the passage.</li>
+                    <li id="nota109">“<em>Arzt, hilf Dir selber</em>” literally means “Physician, help yourself”. The phrase echoes proverbs and biblical formulations and has been preserved with a sententious tone.</li>
+                    <li id="nota110">“<em>Das Kind, das geboren wird, soll gut sein</em>” has been translated literally as “the child that is born must be good”. In the context, “<em>gut</em>” suggests biological, moral, and hereditary value at the same time.</li>
+                    <li id="nota111">“<em>weibliche Ideale</em>” has been kept as “feminine ideals”, although the author uses the expression polemically to associate them with happiness, peace, and the softening of life.</li>
+                    <li id="nota112">“<em>dem Untergang</em>” has been translated as “ruin”, but could also be “downfall” or “perdition”. “Ruin” preserves the grandiose and tragic tone well.</li>
+                    <li id="nota113">“<em>hoch und niedrig</em>” has been translated as “high and low”, maintaining the hierarchical abstraction of the original, and not “superior and inferior”, so as not to narrow the semantic field too much.</li>
+                    <li id="nota114">“<em>Affenliebe</em>” has been translated as “ape‑like love”. It is a German pejorative expression for an excessive, blind, coddling attachment, especially maternal. It could also be rendered as “foolish love” or “possessive love”, but I preserved the zoological image of the original.</li>
+                    <li id="nota115">“<em>Sie muß erfahren, daß sie dazu geboren wurde, Mutter zu sein</em>” has been translated directly as “she must learn that she was born to be a mother”, because the passage has a programmatic and normative character.</li>
+                    <li id="nota116">“<em>Irrlicht des Glücks</em>” has been translated as “will‑o’‑the‑wisp of happiness”. The image suggests something that attracts, deludes, and moves ever onward, never offering stable possession.</li>
+                    <li id="nota117">“<em>Schaffenskraft</em>” – translated as “creative force”. The term appears frequently in German vitalist philosophy and indicates the creative power of life.</li>
+                    <li id="nota118">“<em>Mutter Gottes</em>” – expression meaning literally “mother of God”, evoking the Christian Marian tradition. Here it is used symbolically to exalt the maternal role of woman.</li>
+                    <li id="nota119">“<em>Hin zur Gottnatur</em>” – title of the work by Georg Groddeck mentioned in the editorial note. The expression has been translated as “Toward Divine Nature”, maintaining the philosophical sense of <em>Gottnatur</em> as nature imbued with divinity.</li>
+                    <li id="nota120">The editor explicitly mentions the feminist suffragist movement of the early 20th century. The publication intends to participate in the public debate on the so‑called “woman question”.</li>
+                    <li id="nota121">Wilhelm Schwaner – German writer and editor (1863–1944), linked to nationalist and reformist cultural currents. He acted as a disseminator of philosophical and cultural ideas linked to the spiritual and social reform of Germany.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- References and information about the original text -->
+        <div class="panel">
+            <h3>Reference of the Original Text</h3>
+            <p><strong>Original title:</strong> Die Frau<br>
+            <strong>Author:</strong> Georg Groddeck<br>
+            <strong>Original publication:</strong> <em>Der Volkserzieher</em><br>
+            <strong>Volume / issue:</strong> v. 13, n. 18<br>
+            <strong>Year:</strong> 1909<br>
+            <strong>Pagination:</strong> p. 137–142<br>
+            <strong>Place of publication:</strong> Frankfurt am Main, Germany<br>
+            <strong>Institution responsible for digitization:</strong> Universitätsbibliothek Johann Christian Senckenberg<br>
+            <strong>Digital record (URN):</strong> urn:nbn:de:hebis:30-1094615<br>
+            <strong>ISSN:</strong> not available (publication predates the ISSN system)<br>
+            <strong>Available at:</strong> Digital collection of the Deutsche Nationalbibliothek<br>
+            <strong>Access date:</strong> Jan. 1 - Mar. 8, 2026.<br>
+            <strong>Original language:</strong> German<br>
+            <strong>Thematic classification:</strong> Philosophy</p>
+            <p><strong>Complete reference</strong><br>GRODDECK, Georg. Die Frau. <em>Der Volkserzieher</em>, v. 13, n. 18, p. 137–142, 1909.</p>
+            <p><strong>Copyright</strong><br>© 2026 Inquietações Journal – Open access<br>The original text is in the public domain.</p>
+            <p><strong>Bibliographic reference of the translation</strong><br>GRODDECK, Georg. The woman (Die Frau). Translation from German, introduction and notes by Diego Vinícius Brito dos Santos. <em>Inquietações Journal</em>, Translation Section, v. 1, n. 1, p. 01–27, Jan./Dec. 2026.</p>
+        </div>
+
+        <!-- PDF Viewer -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Complete translation (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/A%20mulher.pdf" title="The Woman (Die Frau) - Georg Groddeck"></iframe>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> If the PDF is not displayed, <a href="/arquivos/A%20mulher.pdf" target="_blank">click here to download</a>.</p>
+        </div>
+
+        <!-- Citation generator -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> How to cite this translation</h2>
+            <div class="citation-generator" data-authors='["GRODDECK, Georg"]'
+                data-title="The woman (Die Frau)"
+                data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/ingles/traducao-a-mulher-georg-groddeck-en.html"
+                data-volume="1" data-issue="1" data-pages="01-27" data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> Reference generator</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Select the desired style and automatically generate the bibliographic reference.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Reference style</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copy reference</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copy ABNT (manual)</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Export BibTeX</button>
+            </div>
+            <p><small><i class="fas fa-info-circle"></i> Use the generator above to cite this translation in different styles (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <!-- About the translator -->
+        <div class="panel">
+            <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Translator photo Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> About the translator </h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> is a pedagogue and effective public servant, with experience teaching in early elementary school and early childhood education. He holds a Master’s degree in Philosophy from the Federal University of Rio Grande do Norte (UFRN, 2022), with research focused on the work and philosophy of Friedrich Nietzsche. He holds a Bachelor’s degree in Philosophy from the State University of Rio Grande do Norte (UERN, 2018) and a Bachelor’s degree in Pedagogy from the International University Center (UNINTER, 2022). He is the author of the book <em>Nietzsche e os valores modernos</em> (2022). He is dedicated to continuing education in areas such as Psychopedagogy, Neuropsicopedagogy, Inclusive Education, Specialized Educational Assistance (AEE), and Youth and Adult Education (EJA).</p>
+            <p><i class="fas fa-envelope"></i> Email: diego_svt@hotmail.com.br<br>
+                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+            </p>
+        </div>
+
+        <footer>
+            <i class="fas fa-university"></i> Inquietações Journal – Caicó, RN | v.1, n.1, 2026 | Section: Translations | DOI: 10.5281/zenodo.18916814<br>
+            Open access under a Creative Commons license.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Submissions with login simulation
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "cadastro-login/submissoes.html";
+            } else {
+                let email = prompt("🔐 To submit an article, please log in. Enter your email (simulation):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Login successful! Redirecting to submissions.");
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    alert("Unauthorized access. Registration/login required.");
+                }
+            }
+        });
+    }
+
+    // Copy ABNT manual (English)
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = [
+            "GRODDECK, Georg. The woman (Die Frau). Translation by Diego Vinícius Brito dos Santos. Inquietações Journal, v. 1, n. 1, p. 01-27, 2026."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("ABNT references copied."));
+    });
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@article{groddeck2026woman,
+  title={The woman (Die Frau)},
+  author={Groddeck, Georg},
+  translator={Santos, Diego Vinícius Brito dos},
+  journal={Inquietações Journal},
+  volume={1},
+  number={1},
+  pages={01--27},
+  year={2026}
+}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copied (example)."));
+    });
+
+    // ========== CITATION GENERATOR (script automático) ==========
+    (function () {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Inquietações Journal';
+        const accessDate = new Date().toLocaleDateString('en-US');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. Translation by Diego Vinícius Brito dos Santos. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Available at: ${url}. Accessed: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. Translation by Diego Vinícius Brito dos Santos. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." Translation by Diego Vinícius Brito dos Santos. ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." Translation by Diego Vinícius Brito dos Santos. ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', translation by Diego Vinícius Brito dos Santos, ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. Translation by Diego Vinícius Brito dos Santos. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," translation by Diego Vinícius Brito dos Santos, ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    if (feedback) feedback.textContent = '✓ Citation copied to clipboard.';
+                    setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    if (feedback) feedback.textContent = '✗ Error copying. Please try manually.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

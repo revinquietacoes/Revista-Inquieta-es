@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Memory, Justice and Democratic Transition: A Reading of the National Truth Commission | Review | Inquietações Journal</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Same style as original */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+            overflow: hidden;
+        }
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+        .header {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+        }
+        .journal-badge {
+            display: inline-block;
+            background: #6b4c2c;
+            color: #fef7e0;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #3a2a1a;
+        }
+        .subtitle {
+            font-size: 1rem;
+            color: #7a5a3a;
+            margin-top: 0.3rem;
+            font-style: italic;
+        }
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6b5a42;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+        }
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f0ede5;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+            cursor: pointer;
+        }
+        .btn-pdf {
+            background: #8b4513;
+            color: white;
+            border: none;
+        }
+        .btn-doi {
+            background: #2c6e5c;
+            color: white;
+            border: none;
+        }
+        .btn-submit {
+            background: #b87c3a;
+            color: white;
+            border: none;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+        /* Static language buttons */
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
+        }
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+            cursor: default;
+            pointer-events: none;
+        }
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
+        .panel {
+            background: rgba(255, 255, 252, 0.96);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
+        }
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #c28a4e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #4a3a2a;
+        }
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #2a2a24;
+        }
+        .article-text p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+            color: #9b5e2c;
+        }
+        .article-text h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+            color: #b47c48;
+        }
+        .wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #8b5a2e;
+            font-weight: 500;
+            border-bottom: 1px dotted #b89a6a;
+            transition: 0.1s;
+        }
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
+        }
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .ref-list li {
+            margin-bottom: 0.9rem;
+            font-size: 0.85rem;
+            border-left: 2px solid #dccfaf;
+            padding-left: 1rem;
+        }
+        .ref-list a {
+            color: #8b5a2e;
+            text-decoration: none;
+            word-break: break-all;
+        }
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+        }
+        .cite-btn {
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2dccf;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #7a6b53;
+        }
+        @media (max-width: 800px) {
+            body {
+                padding: 1rem;
+            }
+            .content-padding {
+                padding: 1.2rem;
+            }
+            .title {
+                font-size: 1.8rem;
+            }
+        }
+        .bg-warm {
+            background: #fefaf0;
+        }
+        /* Citation generator */
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
+        }
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #4a3a2a;
+            border-left: none;
+            padding-left: 0;
+        }
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            color: #2c3a2b;
+            cursor: pointer;
+        }
+        .citation-select:focus {
+            outline: none;
+            border-color: #c28a4e;
+            box-shadow: 0 0 0 2px rgba(194, 138, 78, 0.2);
+        }
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            color: #2a2a24;
+            margin-top: 1rem;
+        }
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+        @media (max-width: 700px) {
+            .citation-controls {
+                flex-direction: column;
+                align-items: stretch;
+            }
+            .citation-actions {
+                justify-content: stretch;
+            }
+            .citation-btn {
+                justify-content: center;
+            }
+        }
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Inquietações Journal • v.1, n.1 • Section: Reviews • 2026</div>
+            <div class="title">Memory, Justice and Democratic Transition:<br>A Reading of the National Truth Commission</div>
+            <div class="author-line">
+                <div class="author-avatar">
+                    <div class="avatar-circle">
+                        <img src="/corpo%20editorial/diego.png" alt="Author photo Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                    </div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18845488</span>
+            </div>
+            <!-- Static language buttons -->
+            <div class="lang-buttons">
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/Resenhas/resenha-comissao-nacional-da-verdade.html">🇧🇷 Portuguese</a>
+                <a class="lang-btn active" href="#">🇺🇸 English</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/resenha-comissao-nacional-da-verdade-esp.html">🇪🇸 Spanish</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Resenha_CNV.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Download PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18845488" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissions</a>
+            </div>
+        </div>
+
+        <!-- Body of the review (full English translation) -->
+        <div class="panel article-text">
+            <h2>Presentation of the work</h2>
+            <p>The <strong>Report of the National Truth Commission (CNV)</strong>, published in 2014, is one of the main official documents produced in the context of Brazilian transitional justice. Created by Law No. 12.528/2011, the CNV aimed to investigate and clarify serious human rights violations that occurred between 1946 and 1988, with special attention to the period of the civil‑military dictatorship (1964–1985).</p>
+            <p>The work presents legal foundations, organizational structure, investigative methodologies, and results achieved over two years and seven months of work, consolidating itself as an institutional instrument of memory and historical reparation.</p>
+
+            <h2>Summary of content</h2>
+            <p>The review highlights the political context surrounding the creation of the CNV, especially the debate initiated during the government of Luiz Inácio Lula da Silva and implemented during the mandate of President Dilma Rousseff. The recommendation to create the commission emerged from the 11th National Conference on Human Rights (2009), and was later formalized by Law No. 12.528/2011.</p>
+            <p>The text reveals the political tensions that marked the institutionalization process of the CNV, particularly the resistance from military sectors and the adjustments made to the National Human Rights Program (PNDH-3), especially regarding the terminology used — replacing “investigate” with “examine” — to avoid challenges to the Amnesty Law (1979).</p>
+            <p>The final Report is organized into three volumes:<br>
+            The first presents legal foundations and the description of violations;<br>
+            The second analyzes impacts on different social segments;<br>
+            The third gathers profiles of the dead and disappeared political activists, totaling 434 victims recognized as the responsibility of the Brazilian State.<br>
+            Also highlighted are the practices investigated: arbitrary detentions, torture, extrajudicial executions, and forced disappearances.</p>
+
+            <h2>Critical analysis</h2>
+            <p>The reading reveals a consistent interpretation of Sérgio Buarque de Holanda's thought, highlighting modernization as a slow and contradictory process. The articulation with the Estado Novo allows us to relate colonial legacies with authoritarian manifestations of the 20th century. Fascist characteristics are noted in the Vargas period, such as power centralization, closure of Congress, censorship, and political repression.</p>
+
+            <h2>Final considerations</h2>
+            <p>The work remains relevant by problematizing the persistence of colonial structures in Brazilian society. The notion of an unfinished revolution offers a powerful interpretive key to understanding contemporary tensions.</p>
+
+            <hr style="margin: 2rem 0; border-color: #e2d6c0;">
+
+            <h3>The establishment of the National Truth Commission</h3>
+            <p>It is indeed symbolic to realize that I am writing these lines of this brief text on the fifty‑seventh anniversary of the 1964 coup. The news that circulated since the dawn of the day echoed the message alluding to March 31 of that year, highlighted by the recently sworn‑in Minister of Defense, Walter Souza Braga Netto, who directs, with nostalgic memories, honors and decorations to the time lapse in which Brazil, with the support of certain sectors and social classes, embarked on a (pseudo‑)struggle against the infamous and media‑friendly specter of communism.</p>
+            <p>It is at times comic, at times tragic, to think that the appetite to fight a so‑called authoritarian regime ended up seducing an entire nation to the ideology of a regime as or more authoritarian, marked by atrocities that certainly did not cease to hurt the countless victims of this regime and subsequent generations. Andréia da Silva Daltoé (2016, p.153) unequivocally tells us that "the dictatorships that marked the history of Latin America from the 1960s onward did not happen without strong confrontation against those who, in the name of a certain National Security, promised to ‘defend us’ from the communist threat". A laughable scope throughout that time, falsely implanted and mediatized in 1937 by Getúlio, and hardly viable in the current era.</p>
+            <p>Nevertheless, I will take for granted the most sensible of certainties that the words written here will resonate in the mind of someone with good or some historical education; thus, I have not the slightest intention of narrating the events that took place over twenty‑one long years of our recent history.</p>
+            <p>At the request of my illustrious professor, I propose only to put into writing comments about the creation of our National Truth Commission (CNV), which, in the words of then former President of the Republic, Luiz Inácio Lula da Silva, was created with the clear scope of ensuring the rescue of memory and truth about the serious human rights violations that occurred in the aforementioned period [1946-1988] (BRAZIL, 2014, p. 20). To achieve this goal, I will be guided by the data presented in the textual body of the first chapter of the first part of the <em>Report of the National Truth Commission</em> (2014), which was finalized in mid‑December 2014 and is available to everyone on the website: <strong>CNV.MEMORIASREVELADAS.GOV.BR</strong>.</p>
+            <p>As the Report confirms, the debate about the creation, implementation, and legalization of the said commission was based on the transition from the end of President Lula da Silva's term to the beginning of the term of Brazil's first woman president, Dilma Rousseff.</p>
+            <p>In December 2009, on the occasion of the 11th National Conference on Human Rights, about 1,200 delegates from state conferences gathered in Brasília, convened by the Human Rights Secretariat under the management of Minister Paulo de Tarso Vannuchi, to review and update the National Human Rights Program (PNDH). The conference recommended the creation of the CNV, with the task of promoting public clarification of human rights violations by State agents in the repression of opponents (BRAZIL, 2014, p. 20).</p>
+            <p>The following year, in a post on BBC São Paulo, Caio Queiro (2010) stated that although the National Human Rights Program (PNDH-3), which presented the CNV's attributions, "was well received by human rights organizations, the Brazilian Bar Association (OAB) and representatives of abuse victims, the proposals regarding the military period caused great discomfort in other sectors, especially among members of the Armed Forces".</p>
+            <p>To mitigate possible conflicts, Lula was led to make adjustments to the proposal for the establishment of the commission presented by the 11th Conference. Among these adjustments, let us remember that the PNDH-3, which was supposed to "investigate" human rights violations during the civil‑military dictatorship as forwarded by the Conference, began to use the term "examine", aiming thereby to avoid possible alterations and revisions to the amnesty law (Law No. 6,683, sanctioned by President João Batista Figueiredo on August 28, 1979). Having partially met the interests of the military, the Lula government came to an end, leaving the new government to sanction Law No. 12,528, resulting from the presidential act of January 13, 2010, which instituted the working group in Congress chaired by the then Executive Secretary of the Civil House, Erenice Guerra.</p>
+            <p>This law was only sanctioned by President Dilma on November 18, 2011. However, the installation of the CNV only took place on May 16 of the following year, through an installation ceremony of the Truth Commission that was attended by former presidents Luiz Inácio Lula da Silva, Fernando Henrique Cardoso, Fernando Collor de Mello and José Sarney, as well as authorities from the most diverse sectors of politics, civil society and, of course, the Brazilian army. The structure of the said commission was initially composed of seven members appointed by then President Dilma Rousseff, namely: Cláudio Lemos Fonteles, Gilson Lagaro Dipp, José Carlos Dias, José Paulo Cavalcante Filho, Maria Rita Kehl, Paulo Sérgio Pinheiro and Rosa Maria Cardoso da Cunha. According to the Report, in mid‑2013, Claudio Lemos Fonteles resigned from his post on the Commission and "his vacancy was filled by Pedro Bohomoletz de Abreu Dallari, lawyer and full professor of international law at the Institute of International Relations of USP" (BRAZIL, 2014, p. 21). In addition to these seven councilors, the commission's structure also included a considerable working group formed by secretaries, managers, commissions, advisors, researchers, consultants, ombudsmen, interns, among other functions, who were to assist the councilors in the investigation.</p>
+            <p>As stated in the Report: "The enactment of a law on access to information of public interest guaranteed greater transparency to public administration, restricting the possibility of classifying information, which benefited the work of the CNV" (BRAZIL, 2014, p. 22). Thus, the Access to Information Law (LAI), sanctioned by President Dilma in 2011, became an important instrument for the CNV, as it provided "normative basis for the treatment of the vast documentary repertoire on the military dictatorship available at the National Archive of the Ministry of Justice" (BRAZIL, 2014, p. 22). However, merely examining documents would not be sufficient to achieve the CNV's objective, hence the need to install truth commissions throughout the country, since "cooperation and dialogue with these state, municipal, university, union and sectional truth commissions of the Brazilian Bar Association (OAB) [...] enabled a broad mobilization around issues related to memory, truth and justice" (BRAZIL, 2014, p. 22, [our suppression]). Among the activities promoted by the CNV to fulfill its objective, we highlight the holding of public hearings and inspections in military units where human rights violations occurred, aiming to map and identify these locations, in addition to producing investigations and expert reports that would evidence the circumstances of the rights violations practiced by public agents of the Brazilian State.</p>
+            <p>In the third part of the first volume of the Report, the CNV reports the practices of these agents who violated human rights, such as: i. illegal or arbitrary detention (or imprisonment); ii. torture; iii. summary, arbitrary or extrajudicial execution, and other deaths attributed to the State; and iv. forced disappearance and concealment of corpses. The activities of the truth commission, which lasted two years and seven months, originated three volumes that make up the final report. In the first volume, one finds the legal foundations, precedents and other explanations for the creation of the CNV, in addition to the list of human rights violations.</p>
+            <p>In the second, the occurrences of violations triggered in different sectors of society (military, urban and rural workers, Christian churches, indigenous communities and universities) are explained. The third volume of the Report presents profiles of the dead and disappeared political activists. In this last volume, the stories of 434 people who, due to the responsibility of the Brazilian State, are dead and disappeared are narrated. On December 10, 2014, then President Dilma Rousseff, in a ceremony broadcast on TV Brasil, delivered the final report of the CNV.</p>
+        </div>
+
+        <!-- PDF Viewer -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Complete review (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/Resenha_CNV.pdf" title="Memory, Justice and Democratic Transition"></iframe>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> If the PDF is not displayed, <a href="/arquivos/Resenha_CNV.pdf" target="_blank">click here to download</a>.</p>
+        </div>
+
+        <!-- References and citation generator -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> References & Citation</h2>
+
+            <!-- CITATION GENERATOR -->
+            <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]'
+                data-title="Memory, Justice and Democratic Transition: A Reading of the National Truth Commission"
+                data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/ingles/resenha-comissao-nacional-da-verdade-en.html"
+                data-volume="1" data-issue="1" data-pages="06-10" data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> How to cite this review</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Select the desired style and automatically generate the bibliographic reference.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Reference style</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copy reference</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copy ABNT (manual)</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Export BibTeX</button>
+            </div>
+            <ul class="ref-list">
+                <li><strong>BRAZIL.</strong> <em>Report of the National Truth Commission</em> (Vol. 1). Brasília: CNV, 2014.</li>
+                <li><strong>DALTOÉ, Andréia da Silva.</strong> A comissão nacional da verdade e suas ressonâncias nos documentários Verdade 12.528 e Em busca da verdade. <em>Linguagem em (Dis)curso – LemD</em>, Tubarão, SC, v. 16, n. 1, p. 153-167, Jan./Apr. 2016.</li>
+                <li><strong>QUERO, Caio.</strong> <em>Entenda a polêmica sobre a Comissão Nacional da Verdade</em>. São Paulo: BBC News Brasil [online]. Available at: <a href="https://www.bbc.com/portuguese/noticias/2010/01/100112_comissao_qanda_cq" target="_blank">https://www.bbc.com/portuguese/noticias/2010/01/100112_comissao_qanda_cq</a>.</li>
+            </ul>
+            <p><small><i class="fas fa-info-circle"></i> Use the generator above to cite this review in different styles (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <!-- About the author -->
+        <div class="panel">
+            <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> About the author </h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> is a pedagogue and effective public servant, with experience teaching in early elementary school and early childhood education. He holds a Master’s degree in Philosophy from the Federal University of Rio Grande do Norte (UFRN, 2022), with research focused on the work and philosophy of Friedrich Nietzsche. He holds a Bachelor’s degree in Philosophy from the State University of Rio Grande do Norte (UERN, 2018) and a Bachelor’s degree in Pedagogy from the International University Center (UNINTER, 2022). He is the author of the book <em>Nietzsche e os valores modernos</em> (2022). He is dedicated to continuing education in areas such as Psychopedagogy, Neuropsicopedagogy, Inclusive Education, Specialized Educational Assistance (AEE), and Youth and Adult Education (EJA).</p>
+            <p><i class="fas fa-envelope"></i> Email: diego_svt@hotmail.com.br<br>
+                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+            </p>
+        </div>
+
+        <footer>
+            <i class="fas fa-university"></i> Inquietações Journal – Caicó, RN | v.1, n.1, 2026 | Section: Reviews | DOI: 10.5281/zenodo.18845488<br>
+            Open access under a Creative Commons license.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Submissions with login simulation
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "cadastro-login/submissoes.html";
+            } else {
+                let email = prompt("🔐 To submit an article, please log in. Enter your email (simulation):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Login successful! Redirecting to submissions.");
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    alert("Unauthorized access. Registration/login required.");
+                }
+            }
+        });
+    }
+
+    // Copy ABNT manual (English)
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = [
+            "SANTOS, Diego Vinícius Brito dos. Memory, Justice and Democratic Transition: A Reading of the National Truth Commission. Inquietações Journal, v. 1, n. 1, p. 06-10, 2026."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("ABNT references copied."));
+    });
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@article{santos2026memory,
+  title={Memory, Justice and Democratic Transition: A Reading of the National Truth Commission},
+  author={Santos, Diego Vinícius Brito dos},
+  journal={Inquietações Journal},
+  volume={1},
+  number={1},
+  pages={06--10},
+  year={2026}
+}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copied (example)."));
+    });
+
+    // ========== CITATION GENERATOR (script automático) ==========
+    (function () {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Inquietações Journal';
+        const accessDate = new Date().toLocaleDateString('en-US');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Available at: ${url}. Accessed: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    if (feedback) feedback.textContent = '✓ Citation copied to clipboard.';
+                    setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    if (feedback) feedback.textContent = '✗ Error copying. Please try manually.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Unfinished Revolution and Authoritarianism in Brazil: Notes on Sérgio Buarque de Holanda and the Estado Novo | Review | Inquietações Journal</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Same style as previous reviews */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+            overflow: hidden;
+        }
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+        .header {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+        }
+        .journal-badge {
+            display: inline-block;
+            background: #6b4c2c;
+            color: #fef7e0;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #3a2a1a;
+        }
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6b5a42;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+        }
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f0ede5;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+            cursor: pointer;
+        }
+        .btn-pdf {
+            background: #8b4513;
+            color: white;
+            border: none;
+        }
+        .btn-doi {
+            background: #2c6e5c;
+            color: white;
+            border: none;
+        }
+        .btn-submit {
+            background: #b87c3a;
+            color: white;
+            border: none;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
+        }
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+            cursor: default;
+            pointer-events: none;
+        }
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
+        .panel {
+            background: rgba(255, 255, 252, 0.96);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
+        }
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #c28a4e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #4a3a2a;
+        }
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #2a2a24;
+        }
+        .article-text p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+            color: #9b5e2c;
+        }
+        .article-text h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+            color: #b47c48;
+        }
+        .wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #8b5a2e;
+            font-weight: 500;
+            border-bottom: 1px dotted #b89a6a;
+            transition: 0.1s;
+        }
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
+        }
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .ref-list li {
+            margin-bottom: 0.9rem;
+            font-size: 0.85rem;
+            border-left: 2px solid #dccfaf;
+            padding-left: 1rem;
+        }
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+        }
+        .cite-btn {
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2dccf;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #7a6b53;
+        }
+        @media (max-width: 800px) {
+            body { padding: 1rem; }
+            .content-padding { padding: 1.2rem; }
+            .title { font-size: 1.8rem; }
+        }
+        .bg-warm { background: #fefaf0; }
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+        }
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #4a3a2a;
+            border-left: none;
+            padding-left: 0;
+        }
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            margin-top: 1rem;
+        }
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+        @media (max-width: 700px) {
+            .citation-controls { flex-direction: column; align-items: stretch; }
+            .citation-actions { justify-content: stretch; }
+            .citation-btn { justify-content: center; }
+        }
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Inquietações Journal • v.1, n.1 • Section: Reviews • 2026</div>
+            <div class="title">Unfinished Revolution and Authoritarianism in Brazil:<br>Notes on Sérgio Buarque de Holanda and the Estado Novo</div>
+            <div class="author-line">
+                <div class="author-avatar">
+                    <div class="avatar-circle">
+                        <img src="/corpo%20editorial/diego.png" alt="Author photo Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                    </div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18845109</span>
+            </div>
+            <!-- Static language buttons -->
+            <div class="lang-buttons">
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/Resenhas/resenha-sergio-buarque-estado-novo.html">🇧🇷 Portuguese</a>
+                <a class="lang-btn active" href="#">🇺🇸 English</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/resenha-sergio-buarque-estado-novo-esp.html">🇪🇸 Spanish</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Resenha_Sergio_Buarque.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Download PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18845109" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissions</a>
+            </div>
+        </div>
+
+        <!-- Structured abstract -->
+        <div class="panel">
+            <h2><i class="fas fa-align-left"></i> Presentation of the work</h2>
+            <p>Originally published in 1936, <strong>Roots of Brazil</strong> constitutes one of the fundamental works of Brazilian social thought. Sérgio Buarque de Holanda proposes a historical-cultural interpretation of Brazil, analyzing the colonial legacies that shaped the country's social, political, and institutional formation.</p>
+
+            <h2 style="margin-top: 1.5rem;"><i class="fas fa-align-left"></i> Summary of content</h2>
+            <p>In the chapter entitled <em>“Our revolution”</em>, the author does not conceive revolution as an abrupt rupture, but as a historical process of overcoming the colonial past towards modernity. The abolition of slavery emerges as a symbolic milestone of this transition. However, the Brazilian revolution remains unfinished. Elements such as agrarianism, cordiality, and exacerbated individualism inherited from the Iberian tradition continue to operate as structural obstacles to the consolidation of full modernity.</p>
+
+            <h2 style="margin-top: 1.5rem;"><i class="fas fa-align-left"></i> Critical analysis</h2>
+            <p>The reading reveals a consistent interpretation of Sérgio Buarque de Holanda's thought, highlighting modernization as a slow and contradictory process. The articulation with the Estado Novo allows relating colonial legacies to authoritarian manifestations of the 20th century. Fascist characteristics are noted in the Vargas period, such as power centralization, closure of Congress, censorship, and political repression.</p>
+
+            <h2 style="margin-top: 1.5rem;"><i class="fas fa-align-left"></i> Final considerations</h2>
+            <p>The work remains current by problematizing the persistence of colonial structures in Brazilian society. The notion of an unfinished revolution offers a powerful interpretive key for understanding contemporary tensions.</p>
+        </div>
+
+        <!-- Full review text (English translation) -->
+        <div class="panel article-text">
+            <h3>Sérgio Buarque de Holanda and Our revolution</h3>
+            <p>This short writing aims to elaborate a brief interpretation of the seventh and final chapter of the work <em>Roots of Brazil</em> (1947<sup>1</sup>) written by the sociologist and historian Sérgio Buarque de Holanda. By selecting that chapter, we do not wish to undervalue the other chapters of the work, since the whole work constitutes the framework of Sérgio Buarque de Holanda's ambitious project to portray, in a broad and historical approach – an intention already present in the work's title – a general image of what Brazilian culture would become, in addition to other fundamental questions that make up the structure of the said work.</p>
+            <p>Beforehand, to guide our reading, analysis, and interpretation, we raise three questions to be answered in light of the seventh chapter of <em>Roots</em>: i) what did the author mean by “our revolution”? ii) How would it take place? iii) and what are its elements? Having set out our concerns, we hope, in the following two paragraphs, to answer them through a hermeneutic reading.</p>
+            <p>Our first question is: what did the author mean by “our revolution”? It seems that by revolution, Sérgio does not intend to express a total rupture of something, but rather a process of overcoming a past towards a new period which, in the Brazilian case, considering that it is our revolution, would correspond to a modern period; that is, this is the moment for Brazil to overcome its colonial past and the heritage of that period, aiming to navigate a sea of new possibilities that come with the establishment of the modern period.</p>
+            <p>We must not forget that in the chapters prior to the seventh, Sérgio Buarque de Holanda meticulously analyzes our roots, that is: our colonial period, guided by the aim of understanding how it emerged and what fruited from it on Brazilian soil. In the fifth chapter, on the cordial man, for example, the author portrays characteristics of Brazilians imported from Portugal and introduced, through the colonial process, into our country.</p>
+            <p>Although we are referring to a distant period of our history, we should not make the mistake of thinking that such characteristics have been overcome today, since although many things have changed over time – because history does not have any fixity – many colonial characteristics are still preserved in the DNA of the Brazilian people.</p>
+            <p>In view of this, we can affirm that our culture is not a product of our environment, but something inherited. Therefore, we think and act based on factors imported from the Iberian Peninsula and from Portugal. In this sense, our revolution [the Brazilian revolution] would be the overcoming of our colonial past towards modernity; however, although this revolution is already underway, our inherited characteristics, for example, agrarianism, cordialism, and exacerbated individualism<sup>2</sup>, are still, above all, the main obstacle to the outcome of this revolution.</p>
+            <p>Having understood what our revolution is, let us now understand how it will take place. Our author does not define an exact moment for the beginning of this revolution, but it is possible to perceive clear signs of its beginning in the abolitionist period (1888).</p>
+            <p>It is known that Brazil was the last country to declare abolition, and that is a fact of great importance to be analyzed; however, if we dwell on the reasons that led to abolition in our territory, we will place ourselves at the starting point to understand the occurrence of our revolution.</p>
+            <p>First, it is not logically acceptable that in a modern period, as the revolution intended, there were slaves, because to implant the modern and capitalist system, it was necessary for the population to become a demand of consumers.</p>
+            <p>Men and women deprived of freedoms, as is known, did not receive exchangeable currency for their work; therefore, it was necessary to abolish that slave system in order to implant the capitalist system with working hours, obtaining wages to generate consumption, etc.</p>
+            <p>In light of this, it is with abolition that we see a slight overcoming of our colonial past. However, our revolution only began there and, slowly and gradually, we can affirm that it is still ongoing, being possible to observe its elements throughout our history, whether with the country's urbanization, whether with the establishment of democratic and republican governments, or in the economic advances generated as a consequence of the country's industrial development, etc.</p>
+            <p><strong>Reference</strong><br>HOLANDA, Sérgio Buarque de. <em>Roots of Brazil</em>. Rio de Janeiro: José Olympio, 1947 (2nd ed.).</p>
+
+            <hr style="margin: 2rem 0; border-color: #e2d6c0;">
+
+            <h3>Fascism and the Estado Novo in Brazil</h3>
+            <p>When we think of fascism, our mind immediately turns to fascist Italy of the 1920s, governed dictatorially by Benito Mussolini. However, we forget the fact that fascism spread, like any disease, to other parts of the world. Citing a similar case, Mussolini's fascism inspired the Nazi movement of Adolf Hitler in Germany in the 20th century.</p>
+            <p>But that infection was not contained in Europe, since today we can confidently affirm that fascism crossed the Atlantic Ocean and landed on Brazilian soil, because its presence and symptoms can be perceived from the 1930s onwards, mainly with the Brazilian Integralist Action (AIB), in the government of Getúlio Vargas [or: Vargas era] from 1937 to 1945, and in the military dictatorship that would be born after Vargas. However, although we can perceive the presence of fascism over a long period of our 20th‑century history, we intend, below, to highlight the presence of fascism during the Estado Novo, that is, in Getúlio Vargas's government.</p>
+            <p>To achieve this purpose, we raise three questions to be answered: i) what is fascism? ii) How was the Estado Novo born? iii) And what characteristics of this period can be associated with the fascist movement?</p>
+            <p>We can understand fascism by what Karl Marx understood by ideology, that is, a set of political ideas that organizes a given government based on an ultranationalist and authoritarian bias, and where government power has a dictatorial character. In that sense, although there are countless analogous and explicit cases of fascism in human history, we can say that, in general, all these cases have common characteristics, such as nationalist sentiment, rejection of democratic governments, political and economic freedom repression, and the desire to establish a social hierarchy or social castes, where subjects of lower castes must obey their superiors and work exclusively for the nation.</p>
+            <p>Of course, this small definition does not encompass all the characteristics of fascism; however, from it, we can now perceive the fascist traits in the period to be examined below.</p>
+            <p>The Vargas Era is divided into three moments: the first is known as the Provisional Government, initiated in 1930 and ended in 1934 with the promulgation of the Constitution of the Republic of the United States of Brazil on July 16 of the said year. In view of this, the second moment of the Vargas Era would be a constitutional government, which began in 1934 with the said constitution and ended in 1937 with a new constitutional text that would found the then‑known Estado Novo. In the magna text of Brazil itself, we find the alleged reason that led Getúlio to impose a new constituent assembly, when he states that he is</p>
+            <p>“ATTENDING to the legitimate aspirations of the Brazilian people for political and social peace, profoundly disturbed by known factors of disorder, resulting from the increasing aggravation of party disputes, which notorious demagogic propaganda seeks to denature into class struggle, and from the exacerbation of ideological conflicts, tending, by their natural development, to resolve themselves in terms of violence, placing the Nation under the fateful imminence of civil war” (BRAZIL, 1937).</p>
+            <p>In the said magna text, there are other reasons that justify the act of tearing up the 1934 constitution; however, the reason mentioned here is undoubtedly the most important when considering the birth of the Estado Novo.</p>
+            <p>Getúlio used a document known as the Cohen Plan, which detailed a possible establishment of a communist revolution in Brazil that would be supported by the then Soviet Union, to justify the need for the new 1937 constitution.</p>
+            <p>Today it is known that such a document was forged by Colonel Olympio Mourão Filho, seeking to create a climate of national insecurity, since, in 1935, the National Liberating Alliance (ANL), an organization created by Luís Carlos Prestes, had been carrying out uprisings in some Brazilian capitals, which further reinforced the thesis of an imminent communist revolution that would result in a civil war on Brazilian soil – a presupposition pointed out in the transcription of the 1937 constitution.</p>
+            <p>Therefore, the new constitution was supposedly “ATTENDING to the state of apprehension created in the Country by communist infiltration, which becomes day by day more extensive and deeper, requiring remedies of a radical and permanent character” (BRAZIL, 1937). Here, then, is the presupposition of the coup – as we understand it today – that was absolutely necessary to found the Estado Novo.</p>
+            <p>Having shown how Getúlio established the Estado Novo, which would last until 1945, let us now list characteristics of this period that resemble fascism. We can perceive the similarity of the dictatorial character in the following acts taken by Getúlio: i) the closure of the National Congress and of state assemblies and municipal chambers; ii) the subordination of the other instances of power to the Executive Power (see, for example, the decision of the Federal Supreme Court that guaranteed the deportation of Olga Benário to Nazi Germany of A. Hitler, even though she was pregnant with a Brazilian [Luís Carlos Prestes]); iii) the Executive Power comes to be supported by military leaderships; iv) the persecution of political adversaries; v) the establishment of full control over the means of communication: such as radios and newspapers; vi) the establishment of restrictions on freedom; vii) among other acts. Therefore, it is legitimate for us to affirm that fascism came to Brazil, since our history is fruitful in fascist cases and actions. Getúlio Vargas went from life to history, not only as a populist ruler, but also as a dictatorial, fascist, and coup‑mongering ruler.</p>
+            <p><strong>Reference</strong><br>BRAZIL. <em>Constitution of the United States of Brazil (1937)</em>. Rio de Janeiro, 1937.</p>
+
+            <div class="footnote" style="font-size: 0.85rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2d6c0;">
+                <p><sup>1</sup> <em>Roots of Brazil</em> was initially launched in the 1930s; however, Sérgio Buarque de Holanda re‑launched it in 1947. In this second edition, the author structured the seven chapters that make up the work and added 116 new paragraphs. In light of this, throughout the present writing, we will be using the second edition of the work, considering the importance that these additions and modifications by the author bring to the discussion at hand.</p>
+                <p><sup>2</sup> In our readings of <em>Roots</em>, we understand this exacerbated individualism as the belief in the Self (ego), which, in our interpretation, offers scope for developing a psychological study of the Brazilian people.</p>
+            </div>
+        </div>
+
+        <!-- PDF Viewer -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Complete review (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/Resenha_Sergio_Buarque.pdf" title="Unfinished Revolution and Authoritarianism in Brazil"></iframe>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> If the PDF is not displayed, <a href="/arquivos/Resenha_Sergio_Buarque.pdf" target="_blank">click here to download</a>.</p>
+        </div>
+
+        <!-- References and citation generator -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> References & Citation</h2>
+
+            <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]'
+                data-title="Unfinished Revolution and Authoritarianism in Brazil: Notes on Sérgio Buarque de Holanda and the Estado Novo"
+                data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/ingles/resenha-sergio-buarque-estado-novo-en.html"
+                data-volume="1" data-issue="1" data-pages="01-05" data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> How to cite this review</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Select the desired style and automatically generate the bibliographic reference.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Reference style</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copy reference</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copy ABNT (manual)</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Export BibTeX</button>
+            </div>
+            <ul class="ref-list">
+                <li><strong>HOLANDA, Sérgio Buarque de.</strong> <em>Roots of Brazil</em>. 2nd ed. Rio de Janeiro: José Olympio, 1947.</li>
+                <li><strong>BRAZIL.</strong> <em>Constitution of the United States of Brazil (1937)</em>. Rio de Janeiro, 1937.</li>
+            </ul>
+            <p><small><i class="fas fa-info-circle"></i> Use the generator above to cite this review in different styles (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <!-- About the author -->
+        <div class="panel">
+            <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> About the author </h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> is a pedagogue and effective public servant, with experience teaching in early elementary school and early childhood education. He holds a Master’s degree in Philosophy from the Federal University of Rio Grande do Norte (UFRN, 2022), with research focused on the work and philosophy of Friedrich Nietzsche. He holds a Bachelor’s degree in Philosophy from the State University of Rio Grande do Norte (UERN, 2018) and a Bachelor’s degree in Pedagogy from the International University Center (UNINTER, 2022). He is the author of the book <em>Nietzsche e os valores modernos</em> (2022). He is dedicated to continuing education in areas such as Psychopedagogy, Neuropsicopedagogy, Inclusive Education, Specialized Educational Assistance (AEE), and Youth and Adult Education (EJA).</p>
+            <p><i class="fas fa-envelope"></i> Email: diego_svt@hotmail.com.br<br>
+                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+            </p>
+        </div>
+
+        <footer>
+            <i class="fas fa-university"></i> Inquietações Journal – Caicó, RN | v.1, n.1, 2026 | Section: Reviews | DOI: 10.5281/zenodo.18845109<br>
+            Open access under a Creative Commons license.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Submissions with login simulation
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "cadastro-login/submissoes.html";
+            } else {
+                let email = prompt("🔐 To submit an article, please log in. Enter your email (simulation):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Login successful! Redirecting to submissions.");
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    alert("Unauthorized access. Registration/login required.");
+                }
+            }
+        });
+    }
+
+    // Copy ABNT manual (English)
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = [
+            "SANTOS, Diego Vinícius Brito dos. Unfinished Revolution and Authoritarianism in Brazil: Notes on Sérgio Buarque de Holanda and the Estado Novo. Inquietações Journal, v. 1, n. 1, p. 01-05, 2026."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("ABNT references copied."));
+    });
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@article{santos2026unfinished,
+  title={Unfinished Revolution and Authoritarianism in Brazil: Notes on Sérgio Buarque de Holanda and the Estado Novo},
+  author={Santos, Diego Vinícius Brito dos},
+  journal={Inquietações Journal},
+  volume={1},
+  number={1},
+  pages={01--05},
+  year={2026}
+}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copied (example)."));
+    });
+
+    // ========== CITATION GENERATOR (script automático) ==========
+    (function () {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Inquietações Journal';
+        const accessDate = new Date().toLocaleDateString('en-US');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Available at: ${url}. Accessed: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    if (feedback) feedback.textContent = '✓ Citation copied to clipboard.';
+                    setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    if (feedback) feedback.textContent = '✗ Error copying. Please try manually.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

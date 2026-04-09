@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>La Mujer (Die Frau) | Georg Groddeck | Traducción | Revista Inquietaciones</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Mismo estilo que la versión en portugués */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
+            padding: 2rem 1.5rem;
+            display: flex;
+            justify-content: center;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1280px;
+            width: 100%;
+            background: rgba(255, 253, 245, 0.98);
+            border-radius: 2rem;
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
+            overflow: hidden;
+        }
+        .content-padding {
+            padding: 2rem 2.5rem;
+        }
+        .header {
+            border-bottom: 2px solid #e0d6c0;
+            margin-bottom: 1.8rem;
+        }
+        .journal-badge {
+            display: inline-block;
+            background: #6b4c2c;
+            color: #fef7e0;
+            font-size: 0.7rem;
+            letter-spacing: 1.5px;
+            padding: 0.25rem 0.9rem;
+            border-radius: 30px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+        .title {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 2.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-top: 1rem;
+            color: #3a2a1a;
+        }
+        .author-line {
+            margin-top: 0.8rem;
+            font-size: 0.95rem;
+            color: #6b5a42;
+            font-weight: 500;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            gap: 1rem;
+        }
+        .author-avatar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .avatar-circle {
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            overflow: hidden;
+            background: #dcd0b8;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            border: 2px solid #c28a4e;
+        }
+        .avatar-circle img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        .action-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0 1rem;
+        }
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 0.65rem 1.4rem;
+            border-radius: 60px;
+            font-weight: 600;
+            font-size: 0.85rem;
+            text-decoration: none;
+            transition: 0.2s;
+            background: #f0ede5;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+            cursor: pointer;
+        }
+        .btn-pdf {
+            background: #8b4513;
+            color: white;
+            border: none;
+        }
+        .btn-doi {
+            background: #2c6e5c;
+            color: white;
+            border: none;
+        }
+        .btn-submit {
+            background: #b87c3a;
+            color: white;
+            border: none;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+            filter: brightness(1.05);
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+        .lang-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+            margin: 1rem 0 0.5rem;
+            justify-content: flex-start;
+        }
+        .lang-btn {
+            background: #f4efe2;
+            border: 1px solid #c2b697;
+            padding: 0.4rem 1rem;
+            border-radius: 40px;
+            font-size: 0.8rem;
+            font-weight: 600;
+            text-decoration: none;
+            color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
+        }
+        .lang-btn.active {
+            background: #c28a4e;
+            border-color: #8b5a2e;
+            color: white;
+            cursor: default;
+            pointer-events: none;
+        }
+        .lang-btn:hover {
+            background: #e0d4bc;
+        }
+        .panel {
+            background: rgba(255, 255, 252, 0.96);
+            border-radius: 1.2rem;
+            margin-bottom: 2rem;
+            padding: 1.6rem 2rem;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
+        }
+        .panel h2 {
+            font-size: 1.8rem;
+            font-weight: 600;
+            border-left: 5px solid #c28a4e;
+            padding-left: 1rem;
+            margin-bottom: 1.2rem;
+            color: #4a3a2a;
+        }
+        .article-text {
+            font-size: 1.02rem;
+            line-height: 1.7;
+            color: #2a2a24;
+        }
+        .article-text p {
+            margin-bottom: 1.2rem;
+            text-align: justify;
+        }
+        .article-text h3 {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin: 1.8rem 0 0.8rem;
+            color: #9b5e2c;
+        }
+        .article-text h4 {
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem;
+            color: #b47c48;
+        }
+        .wikilink {
+            text-decoration: none;
+            background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
+            padding: 0 2px;
+            border-radius: 6px;
+            color: #8b5a2e;
+            font-weight: 500;
+            border-bottom: 1px dotted #b89a6a;
+            transition: 0.1s;
+        }
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
+        }
+        .ref-list {
+            list-style: none;
+            margin-top: 1rem;
+        }
+        .ref-list li {
+            margin-bottom: 0.9rem;
+            font-size: 0.85rem;
+            border-left: 2px solid #dccfaf;
+            padding-left: 1rem;
+        }
+        .citation-actions {
+            margin: 1rem 0 0.5rem;
+            display: flex;
+            gap: 12px;
+        }
+        .cite-btn {
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
+            border-radius: 40px;
+            font-size: 0.7rem;
+            cursor: pointer;
+        }
+        .pdf-frame {
+            border-radius: 1rem;
+            overflow: hidden;
+            border: 1px solid #e2dccf;
+        }
+        iframe {
+            width: 100%;
+            height: 700px;
+            border: none;
+        }
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            border-top: 1px solid #e2d6c0;
+            padding-top: 1.5rem;
+            margin-top: 1rem;
+            color: #7a6b53;
+        }
+        @media (max-width: 800px) {
+            body { padding: 1rem; }
+            .content-padding { padding: 1.2rem; }
+            .title { font-size: 1.8rem; }
+        }
+        .bg-warm { background: #fefaf0; }
+        .citation-generator {
+            background: #fefaf0;
+            border: 1px solid #e2dac8;
+            border-radius: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+            overflow: hidden;
+        }
+        .citation-generator-head {
+            background: #f4efe2;
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid #e2d6c0;
+        }
+        .citation-generator-head h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin: 0;
+            color: #4a3a2a;
+            border-left: none;
+            padding-left: 0;
+        }
+        .citation-generator-body {
+            padding: 1.2rem 1.5rem;
+        }
+        .citation-generator-note {
+            font-size: 0.85rem;
+            color: #6b5a42;
+            margin-bottom: 1rem;
+            font-style: italic;
+        }
+        .citation-controls {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            align-items: flex-end;
+            margin-bottom: 1.2rem;
+        }
+        .citation-field {
+            flex: 2;
+            min-width: 180px;
+        }
+        .citation-field label {
+            display: block;
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            color: #8b7355;
+            margin-bottom: 0.3rem;
+        }
+        .citation-select {
+            width: 100%;
+            padding: 0.6rem 0.8rem;
+            background: white;
+            border: 1px solid #d6cdb5;
+            border-radius: 2rem;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .citation-actions {
+            flex: 1;
+            display: flex;
+            justify-content: flex-end;
+        }
+        .citation-btn {
+            background: #2c5a4a;
+            border: none;
+            padding: 0.6rem 1.2rem;
+            border-radius: 2rem;
+            font-weight: 600;
+            font-size: 0.8rem;
+            color: white;
+            cursor: pointer;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .citation-btn:hover {
+            background: #1f4538;
+            transform: translateY(-1px);
+        }
+        .citation-output {
+            background: #ffffff;
+            border: 1px solid #e2dac8;
+            border-radius: 1rem;
+            padding: 1rem;
+            font-size: 0.85rem;
+            line-height: 1.5;
+            font-family: 'Inter', monospace;
+            margin-top: 1rem;
+        }
+        .citation-feedback {
+            font-size: 0.75rem;
+            margin-top: 0.5rem;
+            color: #9b5e2c;
+            min-height: 1.8rem;
+        }
+        @media (max-width: 700px) {
+            .citation-controls { flex-direction: column; align-items: stretch; }
+            .citation-actions { justify-content: stretch; }
+            .citation-btn { justify-content: center; }
+        }
+        .autor-titulo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .autor-foto {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            object-fit: cover;
+        }
+        .footnote-ref {
+            position: relative;
+            display: inline-block;
+            cursor: pointer;
+            font-size: 0.75rem;
+            vertical-align: super;
+            margin: 0 1px;
+        }
+        .footnote-ref a {
+            text-decoration: none;
+            background: #e9e0cf;
+            padding: 0 4px;
+            border-radius: 20px;
+            color: #9b5e2c;
+            font-weight: bold;
+            font-size: 0.7rem;
+        }
+        .footnotes {
+            margin-top: 2rem;
+            padding-top: 1rem;
+            border-top: 1px solid #e2d6c0;
+            font-size: 0.85rem;
+            line-height: 1.6;
+        }
+        .footnotes ol {
+            margin-left: 1.5rem;
+        }
+        .footnotes li {
+            margin-bottom: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietaciones • v.1, n.1 • Sección: Traducciones • 2026</div>
+            <div class="title">La Mujer (Die Frau)</div>
+            <div class="author-line">
+                <div class="author-avatar">
+                    <div class="avatar-circle">
+                        <img src="/corpo%20editorial/diego.png" alt="Foto del traductor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                    </div>
+                    <span><i class="fas fa-language"></i> Traductor: <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18916814</span>
+            </div>
+            <!-- Botones de idioma estáticos -->
+            <div class="lang-buttons">
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/Traducoes/traducao-a-mulher-georg-groddeck.html">🇧🇷 Portugués</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/ingles/traducao-a-mulher-georg-groddeck-en.html">🇺🇸 Inglés</a>
+                <a class="lang-btn active" href="#">🇪🇸 Español</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/A%20mulher.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Descargar PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18916814" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Envíos</a>
+            </div>
+        </div>
+
+        <!-- Nota editorial -->
+        <div class="panel article-text">
+            <h3>Nota editorial</h3>
+            <p>La presente traducción forma parte del esfuerzo de la Revista Inquietaciones por ampliar el acceso, en lengua española, a textos relevantes para la historia del pensamiento filosófico, psicoanalítico y cultural europeo de principios del siglo XX. El texto “Die Frau”, de Georg Groddeck, fue originalmente publicado en 1909 en el periódico alemán <em>Der Volkserzieher</em> (v. 13, n. 18, p. 137–142) y se encuentra actualmente disponible en el acervo digital de la Universitätsbibliothek Johann Christian Senckenberg, en Frankfurt am Main.</p>
+            <p>A pesar de la relevancia intelectual de Groddeck —frecuentemente reconocido como uno de los pensadores que influyeron en el desarrollo del psicoanálisis y la medicina psicosomática— su obra permanece relativamente poco traducida en español. Ante este vacío editorial y académico, la Revista Inquietaciones asume el compromiso de contribuir a la circulación de sus textos en lengua española, promoviendo traducciones acompañadas de aparato crítico y contextualización histórica. Esta situación no es nueva. Al comentar la recepción de Groddeck en Brasil, José Teixeira, traductor de <em>El libro del Ello</em> (Editorial Perspectiva), observó que, incluso décadas después del redescubrimiento internacional del autor, sus obras aún eran poco accesibles en el país. En su relato, el traductor afirma:</p>
+            <blockquote style="margin: 1rem 1.5rem; padding-left: 1rem; border-left: 3px solid #dbba8c; color: #5a4a37; font-style: italic;">
+                “Hace unos cuatro años, escribiendo un artículo para un periódico sobre Groddeck, tuve la curiosidad de saber si la biblioteca del Instituto de Psicología de la Universidad de São Paulo tenía en su acervo algún libro suyo. No tenía. Cuando se observa que las primeras ediciones comerciales de los libros de Groddeck fuera de Alemania, que comenzaron a divulgar su nombre de este lado (para Brasil, pero Inglaterra y Francia podrían incluirse también), datan de principios de la década de 1960, no es extraño que a finales de los años 1970 ese material aún no hubiera llegado aquí. Ese retraso, para nosotros, como siempre, significa tren en hora. Aun así, es un retraso considerable. Después de todo, <em>El libro del Ello</em> es de 1923.”
+            </blockquote>
+            <p>La observación sigue siendo pertinente hoy. Muchas obras de autores extranjeros de gran importancia intelectual continúan siendo de difícil acceso para lectores e investigadores de habla hispana, sobre todo cuando se trata de textos históricos publicados en periódicos o ediciones raras. En ese sentido, concordamos con la evaluación de José Teixeira y reiteramos la importancia de ampliar el acceso a las obras de estos autores. La traducción y difusión de estos textos contribuyen a fortalecer el diálogo académico internacional y ofrecen elementos importantes para investigadores que necesitan este material en español. Así, al publicar esta traducción, la Revista Inquietaciones busca no solo poner a disposición un texto histórico poco conocido en el mundo hispanohablante, sino también incentivar nuevas investigaciones sobre la obra de Georg Groddeck, promoviendo su lectura crítica en el contexto contemporáneo.</p>
+        </div>
+
+        <!-- Texto de la traducción -->
+        <div class="panel article-text">
+            <h2>LA MUJER (DIE FRAU)</h2>
+            <p><strong>Dr. med. Georg Groddeck, Baden-Baden</strong></p>
+
+            <p>“Lo eterno femenino nos eleva”<span class="footnote-ref"><a href="#nota1">1</a></span>. Todos ustedes conocen las palabras finales del Fausto<span class="footnote-ref"><a href="#nota2">2</a></span>, y no les causará extrañeza que resuenen en mis oídos cuando deseo hablarles sobre la cuestión de la mujer<span class="footnote-ref"><a href="#nota3">3</a></span>. No sé si alguna mujer ha comprendido alguna vez la seriedad de esa única frase que hace responsable a lo femenino del actuar de los seres humanos<span class="footnote-ref"><a href="#nota4">4</a></span>. No lo creo. Lo creo tan poco que, durante mucho tiempo, yo mismo no comprendí por qué la última palabra de Goethe iba dirigida a las mujeres<span class="footnote-ref"><a href="#nota5">5</a></span>. Ahora sé que una verdad debe ser dicha incluso cuando permanece sin ser oída; que es como una fuente que brota de la tierra sin preguntar si algún sediento beberá de ella<span class="footnote-ref"><a href="#nota6">6</a></span>. Sé también que esa es la verdad más profunda, y no dudo en repetirla aquí: La mujer carga con la responsabilidad por el futuro. Lo eterno femenino nos eleva.</p>
+
+            <p>“Todo lo que es transitorio es solo un símbolo”<span class="footnote-ref"><a href="#nota7">7</a></span>. Ya no puedo indicarles el lugar donde experimenté esto; tal vez fue Roma o Berlín o Londres, alguna gran ciudad en todo caso, en la cual caminaba en medio de personas extrañas, entre personas rudas y apresuradas<span class="footnote-ref"><a href="#nota8">8</a></span>, como ellas siguen su trabajo y, con rabia cerrada contra la coerción de la vida, corren por las calles. Ese día noté que todas esas personas, en un determinado punto, moderaban su prisa y, cuando luego proseguían, mostraban en sus rostros una expresión de extraño recogimiento, como si hubieran visto algo sagrado. Cuando me acerqué más, vi, bajo el arco de una vía férrea elevada (debió ser entonces Berlín), acurrucada en un rincón, una mujer sentada que, despreocupada de todo lo que la rodeaba, amamantaba a su hijo. Era una mujer totalmente común. Nadie que pasara junto a ella habría siquiera mirado hacia ella; y, sin embargo, esa única mujer detenía la corriente de la gran ciudad y consagraba a cada uno que la veía aquel día y aquella hora.</p>
+
+            <p>Ese acontecimiento permaneció conmigo durante años, y solo mucho tiempo después comprendí que yo y todos los que lo vimos habíamos contemplado: una parábola, un símbolo de la naturaleza divina<span class="footnote-ref"><a href="#nota9">9</a></span>. Eso nos había elevado por encima de nosotros mismos. Solo entonces aprendí también un poco del ser de las mujeres, que por tanto tiempo me había permanecido extraño y que veneraba sin saber por qué — la mujer que no puedo aprehender como aprehendo al hombre, cuando se presenta ante mí como una personalidad<span class="footnote-ref"><a href="#nota10">10</a></span> fuerte, consciente de sí y actuante — la mujer que jamás es una personalidad. Nunca. La mujer nunca es una personalidad. Ella es una imagen simbólica de todo el acontecer<span class="footnote-ref"><a href="#nota11">11</a></span>, la naturaleza divina figurada simbólicamente, algo inefablemente sagrado que domina el corazón de todo hombre, como la mirada al espacio infinito del cielo. Ninguna personalidad, sino naturaleza divina, un ser del que resuena, en las palabras:</p>
+
+            <p style="font-style: italic; margin-left: 2rem;">Todo lo que es transitorio<br>es solo un símbolo<span class="footnote-ref"><a href="#nota12">12</a></span>.</p>
+
+            <p>Y si tú no posees esto:<br>Este morir y devenir<span class="footnote-ref"><a href="#nota13">13</a></span>,<br>entonces eres solo un huésped sombrío<br>sobre la bella tierra.</p>
+
+            <p>…una comprensión, buscar y luchar y combatir hasta el fin de la vida, para entonces finalmente, cansado y envejecido, oír de la muerte: “Sí, tú, ser humano, no eres sino una parte del mundo; también en ti vive la naturaleza divina; también tú eres eterno — no un yo, no un dios de la tierra, no una personalidad; pero eres más que eso, pues eres un símbolo<span class="footnote-ref"><a href="#nota14">14</a></span>; y todo lo que es transitorio es solo un símbolo”<span class="footnote-ref"><a href="#nota15">15</a></span>. Ese es el fin de una larga vida, el objetivo de la vida: una palabra tranquila y grave, una comprensión profunda, seguida de renuncia (Entsagung)<span class="footnote-ref"><a href="#nota16">16</a></span> y, sin embargo, bienaventurada. Y a nuestro lado, nosotros que luchamos, vive un ser que no conoce ese combate, a quien ya fue puesto en la cuna aquello que a nosotros solo se presenta como ideal: un ser totalmente impregnado y animado por las fuerzas de la naturaleza, siempre e incesantemente santificado como portador del más elevado símbolo<span class="footnote-ref"><a href="#nota17">17</a></span>, un símbolo de cómo la vida se nutre de la muerte<span class="footnote-ref"><a href="#nota18">18</a></span>, un ser no cerrado en sí mismo, sino que todo lo abarca en sí — pasado y futuro — un símbolo de todo lo que es transitorio.</p>
+
+            <p>¿Y entonces no deberíamos amar a ese ser?<br>¿No deberíamos amar a la mujer?</p>
+
+            <p>Pero, naturalmente, ese amor se presenta de modo totalmente diverso en el hombre y en la mujer; y por eso también la ley moral del hombre es diferente de la de la mujer<span class="footnote-ref"><a href="#nota19">19</a></span>. El contenido de la vida femenina es el amor; y así su moral es una moral del amor, de la relación recíproca entre hombre y mujer, una moral del sentimiento (Gefühlsmoral)<span class="footnote-ref"><a href="#nota20">20</a></span>. El contenido de la vida masculina es la acción; su moral es intelectual, una moral del entendimiento (Verstandesmoral)<span class="footnote-ref"><a href="#nota21">21</a></span>. La mujer ama la personalidad de un único hombre; ella ama a ese hombre determinado, su yo, su individualidad; no puede actuar de otra forma: pues, desde el momento en que se entrega a él, se convierte en parte de él, una criatura suya<span class="footnote-ref"><a href="#nota22">22</a></span>. Ella le pertenece; debe serle fiel. Es una ley de la naturaleza; y si no lo es, peca contra su propia esencia, contra sí misma<span class="footnote-ref"><a href="#nota23">23</a></span>. La fidelidad de la mujer no es una cuestión de moral: es una coerción fisiológica<span class="footnote-ref"><a href="#nota24">24</a></span>. Para el hombre, en cambio, la fidelidad es un acto libre de su voluntad; él debe dominarse a sí mismo para ser fiel; su fidelidad es, en verdad, una acción moral, un testimonio de su autocontrol y de su fuerza<span class="footnote-ref"><a href="#nota25">25</a></span>. Pues el hombre no ama en su mujer la personalidad (¿cómo podría, si ninguna mujer ha poseído jamás personalidad, ni jamás poseerá?)<span class="footnote-ref"><a href="#nota26">26</a></span>. En su mujer ama la naturaleza divina; ella es para él el símbolo del Todo, ciertamente lo más sublime que conoce<span class="footnote-ref"><a href="#nota27">27</a></span>. Hay reverencia en su amor, mucho más que en el amor de su mujer. Tal vez él mismo no lo sepa; pero la mujer que posee es la más alta idea de su vida, la imagen de lo que fue y de lo que será, el símbolo de la naturaleza divina. Él no es, como la mujer, forzado por su amor a ser fiel. Solo la idea lo constriñe — la idea a la que sacrificó su instinto, y que puede sacrificar de nuevo, si quiere<span class="footnote-ref"><a href="#nota28">28</a></span>.</p>
+
+            <p>Pero no es siempre, para el hombre, una señal de grandeza moral cuando es fiel. Cuanto más insignificante es el hombre, cuanto más estrechamente piensa, tanto más fácilmente puede ser fiel; sí, para muchos hombres eso difícilmente exige esfuerzo. Cuanto mayor es, sin embargo, la personalidad del hombre, cuanto más alto aspiran su espíritu y su ser, tanto más difícil le es la fidelidad; pues, así como él exige más de sí mismo, exige también más de su mujer, ese símbolo transitorio de Dios y del mundo (Vergängliches Gleichnis von Gott und Welt)<span class="footnote-ref"><a href="#nota29">29</a></span>. Solo bajo tres condiciones puede entonces permanecer fiel. O reconoció ya en su juventud, de modo correcto y verdadero, que esa única mujer que eligió es para él naturaleza divina — ciertamente el caso más raro; pues ¿quién, en tiempo de cortejo, tendría discernimiento suficiente para juzgar como un sabio? El caso más raro, ciertamente; podría decirse: un azar feliz. La segunda posibilidad es que se diga a sí mismo: “sí, me equivoqué; aquella que elegí es solo un frágil vaso de Dios, y si buscara encontraría tal vez otra mujer que significara más para mí. Pero ¿por qué debería buscar? Esa primera mujer que encontré me enseñó a contemplar la naturaleza divina. Ella fue una vez para mí el símbolo del mundo, y yo la hice mía, la puse a mi servicio; en cierto sentido ella es mi obra. Ahora mis ojos están abiertos, y hacia donde quiera que mire veo el mundo eterno, el morir y devenir. Veo bien aquí una mujer que muestra más perfectamente la imagen de Dios; pero ¿por qué debería hacerla mía? Aquello que puede enseñarme, lo tomo de ella sin tocarla, reverente y cuidadoso, dominando con tranquila fuerza mis impulsos; pues eso puedo hacerlo, si quiero”<span class="footnote-ref"><a href="#nota30">30</a></span>. Este es el segundo caso, el caso de los grandes hombres, de los verdaderos hombres — el caso de Goethe<span class="footnote-ref"><a href="#nota31">31</a></span>. Hay aún una tercera posibilidad de que un hombre significativo, una personalidad — que incluso entre hombres son raras — pueda ser fiel. Una posibilidad extremadamente triste, que me parece demasiado frecuente y por la cual esas personalidades terminan arruinándose. Son los transgresores contra lo que poseen de mejor, aquellos que, por vanidad obstinada o por devoción religiosa fanática al ideal una vez elegido, cierran deliberadamente los ojos ante la naturaleza divina. Y, porque ya no pueden contemplar la naturaleza divina en su propia mujer, tampoco quieren mirar a ninguna otra. Temen el poder de sus propios impulsos y su propia debilidad. Poseen moral femenina, no masculina: moral de sentimiento, pero no moral del intelecto. Son los cobardes, los hombres que mienten contra el espíritu santo; no son en absoluto hombres morales, sino hombres malos, mentirosos contra sí mismos. Estas tres posibilidades existen para la fidelidad del hombre que posee personalidad. Los hombres de la masa, en cambio, son fieles solo porque es moral serlo, o infieles porque tienen oportunidad para ello — ambas despreciables nulidades. Pero aquel que posee personalidad y fuerza suficiente y, aun así, no mantiene la fidelidad, debe responder por ello ante sí mismo; pues solo él puede juzgar por qué causa se daña a sí propio. Solo él tiene el derecho y el deber de juzgarse a sí mismo, de absolverse o condenarse; pues solo él sabe qué lo llevó al adulterio<span class="footnote-ref"><a href="#nota34">34</a></span>. Una moral universal que hiciera esclavo al hombre de la fidelidad no existe y jamás debe existir. Eso significaría imponer una ley a la naturaleza<span class="footnote-ref"><a href="#nota35">35</a></span>, que — dada a lo femenino — prescribiría al hombre algo que paralizaría sus fuerzas más íntimas.</p>
+
+            <p>Ved: aquí estoy yo, en medio de la cuestión de la mujer, en medio de la agitación insensata de nuestro tiempo, que quiere enseñar al hombre la moral de las mujeres, que quiere transformar al hombre en mujer — en medio del feminismo<span class="footnote-ref"><a href="#nota36">36</a></span>. Se empieza ahora también a comprender lo que quise decir cuando afirmé que la cuestión de la mujer (Frauenfrage)<span class="footnote-ref"><a href="#nota37">37</a></span> es la decisiva de nuestro tiempo. Si el movimiento femenino logra arrebatar al hombre el último resto de sentimiento de personalidad (y ya es bastante pequeño), entonces estará terminado todo lo que hay de grandioso y todo el futuro<span class="footnote-ref"><a href="#nota38">38</a></span>. Pues es sobre el sentimiento de personalidad del hombre que reposan: su sentimiento del deber; su fuerza de acción; su capacidad de sacrificio; su reverencia por la idea (Idee)<span class="footnote-ref"><a href="#nota39">39</a></span>. Y sin esa reverencia por la idea — que, en verdad, y solo ella, creó todas las acciones del hombre (o, en otras palabras, del ser humano) y que constituye la verdadera dignidad del hombre — se pierde todo lo conquistado. Todo lo que es grande y bello en la vida humana es obra del hombre, es obra de la personalidad en el hombre. Y eso siempre permanecerá así; pues solo un ser humano que posee personalidad puede actuar de manera creadora. Y la mujer no posee personalidad<span class="footnote-ref"><a href="#nota40">40</a></span>.</p>
+
+            <p>Sé que esta afirmación encontrará oposición; sin embargo, debo mantenerla. Ella no es, en modo alguno, un producto de mi fantasía, sino una ley de la naturaleza. Ya lo he dicho antes: la mujer está más cerca de la naturaleza divina que el hombre; o, para expresarlo de otra manera: está mucho más estrechamente ligada a la naturaleza; ella es un instrumento de naturaleza diferente para fines diferentes — no un instrumento inferior, sino un instrumento<span class="footnote-ref"><a href="#nota41">41</a></span> que es utilizado para otras cosas y que, por eso, no posee tantas posibilidades de movimiento. Es como ocurre también con otras cosas. Un animal puede moverse libremente; está menos preso que el árbol que está enraizado en la tierra. Pero por eso el animal no es más valioso que el árbol. Con un automóvil puedo viajar por medio mundo; pero por eso no es más valioso que la máquina de vapor<span class="footnote-ref"><a href="#nota42">42</a></span> que permanece fija en la usina eléctrica y proporciona luz a cientos de casas. La disputa sobre si el hombre o la mujer serían más altamente organizados es tonta. No deben ser comparados entre sí, pues sirven a fines diferentes, y puede decirse tranquilamente: ambos son perfectos<span class="footnote-ref"><a href="#nota43">43</a></span>. El propósito de la mujer, sin embargo — la vocación de la maternidad — solo puede alcanzarse si la mujer es limitada en su libertad de movimiento. Si ella realizara externamente, de modo creador, aquello que el hombre realiza, entonces el desarrollo del niño se vería perjudicado. Entretanto, la propia naturaleza ya ha puesto en la mujer, por medio de su cuerpo, un límite que la restringe en todas partes. La mujer sana y normal es, en intervalos regulares, paralizada por la naturaleza<span class="footnote-ref"><a href="#nota44">44</a></span>, y con ello se establece un límite para su fuerza, que el sexo femenino no puede traspasar. En los círculos feministas, hoy en día, se evita deliberadamente oír esa advertencia de la naturaleza. Pero eso no ayudará. En un determinado punto el movimiento femenino tendrá que parar. No se trata solo de condiciones puramente corporales, aunque estas, por sí solas, bastan para disminuir la capacidad de desempeño de la mujer. La mujer — incluso la más sana — en esos períodos se encuentra siempre, en mayor o menor grado, intelectualmente incapaz de juicio. Su ser entra entonces, con inevitable necesidad, en completa perturbación, que recuerda el tiempo del desarrollo de la niña; se convierte, por así decirlo, nuevamente en una niña, con ideas propias de la juventud, y cae bajo la presión de una fuerza que la domina, en vez de ser dominada por ella. La mujer depende, en el más alto grado, de su condición femenina, y jamás, jamás conseguirá superar eso<span class="footnote-ref"><a href="#nota45">45</a></span>. Por esa razón, tampoco podrá realizar externamente aquello que el hombre realiza. Ante esta parte de la cuestión de la mujer, el hombre permanece muy tranquilo. La mujer permanecerá diletante en la creación. Está destinada a otras cosas<span class="footnote-ref"><a href="#nota46">46</a></span>.</p>
+
+            <p>La naturaleza trabajó de manera admirable para preservar a la mujer de apartarse de su destinación, para mantenerla alejada del campo de actividad del hombre y hacerle imposible cualquier actividad creadora. No bastó con que hiciera a la mujer físicamente más débil; no bastó con que le recordara a la mujer, en intervalos regulares, que está al servicio de la especie; así como también le dio, como señal visible de esa sumisión a la sexualidad, los senos, que la hacen incapaz de realizar todos los trabajos pesados. No bastó eso: también formó el carácter y el ser de la mujer de tal modo que ella no es capaz de resolver problemas intelectuales. Casi no le concedió el impulso de personalidad del hombre; y aquello que le dio no fue el deseo de realizar algo, sino el deseo de ser feliz y hacer feliz, esos dos impulsos motores de la acción femenina<span class="footnote-ref"><a href="#nota47">47</a></span>. Por más elevada que una mujer pueda estar, por más que pueda alcanzar, ella siempre ve las cosas bajo el punto de vista de la felicidad. Ese impulso incesante hacia la felicidad y el hacer feliz también necesita tenerlo; le fue dado con plena intención. Pues, de lo contrario, sería incapaz de cumplir su vocación maternal; más aún, sería incapaz de convertirse en madre, ya que solo el deseo de felicidad lleva a la mujer a entregarse al hombre y a asumir los sufrimientos del parto. Así, ella ve las cosas desde el principio de forma equivocada o, al menos, unilateral. Pero aún se añade el hecho de que la naturaleza prudente, siempre preocupada por realizar su objetivo principal de mil maneras y por utilizar cada cosa dentro de límites determinados para fines determinados, restringió el ser de la mujer a los límites de la proximidad inmediata, tanto corporal como espiritualmente. Así como el cuerpo femenino no es capaz de soportar los esfuerzos de movimientos peligrosos, y como al menos la advertencia de la naturaleza interrumpe cualquier movimiento prolongado por meses — lo que por sí solo ya basta para impedir el peligro de los descubrimientos —, así también el espíritu femenino es impedido, por el mismo medio, de realizar grandes descubrimientos, pues el trabajo intelectual continuo es regularmente interrumpido por el acceso del período menstrual. A la mujer le es negado vagar con su espíritu lejos, abarcar milenios, trabajar olvidada del mundo en problemas profundos y difíciles. La naturaleza divina la ató al suelo: a su hombre, a su hijo, a su sexualidad. Cuán seriamente la naturaleza toma la vocación de la mujer lo muestra dos veces con claridad evidente: en los años de desarrollo; en el tiempo de la transición<span class="footnote-ref"><a href="#nota48">48</a></span>. Cuerpo y espíritu de la mujer son, en ambos períodos, completamente perturbados y puestos en tumulto. Son procesos para los que no se encuentran paralelos en la vida del hombre. La naturaleza no quiere la actividad creadora de la mujer. Ella puso límites al movimiento femenino. Y por eso el hombre puede observar ese movimiento con tranquilidad; sí, puede e incluso debe apoyarlo<span class="footnote-ref"><a href="#nota49">49</a></span>.</p>
+
+            <p>La naturaleza no quiere la actividad de la mujer. ¿O no ocurre que, desde el momento en que la mujer concibe, cualquier otra actividad espiritual es absorbida por la única certeza del niño que crece?<span class="footnote-ref"><a href="#nota50">50</a></span> La mujer más inteligente, más instruida — sí, incluso un genio, si tal existiera entre las mujeres — es forzada por la concepción a abandonar su trabajo o a realizarlo de manera imperfecta, sea estudio, arte o cualquier otra cosa. Es privada de la libre disposición de sus fuerzas espirituales y corporales; se vuelve, por así decirlo, indiferente o incapaz para todo lo que constituye el acontecer del mundo, en la medida en que no se refiere a su hijo. Y ahora el hecho curioso: esa mujer se vuelve, de repente, bella. Y si la belleza es la armonía de las cualidades con el fin, el cumplimiento de un propósito — lo que ciertamente es una definición correcta — entonces ese volverse bella de la mujer es la prueba evidente de que el ser de la mujer reside en la maternidad y que todo lo demás es solo sustituto o adorno<span class="footnote-ref"><a href="#nota51">51</a></span>. La mujer es el símbolo de la naturaleza divina, el símbolo de lo eternamente creador, que actúa sin conciencia y sin intención, sin todas las debilidades y añadidos humanos, y que moldea el futuro<span class="footnote-ref"><a href="#nota52">52</a></span>. Actúa como el sol o como la tierra, mucho más allá de los límites de la comprensión humana; ejerce una función que no puede ser medida por criterios humanos. Y para concederle esa elevación por encima de las intrigas y de los juicios humanos, Dios le redujo aquello que es la señal característica de la condición humana — la grandeza y también la pequeñez de la condición humana: la personalidad, con todas sus realizaciones y también sus limitaciones.</p>
+
+            <p>Pues la mujer no es una personalidad. Como niña, eso será admitido sin mayores dificultades. En la mujer, sin embargo, actúa una ley peculiar, que naturalmente no se quiere reconocer, pero que no por eso deja de regir. El ser de la mujer es transformado por el contacto con el hombre. La mujer no solo recibe al niño; por la concepción toda su existencia, cuerpo y espíritu, es modificada e impregnada por el ser del hombre: se vuelve semejante al hombre; puede incluso decirse que se convierte en una parte, un miembro del hombre<span class="footnote-ref"><a href="#nota53">53</a></span>. Desde el primer hijo, la mujer ya no es más aquello que era antes; es entonces una mezcla de niña y hombre. Eso es un hecho científicamente fundamentado e incontestable<span class="footnote-ref"><a href="#nota54">54</a></span>. De ahí la semejanza exterior entre los cónyuges, de ahí el amor inquebrantable de la mujer por su marido, que sobrevive a todo. De ahí también la validez incontestable de la frase: “La mujer sea sumisa al hombre”<span class="footnote-ref"><a href="#nota55">55</a></span>. Incontestable — aunque violentamente contestada. Nada en la relación de sumisión será alterado por el movimiento femenino. El hombre sirve al mundo; la mujer, en cambio, sirve al hombre. Servir y servir de nuevo — esa es la sabiduría femenina desde el principio hasta el fin. El hombre es y permanece el señor de la mujer; ella siempre le obedecerá: no puede actuar de otro modo, exactamente como la mano obedece al cerebro<span class="footnote-ref"><a href="#nota56">56</a></span>. Y así como es señal de grave enfermedad cuando la mano deja de obedecer a la voluntad, así también es señal de grave enfermedad cuando la mujer se emancipa<span class="footnote-ref"><a href="#nota57">57</a></span>. Nada logrará con eso. Pues la llamada liberación de la mujer no es prueba de fuerza, sino solo prueba de la debilidad del hombre, de su degeneración o, al menos, de su enfermedad. Más temprano o más tarde la mujer caerá nuevamente en la dependencia. Y el único resultado de ese curioso movimiento — que se basa en la degeneración del hombre — será que el futuro señor de la mujer será menos digno que aquel contra el que ella lucha ahora. Y ella tendrá que obedecer a ese futuro señor, aunque lo desprecie, mientras antes se sometía al hombre con reverencia<span class="footnote-ref"><a href="#nota58">58</a></span>.</p>
+
+            <p>Pues aquí reside la seriedad de la cuestión de la mujer: solo en la manera como la mujer modela el futuro, en la forma como ejerce su oficio de madre; no en el derecho al voto, ni en la libertad de estudiar, ni en la disposición del patrimonio<span class="footnote-ref"><a href="#nota59">59</a></span>. La mujer carga con la responsabilidad por el futuro — una responsabilidad pesada, de la que debería ser recordada diariamente y a cada hora: con suavidad y con severidad, incansablemente. Vosotras sois responsables. No tenéis derechos, pero tenéis un deber<span class="footnote-ref"><a href="#nota60">60</a></span> que es aplastantemente pesado. Aquello que en general se llama cuestión de la mujer es, en verdad, una broma<span class="footnote-ref"><a href="#nota61">61</a></span>, un divertimento femenino con el que el hombre se divierte y que sabrá utilizar en el momento oportuno. Pues, en sí, no hay nada en contra de que la mujer participe del trabajo cotidiano. ¿Por qué sus fuerzas deberían permanecer ociosas? Pero aquello que trabajará y realizará — en la ciencia, en el arte, en la vida profesional o en la investigación — será siempre realizado al servicio del hombre<span class="footnote-ref"><a href="#nota62">62</a></span>. Él cosechará los frutos de su trabajo diligente y, con las piedras que la mujer trae, erguirá la construcción de su arte, de sus religiones, de su mundo. Incluso como mujer instruida y culta, será solo, bajo otra forma, aquello que fue para el antiguo alemán, aquello que siempre fue y debe ser: la sierva (Magd) que ejecuta el trabajo pesado<span class="footnote-ref"><a href="#nota63">63</a></span>. Si eso le agrada, ella — el símbolo de la naturaleza divina — puede hacerlo. Al menos así ayuda nuevamente, mientras que en el siglo pasado fue solo un obstáculo para la cultura. La cuestión de la mujer, en ese sentido, es en verdad una cuestión masculina. Y los hombres deberían promover el desarrollo de la mujer tanto como sea posible, pues así perfeccionan su mejor instrumento. Su mejor instrumento. Pues la mujer no solo posee una fuerza de intuición mucho más elevada que la del hombre; no solo comprende mucho más rápidamente una situación, un valor, un pensamiento — ella es sobre todo la gran inspiradora de todo aquello que el hombre crea<span class="footnote-ref"><a href="#nota64">64</a></span>. Ella — que es naturaleza divina — es aquella que desencadena todas las fuerzas en el hombre y que, en cierto sentido, es nuevamente señora y objetivo del hombre. Existen objetivos para la mujer que ningún hombre puede alcanzar. Pero ella aún no lo sabe. Y, sin embargo, debe aspirar a ello, si todo no quiere perecer. Pues la mujer carga con la responsabilidad por el futuro. Para construir el presente — pero no para crear — la mujer es incapaz. Le falta la personalidad<span class="footnote-ref"><a href="#nota65">65</a></span>.</p>
+
+            <p>La mujer no es una personalidad. De modo muy característico, uno de mis pacientes expresó eso cuando, en un estado melancólico, manifestó el deseo de vivir lo suficiente para conocer a su nieto. “¿Y no le interesa qué tipo de nuera le traerá su hijo?”, se le preguntó. “No”, respondió, “la nuera es solo un fenómeno pasajero”<span class="footnote-ref"><a href="#nota66">66</a></span>. Aquí está escondido un sentido profundo. Aquí nos encontramos ante la medida de valor por la cual se decide la bondad o la inferioridad de la mujer. A partir de ella misma no se puede reconocer su valor o desvalor; pues es solo un fenómeno pasajero. Su valor es demostrado por los hijos. El valor del hombre es demostrado por su acción; pues él es una persona que se ha apartado de la naturaleza divina — y debe apartarse de ella; él posee ese impulso. El valor de la mujer es mostrado por su fruto, exactamente como el árbol es reconocido por sus frutos<span class="footnote-ref"><a href="#nota67">67</a></span>. Pues ella está cerca de la naturaleza divina, tan cerca como el árbol: está vuelta hacia el Todo, una aparición pasajera, no una personalidad, no un ser que crea valores o transforma el mundo — al menos no por su propia fuerza<span class="footnote-ref"><a href="#nota68">68</a></span>. Pero posee instrumentos por medio de los cuales puede ejercer influencia, y está en su poder utilizar esos instrumentos de una manera o de otra, formarlos de esta o de aquella forma. Esos instrumentos son: el hombre a quien pertenece y sus hijos, a los cuales pertenece. La mujer es, en sentido mucho más estricto que el hombre, una fuerza de la naturaleza. Actúa de modo semejante al sol, que crea por su propia existencia, por su luz y por su vida; actúa sin intención. Es como el bosque, cuyo encanto imprime en el ser humano una determinada marca<span class="footnote-ref"><a href="#nota69">69</a></span>. Así como la montaña moldea al habitante de las montañas, y la llanura moldea de modo diferente al habitante del valle, y el mar aún otro tipo de hombre, así también actúa la mujer. Está cerca de la naturaleza divina; de ahí proviene su fuerza demoníaca<span class="footnote-ref"><a href="#nota70">70</a></span>, el súbito destello de luz espiritual que nunca se encuentra en el hombre, la naturaleza artística de la mujer, la naturaleza de la musa, el ser que constituye un objetivo. Pero en eso reside también su responsabilidad, su deber. No debe apartarse de la naturaleza divina. Si lo hace, destruirá el futuro<span class="footnote-ref"><a href="#nota71">71</a></span>.</p>
+
+            <p>¿Cómo se coloca entonces la mujer ante esa responsabilidad, cómo cumple su deber, cómo cuida del futuro? Esa es la cuestión de la mujer. Solo eso. La cuestión de la mujer es una cuestión de deber, no de derecho. En verdad, ningún ser humano posee derechos; y la mujer menos que todos. Pues ella nada hizo por el ser humano; ella nada puede hacer por el ser humano: eso contradice a la naturaleza<span class="footnote-ref"><a href="#nota72">72</a></span>. No derribó los bosques ni exterminó los animales; no construyó casa alguna ni compuso canción alguna; permaneció completamente ajena a la conquista del mundo por el hombre<span class="footnote-ref"><a href="#nota73">73</a></span>. Pero ella es la única que puede conquistar al hombre para el mundo: y ese es su deber. No existe derecho femenino; existe solo un deber femenino<span class="footnote-ref"><a href="#nota74">74</a></span>.</p>
+
+            <p>Y ahora, una vez más: ¿cómo se coloca la mujer ante ese deber? Hasta ahora, de ningún modo; pues aún ni siquiera lo conoce. Y cabe preguntarse si comprenderá ese deber cuando se le muestre. Pues la mujer es un ser extraño: fácilmente herido y difícilmente reconciliado<span class="footnote-ref"><a href="#nota75">75</a></span>. Es como el agua, en cuyo espejo<span class="footnote-ref"><a href="#nota76">76</a></span> puro la imagen se muestra claramente mientras el agua permanece tranquila. Pero si un golpe alcanza la profundidad del agua o el alma de la mujer, entonces la imagen se distorsiona en las ondas o en el odio y la pasión. ¡Que el espejo permanezca claro! Pues tengo cosas duras que decir.</p>
+
+            <p>Primeramente, pues, el registro de culpa de los hombres; pues, para decirlo desde ya, no fueron las mujeres las que crearon las condiciones insostenibles detrás de las cuales acecha la ruina de las naciones<span class="footnote-ref"><a href="#nota77">77</a></span>, sino los hombres. Sin embargo, sacarnos de esas condiciones no pueden nuevamente los hombres, sino solo las mujeres. Se trata de la decisión sobre si de hecho entraremos en el camino de la naturaleza divina, y esa decisión solo puede ser tomada por la mujer, que está más cerca de la esencia del mundo, que trae en sí el morir y devenir.</p>
+
+            <p>Todo ser humano sabe — y quien aún no sabe pronto lo aprenderá — que el hombre oprimió al sexo femenino durante siglos<span class="footnote-ref"><a href="#nota78">78</a></span>, que lo trató como juguete y como animal de trabajo, y al mismo tiempo lo privó deliberadamente de toda posibilidad de acompañar el ritmo de las etapas del desarrollo humano. A la mujer se le alejó todo saber y todo pensamiento; fue artificialmente educada para ser una muñeca y en ella se cultivó la “graciosa feminidad”, una ingenua frivolidad de colegiala que aún hoy muchos hombres consideran la cualidad deseable en una mujer<span class="footnote-ref"><a href="#nota79">79</a></span>. Eso ahora está cambiando, no por obra de los hombres — pues como hombres ya no valen gran cosa, sirviendo solo como profesionales<span class="footnote-ref"><a href="#nota80">80</a></span> — sino por la fuerza de las propias mujeres. Sin duda una realización significativa, un esfuerzo que tendrá la aprobación de todo hombre. Pero ese no es el punto central de la cuestión; y con gimnasios para muchachas, campañas por el derecho al voto y asociaciones para la elevación moral de los hombres (pues en eso termina resultando todo) no se llegará de ningún modo al núcleo del problema. Aquello que falta a las mujeres es la conciencia del deber. Les fue retirada por los hombres, lenta y profundamente; y ahora — hay que decirlo — ahora las mujeres se han vuelto olvidadizas de sus deberes<span class="footnote-ref"><a href="#nota81">81</a></span>.</p>
+
+            <p>Ya les he dicho que el sentimiento de personalidad<span class="footnote-ref"><a href="#nota82">82</a></span> del ser humano, su autoconciencia, ha disminuido: su orgullo de sostenerse por sí mismo y de realizar grandes cosas a partir de sí propio. Al mismo tiempo, el conocimiento de la naturaleza divina aún no se ha convertido en patrimonio común; e incluso los pocos que sospechan de ella aún no han conseguido, ni siquiera intentado, poner su vida en armonía<span class="footnote-ref"><a href="#nota83">83</a></span> con ese conocimiento. La armonía del ser humano con el universo aún no ha sido alcanzada. En su lugar, se construyó el concepto de humanidad<span class="footnote-ref"><a href="#nota84">84</a></span>, al cual se integra el individuo como miembro servidor, ante el cual el individuo posee obligaciones. Esa humanidad tomó, de cierto modo, el lugar del Dios personal; promoverla, ayudarla, se convirtió en la tarea más elevada. Y no se puede negar que, en cierto sentido, la religión del amor al prójimo<span class="footnote-ref"><a href="#nota85">85</a></span> se ha hecho ahora realidad. Partiendo de la divinidad de ese concepto de humanidad, se atribuyeron a ese nuevo dios derechos — los famosos derechos humanos, que reciben ora un nombre, ora otro: derecho al trabajo, derecho al libre desarrollo, derecho a la alimentación y así sucesivamente. Todas nuestras instituciones sociales están construidas sobre eso, y todo nuestro pensamiento y acción modernos están impregnados por la ley del amor al prójimo, por la devoción al nuevo dios humanidad. De manera curiosa — y en una contradicción que revela claramente la confusión de los conceptos, pero que es explicable por la propia naturaleza humana — surgió, justo en el tiempo en que el sentimiento de personalidad se debilitaba y las personalidades se extinguían, un discurso sobre la personalidad libre<span class="footnote-ref"><a href="#nota86">86</a></span>, sobre el vivir-se plenamente, sobre el derecho a la personalidad. Y en ese discurso se cree. También la mujer cree en eso; sí, sobre todo a ella se le inculcó esa idea, y entonces ella, con su imaginación viva, pasó a fantasear al respecto. Derecho a la personalidad: con eso ella nada podía hacer. Pues no posee personalidad, es una aparición pasajera, una parte del hombre y una madre, un símbolo<span class="footnote-ref"><a href="#nota87">87</a></span>. Para la mujer, la expresión personalidad es una frase incomprensible. Para acercarla a su comprensión fue necesario añadir algo. Ese algo fue la palabra felicidad. De modo que ahora se dice: el derecho a la felicidad<span class="footnote-ref"><a href="#nota88">88</a></span> de la personalidad. Naturalmente eso no fue formulado expresamente así; pero interiormente ocurrió de esa manera, pues la mujer no puede imaginar otra cosa bajo la idea de personalidad sino la felicidad y el hacer feliz. Vivirse plenamente, ser una personalidad, es para ella una expresión que despierta ideas extrañas. El vivirse plenamente de la mujer ya fue una moda, y aún lo es en ciertos círculos, y todos saben por experiencia qué frutos produce esa visión de vida. Las mujeres libertinas muestran solo el exceso<span class="footnote-ref"><a href="#nota89">89</a></span>. En verdad, ninguna mujer está más libre de la idea de que posee un derecho a la personalidad. Eso quiere decir: un derecho a la felicidad. Y aquí comienza aquello que yo llamo olvido del deber<span class="footnote-ref"><a href="#nota90">90</a></span>, la falta de conciencia moral de la mujer.</p>
+
+            <p>Volverse feliz y hacer feliz: esos son los impulsos fundamentales de la mujer<span class="footnote-ref"><a href="#nota91">91</a></span>. Necesitan existir; los fines que la naturaleza persigue con ese don dado a la mujer son claramente reconocibles. Si alguna ley natural ha sido demostrada, es la de la conservación de la especie: la naturaleza emplea todas las fuerzas para asegurar la reproducción. El medio, entre los seres humanos, es el hambre de felicidad<span class="footnote-ref"><a href="#nota92">92</a></span> de la mujer. Ella la impulsa repetidamente a los brazos del hombre; y, por más veces que la ilusión de la felicidad sea destruida (pues es una ilusión), tantas veces despierta de nuevo. Ningún niño más nacería si ese insaciable deseo de felicidad no estuviera plantado en lo más profundo del ser de la mujer. Ese impulso natural no debe ser aún artificialmente alimentado; si no se quiere que ahogue y oprima todas las otras inclinaciones, es preciso contenerlo y, cuando sea necesario, podarlo<span class="footnote-ref"><a href="#nota93">93</a></span>. Ningún daño puede ser causado con eso. La fuerza de ese impulso es tan grande que supera incluso los mayores obstáculos. Hasta tiempos muy recientes, ese deseo de felicidad, ese impulso natural de la mujer, fue mantenido dentro de límites adecuados por la posición peculiar de la mujer y por su educación. Pero desde que el hombre perdió su autoconfianza, desde que ya no es más una personalidad y tampoco vive en armonía con el universo, desde que no se atreve más a mantener a la mujer en sumisión y obediencia, porque imagina que ella posee derechos humanos, desde que ya no consigue dominar a la mujer, porque se ha vuelto débil — pues así es como se presentan las cosas ahora — desde entonces el impulso de felicidad de la mujer ha crecido exuberantemente y ha sofocado su conciencia natural, o al menos la ha entorpecido — pero temo que la haya sofocado.</p>
+
+            <p>Lo más importante en la vida de la mujer es el matrimonio. No solo en su propia concepción es eso lo más importante; también para la naturaleza actuante es lo más importante, pues el matrimonio es el medio para el fin que la naturaleza persigue. Al pensar en eso, la mujer pregunta primero: ¿seré feliz con ese hombre, o podré al menos hacerlo feliz si yo misma tengo que renunciar a la felicidad? Así piensa la joven durante el cortejo<span class="footnote-ref"><a href="#nota94">94</a></span>; así piensa la madre cuando debe entregar a su hija. Pero eso es simplemente un crimen. ¿La felicidad es el objetivo del matrimonio? Ciertamente que no. Eso sería pensar muy bajo de ese sacramento<span class="footnote-ref"><a href="#nota95">95</a></span>. Ustedes oyen que lo llamo sacramento, aunque yo sea protestante en el sentido más riguroso de la palabra. Durante milenios no se pensó así sobre el matrimonio; y el verdadero hombre aún hoy no piensa tan bajo. Y menos aún la naturaleza. ¿Qué le importa a la naturaleza la felicidad de la mujer — o del ser humano en general?<span class="footnote-ref"><a href="#nota96">96</a></span> Para la naturaleza, la piedra o el río están tan cerca como el ser humano. Ambos son solo instrumentos<span class="footnote-ref"><a href="#nota97">97</a></span>; y también la felicidad es solo un medio para su propósito inescrutable. Para aquel que conoce la naturaleza divina, el matrimonio tiene solo un sentido: el sentido que Nietzsche coloca en sus palabras sobre el “jardín del matrimonio”<span class="footnote-ref"><a href="#nota98">98</a></span>, esto es, que el niño crezca bien y supere a los padres. Eso es naturaleza divina. Pero ¿qué ocurre si la mujer — ese símbolo de la naturaleza divina, esa madre cuyo nombre se pronuncia solo con reverencia, ese modelo para la madre tierra, para la madre sol, para la madre naturaleza, para la madre de Dios — si esa madre busca la felicidad en lugar de cumplir su oficio? ¿Si se entrega al hombre que le agrada, sin importar si él está enfermo, sin importar si pertenece a su raza o no, si es un alemán del norte o del sur, un conde o un pastor, un italiano o un germánico, con tal de que lo ame?</p>
+
+            <p>¡El amor de una joven! El hombre experimentado ríe cuando oye eso. ¿Entonces el amor de una joven, ese impulso ciego e irreflexivo, se ha convertido en juez del futuro? ¡Del impulso de una pequeña tonta depende el destino del mundo! ¿Derecho al amor? ¿Toda mujer puede seguir su amor? ¿Solo se puede casar por amor, de lo contrario la mujer es humillada, el matrimonio se convierte en prostitución? Verdaderamente, siento repugnancia cuando oigo esas frases vacías, esas frases perversas. El derecho de casarse por amor pertenece solo a los más grandes entre los seres humanos<span class="footnote-ref"><a href="#nota99">99</a></span>, a los pocos que conocen la naturaleza divina y a los que realmente aparece una mujer que sea para ellos naturaleza divina; para todos los demás ese derecho es una injusticia. Sobre todo, sin embargo, ese derecho pertenece solo al hombre; pues solo el hombre puede amar de modo impersonal<span class="footnote-ref"><a href="#nota100">100</a></span>, puede venerar en la mujer la naturaleza divina; la mujer, en cambio, ama la personalidad. Y ese amor es muy humano. Créanme: aquí tienen ante sí la cuestión de la mujer, aquí está el oficio de juez de la mujer, la responsabilidad de la mujer.</p>
+
+            <p>¡El amor de una joven! No hay que dejarse engañar por tales ideas. Un amor así simplemente no existe. Es solo una mentira. El amor de la mujer comienza solo con el matrimonio; solo cuando se convierte en propiedad del hombre puede amar una mujer: hasta entonces se trata de un impulso tan bajo como el hambre o la sed. Pero cuando se convierte en propiedad del hombre, entonces debe amarlo; no puede actuar de otro modo. El amor surge entonces por sí mismo. La naturaleza no es una artesana inepta. Realizó bien su trabajo y fuerza el amor de la mujer a través del matrimonio; pues, por la concepción, la mujer se convierte en una parte del hombre: pasa entonces a vivir en él, porque vive a sí misma en él. Se ha convertido en él, su cuerpo se convierte en el cuerpo de él, su espíritu se convierte en el espíritu de él. Ese es el sentido de la frase: “Debéis ser una sola carne y una sola sangre”<span class="footnote-ref"><a href="#nota101">101</a></span>. Solo eso.</p>
+
+            <p>La mujer carga con la responsabilidad por el futuro. La culpa de que la más noble raza del mundo, la única verdaderamente noble, esté miserablemente pereciendo, recae sobre las mujeres. Esa es mi respuesta a la cuestión de la mujer. O, si lo prefieren de otra forma: la mujer moderna aún no es capaz de gobernarse a sí misma, sino que se deja gobernar por su impulso de felicidad. No posee conciencia del deber. Y esa falta de conciencia del deber explica también otro hecho que frecuentemente se presenta como argumento importante en la discusión de la cuestión de la mujer: el gran número de mujeres solteras. La mujer tiene el deber de casarse: debe intentar, por todos los medios, conquistar a un hombre, por todos los medios que la astucia femenina ya ha inventado e imaginado; pues solo como compañera del hombre, como madre, cumple su primera tarea natural. Esa es la primera cosa que se debe exigir a una joven: que ella, con ojos claros y lúcidos, no cegados por la pasión, busque a aquel que será su señor y que puede hacerla volverse plenamente humana. Ese debería ser el objetivo de la educación femenina<span class="footnote-ref"><a href="#nota102">102</a></span>. Aquella que se considera demasiado elevada para caminar sola por el mundo debe al menos saber que priva a ese mundo de su futuro, que es culpable si una generación entera, que reposa en ella, no llega a florecer, que sofoca la vida. Y si aún así tiene la osadía de permanecer soltera por causa de su propia felicidad (hay también otras razones para permanecer soltera que reconozco y respeto plenamente); pero si lo hace por causa de su felicidad, entonces que lo haga. Pues una joven así no merece tener hijos<span class="footnote-ref"><a href="#nota103">103</a></span>. Es indigna de gobernar el futuro.</p>
+
+            <p>Ese es el deseo de felicidad de la mujer, el gran peligro que corrompe la raza, que mezcló sangre eslava y latina a la nuestra y que ahora entrega la sangre europea incluso a japoneses, chinos y negros, en la India, en América y en África. Ese peligro casi no deja esperanza para el futuro<span class="footnote-ref"><a href="#nota104">104</a></span>.</p>
+
+            <p>El segundo impulso fundamental del ser femenino — ayudar todo lo que es indefenso, sostener todo lo que es débil y elevarlo, hacerlo feliz — duplica el peligro. También ese impulso está profundamente plantado en el ser de la mujer y debe actuar en ella; pues en él se enraíza el amor materno, ese mayor de todos los milagros, que solo hace posible la continuidad de la humanidad. También ese impulso ha crecido de forma excesiva; también en él se muestra que la mujer no conoce su deber. Se puede perdonar cuando una madre cría con todo cuidado a su hijo débil; puede incluso comprenderse cuando mantiene vivo incluso al hijo idiota. Pero cuando se enorgullece, en tonta ostentación, de su actividad caritativa entre enfermos e inválidos, entre borrachos y epilépticos, cuando apoya y conduce la locura de nuestro tiempo, que busca mantener vivo todo lo que es débil, participando de todo aquello que perjudica el futuro de la raza, eso no es menos condenable que su negligencia en la elección del matrimonio. También en eso muestra que no consigue dominarse a sí misma, que es dominada por sus impulsos, que necesita de un señor que la mantenga firmemente en la naturaleza divina.</p>
+
+            <p>¿Qué debe entonces hacer la mujer? También para eso existe una respuesta. Debe educar al señor al cual pueda servir con honor y reverencia. Desgraciadamente esa respuesta está en contradicción con el espíritu del tiempo. La generación actual está lejos de la cultura y de la armonía con la naturaleza divina. Del hombre ya ni siquiera se puede hablar. Ya les he dicho: se ha convertido en un esclavo profesional y, en tres cuartas partes de su naturaleza, se ha vuelto femenino. Todos los ideales de nuestra época son ideales femeninos, ideales de felicidad y de paz en la tierra<span class="footnote-ref"><a href="#nota105">105</a></span>, ciertamente no objetivos que ejerciten la fuerza del hombre. Así ha perdido también su dominio. ¿Y la mujer? También ella, como buscadora de felicidad, no es capaz de conducir a la naturaleza divina. Pero posee en sus manos el medio por el cual puede moldear el futuro: la educación de los niños. Lentamente y de manera casi imperceptible la influencia del padre ha disminuido; y, hacia donde quiera que se mire, es siempre la madre quien educa.</p>
+
+            <p>Solo el hombre puede transformar el mundo; solo él posee la fuerza de la personalidad para realizar algo duradero; solo él es creador de la cultura. Así, la primera preocupación debe ser la educación del niño para que se convierta en hombre. Eso quiere decir: para la lucha, para el peligro, para la acción<span class="footnote-ref"><a href="#nota106">106</a></span>. El niño no pertenece al cuarto de niños: pertenece a la calle, a la vida humana, y eso desde la más tierna infancia. Tampoco pertenece a la escuela, sino a la naturaleza, al contacto con las fuerzas elementales, a la amistad y a la hostilidad con sus hermanos en el árbol y en la roca, en el mar y en el sol, en el animal y en el cielo<span class="footnote-ref"><a href="#nota107">107</a></span>. ¡Que por fin se lo libere de esa estúpida acumulación de cosas para memorizar; que se le den tareas de acción y de creación; que se lo endurezca contra sí mismo y contra el mundo; que se le enseñe a amar el peligro<span class="footnote-ref"><a href="#nota108">108</a></span>; que se le enseñe que él es un juego, que él es lo más alto en la vida. Que se le enseñe a obedecer, para que pueda mandar; pues él es el señor nato entre los seres humanos. Que se le enseñe el dominio de sí mismo. La gran renuncia de que es capaz no debe reprimirse; debe darse libre curso a sus impulsos y humores; pero no debe ayudársele cuando parezca estar hundiéndose. Médico, ayúdate a ti mismo<span class="footnote-ref"><a href="#nota109">109</a></span>: ese es el lema de la vida masculina, el lema de la educación. Que se arranque despiadadamente toda sentimentalidad; el sentimiento saludable permanecerá de todos modos. Que se le enseñe desde la infancia la reverencia ante la naturaleza divina y ante su símbolo, la mujer; que se le enseñe que no puede tomar ciegamente a una mujer allí donde el deseo lo atraiga, que es fundador de un linaje, que debe ser fuerte de cuerpo y de alma para poder engendrar hijos, que su primer y más sagrado deber es contraer matrimonio, no en el cielo, sino sobre la tierra, con plena conciencia de la responsabilidad, pero que debe antes renunciar a todo amor si no es fuerte de cuerpo y de alma. Limitar el número de hijos. Eso es muy bueno. ¿Para qué tantos seres humanos? Pero el niño que nazca debe ser bueno<span class="footnote-ref"><a href="#nota110">110</a></span>. El niño debe ser soltado de las riendas de la madre. La madre debe educarlo para que se convierta en el futuro señor de la mujer. Debe hacerle despreciables todos los ideales femeninos<span class="footnote-ref"><a href="#nota111">111</a></span>. Debe enseñarle a despreciar la felicidad. Debe enseñarle a comprender que él tiene deberes y no derechos, que es un instrumento en la mano de la naturaleza divina. Debe enseñarle a ver el todo en el fragmento, a refrenar su egoísmo, a ligarlo a la tierra, a mostrarle: no eres más que la mujer, pero eres diferente. No eres más que el árbol, pero eres diferente. No eres más noble que cualquier ser a tu lado, pero eres diferente. Tu peligro no es mayor que el del pájaro en el aire, y tu vida no vale más. Despréciala. No busques la felicidad. Tú no eres mujer. Que la felicidad te permanezca distante. Relaciónate con la naturaleza divina. Aprende a comprenderla. Respeta en ti mismo la naturaleza divina. Ten reverencia ante la mujer; ella también es naturaleza divina. Ten reverencia ante cada cosa que existe y ante el todo; aprende a admirar y a maravillarte; y, sobre todo, aprende a actuar. Tú cargas con la responsabilidad por todo lo que ocurre.</p>
+
+            <p>Pero ¿dónde están ahora las madres que envían al hijo al peligro? ¿Que se alegran con su audacia y con su desprecio por la felicidad? ¿Dónde está el movimiento femenino que quiebra el poder de las escuelas? ¿Dónde están las mujeres que enseñan al niño la naturaleza divina? ¿Que le muestran: tú eres un ser humano, no un ser inmortal con un alma inmortal? De ti no quedará más que de la hoja que el viento arranca de la rama; de ti nada quedará además de tus actos. Tú no sufres más, cuando eres herido en el cuerpo y en el alma, que el río en el que arrojas una piedra; tu sufrimiento nada es, tus heridas nada son, tus peligros nada son. Toda criatura tiene el mismo sufrimiento que tú; cada una carga silenciosamente su destino y cumple silenciosamente su obra; ¿y solo tú, un hombre, querrías llorar? ¡Oye el canto que el árbol entona cuando la tempestad lo envuelve! Esa es la alegría del peligro. ¡Oye el ímpetu ruidoso del arroyo que lucha con la roca! Esa es la alegría del peligro. ¡Júbila ante la vida, la lucha, la alegría, la ruina<span class="footnote-ref"><a href="#nota112">112</a></span>! ¿Dónde está la madre que le muestra, en el símbolo de la naturaleza, la jerarquía del mundo, que le dice: no importa tu habilidad, sino que debes ser capaz, aunque por ello perezcas? Al árbol no se le pregunta si sus ramas se parten bajo los frutos; debe cargarlos. Haz tú lo mismo. Aprende a obedecer. Toda criatura debe obedecer; toda la naturaleza obedece a leyes eternas. Ajústate a tu destino y vívelo. En todas partes hay lo alto y lo bajo<span class="footnote-ref"><a href="#nota113">113</a></span>; examínate para saber si has sido llamado a ser señor; examínate sin cesar, y si no tienes la fuerza, entonces sé siervo de buena voluntad, con alegría y sin envidia.</p>
+
+            <p>Así debería ser la educación de los niños. La madre debería dominar en sí el amor simiesco<span class="footnote-ref"><a href="#nota114">114</a></span>, debería reconocer que le ha sido confiado un valor eterno. Debería decirse a sí misma, si el niño se accidenta: bien, él me era querido; pero mejor que haya perecido con honor a que viva cobardemente. La naturaleza tiene millones de gérmenes en su seno. El niño muerto es enterrado, pero allí adelante nace otro, y allí otro; y tal vez él valga más que el tuyo. El árbol da sus frutos, sus hijos; la hierba lo hace y la roca también; todos sufren como tú, pero aún así lo hacen. Ese es tu destino: ama tu destino, sométete a él. No te ocurre más dolor que a todos los otros, y tú no eres un todo: eres solo una parte en el Todo, un servidor de la naturaleza divina. Reconoce el morir y el devenir, y entonces tu dolor será soportable. Reconoce eso, y ten reverencia ante la eternidad.</p>
+
+            <p>Son exigencias duras; lo sé. Pero son necesarias; son necesarias, aunque contradigan todo aquello que hoy el ser humano llama elevado y sagrado, todo aquello que la mujer siente y que tiene por su mejor, aquello que muestra a sus hijas y les enseña como ejemplar; pues también las hijas deben ser educadas de otra manera, de manera enteramente diversa. Y ellas son fáciles de educar; pues en ellas reside la naturaleza divina. Basta un único impulso, y la muchacha encontrará aquello que está en ella: la fuerza creadora del futuro. Pero, naturalmente, ese impulso necesita ser dado. Ella debe saber para qué está en el mundo. Debe aprender que nació para ser madre<span class="footnote-ref"><a href="#nota115">115</a></span>. Debe aprender que el discurso sobre el único y singular amor es solo discurso, y no verdad. Debe aprender que el dolor y el placer del amor no tienen absolutamente nada de extraordinario, nada que deba ser cultivado como una rareza, sino que son algo cotidiano. Debe aprender que sus sentimientos no son sagrados en sí mismos, aunque sean declarados sagrados — pues ¿qué no se dice de los delicados sentimientos de una joven? —, sino que son impulsos de la naturaleza, exactamente los mismos impulsos que hacen florecer la flor, cantar al pájaro y desgastarse a la roca, que no es privilegio del ser humano amar, y que él, el más magnífico de todos, no constituye excepción alguna, que el amor no es en absoluto algo sagrado, sino un deber, y que la mujer nació para soportar, cargar y servir, y para nada más, que la felicidad es solo un señuelo de la naturaleza, y que ese mismo fuego fatuo de la felicidad volverá siempre a aparecer ante sus ojos mientras sea mujer, del mismo modo como el árbol, todos los años, adorna su fuego fatuo de la felicidad<span class="footnote-ref"><a href="#nota116">116</a></span>. Pero ¿dónde está la madre que, en medio de los tontos sueños de muchacha de su hija, le muestra la mariposa y le dice: ves, eso eres tú. Eso es el morir y devenir. Pocos días, y la colorida mariposa de verano habrá muerto, muerto de su amor, muerto para que algo llegue a ser; y así eres tú. Tú nada vales. Solo el fruto te hace valiosa. Eres bella como la flor en el árbol; pero de ti nada permanece además del fruto. Tú misma pereces. Ten reverencia ante tu vocación. No mires a tu felicidad, sino a tu deber. Mira al interior de la naturaleza: en todas partes encontrarás lo mismo que en ti, el mismo amor, la misma felicidad, el mismo dolor. Son solo medios para un fin, no son sentimientos sagrados, son instrumentos de la naturaleza divina, así como tú misma eres un instrumento. Ten reverencia ante tu fin, y no te entregues ciegamente a tu amor. Tu amor no es amor; es anhelo, pero no amar. Solo se puede amar aquello que se posee; lo que no se tiene, se desea. Y esa nostalgia que llamas amor es algo que compartes con todos los seres de tu edad primaveral. No es un sentimiento personal, sino general, que no se dirige a ese hombre, al que ni siquiera conoces, sino que lo posees para que llegues al florecimiento, exactamente como el lila y el rosal lo poseen. Eres una flor; el fruto, sin embargo, es lo que te ennoblece. No busques la felicidad, sino comprende que eres un símbolo del mundo, una imagen figurativa de todo lo que es pasajero, un miembro cercano al corazón de la naturaleza divina, un ser que muere y se convierte.</p>
+
+            <p>Un símbolo de Dios: eso es la mujer. En ella el hombre ama el pasado y el futuro; de ella fluye para él la fuerza creadora<span class="footnote-ref"><a href="#nota117">117</a></span>, la voluntad, el esfuerzo que aspira y se eleva. La mujer es, en verdad, la fuente de lo más bello que existe en la tierra, un ser cuyo elogio jamás cesará, un símbolo que nos eleva, en verdad una madre de Dios<span class="footnote-ref"><a href="#nota118">118</a></span>.</p>
+
+            <!-- Nota del editor original -->
+            <div style="margin-top: 2rem; padding-top: 1rem; border-top: 1px solid #e2d6c0; font-size: 0.85rem; font-style: italic;">
+                <p><strong>Nota del editor de la publicación original:</strong> Ante el movimiento sufragista femenino que ahora también se manifiesta en Berlín, consideré mi deber pedir a alguien que, como médico especialista en enfermedades nerviosas y director de un sanatorio, aprendió a conocer profundamente a la mujer moderna por medio de su experiencia, que me permitiera publicar un capítulo de su libro <em>“Rumbo a la naturaleza divina”</em> (<em>Hin zur Gottnatur</em>, editorial S. Hirzel, Leipzig)<span class="footnote-ref"><a href="#nota119">119</a></span>. Esa autorización fue concedida tanto por el autor como por la editorial. Pido que esta conferencia sea discutida, tanto como sea posible, en todos los círculos familiares<span class="footnote-ref"><a href="#nota120">120</a></span>, sin prejuicio, y que sea considerada solo como los pensamientos de un hombre que no odia, sino que ama y reverencia lo que es sagrado.<br><strong>Wilhelm Schwaner</strong><span class="footnote-ref"><a href="#nota121">121</a></span>.</p>
+            </div>
+
+            <!-- Notas de pie de página -->
+            <div class="footnotes">
+                <h3>Notas</h3>
+                <ol>
+                    <li id="nota1">“Das ewig Weibliche zieht uns hinan” es el verso final de la segunda parte de <em>Fausto</em> (1832) de Johann Wolfgang von Goethe. La expresión “eterno femenino” (<em>Ewig-Weibliche</em>) se convirtió en un concepto cultural importante en la filosofía y literatura alemanas del siglo XIX. Generalmente se refiere a un principio simbólico asociado a la elevación espiritual, creación y transformación de la vida.</li>
+                    <li id="nota2"><em>Fausto</em> es la obra monumental de Goethe, publicada en dos partes (1808 y 1832). La frase aparece en el coro místico final, que concluye la obra con una interpretación metafísica de la redención humana.</li>
+                    <li id="nota3">“<em>Frauenfrage</em>” (cuestión de la mujer) es una expresión muy común en el debate intelectual europeo entre 1870 y 1920. Se refiere a las discusiones sobre: derechos de las mujeres; educación femenina; trabajo femenino; papel social de la mujer. En Alemania, este debate estaba ligado al primer movimiento feminista alemán (<em>erste Frauenbewegung</em>).</li>
+                    <li id="nota4">Groddeck introduce aquí una idea típica de su visión psicosomática: lo femenino no es solo una categoría social, sino un principio fundamental de la vida y la naturaleza, que influye en el comportamiento humano.</li>
+                    <li id="nota5">La referencia es al hecho de que <em>Fausto</em> termina con el verso sobre lo eterno femenino, sugiriendo que la redención del protagonista está ligada a ese principio simbólico. Muchos intérpretes ven en ello: influencia del romanticismo alemán; elementos de la mística cristiana; simbolismo mariano.</li>
+                    <li id="nota6">La imagen de la verdad como fuente que brota de la tierra aparece frecuentemente en la tradición filosófica alemana y remite a la idea de que: la verdad existe independientemente de ser reconocida; el pensador solo la expresa.</li>
+                    <li id="nota7">“<em>Alles Vergängliche ist nur ein Gleichnis</em>” es un verso del coro final de <em>Fausto II</em> (1832) de Johann Wolfgang von Goethe. El pasaje completo pertenece a la conclusión mística de la obra y se convirtió en una de las formulaciones filosóficas más influyentes del romanticismo alemán. El verso sugiere que los fenómenos del mundo sensible son símbolos de realidades más profundas.</li>
+                    <li id="nota8">La descripción de la multitud apresurada en la gran ciudad refleja críticas comunes en la cultura europea de principios del siglo XX a: la industrialización; alienación urbana; ritmo de la vida moderna. Autores como Simmel y Benjamin desarrollaron reflexiones semejantes sobre la experiencia de la metrópoli.</li>
+                    <li id="nota9">“<em>Gottnatur</em>” (naturaleza divina) es un término característico de la tradición filosófica alemana del siglo XIX, relacionado con el panteísmo romántico. En autores como Goethe, Schelling y Novalis, la naturaleza es concebida como manifestación de lo divino. Groddeck utiliza el término para indicar que la mujer representa una expresión simbólica de la fuerza vital universal.</li>
+                    <li id="nota10">En el pensamiento alemán del siglo XIX y principios del XX, el concepto de personalidad poseía un significado filosófico fuerte, ligado a la autonomía moral y a la capacidad creadora del individuo. La filosofía idealista alemana consideraba frecuentemente la personalidad como el punto culminante del desarrollo humano.</li>
+                    <li id="nota11">Esta afirmación debe interpretarse en el contexto del pensamiento de Groddeck. Él no pretende negar la individualidad femenina, sino argumentar que lo femenino expresa fuerzas vitales más amplias que la individualidad racional, acercándose al concepto psicoanalítico posterior del “Ello” (Id).</li>
+                    <li id="nota12">Simbolismo goethiano. Al citar a Goethe, Groddeck inserta su reflexión en una tradición cultural alemana que interpreta la realidad como sistema de símbolos. Para Goethe, el símbolo (<em>Symbol</em>) no es mera metáfora, sino una manifestación concreta de una verdad universal.</li>
+                    <li id="nota13">“<em>Stirb und werde</em>” (muere y deviene) es una expresión famosa del poema “Selige Sehnsucht” de Goethe (1814), incluido en el ciclo <em>West-östlicher Divan</em>. El concepto indica el proceso espiritual de transformación continua del ser humano. En la filosofía alemana, esta idea fue asociada a: transformación espiritual; renacimiento interior; dinámica de la vida.</li>
+                    <li id="nota14">El texto anticipa ideas que Groddeck desarrollaría posteriormente en su obra principal: <em>Das Buch vom Es</em> (1923). En esa obra, Groddeck defiende que el ser humano no es gobernado por el “yo”, sino por una fuerza inconsciente que denomina “Es” (Ello).</li>
+                    <li id="nota15">Repetición de la famosa frase del coro final de <em>Fausto II</em> de Goethe (1832). El concepto central es que los fenómenos del mundo sensible son representaciones simbólicas de una realidad más profunda. En el romanticismo alemán, el símbolo (<em>Symbol</em>) expresa una unidad entre: naturaleza; espíritu; divino.</li>
+                    <li id="nota16">La idea de renuncia posee fuerte presencia en la tradición filosófica alemana, especialmente en: Schopenhauer (renuncia de la voluntad); Goethe (sabiduría adquirida al final de la vida); espiritualidad cristiana protestante. Groddeck asocia aquí la sabiduría final de la vida a la aceptación de la condición simbólica del ser humano.</li>
+                    <li id="nota17">En el pensamiento de Groddeck, lo femenino aparece como manifestación privilegiada de la fuerza vital de la naturaleza. Este tema tiene paralelos en: romanticismo alemán; filosofía de la naturaleza (<em>Naturphilosophie</em>); antropología simbólica del siglo XIX.</li>
+                    <li id="nota18">La frase expresa un principio biológico y filosófico fundamental: la vida depende de la muerte para su continuidad. Este tema aparece en varias tradiciones intelectuales: biología evolutiva; filosofía de la naturaleza; dialéctica de la vida en Nietzsche.</li>
+                    <li id="nota19">La distinción entre moral masculina y femenina era común en el pensamiento europeo entre finales del siglo XIX y principios del siglo XX. Autores como Nietzsche, Weininger y Schopenhauer desarrollaron teorías semejantes, asociando: mujer → esfera afectiva y relacional; hombre → esfera intelectual y activa.</li>
+                    <li id="nota20">El término indica una moral fundamentada en las emociones y en las relaciones personales, en contraste con una moral basada en principios abstractos o racionales. En la filosofía alemana, la oposición entre sentimiento y razón aparece en debates desde Kant y Schiller.</li>
+                    <li id="nota21">Se refiere a una moral fundada en el intelecto y en la reflexión racional. Esta distinción entre sentimiento y razón también aparece en Simmel y en la sociología alemana de la época.</li>
+                    <li id="nota22">La idea de que la mujer se convierte en “parte del hombre” tras la unión amorosa refleja concepciones tradicionales del matrimonio y la sexualidad a principios del siglo XX. Sin embargo, en Groddeck esta formulación posee también un sentido simbólico ligado a su teoría de la unidad vital de la naturaleza.</li>
+                    <li id="nota23">La referencia a la naturaleza indica que Groddeck interpreta el comportamiento humano no solo en términos sociales o morales, sino también biológicos y psicológicos. Este enfoque anticipa su teoría psicosomática.</li>
+                    <li id="nota24">Esta afirmación refleja concepciones médicas y biológicas difundidas a principios del siglo XX, según las cuales los instintos femeninos serían más orientados a la estabilidad de la relación y de la reproducción. Hoy esta interpretación es considerada históricamente situada y culturalmente condicionada.</li>
+                    <li id="nota25">Para Groddeck, el hombre necesita controlar sus impulsos para permanecer fiel, lo que transforma la fidelidad en un acto moral consciente. Este argumento hace eco de ideas de ética de la autodisciplina, presentes en la tradición filosófica europea.</li>
+                    <li id="nota26">Esta afirmación extrema debe entenderse en el contexto simbólico de la argumentación de Groddeck. Él no pretende negar la individualidad femenina, sino sostener que la mujer representa, en su visión, algo más universal que la individualidad, esto es, la propia fuerza de la naturaleza. Aun así, esta posición refleja debates controvertidos sobre género en la cultura intelectual de la época.</li>
+                    <li id="nota27">La idea de que lo femenino simboliza el todo de la naturaleza remite a la tradición del romanticismo alemán y al concepto goethiano de <em>Ewig-Weibliche</em> (lo eterno femenino).</li>
+                    <li id="nota28">Groddeck sugiere que el hombre puede sacrificar su instinto en nombre de una idea — esto es, un ideal moral o espiritual. Esta oposición entre instinto e ideal aparece también en: Nietzsche; Freud; filosofía moral moderna.</li>
+                    <li id="nota29">La expresión combina dos referencias goethianas: la idea de símbolo (<em>Gleichnis</em>) y la concepción de naturaleza divina (<em>Gottnatur</em>). Groddeck interpreta a la mujer como manifestación simbólica de la totalidad del mundo.</li>
+                    <li id="nota30">La idea de dominar los impulsos sin reprimirlos completamente aparece en varios pensadores alemanes del siglo XIX, especialmente en Goethe y Nietzsche. Se trata de una ética de la autodisciplina espiritual.</li>
+                    <li id="nota31">Groddeck menciona a Goethe como ejemplo de hombre que habría alcanzado esa segunda forma de fidelidad. Goethe mantuvo diversas relaciones amorosas a lo largo de su vida, pero también reflexionó profundamente sobre el amor y la naturaleza humana en su obra literaria.</li>
+                    <li id="nota34">Expresión de origen bíblico (Mateo 12:31). En el contexto religioso, significa negar conscientemente la verdad espiritual. Groddeck utiliza la expresión metafóricamente para indicar la negación de la naturaleza vital.</li>
+                    <li id="nota35">Groddeck rechaza la idea de una moral universal que obligue a todos los hombres a la fidelidad absoluta. Para él, tal regla ignoraría la diversidad de la naturaleza humana.</li>
+                    <li id="nota36">Groddeck escribe este texto en el contexto de las primeras décadas del siglo XX, cuando el movimiento feminista europeo se estaba expandiendo rápidamente. En Alemania, el llamado primer movimiento feminista (<em>Erste Frauenbewegung</em>) defendía: acceso de las mujeres a la educación superior; derechos civiles y políticos; participación en el mercado laboral. El texto de Groddeck debe entenderse como parte de las reacciones intelectuales masculinas a ese movimiento.</li>
+                    <li id="nota37">La expresión <em>Frauenfrage</em> era ampliamente utilizada en los debates sociales y políticos de Europa entre 1870 y 1930.</li>
+                    <li id="nota38">La preocupación de Groddeck refleja un temor común entre intelectuales de la época de que cambios sociales rápidos pudieran amenazar estructuras tradicionales de la sociedad. Este tipo de crítica aparece también en pensadores como: Oswald Spengler; Max Scheler; Nietzsche (en sentido diferente).</li>
+                    <li id="nota39">El término “idea” posee aquí un significado filosófico heredado de la tradición idealista alemana. En autores como Kant, Hegel y Goethe, la idea representa un principio espiritual o racional que orienta la acción humana. Groddeck asocia la acción creadora del hombre a la fidelidad a una idea.</li>
+                    <li id="nota40">Esta afirmación debe comprenderse dentro de la estructura simbólica del argumento de Groddeck. A lo largo del artículo, él describe a la mujer como: símbolo de la naturaleza; manifestación de la fuerza vital; representación del todo de la vida. Aun así, esta posición refleja concepciones de género características de principios del siglo XX y hoy es objeto de crítica histórica.</li>
+                    <li id="nota41">Groddeck utiliza aquí una metáfora funcional: hombre y mujer serían instrumentos distintos para funciones diferentes dentro del orden natural.</li>
+                    <li id="nota42">La comparación entre automóvil y máquina de vapor revela la influencia del imaginario técnico de la segunda revolución industrial, período en que tecnologías mecánicas eran frecuentemente usadas como metáforas filosóficas.</li>
+                    <li id="nota43">Aunque Groddeck atribuya funciones diferentes a los sexos, insiste en que no se trata de superioridad o inferioridad, sino de diferencia funcional. Este argumento era común en discursos conservadores de la época.</li>
+                    <li id="nota44">La “paralización periódica” mencionada por Groddeck se refiere al ciclo menstrual, frecuentemente interpretado por médicos del siglo XIX y principios del XX como un factor limitador de la actividad femenina. Hoy esta interpretación es considerada históricamente condicionada.</li>
+                    <li id="nota45">Groddeck asume aquí una posición de determinismo biológico, según la cual ciertas características sociales derivarían directamente de la biología. Este tipo de argumento era común en debates científicos de la época.</li>
+                    <li id="nota46">La afirmación de que la mujer sería “diletante” en las actividades creadoras refleja concepciones culturales de género predominantes en la época. Hoy, historiadores y sociólogos interpretan tales afirmaciones como expresiones de un contexto social específico y no como descripciones objetivas de la realidad.</li>
+                    <li id="nota47">Groddeck interpreta la motivación femenina principalmente en términos emocionales y relacionales, en contraste con la motivación masculina orientada a la acción y la creación.</li>
+                    <li id="nota48">Los “años de desarrollo” se refieren a la pubertad, y el “tiempo de la transición” a la menopausia.</li>
+                    <li id="nota49">A pesar de las críticas al movimiento feminista, Groddeck afirma que el hombre puede incluso apoyar la emancipación femenina, pues cree que la propia naturaleza impondría límites inevitables a ese movimiento.</li>
+                    <li id="nota50">Groddeck interpreta el embarazo como un evento que reorganiza completamente la vida psíquica de la mujer.</li>
+                    <li id="nota51">La definición de belleza como armonía entre forma y finalidad recuerda concepciones clásicas de la estética, presentes desde Aristóteles y retomadas en la filosofía alemana, especialmente en Schiller y Goethe.</li>
+                    <li id="nota52">La idea de que la naturaleza crea sin conciencia acerca a Groddeck de la tradición de la filosofía de la naturaleza (<em>Naturphilosophie</em>) del romanticismo alemán, presente en pensadores como Schelling.</li>
+                    <li id="nota53">Esta concepción posee raíces en tradiciones culturales y religiosas antiguas, especialmente en la narrativa bíblica de Génesis 2:23, donde la mujer es creada a partir del hombre.</li>
+                    <li id="nota54">Groddeck utiliza el lenguaje de la ciencia para sostener su posición, aunque muchas de las afirmaciones presentadas no correspondan al conocimiento científico actual. Este recurso retórico era común en textos científicos y filosóficos de la época.</li>
+                    <li id="nota55">Esta frase hace eco de pasajes del Nuevo Testamento, especialmente: Efesios 5:22; Colosenses 3:18. Estos textos fueron frecuentemente utilizados en debates sobre roles de género en la sociedad europea.</li>
+                    <li id="nota56">La comparación entre la relación hombre–mujer y la relación cerebro–mano expresa una visión jerárquica del organismo social.</li>
+                    <li id="nota57">Algunos intelectuales de principios del siglo XX interpretaban movimientos sociales como síntomas de crisis cultural. Esta visión aparece también en autores como Oswald Spengler y Gustave Le Bon.</li>
+                    <li id="nota58">Groddeck sugiere que la emancipación femenina podría resultar en la sustitución de una autoridad masculina considerada legítima por otra considerada inferior.</li>
+                    <li id="nota59">El autor menciona tres demandas centrales del feminismo europeo de principios del siglo XX: derecho al voto femenino; acceso a la educación superior; autonomía económica. Estas reivindicaciones estaban en el centro del debate político en Alemania y en otros países europeos antes de la Primera Guerra Mundial.</li>
+                    <li id="nota60">La idea de atribuir a las mujeres responsabilidad moral por la sociedad sin concederles derechos políticos refleja una posición conservadora común en muchos debates sociales de la época.</li>
+                    <li id="nota61">La caracterización de la emancipación femenina como “juego” o “diversión” aparece frecuentemente en críticas conservadoras al movimiento feminista a principios del siglo XX.</li>
+                    <li id="nota62">Groddeck argumenta que las contribuciones femeninas en la ciencia o el arte servirían principalmente como apoyo al trabajo masculino.</li>
+                    <li id="nota63">La referencia a la mujer como sierva (<em>Magd</em>) evoca modelos tradicionales de organización doméstica presentes en la cultura alemana rural y burguesa.</li>
+                    <li id="nota64">A pesar de las críticas, Groddeck atribuye a la mujer un papel central como inspiradora de la creatividad masculina. Esta idea aparece también en varias tradiciones culturales europeas, en las que lo femenino se asocia a la inspiración artística o espiritual.</li>
+                    <li id="nota65">Groddeck retoma aquí un concepto central de la filosofía alemana: la <em>Persönlichkeit</em> (personalidad), entendida como la capacidad de actuar autónomamente y de crear valores. Según su interpretación, solo el hombre poseería plenamente esa característica.</li>
+                    <li id="nota66">La expresión alemana <em>vorübergehende Erscheinung</em> sugiere algo transitorio o contingente. Groddeck utiliza esa idea para sostener su tesis de que la mujer no sería una individualidad permanente, sino un fenómeno ligado a la continuidad de la vida.</li>
+                    <li id="nota67">La comparación entre árbol y fruto aparece frecuentemente en la tradición bíblica (por ejemplo, Mateo 7:16: “Por sus frutos los conoceréis”). Groddeck utiliza esta metáfora para afirmar que el valor de la mujer sería evaluado por los hijos.</li>
+                    <li id="nota68">Esta concepción remite a la tradición del romanticismo alemán, especialmente a la idea de que la naturaleza expresa fuerzas creadoras inconscientes.</li>
+                    <li id="nota69">La comparación con montañas, bosques y mares revela una concepción determinista de la formación del carácter humano, común en teorías geográficas y antropológicas del siglo XIX.</li>
+                    <li id="nota70">El término “demoníaco” (<em>dämonisch</em>) aparece frecuentemente en la tradición literaria alemana para indicar una fuerza creadora o inspiradora misteriosa. La referencia a la “musa” asocia lo femenino a la inspiración artística masculina.</li>
+                    <li id="nota71">Esta idea aparece repetidamente en el texto: la mujer sería responsable de la continuidad de la vida y de la sociedad a través de la maternidad y de la formación de las nuevas generaciones.</li>
+                    <li id="nota72">“<em>Natur</em>” (naturaleza) – Groddeck utiliza el término dentro de la tradición de la <em>Naturphilosophie</em> alemana, en que naturaleza no significa solo biología, sino un orden vital que estructura el mundo.</li>
+                    <li id="nota73">“<em>Eroberung der Welt</em>” (conquista del mundo) – Expresión típica del discurso cultural europeo del siglo XIX y principios del siglo XX para designar el avance técnico, científico y político de las sociedades modernas.</li>
+                    <li id="nota74">“<em>Frauenpflicht</em>” (deber de la mujer) – El término indica que Groddeck sustituye el lenguaje político de “derechos” por el lenguaje moral de “deber”, reflejando debates europeos sobre el feminismo a principios del siglo XX.</li>
+                    <li id="nota75">La mujer como “ser sensible” – Esta caracterización aparece en muchas teorías psicológicas de la época, que asociaban lo femenino a la sensibilidad emocional y lo masculino a la racionalidad.</li>
+                    <li id="nota76">Metáfora del agua y del espejo – Imagen común en la literatura alemana para describir estados psíquicos. El agua tranquila representa claridad espiritual; el agua agitada representa pasiones o perturbación interior.</li>
+                    <li id="nota77">“Ruina de las naciones” – Referencia a una crisis cultural percibida por muchos intelectuales europeos a principios del siglo XX, marcada por críticas a la industrialización, al materialismo y a la política moderna.</li>
+                    <li id="nota78">Groddeck reconoce explícitamente que las mujeres fueron históricamente privadas de educación y participación social.</li>
+                    <li id="nota79">“<em>holde Weiblichkeit</em>” (graciosa feminidad) – Expresión cultural del siglo XIX asociada al ideal burgués de feminidad: delicadeza, pasividad y docilidad.</li>
+                    <li id="nota80">El autor sugiere que los hombres habrían perdido su papel tradicional, convirtiéndose solo en especialistas o profesionales técnicos.</li>
+                    <li id="nota81">“<em>Pflichtbewusstsein</em>” (conciencia del deber) – Concepto moral central en la cultura alemana, asociado a la ética del deber desarrollada por Immanuel Kant.</li>
+                    <li id="nota82"><em>Persönlichkeitsgefühl</em> – término filosófico común en la cultura alemana del siglo XIX, ligado a la idea de individualidad moral y autonomía.</li>
+                    <li id="nota83"><em>Gottnatur</em> – concepto recurrente en el texto de Groddeck que combina ideas del romanticismo alemán y de la filosofía de la naturaleza, indicando un orden vital o divino presente en la naturaleza.</li>
+                    <li id="nota84">“Humanidad” como entidad moral – crítica a la ética humanitaria moderna y al universalismo social.</li>
+                    <li id="nota85">Religión del amor al prójimo – referencia indirecta a la tradición cristiana reinterpretada en términos sociales.</li>
+                    <li id="nota86">Personalidad libre – alusión al ideal individualista moderno difundido en el siglo XIX.</li>
+                    <li id="nota87">Mujer como “símbolo” – idea central de Groddeck: lo femenino representa fuerzas de la naturaleza y no la individualidad racional.</li>
+                    <li id="nota88"><em>Glück</em> (felicidad) – concepto central en la interpretación de Groddeck sobre la psicología femenina.</li>
+                    <li id="nota89">“<em>Frauen der Übertreibung</em>” – referencia crítica a mujeres consideradas libertinas o emancipadas.</li>
+                    <li id="nota90"><em>Pflichtvergessenheit</em> – literalmente “olvido del deber”.</li>
+                    <li id="nota91">Instinto femenino – Groddeck interpreta la motivación femenina en términos biológicos.</li>
+                    <li id="nota92"><em>Glückshunger</em> – literalmente “hambre de felicidad”.</li>
+                    <li id="nota93">Contención del instinto – visión moral típica del pensamiento europeo conservador de la época.</li>
+                    <li id="nota94">Cortejo y matrimonio – referencia a las prácticas matrimoniales tradicionales.</li>
+                    <li id="nota95">Matrimonio como sacramento – uso metafórico, aunque el autor sea protestante.</li>
+                    <li id="nota96">Naturaleza indiferente a la felicidad humana – visión cercana al naturalismo filosófico.</li>
+                    <li id="nota97">Instrumentalidad del ser humano – idea de que el individuo sirve a los procesos naturales.</li>
+                    <li id="nota98">Referencia a Nietzsche – alusión al texto “Del jardín del matrimonio” en <em>Así habló Zaratustra</em>.</li>
+                    <li id="nota99">Amor reservado a los “grandes hombres” – argumento elitista presente en varios textos filosóficos de la época.</li>
+                    <li id="nota100">Amor impersonal masculino – oposición simbólica entre masculino universal y femenino individual.</li>
+                    <li id="nota101">“Una sola carne y una sola sangre” – referencia a Génesis 2:24 y también a las tradiciones cristianas sobre el matrimonio.</li>
+                    <li id="nota102">Educación femenina – el autor entiende la educación de la mujer principalmente como preparación para el matrimonio y la maternidad.</li>
+                    <li id="nota103">Groddeck considera que la negativa al matrimonio por motivos personales sería una falta moral.</li>
+                    <li id="nota104">Mezcla racial – referencia al discurso eugenista común en algunos medios intelectuales europeos de principios del siglo XX.</li>
+                    <li id="nota105">Ideales “femeninos” de paz – crítica a valores modernos como pacifismo y búsqueda de felicidad colectiva.</li>
+                    <li id="nota106">“<em>Tat</em>” fue traducido como acción, y no solo “hecho”, porque el término lleva aquí un sentido ético y heroico, próximo de la tradición idealista y vitalista alemana.</li>
+                    <li id="nota107">La secuencia “en árbol y roca, en mar y sol, en animal y cielo” se ha mantenido con fuerte literalidad porque el texto hace una especie de catecismo naturalista de la formación masculina.</li>
+                    <li id="nota108">La expresión “<em>die Lust der Gefahr</em>” se ha traducido como “amar el peligro”, preservando el tono afirmativo. También podría ser “el placer del peligro”, pero “amar” se ajusta mejor al estilo solemne del pasaje.</li>
+                    <li id="nota109">“<em>Arzt, hilf Dir selber</em>” significa literalmente “Médico, ayúdate a ti mismo”. La frase hace eco de proverbios y formulaciones bíblicas y se ha preservado con tono sentencioso.</li>
+                    <li id="nota110">“<em>Das Kind, das geboren wird, soll gut sein</em>” se ha traducido literalmente como “el niño que nazca debe ser bueno”. En el contexto, “<em>gut</em>” sugiere valor biológico, moral y hereditario al mismo tiempo.</li>
+                    <li id="nota111">“<em>weibliche Ideale</em>” se ha mantenido como “ideales femeninos”, aunque el autor usa la expresión polémicamente para asociarlos a felicidad, paz y suavización de la vida.</li>
+                    <li id="nota112">“<em>dem Untergang</em>” se ha traducido como “la ruina”, pero también podría ser “la caída” o “la perdición”. “Ruina” preserva bien el tono grandioso y trágico.</li>
+                    <li id="nota113">“<em>hoch und niedrig</em>” se ha traducido como “lo alto y lo bajo”, manteniendo la abstracción jerárquica del original, y no “superior e inferior”, para no estrechar demasiado el campo semántico.</li>
+                    <li id="nota114">“<em>Affenliebe</em>” se ha traducido como “amor simiesco”. Se trata de una expresión alemana peyorativa para un apego excesivo, ciego y mimador, sobre todo materno. Podría verterse también como “amor tonto” o “amor posesivo”, pero se ha preservado la imagen zoológica del original.</li>
+                    <li id="nota115">“<em>Sie muß erfahren, daß sie dazu geboren wurde, Mutter zu sein</em>” se ha traducido de modo directo como “debe aprender que nació para ser madre”, porque el pasaje tiene carácter programático y normativo.</li>
+                    <li id="nota116">“<em>Irrlicht des Glücks</em>” se ha traducido como “fuego fatuo de la felicidad”. La imagen sugiere algo que atrae, ilusiona y se mueve siempre adelante, sin jamás ofrecer posesión estable.</li>
+                    <li id="nota117">“<em>Schaffenskraft</em>” – traducido como “fuerza creadora”. El término aparece frecuentemente en la filosofía vitalista alemana e indica la potencia creativa de la vida.</li>
+                    <li id="nota118">“<em>Mutter Gottes</em>” – expresión que significa literalmente “madre de Dios”, evocando la tradición cristiana mariana. Aquí se usa de modo simbólico para exaltar el papel maternal de la mujer.</li>
+                    <li id="nota119">“<em>Hin zur Gottnatur</em>” – título de la obra de Georg Groddeck mencionada en la nota editorial. La expresión se ha traducido como “Rumbo a la naturaleza divina”, manteniendo el sentido filosófico de <em>Gottnatur</em> como naturaleza impregnada de divinidad.</li>
+                    <li id="nota120">El editor menciona explícitamente el movimiento sufragista femenino de principios del siglo XX. La publicación pretende participar en el debate público sobre la llamada “cuestión de la mujer”.</li>
+                    <li id="nota121">Wilhelm Schwaner – escritor y editor alemán (1863–1944), ligado a corrientes culturales nacionalistas y reformistas. Actuó como divulgador de ideas filosóficas y culturales ligadas a la reforma espiritual y social de Alemania.</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Referencias e información sobre el texto original -->
+        <div class="panel">
+            <h3>Referencia del Texto Original</h3>
+            <p><strong>Título original:</strong> Die Frau<br>
+            <strong>Autor:</strong> Georg Groddeck<br>
+            <strong>Publicación original:</strong> <em>Der Volkserzieher</em><br>
+            <strong>Volumen / número:</strong> v. 13, n. 18<br>
+            <strong>Año:</strong> 1909<br>
+            <strong>Paginación:</strong> p. 137–142<br>
+            <strong>Lugar de publicación:</strong> Frankfurt am Main, Alemania<br>
+            <strong>Institución responsable de la digitalización:</strong> Universitätsbibliothek Johann Christian Senckenberg<br>
+            <strong>Registro digital (URN):</strong> urn:nbn:de:hebis:30-1094615<br>
+            <strong>ISSN:</strong> no disponible (publicación anterior al sistema ISSN)<br>
+            <strong>Disponible en:</strong> Acervo digital de la Deutsche Nationalbibliothek<br>
+            <strong>Fecha de acceso:</strong> 01 de ene. - 08 de mar. 2026.<br>
+            <strong>Idioma original:</strong> Alemán<br>
+            <strong>Clasificación temática:</strong> Filosofía</p>
+            <p><strong>Referencia completa</strong><br>GRODDECK, Georg. Die Frau. <em>Der Volkserzieher</em>, v. 13, n. 18, p. 137–142, 1909.</p>
+            <p><strong>Derechos de autor</strong><br>© 2026 Revista Inquietaciones – Acceso abierto<br>El texto original se encuentra en dominio público.</p>
+            <p><strong>Referencia bibliográfica de la traducción</strong><br>GRODDECK, Georg. La mujer (Die Frau). Traducción del alemán, introducción y notas de Diego Vinícius Brito dos Santos. <em>Revista Inquietaciones</em>, Sección Traducciones, v. 1, n. 1, p. 01–27, ene./dic. 2026.</p>
+        </div>
+
+        <!-- Visor PDF -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Traducción completa (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/A%20mulher.pdf" title="La Mujer (Die Frau) - Georg Groddeck"></iframe>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> Si el PDF no se muestra, <a href="/arquivos/A%20mulher.pdf" target="_blank">haga clic aquí para descargar</a>.</p>
+        </div>
+
+        <!-- Generador de citas -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> Cómo citar esta traducción</h2>
+            <div class="citation-generator" data-authors='["GRODDECK, Georg"]'
+                data-title="La mujer (Die Frau)"
+                data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/espanhol/traducao-a-mulher-georg-groddeck-esp.html"
+                data-volume="1" data-issue="1" data-pages="01-27" data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> Generador de referencias</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Seleccione el estilo deseado y genere automáticamente la referencia bibliográfica.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Estilo de referencia</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar referencia</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
+            </div>
+            <p><small><i class="fas fa-info-circle"></i> Utilice el generador de arriba para citar esta traducción en diferentes estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <!-- Sobre el traductor -->
+        <div class="panel">
+            <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto del traductor Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre el traductor </h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> es pedagogo y servidor público efectivo, con experiencia docente en los primeros años de la educación primaria y educación infantil. Posee una maestría en Filosofía por la Universidad Federal de Rio Grande do Norte (UFRN, 2022), con investigación centrada en la obra y filosofía de Friedrich Nietzsche. Es licenciado en Filosofía por la Universidad del Estado de Rio Grande do Norte (UERN, 2018) y en Pedagogía por el Centro Universitario Internacional (UNINTER, 2022). Es autor del libro <em>Nietzsche e os valores modernos</em> (2022). Se dedica a la formación continua en áreas como Psicopedagogía, Neuropsicopedagogía, Educación Inclusiva, Atención Educativa Especializada (AEE) y Educación de Jóvenes y Adultos (EJA).</p>
+            <p><i class="fas fa-envelope"></i> Correo electrónico: diego_svt@hotmail.com.br<br>
+                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+            </p>
+        </div>
+
+        <footer>
+            <i class="fas fa-university"></i> Revista Inquietaciones – Caicó, RN | v.1, n.1, 2026 | Sección: Traducciones | DOI: 10.5281/zenodo.18916814<br>
+            Acceso abierto bajo licencia Creative Commons.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Envíos con simulación de login
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "cadastro-login/submissoes.html";
+            } else {
+                let email = prompt("🔐 Para enviar un artículo, inicie sesión. Ingrese su correo electrónico (simulación):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Inicio de sesión exitoso. Redirigiendo a envíos.");
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    alert("Acceso no autorizado. Registro/inicio de sesión requerido.");
+                }
+            }
+        });
+    }
+
+    // Copiar ABNT manual (español)
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = [
+            "GRODDECK, Georg. La mujer (Die Frau). Traducción de Diego Vinícius Brito dos Santos. Revista Inquietaciones, v. 1, n. 1, p. 01-27, 2026."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referencias ABNT copiadas."));
+    });
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@article{groddeck2026mujer,
+  title={La mujer (Die Frau)},
+  author={Groddeck, Georg},
+  translator={Santos, Diego Vinícius Brito dos},
+  journal={Revista Inquietaciones},
+  volume={1},
+  number={1},
+  pages={01--27},
+  year={2026}
+}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (ejemplo)."));
+    });
+
+    // ========== GENERADOR DE CITAS (script automático) ==========
+    (function () {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Revista Inquietaciones';
+        const accessDate = new Date().toLocaleDateString('es-ES');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. Traducción de Diego Vinícius Brito dos Santos. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Disponible en: ${url}. Acceso: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. Traducción de Diego Vinícius Brito dos Santos. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." Traducción de Diego Vinícius Brito dos Santos. ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." Traducción de Diego Vinícius Brito dos Santos. ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', traducción de Diego Vinícius Brito dos Santos, ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. Traducción de Diego Vinícius Brito dos Santos. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," traducción de Diego Vinícius Brito dos Santos, ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    if (feedback) feedback.textContent = '✓ Referencia copiada al portapapeles.';
+                    setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    if (feedback) feedback.textContent = '✗ Error al copiar. Intente manualmente.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

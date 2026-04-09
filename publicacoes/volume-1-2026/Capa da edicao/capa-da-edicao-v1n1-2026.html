@@ -99,46 +99,50 @@
       margin-bottom: 1rem;
     }
 
-    /* Estilo do autor com círculo */
     .author-section {
       margin-top: 0.5rem;
     }
+
     .author-avatar {
       display: flex;
       align-items: center;
       gap: 16px;
       margin-bottom: 0.5rem;
     }
+
     .avatar-circle {
       width: 60px;
       height: 60px;
       border-radius: 50%;
       overflow: hidden;
       background: #dcd0b8;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       border: 2px solid #c28a4e;
     }
+
     .avatar-circle img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
     .author-name {
       font-size: 1.2rem;
       font-weight: 700;
       color: #4a3a2a;
     }
+
     .author-name i {
       margin-right: 6px;
       color: #c28a4e;
     }
+
     .mini-meta {
       font-size: 0.8rem;
       color: #7a6b53;
       margin-top: 4px;
     }
 
-    /* Botões de tradução */
     .lang-buttons {
       display: flex;
       flex-wrap: wrap;
@@ -146,6 +150,7 @@
       margin: 1.2rem 0 0.5rem;
       justify-content: flex-start;
     }
+
     .lang-btn {
       background: #f4efe2;
       border: 1px solid #c2b697;
@@ -153,21 +158,22 @@
       border-radius: 40px;
       font-size: 0.8rem;
       font-weight: 600;
-      cursor: pointer;
-      transition: 0.1s;
+      text-decoration: none;
       color: #4a3a2a;
+      display: inline-block;
+      transition: 0.1s;
     }
+
     .lang-btn.active {
       background: #c28a4e;
       border-color: #8b5a2e;
       color: white;
-    }
-    .lang-btn:hover {
-      background: #e0d4bc;
+      cursor: default;
+      pointer-events: none;
     }
 
-    .banner-card img {
-      max-height: 80px;
+    .lang-btn:hover {
+      background: #e0d4bc;
     }
 
     .panel {
@@ -195,7 +201,6 @@
       color: #6b5a42;
     }
 
-    /* PDF viewer */
     .pdf-frame {
       border-radius: 1rem;
       overflow: hidden;
@@ -232,7 +237,6 @@
       background: #a06e3a;
     }
 
-    /* Gerador de citações */
     .citation-generator {
       background: #fefaf0;
       border: 1px solid #e2dac8;
@@ -298,7 +302,6 @@
       border-radius: 2rem;
       font-family: 'Inter', sans-serif;
       font-size: 0.85rem;
-      color: #2c3a2b;
       cursor: pointer;
     }
 
@@ -335,7 +338,6 @@
       font-size: 0.85rem;
       line-height: 1.5;
       font-family: 'Inter', monospace;
-      color: #2a2a24;
       margin-top: 1rem;
     }
 
@@ -350,13 +352,16 @@
       .content-padding {
         padding: 1.2rem;
       }
+
       .title-main {
         font-size: 1.6rem;
       }
+
       embed,
       object {
         height: 500px;
       }
+
       .avatar-circle {
         width: 48px;
         height: 48px;
@@ -392,269 +397,186 @@
       transform: translateY(-2px);
       box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
     }
-
-    /* Ocultar elementos padrão do Google Translate */
-    .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
-    body { top: 0 !important; }
-    .goog-te-gadget { display: none; }
   </style>
 </head>
 
 <body>
-<div class="container">
-  <div class="content-padding">
-    <div class="topbar">
-      <div class="pill">Revista Inquietações • Publicação individual</div>
-      <div class="pill">v. 1, n. 1 (2026)</div>
-    </div>
-
-    <div class="masthead">
-      <div>
-        <p class="kicker">Portal científico • Revista Inquietações</p>
-        <h1 class="title-main">Capa da edição v.1 n.1 (2026)</h1>
-        <p class="hero-text">Registro visual da edição inaugural da Revista Inquietações.</p>
-
-        <!-- Autor com foto em círculo ao lado do nome -->
-        <div class="author-section">
-          <div class="author-avatar">
-            <div class="avatar-circle">
-              <img src="/corpo editorial/diego.png" alt="Foto do autor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
-            </div>
-            <div>
-              <div class="author-name"><i class="fas fa-user-pen"></i> Diego Vinícius Brito dos Santos</div>
-              <div class="mini-meta">Revista Inquietações • v.1, n.1 (2026)</div>
+  <div class="container">
+    <div class="content-padding">
+      <div class="topbar">
+        <div class="pill">Revista Inquietações • Publicação individual</div>
+        <div class="pill">v. 1, n. 1 (2026)</div>
+      </div>
+      <div class="masthead">
+        <div>
+          <p class="kicker">Portal científico • Revista Inquietações</p>
+          <h1 class="title-main">Capa da edição v.1 n.1 (2026)</h1>
+          <p class="hero-text">Registro visual da edição inaugural da Revista Inquietações.</p>
+          <div class="author-section">
+            <div class="author-avatar">
+              <div class="avatar-circle">
+                <img src="/corpo editorial/diego.png" alt="Foto do autor Diego Vinícius"
+                  onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+              </div>
+              <div>
+                <div class="author-name"><i class="fas fa-user-pen"></i> Diego Vinícius Brito dos Santos</div>
+                <div class="mini-meta">Revista Inquietações • v.1, n.1 (2026)</div>
+              </div>
             </div>
           </div>
-        </div>
-
-        <!-- Botões de tradução -->
-        <div class="lang-buttons">
-          <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
-          <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
-          <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+          <!-- Botões de tradução estáticos (links para as versões em inglês e espanhol) -->
+          <div class="lang-buttons">
+            <a class="lang-btn active" href="#">🇧🇷 PT-BR</a>
+            <a class="lang-btn" href="/publicacoes/volume-1-2026/ingles/capa-da-edicao-v1n1-2026-en.html">🇺🇸
+              Inglês</a>
+            <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/capa-da-edicao-v1n1-2026-esp.html">🇪🇸
+              Espanhol</a>
+          </div>
         </div>
       </div>
     </div>
-  </div>
 
-  <!-- Logo opcional -->
-  <div class="banner-card" style="padding: 0 2.5rem 1rem 2.5rem;">
-    <img alt="Logo da Revista Inquietações" src="/assets/favicon.png" onerror="this.style.display='none'" style="max-height: 60px;">
-  </div>
-
-  <!-- Resumo -->
-  <div class="panel" style="margin: 0 2.5rem 2rem 2.5rem;">
-    <h2><i class="fas fa-image"></i> Sobre a capa</h2>
-    <p>Registro visual da edição inaugural da Revista Inquietações, volume 1, número 1, publicada em 2026. A imagem
-      da capa representa o espírito da revista: um espaço de democratização do saber, de escuta atenta e de trocas
-      intelectuais organizadas, publicizadas e compartilhadas. O design busca traduzir a inquietação como motor do
-      pensamento crítico, combinando elementos tipográficos e visuais que remetem à tradição acadêmica e à inovação
-      editorial.</p>
-    <p class="keywords-line"><strong>Palavras-chave:</strong> Capa da edição; Revista Inquietações; volume 1; número
-      1.</p>
-  </div>
-
-  <!-- Visualizador PDF -->
-  <div class="panel" style="margin: 0 2.5rem 2rem 2.5rem;">
-    <h2><i class="fas fa-book-open"></i> Capa em PDF</h2>
-    <div class="reader-actions">
-      <a class="reader-btn" href="/arquivos/Capa_da_edicao_v_1_n_1_2026.pdf" target="_blank">
-        <i class="fas fa-external-link-alt"></i> Abrir PDF completo
-      </a>
+    <div class="banner-card" style="padding: 0 2.5rem 1rem 2.5rem;">
+      <img alt="Logo da Revista Inquietações" src="/assets/favicon.png" onerror="this.style.display='none'"
+        style="max-height: 60px;">
     </div>
-    <div class="pdf-frame">
-      <embed src="/arquivos/Capa_da_edicao_v_1_n_1_2026.pdf" type="application/pdf" width="100%" height="700px" />
-      <p style="margin-top: 1rem; text-align: center;">
-        <a href="/arquivos/Capa_da_edicao_v_1_n_1_2026.pdf" target="_blank" class="btn-download">
-          <i class="fas fa-download"></i> Baixar PDF
+
+    <div class="panel" style="margin: 0 2.5rem 2rem 2.5rem;">
+      <h2><i class="fas fa-image"></i> Sobre a capa</h2>
+      <p>Registro visual da edição inaugural da Revista Inquietações, volume 1, número 1, publicada em 2026. A imagem
+        da capa representa o espírito da revista: um espaço de democratização do saber, de escuta atenta e de trocas
+        intelectuais organizadas, publicizadas e compartilhadas. O design busca traduzir a inquietação como motor do
+        pensamento crítico, combinando elementos tipográficos e visuais que remetem à tradição acadêmica e à inovação
+        editorial.</p>
+      <p class="keywords-line"><strong>Palavras-chave:</strong> Capa da edição; Revista Inquietações; volume 1; número
+        1.</p>
+    </div>
+
+    <div class="panel" style="margin: 0 2.5rem 2rem 2.5rem;">
+      <h2><i class="fas fa-book-open"></i> Capa em PDF</h2>
+      <div class="reader-actions">
+        <a class="reader-btn" href="/arquivos/Capa_da_edicao_v_1_n_1_2026.pdf" target="_blank">
+          <i class="fas fa-external-link-alt"></i> Abrir PDF completo
         </a>
-      </p>
-    </div>
-  </div>
-
-  <!-- Informações da publicação -->
-  <div class="panel" style="margin: 0 2.5rem 2rem 2.5rem;">
-    <h2><i class="fas fa-info-circle"></i> Informações da publicação</h2>
-    <p><strong>Revista:</strong> Revista Inquietações</p>
-    <p><strong>Volume:</strong> 1 | <strong>Número:</strong> 1 | <strong>Ano:</strong> 2026</p>
-    <p><strong>ISSN:</strong> 3086-4119</p>
-    <p><strong>Seção:</strong> Publicação individual | <strong>Páginas:</strong> 1</p>
-  </div>
-
-  <!-- Gerador de referências -->
-  <div class="citation-generator" style="margin: 0 2.5rem 2rem 2.5rem;" data-authors='["VINÍCIUS, Diego"]' data-issue="1" data-pages="1"
-    data-title="Capa da edição v.1 n.1 (2026)"
-    data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Capa da edicao/capa-da-edicao-v1n1-2026.html"
-    data-volume="1" data-year="2026">
-
-    <div class="citation-generator-head">
-      <h2><i class="fas fa-quote-left"></i> Como citar este trabalho</h2>
-    </div>
-    <div class="citation-generator-body">
-      <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência
-        bibliográfica.</p>
-      <div class="citation-controls">
-        <div class="citation-field">
-          <label for="citation-style">Estilo de referência</label>
-          <select class="citation-select" id="citation-style">
-            <option value="abnt">ABNT</option>
-            <option value="apa">APA</option>
-            <option value="mla">MLA</option>
-            <option value="chicago">Chicago</option>
-            <option value="harvard">Harvard</option>
-            <option value="vancouver">Vancouver</option>
-            <option value="ieee">IEEE</option>
-          </select>
-        </div>
-        <div class="citation-actions">
-          <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar
-            referência</button>
-        </div>
       </div>
-      <div aria-live="polite" class="citation-output" id="citationOutput"></div>
-      <p class="citation-feedback"></p>
+      <div class="pdf-frame">
+        <embed src="/arquivos/Capa_da_edicao_v_1_n_1_2026.pdf" type="application/pdf" width="100%" height="700px" />
+        <p style="margin-top: 1rem; text-align: center;">
+          <a href="/arquivos/Capa_da_edicao_v_1_n_1_2026.pdf" target="_blank" class="btn-download">
+            <i class="fas fa-download"></i> Baixar PDF
+          </a>
+        </p>
+      </div>
     </div>
+
+    <div class="panel" style="margin: 0 2.5rem 2rem 2.5rem;">
+      <h2><i class="fas fa-info-circle"></i> Informações da publicação</h2>
+      <p><strong>Revista:</strong> Revista Inquietações</p>
+      <p><strong>Volume:</strong> 1 | <strong>Número:</strong> 1 | <strong>Ano:</strong> 2026</p>
+      <p><strong>ISSN:</strong> 3086-4119</p>
+      <p><strong>Seção:</strong> Publicação individual | <strong>Páginas:</strong> 1</p>
+    </div>
+
+    <div class="citation-generator" style="margin: 0 2.5rem 2rem 2.5rem;"
+      data-authors='["SANTOS, Diego Vinícius Brito dos"]' data-issue="1" data-pages="1"
+      data-title="Capa da edição v.1 n.1 (2026)"
+      data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Capa da edicao/capa-da-edicao-v1n1-2026.html"
+      data-volume="1" data-year="2026">
+      <div class="citation-generator-head">
+        <h2><i class="fas fa-quote-left"></i> Como citar este trabalho</h2>
+      </div>
+      <div class="citation-generator-body">
+        <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência
+          bibliográfica.</p>
+        <div class="citation-controls">
+          <div class="citation-field">
+            <label for="citation-style">Estilo de referência</label>
+            <select class="citation-select" id="citation-style">
+              <option value="abnt">ABNT</option>
+              <option value="apa">APA</option>
+              <option value="mla">MLA</option>
+              <option value="chicago">Chicago</option>
+              <option value="harvard">Harvard</option>
+              <option value="vancouver">Vancouver</option>
+              <option value="ieee">IEEE</option>
+            </select>
+          </div>
+          <div class="citation-actions">
+            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar
+              referência</button>
+          </div>
+        </div>
+        <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+        <p class="citation-feedback"></p>
+      </div>
+    </div>
+
+    <footer class="footer" style="margin: 0 2.5rem 1.5rem 2.5rem;">
+      <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | ISSN: 3086-4119
+    </footer>
   </div>
 
-  <footer class="footer" style="margin: 0 2.5rem 1.5rem 2.5rem;">
-    <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | ISSN: 3086-4119
-  </footer>
-</div>
+  <script>
+    // ========== GERADOR DE CITAÇÕES (script automático) ==========
+    (function () {
+      const monthsPt = ['jan.', 'fev.', 'mar.', 'abr.', 'maio', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
+      const monthsEn = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
+      function accessDatePt() { const d = new Date(); return d.getDate() + ' ' + monthsPt[d.getMonth()] + ' ' + d.getFullYear(); }
+      function accessDateEn() { const d = new Date(); return monthsEn[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); }
+      function normSpaces(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
 
-<!-- Google Translate Widget (carregado de forma discreta) -->
-<script type="text/javascript">
-  function googleTranslateElementInit() {
-    new google.translate.TranslateElement({
-      pageLanguage: 'pt',
-      includedLanguages: 'pt,en,es',
-      autoDisplay: false,
-      layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-    }, 'google_translate_element');
-    // Esconde o gadget padrão
-    document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
-  }
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<div id="google_translate_element" style="display:none;"></div>
+      document.querySelectorAll('.citation-generator').forEach(function (box) {
+        const meta = {
+          authors: JSON.parse(box.dataset.authors || '[]'),
+          title: box.dataset.title || '',
+          url: box.dataset.url || window.location.href,
+          year: box.dataset.year || '2026',
+          volume: box.dataset.volume || '1',
+          issue: box.dataset.issue || '1',
+          pages: box.dataset.pages || '',
+          doi: box.dataset.doi || ''
+        };
+        const select = box.querySelector('.citation-select');
+        const output = box.querySelector('.citation-output');
+        const copyBtn = box.querySelector('.citation-copy');
+        const feedback = box.querySelector('.citation-feedback');
 
-<script>
-  // Botões de tradução manuais via Google Translate API
-  (function() {
-    const langBtns = document.querySelectorAll('.lang-btn');
-    let currentLang = 'pt';
+        function renderCitation(style) {
+          const authors = meta.authors.join('; ');
+          const url = meta.url;
+          const title = meta.title;
+          const doi = meta.doi ? 'https://doi.org/' + meta.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//, '') : '';
+          const pages = meta.pages;
+          const accessPt = accessDatePt();
+          const accessEn = accessDateEn();
+          if (style === 'abnt') return normSpaces(`${authors}. ${title}. <strong>Revista Inquietações</strong>, Caicó, RN, fluxo contínuo, v. ${meta.volume}, n. ${meta.issue}, ${pages ? 'p. ' + pages + ', ' : ''}${meta.year}. Disponível em: ${url}. Acesso em: ${accessPt}.${doi ? ' DOI: ' + doi + '.' : ''}`);
+          if (style === 'apa') return normSpaces(`${authors}. (${meta.year}). ${title}. <strong>Revista Inquietações</strong>, ${meta.volume}(${meta.issue})${pages ? ', ' + pages : ''}. ${url}${doi ? ' ' + doi : ''}`);
+          if (style === 'mla') return normSpaces(`${authors}. “${title}.” <strong>Revista Inquietações</strong>, vol. ${meta.volume}, no. ${meta.issue}, ${meta.year}${pages ? ', pp. ' + pages : ''}, ${url}. Accessed ${accessEn}.${doi ? ' DOI: ' + doi + '.' : ''}`);
+          if (style === 'chicago') return normSpaces(`${authors}. “${title}.” <strong>Revista Inquietações</strong> ${meta.volume}, no. ${meta.issue} (${meta.year})${pages ? ': ' + pages : ''}. Accessed ${accessEn}. ${url}.${doi ? ' DOI: ' + doi + '.' : ''}`);
+          if (style === 'harvard') return normSpaces(`${authors} ${meta.year}, '${title}', <strong>Revista Inquietações</strong>, Caicó, RN, fluxo contínuo, v. ${meta.volume}, n. ${meta.issue}${pages ? ', p. ' + pages : ''}, viewed ${accessEn}, &lt;${url}&gt;.${doi ? ' DOI: ' + doi + '.' : ''}`);
+          if (style === 'vancouver') return normSpaces(`${authors}. ${title}. <strong>Revista Inquietações</strong>. ${meta.year};${meta.volume}(${meta.issue})${pages ? ':' + pages : ''}. Available from: ${url}.${doi ? ' DOI: ' + doi + '.' : ''}`);
+          if (style === 'ieee') return normSpaces(`${authors}, “${title},” <strong>Revista Inquietações</strong>, vol. ${meta.volume}, no. ${meta.issue}${pages ? ', pp. ' + pages : ''}, ${meta.year}. [Online]. Available: ${url}.${doi ? ' DOI: ' + doi + '.' : ''}`);
+          return '';
+        }
 
-    function triggerGoogleTranslate(lang) {
-      const selectElem = document.querySelector('.goog-te-combo');
-      if (selectElem) {
-        selectElem.value = lang;
-        selectElem.dispatchEvent(new Event('change'));
-      } else {
-        setTimeout(() => {
-          const select = document.querySelector('.goog-te-combo');
-          if (select) {
-            select.value = lang;
-            select.dispatchEvent(new Event('change'));
+        function update() { output.innerHTML = renderCitation(select.value); }
+        select.addEventListener('change', update);
+        copyBtn.addEventListener('click', async function () {
+          const temp = document.createElement('div');
+          temp.innerHTML = output.innerHTML;
+          const text = temp.textContent || temp.innerText || '';
+          try {
+            await navigator.clipboard.writeText(text);
+            feedback.textContent = '✓ Referência copiada para a área de transferência.';
+            setTimeout(() => { feedback.textContent = ''; }, 3000);
+          } catch (e) {
+            feedback.textContent = '✗ Não foi possível copiar automaticamente.';
           }
-        }, 500);
-      }
-    }
-
-    langBtns.forEach(btn => {
-      btn.addEventListener('click', () => {
-        const lang = btn.getAttribute('data-lang');
-        if (lang === currentLang) return;
-        
-        langBtns.forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
-        
-        let googleCode = '';
-        if (lang === 'pt') googleCode = 'pt';
-        else if (lang === 'en') googleCode = 'en';
-        else if (lang === 'es') googleCode = 'es';
-        
-        triggerGoogleTranslate(googleCode);
-        currentLang = lang;
+        });
+        update();
       });
-    });
-    
-    // Observa a criação do combo do Google Translate
-    const observer = new MutationObserver(() => {
-      const combo = document.querySelector('.goog-te-combo');
-      if (combo && !combo._listenerAdded) {
-        combo._listenerAdded = true;
-        const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
-        let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
-        if (combo.value !== code) {
-          combo.value = code;
-          combo.dispatchEvent(new Event('change'));
-        }
-      }
-    });
-    observer.observe(document.body, { childList: true, subtree: true });
-  })();
-
-  // ========== GERADOR DE CITAÇÕES (script automático) ==========
-  (function () {
-    const monthsPt = ['jan.', 'fev.', 'mar.', 'abr.', 'maio', 'jun.', 'jul.', 'ago.', 'set.', 'out.', 'nov.', 'dez.'];
-    const monthsEn = ['Jan.', 'Feb.', 'Mar.', 'Apr.', 'May', 'Jun.', 'Jul.', 'Aug.', 'Sep.', 'Oct.', 'Nov.', 'Dec.'];
-    function accessDatePt() { const d = new Date(); return d.getDate() + ' ' + monthsPt[d.getMonth()] + ' ' + d.getFullYear(); }
-    function accessDateEn() { const d = new Date(); return monthsEn[d.getMonth()] + ' ' + d.getDate() + ', ' + d.getFullYear(); }
-    function normSpaces(s) { return (s || '').replace(/\s+/g, ' ').trim(); }
-
-    document.querySelectorAll('.citation-generator').forEach(function (box) {
-      const meta = {
-        authors: JSON.parse(box.dataset.authors || '[]'),
-        title: box.dataset.title || '',
-        url: box.dataset.url || window.location.href,
-        year: box.dataset.year || '2026',
-        volume: box.dataset.volume || '1',
-        issue: box.dataset.issue || '1',
-        pages: box.dataset.pages || '',
-        doi: box.dataset.doi || ''
-      };
-      const select = box.querySelector('.citation-select');
-      const output = box.querySelector('.citation-output');
-      const copyBtn = box.querySelector('.citation-copy');
-      const feedback = box.querySelector('.citation-feedback');
-
-      function renderCitation(style) {
-        const authors = meta.authors.join('; ');
-        const url = meta.url;
-        const title = meta.title;
-        const doi = meta.doi ? 'https://doi.org/' + meta.doi.replace(/^https?:\/\/(dx\.)?doi\.org\//, '') : '';
-        const pages = meta.pages;
-        const accessPt = accessDatePt();
-        const accessEn = accessDateEn();
-        if (style === 'abnt') return normSpaces(`${authors}. ${title}. <strong>Revista Inquietações</strong>, Caicó, RN, fluxo contínuo, v. ${meta.volume}, n. ${meta.issue}, ${pages ? 'p. ' + pages + ', ' : ''}${meta.year}. Disponível em: ${url}. Acesso em: ${accessPt}.${doi ? ' DOI: ' + doi + '.' : ''}`);
-        if (style === 'apa') return normSpaces(`${authors}. (${meta.year}). ${title}. <strong>Revista Inquietações</strong>, ${meta.volume}(${meta.issue})${pages ? ', ' + pages : ''}. ${url}${doi ? ' ' + doi : ''}`);
-        if (style === 'mla') return normSpaces(`${authors}. “${title}.” <strong>Revista Inquietações</strong>, vol. ${meta.volume}, no. ${meta.issue}, ${meta.year}${pages ? ', pp. ' + pages : ''}, ${url}. Accessed ${accessEn}.${doi ? ' DOI: ' + doi + '.' : ''}`);
-        if (style === 'chicago') return normSpaces(`${authors}. “${title}.” <strong>Revista Inquietações</strong> ${meta.volume}, no. ${meta.issue} (${meta.year})${pages ? ': ' + pages : ''}. Accessed ${accessEn}. ${url}.${doi ? ' DOI: ' + doi + '.' : ''}`);
-        if (style === 'harvard') return normSpaces(`${authors} ${meta.year}, '${title}', <strong>Revista Inquietações</strong>, Caicó, RN, fluxo contínuo, v. ${meta.volume}, n. ${meta.issue}${pages ? ', p. ' + pages : ''}, viewed ${accessEn}, &lt;${url}&gt;.${doi ? ' DOI: ' + doi + '.' : ''}`);
-        if (style === 'vancouver') return normSpaces(`${authors}. ${title}. <strong>Revista Inquietações</strong>. ${meta.year};${meta.volume}(${meta.issue})${pages ? ':' + pages : ''}. Available from: ${url}.${doi ? ' DOI: ' + doi + '.' : ''}`);
-        if (style === 'ieee') return normSpaces(`${authors}, “${title},” <strong>Revista Inquietações</strong>, vol. ${meta.volume}, no. ${meta.issue}${pages ? ', pp. ' + pages : ''}, ${meta.year}. [Online]. Available: ${url}.${doi ? ' DOI: ' + doi + '.' : ''}`);
-        return '';
-      }
-
-      function update() {
-        output.innerHTML = renderCitation(select.value);
-      }
-      select.addEventListener('change', update);
-      copyBtn.addEventListener('click', async function () {
-        const temp = document.createElement('div');
-        temp.innerHTML = output.innerHTML;
-        const text = temp.textContent || temp.innerText || '';
-        try {
-          await navigator.clipboard.writeText(text);
-          feedback.textContent = '✓ Referência copiada para a área de transferência.';
-          setTimeout(() => { feedback.textContent = ''; }, 3000);
-        } catch (e) {
-          feedback.textContent = '✗ Não foi possível copiar automaticamente.';
-        }
-      });
-      update();
-    });
-  })();
-</script>
+    })();
+  </script>
 </body>
 
 </html>

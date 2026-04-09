@@ -3,54 +3,44 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Assistance to Black Bodies in Health Establishments | Revista Inquietações</title>
-    <!-- Font Awesome Icons (for modern icons) -->
+    <title>Assistência a Corpos Negros nos Estabelecimentos de Saúde: Desconstruindo Preconceitos e Promovendo uma Ética do Cuidado | Tradução | Revista Inquietações</title>
+    <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Google Fonts for refined typography -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
     <style>
+        /* Mesmo estilo das traduções anteriores */
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
         }
-
         body {
             font-family: 'Inter', sans-serif;
-            background: radial-gradient(circle at 10% 20%, rgba(10, 25, 35, 0.95), rgba(2, 15, 22, 0.98));
+            background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f);
             padding: 2rem 1.5rem;
             display: flex;
             justify-content: center;
-            align-items: center;
             min-height: 100vh;
         }
-
-        /* main container – elegant glassmorphism */
         .container {
             max-width: 1280px;
             width: 100%;
-            background: rgba(255, 255, 255, 0.97);
-            backdrop-filter: blur(2px);
+            background: rgba(255, 253, 245, 0.98);
             border-radius: 2rem;
-            box-shadow: 0 25px 45px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(255, 255, 255, 0.2);
+            box-shadow: 0 30px 50px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(180, 150, 100, 0.3);
             overflow: hidden;
-            transition: all 0.2s ease;
         }
-
-        /* inner content padding */
         .content-padding {
             padding: 2rem 2.5rem;
         }
-
-        /* header styling */
         .header {
-            border-bottom: 2px solid #e2e8f0;
+            border-bottom: 2px solid #e0d6c0;
             margin-bottom: 1.8rem;
         }
         .journal-badge {
             display: inline-block;
-            background: #1e3a5f;
-            color: white;
+            background: #6b4c2c;
+            color: #fef7e0;
             font-size: 0.7rem;
             letter-spacing: 1.5px;
             padding: 0.25rem 0.9rem;
@@ -60,16 +50,16 @@
         }
         .title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.7rem;
+            font-size: 2.2rem;
             font-weight: 700;
             line-height: 1.2;
             margin-top: 1rem;
-            color: #0a2540;
+            color: #3a2a1a;
         }
         .author-line {
             margin-top: 0.8rem;
             font-size: 0.95rem;
-            color: #2c5f7a;
+            color: #6b5a42;
             font-weight: 500;
             display: flex;
             flex-wrap: wrap;
@@ -111,22 +101,23 @@
             font-size: 0.85rem;
             text-decoration: none;
             transition: 0.2s;
-            background: #f1f5f9;
-            color: #1e293b;
-            border: 1px solid #cbd5e1;
+            background: #f0ede5;
+            color: #2c3a2b;
+            border: 1px solid #d6cdb5;
+            cursor: pointer;
         }
         .btn-pdf {
-            background: #8b0000;
+            background: #8b4513;
             color: white;
             border: none;
         }
         .btn-doi {
-            background: #004a7c;
+            background: #2c6e5c;
             color: white;
             border: none;
         }
         .btn-submit {
-            background: #2c5f2d;
+            background: #b87c3a;
             color: white;
             border: none;
         }
@@ -135,8 +126,6 @@
             filter: brightness(1.05);
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
         }
-
-        /* Botões de tradução */
         .lang-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -151,156 +140,98 @@
             border-radius: 40px;
             font-size: 0.8rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: 0.1s;
+            text-decoration: none;
             color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
         }
         .lang-btn.active {
             background: #c28a4e;
             border-color: #8b5a2e;
             color: white;
+            cursor: default;
+            pointer-events: none;
         }
         .lang-btn:hover {
             background: #e0d4bc;
         }
-
-        /* panels */
         .panel {
-            background: white;
+            background: rgba(255, 255, 252, 0.96);
             border-radius: 1.2rem;
             margin-bottom: 2rem;
             padding: 1.6rem 2rem;
-            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.02), 0 1px 2px rgba(0, 0, 0, 0.03);
-            border: 1px solid #edf2f7;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.02);
+            border: 1px solid #ece2d0;
         }
         .panel h2 {
             font-size: 1.8rem;
             font-weight: 600;
-            letter-spacing: -0.3px;
-            border-left: 5px solid #1e5a7a;
+            border-left: 5px solid #c28a4e;
             padding-left: 1rem;
             margin-bottom: 1.2rem;
-            color: #0f3b4f;
+            color: #4a3a2a;
         }
         .article-text {
             font-size: 1.02rem;
             line-height: 1.7;
-            color: #1e2f3c;
+            color: #2a2a24;
         }
         .article-text p {
             margin-bottom: 1.2rem;
+            text-align: justify;
         }
         .article-text h3 {
             font-size: 1.5rem;
             font-weight: 600;
-            margin: 1.8rem 0 0.8rem 0;
-            color: #1c4e6c;
+            margin: 1.8rem 0 0.8rem;
+            color: #9b5e2c;
         }
         .article-text h4 {
             font-size: 1.2rem;
-            font-weight: 600;
-            margin: 1.2rem 0 0.5rem;
-            color: #2b6a4a;
+            margin: 1rem 0 0.5rem;
+            color: #b47c48;
         }
-        /* wikilinks style */
-        a.wikilink {
+        .wikilink {
             text-decoration: none;
-            background: linear-gradient(120deg, #eef2ff 0%, #eef2ff 40%, transparent 60%);
+            background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%);
             padding: 0 2px;
             border-radius: 6px;
-            color: #1e4a76;
+            color: #8b5a2e;
             font-weight: 500;
-            transition: all 0.1s ease;
-            border-bottom: 1px dotted #809ab3;
+            border-bottom: 1px dotted #b89a6a;
+            transition: 0.1s;
         }
-        a.wikilink:hover {
-            background: #dfe9f5;
-            color: #0b3552;
-            border-bottom: 1px solid #1e4a76;
-        }
-        /* tooltip for books / authors with image simulation */
-        .book-tooltip {
-            position: relative;
-            cursor: help;
-            font-weight: 600;
-            color: #2c5a2e;
-            border-bottom: 1px dashed #2c5a2e;
-        }
-        .book-tooltip .tooltip-card {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            bottom: 150%;
-            left: 0;
-            background: #fffef7;
-            box-shadow: 0 12px 28px rgba(0,0,0,0.2);
-            border-radius: 14px;
-            padding: 8px 12px;
-            width: 220px;
-            z-index: 100;
-            transition: 0.15s;
-            pointer-events: none;
-            font-weight: normal;
-            border: 1px solid #e2e8f0;
-            backdrop-filter: blur(4px);
-            font-size: 0.8rem;
-            color: #2d3e50;
-        }
-        .book-tooltip:hover .tooltip-card {
-            visibility: visible;
-            opacity: 1;
-        }
-        .tooltip-card img {
-            width: 100%;
-            max-height: 100px;
-            object-fit: contain;
-            margin-bottom: 6px;
-            border-radius: 8px;
+        .wikilink:hover {
+            background: #e0d4bc;
+            color: #4e3a22;
         }
         .ref-list {
             list-style: none;
             margin-top: 1rem;
         }
         .ref-list li {
-            margin-bottom: 1rem;
+            margin-bottom: 0.9rem;
             font-size: 0.85rem;
-            line-height: 1.5;
-            border-left: 2px solid #cbd5e1;
+            border-left: 2px solid #dccfaf;
             padding-left: 1rem;
-        }
-        .ref-list a {
-            color: #2b6a8f;
-            text-decoration: none;
-            word-break: break-all;
-        }
-        .ref-list a:hover {
-            text-decoration: underline;
         }
         .citation-actions {
             margin: 1rem 0 0.5rem;
             display: flex;
             gap: 12px;
-            flex-wrap: wrap;
         }
         .cite-btn {
-            background: #ecfdf5;
-            border: 1px solid #a7f3d0;
-            padding: 6px 14px;
+            background: #f4efdf;
+            border: 1px solid #cfc2a0;
+            padding: 6px 16px;
             border-radius: 40px;
             font-size: 0.7rem;
-            font-weight: 500;
             cursor: pointer;
-            transition: 0.1s;
         }
-        .cite-btn:hover {
-            background: #d1fae5;
-        }
-        /* iframe pdf */
         .pdf-frame {
             border-radius: 1rem;
             overflow: hidden;
-            border: 1px solid #e2e8f0;
-            background: #f8fafc;
+            border: 1px solid #e2dccf;
         }
         iframe {
             width: 100%;
@@ -310,32 +241,23 @@
         footer {
             font-size: 0.7rem;
             text-align: center;
-            border-top: 1px solid #e2e8f0;
+            border-top: 1px solid #e2d6c0;
             padding-top: 1.5rem;
             margin-top: 1rem;
-            color: #5b6e8c;
+            color: #7a6b53;
         }
         @media (max-width: 800px) {
             body { padding: 1rem; }
             .content-padding { padding: 1.2rem; }
-            .title { font-size: 1.9rem; }
+            .title { font-size: 1.8rem; }
         }
-        /* subtle animated background for elegance */
-        .bg-accent {
-            background: radial-gradient(ellipse at 70% 30%, #fef9e6, #ffffff);
-        }
-        hr {
-            margin: 1rem 0;
-        }
-
-        /* ========== GERADOR DE CITAÇÕES ========== */
+        .bg-warm { background: #fefaf0; }
         .citation-generator {
             background: #fefaf0;
             border: 1px solid #e2dac8;
             border-radius: 1.2rem;
             margin: 1.5rem 0 1rem 0;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.02);
         }
         .citation-generator-head {
             background: #f4efe2;
@@ -346,7 +268,7 @@
             font-size: 1.3rem;
             font-weight: 600;
             margin: 0;
-            color: #2d5a48;
+            color: #4a3a2a;
             border-left: none;
             padding-left: 0;
         }
@@ -387,14 +309,7 @@
             border-radius: 2rem;
             font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
-            color: #2c3a2b;
             cursor: pointer;
-            transition: 0.2s;
-        }
-        .citation-select:focus {
-            outline: none;
-            border-color: #c28a4e;
-            box-shadow: 0 0 0 2px rgba(194,138,78,0.2);
         }
         .citation-actions {
             flex: 1;
@@ -410,7 +325,6 @@
             font-size: 0.8rem;
             color: white;
             cursor: pointer;
-            transition: 0.2s;
             display: inline-flex;
             align-items: center;
             gap: 6px;
@@ -427,9 +341,7 @@
             font-size: 0.85rem;
             line-height: 1.5;
             font-family: 'Inter', monospace;
-            color: #2a2a24;
             margin-top: 1rem;
-            word-break: break-word;
         }
         .citation-feedback {
             font-size: 0.75rem;
@@ -438,62 +350,44 @@
             min-height: 1.8rem;
         }
         @media (max-width: 700px) {
-            .citation-controls {
-                flex-direction: column;
-                align-items: stretch;
-            }
-            .citation-actions {
-                justify-content: stretch;
-            }
-            .citation-btn {
-                justify-content: center;
-            }
+            .citation-controls { flex-direction: column; align-items: stretch; }
+            .citation-actions { justify-content: stretch; }
+            .citation-btn { justify-content: center; }
         }
-
         .autor-titulo {
             display: flex;
             align-items: center;
             gap: 10px;
         }
-
         .autor-foto {
             width: 40px;
             height: 40px;
             border-radius: 50%;
             object-fit: cover;
         }
-
-        /* Ocultar elementos padrão do Google Translate */
-        .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
-        body { top: 0 !important; }
-        .goog-te-gadget { display: none; }
     </style>
 </head>
 <body>
-<div class="container bg-accent">
+<div class="container bg-warm">
     <div class="content-padding">
-        <!-- header -->
         <div class="header">
-            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1 n.1 • 2026</div>
-            <div class="title">Assistance to Black Bodies in Health Establishments:<br>Deconstructing Prejudices and Promoting an Ethics of Care</div>
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1, n.1 • Seção: Traduções • 2026</div>
+            <div class="title">Assistência a Corpos Negros nos Estabelecimentos de Saúde:<br>Desconstruindo Preconceitos e Promovendo uma Ética do Cuidado</div>
             <div class="author-line">
                 <div class="author-avatar">
                     <div class="avatar-circle">
-                        <img src="/corpo%20editorial/diego.png" alt="Foto do autor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                        <img src="/corpo%20editorial/diego.png" alt="Foto do tradutor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
                     </div>
-                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinicius Brito dos Santos</strong></span>
+                    <span><i class="fas fa-language"></i> Tradutor: <strong>Diego Vinícius Brito dos Santos</strong></span>
                 </div>
-                <span><i class="fas fa-globe"></i> Original translation by the author</span>
                 <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18841714</span>
             </div>
-
-            <!-- Botões de tradução -->
+            <!-- Botões de tradução estáticos -->
             <div class="lang-buttons">
-                <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
-                <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
-                <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+                <a class="lang-btn active" href="#">🇧🇷 PT-BR</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/ingles/traducao-assistance-to-black-bodies-en.html">🇺🇸 Inglês</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/traducao-assistance-to-black-bodies-esp.html">🇪🇸 Espanhol</a>
             </div>
-
             <div class="action-buttons">
                 <a class="btn btn-pdf" href="/arquivos/Texto-do-artigo-em-inglês.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Baixar PDF</a>
                 <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18841714" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
@@ -501,80 +395,146 @@
             </div>
         </div>
 
-        <!-- Abstract panel -->
-        <div class="panel">
-            <h2><i class="fas fa-align-left"></i> Abstract</h2>
-            <p><strong>Introduction:</strong> This article explores the differential treatment of black bodies in health systems, highlighting the influence of structural racism and gender bias. The differentiated service faced by black individuals is the result of stereotypes rooted in skin color and ethnic origins, worsening when it comes to transgender people and transvestites.</p>
-            <p><strong>Objective:</strong> The study aims to analyze the approach to black bodies in health systems, highlighting the role of unconscious prejudices in the perpetuation of these disparities and proposing critical education as a fundamental step towards awareness.</p>
-            <p><strong>Method:</strong> Narrative review of the literature, analyzing books and articles in electronic journals to identify discriminatory patterns and prejudices.</p>
-            <p><strong>Results:</strong> Discrimination occurs not only consciously but also as a result of social normalization of racism and gender prejudice. Human and critical training is vital to sensitize health professionals.</p>
-            <p><strong>Conclusion:</strong> Urgency of promoting an ethics of care that values diversity. Transformation requires profound cultural change, involving education and critical reflection.</p>
-            <p><strong>Keywords:</strong> <a class="wikilink" href="#racism">Racism</a>; Health Care; Diversity; Critical Training.</p>
-        </div>
-
-        <!-- Full article with IDs and wikilinks -->
+        <!-- Nota editorial -->
         <div class="panel article-text">
-            <h2 id="artigo"><i class="fas fa-scroll"></i> Full Article</h2>
-            <h3 id="introducao">1. INTRODUCTION</h3>
-            <p>The scenario of health facilities is the scene of a worrying reality that crosses historical and cultural boundaries: the different treatment given to black bodies (<span class="book-tooltip">Almeida, 2019<span class="tooltip-card"><i class="fas fa-book"></i> <strong>Racismo Estrutural</strong><br>Silvio Almeida analisa as raízes do racismo como parte da estrutura social.<br><img src="https://books.google.com/books/content?id=8eWkDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api" alt="capa ilustrativa" onerror="this.src='https://via.placeholder.com/100x140?text=Racismo+Estrutural'"></span></span>; Cidade de Jesus & Sa Neto, 2021; Paiva, 2008; Silva & Cruz, 2019). In the midst of the incessant search for equity in the provision of medical care, a complex web of inequalities and prejudices emerges that profoundly affect the experience and health outcomes of these individuals. This article aims to shed light on the issue of care for black bodies in health systems, exploring the origins of this differentiated treatment, its implications for the health of transgender and transvestite people, the presence of unconscious prejudices and the pressing need for a cultural change that promotes an <a class="wikilink" href="#etica">ethics of care</a>.</p>
-            <p>According to <span class="book-tooltip">Goffman (1963)<span class="tooltip-card"><i class="fas fa-id-card"></i> <strong>Stigma: Notes on the Management of Spoiled Identity</strong><br>Erving Goffman teoriza sobre estigma e identidade social.<img src="https://covers.openlibrary.org/b/id/10741616-L.jpg" alt="capa Stigma" onerror="this.src='https://via.placeholder.com/80x120?text=Stigma'"></span></span>, the historical stigma attributed to these bodies reverberates in the contemporary context of health care, challenging the fundamental notion of justice and equality. Furthermore, gender discrimination intertwines with racism, further compounding the experience of those belonging to both marginalized groups.</p>
-            <p>The intersectionality theory, coined by <strong>Kimberlé Crenshaw (2017)</strong> <a class="wikilink" href="https://en.wikipedia.org/wiki/Intersectionality" target="_blank">(intersectionality)</a>, represents a fundamental approach to understanding the complexity of human experiences and the impacts of social structures. Intersectionality recognizes that an individual’s identities and experiences are shaped not just by one dimension of their identity, such as gender, race, class or sexuality, but by multiple interconnected dimensions.</p>
-            <p>From the studies by <span class="book-tooltip">Almeida (2019)<span class="tooltip-card"><img src="https://images-na.ssl-images-amazon.com/images/I/41qV3qFkqTL._SX342_.jpg" alt="capa" onerror="this.src='https://placehold.co/100x140?text=Racismo+Estrutural'"><br><strong>Racismo Estrutural</strong> – o racismo é sistêmico e inconsciente.</span></span>, we will emphasize that some health professionals do not consciously employ racist and misogynistic attitudes. However, structural racism and gender bias are so deeply rooted in society that their manifestations often occur unconsciously.</p>
-            
-            <h3 id="metodologia">2. METHODOLOGY</h3>
-            <p>This study adopts a qualitative narrative review approach, examining the cutting edge of the topic. A bibliographical search was conducted in June 2023 across databases such as SCIELO, DOAJ, REDIB, LATINDEX, CAPES Portal. Time limit of 10 years, selecting 19 studies aligned with four analytical axes: 1) Differentiated health care for black bodies; 2) Impacts on black trans and transvestite bodies; 3) Unconscious prejudices; 4) Ethics of care.</p>
-            
-            <h3 id="resultados">3. RESULTS</h3>
-            <p>After filtering, 19 studies were selected: 5 on axis 1, 7 on axis 2, 4 on axis 3 and 3 on axis 4. The findings confirm that structural racism determines negative health outcomes for black populations, affecting access, quality of care, and emotional safety.</p>
-            
-            <h3 id="discussao">4. DISCUSSION</h3>
-            <h4>4.1 Differentiated health care for black people</h4>
-            <p>The differentiated care experienced by black bodies is a symptom of systemic problem: structural racism. According to Chehuen Neto et al. (2015), based on the Annual Report on Racial Inequalities in Brazil (2009-2010), there is a clear reduction in quality of life and increase in maternal/infant mortality among the black population. The <a class="wikilink" href="#fanon">zone of being and non-being</a>, proposed by Frantz Fanon and revisited by Thula Pires (2018), helps to understand how the health system legitimizes the humanity of white, cisheteronormative bodies while denying black bodies full rights. <span class="book-tooltip">Fanon, "Pele Negra, Máscaras Brancas"<span class="tooltip-card"><img src="https://upload.wikimedia.org/wikipedia/en/9/9a/Black_Skin_White_Masks.jpg" alt="capa Fanon" style="max-width:90px"><br>Fanon descreve a dualidade existencial do sujeito negro em sociedades coloniais.</span></span>.</p>
-            <p>Health as a fundamental human right is undermined when the "zone of being" dictates who deserves empathy and quality treatment.</p>
-            
-            <h4>4.2 Impacts on trans and transvestite black bodies</h4>
-            <p>According to Rigolon, Oliveira & Salim (2020), the absence of theoretical basis and dialogue during the training of health professionals results in the non-approach of topics related to trans bodies. Intersection of racism and transphobia creates barriers such as refusal of social name, pathologization, and lack of access to primary care. Oliveira (2020) highlights that sexual reassignment processes are often considered low priority, and disrespect for social name causes severe psychological distress.</p>
-            <p>Thus, black trans women experience simultaneous oppression: they are excluded both by racist structures and by transphobic protocols within health establishments.</p>
-            
-            <h4>4.3 Unconscious prejudices and the “normalization” of racism</h4>
-            <p>Unconscious racism (or "silent racism") is explored by Fernandes (2016) and Almeida (2019). Even well-intentioned professionals can reproduce stereotypes. Racial "jokes", recreational racism, and the naturalization of discriminatory practices are rooted in the collective unconscious inherited from the slavery past. Recognizing these biases is the first step. Critical training and continuing education are essential to deconstruct such mechanisms.</p>
-            
-            <h4 id="etica">4.4 For an ethics of care in the care of black bodies</h4>
-            <p>The National Policy for Comprehensive Health of the Black Population (NPCHBP) is a milestone. However, Werneck (2016) identified a scarcity of studies on black women's health in Brazilian databases – only six full texts in SciELO. This epistemic gap is also a consequence of unconscious racism. An ethics of care demands humanized, intersectional training, inclusive environments, and the recognition of social determinants of health. The biomedical model based on white, cisheteronormative bodies (Alonso, 2022) must be replaced by a practice that embraces diversity.</p>
-            
-            <h3 id="conclusao">5. CONCLUSION</h3>
-            <p>The care for black bodies in health establishments echoes the persistence of a system deeply rooted in racial and gender prejudices. Awareness, education, and promotion of an ethics of care emerge as essential pillars. It is necessary to reform professional curricula, implement anti-racist policies, and foster self-reflection. Only through systemic change can we achieve equitable and respectful health care for all, regardless of skin color, gender identity, or ethnic origin.</p>
+            <h3>Nota editorial</h3>
+            <p>Este texto corresponde à tradução para o português do artigo originalmente publicado em inglês sob o título "Assistance to Black Bodies in Health Establishments: Deconstructing Prejudices and Promoting an Ethics of Care". O artigo original em inglês foi produzido pelo mesmo autor e traduzido para ampliar a circulação científica em língua portuguesa.</p>
+            <p><strong>Referência original (inglês):</strong> VINÍCIUS, Diego. Assistance to Black Bodies in Health Establishments: Deconstructing Prejudices and Promoting an Ethics of Care. <em>Inquietações Journal</em>, Seção Traduções, v. 1, n. 1, p. 1-19, jan./dez. 2026. DOI: 10.5281/zenodo.18841714.</p>
         </div>
 
-        <!-- PDF VIEWER -->
+        <!-- Texto da tradução (português) -->
+        <div class="panel article-text">
+            <h2>ASSISTÊNCIA A CORPOS NEGROS NOS ESTABELECIMENTOS DE SAÚDE:<br>DESCONSTRUINDO PRECONCEITOS E PROMOVENDO UMA ÉTICA DO CUIDADO</h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong></p>
+
+            <h3>Resumo</h3>
+            <p><strong>Introdução:</strong> Este artigo explora o tratamento diferenciado de corpos negros nos sistemas de saúde, destacando a influência do racismo estrutural e do preconceito de gênero. O atendimento diferenciado enfrentado por indivíduos negros é resultado de estereótipos enraizados na cor da pele e nas origens étnicas, agravando-se quando se trata de pessoas transgênero e travestis. <strong>Objetivo:</strong> O estudo visa analisar a abordagem dos corpos negros nos sistemas de saúde, destacando o papel dos preconceitos inconscientes na perpetuação dessas disparidades e propondo a educação crítica como um passo fundamental para a conscientização. <strong>Método:</strong> O método de análise adotado é a revisão narrativa da literatura. Por meio da análise de livros e artigos em periódicos eletrônicos, busca-se compreender como os corpos negros são tratados nos sistemas de saúde, identificando padrões discriminatórios e preconceitos. <strong>Resultados:</strong> Emerge a constatação de que a discriminação não ocorre conscientemente, mas é resultado da normalização social do racismo e do preconceito de gênero. A formação humana e crítica é vital para sensibilizar os profissionais de saúde, incentivando uma abordagem consciente e equitativa. <strong>Conclusão:</strong> Diante dos resultados, destaca-se a urgência de promover uma ética do cuidado que valorize a diversidade. A transformação exige uma mudança cultural profunda, envolvendo educação e reflexão crítica. A superação dos preconceitos enraizados nos sistemas de saúde é essencial para garantir um tratamento igualitário e respeitoso para todos os pacientes, independentemente de sua origem étnica ou identidade de gênero.</p>
+            <p><strong>Palavras-chave:</strong> Racismo; Atendimento em saúde; Diversidade; Formação crítica.</p>
+
+            <h3>INTRODUÇÃO</h3>
+            <p>O cenário das unidades de saúde é palco de uma realidade preocupante que atravessa fronteiras históricas e culturais: o tratamento diferenciado dado aos corpos negros (Almeida, 2019; Cidade de Jesus & Sá Neto, 2021; Paiva, 2008; Silva & Cruz, 2019). Em meio à busca incessante por equidade na prestação de cuidados médicos, emerge uma complexa teia de desigualdades e preconceitos que afetam profundamente a experiência e os resultados de saúde desses indivíduos. Este artigo tem como objetivo lançar luz sobre a questão do atendimento a corpos negros nos sistemas de saúde, explorando as origens desse tratamento diferenciado, suas implicações para a saúde de pessoas transgênero e travestis, a presença de preconceitos inconscientes e a premente necessidade de uma mudança cultural que promova uma ética do cuidado.</p>
+            <p>A diferença no tratamento de indivíduos com base na cor da pele e em suas origens étnicas é uma questão que transcende fronteiras geográficas e temporais. Corpos negros continuam a enfrentar barreiras que derivam do racismo estrutural e sistemático, perpetuando estereótipos prejudiciais e minando a qualidade da assistência médica. Por meio das contribuições de Goffman (1963), pode-se afirmar que o estigma histórico atribuído a esses corpos repercute no contexto contemporâneo do cuidado em saúde, desafiando a noção fundamental de justiça e igualdade.</p>
+            <p>Além disso, a discriminação de gênero se entrelaça com o racismo, agravando ainda mais a experiência daqueles que pertencem a ambos os grupos marginalizados. A população transgênero e travesti enfrenta desafios únicos no acesso a cuidados médicos que atendam às suas necessidades específicas. A intersecção do preconceito racial e de gênero cria um ambiente que exige uma abordagem sensível e culturalmente competente por parte dos profissionais de saúde.</p>
+            <p>A teoria da interseccionalidade, cunhada por Kimberlé Crenshaw (2017), representa uma abordagem fundamental para compreender a complexidade das experiências humanas e os impactos das estruturas sociais. A interseccionalidade reconhece que as identidades e experiências de um indivíduo são moldadas não apenas por uma dimensão de sua identidade, como gênero, raça, classe ou sexualidade, mas por múltiplas dimensões interconectadas. Isso significa que as experiências das pessoas são moldadas pela interação de diferentes marcadores sociais e não podem ser compreendidas isoladamente. A importância de incorporar a interseccionalidade nas pesquisas sobre diversidade é evidente e bem justificada. Ao considerar apenas uma única dimensão da identidade de um indivíduo, podemos perder nuances e realidades significativas. Por exemplo, ao analisar as disparidades de gênero, não podemos ignorar como a raça, a classe e outras dimensões podem influenciar a experiência de uma mulher cis/trans. Isso é crucial para uma compreensão mais precisa das desigualdades e para a criação de soluções eficazes.</p>
+            <p>A interseccionalidade desafia a tendência de reduzir as pessoas a uma única característica ou identidade. Por meio dessa abordagem, somos incentivados a considerar as complexas interações entre diferentes dimensões da identidade, reconhecendo que as experiências não podem ser separadas umas das outras. Isso não apenas enriquece nossa compreensão da diversidade, mas também nos permite desenvolver políticas, práticas e estratégias mais inclusivas. Nesse sentido, esta pesquisa sobre diversidade tem a interseccionalidade como cerne. Isso envolve examinar como diferentes marcadores sociais interagem e se sobrepõem, impactando as experiências individuais e coletivas. Ao compreender como essas interseções moldam a vida das pessoas, somos capazes de desenvolver estratégias e políticas mais eficazes para promover a igualdade e a inclusão. Kimberlé Crenshaw nos lembra que a diversidade é complexa e multifacetada. A pesquisa sobre diversidade deve ir além de uma visão unidimensional, considerando as interações entre os marcadores sociais para uma compreensão mais completa das desigualdades e para a criação de ambientes verdadeiramente inclusivos.</p>
+            <p>A partir dos estudos de Almeida (2019), enfatizaremos que alguns profissionais de saúde não empregam atitudes racistas e misóginas conscientemente. No entanto, o racismo estrutural e o preconceito de gênero estão tão profundamente enraizados na sociedade que suas manifestações frequentemente ocorrem de forma inconsciente. Reconhecer essa realidade é um passo crucial para desafiar o status quo e trabalhar em direção a um sistema de saúde verdadeiramente igualitário e inclusivo.</p>
+            <p>Diante desse contexto e para alcançar nosso objetivo, este artigo propõe uma análise baseada em uma revisão narrativa da literatura existente. Por meio dessa abordagem, buscamos elucidar como os corpos negros são tratados nos sistemas de saúde, identificando padrões de discriminação e destacando a urgente necessidade de promover uma ética do cuidado. Por meio da conscientização, da formação crítica e de uma mudança de mentalidade, acreditamos que é possível desconstruir atividades preconceituosas e excludentes, promovendo um ambiente de cuidado que honre a diversidade e respeite os marcadores sociais de todos os pacientes.</p>
+            <p>Assim, este artigo busca lançar um olhar crítico sobre o tratamento dos corpos negros nas unidades de saúde, contextualizando sua origem, explorando suas consequências e propondo soluções viáveis para promover mudanças transformadoras. À medida que avançamos em direção a uma sociedade mais justa e igualitária, é essencial que o campo da saúde desempenhe um papel ativo na desconstrução de preconceitos arraigados e na construção de um ambiente de cuidado que acolha e respeite a diversidade de todos os pacientes.</p>
+
+            <h3>METODOLOGIA</h3>
+            <p>Este estudo adota uma abordagem qualitativa de revisão narrativa, uma estratégia apropriada para examinar o estado da arte de um tópico específico. Este método envolve uma análise abrangente da literatura disponível, sem adotar uma metodologia rigorosa e reproduzível para coletar dados e fornecer respostas quantitativas a perguntas específicas, como destacado por Cordeiro, Oliveira, Rentería e Guimarães (2007). Apesar da ausência de um protocolo estritamente quantitativo, a revisão narrativa desempenha um papel fundamental ao fornecer uma compreensão abrangente e atualizada de um campo de estudo específico (Rother, 2007). Esse tipo de revisão permite a exploração de novas ideias, métodos e subtópicos que podem ter recebido diferentes níveis de ênfase na literatura selecionada, contribuindo para o desenvolvimento contínuo do conhecimento sobre o assunto. Nesse sentido, este tipo de revisão oferece uma plataforma favorável para explorar novas ideias, métodos e subtemas que podem ter sido abordados com diferentes graus de ênfase na literatura selecionada. Como resultado, essa abordagem dinâmica e flexível não apenas enriquece a compreensão existente do tópico, mas também catalisa o desenvolvimento contínuo do conhecimento dentro do tema em questão.</p>
+
+            <h3>RESULTADOS</h3>
+            <p>Em junho de 2023, realizamos uma busca bibliográfica com o propósito de identificar estudos de alta relevância relacionados ao tema abordado. A pesquisa foi conduzida abrangendo várias bases de dados bibliográficas amplamente reconhecidas no ambiente acadêmico brasileiro, seguindo critérios específicos para garantir o escopo da busca. As bases de dados envolvidas foram: SCIELO, Directory of Open Access Journals (DOAJ), Rede Ibero-americana de Inovação e Conhecimento (REDIB), Sistema Regional de Información en línea para Revistas Científicas de América Latina, el Caribe, España y Portugal (LATINDEX) e o Portal de Periódicos da CAPES. Além dessas bases, também recorremos a dissertações e anais de eventos que pudessem enriquecer a revisão narrativa. Estabelecemos um limite temporal de 10 anos para a publicação dos artigos e, por meio da análise de títulos e resumos das publicações encontradas, selecionamos aquelas em português e inglês que eram de acesso aberto e que dialogavam com quatro eixos de análise, a saber: 1) Atendimento diferenciado em saúde para corpos negros; 2) Impactos do atendimento inadequado em corpos negros trans e travestis; 3) Preconceitos inconscientes e a normalização do racismo e da discriminação de gênero; e 4) Estudos sobre uma ética do cuidado em saúde e atenção aos corpos negros.</p>
+            <p>Após a realização da busca e a filtragem pela leitura dos títulos e resumos dos trabalhos identificados, optamos por selecionar, com base na análise completa dos trabalhos e na avaliação de seus resultados, um total de 19 (dezenove) estudos que estavam em adequada concordância com os eixos de análise adotados para esta pesquisa. No primeiro eixo, foram escolhidos 5 (cinco) estudos; no segundo eixo, foram identificados 7 (sete) estudos; no terceiro eixo, foram selecionados 4 (quatro) estudos; finalmente, no quarto eixo, optamos por incluir 3 (três) estudos.</p>
+
+            <h3>DISCUSSÃO</h3>
+            <h4>Atendimento diferenciado em saúde para pessoas negras</h4>
+            <p>O atendimento diferenciado vivenciado por corpos negros nas unidades de saúde é um sintoma de um problema sistêmico mais amplo: o racismo estrutural que permeia várias esferas da sociedade. A cor da pele e a origem étnica tornam-se determinantes cruciais nas interações de saúde, resultando em marcantes disparidades no acesso a cuidados médicos de qualidade. O fenômeno, que pode parecer sutil em alguns casos, está enraizado nos fundamentos de um racismo que se entrelaça com a própria estrutura da sociedade, perpetuando estereótipos e preconceitos arraigados. Corroborando essa afirmação, Chehuen Neto, Fonseca, Santos, Rodrigues, Paulino e Ferreira (2015) buscam demonstrar a conexão entre as desigualdades em saúde e a variável racial. Com base no Relatório Anual das Desigualdades Raciais no Brasil para o biênio 2009-2010 – que mostra uma redução na qualidade e na expectativa de vida da comunidade negra, ao mesmo tempo que revela um aumento nas taxas de mortalidade materna e infantil, bem como maior acesso restrito aos serviços de saúde e, além disso, aponta para uma incidência desproporcional de violência entre jovens negros, quando comparados ao restante da população – os autores concluem que a falta de medidas concretas para enfrentar essas disparidades no acesso à saúde pode perpetuar indefinidamente as diferenças nas condições de vida e saúde da população negra.</p>
+            <p>Em uma sociedade estruturada na violência contra a população negra, o racismo estrutural e sistemático, mesmo quando não manifestado explicitamente, molda as experiências de saúde de indivíduos negros de maneiras complexas e multifacetadas (Bastos & Faerstein, 2012; Kantamneni, 2020; Williams, Mohammed, Leavell & Collins, 2010). A influência desse racismo pode ser observada na comunicação médico-paciente, onde estereótipos arraigados podem levar a diagnósticos errados e tratamentos inadequados. Além disso, o acesso a tratamentos de qualidade é frequentemente negado ou dificultado para aqueles que enfrentam o peso da discriminação histórica (Neto, Lima, Souza & Moura, 2021; Santos, 2012; Schliemann, Souza & Figueiredo, 2020).</p>
+            <p>Diante disso, é possível inferir que a qualidade do atendimento é profundamente impactada pela presença dessas disparidades. A falta de sensibilidade cultural e a falta de conscientização sobre as experiências específicas dos pacientes negros podem resultar em interações médico-paciente tensas e prejudiciais. A falta de empatia por parte dos profissionais de saúde pode minar a confiança dos pacientes, levando à adesão insuficiente aos tratamentos prescritos. Nesse contexto, dialogamos com o estudo de Lages, Silva, Silva, Damas e Jesus (2017), que trazem à luz uma perspectiva comum no cotidiano brasileiro: a necessidade percebida de que pessoas negras assimilem características brancas para serem reconhecidas, negando sua própria negritude e adotando padrões estéticos brancos, que favorecem certos tipos corporais em detrimento de outros. Essa abordagem também está alinhada com os estudos de Florestan Fernandes, especialmente em sua obra “O negro no mundo dos brancos”, que, diferentemente de Gilberto Freyre (2003), demonstra que a presença do corpo negro em uma sociedade que valoriza e se orienta pela branquitude não é harmoniosa, mas permeada por conflitos e tensões. Os autores apontam que a invisibilidade das pessoas negras abrange tanto espaços físicos quanto sociais, incluindo as esferas pública e privada. Pessoas negras são frequentemente restritas a circular nesses espaços. Essas restrições frequentemente resultam em efeitos observáveis, como o silêncio diante da discriminação sofrida, o medo de reagir e discursos comuns em qualquer contexto social, inclusive em locais que deveriam oferecer cuidado e acolhimento, como hospitais, Unidades Básicas de Saúde (UBS) e clínicas, tanto públicas quanto privadas, entre outros espaços de atendimento. Assim, a predominância de pessoas brancas nesses espaços não deve ser interpretada como uma indicação de que pessoas negras não precisam de cuidados e atenção em saúde. Pelo contrário, tal cenário indica que esses espaços impõem restrições à presença e circulação de corpos negros.</p>
+            <p>É crucial que a comunidade de saúde enfrente essa realidade alarmante e tome medidas concretas para combater o racismo estrutural em sua essência. Esta não é apenas uma questão moral, mas uma necessidade fundamental para garantir o direito de todos a cuidados de saúde justos e equitativos. É imperativo que os profissionais de saúde sejam educados e sensibilizados para as nuances das experiências enfrentadas pelos pacientes negros, reconhecendo as influências sociais e históricas que moldam suas trajetórias de saúde. Frequentemente, os indivíduos que perpetuam o racismo ou a misoginia o fazem sem intenção. Alguns argumentam que não receberam treinamento adequado sobre o assunto e, consequentemente, não reconhecem a natureza prejudicial de suas ações em relação a certos grupos. Outros atribuem tal comportamento à sua própria formação pessoal e à mentalidade arraigada no Brasil, que muitas vezes minimiza certas atitudes como “brincadeiras” em vez de reconhecê-las como manifestações de violência. Almeida (2019) destaca essa questão, referindo-se ao conceito de “racismo recreativo”. No entanto, como podemos aceitar essa justificativa de falta de conhecimento sobre o que é racismo, dada a abundância de pesquisas e trabalhos publicados sobre o assunto, bem como o aumento do debate sobre este tema na sociedade como um todo? A comunidade médica, tendo formação acadêmica e acesso privilegiado à informação, deveria estar especialmente comprometida em buscar conhecimentos sobre como abordar empaticamente a diversidade, uma vez que seu público, em particular, nunca será homogêneo.</p>
+            <p>A relutância em buscar informações também esbarra na compreensão do conceito de “lugar de fala”. Muitas pessoas se sentem inseguras ao discutir questões como raça, racismo, identidade de gênero e outros marcadores sociais que não estão diretamente relacionados às suas próprias vidas e experiências. É evidente que alguns profissionais se esforçam para se manter atualizados, a fim de melhorar suas práticas e oferecer um atendimento mais empático aos seus pacientes e interlocutores. No entanto, há aqueles que buscam apenas informações que se conectam diretamente às suas histórias pessoais, evitando explorar conhecimentos sobre marcadores sociais que não estão alinhados com sua própria biografia. Por exemplo, médicas frequentemente se esforçam para melhorar sua abordagem para atender melhor outras mulheres. No entanto, essa abordagem pode ser restrita ao escopo do gênero, desconsiderando a multiplicidade de marcadores sociais que essas mulheres podem ter. Continuando com este exemplo, podemos nos perguntar se as mesmas informações e diretrizes que funcionam para mulheres cisgênero brancas de classe média são apropriadas para mulheres negras e transgênero que vivem em áreas periféricas. A abordagem para realizar um exame de rotina no corpo de uma mulher cisgênero branca é igualmente válida para o corpo de uma mulher transgênero negra? Essas perguntas podem ser infinitamente multiplicadas, visto que as pessoas, mesmo quando compartilham certos marcadores, são diversas em suas identidades. Nesse contexto, é crucial abandonar a noção rígida de “lugar de fala” para permitir uma discussão aberta e aprofundada sobre todos os possíveis marcadores que influenciam a identidade de um indivíduo. Como apontado por Ribeiro (2017), a representatividade ligada ao conceito de lugar de fala não deve restringir o debate político, como se apenas aqueles pertencentes a grupos subalternos tivessem autoridade para discutir tópicos como raça, racismo, misoginia, gênero e desigualdade. Em vez disso, devemos incentivar um diálogo inclusivo que reconheça a multiplicidade de perspectivas e experiências que cada indivíduo carrega consigo. Isso enriquece a discussão e promove uma compreensão mais completa das complexidades envolvidas nos diferentes marcadores sociais.</p>
+            <p>Para concluir esta análise sobre a diferença no atendimento em saúde para corpos negros, é crucial ter em mente que, embora a saúde seja um direito humano fundamental, a discriminação racial enraizada nos sistemas de saúde dificulta o acesso igualitário aos cuidados para todos os cidadãos. Para compreender essa realidade, é necessário revisitar o conceito de “zona do ser” proposto pelo filósofo Frantz Fanon em seu livro “Pele Negra, Máscaras Brancas” e trazido por Thula Pires (2018) para impulsionar a discussão sobre direitos humanos em uma perspectiva racial. Resumidamente, podemos identificar duas categorias de análise, ou melhor, duas esferas de existência: a zona do ser, construída para o homem soberano, branco, heterossexual, não deficiente e cisgênero; e a zona do não ser, destinada àqueles rotulados como “outros”, diferentes e que representam a alteridade. Ambas as zonas conferem legitimidade às experiências, no entanto, Pires argumenta que esse contraste vai além, pois essas zonas legitimam a humanidade de alguns enquanto negam a humanidade de outros. Essa dinâmica é então transposta para o contexto do direito, onde Pires demonstra que o arcabouço jurídico busca beneficiar aqueles que se encaixam na zona do ser, enquanto pune aqueles pertencentes à zona do não ser. Para reforçar essa proposição, Pires entende que o sistema jurídico foi moldado por e para aqueles que vivem na zona do ser, para indivíduos cuja humanidade é reconhecida e validada, perpetuando assim a homogeneização da sociedade, ao mesmo tempo que exclui e marginaliza aqueles que são considerados não humanos e, portanto, desprovidos de direitos, uma vez que os direitos humanos são concebidos para seres humanos. Como a zona do ser endossa a humanidade de alguns em detrimento de outros, isso também se traduz na negação de direitos, com base na premissa de que aqueles que pertencem à zona do não ser não são dignos de serem reconhecidos como humanos.</p>
+            <p>Ao trazer essa discussão para o contexto da saúde, podemos observar que os fundamentos das zonas de ser estão intrinsecamente relacionados a atitudes e comportamentos racistas, transfóbicos, sexistas e outros, praticados consciente ou inconscientemente por aqueles que lidam com a diversidade e a pluralidade de indivíduos. Isso ocorre porque as zonas de ser e não ser estabelecem quem merece ser tratado com respeito, cuidado, atenção, prioridade e empatia, e quem, como já mencionamos, deve ser submetido a restrições e violências, mesmo que de forma sutil, para ser excluído dos lugares reservados para aqueles que pertencem à zona do ser. Assim, mesmo que a saúde seja reconhecida como um direito humano fundamental, surge a pergunta: quem é considerado humano e tratado como tal nos espaços públicos e no atendimento médico? Embora seja uma pergunta retórica, ela nos convida a refletir criticamente sobre nossas práticas em relação à diversidade. Retomando a discussão sobre o lugar de fala, é essencial reconhecer que essas zonas de ser e não ser são construções sociais que persistem ao longo do tempo. Portanto, cabe à sociedade como um todo desconstruir essa noção hegemônica de ser e reconhecer a existência de múltiplas zonas que escapam à definição atual de ser. É crucial adotar uma perspectiva crítica e reflexiva para abordar essas questões. Isso envolve reconhecer o papel das estruturas sociais na perpetuação dessas zonas, questionar as hierarquias de poder nelas embutidas e buscar uma abordagem mais inclusiva e equitativa para tratar todas as pessoas, independentemente de onde estejam localizadas dentro dessas zonas. Desconstruir as zonas de ser e não ser exige um esforço coletivo para redefinir o que significa ser humano e garantir que todos tenham acesso igualitário aos cuidados de saúde e a um tratamento respeitoso.</p>
+
+            <h4>Impactos em corpos negros trans e travestis</h4>
+            <p>Segundo estudos de Pessalacia, Zoboli e Ribeiro (2016), Fortes (2008), Carrapato, Correia e Garcia (2017) e Padilla, Hernández-Plaza, Freitas, Santinho e Ortiz (2013), a equidade e a justiça no acesso aos cuidados de saúde têm sido questões cada vez mais debatidas e cruciais na sociedade contemporânea. No entanto, é essencial enfatizar que a discriminação nos serviços de saúde não se manifesta isoladamente. A intersecção entre raça e gênero forma um campo complexo de desigualdades que afeta especialmente indivíduos negros, transexuais e travestis. Essa situação problemática exige uma análise aprofundada do tratamento diferenciado e muitas vezes inadequado que essas pessoas enfrentam nos sistemas de saúde. De acordo com os dados coletados na pesquisa de Rigolon, Oliveira e Salim (2020), a ausência de base teórica e a falta de diálogo durante a formação dos profissionais de saúde resultam na não abordagem e discussão de temas relacionados aos corpos trans na área da saúde.</p>
+            <p>A experiência marginalizada de corpos negros de pessoas transgênero e travestis nos sistemas de saúde, caracterizada por ignorância, exotificação e patologização de suas especificidades (Rigolon, Oliveira & Salim, 2020), é uma manifestação complexa que resulta da intersecção de fatores, incluindo racismo e preconceito de gênero. A confluência dessas formas de discriminação intensifica os desafios enfrentados por esses indivíduos, resultando em desigualdades no acesso e em tratamentos inadequados. A intersecção entre racismo e transfobia cria uma realidade em que essas pessoas se deparam não apenas com estigmas e preconceitos ligados ao gênero, mas também com o peso da discriminação racial. Nesse contexto, é importante destacar a discussão promovida por Oliveira (2020), que, ao examinar o acesso aos cuidados de saúde para pessoas transgênero, expõe situações comuns que afetam essa população. Um exemplo é o processo de redesignação sexual, frequentemente considerado de menor prioridade pelas autoridades de saúde e seus profissionais. Além disso, o autor enfatiza a percepção equivocada sobre o uso do nome social, muitas vezes interpretado pelos profissionais como um apelido em vez de um meio de inclusão e afirmação de direitos iguais, o que pode prejudicar a autoestima, pois é fundamental para a legitimidade e dignidade das pessoas transgênero e travestis. O autor também enfatiza que a ignorância e a crueldade social sistêmica presentes no cuidado em saúde são observáveis como uma prática que visa negar às pessoas trans o direito de acessar os serviços de saúde e, além disso, negar o direito de viver de acordo com seus desejos.</p>
+            <p>Conforme já delineado anteriormente, o autor destaca a urgência de abordar as formas de opressão de forma interseccional, especialmente ao considerar as particularidades da população transexual e negra, uma vez que as intersecções operam como opressão simultânea vivida por homens e mulheres transexuais. Essas intersecções podem dar origem a atos de racismo e transfobia institucional e interpessoal, culminando em exclusão, desvalorização e restrição do acesso aos serviços de saúde. Para corroborar essa perspectiva, o autor apresenta testemunhos de mulheres transexuais que mostram que a busca por atendimento é frequentemente relegada à urgência, em vez de ser direcionada às Unidades Básicas de Saúde, onde deveriam prevalecer a promoção da saúde e a prevenção. Esse comportamento é motivado pelo medo de retaliação, discriminação e constrangimento, especialmente devido à persistência de profissionais que não respeitam o uso do nome social, apesar das bases legais que amparam esse direito, que muitas vezes é sistematicamente desrespeitado.</p>
+            <p>No estudo realizado por Rigolon et al. (2020), cujo objetivo foi compreender as trajetórias de vida e as experiências de travestis e transexuais nos serviços de saúde, evidenciou-se que essas pessoas frequentemente vivenciam experiências de violência e discriminação como parte de suas rotinas. Este estudo destaca que a falta de compreensão e sensibilidade em relação às identidades de gênero de negros trans e travestis desempenha um papel central na qualidade do atendimento de saúde que recebem. Os autores apontam que os profissionais de saúde muitas vezes não estão adequadamente preparados para lidar com a complexidade das diversas identidades de gênero, resultando em um descompasso entre as necessidades médicas específicas desses indivíduos e o tratamento oferecido. Mesmo em um cenário de maior aceitação das expressões de gênero nos últimos anos, os autores identificam que persiste uma abordagem binária no atendimento, ancorada em características biológicas. No entanto, os corpos trans desafiam essa noção biológica. A negligência desse aspecto impacta não apenas a saúde física, mas também a saúde mental desses pacientes, uma vez que a falta de respeito e compreensão pode levar a sentimentos de isolamento e marginalização. Como indicado pelos autores, essa negligência está ligada à invisibilização da temática trans e das identidades de gênero, por exemplo, em cursos como Medicina, Psicologia e Enfermagem, perpetuando discursos cisheteronormativos e biologicistas que prejudicam a assistência oferecida e afastam transexuais e travestis do cuidado em saúde. Para neutralizar os impactos práticos dessa invisibilização na vida dessas pessoas, os autores enfatizam a necessidade de aprofundar, durante a formação em saúde, a compreensão da sexualidade e da identidade de gênero. Essa abordagem deve ir além das questões puramente biológicas, abrangendo as dimensões sociais, culturais, afetivas e psicológicas que permeiam essas experiências. Essa formação deve ser baseada, acima de tudo, em uma ética do cuidado, conforme discutido abaixo.</p>
+
+            <h4>Preconceitos inconscientes e a “normalização” do racismo</h4>
+            <p>A maioria dos profissionais de saúde ingressa em suas carreiras com a nobre intenção de fornecer cuidados de qualidade e promover o bem-estar de todos os seus pacientes, seguindo os princípios do Juramento de Hipócrates. No entanto, é importante reconhecer que mesmo aqueles que não praticam conscientemente ações racistas e misóginas podem estar sujeitos a perpetuar essas atitudes inconscientemente. Esse fenômeno é em grande parte resultado da normalização do racismo e da discriminação de gênero que permeia as estruturas políticas e sociais e as interações cotidianas. Diante desse cenário, é imperativo identificar e confrontar esses preconceitos internalizados para promover uma genuína transformação na prática médica e no ato de cuidar.</p>
+            <p>A normalização do racismo e da discriminação de gênero na sociedade é uma realidade insidiosa que penetra em várias esferas, incluindo o âmbito da prestação de cuidados de saúde. Estereótipos, preconceitos e julgamentos arraigados são muitas vezes perpetuados inconscientemente, dando origem a um ambiente de desigualdade no tratamento e no acesso aos serviços de saúde. É importante notar que ao mencionar que essas práticas são inconscientes, não se pretende sugerir que sejam involuntárias. O conceito de racismo inconsciente pode ser explorado à luz do estudo de Almeida (2019), que argumenta que o racismo constitui uma forma sistêmica de opressão, manifestando-se por meio de práticas conscientes ou inconscientes. Esta concepção encontra apoio nos estudos de Costa (2015) e Mauro (2015). No entanto, para abordar a noção de racismo inconsciente ou “racismo silencioso” (Tomaz, 2009), é relevante referir-se ao estudo de Fernandes (2016). Em sua pesquisa, o autor aponta que o racismo à brasileira opera de forma disfarçada, quase invisível e velada. Demonstra que as práticas cotidianas de discriminação racial estão enraizadas no inconsciente coletivo da sociedade brasileira. É a partir desse inconsciente coletivo que podemos compreender o conceito de racismo inconsciente, onde todas as pessoas no Brasil apresentam práticas discriminatórias, uma vez que suas formações são permeadas por elementos herdados do passado escravista, que continuam a influenciar o inconsciente coletivo. As chamadas “brincadeiras” racistas, aqui denominadas racismo recreativo, exemplificam um caso típico desse racismo inconsciente. Nessa dinâmica, as brincadeiras refletem atitudes racistas, mas os envolvidos não as reconhecem como tais, uma vez que essas ações são comuns em muitos indivíduos, são consideradas normais e fazem parte de uma consciência coletiva, quase como uma característica da identidade cultural. Essa atitude reflete a naturalização do comportamento racista, perpetuando o ciclo de discriminação de forma insidiosa e profunda na sociedade.</p>
+            <p>O primeiro passo para combater esse problema é o reconhecimento da existência desses vieses inconscientes. A autorreflexão dos profissionais de saúde é essencial para identificar crenças e atitudes internalizadas que podem influenciar a forma como interagem com os pacientes. Além disso, é crucial implementar treinamentos e workshops que abordem de forma direta e honesta a questão do racismo e da discriminação de gênero na prática médica e no sistema de saúde. Esses programas de conscientização podem abrir um diálogo construtivo sobre os vieses inconscientes e fornecer ferramentas para enfrentá-los.</p>
+            <p>A formação crítica é outra peça-chave nesse quebra-cabeça. Os profissionais de saúde precisam ser capacitados para analisar criticamente as estruturas sociais que perpetuam a desigualdade e a injustiça. Isso envolve uma compreensão profunda das intersecções entre raça, gênero, classe e outras formas de marginalização. A educação continuada que incentiva a empatia e a compreensão das diversas experiências dos pacientes pode ser um catalisador para a mudança de mentalidade e a adoção de práticas mais equitativas e antidiscriminatórias.</p>
+            <p>No entanto, a conscientização e o treinamento por si só não são suficientes. É crucial que as instituições de saúde criem um ambiente propício para a implementação efetiva desse conhecimento adquirido. Isso envolve a promoção de políticas de não discriminação, a garantia da diversidade nas equipes de saúde e a criação de espaços seguros e inclusivos para os pacientes. A cultura institucional deve refletir o compromisso com a igualdade e a justiça em todas as dimensões.</p>
+            <p>Devemos compreender que a luta contra os preconceitos inconscientes na prática da saúde é um desafio complexo e crucial. A normalização do racismo e da discriminação de gênero na sociedade pode infiltrar-se sutilmente nas interações médico-paciente, afetando a qualidade do cuidado e perpetuando desigualdades. Reconhecer a presença desses vieses, buscar a conscientização e a formação crítica e criar ambientes inclusivos são passos essenciais para criar um campo de cuidados de saúde mais justo, respeitoso e equitativo para todos. Somente por meio do esforço conjunto dos profissionais de saúde, das instituições e da sociedade em geral poderemos alcançar uma verdadeira transformação nesse cenário.</p>
+
+            <h4>Por uma ética do cuidado no atendimento a corpos negros</h4>
+            <p>Para lidar com as questões complexas apresentadas até agora, é imperativo que haja uma mudança abrangente na formação e educação dos profissionais de saúde. A inclusão de temas relacionados à diversidade de gênero e à intersecção com o racismo na formação médica é essencial para garantir um atendimento mais justo e adequado. Além disso, a criação de espaços seguros e inclusivos nos sistemas de saúde é uma medida vital para garantir que essas pessoas se sintam acolhidas e respeitadas durante o processo de atendimento médico.</p>
+            <p>Segundo o estudo realizado por Barros, Lopes, Mendonça e Sousa (2016), a busca pela equidade no cuidado em saúde tem se mostrado uma das principais aspirações no campo da medicina contemporânea. No entanto, esse empreendimento não se limita à mera aplicação de tratamentos médicos, exames e procedimentos. Há uma percepção crescente de que uma abordagem ética do cuidado é essencial para garantir não apenas a qualidade técnica dos serviços, mas também a humanização das interações médico-paciente (Alonso, 2022; Caprara & Franco, 2006). Nesse contexto, a construção de uma ética do cuidado no atendimento em saúde de pessoas negras apresenta-se como uma demanda imperativa, convergindo com as premissas da Política Nacional de Saúde Integral da População Negra (PNSIPN).</p>
+            <p>O racismo institucional não se limita apenas a situações evidentes de mau atendimento ou à dificuldade de acesso à saúde pela população negra. Também é visível nas deficiências presentes nos programas de formação profissional e educação em saúde, que muitas vezes omitem a discussão sobre o impacto do racismo na prestação de cuidados. Por meio de uma revisão de literatura realizada por Werneck (2016), constatou-se que o Brasil tem uma lacuna significativa no campo dos estudos acadêmicos sobre a saúde de mulheres negras. Ao examinar os periódicos acadêmicos disponíveis na biblioteca virtual SciELO, a autora identificou essa lacuna ao realizar uma busca simples com descritores como “saúde da mulher negra”, que resultou em apenas 24 artigos nacionais publicados a partir de 2008. A filtragem pela área de saúde pública reduziu essa disponibilidade para apenas seis textos completos publicados. Com base nesse levantamento, concordamos com a autora em dois aspectos: 1) a ausência de tais publicações pode indicar uma falta de consolidação nos campos da saúde da população negra e da saúde da mulher negra como áreas temáticas de pesquisa; 2) há uma penetração limitada dos debates sobre racismo, seus impactos na saúde e estratégias para enfrentá-lo nas instituições de pesquisa; no entanto, discordamos da afirmação de que as razões por trás dessa escassez de publicações sobre o assunto não são claras, pois, seguindo as diretrizes já discutidas, pode-se afirmar que essa ausência é resultado, acima de tudo, do racismo inconsciente ou racismo silencioso. A falta de conhecimento e reflexão nesse contexto contribui para a manutenção de mecanismos racistas e para a persistência de desigualdades no sistema de saúde. Portanto, é imperativo que essas lacunas sejam preenchidas por uma abordagem mais inclusiva e abrangente nos programas de educação e pesquisa em saúde, visando não apenas combater as desigualdades raciais, mas também promover uma prestação de cuidados de saúde mais justa e equitativa para todos os grupos da sociedade.</p>
+            <p>A PNSIPN, instituída pelo Ministério da Saúde, surge como um marco importante no combate ao racismo e na promoção de uma abordagem ética e equitativa da saúde. Diante dos indicadores de saúde da população negra, visa promover ações voltadas para a melhoria das condições de saúde da população negra, valorizando as práticas culturais, promovendo a equidade e conscientizando sobre os impactos do racismo na saúde. A PNSIPN reconhece a necessidade de ações que vão além do mero diagnóstico e tratamento, incorporando a dimensão ética e humanística na relação médico-paciente.</p>
+            <p>Em linha com as premissas da PNSIPN, é essencial que os profissionais de saúde passem por uma formação mais ampla e aprofundada, que inclua a discussão sobre racismo, questões de gênero e direitos humanos em seu currículo formativo. A formação humana e crítica deve incentivar a autorreflexão, permitindo que os profissionais identifiquem vieses inconscientes e desafiem crenças pessoais formadas pela tradição racista. Isso é crucial para que a prática médica se torne mais sensível às necessidades específicas das pessoas negras, evitando a reprodução de estereótipos e comportamentos discriminatórios.</p>
+            <p>A construção de uma ética do cuidado também exige a promoção de um ambiente de trabalho inclusivo e respeitoso. As instituições de saúde devem estabelecer políticas de combate ao racismo institucional e fornecer um espaço seguro para que os profissionais discutam suas experiências, desafios e aprendizados relacionados ao atendimento de pessoas negras. Além disso, a presença de equipes diversificadas e culturalmente sensíveis é essencial para garantir um atendimento adequado e não discriminatório nos espaços de serviço.</p>
+            <p>Em resumo, a construção de uma ética do cuidado no atendimento em saúde de pessoas negras é um empreendimento multifacetado que envolve formação, conscientização e criação de ambientes inclusivos. A PNSIPN, ao enfatizar a importância da equidade e da valorização das práticas culturais, fornece um guia sólido para a promoção dessa ética. O desafio é traduzir esses princípios em ações concretas, por meio da revisão dos currículos de formação, da promoção de diálogos abertos e da implementação de políticas institucionais. Somente por meio desses esforços coordenados e contínuos será possível avançar em direção a um sistema de saúde que, além de técnico, seja profundamente humano, justo e sensível às particularidades das identidades e experiências das pessoas negras.</p>
+
+            <h3>CONCLUSÃO</h3>
+            <p>O cuidado com os corpos negros nos estabelecimentos de saúde ecoa a persistência de um sistema profundamente enraizado em preconceitos raciais e de gênero, revelando desigualdades persistentes e falta de equidade no campo da saúde. A transformação desse cenário requer uma abordagem sistêmica, ampla e bem fundamentada que vá além de soluções pontuais e atinja a raiz dos problemas. Nesse contexto, a conscientização, a educação e a promoção de uma ética do cuidado emergem como pilares essenciais para a construção de um sistema de saúde verdadeiramente igualitário e sensível às necessidades de todos os pacientes.</p>
+            <p>Uma análise crítica das disparidades no cuidado de corpos negros nos serviços de saúde revela a complexa intersecção entre racismo estrutural e preconceito de gênero. Essas manifestações de discriminação não são meramente incidentais, mas são produtos de um sistema que perpetua desigualdades históricas e culturais. A superação dessas barreiras exige uma mudança profunda na mentalidade e nas práticas dos profissionais de saúde, bem como nas estruturas institucionais.</p>
+            <p>A conscientização emerge como ponto de partida para a transformação. Compreender e reconhecer os preconceitos arraigados nas práticas de saúde é essencial para desafiar e romper esses padrões prejudiciais e preconceituosos. Tomar consciência de sua posição, privilégio e responsabilidade como profissional de saúde é o primeiro passo para a mudança. É fundamental que os profissionais estejam dispostos a confrontar seus próprios vieses inconscientes e a se educar sobre as experiências únicas enfrentadas pelos pacientes negros.</p>
+            <p>A educação, por sua vez, desempenha um papel central na desconstrução desses preconceitos. A formação dos profissionais de saúde deve ser revista para incluir uma perspectiva crítica e interseccional sobre raça e gênero. Isso implica incorporar discussões sobre as estruturas sociais que perpetuam as desigualdades, bem como compreender as histórias e experiências das comunidades negras. Além disso, a educação deve incluir treinamentos específicos sobre a promoção de uma ética do cuidado, enfatizando a importância da empatia, do respeito e da consideração pelas diversas identidades e experiências dos pacientes.</p>
+            <p>A promoção de uma ética do cuidado, que prioriza a humanização das interações médico-paciente, emerge como um elemento crucial nessa jornada de transformação. Isso significa ir além do tratamento meramente técnico e buscar uma conexão genuína com o paciente, baseada no respeito mútuo, na compreensão das necessidades individuais e no reconhecimento do outro. A ética do cuidado se traduz em práticas que levam em conta a história e a cultura do paciente, reconhecendo as intersecções entre sua identidade racial, de gênero e de saúde.</p>
+            <p>A responsabilidade por criar um ambiente de cuidado equitativo, respeitoso e inclusivo é compartilhada por todos os profissionais de saúde. Cada indivíduo deve se comprometer a romper com os preconceitos arraigados e contribuir para a criação de um sistema de saúde que realmente atenda às necessidades de todos, independentemente de sua cor de pele, origem étnica ou identidade de gênero. Somente por meio da conscientização, da educação e da promoção de uma ética do cuidado poderemos pavimentar o caminho para uma saúde mais justa, igualitária e sensível à diversidade da população que busca e precisa estar presente e ser reconhecida em todas as áreas da promoção da saúde humana.</p>
+
+            <h3>REFERÊNCIAS</h3>
+            <ul class="ref-list" style="list-style: none; margin-top: 1rem;">
+                <li>Almeida, S. (2019). <em>Racismo estrutural</em>. Pólen Produção Editorial LTDA.</li>
+                <li>Alonso, L. (2022). O MODELO BIOMÉDICO DOS CORPOS BRANCOS CISHETERONORMATIVOS E AS BARREIRAS DE ACESSO À SAÚDE PARA OS CORPOS DESVIANTES. <em>Revista Estudos Libertários</em>, 4(10), 49-65. https://doi.org/10.59488/rel.v4i10.49660</li>
+                <li>Barros, F. P. C. D., Lopes, J. D. S., Mendonça, A. V. M., & Sousa, M. F. D. (2016). Acesso e equidade nos serviços de saúde: uma revisão estruturada. <em>Saúde em debate</em>, 40, 264-271. https://www.scielosp.org/article/sdeb/2016.v40n110/264-271/pt/</li>
+                <li>Bastos, J. L., & Faerstein, E. (2012). <em>Discriminação e saúde: perspectivas e métodos</em>. SciELO-Editora FIOCRUZ.</li>
+                <li>Borret, R. H., Silva, M. F. da, Jatobá, L. R., Vieira, R. C., & Oliveira, D. O. P. S. de. (2020). “A sua consulta tem cor?” Incorporando o debate racial na Medicina de Família e Comunidade: um relato de experiência. <em>Revista Brasileira de Medicina de Família e Comunidade</em>, 15(42), 2255. https://doi.org/10.5712/rbmfc15(42)2255</li>
+                <li>Caprara, A., & Franco, A. L. S. (2006). Relação médico-paciente e humanização dos cuidados em saúde: limites, possibilidades, falácias. In: Deslandes, S. F. (Org.). <em>Humanização dos cuidados em saúde: conceitos, dilemas e práticas</em>. Rio de Janeiro: Fiocruz, 85-108. https://doi.org/10.7476/9788575413296</li>
+                <li>Carrapato, P., Correia, P., & Garcia, B. (2017). Determinante da saúde no Brasil: a procura da equidade na saúde. <em>Saúde e Sociedade</em>, 26, 676-689. https://doi.org/10.1590/S0104-12902017170304</li>
+                <li>Chehuen Neto, J. A., Fonseca, G. M., Brum, I. V., Santos, J. L. C. T. D., Rodrigues, T. C. G. F., Paulino, K. R., & Ferreira, R. E. (2015). Política Nacional de Saúde Integral da População Negra: implementação, conhecimento e aspectos socioeconômicos sob a perspectiva desse segmento populacional. <em>Ciência & Saúde coletiva</em>, 20(6), 1909-1916. https://www.scielo.br/j/csc/a/mNYPvyFtbp3bm3bc8S64b3j/?format=html&lang=pt</li>
+                <li>Cidade de Jesus, E. S., & Sá Neto, C. E. (2021). Entre colonialismo jurídico e epistemicídio: o uso estratégico do direito como instrumento de governança racial. In: R. Angelin & C. Gabatz (Eds.), <em>Conceitos e Preconceitos de Gênero na Sociedade Brasileira Contemporânea: Perspectivas a partir dos Direitos Humanos</em>. (72-86). Foz do Iguaçu: CLAEC.</li>
+                <li>Cordeiro, A. M., Oliveira, G. M. D., Rentería, J. M., & Guimarães, C. A. (2007). Revisão sistemática: uma revisão narrativa. <em>Revista do colégio brasileiro de cirurgiões</em>, 34, 428-431. https://www.scielo.br/j/rcbc/a/CC6NRNtP3dKLgLPwcgmV6Gf/?lang=pt#</li>
+                <li>Costa, E. S. (2015). Racismo como metaenquadre. <em>Revista do Instituto de Estudos Brasileiros</em>, (62), 146-163. https://doi.org/10.11606/issn.2316-901X.v0i62p146-163</li>
+                <li>Crenshaw, K. W. (2017). <em>On Intersectionality: Essential Writings</em>. The New Press.</li>
+                <li>Fanon, F. (2008). <em>Pele Negra, Máscaras Brancas</em>. Salvador: EDUFBA.</li>
+                <li>Fernandes, F. (1972). <em>O negro no mundo dos brancos</em>. São Paulo: Difusão Europeia do Livro.</li>
+                <li>Fernandes, M. (2016). O Lugar do negro: o negro no seu lugar. <em>Anais do XVII Encontro de História da Anpuh</em>, 1-9. http://www.encontro2016.rj.anpuh.org/site/anaiscomplementares</li>
+                <li>Fortes, P. A. D. C. (2008). Reflexão bioética sobre a priorização e o racionamento de cuidados de saúde: entre a utilidade social e a equidade. <em>Cadernos de Saúde Pública</em>, 24(3), 696-701. https://www.scielo.br/j/csp/a/JS4jX5fnjH3vTmrWSfJW5WL/?lang=pt</li>
+                <li>Freyre, G. (2003). <em>Casa-grande & senzala: formação da família brasileira sob o regime da economia patriarcal</em>. São Paulo: Global.</li>
+                <li>Kantamneni, N. (2020). The impact of the COVID-19 pandemic on marginalized populations in the United States: A research agenda. <em>Journal of Vocational Behavior</em>, 119, 103439. https://doi.org/10.1016/j.jvb.2020.103439</li>
+                <li>Lages, S. R. C., Silva, A. M. da, Silva, D. P. da, Damas, J. M., & Jesus, M. A. de. (2017). O preconceito racial como determinante social da saúde - a invisibilidade da anemia falciforme. <em>Gerais: Revista Interinstitucional de Psicologia</em>, 10(1), 109-122. http://pepsic.bvsalud.org/scielo.php?script=sci_arttext&pid=S1983-82202017000100011&lng=pt&tlng=pt.</li>
+                <li>Mauro, F. (2015). <em>Raça e Gênero na Educação: a cor e os cabelos na construção da identidade da mulher</em>. Curitiba: Appris.</li>
+                <li>Ministério da Saúde (MEC). Secretaria de Gestão Estratégica e Participativa. Departamento de Apoio à Gestão Participativa e ao Controle Social. (2017). <em>Política Nacional de Saúde Integral da População Negra: uma política para o SUS</em> (3ª ed.). Brasília: Editora do Ministério da Saúde. https://bvsms.saude.gov.br/bvs/publicacoes/politica_nacional_saude_populacao_negra_3d.pdf</li>
+                <li>Neto, L. de M. F., Lima, P. L. S. de, Souza, J. M. M. de, & Moura, C. L. de. (2021). A medicina contribuiu para a segregação racial americana institucionalizada? <em>Revista Relações Internacionais do Mundo Atual</em>, 1(30). https://revista.unicuritiba.edu.br/index.php/RIMA/article/view/5360</li>
+                <li>Oliveira, G. S. de. (2020). TRANSfobia, RACISMO E SUAS IMPLICAÇÕES NA SAÚDE DE PESSOAS TRANSEXUAIS E NEGRAS: TRANSgressão no pensar a partir do âmbito do SUS. <em>Revista Feminismos</em>, 8(1), 119-125. https://periodicos.ufba.br/index.php/feminismos/article/view/42405</li>
+                <li>Padilla, B., Hernández-Plaza, S., Freitas, C. de, Masanet, E., Santinho, C., & Ortiz, A. (2013). Cidadania e diversidade em saúde: necessidades e estratégias de promoção de equidade nos cuidados. <em>Saúde & Tecnologia</em>, (Suplemento), 57-64. https://doi.org/10.25758/set.924</li>
+                <li>Paiva, A. T. (2008). “O anseio por bom tratamento e honra”: índios, negros e mestiços setecentistas e a delimitação de suas identidades. In: <em>Simpósio Temático Escravidão: Sociedades, Culturas, Economia e Trabalho</em>. XVI Encontro Regional de História da ANPUH-MG. FAFICH - UFMG, Belo Horizonte, MG. Anais do XVI Encontro Regional de História da ANPUH-MG. Universidade Federal de Minas Gerais. http://historia_demografica.tripod.com/bhds/bhd54/bhd54.htm</li>
+                <li>Paixão, M., Rossetto, I., Montovanele, F., & Carvano, L. M. (2010). <em>Relatório Anual das Desigualdades Raciais no Brasil; 2009-2010</em>. Rio de Janeiro: Garamond. https://www.palmares.gov.br/wp-content/uploads/2011/09/desigualdades_raciais_2009-2010.pdf</li>
+                <li>Pessalacia, J. D. R., Zoboli, E. L. C. P., & Ribeiro, I. K. (2016). Equidade no acesso aos cuidados paliativos na atenção primária à saúde: uma reflexão teórica. <em>Revista de Enfermagem do Centro-Oeste Mineiro</em>, 6(1), 2119-2139. https://doi.org/10.19175/recom.v0i0.1072</li>
+                <li>Ribeiro, D. (2017). <em>O que é lugar de fala?</em> Belo Horizonte: Letramento.</li>
+                <li>Rigolon, M., Carlos, D. M., Oliveira, W. A. D., & Salim, N. R. (2020). “A saúde não discute corpos trans”: História Oral de transexuais e travestis. <em>Revista Brasileira de Enfermagem</em>, 73, 5-8. https://www.scielo.br/j/reben/a/x58YbB45vmkKFqh8zyhCCLC/?lang=pt#</li>
+                <li>Rother, E. T. (2007). Revisão sistemática x revisão narrativa. [Editorial]. <em>Acta Paulista de Enfermagem</em>, 20(2). https://www.scielo.br/j/ape/a/z7Zz4Z4GwYV6FR7S9FHTByr/?lang=pt</li>
+                <li>Santos, M. O. P. (2012). <em>Médicos e pacientes têm sexo e cor? A perspectiva de médicos e residentes sobre a relação médico-paciente na prática ambulatorial</em>. [Dissertação de Mestrado], Instituto de Psicologia, Universidade de São Paulo, São Paulo. https://teses.usp.br/teses/disponiveis/47/47134/tde-05092012-101342/pt-br.php</li>
+                <li>Schliemann, A. L., Souza, G. L. de, & Figueiredo, I. V. (2020). Preconceito e saúde: uma relação que precisa ser cuidada. <em>Revista da Faculdade de Ciências Médicas de Sorocaba</em>, 22. https://revistas.pucsp.br/index.php/RFCMS/article/view/51572</li>
+                <li>Silva, C. M., & Cruz, C. A. M. (2019). Corpos negros expostos em uma praça de alimentação de um shopping. <em>Revista de Políticas Públicas</em>, 23(1), 97-114. https://doi.org/10.18764/2178-2865.v23n1p97-114</li>
+                <li>Thula, P. (2018). Racionalizando o debate sobre direitos humanos: limites e possibilidades da criminalização do racismo no Brasil. <em>Revista Internacional de Direitos Humanos</em>, 15(28), 65-75. https://sur.conectas.org/wp-content/uploads/2019/05/sur-28-portugues-thulapires.pdf</li>
+                <li>Tomaz T. S. (2009). <em>Documentos de Identidade: Uma introdução às teorias do currículo</em>: Autêntica.</li>
+                <li>Werneck, J. (2016). Racismo institucional e saúde da população negra. <em>Saúde e sociedade</em>, 25, 535-549. https://www.scielo.br/j/sausoc/a/bJdS7R46GV7PB3wV54qW7vm/?lang=pt</li>
+                <li>Williams, D. R., Mohammed, S. A., Leavell, J., & Collins, C. (2010). Race, socioeconomic status, and health: complexities, ongoing challenges, and research opportunities. <em>Annals of the New York Academy of Sciences</em>, 1186, 69-101. https://doi.org/10.1111/j.1749-6632.2009.05339.x</li>
+            </ul>
+        </div>
+
+        <!-- PDF Viewer -->
         <div class="panel">
-            <h2><i class="fas fa-file-alt"></i> Complete Article (PDF)</h2>
+            <h2><i class="fas fa-file-pdf"></i> Tradução completa (PDF)</h2>
             <div class="pdf-frame">
-                <iframe src="/arquivos/Texto-do-artigo-em-inglês.pdf" title="artigo completo"></iframe>
+                <iframe src="/arquivos/Texto-do-artigo-em-inglês.pdf" title="Assistência a Corpos Negros nos Estabelecimentos de Saúde"></iframe>
             </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> Caso o PDF não seja exibido, <a href="/arquivos/Texto-do-artigo-em-inglês.pdf" target="_blank">clique aqui para baixar</a>.</p>
         </div>
 
-        <!-- REFERENCES with citation generator -->
+        <!-- Gerador de citações -->
         <div class="panel" id="references-panel">
-            <h2><i class="fas fa-quote-right"></i> References & Citation Tools</h2>
-            
-            <!-- GERADOR DE CITAÇÕES (componente) -->
-            <div class="citation-generator" 
-                 data-authors='["VINICIUS, Diego"]' 
-                 data-title="Assistance to Black Bodies in Health Establishments: Deconstructing Prejudices and Promoting an Ethics of Care" 
-                 data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Traducoes/traducao-assistance-to-black-bodies.html" 
-                 data-volume="1" 
-                 data-issue="1" 
-                 data-pages="1-22" 
-                 data-year="2026">
+            <h2><i class="fas fa-quote-right"></i> Como citar esta tradução</h2>
+            <div class="citation-generator" data-authors='["VINÍCIUS, Diego"]'
+                data-title="Assistência a Corpos Negros nos Estabelecimentos de Saúde: Desconstruindo Preconceitos e Promovendo uma Ética do Cuidado"
+                data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Traducoes/traducao-assistance-to-black-bodies.html"
+                data-volume="1" data-issue="1" data-pages="1-19" data-year="2026">
                 <div class="citation-generator-head">
-                    <h2><i class="fas fa-quote-left"></i> How to cite this work</h2>
+                    <h2><i class="fas fa-quote-left"></i> Gerador de referências</h2>
                 </div>
                 <div class="citation-generator-body">
-                    <p class="citation-generator-note">Select the desired citation style and generate the reference automatically.</p>
+                    <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência bibliográfica.</p>
                     <div class="citation-controls">
                         <div class="citation-field">
-                            <label for="citation-style">Citation style</label>
+                            <label for="citation-style">Estilo de referência</label>
                             <select id="citation-style" class="citation-select">
                                 <option value="abnt">ABNT</option>
                                 <option value="apa">APA</option>
@@ -586,188 +546,81 @@
                             </select>
                         </div>
                         <div class="citation-actions">
-                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copy reference</button>
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar referência</button>
                         </div>
                     </div>
                     <div aria-live="polite" class="citation-output" id="citationOutput"></div>
                     <p class="citation-feedback"></p>
                 </div>
             </div>
-
             <div class="citation-actions">
-                <button class="cite-btn" id="copyAbtn"><i class="fas fa-copy"></i> Copiar formatação ABNT</button>
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copiar ABNT (manual)</button>
                 <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
             </div>
-            <ul class="ref-list" id="referenceList">
-                <li id="ref-almeida">ALMEIDA, Silvio. <strong>Racismo Estrutural</strong>. São Paulo: Pólen, 2019. <a href="https://doi.org/10.5281/zenodo.11322576" target="_blank">DOI:10.5281/zenodo.11322576</a></li>
-                <li id="ref-crenshaw">CRENSHAW, Kimberlé W. <strong>On Intersectionality: Essential Writings</strong>. The New Press, 2017.</li>
-                <li id="ref-fanon">FANON, Frantz. <strong>Pele Negra, Máscaras Brancas</strong>. Salvador: EDUFBA, 2008. <a href="https://doi.org/10.7476/9788575413296" target="_blank">doi:10.7476/9788575413296</a></li>
-                <li id="ref-goffman">GOFFMAN, Erving. <strong>Stigma: Notes on the Management of Spoiled Identity</strong>. Prentice-Hall, 1963.</li>
-                <li id="ref-chehuen">CHEHUEN NETO, J. A. et al. Política Nacional de Saúde Integral da População Negra: implementação, conhecimento e aspectos socioeconômicos. <em>Ciência & Saúde Coletiva</em>, 20(6), 2015. <a href="https://www.scielo.br/j/csc/a/mNYPvyFtbp3bm3bc8S64b3j/" target="_blank">SciELO</a></li>
-                <li id="ref-rigolon">RIGOLON, M. et al. “A saúde não discute corpos trans”: História Oral de transexuais e travestis. <em>Revista Brasileira de Enfermagem</em>, 73, 2020. <a href="https://www.scielo.br/j/reben/a/x58YbB45vmkKFqh8zyhCCLC/" target="_blank">https://doi.org/10.1590/0034-7167-2019-0286</a></li>
-                <li id="ref-werneck">WERNECK, Jurema. Racismo institucional e saúde da população negra. <em>Saúde e Sociedade</em>, 25, 2016. <a href="https://www.scielo.br/j/sausoc/a/bJdS7R46GV7PB3wV54qW7vm/" target="_blank">https://doi.org/10.1590/S0104-12902016149244</a></li>
-                <li id="ref-oliveira">OLIVEIRA, G. S. de. TRANSfobia, RACISMO E SUAS IMPLICAÇÕES NA SAÚDE DE PESSOAS TRANSEXUAIS E NEGRAS. <em>Revista Feminismos</em>, 8(1), 2020. <a href="https://periodicos.ufba.br/index.php/feminismos/article/view/42405" target="_blank">link</a></li>
-                <li id="ref-alonso">ALONSO, L. O MODELO BIOMÉDICO DOS CORPOS BRANCOS... <em>Revista Estudos Libertários</em>, 4(10), 2022. <a href="https://doi.org/10.59488/rel.v4i10.49660" target="_blank">DOI</a></li>
-                <li id="ref-fernandes">FERNANDES, M. O Lugar do negro: o negro no seu lugar. <em>Anais do XVII Encontro de História da Anpuh</em>, 2016.</li>
-                <li id="ref-pires">THULA PIRES. Racionalizando o debate sobre direitos humanos. <em>Sur International Journal on Human Rights</em>, 15(28), 2018. <a href="https://sur.conectas.org/wp-content/uploads/2019/05/sur-28-portugues-thula-pires.pdf" target="_blank">PDF</a></li>
-            </ul>
-            <p><small><i class="fas fa-info-circle"></i> Clique nos DOIs ou links para acessar a fonte original. Use os botões acima para gerar citações.</small></p>
+            <p><small><i class="fas fa-info-circle"></i> Utilize o gerador acima para citar esta tradução em diferentes estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
         </div>
+
+        <!-- Sobre o tradutor -->
+        <div class="panel">
+            <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Foto do tradutor Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> Sobre o tradutor </h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> é professor pedagogo e servidor público efetivo, com experiência na docência nos anos iniciais do ensino fundamental e educação infantil. Possui mestrado em Filosofia pela Universidade Federal do Rio Grande do Norte (UFRN, 2022), com pesquisa focada na obra e filosofia de Friedrich Nietzsche. É graduado em Filosofia pela Universidade do Estado do Rio Grande do Norte (UERN, 2018) e em Pedagogia pelo Centro Universitário Internacional (UNINTER, 2022). É autor do livro <em>Nietzsche e os valores modernos</em> (2022). Dedica-se à formação continuada em áreas como Psicopedagogia, Neuropsicopedagogia, Educação Inclusiva, Atendimento Educacional Especializado (AEE) e Educação de Jovens e Adultos (EJA).</p>
+            <p><i class="fas fa-envelope"></i> E-mail: diego_svt@hotmail.com.br<br>
+                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a>
+            </p>
+        </div>
+
         <footer>
-            <i class="fas fa-university"></i> Original article: Práticas e Cuidado: Revista de Saúde Coletiva (PC-RESC), UNEB. English version published by Revista Inquietações. This digital edition includes interactive references.
+            <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | Seção: Traduções | DOI: 10.5281/zenodo.18841714<br>
+            Acesso aberto sob licença Creative Commons.
         </footer>
     </div>
 </div>
 
-<!-- Google Translate Widget -->
-<script type="text/javascript">
-    function googleTranslateElementInit() {
-        new google.translate.TranslateElement({
-            pageLanguage: 'pt',
-            includedLanguages: 'pt,en,es',
-            autoDisplay: false,
-            layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-        }, 'google_translate_element');
-        document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
-    }
-</script>
-<script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-<div id="google_translate_element" style="display:none;"></div>
-
 <script>
-    // Botões de tradução manuais via Google Translate API
-    (function() {
-        const langBtns = document.querySelectorAll('.lang-btn');
-        let currentLang = 'pt';
-
-        function triggerGoogleTranslate(lang) {
-            const selectElem = document.querySelector('.goog-te-combo');
-            if (selectElem) {
-                selectElem.value = lang;
-                selectElem.dispatchEvent(new Event('change'));
+    // Submissões com simulação de login
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "cadastro-login/submissoes.html";
             } else {
-                setTimeout(() => {
-                    const select = document.querySelector('.goog-te-combo');
-                    if (select) {
-                        select.value = lang;
-                        select.dispatchEvent(new Event('change'));
-                    }
-                }, 500);
-            }
-        }
-
-        langBtns.forEach(btn => {
-            btn.addEventListener('click', () => {
-                const lang = btn.getAttribute('data-lang');
-                if (lang === currentLang) return;
-                
-                langBtns.forEach(b => b.classList.remove('active'));
-                btn.classList.add('active');
-                
-                let googleCode = '';
-                if (lang === 'pt') googleCode = 'pt';
-                else if (lang === 'en') googleCode = 'en';
-                else if (lang === 'es') googleCode = 'es';
-                
-                triggerGoogleTranslate(googleCode);
-                currentLang = lang;
-            });
-        });
-        
-        const observer = new MutationObserver(() => {
-            const combo = document.querySelector('.goog-te-combo');
-            if (combo && !combo._listenerAdded) {
-                combo._listenerAdded = true;
-                const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
-                let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
-                if (combo.value !== code) {
-                    combo.value = code;
-                    combo.dispatchEvent(new Event('change'));
+                let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Login simulado com sucesso! Redirecionando para submissões.");
+                    window.location.href = "cadastro-login/submissoes.html";
+                } else {
+                    alert("Acesso não autorizado. Cadastro/login necessário.");
                 }
             }
         });
-        observer.observe(document.body, { childList: true, subtree: true });
-    })();
+    }
 
-    // Gerador de referências ABNT (simples)
-    const refItems = [
-        "ALMEIDA, Silvio. Racismo Estrutural. São Paulo: Pólen, 2019.",
-        "CRENSHAW, Kimberlé W. On Intersectionality: Essential Writings. The New Press, 2017.",
-        "FANON, Frantz. Pele Negra, Máscaras Brancas. Salvador: EDUFBA, 2008.",
-        "GOFFMAN, Erving. Stigma: Notes on the Management of Spoiled Identity. Prentice-Hall, 1963.",
-        "CHEHUEN NETO, J. A. et al. Política Nacional de Saúde Integral da População Negra... Ciência & Saúde Coletiva, 20(6), 2015.",
-        "RIGOLON, M. et al. “A saúde não discute corpos trans”. Revista Brasileira de Enfermagem, v.73, 2020.",
-        "WERNECK, Jurema. Racismo institucional e saúde da população negra. Saúde e Sociedade, v.25, 2016.",
-        "OLIVEIRA, G. S. TRANSfobia, RACISMO E SUAS IMPLICAÇÕES... Revista Feminismos, 8(1), 2020.",
-        "ALONSO, L. O MODELO BIOMÉDICO DOS CORPOS BRANCOS... Revista Estudos Libertários, 4(10), 2022.",
-        "FERNANDES, M. O Lugar do negro: o negro no seu lugar. Anpuh-RJ, 2016.",
-        "THULA PIRES. Racionalizando o debate sobre direitos humanos. Sur, v.15 n.28, 2018."
-    ];
-
-    document.getElementById("copyAbtn").addEventListener("click", function() {
-        let abntText = "REFERÊNCIAS\n" + refItems.map((r, idx) => `${idx+1}. ${r}`).join("\n");
-        navigator.clipboard.writeText(abntText).then(() => {
-            alert("✅ Referências no formato ABNT copiadas para a área de transferência.");
-        }).catch(() => alert("Não foi possível copiar."));
+    // Copiar ABNT manual
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = [
+            "VINÍCIUS, Diego. Assistência a Corpos Negros nos Estabelecimentos de Saúde: Desconstruindo Preconceitos e Promovendo uma Ética do Cuidado. Revista Inquietações, v. 1, n. 1, p. 1-19, 2026."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
     });
-
-    document.getElementById("exportBibBtn").addEventListener("click", function() {
-        let bibtex = `@book{almeida2019,
-  title={Racismo Estrutural},
-  author={Almeida, Silvio},
-  year={2019},
-  publisher={Pólen}
-}
-@book{crenshaw2017,
-  title={On Intersectionality},
-  author={Crenshaw, Kimberlé W.},
-  year={2017}
-}
-@book{fanon2008,
-  title={Pele Negra, Máscaras Brancas},
-  author={Fanon, Frantz},
-  year={2008}
-}
-@article{chehuen2015,
-  title={Política Nacional de Saúde Integral da População Negra},
-  journal={Ciência & Saúde Coletiva},
-  year={2015}
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@article{vinicius2026assistencia,
+  title={Assistência a Corpos Negros nos Estabelecimentos de Saúde: Desconstruindo Preconceitos e Promovendo uma Ética do Cuidado},
+  author={Vinicius, Diego},
+  journal={Revista Inquietações},
+  volume={1},
+  number={1},
+  pages={1--19},
+  year={2026}
 }`;
-        navigator.clipboard.writeText(bibtex).then(() => alert("BibTeX exportado (pré-visualização)."));
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
     });
 
-    // SUBMISSÕES: simulação de login/redirecionamento
-    const submitBtn = document.getElementById("submitBtn");
-    submitBtn.addEventListener("click", (e) => {
-        e.preventDefault();
-        let logged = localStorage.getItem("inquietacoes_logged");
-        if (logged === "true") {
-            window.location.href = "cadastro-login/submissoes.html";
-        } else {
-            let userPrompt = prompt("🔐 Para submeter um artigo, faça login.\nDigite seu e-mail (simulação):");
-            if (userPrompt && userPrompt.includes("@")) {
-                localStorage.setItem("inquietacoes_logged", "true");
-                alert("Login simulado com sucesso! Redirecionando para submissões.");
-                window.location.href = "cadastro-login/submissoes.html";
-            } else {
-                alert("Acesso não autorizado. Cadastro/login necessário. (Simulação)");
-            }
-        }
-    });
-    
-    // Adicionar tooltips dinâmicos para links internos - suavidade extra
-    document.querySelectorAll('.wikilink').forEach(link => {
-        if(link.getAttribute('href') && link.getAttribute('href').startsWith('#')) {
-            link.addEventListener('click', (e) => {
-                e.preventDefault();
-                const target = document.querySelector(link.getAttribute('href'));
-                if(target) target.scrollIntoView({ behavior: 'smooth' });
-            });
-        }
-    });
-
-    // ========== GERADOR DE CITAÇÕES (script) ==========
-    (function() {
+    // ========== GERADOR DE CITAÇÕES (script automático) ==========
+    (function () {
         const generator = document.querySelector('.citation-generator');
         if (!generator) return;
         const authors = JSON.parse(generator.dataset.authors || '[]');
@@ -814,10 +667,10 @@
             copyBtn.addEventListener('click', () => {
                 const citationText = outputDiv.innerText;
                 navigator.clipboard.writeText(citationText).then(() => {
-                    feedback.textContent = '✓ Reference copied to clipboard.';
-                    setTimeout(() => { feedback.textContent = ''; }, 3000);
+                    if (feedback) feedback.textContent = '✓ Referência copiada para a área de transferência.';
+                    setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
                 }).catch(() => {
-                    feedback.textContent = '✗ Error copying. Try manually.';
+                    if (feedback) feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
                 });
             });
         }

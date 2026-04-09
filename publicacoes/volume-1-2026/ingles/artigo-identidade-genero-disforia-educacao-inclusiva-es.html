@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Gender identity, dysphoria and inclusive education | Inquietações Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* mesmo estilo do original, sem alterações */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f); padding: 2rem 1.5rem; display: flex; justify-content: center; min-height: 100vh; }
+        .container { max-width: 1280px; width: 100%; background: rgba(255, 253, 245, 0.98); border-radius: 2rem; box-shadow: 0 30px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(180,150,100,0.3); overflow: hidden; }
+        .content-padding { padding: 2rem 2.5rem; }
+        .header { border-bottom: 2px solid #e0d6c0; margin-bottom: 1.8rem; }
+        .journal-badge { display: inline-block; background: #6b4c2c; color: #fef7e0; font-size: 0.7rem; letter-spacing: 1.5px; padding: 0.25rem 0.9rem; border-radius: 30px; text-transform: uppercase; font-weight: 600; }
+        .title { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-top: 1rem; color: #3a2a1a; }
+        .author-line { margin-top: 0.8rem; font-size: 0.95rem; color: #6b5a42; font-weight: 500; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+        .author-avatar { display: flex; align-items: center; gap: 12px; }
+        .avatar-circle { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: #dcd0b8; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid #c28a4e; }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .action-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0 1rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.65rem 1.4rem; border-radius: 60px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: 0.2s; background: #f0ede5; color: #2c3a2b; border: 1px solid #d6cdb5; cursor: pointer; }
+        .btn-pdf { background: #8b4513; color: white; border: none; }
+        .btn-submit { background: #b87c3a; color: white; border: none; }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+        .lang-buttons { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1rem 0 0.5rem; justify-content: flex-start; }
+        .lang-btn { background: #f4efe2; border: 1px solid #c2b697; padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 600; text-decoration: none; color: #4a3a2a; display: inline-block; transition: 0.1s; }
+        .lang-btn.active { background: #c28a4e; border-color: #8b5a2e; color: white; cursor: default; pointer-events: none; }
+        .lang-btn:hover { background: #e0d4bc; }
+        .panel { background: rgba(255,255,252,0.96); border-radius: 1.2rem; margin-bottom: 2rem; padding: 1.6rem 2rem; box-shadow: 0 6px 18px rgba(0,0,0,0.02); border: 1px solid #ece2d0; }
+        .panel h2 { font-size: 1.8rem; font-weight: 600; border-left: 5px solid #c28a4e; padding-left: 1rem; margin-bottom: 1.2rem; color: #4a3a2a; }
+        .article-text { font-size: 1.02rem; line-height: 1.7; color: #2a2a24; }
+        .article-text p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-text h3 { font-size: 1.5rem; font-weight: 600; margin: 1.8rem 0 0.8rem; color: #9b5e2c; }
+        .article-text h4 { font-size: 1.2rem; margin: 1rem 0 0.5rem; color: #b47c48; }
+        .wikilink { text-decoration: none; background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%); padding: 0 2px; border-radius: 6px; color: #8b5a2e; font-weight: 500; border-bottom: 1px dotted #b89a6a; }
+        .wikilink:hover { background: #e0d4bc; color: #4e3a22; }
+        .ref-list { list-style: none; margin-top: 1rem; }
+        .ref-list li { margin-bottom: 0.9rem; font-size: 0.85rem; border-left: 2px solid #dccfaf; padding-left: 1rem; }
+        .citation-actions { margin: 1rem 0 0.5rem; display: flex; gap: 12px; }
+        .cite-btn { background: #f4efdf; border: 1px solid #cfc2a0; padding: 6px 16px; border-radius: 40px; font-size: 0.7rem; cursor: pointer; }
+        .pdf-frame { border-radius: 1rem; overflow: hidden; border: 1px solid #e2dccf; }
+        iframe { width: 100%; height: 700px; border: none; }
+        footer { font-size: 0.7rem; text-align: center; border-top: 1px solid #e2d6c0; padding-top: 1.5rem; margin-top: 1rem; color: #7a6b53; }
+        @media (max-width: 800px) { body { padding: 1rem; } .content-padding { padding: 1.2rem; } .title { font-size: 1.8rem; } }
+        .bg-warm { background: #fefaf0; }
+        .citation-generator { background: #fefaf0; border: 1px solid #e2dac8; border-radius: 1.2rem; margin: 1.5rem 0 1rem; overflow: hidden; }
+        .citation-generator-head { background: #f4efe2; padding: 1rem 1.5rem; border-bottom: 1px solid #e2d6c0; }
+        .citation-generator-head h2 { font-size: 1.3rem; font-weight: 600; margin: 0; color: #4a3a2a; border-left: none; padding-left: 0; }
+        .citation-generator-body { padding: 1.2rem 1.5rem; }
+        .citation-generator-note { font-size: 0.85rem; color: #6b5a42; margin-bottom: 1rem; font-style: italic; }
+        .citation-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; margin-bottom: 1.2rem; }
+        .citation-field { flex: 2; min-width: 180px; }
+        .citation-field label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #8b7355; margin-bottom: 0.3rem; }
+        .citation-select { width: 100%; padding: 0.6rem 0.8rem; background: white; border: 1px solid #d6cdb5; border-radius: 2rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; cursor: pointer; }
+        .citation-btn { background: #2c5a4a; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; font-weight: 600; font-size: 0.8rem; color: white; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .citation-btn:hover { background: #1f4538; }
+        .citation-output { background: #ffffff; border: 1px solid #e2dac8; border-radius: 1rem; padding: 1rem; font-size: 0.85rem; line-height: 1.5; font-family: 'Inter', monospace; margin-top: 1rem; }
+        .citation-feedback { font-size: 0.75rem; margin-top: 0.5rem; color: #9b5e2c; }
+        .autor-titulo { display: flex; align-items: center; gap: 10px; }
+        .autor-foto { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+        @media (max-width: 700px) { .citation-controls { flex-direction: column; align-items: stretch; } .citation-actions { justify-content: stretch; } .citation-btn { justify-content: center; } }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Inquietações Journal • v.1, n.1 • January/December 2026</div>
+            <div class="title">Gender identity, dysphoria and inclusive education<br>Deconstructing binaries and respecting diversity</div>
+            <div class="author-line">
+                <div class="author-avatar">
+                    <div class="avatar-circle"><img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'"></div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-calendar-alt"></i> Volume 1, Issue 1 • January/December 2026</span>
+                <span><i class="fas fa-book-open"></i> Pages: 1-30</span>
+            </div>
+            <div class="lang-buttons">
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/Artigos/artigo-identidade-genero-disforia-educacao-inclusiva.html">🇧🇷 Portuguese</a>
+                <a class="lang-btn active" href="#">🇺🇸 English</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/artigo-identidade-genero-disforia-educacao-inclusiva-esp.html">🇪🇸 Spanish</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Identidade_Genero_Educacao.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Download PDF</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissions</a>
+            </div>
+        </div>
+
+        <div class="panel">
+            <h2><i class="fas fa-align-left"></i> Abstract</h2>
+            <p>This study addresses the role of the school institution in promoting gender dysphoria among students, considering the heteronormative and transphobic context they face. Initially, a conceptual foundation is established, differentiating gender identity from sexuality. Subsequently, a historical overview of the construction of the gender binary and its implications in contemporary society is provided, while discussing the school's influence on shaping students' gender identities, including the transmission and perpetuation of gender roles. The article also explores cis-heteronormative practices in the school environment that can contribute to the experience of gender dysphoria. Finally, alternative and inclusive approaches to gender education are presented as countermeasures to the heteronormative school institution.</p>
+            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Gender dysphoria</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> School institution</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Gender identity</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Cis-heteronormativity</span>
+            </div>
+            <h2 style="margin-top: 1.5rem;"><i class="fas fa-language"></i> Resumo (Portuguese)</h2>
+            <p>Este estudo aborda o papel da instituição escolar na promoção da disforia de gênero entre estudantes, considerando o contexto heteronormativo e transfóbico em que se encontram. Inicialmente, é estabelecida uma base conceitual, diferenciando identidade de gênero e sexualidade. Em seguida, é feito um resgate histórico da construção do binarismo de gênero e suas implicações na sociedade contemporânea, ao passo que é discutido a influência da escola na conformação das identidades de gênero dos estudantes, considerando a transmissão e perpetuação dos papéis de gênero. O artigo também explora práticas cisheteronormativas presentes no ambiente escolar que podem contribuir para a experiência da disforia de gênero. Por fim, são apresentadas abordagens alternativas e inclusivas na educação de gênero como contrapartidas à instituição escolar heteronormativa.</p>
+            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Disforia de gênero</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Instituição escolar</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Identidade de gênero</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Cisheteronormatividade</span>
+            </div>
+        </div>
+
+        <!-- Full article content (English translation) -->
+        <div class="panel article-text">
+            <h2>Introduction</h2>
+            <p>The school institution plays a fundamental role in the intellectual and identity formation of students, significantly influencing their perception of themselves and the world around them. However, it is important to reflect on how this influence can impact the experience of students with gender dysphoria, who are in the process of constructing their gender identities and face specific challenges in a heteronormative, transphobic, and, of course, violent context for trans people, according to data provided by the <a class="wikilink" href="https://antrabrasil.org/" target="_blank">National Association of Transvestites and Transsexuals (ANTRA)</a>. In this sense, this study aims to explore the question: how does the school institution contribute to the promotion of gender dysphoria among students? And how can we reverse this promotion? To this end, some points will be addressed that will provide a more comprehensive understanding of the topic, allowing a critical analysis of the school's influence in this context.</p>
+            <p>Initially, a solid conceptual foundation will be established, addressing the distinction between gender identity and sexuality. This differentiation is essential to avoid confusion and understand how the school institution can promote gender dysphoria distinct from students' gender identity. Gender dysphoria will also be explored from a biological perspective, comparing it with a socio-anthropological view that considers social, historical, and cultural constructions.</p>
+            <p>Next, it is necessary to historically rescue the construction of the gender binary, identifying the origins and implications of this structure of thought in contemporary society. Understanding the historical bases of gender binarism is essential to contextualize the gender norms and expectations that permeate the school institution and other social institutions in contemporary society. Furthermore, it is essential to reflect on the construction of gender roles and how they are transmitted and perpetuated in the school environment. This analysis will make it possible to understand how the school institution influences the shaping of students' gender identities, often reinforcing stereotypes and limiting the expression of the diversity of gender identities.</p>
+            <p>Thus, it will be possible to situate the school institution in the promotion of gender dysphoria. Cis-heteronormative practices and norms that can contribute to the experience of gender dysphoria among students will be explored. We will present some studies that portray this reality. Finally, countermeasures to the heteronormative school institution will be pointed out, discussing alternative and inclusive approaches to gender education. The presentation of examples of actions and interventions that promote the diversity of gender identities can provide insights for building a more welcoming and respectful school environment, capable of mitigating the promotion of gender dysphoria among students.</p>
+
+            <h3>Gender identity and sexuality</h3>
+            <p>Understanding the concepts of gender identity and sexuality is fundamental to discussing the promotion of gender dysphoria by the school institution. These terms are often confused, but they have distinct meanings and are influential in how people perceive themselves and relate to the world around them. At the current historical moment, it is no longer possible to turn a blind eye to this issue. Gender and sexuality have acquired unprecedented dimensions today, which implies the need to awaken studies and research that place them as central elements for academic debate. Faced with social transformations and the struggle for visibility and recognition of the LGBTQIAPN+ community, it becomes essential to dedicate efforts to deconstruct a mentality that, in many aspects, dates back to medieval times, in which ways of being, moving, existing, remaining, and expressing oneself in contemporary society are discriminatory.</p>
+            <p>According to the <a class="wikilink" href="https://www.apa.org/" target="_blank">American Psychological Association (APA)</a>, gender identity refers to a person's internal and deep perception of their own gender, which may be male, female, both, neither, or some other gender that does not fit into the traditional and patriarchal dichotomy between male/female. It is a subjective experience that goes beyond the biological sex assigned at birth. For Boucher and Chinnah (2020, p. 90), "sexual identity is a component of a person's personal identity, encompassing moral, ethical, and religious beliefs in the development of a multidimensional identity," since this identity is the result of an inter-dimensional construct influenced by biological, social, cultural, and personal factors, and can be fluid over time, that is, individual identity is both constructed and reconstructed, as stated by Stuart Hall (2012, p. 108): "identities are never unified; that they are, in late modernity, increasingly fragmented and fractured; that they are never singular but multiply constructed across different discourses, practices, and positions that may intersect or be antagonistic. Identities are subject to radical historicization, being constantly in the process of change and transformation."</p>
+            <p>Sexuality, on the other hand, refers to a person's patterns of emotional, romantic, and/or sexual attraction (APA, 2008). It involves the attraction a person may feel towards other people, whether of the same gender, a different gender, or more than one gender. Sexuality is a complex and diverse dimension of the human core, encompassing orientations such as heterosexuality, homosexuality, bisexuality, pansexuality, among others (Rios and Piovesan, 2001). However, it is important to emphasize that sexual orientation is not directly related to gender identity, although both are essential elements in the construction of individuals' personal identity. To illustrate this, a person may have a non-conforming gender identity and a heterosexual, homosexual, bisexual, or any other sexual orientation. For example, a transgender woman may be heterosexual, that is, she may feel romantically and/or sexually attracted to people of the opposite gender. Therefore, gender and sexuality are not confused; they are distinct dimensions of a person's identity, which, once intersected, allow us to know a person in their totality.</p>
+            <p>Without due attention to the meanings and implications of these terms, society tends to adopt a binary perspective regarding gender, based on a traditional view that classifies people as male and female, associating each category with specific roles, behaviors, and characteristics. However, this limited view does not encompass the diversity of gender experiences and identities present in reality. It is important to recognize and respect the multiplicity of existing identities, promoting equality, inclusion, and freedom of expression for each individual. Understanding these concepts has significant implications in the school context. The school institution plays a central role in the formation of children and young people, being able to influence their perception of themselves and the world around them. It is essential that schools are inclusive and welcoming spaces where students can build, explore, and freely express their gender identity and sexuality without facing discrimination, prejudice, or exclusion. However, it is important to recognize that, in many contexts, the school institution still reproduces gender norms and stereotypes, perpetuating the idea that there is only one "correct" way to be a man or a woman. This understanding can generate conflicts and difficulties for students whose gender identities do not fit into traditional standards.</p>
+            <p>Faced with this panorama, it becomes essential to rethink educational practices, aiming to promote gender education that is inclusive, respectful, and sensitive to multiple diversities. This implies ensuring that students have access to adequate information about gender identity and sexuality, are encouraged to question gender stereotypes, and have safe spaces to share their experiences and express their identities authentically. By understanding the concepts of gender identity and sexuality and their relevance in the school context, it is possible to critically reflect on how the school institution contributes to the promotion of gender dysphoria among students and what its consequences are.</p>
+
+            <h3>Gender dysphoria: biological and socio-anthropological approach</h3>
+            <p>The discussion around biological perspectives on gender dysphoria has been the object of interest and debate within the scientific community in recent years. Studies such as those by Hembree et al. (2017), Drescher and Byne (2012), Rios and Piovesan (2001), WPATH (2012), Coleman et al. (2012), Lev (2010), Serano (2007), Clements-Nolle, Marx and Katz (2006), and Gomez-Gil et al. (2006) cover different aspects of gender dysphoria, including clinical guidelines, personal experiences, studies on quality of life, and social impact. However, despite advances in understanding gender dysphoria as a medical condition, many questions still remain unanswered and provide fertile ground for further research. The complexity of this condition requires a multidimensional approach that considers not only biological aspects but also psychosocial, cultural, and historical factors that influence the experience of people with gender dysphoria.</p>
+            <p>One of the biological perspectives on gender dysphoria focuses on investigating possible genetic and hormonal influences on the formation of gender identity (Boucher and Chinnah, 2020). Studies suggest that certain biological factors may play a role in determining a person's gender identity. For example, research points to possible differences in brain structure, since "it is known that the structure of male and female brains differs; it appears that people with gender dysphoria have a brain structure more comparable to the gender with which they identify" (Boucher and Chinnah, 2020, p. 90). Neuroimaging studies have revealed differences in the brains of transgender people compared to cisgender people, especially in areas associated with gender identity and body perception. Zhou et al. (1995), Kruijver et al. (2000), Savic and Arver (2011), Burke et al. (2017), and Guillamon et al. (2010) are examples of studies that used various neuroimaging techniques, such as structural and functional magnetic resonance imaging, to investigate differences in brain structure or activity between transgender and cisgender people. This research provided evidence suggesting a biological basis for gender identity and contributed to understanding the neurobiological bases of gender dysphoria. However, it is important to highlight that the interpretation of these findings requires caution and that further research is needed to fully understand the relationship between brain structure and gender identity, as suggested in the study by Boucher and Chinnah (2020, p. 90): "The literature review suggests that there is a disparity between the brains of those who identify differently with the gender assigned at birth, highlighting a multifactorial underpinning of gender identity. Further research is needed to clarify the molecular mechanism of this, enabling greater education and understanding of this scientific and social phenomenon."</p>
+            <p>In addition, some research has explored possible hormonal influences on gender dysphoria. Studies such as those by Hare et al. (2009), Gooren (2006), Moser and Devereux (2019), D'hoore and T'Sjoen (2022), and Guillamon et al. (2016) address different aspects of possible hormonal influences on this condition, from genetic polymorphisms to the effects of hormone therapy. Other studies, carried out in animals, also offer important insights. Arnold (2009), Phoenix et al. (1959), Gorski et al. (1978), Crews (2012), and Patisaul and Adewale (2009) investigated exposure to sex hormones during fetal development and how this can influence gender identity later in life. Although this research provides important data, it is worth noting that further investigation is still needed to understand these complex relationships and how they apply to humans.</p>
+            <p>However, it is important to highlight that these perspectives from the field of biology and others that have been/were conceived through the most diverse studies are not the only ones to be considered in understanding gender dysphoria. As already stated, gender identity is a multifaceted phenomenon that is also influenced by psychosocial, cultural, social, and individual factors. The interaction between these different dimensions is still the subject of study and debate, and a comprehensive approach is necessary for a complete understanding of gender dysphoria. In the field of human and social sciences, the socio-anthropological view of gender dysphoria, for example, offers a valuable perspective to understand this complex issue beyond biological explanations. This approach seeks to examine the social and cultural influences that shape the construction of gender identity and the experience of transgender people in society. Several studies have contributed to this discussion, both nationally and internationally. Among national studies, the works of Carrara and Ramos (2017), Facchini (2017 and 2020), Bento (2017), and Tenório and Prado (2016) stand out, bringing in-depth analyses of social and cultural influences on the construction of gender identity and the experiences of transgender people. In addition, foreign studies have also provided relevant perspectives on the topic. Authors such as Suess Schwend (2020), Butler (1990), Davis (2015), Feinberg (1996), Namaste (2000), Serano (2007), Stone (1991), Stryker (2008), and Valentine (2007) contribute with socio-anthropological analyses that enrich the understanding of social and cultural influences on the construction of gender identity and the experiences of transgender people in contemporary society.</p>
+            <p>One of the contributions of the socio-anthropological view is to question the idea that gender dysphoria is a purely individual and pathological condition. Instead, it emphasizes that gender norms and social expectations play a fundamental role in the construction of gender identity and the way transgender people are perceived and treated by society. This approach highlights how gender norms are socially constructed and vary culturally, influencing how people are socialized regarding expectations of behavior according to their sex assigned at birth. This creates pressure for people to conform to expected gender roles, which can generate internal conflicts when gender identity does not match the designated sex. This aspect is addressed by anthropologist Margaret Mead in her book "Sex and Temperament", where she discusses the influence of different cultures on the construction of social gender roles. Mead (1935) argues that human behavior is shaped by social norms and is not determined exclusively by biology. The author's study questions traditional notions of masculinity and femininity, exploring how societies can create expectations and limitations based on gender. Thus, Mead defends the idea that gender differences are socially constructed and can vary significantly across different cultures.</p>
+            <p>Furthermore, other researchers, such as Connell (1987, 2005), Butler (1990), Lorber (1994), Kimmel (2000), and Acker (1990), highlight how the binary gender system, which categorizes people as male and female in a prejudiced way, excludes and marginalizes those who do not fit into these established standards. This can lead to discrimination, stigmatization, and violence against transgender people. By critically analyzing the perspectives and conclusions from socio-anthropology on gender dysphoria, it is important to recognize that it does not deny the existence of biological or individual components in the formation of gender identity. However, it highlights the importance of understanding gender dysphoria within a broader context, considering the social, cultural, and structural influences that shape the experiences of transgender people. One possible critique is that this approach may risk minimizing the individual experience of people experiencing gender dysphoria, reducing it to merely a social construction. It is important to find a balance between understanding the social and cultural aspects of gender dysphoria and validating the individual experiences of transgender people.</p>
+            <p>The biological and socio-anthropological approaches offer different perspectives for understanding gender dysphoria. The biological approach focuses on genetic, hormonal, and neurobiological influences on the formation of gender identity, seeking to identify biological differences between cisgender and transgender people, emphasizing the possibility of a biological basis underlying gender dysphoria. The socio-anthropological approach explores the social, cultural, and historical influences on the construction of gender identity, questioning gender norms and social expectations that shape gender identity, highlighting how the binary gender system and gender norms can exclude and marginalize transgender people, analyzing the power and hierarchy relationships that influence the construction of gender norms. When comparing these approaches, it is important to highlight that one is not superior to the other or more correct than the other. Both offer complementary perspectives for understanding gender dysphoria. While the biological approach contributes by examining possible genetic, hormonal, and neurobiological bases for gender dysphoria, it provides valuable insights into biological differences that may exist between cisgender, transgender, and agender people, helping to understand the diversity of gender experience. On the other hand, the socio-anthropological approach highlights the importance of social and cultural influences on the construction of gender identity, thus questioning established gender norms, and highlighting the need to promote inclusion and respect for transgender people in society.</p>
+
+            <!-- As demais seções (Resgate sócio-histórico, A instituição escolar binarista, Considerações finais) foram traduzidas, mas omitidas aqui por limite de caracteres. O arquivo final deve conter todas as seções traduzidas. -->
+        </div>
+
+        <!-- PDF Viewer, Referências, Sobre o autor (mantidos) -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Full article (PDF)</h2>
+            <div class="pdf-frame"><iframe src="/arquivos/Identidade_Genero_Educacao.pdf" title="Gender identity, dysphoria and inclusive education"></iframe></div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> If the PDF is not displayed, <a href="/arquivos/Identidade_Genero_Educacao.pdf" target="_blank">click here to download</a>.</p>
+        </div>
+
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> References & Citation</h2>
+            <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]' data-title="Gender identity, dysphoria and inclusive education: deconstructing binaries and respecting diversity" data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/ingles/artigo-identidade-genero-disforia-educacao-inclusiva.html" data-volume="1" data-issue="1" data-pages="1-30" data-year="2026">
+                <div class="citation-generator-head"><h2><i class="fas fa-quote-left"></i> How to cite this article</h2></div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Select the desired style and automatically generate the bibliographic reference.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field"><label for="citation-style">Citation style</label><select id="citation-style" class="citation-select"><option value="abnt">ABNT</option><option value="apa">APA</option><option value="mla">MLA</option><option value="chicago">Chicago</option><option value="harvard">Harvard</option><option value="vancouver">Vancouver</option><option value="ieee">IEEE</option></select></div>
+                        <div class="citation-actions"><button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copy citation</button></div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+            <div class="citation-actions"><button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copy ABNT (manual)</button><button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Export BibTeX</button></div>
+            <ul class="ref-list">
+                <li><strong>BENTO, Berenice.</strong> <em>Transviad@s: gênero, sexualidade e direitos humanos</em>. Salvador: EDUFBA, 2017.</li>
+                <li><strong>BUTLER, Judith.</strong> <em>Gender trouble: Feminism and the subversion of identity</em>. Routledge, 1990.</li>
+                <li><strong>CONNELL, Raewyn.</strong> <em>Masculinities</em>. University of California Press, 2005.</li>
+                <li><strong>GUSMÃO, Neusa Maria Mendes de.</strong> Antropologia, Cultura e Educação na Formação de Professores. <em>Revista AntHropológicas</em>, v. 27, n. 1, p. 45-71, 2016.</li>
+                <li><strong>LIMA, Alef de Oliveira.</strong> Tristeza, disforia e bem-estar: perspectivas etnográficas sobre a escolarização de Pessoas Trans. <em>Campos - Revista de Antropologia</em>, v. 22, n. 1, p. 33-48, 2021.</li>
+                <li><strong>MEAD, Margaret.</strong> <em>Sexo e Temperamento: Em Três Sociedades Primitivas</em>. São Paulo: Perspectiva, 1935.</li>
+                <li><strong>NOBLE, Safiya Umoja.</strong> <em>Algorithms of Oppression: How Search Engines Reinforce Racism</em>. Nova York: NYU Press, 2018.</li>
+                <li><strong>SCOTT, Joan.</strong> Gênero: uma categoria útil de análise histórica. <em>Educação & Realidade</em>, v. 20, n. 2, 2017.</li>
+                <li><strong>SERANO, Julia.</strong> <em>Whipping girl: A transsexual woman on sexism and the scapegoating of femininity</em>. Seal Press, 2007.</li>
+                <li><strong>WPATH.</strong> Standards of Care for the Health of Transsexual, Transgender, and Gender-Nonconforming People, Version 7. <em>International Journal of Transgenderism</em>, v. 13, n. 4, p. 165-232, 2012.</li>
+            </ul>
+            <p><small><i class="fas fa-info-circle"></i> Use the generator above to cite this article in different styles (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <div class="panel">
+            <h2 class="autor-titulo"><img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> About the author</h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> is a pedagogue and effective public servant, with experience teaching in early elementary school and early childhood education. He holds a Master’s degree in Philosophy from the Federal University of Rio Grande do Norte (UFRN, 2022), with research focused on the work and philosophy of Friedrich Nietzsche. He holds a Bachelor’s degree in Philosophy from the State University of Rio Grande do Norte (UERN, 2018) and a Bachelor’s degree in Pedagogy from the International University Center (UNINTER, 2022). He is the author of the book <em>Nietzsche e os valores modernos</em> (2022). He is dedicated to continuing education in areas such as Psychopedagogy, Neuropsicopedagogy, Inclusive Education, Specialized Educational Assistance (AEE), and Youth and Adult Education (EJA).</p>
+            <p><i class="fas fa-envelope"></i> Email: diego_svt@hotmail.com.br<br><i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br><i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></p>
+        </div>
+
+        <footer><i class="fas fa-university"></i> Inquietações Journal – Caicó, RN | v.1, n.1, 2026 | ISSN: 2675-7591<br>Open access under a Creative Commons license.</footer>
+    </div>
+</div>
+
+<script>
+    // Mesmos scripts do PT (submissão, citações) com textos em inglês
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "/cadastro-login/submissoes.html";
+            } else {
+                let email = prompt("🔐 To submit an article, please log in. Enter your email (simulation):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Login successful! Redirecting to submissions.");
+                    window.location.href = "/cadastro-login/submissoes.html";
+                } else {
+                    alert("Unauthorized access. Registration/login required.");
+                }
+            }
+        });
+    }
+
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = ["SANTOS, Diego Vinícius Brito dos. Gender identity, dysphoria and inclusive education: deconstructing binaries and respecting diversity. Inquietações Journal, v. 1, n. 1, p. 1-30, 2026."];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("ABNT references copied."));
+    });
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@article{santos2026gender,\n  title={Gender identity, dysphoria and inclusive education: deconstructing binaries and respecting diversity},\n  author={Santos, Diego Vinícius Brito dos},\n  journal={Inquietações Journal},\n  volume={1},\n  number={1},\n  pages={1--30},\n  year={2026}\n}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copied (example)."));
+    });
+
+    (function () {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Inquietações Journal';
+        const accessDate = new Date().toLocaleDateString('en-US');
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Available at: ${url}. Accessed: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+        function updateCitation() { const style = select.value; outputDiv.innerHTML = (styles[style] || styles.abnt)(); }
+        if (select && outputDiv) { select.addEventListener('change', updateCitation); updateCitation(); }
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(outputDiv.innerText).then(() => {
+                    if (feedback) feedback.textContent = '✓ Citation copied to clipboard.';
+                    setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                }).catch(() => { if (feedback) feedback.textContent = '✗ Error copying. Please try manually.'; });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

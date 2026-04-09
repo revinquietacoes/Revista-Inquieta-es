@@ -1,0 +1,328 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Machiavelli and the freedom of the people | Essay | Inquietações Journal</title>
+    <!-- Font Awesome & Google Fonts -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        /* Mesmo estilo do original (copiado do português) */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f); padding: 2rem 1.5rem; display: flex; justify-content: center; min-height: 100vh; }
+        .container { max-width: 1280px; width: 100%; background: rgba(255, 253, 245, 0.98); border-radius: 2rem; box-shadow: 0 30px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(180,150,100,0.3); overflow: hidden; }
+        .content-padding { padding: 2rem 2.5rem; }
+        .header { border-bottom: 2px solid #e0d6c0; margin-bottom: 1.8rem; }
+        .journal-badge { display: inline-block; background: #6b4c2c; color: #fef7e0; font-size: 0.7rem; letter-spacing: 1.5px; padding: 0.25rem 0.9rem; border-radius: 30px; text-transform: uppercase; font-weight: 600; }
+        .title { font-family: 'Cormorant Garamond', serif; font-size: 2.5rem; font-weight: 700; line-height: 1.2; margin-top: 1rem; color: #3a2a1a; }
+        .author-line { margin-top: 0.8rem; font-size: 0.95rem; color: #6b5a42; font-weight: 500; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+        .author-avatar { display: flex; align-items: center; gap: 12px; }
+        .avatar-circle { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: #dcd0b8; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid #c28a4e; }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .action-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0 1rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.65rem 1.4rem; border-radius: 60px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: 0.2s; background: #f0ede5; color: #2c3a2b; border: 1px solid #d6cdb5; }
+        .btn-pdf { background: #8b4513; color: white; border: none; }
+        .btn-doi { background: #2c6e5c; color: white; border: none; }
+        .btn-submit { background: #b87c3a; color: white; border: none; }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+        .lang-buttons { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1rem 0 0.5rem; justify-content: flex-start; }
+        .lang-btn { background: #f4efe2; border: 1px solid #c2b697; padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 600; text-decoration: none; color: #4a3a2a; display: inline-block; transition: 0.1s; }
+        .lang-btn.active { background: #c28a4e; border-color: #8b5a2e; color: white; cursor: default; pointer-events: none; }
+        .lang-btn:hover { background: #e0d4bc; }
+        .panel { background: rgba(255,255,252,0.96); border-radius: 1.2rem; margin-bottom: 2rem; padding: 1.6rem 2rem; box-shadow: 0 6px 18px rgba(0,0,0,0.02); border: 1px solid #ece2d0; }
+        .panel h2 { font-size: 1.8rem; font-weight: 600; border-left: 5px solid #c28a4e; padding-left: 1rem; margin-bottom: 1.2rem; color: #4a3a2a; }
+        .article-text { font-size: 1.02rem; line-height: 1.7; color: #2a2a24; }
+        .article-text p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-text h3 { font-size: 1.5rem; font-weight: 600; margin: 1.8rem 0 0.8rem; color: #9b5e2c; }
+        .article-text h4 { font-size: 1.2rem; margin: 1rem 0 0.5rem; color: #b47c48; }
+        .wikilink { text-decoration: none; background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%); padding: 0 2px; border-radius: 6px; color: #8b5a2e; font-weight: 500; border-bottom: 1px dotted #b89a6a; transition: 0.1s; }
+        .wikilink:hover { background: #e0d4bc; color: #4e3a22; }
+        .ref-list { list-style: none; margin-top: 1rem; }
+        .ref-list li { margin-bottom: 0.9rem; font-size: 0.85rem; border-left: 2px solid #dccfaf; padding-left: 1rem; }
+        .ref-list a { color: #8b5a2e; text-decoration: none; word-break: break-all; }
+        .citation-actions { margin: 1rem 0 0.5rem; display: flex; gap: 12px; }
+        .cite-btn { background: #f4efdf; border: 1px solid #cfc2a0; padding: 6px 16px; border-radius: 40px; font-size: 0.7rem; cursor: pointer; }
+        .pdf-frame { border-radius: 1rem; overflow: hidden; border: 1px solid #e2dccf; }
+        iframe { width: 100%; height: 700px; border: none; }
+        footer { font-size: 0.7rem; text-align: center; border-top: 1px solid #e2d6c0; padding-top: 1.5rem; margin-top: 1rem; color: #7a6b53; }
+        @media (max-width: 800px) { body { padding: 1rem; } .content-padding { padding: 1.2rem; } .title { font-size: 1.9rem; } }
+        .bg-warm { background: #fefaf0; }
+        .citation-generator { background: #fefaf0; border: 1px solid #e2dac8; border-radius: 1.2rem; margin: 1.5rem 0 1rem 0; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.02); }
+        .citation-generator-head { background: #f4efe2; padding: 1rem 1.5rem; border-bottom: 1px solid #e2d6c0; }
+        .citation-generator-head h2 { font-size: 1.3rem; font-weight: 600; margin: 0; color: #4a3a2a; border-left: none; padding-left: 0; }
+        .citation-generator-body { padding: 1.2rem 1.5rem; }
+        .citation-generator-note { font-size: 0.85rem; color: #6b5a42; margin-bottom: 1rem; font-style: italic; }
+        .citation-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; margin-bottom: 1.2rem; }
+        .citation-field { flex: 2; min-width: 180px; }
+        .citation-field label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #8b7355; margin-bottom: 0.3rem; }
+        .citation-select { width: 100%; padding: 0.6rem 0.8rem; background: white; border: 1px solid #d6cdb5; border-radius: 2rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; cursor: pointer; }
+        .citation-select:focus { outline: none; border-color: #c28a4e; box-shadow: 0 0 0 2px rgba(194,138,78,0.2); }
+        .citation-actions { flex: 1; display: flex; justify-content: flex-end; }
+        .citation-btn { background: #2c5a4a; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; font-weight: 600; font-size: 0.8rem; color: white; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .citation-btn:hover { background: #1f4538; transform: translateY(-1px); }
+        .citation-output { background: #ffffff; border: 1px solid #e2dac8; border-radius: 1rem; padding: 1rem; font-size: 0.85rem; line-height: 1.5; font-family: 'Inter', monospace; margin-top: 1rem; }
+        .citation-feedback { font-size: 0.75rem; margin-top: 0.5rem; color: #9b5e2c; min-height: 1.8rem; }
+        @media (max-width: 700px) { .citation-controls { flex-direction: column; align-items: stretch; } .citation-actions { justify-content: stretch; } .citation-btn { justify-content: center; } }
+        .footnote { font-size: 0.85rem; margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2d6c0; }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Inquietações Journal • v.1, n.1 • Section: Essays • Continuous flow • 2026</div>
+            <div class="title">Machiavelli and the freedom of the people</div>
+            <div class="author-line">
+                <div class="author-avatar">
+                    <div class="avatar-circle">
+                        <img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                    </div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-university"></i> Municipality of Carnaúba dos Dantas, RN, Brazil</span>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18846061</span>
+            </div>
+            <!-- Language buttons (static links) -->
+            <div class="lang-buttons">
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/Ensaios/ensaio-maquiavel-e-a-liberdade-do-povo.html">🇧🇷 Portuguese</a>
+                <a class="lang-btn active" href="#">🇺🇸 English</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/ensaio-maquiavel-e-a-liberdade-do-povo-esp.html">🇪🇸 Spanish</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Maquiavel_liberdade_povo.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Download PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.18846061" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissions</a>
+            </div>
+        </div>
+
+        <!-- Abstract (English) -->
+        <div class="panel">
+            <h2><i class="fas fa-align-left"></i> Abstract</h2>
+            <p>This essay analyzes the concept of freedom in the work of Niccolò Machiavelli, especially through the contrast between <em>The Prince</em> and the <em>Discourses on the First Decade of Titus Livy</em>. It argues that the traditional interpretation of Machiavelli as an adviser to tyrants finds no support in a systematic reading of his work. On the contrary, the author offers theoretical instruments for the people to understand the mechanisms of power and, through political conflict, claim their freedom.</p>
+            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Machiavelli</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> freedom</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> conflict</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> republic</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> political power</span>
+            </div>
+        </div>
+
+        <!-- Full essay (English translation) -->
+        <div class="panel article-text">
+            <h2>Introduction</h2>
+            <p>This essay aims to highlight the misunderstanding surrounding the thought of Niccolò Machiavelli, given that historically the Florentine thinker is seen as an adviser to tyrants. Our hypothesis is that this perspective lacks theoretical foundation within the thinker's work, since an in‑depth reading of Machiavelli's body of work factually portrays the opposite: Machiavelli, far from wasting his time and knowledge in favor of preserving and maintaining the power of any sitting ruler, offers a rich theoretical framework from which the people can draw lessons that guide them toward a critical stance against the will‑to‑dominate of tyrants, in contrast with their own will, the will‑to‑be‑free. In this sense, by recovering Machiavelli's political advice, so misunderstood by some, we will seek to show that Machiavelli is a thinker of the people, their political adviser.</p>
+            <p>To achieve this goal, we will retrieve the Machiavellian advice contained in <em>The Prince</em><span class="footnote-ref" style="position: relative; display: inline-block; cursor: pointer; font-size: 0.75rem; vertical-align: super; margin: 0 1px;"><a href="#nota1" style="text-decoration: none; background: #e9e0cf; padding: 0 4px; border-radius: 20px; color: #9b5e2c; font-weight: bold; font-size: 0.7rem;">1</a></span> in contrast with the comments on the republican regime contained in the <em>Discourses on the First Decade of Titus Livy</em>.</p>
+            <p>Nevertheless, to carry out this retrieval in both works, we have chosen the concept of freedom as a guiding concept for reading and analysis, which, when contrasted with Machiavellian thought, will allow us to understand the author's intellectual objective, which can be understood as the desire to show the people that, through conflict, they can free themselves from any authoritarian power.</p>
+
+            <h3>Machiavellian advice on freedom, power, and conflict</h3>
+            <p>In <em>The Prince</em>, the question of freedom appears already in the first paragraph of the first chapter, where Machiavelli writes: "The dominions thus occupied are either accustomed to live under a prince, or accustomed to be free" (I:1). In this paragraph, Machiavelli is referring to the types of principalities, which may be "hereditary, in which the blood of the current lord has been prince for many years, or they are new" (I:1). That is, principalities — territories governed by princes — either belong to the royal family's bloodline, passed down from generation to generation, or are conquered by royal nobles. When a territory is conquered, it is quite normal for the prince to face some difficulty in fully establishing his power, if that territory has never before been governed by members of royalty (princes, kings, queens, etc.). It would be necessary to use the strength of the royal army to root power in that place. However, already in the next chapter, Machiavelli, understanding the need for more cunning methods to establish and maintain the prince's power over such principalities, will concern himself with discussing how "principalities may be occupied and maintained" (II:1). In view of this, Machiavelli will give greater attention to new principalities, since "in hereditary states accustomed to the blood of their prince, the difficulties of maintaining them are less than in new ones" (II:2), it being sufficient for the prince to guide his actions based on the assumptions of tradition and his predecessors. Therefore, as long as the prince is liked and loved by his subjects, he need fear nothing, since with popular will on his side, no one can remove him from the sacred power granted to him to govern that territory.</p>
+            <p>This factor does not hold for every case, since in mixed principalities — territories annexed to some hereditary principality — there may be rebellions of the people who want a new prince who offers them personal advantages. But in any case, if such advantages are not offered by the new prince, the population will rebel again and support the reconquest by the deposed prince. A well‑known prince is better than an unknown one: this maxim could represent the selfish thinking of the successors of a principality. It is quite likely that, given human nature — as we will see below — such subjects would not give up their freedoms for a prince who offered nothing advantageous in return. Should the deposed prince regain his place by right, the principality that rebelled once will not do so again, since the prince will be aware and more cautious.</p>
+            <p>The second occurrence of freedom appears in the third chapter. There, Machiavelli provides means for the prince to maintain power in mixed or conquered principalities. An interesting element that facilitates the conquest of a new principality is language. It is advantageous for the prince to conquer or annex to his hereditary or conquered principality another territory where the population speaks the same language, because language establishes a bond between the subjects of the original principality and those of the newly conquered territory. Furthermore, it is profitable to conquer territories already governed by other princes, because the population is already accustomed to living under such a regime. Therefore, these are the factors for conquering and maintaining power in a new principality: if the principalities "are of the same province and have the same language, then it is easy to keep them, especially when they are not accustomed to living free" (III:3) from the monarchical regime.</p>
+            <p>However, after conquering, taking these factors into account, one needs <em>virtù</em> to maintain power over the new principality. Machiavelli advises the following for "Whoever occupies them [...] [and wants] to keep them, must take two measures: first, that the blood of the old prince be extinguished; second, not to change their laws nor their taxes" (III:3 – amended and suppressed), because, as already stated, the prince must bear in mind that the population does not want to suffer misfortunes or any harm. Should some decision of the prince lead the population to experience misfortune, they will turn against the prince.</p>
+            <p>After some historical allusions and teachings in the fourth chapter, Machiavelli returns to the question of freedom only in the fifth chapter, where he presents three principles for the prince to maintain power over territories that had been free from the power of any prince. These principles are: "ruin them; another, to dwell there personally; the third, to let them live with their own laws, collecting tribute from them and creating a state of few that keeps them friendly" (V:1). It is indeed laborious to accustom a people to serve and obey the power of a prince, when that people lived free from such power. The prince cannot use force or his armies to impose social subjection, for such an act would lead to revolutions that would easily remove him from power. The ideal would be to maintain the prior order already established by the former governor, since the people are already accustomed and will not immediately accept an abrupt change in their customs. In this existing model of government, the prince should reconstruct it with his close friends — those who will not seek to steal his power, either for the sake of the friendship cultivated between both parties, or out of fear of the consequences. The prince is forbidden to offer power to those he does not fully trust and who could become an enemy by gaining the favor of the people.</p>
+            <p>However, among the teachings, the most advantageous and suitable for maintaining power in territories not governed by princes is to destroy them and then rebuild them according to the precepts of an authentic principality, for if he does not do so, the prince will run greater risks of succumbing along with his conquest, through popular rebellions that may arise and claim the freedom of old and the re‑establishment of the old institutions that offered popular benefits.</p>
+            <p>If the prince does not destroy the newly conquered territory in order to impose a new order, the safest course is to live there, so that the people feel their new ruler is accessible and so that he can perceive, with some advance warning, possible popular uprisings, aiming to circumvent them before they get underway, for once a popular uprising is underway, the chances of resolving it drop drastically to the prince's disadvantage.</p>
+            <p>Although it is not an issue apparently linked to freedom, Machiavelli introduces in the sixth chapter the concepts of <em>virtù</em> and <em>fortuna</em>. Both concepts are indispensable when we consider the conquest of a new territory and the maintenance of the prince's power. Up to the opening of this chapter, our author had been cautiously introducing his concept of <em>virtù</em>, but only in this chapter are both <em>virtù</em> and <em>fortuna</em> placed side by side. Hence the need to give some emphasis to the concepts, since they guide the framework of the work.</p>
+            <p>Machiavelli, when considering the seizure of a territory by the prince, understands that <em>virtù</em> and <em>fortuna</em> ease the difficulties of maintaining that territory under the prince's dominion. However, the prince "who depends less on fortune has maintained himself longer" (VI:2) in power over that conquered or not territory, for fortune is volatile and unpredictable, and it is up to the prince to possess the necessary <em>virtù</em> to take any territory for himself and keep it. Machiavelli warns that "Those who by the path of virtue [...] become princes, acquire the principality with greater difficulty, but maintain it with ease" (VI:4 – amended), because <em>virtù</em> allows the prince to deliberate and make the best possible decisions to maintain his power over a conquered or inherited principality.</p>
+            <p>If the prince possesses <em>virtù</em>, he will wisely know how to decide whether or not to use his armies to stay in power, but if he lacks <em>virtù</em>, he will not be able to remain standing for long, and with difficulty he will retain some support in his favor, when attacked both by the people and by those who wish to seize power. Therefore, the prince must possess <em>virtù</em> and not depend exclusively on fortune, because "Those who solely by fortune become princes from private persons, with little trouble acquire the principality, but with much maintain it" (VII:1), since those who come to power easily leave it with equal or greater ease. A certain balance between fortune and <em>virtù</em> is needed to stay in power in a principality, and if there is a lack of fortune, at least the prince must possess a good <em>virtù</em>.</p>
+            <p>At the end of the first paragraph of the ninth chapter, Machiavelli presents the inclination of the people and that of the prince: "the people do not wish to be commanded nor oppressed by the great, and the great wish to command and oppress the people" (IX:2). Regarding this chapter, we are led to think that Machiavelli did not write advice for any prince, but rather for the people who need to become aware of their power in the face of the power of the great. The message this chapter reveals would take some time to be understood.</p>
+            <p>Machiavelli's words show us that it is possible for the people to (re)conquer their freedom taken by the prince, provided they rise up against the prince and establish a political system in which they can elect a representative who no longer wants to command and oppress the people, but who shares the same interests as the people, that is, who provides advantages for the population. He who comes to gain the power of the principality with the help of the people can institute a civil principality, where the will of the people becomes the ruler through the representation and election of a popular governor — this is possible within a republic, understood by Machiavelli as a virtuous form of government. For Machiavelli, "Happy is that republic to which fate grants a prudent lawgiver, whose laws are so combined as to secure the tranquility of all" (<em>Discourses</em>, Book 1, II:2).</p>
+            <p>According to Machiavelli, "there are three kinds of government: monarchy, aristocracy, and democracy; those who intend to establish order in a city must choose among these three kinds the one that best suits their objectives" (<em>Discourses</em>, Book 1, II:5). However, these three forms of government can and tend to degenerate, becoming respectively despotism, oligarchy, and permissiveness. For a strong system of government that does not degenerate into some vice, it is necessary that the three parts (aristocracy, monarchy, and the people) compose a single political system. Machiavelli uses as an example the Roman republic, which, after deposing the kings, created two state bodies: consuls and senate. These were managed by members of the nobility who monopolized the governmental power of Rome, and this factor led the Roman population to rise up against them, aiming to force them to cede part of the power to the people. From this uprising, one finds "the causes that originated the tribunes of the people, an institution that weakened the republic because each of the three elements of government received a portion of its authority" (<em>Discourses</em>, Book 1, II:20). However, "the balance of the three powers thus gave birth to a perfect republic" (<em>Discourses</em>, Book 1, II:20).</p>
+            <p>In the fourth chapter, Machiavelli shows that "the disunion between the people and the Senate was the cause of the greatness and freedom of the Roman republic" (<em>Discourses</em>, Book 1, IV). It seems that it is in the tension, conflict, and struggle between those who want to dominate and oppress against those who do not want to be dominated that there is a possibility of achieving a development in jurisprudence on freedom, because, "if one examines carefully the way in which such disorders ended, one will see that they never caused exile or violence harmful to the freedoms of all" (<em>Discourses</em>, Book 1, IV:3). When in a society there is no conflict between the dominators and the dominated, then one cannot speak of freedom, but only of submission to the will of the dominator. Therefore, for freedom to exist, conflicts are necessary that generate or improve laws that guarantee the maintenance of the interests of those who do not want to be dominated. Within a civil order, it should sound strange to man to hear that his natural condition is freedom — <em>absurdité existentielle</em> — man is not free, but forced to fight for freedom. Therefore, you must fight or succumb to the setbacks of those who will‑to‑dominate, for freedom can be nothing other than wanting to be free from the will of a non‑self.</p>
+
+            <h3>Final considerations</h3>
+            <p>In light of the facts narrated in this essay, we can conclude that Machiavelli did not write his <em>Prince</em> to teach or instruct rulers on how to stay in power over their mixed or inherited principalities, but rather to instruct the people on how to fight for their freedom. To reach this understanding, in addition to mapping the occurrences of the debate on freedom in <em>The Prince</em>, it was of utmost importance to pay attention and regard to the <em>Discourses on the First Decade of Titus Livy</em>, a work in which Machiavelli reveals his affection for republican government and no longer for principalities.</p>
+            <p>Contrasting the two works, we note that the first, <em>The Prince</em>, actually aims to reveal all the maneuvers that the prince uses to stay in power and subject his subjects to his own will and pleasure. But why does Machiavelli highlight this? Princes know what they do, how they do it, and, when they do not know how to proceed due to a lack of <em>virtù</em>, princes can still resort to their strategic advisers. Therefore, the prince does not need a didactic manual on how to proceed, but the people need to know how the prince proceeds. That is why Machiavelli, fond of the Republic, writes <em>The Prince</em> to warn indirectly — that is, in a way that might go unnoticed by the ruler — so that it reaches the public for whom the symbolic words of the work were truly intended. That target audience, there is no doubt, is the people themselves. Thus, the thinker, who lived his youth in the light of the Florentine Republic and suffered persecution when that same republic fell, felt the need to use his intellect and his years of accumulated knowledge about the political functioning of the State in favor of the people, not only to show them how the prince or a ruler acts, but also to warn them of the oppressive evils that may manifest themselves in monarchical and oligarchic governments.</p>
+        </div>
+
+        <!-- Footnote (translated) -->
+        <div class="panel" id="notas">
+            <h2><i class="fas fa-paperclip"></i> Notes</h2>
+            <ol style="font-size: 0.85rem; line-height: 1.6; margin-left: 1.5rem;">
+                <li id="nota1">In this essay, we use the method of referencing, once very common. The referencing we follow has the following general rule: to refer to chapters of <em>The Prince</em>, we use Roman numerals (i, ii, iii, iv, etc.) followed, by means of an Arabic number (1, 2, 3, 4, etc.), by the number of the paragraph from which the citation was taken. In this sense: the indication IV:1 corresponds to the first paragraph of the chapter entitled <em>Why the kingdom of Darius, conquered by Alexander, did not rebel against his successors after the death of Alexander</em> in <em>The Prince</em>. We adopt the translation of <em>The Prince</em> proposed by Hingo Weder (6th ed. Petrópolis, RJ: Vozes, 2015). The same referencing rule will also serve for the work <em>Discourses on the First Decade of Titus Livy</em>, where <em>Discourses</em>, Book 1, II:5 refers, in the aforementioned work, to the fifth paragraph of the second chapter of the first book. We use the translation proposed by Sérgio Bath (3rd ed. Brasília: Editora Universidade de Brasília, 1994).</li>
+            </ol>
+        </div>
+
+        <!-- PDF Viewer -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Full essay (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/Maquiavel_liberdade_povo.pdf" title="Machiavelli and the freedom of the people"></iframe>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> If the PDF is not displayed, <a href="/arquivos/Maquiavel_liberdade_povo.pdf" target="_blank">click here to download</a>.</p>
+        </div>
+
+        <!-- References and citation generator (English) -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> References & Citation</h2>
+            <div class="citation-generator" 
+                 data-authors='["SANTOS, Diego Vinícius Brito dos"]' 
+                 data-title="Machiavelli and the freedom of the people" 
+                 data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/ingles/ensaio-maquiavel-e-a-liberdade-do-povo-en.html" 
+                 data-volume="1" 
+                 data-issue="1" 
+                 data-pages="01-07" 
+                 data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> How to cite this essay</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Select the desired style and automatically generate the bibliographic reference.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Citation style</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option>
+                                <option value="apa">APA</option>
+                                <option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option>
+                                <option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option>
+                                <option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copy citation</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copy ABNT (manual)</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Export BibTeX</button>
+            </div>
+            <ul class="ref-list">
+                <li><strong>MACHIAVELLI, Niccolò.</strong> <em>Discourses on the First Decade of Titus Livy</em>. Translated by Sérgio Bath. 3rd ed. Brasília: Editora Universidade de Brasília, 1994.</li>
+                <li><strong>MACHIAVELLI, Niccolò.</strong> <em>The Prince</em>. Translated by Hingo Weder. 6th ed. Petrópolis: Vozes, 2015.</li>
+                <li><strong>SANTOS, Diego Vinícius Brito dos.</strong> Machiavelli and the freedom of the people. <em>Inquietações Journal</em>, v. 1, n. 1, p. 01–07, 2026. DOI: <a href="https://doi.org/10.5281/zenodo.18846061" target="_blank">10.5281/zenodo.18846061</a></li>
+            </ul>
+            <p><small><i class="fas fa-info-circle"></i> Use the generator above to cite this essay in different styles (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <!-- About the author (English) -->
+        <div class="panel">
+            <h2 class="autor-titulo"> <img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> About the author </h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> is a pedagogue and effective public servant, with experience teaching in early elementary school and early childhood education. He holds a Master’s degree in Philosophy from the Federal University of Rio Grande do Norte (UFRN, 2022), with research focused on the work and philosophy of Friedrich Nietzsche. He holds a Bachelor’s degree in Philosophy from the State University of Rio Grande do Norte (UERN, 2018) and a Bachelor’s degree in Pedagogy from the International University Center (UNINTER, 2022). He is the author of the book <em>Nietzsche e os valores modernos</em> (2022). He is dedicated to continuing education in areas such as Psychopedagogy, Neuropsicopedagogy, Inclusive Education, Specialized Educational Assistance (AEE), and Youth and Adult Education (EJA).</p>
+            <p><i class="fas fa-envelope"></i> Email: diego_svt@hotmail.com.br<br>
+            <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+            <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></p>
+        </div>
+
+        <footer>
+            <i class="fas fa-university"></i> Inquietações Journal – Caicó, RN | v.1, n.1, 2026 | Section: Essays | DOI: 10.5281/zenodo.18846061<br>
+            Open access under a Creative Commons license.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Submissions with login simulation
+    const submitBtn = document.getElementById("submitBtn");
+    submitBtn.addEventListener("click", (e) => {
+        e.preventDefault();
+        let logged = localStorage.getItem("inquietacoes_logged");
+        if (logged === "true") {
+            window.location.href = "/cadastro-login/submissoes.html";
+        } else {
+            let email = prompt("🔐 To submit an article, please log in. Enter your email (simulation):");
+            if (email && email.includes("@")) {
+                localStorage.setItem("inquietacoes_logged", "true");
+                alert("Login successful! Redirecting to submissions.");
+                window.location.href = "/cadastro-login/submissoes.html";
+            } else {
+                alert("Unauthorized access. Registration/login required.");
+            }
+        }
+    });
+
+    // Copy ABNT references manually (English)
+    document.getElementById("copyRefBtn").addEventListener("click", () => {
+        const refs = [
+            "MACHIAVELLI, Niccolò. The Prince. Petrópolis: Vozes, 2015.",
+            "MACHIAVELLI, Niccolò. Discourses on the First Decade of Titus Livy. Brasília: UnB, 1994.",
+            "SANTOS, Diego Vinícius Brito dos. Machiavelli and the freedom of the people. Inquietações Journal, v. 1, n. 1, p. 01-07, 2026."
+        ];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("ABNT references copied."));
+    });
+    document.getElementById("exportBibBtn").addEventListener("click", () => {
+        let bib = `@book{maquiavel2015,
+  title={The Prince},
+  author={Machiavelli, Niccolò},
+  year={2015},
+  publisher={Vozes}
+}
+@article{santos2026,
+  title={Machiavelli and the freedom of the people},
+  author={Santos, Diego Vinícius Brito dos},
+  journal={Inquietações Journal},
+  volume={1},
+  number={1},
+  pages={01--07},
+  year={2026}
+}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copied (example)."));
+    });
+
+    // Citation generator (English version)
+    (function() {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Inquietações Journal';
+        const accessDate = new Date().toLocaleDateString('en-US');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Available at: ${url}. Accessed: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    feedback.textContent = '✓ Citation copied to clipboard.';
+                    setTimeout(() => { feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    feedback.textContent = '✗ Error copying. Please try manually.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

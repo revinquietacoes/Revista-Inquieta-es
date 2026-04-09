@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Algorithms of the past: how AI is rewriting history | Inquietações Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f); padding: 2rem 1.5rem; display: flex; justify-content: center; min-height: 100vh; }
+        .container { max-width: 1280px; width: 100%; background: rgba(255, 253, 245, 0.98); border-radius: 2rem; box-shadow: 0 30px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(180,150,100,0.3); overflow: hidden; }
+        .content-padding { padding: 2rem 2.5rem; }
+        .header { border-bottom: 2px solid #e0d6c0; margin-bottom: 1.8rem; }
+        .journal-badge { display: inline-block; background: #6b4c2c; color: #fef7e0; font-size: 0.7rem; letter-spacing: 1.5px; padding: 0.25rem 0.9rem; border-radius: 30px; text-transform: uppercase; font-weight: 600; }
+        .title { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-top: 1rem; color: #3a2a1a; }
+        .author-line { margin-top: 0.8rem; font-size: 0.95rem; color: #6b5a42; font-weight: 500; display: flex; flex-wrap: wrap; align-items: center; gap: 1rem; }
+        .author-avatar { display: flex; align-items: center; gap: 12px; }
+        .avatar-circle { width: 48px; height: 48px; border-radius: 50%; overflow: hidden; background: #dcd0b8; box-shadow: 0 2px 8px rgba(0,0,0,0.1); border: 2px solid #c28a4e; }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .action-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0 1rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.65rem 1.4rem; border-radius: 60px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: 0.2s; background: #f0ede5; color: #2c3a2b; border: 1px solid #d6cdb5; cursor: pointer; }
+        .btn-pdf { background: #8b4513; color: white; border: none; }
+        .btn-submit { background: #b87c3a; color: white; border: none; }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+        .lang-buttons { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1rem 0 0.5rem; justify-content: flex-start; }
+        .lang-btn { background: #f4efe2; border: 1px solid #c2b697; padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 600; cursor: pointer; transition: 0.1s; color: #4a3a2a; text-decoration: none; display: inline-block; }
+        .lang-btn.active { background: #c28a4e; border-color: #8b5a2e; color: white; cursor: default; pointer-events: none; }
+        .lang-btn:hover { background: #e0d4bc; }
+        .panel { background: rgba(255,255,252,0.96); border-radius: 1.2rem; margin-bottom: 2rem; padding: 1.6rem 2rem; box-shadow: 0 6px 18px rgba(0,0,0,0.02); border: 1px solid #ece2d0; }
+        .panel h2 { font-size: 1.8rem; font-weight: 600; border-left: 5px solid #c28a4e; padding-left: 1rem; margin-bottom: 1.2rem; color: #4a3a2a; }
+        .article-text { font-size: 1.02rem; line-height: 1.7; color: #2a2a24; }
+        .article-text p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-text h3 { font-size: 1.5rem; font-weight: 600; margin: 1.8rem 0 0.8rem; color: #9b5e2c; }
+        .article-text h4 { font-size: 1.2rem; margin: 1rem 0 0.5rem; color: #b47c48; }
+        .wikilink { text-decoration: none; background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%); padding: 0 2px; border-radius: 6px; color: #8b5a2e; font-weight: 500; border-bottom: 1px dotted #b89a6a; }
+        .wikilink:hover { background: #e0d4bc; color: #4e3a22; }
+        .ref-list { list-style: none; margin-top: 1rem; }
+        .ref-list li { margin-bottom: 0.9rem; font-size: 0.85rem; border-left: 2px solid #dccfaf; padding-left: 1rem; }
+        .citation-actions { margin: 1rem 0 0.5rem; display: flex; gap: 12px; }
+        .cite-btn { background: #f4efdf; border: 1px solid #cfc2a0; padding: 6px 16px; border-radius: 40px; font-size: 0.7rem; cursor: pointer; }
+        .pdf-frame { border-radius: 1rem; overflow: hidden; border: 1px solid #e2dccf; }
+        iframe { width: 100%; height: 700px; border: none; }
+        footer { font-size: 0.7rem; text-align: center; border-top: 1px solid #e2d6c0; padding-top: 1.5rem; margin-top: 1rem; color: #7a6b53; }
+        @media (max-width: 800px) { body { padding: 1rem; } .content-padding { padding: 1.2rem; } .title { font-size: 1.8rem; } }
+        .bg-warm { background: #fefaf0; }
+        .citation-generator { background: #fefaf0; border: 1px solid #e2dac8; border-radius: 1.2rem; margin: 1.5rem 0 1rem; overflow: hidden; }
+        .citation-generator-head { background: #f4efe2; padding: 1rem 1.5rem; border-bottom: 1px solid #e2d6c0; }
+        .citation-generator-head h2 { font-size: 1.3rem; font-weight: 600; margin: 0; color: #4a3a2a; border-left: none; padding-left: 0; }
+        .citation-generator-body { padding: 1.2rem 1.5rem; }
+        .citation-generator-note { font-size: 0.85rem; color: #6b5a42; margin-bottom: 1rem; font-style: italic; }
+        .citation-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; margin-bottom: 1.2rem; }
+        .citation-field { flex: 2; min-width: 180px; }
+        .citation-field label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #8b7355; margin-bottom: 0.3rem; }
+        .citation-select { width: 100%; padding: 0.6rem 0.8rem; background: white; border: 1px solid #d6cdb5; border-radius: 2rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; cursor: pointer; }
+        .citation-btn { background: #2c5a4a; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; font-weight: 600; font-size: 0.8rem; color: white; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .citation-btn:hover { background: #1f4538; }
+        .citation-output { background: #ffffff; border: 1px solid #e2dac8; border-radius: 1rem; padding: 1rem; font-size: 0.85rem; line-height: 1.5; font-family: 'Inter', monospace; margin-top: 1rem; }
+        .citation-feedback { font-size: 0.75rem; margin-top: 0.5rem; color: #9b5e2c; }
+        .autor-titulo { display: flex; align-items: center; gap: 10px; }
+        .autor-foto { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+        @media (max-width: 700px) { .citation-controls { flex-direction: column; align-items: stretch; } .citation-actions { justify-content: stretch; } .citation-btn { justify-content: center; } }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Inquietações Journal • v.1, n.1 • January/December 2026</div>
+            <div class="title">Algorithms of the past: how AI is rewriting history</div>
+            <div class="author-line">
+                <div class="author-avatar">
+                    <div class="avatar-circle"><img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'"></div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-calendar-alt"></i> Volume 1, Issue 1 • January/December 2026</span>
+                <span><i class="fas fa-book-open"></i> Pages: 31-41</span>
+            </div>
+            <!-- Language buttons (links to static versions) -->
+            <div class="lang-buttons">
+                <a class="lang-btn" data-lang="pt" href="/publicacoes/volume-1-2026/Artigos/artigo-algoritmos-do-passado.html">🇧🇷 Portuguese</a>
+                <a class="lang-btn active" data-lang="en" href="#">🇺🇸 English</a>
+                <a class="lang-btn" data-lang="es" href="/publicacoes/volume-1-2026/espanhol/artigo-algoritmos-do-passado-esp.html">🇪🇸 Spanish</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Algoritmos_IA_Historia.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Download PDF</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissions</a>
+            </div>
+        </div>
+
+        <!-- Abstract (English) -->
+        <div class="panel">
+            <h2><i class="fas fa-align-left"></i> Abstract</h2>
+            <p>This article aims to analyze the impact of artificial intelligence (AI) on contemporary historical research, focusing on three central axes: the digitization of archives, big data analysis, and the ethical dilemmas inherent in reconstructing the past through automated tools. Based on an interdisciplinary literature review, integrating works from digital historiography, computer science, and critical studies on technology, emblematic projects, theoretical debates, and case studies published between 2010 and 2023 are examined. It was identified that AI enhances access to historical collections and allows for unprecedented scale analysis (e.g., cross-referencing thousands of documents), but also reproduces structural biases (such as algorithmic racism) and weakens contextualized interpretation, which is essential for historiography. Additionally, data gaps and the lost materiality in digitization emerge as methodological challenges. The conclusion is that AI represents an ambivalent technological revolution: while optimizing research, it requires strict ethical protocols and the preservation of human leadership in historical critique. The integration of historians and digital ethics specialists is seen as a way to balance innovation and epistemic responsibility.</p>
+            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Artificial Intelligence</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Historical Research</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Digitization of Archives</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Algorithmic Bias</span>
+            </div>
+            <h2 style="margin-top: 1.5rem;"><i class="fas fa-language"></i> Resumo (Portuguese)</h2>
+            <p>Este artigo busca analisar o impacto da inteligência artificial (IA) na pesquisa histórica contemporânea, com ênfase em três eixos centrais: a digitalização de arquivos, a análise de big data e os dilemas éticos inerentes à reconstrução do passado por meio de ferramentas automatizadas. A partir de uma revisão bibliográfica interdisciplinar, integrando obras de historiografia digital, ciência da computação e estudos críticos sobre tecnologia, examinam-se projetos emblemáticos, debates teóricos e estudos de caso publicados entre 2010 e 2023. Identificou-se que a IA amplia o acesso a acervos históricos e permite análises em escala inédita (ex.: cruzamento de milhares de documentos), mas também reproduz vieses estruturais (como racismo algorítmico) e fragiliza a interpretação contextualizada, essencial à historiografia. Além disso, lacunas nos dados e a materialidade perdida na digitalização emergem como desafios metodológicos. Conclui-se que a IA representa uma revolução tecnológica ambivalente: enquanto otimiza a pesquisa, exige protocolos éticos rigorosos e a manutenção do protagonismo humano na crítica histórica. A integração entre historiadores e especialistas em ética digital surge como caminho para equilibrar inovação e responsabilidade epistêmica.</p>
+            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Inteligência Artificial</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Pesquisa Histórica</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Digitalização de Arquivos</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Viés Algorítmico</span>
+            </div>
+        </div>
+
+        <!-- Full article in English (translated) -->
+        <div class="panel article-text">
+            <h2>Introduction</h2>
+            <p>The relationship between technology and historiography is as old as writing itself, but historians have never faced a challenge as dizzying as that posed by artificial intelligence (AI). If, in the 1980s and 1990s, the digitization of archives and the emergence of electronic databases already heralded a "digital turn" (GULDI; ARMITAGE, 2014), the 21st century has brought a qualitative revolution: algorithms capable not only of storing but of interpreting — or at least simulating the interpretation — of historical sources.</p>
+            <p>Projects such as <a class="wikilink" href="https://transkribus.eu/" target="_blank">Transkribus</a>, a platform that uses machine learning to transcribe ancient manuscripts, or the analysis of migration patterns in the Black Atlantic through the <a class="wikilink" href="https://www.slavevoyages.org/" target="_blank">Slave Voyages</a> database (ELTIS; RICHARDSON, 2010) illustrate the transformative potential of these tools. However, as <a class="wikilink" href="https://en.wikipedia.org/wiki/Safiya_Noble" target="_blank">Safiya Umoja Noble</a> (2018) warns, AI is never neutral: it carries in its codes the biases and hierarchies of those who program it, re‑editing, in new guise, old disputes over who has the right to narrate the past.</p>
+            <p>This article emerges from a contemporary paradox: at the same time that AI democratizes access to archives once restricted to specialists — such as the digitized personal diaries from the Brazilian colonial period available at the National Library — it also threatens to reduce historical complexity to mathematical equations. Timothy Hitchcock (2013), in his provocative essay <em>Big Data for Dead People?</em>, asks whether the analysis of millions of parish records by algorithms might lead us to an illusion of "total objectivity", obscuring the micro‑histories that give flesh and bone to the data. How, then, to reconcile the efficiency of automation with the critical sensitivity that defines the historian's craft?</p>
+            <p>To answer this question, we adopted an interdisciplinary methodology, engaging with digital history theorists (such as Jo Guldi), critics of technological ethics (such as Cathy O’Neil), and historians who reflect on the limits of representing the past (such as Michel-Rolph Trouillot). The temporal scope privileges publications from the last 13 years (2010-2023), a period in which projects such as <a class="wikilink" href="https://livingwithmachines.ac.uk/" target="_blank">Living with Machines</a> (UNITED KINGDOM, 2021) and Slave Voyages (ELTIS et al., 2023) consolidated AI as a historiographic tool.</p>
+            <p>The central objective of this study is twofold: first, to map how AI is reconfiguring three dimensions of historical research: preservation, analysis, and ethics; second, to propose ways for historians to use these tools without renouncing their commitment to human complexity. We defend a delicate thesis here: AI is neither savior nor villain of history, but a distorted mirror of our own limitations. When algorithms trained on colonial archives reproduce racist stereotypes (D’IGNAZIO; KLEIN, 2020), or when mass digitization excludes documents written in non‑dominant indigenous languages (SMITH, 1999), what we see reflected is not a technical failure but a symptom of historical inequalities that have not yet been overcome.</p>
+            <p>The structure of the article follows a dialectical logic. In the first section, we explore the role of AI in preserving and accessing archives, celebrating cases such as the digitization of the Herculaneum scrolls, carbonized by the eruption of Vesuvius (PIERCEY, 2020), but also problematizing the "accumulative fever" that prioritizes quantity over curation (STEEDMAN, 2001). Next, we analyze how big data challenges traditional notions of historical causality, taking as an example the use of natural language processing to track the emergence of the concept of "race" in 19th‑century parliamentary speeches (MIGNOLO, 2011). Finally, we confront the ethical dilemmas of this new frontier, from the privacy of survivors of dictatorial regimes whose archives are algorithmically scrutinized to the risks of epistemicide in projects of "reconstruction" of indigenous cultures via AI (BENJAMIN, 2019). Far from exhausting the debate, this article seeks to offer a critical compass to navigate a territory still in dispute within the human sciences. After all, as anthropologist <a class="wikilink" href="https://en.wikipedia.org/wiki/Bruno_Latour" target="_blank">Bruno Latour</a> (2005) reminds us, every technology is a social fact: AI in history is not only about machines, but about the political and affective choices we make — or fail to make — when entrusting them with our past and our present.</p>
+
+            <h3>Methodology</h3>
+            <p>The construction of this article was guided by a methodological approach that articulated an interdisciplinary literature review and a critical analysis of case studies, aiming to map both the potentials and the ethical challenges of artificial intelligence (AI) in historical research. The literature review integrated three fields of knowledge — history, computer science, and ethics — engaging with authors such as Jo Guldi and David Armitage, who reflect on the digital turn in historiography; Ted Underwood, whose works explore the use of machine learning in literary analysis; and Safiya Umoja Noble, a critic of algorithmic biases. The temporal scope privileged publications between 2010 and 2023, a period of consolidation of AI as a research tool, without neglecting foundational works, such as Michel-Rolph Trouillot's writings on the silencing of marginalized voices.</p>
+            <p>The analysis of case studies sought to balance emblematic examples from the Global North and South, avoiding a narrative centered only on hegemonic initiatives. Projects such as Slave Voyages, which uses big data to map the transatlantic slave trade, were examined not only for their technical innovation but for their potential to reveal historical patterns invisible to traditional methodologies. Meanwhile, <a class="wikilink" href="https://mukurtu.org/" target="_blank">Mukurtu CMS</a>, a digital management platform led by Australian Indigenous communities, illustrated how technology can be reappropriated to ensure sovereignty over sensitive archives. Each case was analyzed from three interconnected dimensions: contribution to democratization of access, impact on historical interpretation, and ethical dilemmas inherent in the use of algorithms.</p>
+            <p>The methodology also adopted a critical stance, questioning the neutrality of technological tools. For this, it crossed quantitative data — such as error rates in automated transcriptions of indigenous languages — with qualitative analyses, including testimonies from communities affected by digitization projects. Authors such as Linda Tuhiwai Smith and Ruha Benjamin grounded the reflection on how AI can reproduce colonial structures or, alternatively, serve as an instrument of resistance. Finally, we acknowledged the limitations of the geographical and linguistic scope, which privileged initiatives in English, but sought to mitigate this bias through examples such as the use of AI by the Guarani Kaiowá people in Brazil. The option not to include new references beyond those already cited in the body of the article maintained the focus on depth of analysis rather than bibliographic breadth. In summary, the methodology sought not only to describe but to problematize the intertwining of technology and history, emphasizing that every innovation carries with it political choices — and ignoring them is, in itself, a form of choice.</p>
+
+            <h3>Results and discussion</h3>
+            <h4>Digitization of archives and memory preservation</h4>
+            <p>In 1752, a group of researchers discovered, in the ruins of Herculaneum, hundreds of scrolls carbonized by the eruption of Vesuvius in 79 AD. For centuries, attempts to unroll them destroyed part of this collection — until, in 2023, a machine learning algorithm developed by the University of Kentucky managed to "read" previously illegible texts, revealing lost works by the philosopher Epicurus (PIERCEY et al., 2023). This case illustrates the potential of artificial intelligence to rescue memories buried by time. However, as historian Carolyn Steedman (2001) reminds us, archives are not just repositories of information but places of power: who preserves, who selects, and who is silenced.</p>
+            <p>Mass digitization of historical collections, accelerated by AI tools such as Optical Character Recognition (OCR) and neural networks, promises unprecedented democratization. Projects such as Google Arts & Culture, which makes medieval manuscripts from the Vatican Library available online, or UNESCO's Memory of the World Programme, dedicated to digitizing records of indigenous peoples, are celebrated as triumphs against oblivion. For marginalized communities, such as the <a class="wikilink" href="https://en.wikipedia.org/wiki/S%C3%A1mi" target="_blank">Sami</a> of Scandinavia, whose oral narratives are being transcribed by AI in collaboration with local linguists (LEHTOLA, 2020), technology emerges as an ally in the fight against cultural erosion.</p>
+            <p>However, technological euphoria hides deep dilemmas. The first is bias in digital curation: which documents are prioritized for digitization? A study of the British Library's digital collection revealed that 78% of the manuscripts available online are by European authors from the modern period, while African and Asian texts remain underrepresented (BHATTACHARYA, 2021). This imbalance is not accidental. As Indian historian Dipesh Chakrabarty (2000) argues, the colonial logic that once organized physical archives is now reproduced in digital repositories, where the universality of knowledge still carries Eurocentric accents.</p>
+            <p>Another challenge is the loss of materiality. When a 19th‑century diary is scanned and turned into a PDF, we gain access to its content but lose fundamental clues: ink stains that reveal the author's emotions, moisture marks that tell the story of its storage, or marginal notes made by later generations. For British archaeologist Ingold (2007), these material traces are "textures of time" — elements that AI algorithms, focused on efficiency, often ignore.</p>
+            <p>Even more critical is the risk of linguistic exclusion. Projects such as Transkribus, despite being revolutionary, are trained predominantly in European languages. Documents written in indigenous languages, such as Guarani or Yoruba, face transcription error rates up to 10 times higher (SANTOS; OLIVEIRA, 2022). As a result, already marginalized narratives risk being doubly erased: first by colonialism, then by artificial intelligence.</p>
+            <p>Faced with these contradictions, an inevitable question arises: is AI‑driven digitization saving memories or creating new kinds of forgetting? For Māori researcher Linda Tuhiwai Smith (1999), the answer depends on who controls the technology. In her work with indigenous communities in New Zealand, Smith shows how collaborative projects — where elders oversee the digitization of oral traditions — can avoid predatory appropriation of knowledge. Top‑down initiatives, such as the controversial digitization of Hopi sacred artifacts by a US company without prior consultation (MARTINEZ, 2018), show how AI can perpetuate historical violence. The way forward, therefore, is neither naive enthusiasm nor total rejection. As technology philosopher Shannon Vallor (2016) suggests, we need to cultivate technical virtues: using AI with epistemic humility, recognizing that every advance brings with it ethical choices. Digitizing an archive is not a neutral act but a political gesture — and as such, it requires that historians, computer scientists, and affected communities share the same decision‑making table.</p>
+
+            <h4>Big data analysis and new interpretations</h4>
+            <p>In 2019, an article in the journal Nature caused a stir by announcing that AI algorithms had identified, in 18th‑century slave ship records, patterns of trade routes previously unknown. The study, based on the Slave Voyages database, revealed how ocean winds and geopolitical conflicts influenced the transatlantic trade in a more complex way than previously imagined (ELTIS et al., 2020). This is just one example of how big data is rewriting — or at least repackaging — historical narratives. However, as historian Timothy Hitchcock (2013) warns, data do not speak for themselves; they whisper biased secrets, depending on who listens.</p>
+            <p>The promise of big data lies in its ability to reveal patterns at a macrosocial scale. While a traditional researcher might analyze hundreds of Victorian‑era letters in a lifetime, Natural Language Processing (NLP) algorithms cross‑reference millions of documents in hours, mapping, for example, the rise of the term "industrialization" in British parliamentary speeches between 1750 and 1850 (UNDERWOOD, 2019). Projects such as Living with Machines, a partnership between the British Library and the University of Cambridge, use these techniques to understand how the Industrial Revolution altered not only economies but perceptions of time, work, and family (HEDGECOE; TOLFO, 2021).</p>
+            <p>However, the seduction of numbers hides pitfalls. The first is the illusion of completeness. When we analyze 19th‑century immigration records through algorithms, we risk treating absences (such as women not recorded in official documents) as mere statistical noise, rather than traces of patriarchal structures (SCOTT, 2021). Historian Joan Scott, in her classic <em>Gender and the Politics of History</em> (1988), already warned that the exclusion of certain groups from archives is not an accident but a symptom of power. Big data, if used uncritically, can naturalize these exclusions.</p>
+            <p>Another challenge is categorical anachronism. By training algorithms to identify nations or social classes in medieval documents, we project modern concepts onto radically different past realities. French medievalist Jacques Le Goff (1985) called this chronological violence — a practice that uncritical use of AI can intensify. A notorious example occurred in 2022, when an NLP model classified accounts of quilombola resistance in colonial Brazil as criminal acts, reproducing the logic of the archives produced by plantation owners (SILVA; FONSECA, 2022).</p>
+            <p>Despite these risks, collaborative projects show promising paths. In South Africa, Archives Alive uses AI to cross‑reference official apartheid records with personal diaries of activists, creating multidimensional narratives that challenge official historiography (MBEMBE, 2023). In India, researchers at the Centre for the Study of Developing Societies employ network analysis to map connections between local anti‑colonial movements and the Indian diaspora in the 20th century (CHATTERJEE, 2021). These initiatives do not replace the traditional work of the historian but expand it, as long as they are guided by a central question: who does this analysis serve?</p>
+            <p>The answer often lies in the ethics of metadata. When the Enslaved.org project linked slave ship records to biographies of enslaved individuals, prioritizing names and personal stories over numbers, it not only humanized big data but challenged the dehumanizing logic of colonial archives (GOMEZ, 2021). As philosopher Donna Haraway (1988) writes, knowledge is always situated: algorithmic analysis only gains meaning when it recognizes its partiality and opens space for silenced voices. In this sense, the greatest legacy of big data may not be technical but epistemological. It forces us to rethink old dichotomies — qualitative versus quantitative, micro versus macro — and to embrace what historian Carlo Ginzburg (1979) called the evidential paradigm: the ability to read the global in the particular, and vice versa. After all, behind every statistical curve there are faces, choices, and chances. And it is in this dialogue between scale and singularity that the future of historical research lies.</p>
+
+            <h4>Ethics in the reconstruction of the past</h4>
+            <p>The reconstruction of the past through artificial intelligence is not an innocent act. In 2018, a European project that sought to digitally "reconstruct" the face of an enslaved 19th‑century woman generated controversy by presenting a smiling image devoid of marks of violence, erasing the brutality of slavery under the guise of a softened aesthetic. As Ruha Benjamin (2019) argues, AI often rewrites history, camouflaging conflicts under a false technical neutrality. This case is no exception: it reveals how algorithms, when interpreting the past, carry the biases and hierarchies of those who program them.</p>
+            <p>The relationship between AI and power becomes even more evident when we analyze colonial archives. Safiya Umoja Noble (2018), in <em>Algorithms of Oppression</em>, demonstrated how search engines perpetuate racist stereotypes, and in historiography the risk is similar. A study on automated transcriptions of letters from Native American peoples showed that terms like "resistance" were systematically classified as "rebellion" by algorithms, reproducing the logic of the colonizers who originally produced those records. This dynamic is not limited to the distant past: in 2021, a Chilean project that used AI to cross‑reference police records from the Pinochet dictatorship with survivor testimonies sparked an ethical debate about how far algorithmic efficiency can expose individual traumas in the name of historical justice. Anthropologist Rita Segato (2016) reminds us that state violence is not a statistical datum but an open wound that requires care — not just fast processing.</p>
+            <p>For indigenous communities, the digitization of traditional knowledge without consent repeats the extractivist logic of colonialism, as Linda Tuhiwai Smith (1999) warns. In response, initiatives such as Mukurtu CMS, a digital management platform led by Australian Aboriginal communities, show that it is possible to subvert this dynamic. In Brazil, the Guarani Kaiowá people use AI to catalog medicinal plants in their native language, protecting them from biopiracy. These examples reveal that technology can be reappropriated, as long as guided by ethical protocols and dialogue with affected communities.</p>
+            <p>The historian's role, therefore, is that of mediator. Hitchcock (2013) warns that the seduction of technology can lead to the illusion that data speak for themselves, but as Jo Guldi (2014) argues, it is the researcher's task to contextualize what machines do not see. When algorithms identify migration patterns in the 19th century, it is the historian who must remember that behind every number there are separated families and interrupted dreams. AI can map slave ship routes, but only human empathy retells the stories of those who were in the hold.</p>
+            <p>Faced with these challenges, projects such as <a class="wikilink" href="https://decolonizingai.com/" target="_blank">Decolonizing AI</a> — a global coalition that includes historians, data scientists, and indigenous peoples — propose guidelines for an ethical use of technology: transparency in disclosing the data that train algorithms, prior consent of communities affected by digitization, and equitable access to technological tools. These proposals are not utopian. In 2023, the National Archives of South Africa adopted a community review protocol for digitizing apartheid records, allowing victims and families to veto the exposure of sensitive documents. As Achille Mbembe (2023) writes, ethics in the age of AI is not an obstacle but a horizon of possibilities — an invitation to rethink not only how we study the past but how we inhabit it in the present.</p>
+
+            <h3>Final considerations</h3>
+            <p>Artificial intelligence in historical research resembles a turbulent river: capable of irrigating new fields of knowledge but also of uprooting the roots that sustain the complexity of the past. Throughout this article, we have explored how this technology redefines the relationship between historians and sources, between scale and singularity, between innovation and ethics. If there is a lesson to be drawn from this journey, it is that AI does not replace the historian's craft but challenges it to rethink its place in a world where machines learn to read — but not necessarily to understand — what was written.</p>
+            <p>The benefits of AI are undeniable. Projects such as Slave Voyages and Transkribus have democratized access to once‑inaccessible archives, revealing patterns on a global scale and safeguarding documents on the brink of destruction. However, as Safiya Umoja Noble (2018) reminds us, each algorithm carries in its code the marks of a past that is often violent. The accelerated digitization of colonial collections, for example, can perpetuate Eurocentric views if not accompanied by critical curation, as demonstrated by the studies of Linda Tuhiwai Smith (1999) with indigenous communities.</p>
+            <p>Enthusiasm for big data also hides pitfalls. The analysis of millions of parish records or parliamentary speeches can illuminate macrosocial trends but risks erasing micro‑histories essential to understanding the texture of the human. Timothy Hitchcock (2013) was right to question whether massive data might lead us to an illusion of objectivity, where numbers replace narratives. The solution, as Jo Guldi (2014) proposes, is not to reject technology but to use it as a bridge — a tool that amplifies, without replacing, the interpretive sensitivity of the human researcher.</p>
+            <p>In ethical dilemmas, we find perhaps the greatest challenge. Reconstructing the faces of enslaved people via AI, as in the case analyzed by Ruha Benjamin (2019), or scrutinizing dictatorship archives with algorithms, requires more than technical competence: it demands a commitment to living memory. Ethics, here, is not a checklist but a continuous practice of listening — to indigenous communities claiming sovereignty over their knowledge, to survivors of authoritarian regimes resisting the expropriation of their pain.</p>
+            <p>The way forward, as Mbembe (2023) suggests, requires historians to embrace AI without naivety. This means building interdisciplinary alliances, where data scientists learn the importance of historical context, and historians understand the limits — and potentials — of algorithms. It also means fighting for equitable access to digital tools, ensuring that Global South institutions are not mere data providers for Northern projects. In the end, artificial intelligence in history is not a technological question but a political one. It confronts us with old questions in new ways: who has the right to narrate the past? How to balance scale and depth? What does it mean to preserve memory in a world of bits and bytes? The answer, as Michel-Rolph Trouillot (1995) well knew, lies in the recognition that the past is never dead — and that every tool we use to revive it inevitably carries the marks of our present.</p>
+        </div>
+
+        <!-- PDF Viewer -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Full article (PDF)</h2>
+            <div class="pdf-frame"><iframe src="/arquivos/Algoritmos_IA_Historia.pdf" title="Algorithms of the past - AI and history"></iframe></div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> If the PDF is not displayed, <a href="/arquivos/Algoritmos_IA_Historia.pdf" target="_blank">click here to download</a>.</p>
+        </div>
+
+        <!-- References and citation generator -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> References & Citation</h2>
+            <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]' data-title="Algorithms of the past: how AI is rewriting history" data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/ingles/artigo-algoritmos-do-passado-en.html" data-volume="1" data-issue="1" data-pages="31-41" data-year="2026">
+                <div class="citation-generator-head"><h2><i class="fas fa-quote-left"></i> How to cite this article</h2></div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Select the desired style and automatically generate the bibliographic reference.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field"><label for="citation-style">Citation style</label><select id="citation-style" class="citation-select"><option value="abnt">ABNT</option><option value="apa">APA</option><option value="mla">MLA</option><option value="chicago">Chicago</option><option value="harvard">Harvard</option><option value="vancouver">Vancouver</option><option value="ieee">IEEE</option></select></div>
+                        <div class="citation-actions"><button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copy citation</button></div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+            <div class="citation-actions"><button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copy ABNT (manual)</button><button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Export BibTeX</button></div>
+            <ul class="ref-list">
+                <li><strong>BENJAMIN, Ruha.</strong> <em>Race After Technology: Abolitionist Tools for the New Jim Code</em>. New York: Polity Press, 2019.</li>
+                <li><strong>BHATTACHARYA, Anindita.</strong> Digital Colonialism: Representation in the British Library’s Online Archives. <em>Journal of Digital History</em>, v. 12, n. 2, p. 45-67, 2021.</li>
+                <li><strong>CHAKRABARTY, Dipesh.</strong> <em>Provincializing Europe: Postcolonial Thought and Historical Difference</em>. Princeton: Princeton University Press, 2000.</li>
+                <li><strong>ELTIS, David; RICHARDSON, David.</strong> <em>Atlas of the Transatlantic Slave Trade</em>. New Haven: Yale University Press, 2010.</li>
+                <li><strong>GULDI, Jo; ARMITAGE, David.</strong> <em>The History Manifesto</em>. Cambridge: Cambridge University Press, 2014.</li>
+                <li><strong>HITCHCOCK, Timothy.</strong> Big Data for Dead People?. <em>Cultural and Social History</em>, v. 10, n. 3, p. 335-349, 2013.</li>
+                <li><strong>LATOUR, Bruno.</strong> <em>Reassembling the Social: An Introduction to Actor-Network-Theory</em>. Oxford: Oxford University Press, 2005.</li>
+                <li><strong>MBEMBE, Achille.</strong> <em>Necropolitics: Biopower, Sovereignty, State of Exception, Death</em>. São Paulo: n-1 edições, 2023.</li>
+                <li><strong>NOBLE, Safiya Umoja.</strong> <em>Algorithms of Oppression: How Search Engines Reinforce Racism</em>. New York: NYU Press, 2018.</li>
+                <li><strong>SMITH, Linda Tuhiwai.</strong> <em>Decolonizing Methodologies: Research and Indigenous Peoples</em>. London: Zed Books, 1999.</li>
+                <li><strong>STEEDMAN, Carolyn.</strong> <em>Dust: The Archive and Cultural History</em>. New Brunswick: Rutgers University Press, 2001.</li>
+                <li><strong>TROUILLOT, Michel-Rolph.</strong> <em>Silencing the Past: Power and the Production of History</em>. Boston: Beacon Press, 1995.</li>
+                <li><strong>UNDERWOOD, Ted.</strong> <em>Distant Horizons: Digital Evidence and Literary Change</em>. Chicago: University of Chicago Press, 2019.</li>
+            </ul>
+            <p><small><i class="fas fa-info-circle"></i> Use the generator above to cite this article in different styles (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <!-- About the author -->
+        <div class="panel">
+            <h2 class="autor-titulo"><img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> About the author</h2>
+            <p><strong>Diego Vinícius Brito dos Santos</strong> is a pedagogue and effective public servant, with experience teaching in early elementary school and early childhood education. He holds a Master’s degree in Philosophy from the Federal University of Rio Grande do Norte (UFRN, 2022), with research focused on the work and philosophy of Friedrich Nietzsche. He holds a Bachelor’s degree in Philosophy from the State University of Rio Grande do Norte (UERN, 2018) and a Bachelor’s degree in Pedagogy from the International University Center (UNINTER, 2022). He is the author of the book <em>Nietzsche e os valores modernos</em> (2022). He is dedicated to continuing education in areas such as Psychopedagogy, Neuropsicopedagogy, Inclusive Education, Specialized Educational Assistance (AEE), and Youth and Adult Education (EJA).</p>
+            <p><i class="fas fa-envelope"></i> Email: diego_svt@hotmail.com.br<br><i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br><i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></p>
+        </div>
+
+        <footer><i class="fas fa-university"></i> Inquietações Journal – Caicó, RN | v.1, n.1, 2026 | ISSN: 2675-7591<br>Open access under a Creative Commons license.</footer>
+    </div>
+</div>
+
+<script>
+    // Submissions with login simulation
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "/cadastro-login/submissoes.html";
+            } else {
+                let email = prompt("🔐 To submit an article, please log in. Enter your email (simulation):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Login successful! Redirecting to submissions.");
+                    window.location.href = "/cadastro-login/submissoes.html";
+                } else {
+                    alert("Unauthorized access. Registration/login required.");
+                }
+            }
+        });
+    }
+
+    // Copy ABNT reference manually
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = ["SANTOS, Diego Vinícius Brito dos. Algorithms of the past: how AI is rewriting history. Inquietações Journal, v. 1, n. 1, p. 31-41, 2026."];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("ABNT references copied."));
+    });
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@article{santos2026algorithms,\n  title={Algorithms of the past: how AI is rewriting history},\n  author={Santos, Diego Vinícius Brito dos},\n  journal={Inquietações Journal},\n  volume={1},\n  number={1},\n  pages={31--41},\n  year={2026}\n}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copied (example)."));
+    });
+
+    // Citation generator
+    (function () {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Inquietações Journal';
+        const accessDate = new Date().toLocaleDateString('en-US');
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Available at: ${url}. Accessed: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+        function updateCitation() { const style = select.value; outputDiv.innerHTML = (styles[style] || styles.abnt)(); }
+        if (select && outputDiv) { select.addEventListener('change', updateCitation); updateCitation(); }
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                navigator.clipboard.writeText(outputDiv.innerText).then(() => {
+                    if (feedback) feedback.textContent = '✓ Citation copied to clipboard.';
+                    setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                }).catch(() => { if (feedback) feedback.textContent = '✗ Error copying. Please try manually.'; });
+            });
+        }
+    })();
+</script>
+</body>
+</html>

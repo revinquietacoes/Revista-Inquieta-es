@@ -9,20 +9,17 @@
     content="Ensaio fotográfico publicado na Revista Inquietações sobre o patrimônio arquitetônico da cidade de Caicó, RN.">
   <meta name="author" content="Diego Vinícius Brito dos Santos">
   <link rel="canonical"
-    href="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Fotografia%20tematica/fotografia-diego-caico.html">
+    href="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Fotografia-tematica/fotografia-diego-caico.html">
   <link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" sizes="48x48"
     type="image/png">
   <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
     type="image/png">
   <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
 
-  <!-- Font Awesome & Google Fonts -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
   <link
     href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
     rel="stylesheet">
-
-  <!-- PDF.js para renderizar páginas -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.min.js"></script>
 
   <style>
@@ -100,43 +97,46 @@
       margin-bottom: 0.8rem;
     }
 
-    /* Estilo do autor com círculo */
     .author-avatar {
       display: flex;
       align-items: center;
       gap: 16px;
       margin: 10px 0 5px;
     }
+
     .avatar-circle {
       width: 60px;
       height: 60px;
       border-radius: 50%;
       overflow: hidden;
       background: #dcd0b8;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+      box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       border: 2px solid #c28a4e;
     }
+
     .avatar-circle img {
       width: 100%;
       height: 100%;
       object-fit: cover;
     }
+
     .author-name {
       font-size: 1.1rem;
       font-weight: 700;
       color: #4a3a2a;
     }
+
     .author-name i {
       margin-right: 6px;
       color: #c28a4e;
     }
+
     .mini-meta {
       font-size: 0.8rem;
       color: #7a6b53;
       margin-top: 4px;
     }
 
-    /* Botões de tradução */
     .lang-buttons {
       display: flex;
       flex-wrap: wrap;
@@ -144,6 +144,7 @@
       margin: 0.8rem 0 0.5rem;
       justify-content: flex-start;
     }
+
     .lang-btn {
       background: #f4efe2;
       border: 1px solid #c2b697;
@@ -151,15 +152,20 @@
       border-radius: 40px;
       font-size: 0.8rem;
       font-weight: 600;
-      cursor: pointer;
-      transition: 0.1s;
+      text-decoration: none;
       color: #4a3a2a;
+      display: inline-block;
+      transition: 0.1s;
     }
+
     .lang-btn.active {
       background: #c28a4e;
       border-color: #8b5a2e;
       color: white;
+      cursor: default;
+      pointer-events: none;
     }
+
     .lang-btn:hover {
       background: #e0d4bc;
     }
@@ -194,7 +200,6 @@
       color: #6b5a42;
     }
 
-    /* ===== FLIPBOOK READER ===== */
     .flipbook-container {
       background: #2c2a24;
       border-radius: 1rem;
@@ -279,7 +284,6 @@
       font-size: 1.2rem;
     }
 
-    /* Gerador de citações */
     .citation-generator {
       background: #fefaf0;
       border: 1px solid #e2dac8;
@@ -345,7 +349,6 @@
       border-radius: 2rem;
       font-family: 'Inter', sans-serif;
       font-size: 0.85rem;
-      color: #2c3a2b;
       cursor: pointer;
     }
 
@@ -382,7 +385,6 @@
       font-size: 0.85rem;
       line-height: 1.5;
       font-family: 'Inter', monospace;
-      color: #2a2a24;
       margin-top: 1rem;
     }
 
@@ -419,28 +421,24 @@
       margin-top: 1rem;
     }
 
-    /* Ocultar elementos padrão do Google Translate */
-    .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
-    body { top: 0 !important; }
-    .goog-te-gadget { display: none; }
-
     @media (max-width: 700px) {
       .content-padding {
         padding: 1.2rem;
       }
+
       .title-main {
         font-size: 1.6rem;
       }
+
       .flipbook-viewer {
         min-height: 400px;
       }
+
       .masthead-inner {
         flex-direction: column;
         align-items: flex-start;
       }
-      .banner-card {
-        margin-top: 1rem;
-      }
+
       .avatar-circle {
         width: 48px;
         height: 48px;
@@ -465,35 +463,33 @@
 <body>
   <div class="container">
     <div class="content-padding">
-
       <div class="topbar">
         <div class="pill">Revista Inquietações • Fotografia temática</div>
         <div class="pill">v. 1, n. 1 (2026)</div>
       </div>
-
       <div class="masthead">
         <div class="masthead-inner">
           <div>
             <p class="kicker">Portal científico • Revista Inquietações</p>
             <h1 class="title-main">Patrimônio Arquitetônico de Caicó – RN</h1>
-            
-            <!-- Autor com foto em círculo ao lado do nome -->
             <div class="author-avatar">
-              <div class="avatar-circle">
-                <img src="/corpo%20editorial/diego.png" alt="Foto do autor Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:60px; width:100%; text-align:center; font-size:28px;\'></i>'">
+              <div class="avatar-circle"><img src="/corpo%20editorial/diego.png" alt="Foto do autor Diego Vinícius"
+                  onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:60px; width:100%; text-align:center; font-size:28px;\'></i>'">
               </div>
               <div>
                 <div class="author-name"><i class="fas fa-user-pen"></i> Diego Vinícius Brito dos Santos</div>
                 <div class="mini-meta">Revista Inquietações • Fotografia temática • v.1, n.1 (2026)</div>
-                <div class="mini-meta">DOI: <a href="https://dx.doi.org/10.5281/zenodo.18820588" target="_blank">10.5281/zenodo.18820588</a></div>
+                <div class="mini-meta">DOI: <a href="https://dx.doi.org/10.5281/zenodo.18820588"
+                    target="_blank">10.5281/zenodo.18820588</a></div>
               </div>
             </div>
-
-            <!-- Botões de tradução -->
+            <!-- Botões de tradução estáticos -->
             <div class="lang-buttons">
-              <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
-              <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
-              <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+              <a class="lang-btn active" href="#">🇧🇷 PT-BR</a>
+              <a class="lang-btn" href="/publicacoes/volume-1-2026/ingles/fotografia-diego-caico-en.html">🇺🇸
+                Inglês</a>
+              <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/fotografia-diego-caico-esp.html">🇪🇸
+                Espanhol</a>
             </div>
           </div>
           <div class="banner-card">
@@ -502,26 +498,24 @@
         </div>
       </div>
 
-      <!-- Resumo -->
       <div class="panel">
         <h2><i class="fas fa-camera"></i> Sobre o ensaio</h2>
-        <p>Este ensaio fotográfico apresenta um registro visual do patrimônio arquitetônico da cidade de Caicó, no estado
-          do Rio Grande do Norte. A partir de estudos fotográficos realizados em espaços urbanos históricos, o trabalho
-          busca documentar edificações, traços arquitetônicos e paisagens urbanas que compõem a memória material da
-          cidade. As imagens evidenciam elementos característicos da arquitetura regional, contribuindo para a valorização
-          do patrimônio cultural local e para a reflexão sobre processos de preservação histórica. O conjunto fotográfico
-          propõe uma leitura estética e documental do espaço urbano, destacando a fotografia como instrumento de registro
-          histórico, interpretação cultural e preservação da memória coletiva.</p>
-        <p class="keywords-line"><strong>Palavras-chave:</strong> patrimônio arquitetônico; fotografia documental; memória
-          urbana; Caicó; patrimônio cultural.</p>
+        <p>Este ensaio fotográfico apresenta um registro visual do patrimônio arquitetônico da cidade de Caicó, no
+          estado do Rio Grande do Norte. A partir de estudos fotográficos realizados em espaços urbanos históricos, o
+          trabalho busca documentar edificações, traços arquitetônicos e paisagens urbanas que compõem a memória
+          material da cidade. As imagens evidenciam elementos característicos da arquitetura regional, contribuindo para
+          a valorização do patrimônio cultural local e para a reflexão sobre processos de preservação histórica. O
+          conjunto fotográfico propõe uma leitura estética e documental do espaço urbano, destacando a fotografia como
+          instrumento de registro histórico, interpretação cultural e preservação da memória coletiva.</p>
+        <p class="keywords-line"><strong>Palavras-chave:</strong> patrimônio arquitetônico; fotografia documental;
+          memória urbana; Caicó; patrimônio cultural.</p>
       </div>
 
-      <!-- Visualizador FLIPBOOK -->
       <div class="panel">
         <h2><i class="fas fa-book-open"></i> Ensaio fotográfico</h2>
         <div class="reader-actions">
-          <a class="reader-btn" href="/arquivos/Fotos-Diego-Vinicius-v.1-2026-Revista-Inquietacoes.pdf" target="_blank"><i
-              class="fas fa-external-link-alt"></i> Abrir PDF completo</a>
+          <a class="reader-btn" href="/arquivos/Fotos-Diego-Vinicius-v.1-2026-Revista-Inquietacoes.pdf"
+            target="_blank"><i class="fas fa-external-link-alt"></i> Abrir PDF completo</a>
         </div>
         <div class="flipbook-container">
           <div class="flipbook-viewer" id="flipbookViewer">
@@ -535,13 +529,11 @@
             <button class="flip-btn" id="nextPageBtn" disabled>Próxima página <i
                 class="fas fa-chevron-right"></i></button>
           </div>
-          <p style="text-align: center; margin-top: 1rem; font-size: 0.75rem; color: #b0a088;">
-            <i class="fas fa-mouse-pointer"></i> Clique na imagem para virar a página ou use os botões
-          </p>
+          <p style="text-align: center; margin-top: 1rem; font-size: 0.75rem; color: #b0a088;"><i
+              class="fas fa-mouse-pointer"></i> Clique na imagem para virar a página ou use os botões</p>
         </div>
       </div>
 
-      <!-- Informações da publicação -->
       <div class="panel">
         <h2><i class="fas fa-info-circle"></i> Informações da publicação</h2>
         <p><strong>Revista:</strong> Revista Inquietações</p>
@@ -550,10 +542,9 @@
         <p><strong>Seção:</strong> Fotografia Temática | <strong>Páginas:</strong> 1–30</p>
       </div>
 
-      <!-- Gerador de referências -->
-      <div class="citation-generator" data-authors='["VINÍCIUS, Diego"]' data-doi="10.5281/zenodo.18820588" data-issue="1"
-        data-pages="1–30" data-title="O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos"
-        data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/o-patrimonio-arquitetonico-de-caico-rn-estudos-fotograficos.html"
+      <div class="citation-generator" data-authors='["VINÍCIUS, Diego"]' data-doi="10.5281/zenodo.18820588"
+        data-issue="1" data-pages="1–30" data-title="O Patrimônio Arquitetônico de Caicó – RN: Estudos Fotográficos"
+        data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Fotografia-tematica/fotografia-diego-caico.html"
         data-volume="1" data-year="2026">
         <div class="citation-generator-head">
           <h2><i class="fas fa-quote-left"></i> Como citar este trabalho</h2>
@@ -562,9 +553,8 @@
           <p class="citation-generator-note">Selecione o estilo desejado e gere automaticamente a referência
             bibliográfica.</p>
           <div class="citation-controls">
-            <div class="citation-field">
-              <label for="citation-style">Estilo de referência</label>
-              <select class="citation-select" id="citation-style">
+            <div class="citation-field"><label for="citation-style">Estilo de referência</label><select
+                class="citation-select" id="citation-style">
                 <option value="abnt">ABNT</option>
                 <option value="apa">APA</option>
                 <option value="mla">MLA</option>
@@ -572,95 +562,21 @@
                 <option value="harvard">Harvard</option>
                 <option value="vancouver">Vancouver</option>
                 <option value="ieee">IEEE</option>
-              </select>
-            </div>
-            <div class="citation-actions">
-              <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copiar
-                referência</button>
-            </div>
+              </select></div>
+            <div class="citation-actions"><button class="citation-btn citation-copy" type="button"><i
+                  class="fas fa-copy"></i> Copiar referência</button></div>
           </div>
           <div aria-live="polite" class="citation-output"></div>
           <p class="citation-feedback"></p>
         </div>
       </div>
 
-      <footer class="footer">
-        <i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | ISSN: 3086-4119
-      </footer>
-
-    </div> <!-- fim content-padding -->
-  </div> <!-- fim container -->
-
-  <!-- Google Translate Widget -->
-  <script type="text/javascript">
-    function googleTranslateElementInit() {
-      new google.translate.TranslateElement({
-        pageLanguage: 'pt',
-        includedLanguages: 'pt,en,es',
-        autoDisplay: false,
-        layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-      }, 'google_translate_element');
-      document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
-    }
-  </script>
-  <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-  <div id="google_translate_element" style="display:none;"></div>
+      <footer class="footer"><i class="fas fa-university"></i> Revista Inquietações – Caicó, RN | v.1, n.1, 2026 | ISSN:
+        3086-4119</footer>
+    </div>
+  </div>
 
   <script>
-    // Botões de tradução manuais via Google Translate API
-    (function() {
-      const langBtns = document.querySelectorAll('.lang-btn');
-      let currentLang = 'pt';
-
-      function triggerGoogleTranslate(lang) {
-        const selectElem = document.querySelector('.goog-te-combo');
-        if (selectElem) {
-          selectElem.value = lang;
-          selectElem.dispatchEvent(new Event('change'));
-        } else {
-          setTimeout(() => {
-            const select = document.querySelector('.goog-te-combo');
-            if (select) {
-              select.value = lang;
-              select.dispatchEvent(new Event('change'));
-            }
-          }, 500);
-        }
-      }
-
-      langBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const lang = btn.getAttribute('data-lang');
-          if (lang === currentLang) return;
-          
-          langBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          
-          let googleCode = '';
-          if (lang === 'pt') googleCode = 'pt';
-          else if (lang === 'en') googleCode = 'en';
-          else if (lang === 'es') googleCode = 'es';
-          
-          triggerGoogleTranslate(googleCode);
-          currentLang = lang;
-        });
-      });
-      
-      const observer = new MutationObserver(() => {
-        const combo = document.querySelector('.goog-te-combo');
-        if (combo && !combo._listenerAdded) {
-          combo._listenerAdded = true;
-          const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
-          let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
-          if (combo.value !== code) {
-            combo.value = code;
-            combo.dispatchEvent(new Event('change'));
-          }
-        }
-      });
-      observer.observe(document.body, { childList: true, subtree: true });
-    })();
-
     // Configurar PDF.js worker
     pdfjsLib.GlobalWorkerOptions.workerSrc = 'https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.16.105/pdf.worker.min.js';
 
@@ -727,25 +643,12 @@
       });
     }
 
-    function nextPage() {
-      if (pdfDoc && currentPage < totalPages && !isRendering) {
-        currentPage++;
-        renderPage(currentPage);
-      }
-    }
-    function prevPage() {
-      if (pdfDoc && currentPage > 1 && !isRendering) {
-        currentPage--;
-        renderPage(currentPage);
-      }
-    }
+    function nextPage() { if (pdfDoc && currentPage < totalPages && !isRendering) { currentPage++; renderPage(currentPage); } }
+    function prevPage() { if (pdfDoc && currentPage > 1 && !isRendering) { currentPage--; renderPage(currentPage); } }
 
     prevBtn.addEventListener('click', prevPage);
     nextBtn.addEventListener('click', nextPage);
-    canvas.addEventListener('click', function () {
-      if (currentPage < totalPages) nextPage();
-    });
-
+    canvas.addEventListener('click', function () { if (currentPage < totalPages) nextPage(); });
     document.addEventListener('keydown', function (e) {
       if (e.key === 'ArrowRight') { e.preventDefault(); nextPage(); }
       else if (e.key === 'ArrowLeft') { e.preventDefault(); prevPage(); }

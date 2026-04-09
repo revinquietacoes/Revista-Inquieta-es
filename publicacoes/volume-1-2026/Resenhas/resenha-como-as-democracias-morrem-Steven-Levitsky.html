@@ -4,13 +4,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
-    <title>Quando as democracias se desgastam | Levitsky & Ziblatt | Revista Inquietações</title>
+    <title>Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt | Resenha | Revista Inquietações
+    </title>
     <!-- Font Awesome & Google Fonts -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap"
         rel="stylesheet">
     <style>
+        /* Mesmo estilo das resenhas anteriores */
         * {
             margin: 0;
             padding: 0;
@@ -58,18 +60,11 @@
 
         .title {
             font-family: 'Cormorant Garamond', serif;
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 700;
             line-height: 1.2;
             margin-top: 1rem;
             color: #3a2a1a;
-        }
-
-        .subtitle {
-            font-size: 1rem;
-            color: #7a5a3a;
-            margin-top: 0.3rem;
-            font-style: italic;
         }
 
         .author-line {
@@ -88,15 +83,17 @@
             align-items: center;
             gap: 12px;
         }
+
         .avatar-circle {
             width: 48px;
             height: 48px;
             border-radius: 50%;
             overflow: hidden;
             background: #dcd0b8;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
             border: 2px solid #c28a4e;
         }
+
         .avatar-circle img {
             width: 100%;
             height: 100%;
@@ -123,6 +120,7 @@
             background: #f0ede5;
             color: #2c3a2b;
             border: 1px solid #d6cdb5;
+            cursor: pointer;
         }
 
         .btn-pdf {
@@ -149,7 +147,6 @@
             box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
         }
 
-        /* Botões de tradução */
         .lang-buttons {
             display: flex;
             flex-wrap: wrap;
@@ -157,6 +154,7 @@
             margin: 1rem 0 0.5rem;
             justify-content: flex-start;
         }
+
         .lang-btn {
             background: #f4efe2;
             border: 1px solid #c2b697;
@@ -164,15 +162,20 @@
             border-radius: 40px;
             font-size: 0.8rem;
             font-weight: 600;
-            cursor: pointer;
-            transition: 0.1s;
+            text-decoration: none;
             color: #4a3a2a;
+            display: inline-block;
+            transition: 0.1s;
         }
+
         .lang-btn.active {
             background: #c28a4e;
             border-color: #8b5a2e;
             color: white;
+            cursor: default;
+            pointer-events: none;
         }
+
         .lang-btn:hover {
             background: #e0d4bc;
         }
@@ -247,12 +250,6 @@
             padding-left: 1rem;
         }
 
-        .ref-list a {
-            color: #8b5a2e;
-            text-decoration: none;
-            word-break: break-all;
-        }
-
         .citation-actions {
             margin: 1rem 0 0.5rem;
             display: flex;
@@ -299,7 +296,7 @@
             }
 
             .title {
-                font-size: 1.9rem;
+                font-size: 1.8rem;
             }
         }
 
@@ -307,14 +304,12 @@
             background: #fefaf0;
         }
 
-        /* Gerador de citações */
         .citation-generator {
             background: #fefaf0;
             border: 1px solid #e2dac8;
             border-radius: 1.2rem;
             margin: 1.5rem 0 1rem 0;
             overflow: hidden;
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02);
         }
 
         .citation-generator-head {
@@ -374,14 +369,7 @@
             border-radius: 2rem;
             font-family: 'Inter', sans-serif;
             font-size: 0.85rem;
-            color: #2c3a2b;
             cursor: pointer;
-        }
-
-        .citation-select:focus {
-            outline: none;
-            border-color: #c28a4e;
-            box-shadow: 0 0 0 2px rgba(194, 138, 78, 0.2);
         }
 
         .citation-actions {
@@ -417,7 +405,6 @@
             font-size: 0.85rem;
             line-height: 1.5;
             font-family: 'Inter', monospace;
-            color: #2a2a24;
             margin-top: 1rem;
         }
 
@@ -455,11 +442,6 @@
             border-radius: 50%;
             object-fit: cover;
         }
-
-        /* Ocultar elementos padrão do Google Translate */
-        .skiptranslate iframe, .goog-te-banner-frame { display: none !important; }
-        body { top: 0 !important; }
-        .goog-te-gadget { display: none; }
     </style>
 </head>
 
@@ -469,27 +451,27 @@
             <div class="header">
                 <div class="journal-badge"><i class="fas fa-feather-alt"></i> Revista Inquietações • v.1, n.1 • Seção:
                     Resenhas • 2026</div>
-                <div class="title">Quando as democracias se desgastam</div>
-                <div class="subtitle">uma releitura de Levitsky e Ziblatt</div>
+                <div class="title">Quando as democracias se desgastam:<br>uma releitura de Levitsky e Ziblatt</div>
                 <div class="author-line">
                     <div class="author-avatar">
                         <div class="avatar-circle">
-                            <img src="/corpo%20editorial/diego.png" alt="Foto do resenhista Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
+                            <img src="/corpo%20editorial/diego.png" alt="Foto do autor Diego Vinícius"
+                                onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:48px; width:100%; text-align:center; font-size:24px;\'></i>'">
                         </div>
-                        <span><i class="fas fa-user-pen"></i> <strong>Resenhista: Diego Vinícius Brito dos Santos</strong></span>
+                        <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
                     </div>
-                    <span><i class="fas fa-book"></i> Obra resenhada: LEVITSKY, Steven; ZIBLATT, Daniel. How Democracies
-                        Die. 1ª ed. New York: Crown Publishing Group, 2018.</span>
                     <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.18945739</span>
                 </div>
-
-                <!-- Botões de tradução -->
+                <!-- Botões de tradução estáticos -->
                 <div class="lang-buttons">
-                    <button class="lang-btn active" data-lang="pt">🇧🇷 PT-BR</button>
-                    <button class="lang-btn" data-lang="en">🇺🇸 Inglês</button>
-                    <button class="lang-btn" data-lang="es">🇪🇸 Espanhol</button>
+                    <a class="lang-btn active" href="#">🇧🇷 PT-BR</a>
+                    <a class="lang-btn"
+                        href="/publicacoes/volume-1-2026/ingles/resenha-como-as-democracias-morrem-Steven-Levitsky-en.html">🇺🇸
+                        Inglês</a>
+                    <a class="lang-btn"
+                        href="/publicacoes/volume-1-2026/espanhol/resenha-como-as-democracias-morrem-Steven-Levitsky-esp.html">🇪🇸
+                        Espanhol</a>
                 </div>
-
                 <div class="action-buttons">
                     <a class="btn btn-pdf" href="/arquivos/Resenha_Levitsky_Ziblatt.pdf" target="_blank"><i
                             class="fas fa-file-pdf"></i> Baixar PDF</a>
@@ -499,29 +481,7 @@
                 </div>
             </div>
 
-            <!-- Resumo / Introdução da resenha -->
-            <div class="panel">
-                <h2><i class="fas fa-align-left"></i> Apresentação</h2>
-                <p>Publicado originalmente em 2018, <strong>Como as Democracias Morrem</strong>, de Steven Levitsky e
-                    Daniel Ziblatt, tornou-se rapidamente uma das obras mais influentes do debate contemporâneo sobre a
-                    crise das democracias liberais. Em um contexto internacional marcado pela ascensão de lideranças
-                    populistas, pelo aumento da polarização política e pela crescente desconfiança nas instituições
-                    representativas, o livro propõe uma interpretação provocativa acerca dos processos pelos quais
-                    regimes democráticos podem entrar em trajetória de deterioração institucional. Diferentemente da
-                    imagem clássica do colapso democrático — frequentemente associada a golpes militares ou rupturas
-                    abruptas da ordem constitucional — os autores defendem que, no mundo contemporâneo, as democracias
-                    tendem a enfraquecer de forma gradual, por meio de processos internos de erosão das instituições e
-                    das normas políticas que sustentam o regime.</p>
-                <p>Partindo de uma abordagem comparativa que combina análise histórica e reflexão teórica, Levitsky e
-                    Ziblatt investigam episódios emblemáticos de deterioração democrática ocorridos ao longo do século
-                    XX e estabelecem paralelos com processos políticos recentes observados em diferentes países. Ao
-                    examinar casos como a ascensão de regimes autoritários na Europa do período entre guerras e
-                    compará-los com transformações contemporâneas da política democrática, os autores procuram
-                    identificar padrões recorrentes na trajetória de democracias que entram em processo de fragilização
-                    institucional.</p>
-            </div>
-
-            <!-- Texto completo da resenha (páginas 11-45) -->
+            <!-- Corpo da resenha (texto completo) -->
             <div class="panel article-text">
                 <h2>Introdução</h2>
                 <p>Publicado originalmente em 2018, <em>Como as Democracias Morrem</em>, de Steven Levitsky e Daniel
@@ -566,7 +526,7 @@
                     da obra e de sua importância para a compreensão dos desafios enfrentados pelas democracias no início
                     do século XXI.</p>
 
-                <h3>Como as democracias morrem</h3>
+                <h2>Como as democracias morrem</h2>
                 <p>O primeiro capítulo de <em>Como as Democracias Morrem</em> estabelece o ponto de partida analítico da
                     obra ao questionar uma percepção comum na história política do século XX: a ideia de que democracias
                     costumam morrer por meio de golpes militares abruptos ou rupturas institucionais violentas. Para
@@ -612,9 +572,9 @@
                     preservação da democracia. Segundo os autores, partidos desempenham historicamente a função de
                     “porteiros da democracia”, responsáveis por filtrar candidatos e impedir que figuras
                     antidemocráticas ocupem posições de poder. Esse mecanismo informal de proteção institucional
-                    constitui uma das principais barreiras contra a ascensão de regimes autoritários.</p>
-                <p>A literatura clássica da ciência política já havia destacado a importância das elites partidárias
-                    para o funcionamento da democracia representativa. Joseph Schumpeter, em sua formulação do modelo
+                    constitui uma das principais barreiras contra a ascensão de regimes autoritários. A literatura
+                    clássica da ciência política já havia destacado a importância das elites partidárias para o
+                    funcionamento da democracia representativa. Joseph Schumpeter, em sua formulação do modelo
                     competitivo de democracia, argumentava que sistemas democráticos dependem da competição organizada
                     entre elites políticas estruturadas em partidos. Nesse contexto, a estabilidade institucional está
                     diretamente associada à disposição dessas elites em respeitar regras procedimentais e em excluir
@@ -623,21 +583,20 @@
                     falhar quando elites políticas optam por alianças estratégicas com líderes radicais. Em momentos de
                     crise política ou polarização ideológica intensa, partidos tradicionais podem enxergar nesses
                     líderes uma oportunidade de fortalecer sua posição eleitoral ou neutralizar adversários políticos
-                    considerados mais perigosos.</p>
-                <p>Essa dinâmica evidencia um paradoxo fundamental das democracias modernas. Ao mesmo tempo em que
-                    sistemas democráticos pressupõem competição política aberta, essa abertura pode ser explorada por
-                    atores que não estão comprometidos com a preservação das regras do jogo democrático.</p>
+                    considerados mais perigosos. Essa dinâmica evidencia um paradoxo fundamental das democracias
+                    modernas. Ao mesmo tempo em que sistemas democráticos pressupõem competição política aberta, essa
+                    abertura pode ser explorada por atores que não estão comprometidos com a preservação das regras do
+                    jogo democrático.</p>
                 <p>O capítulo também destaca que líderes autoritários raramente se apresentam inicialmente como inimigos
                     declarados da democracia. Em muitos casos, eles adotam discursos ambíguos que combinam retórica
                     populista, críticas às instituições existentes e promessas de restauração da ordem política. Esse
                     tipo de discurso permite que tais líderes obtenham legitimidade política sem revelar plenamente suas
-                    intenções autoritárias.</p>
-                <p>Esse fenômeno pode ser compreendido à luz de debates clássicos da teoria política sobre os limites da
-                    tolerância democrática. Karl Popper, em <em>A Sociedade Aberta e Seus Inimigos</em>, formulou o
-                    chamado “paradoxo da tolerância”, segundo o qual uma sociedade completamente tolerante pode acabar
-                    permitindo a ascensão de forças que destruirão a própria tolerância. Para Popper, a preservação de
-                    sociedades abertas exige que certos limites sejam estabelecidos para impedir a ascensão de
-                    movimentos intolerantes.</p>
+                    intenções autoritárias. Esse fenômeno pode ser compreendido à luz de debates clássicos da teoria
+                    política sobre os limites da tolerância democrática. Karl Popper, em <em>A Sociedade Aberta e Seus
+                        Inimigos</em>, formulou o chamado “paradoxo da tolerância”, segundo o qual uma sociedade
+                    completamente tolerante pode acabar permitindo a ascensão de forças que destruirão a própria
+                    tolerância. Para Popper, a preservação de sociedades abertas exige que certos limites sejam
+                    estabelecidos para impedir a ascensão de movimentos intolerantes.</p>
                 <p>Embora Levitsky e Ziblatt não adotem explicitamente o argumento filosófico de Popper, sua análise
                     sugere uma preocupação semelhante: democracias precisam desenvolver mecanismos institucionais
                     capazes de identificar e conter líderes que demonstram inclinações autoritárias antes que estes
@@ -645,11 +604,11 @@
                 <p>Outro elemento importante discutido no capítulo é a relação entre crises políticas e a ascensão de
                     lideranças autoritárias. Momentos de instabilidade institucional, polarização política ou crise
                     econômica frequentemente criam condições favoráveis para a emergência de líderes que prometem
-                    restaurar ordem e estabilidade por meio de soluções radicais.</p>
-                <p>Essa interpretação encontra respaldo em análises clássicas sobre a ascensão de regimes autoritários
-                    no século XX. Hannah Arendt, em <em>As Origens do Totalitarismo</em>, destacou como contextos de
-                    desintegração social e descrédito institucional podem favorecer movimentos políticos que prometem
-                    reorganizar radicalmente a ordem política existente.</p>
+                    restaurar ordem e estabilidade por meio de soluções radicais. Essa interpretação encontra respaldo
+                    em análises clássicas sobre a ascensão de regimes autoritários no século XX. Hannah Arendt, em
+                    <em>As Origens do Totalitarismo</em>, destacou como contextos de desintegração social e descrédito
+                    institucional podem favorecer movimentos políticos que prometem reorganizar radicalmente a ordem
+                    política existente.</p>
                 <p>No entanto, Levitsky e Ziblatt enfatizam que crises políticas, por si só, não explicam o colapso das
                     democracias. O fator decisivo reside na forma como elites políticas respondem a essas crises. Quando
                     partidos tradicionais se recusam a colaborar com líderes autoritários e mantêm compromisso com
@@ -664,38 +623,30 @@
                     claro que a história política demonstra repetidamente os riscos associados à normalização de líderes
                     autoritários dentro do sistema democrático. Quando partidos políticos abandonam seu papel de
                     guardiões institucionais e passam a priorizar ganhos eleitorais imediatos, o sistema democrático
-                    pode tornar-se vulnerável a processos de erosão gradual.</p>
-                <p>Essa interpretação oferece um ponto de partida fundamental para os capítulos seguintes da obra, nos
-                    quais os autores examinam de forma mais detalhada os mecanismos institucionais e normativos que
-                    permitem a preservação — ou a deterioração — das democracias contemporâneas.</p>
+                    pode tornar-se vulnerável a processos de erosão gradual. Essa interpretação oferece um ponto de
+                    partida fundamental para os capítulos seguintes da obra, nos quais os autores examinam de forma mais
+                    detalhada os mecanismos institucionais e normativos que permitem a preservação — ou a deterioração —
+                    das democracias contemporâneas.</p>
 
-                <!-- Os demais capítulos e seções foram omitidos por razões de espaço, mas o conteúdo completo está no PDF. O texto integral da resenha segue fielmente as páginas 11-45 do documento original. -->
-                <p><em>(O texto completo da resenha, abrangendo os capítulos 2 a 9 e as considerações finais, está
-                        disponível na íntegra no PDF anexo. Devido à extensão do documento, optou-se por manter no HTML
-                        uma versão sintética representativa, garantindo que todos os elementos estruturais e argumentos
-                        centrais estejam devidamente contemplados.)</em></p>
-                <p><strong>Nota do editor:</strong> A resenha completa de 35 páginas (páginas 11 a 45 do original) pode
-                    ser acessada no formato PDF através do botão acima. O conteúdo impresso inclui análises detalhadas
-                    dos capítulos <em>Guardiões da América</em>, <em>A grande abdicação republicana</em>,
-                    <em>Subvertendo a democracia</em>, <em>As grades de proteção da democracia</em>, <em>As regras não
-                        escritas da política norte-americana</em>, <em>A desintegração</em>, <em>Trump contra as grades
-                        de proteção</em>, <em>Salvando a democracia</em> e o ensaio final <em>Como as democracias
-                        morrem: oito anos depois</em>.</p>
+                
             </div>
 
             <!-- PDF Viewer -->
             <div class="panel">
                 <h2><i class="fas fa-file-pdf"></i> Resenha completa (PDF)</h2>
                 <div class="pdf-frame">
-                    <iframe src="/arquivos/Resenha_Levitsky_Ziblatt.pdf" title="Resenha - Levitsky & Ziblatt"></iframe>
+                    <iframe src="/arquivos/Resenha_Levitsky_Ziblatt.pdf"
+                        title="Quando as democracias se desgastam"></iframe>
                 </div>
+                <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i>
+                    Caso o PDF não seja exibido, <a href="/arquivos/Resenha_Levitsky_Ziblatt.pdf" target="_blank">clique
+                        aqui para baixar</a>.</p>
             </div>
 
             <!-- Referências com gerador de citações -->
             <div class="panel" id="references-panel">
                 <h2><i class="fas fa-quote-right"></i> Referências & Citação</h2>
 
-                <!-- GERADOR DE CITAÇÕES -->
                 <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos"]'
                     data-title="Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt"
                     data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/Resenhas/resenha-como-as-democracias-morrem-Steven-Levitsky.html"
@@ -734,12 +685,10 @@
                     <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Exportar BibTeX</button>
                 </div>
                 <ul class="ref-list">
-                    <li><strong>LEVITSKY, Steven; ZIBLATT, Daniel.</strong> <em>How Democracies Die</em>. 1. ed. New
+                    <li><strong>LEVITSKY, Steven; ZIBLATT, Daniel.</strong> <em>How Democracies Die</em>. 1ª ed. New
                         York: Crown Publishing Group, 2018.</li>
-                    <li><strong>LEVITSKY, Steven; ZIBLATT, Daniel.</strong> <em>Como as democracias morrem</em>.
-                        Tradução de Renato Aguiar. Rio de Janeiro: Zahar, 2018.</li>
-                    <li><strong>ARENDT, Hannah.</strong> <em>As origens do totalitarismo</em>. Tradução de Roberto
-                        Raposo. São Paulo: Companhia das Letras, 2012.</li>
+                    <li><strong>ARENDT, Hannah.</strong> <em>As origens do totalitarismo</em>. São Paulo: Companhia das
+                        Letras, 2012.</li>
                     <li><strong>DAHL, Robert A.</strong> <em>Poliarquia: participação e oposição</em>. São Paulo: Edusp,
                         1997.</li>
                     <li><strong>POPPER, Karl.</strong> <em>A sociedade aberta e seus inimigos</em>. Belo Horizonte:
@@ -748,11 +697,11 @@
                         Janeiro: Editora Unesp, 2017.</li>
                     <li><strong>TOCQUEVILLE, Alexis de.</strong> <em>A democracia na América</em>. São Paulo: Edipro,
                         2019.</li>
-                    <li><strong>WEBER, Max.</strong> <em>Economia e sociedade</em>. 4. ed. Brasília: Editora UnB, 2009.
-                    </li>
+                    <li><strong>WEBER, Max.</strong> <em>Economia e sociedade</em>. Vol. 1. 4ª ed. Brasília: Editora
+                        UnB, 2009.</li>
                 </ul>
-                <p><small><i class="fas fa-info-circle"></i> Clique nos links para acessar as fontes originais. Utilize
-                        o gerador acima para citar esta resenha em diferentes estilos.</small></p>
+                <p><small><i class="fas fa-info-circle"></i> Utilize o gerador acima para citar esta resenha em
+                        diferentes estilos (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
             </div>
 
             <!-- Sobre o autor -->
@@ -783,109 +732,44 @@
         </div>
     </div>
 
-    <!-- Google Translate Widget -->
-    <script type="text/javascript">
-        function googleTranslateElementInit() {
-            new google.translate.TranslateElement({
-                pageLanguage: 'pt',
-                includedLanguages: 'pt,en,es',
-                autoDisplay: false,
-                layout: google.translate.TranslateElement.InlineLayout.SIMPLE
-            }, 'google_translate_element');
-            document.querySelector('.goog-te-gadget')?.setAttribute('style', 'display:none');
-        }
-    </script>
-    <script type="text/javascript" src="//translate.google.com/translate_a/element.js?cb=googleTranslateElementInit"></script>
-    <div id="google_translate_element" style="display:none;"></div>
-
     <script>
-        // Botões de tradução manuais via Google Translate API
-        (function() {
-            const langBtns = document.querySelectorAll('.lang-btn');
-            let currentLang = 'pt';
-
-            function triggerGoogleTranslate(lang) {
-                const selectElem = document.querySelector('.goog-te-combo');
-                if (selectElem) {
-                    selectElem.value = lang;
-                    selectElem.dispatchEvent(new Event('change'));
+        // Submissões com simulação de login
+        const submitBtn = document.getElementById("submitBtn");
+        if (submitBtn) {
+            submitBtn.addEventListener("click", (e) => {
+                e.preventDefault();
+                let logged = localStorage.getItem("inquietacoes_logged");
+                if (logged === "true") {
+                    window.location.href = "cadastro-login/submissoes.html";
                 } else {
-                    setTimeout(() => {
-                        const select = document.querySelector('.goog-te-combo');
-                        if (select) {
-                            select.value = lang;
-                            select.dispatchEvent(new Event('change'));
-                        }
-                    }, 500);
-                }
-            }
-
-            langBtns.forEach(btn => {
-                btn.addEventListener('click', () => {
-                    const lang = btn.getAttribute('data-lang');
-                    if (lang === currentLang) return;
-                    
-                    langBtns.forEach(b => b.classList.remove('active'));
-                    btn.classList.add('active');
-                    
-                    let googleCode = '';
-                    if (lang === 'pt') googleCode = 'pt';
-                    else if (lang === 'en') googleCode = 'en';
-                    else if (lang === 'es') googleCode = 'es';
-                    
-                    triggerGoogleTranslate(googleCode);
-                    currentLang = lang;
-                });
-            });
-            
-            const observer = new MutationObserver(() => {
-                const combo = document.querySelector('.goog-te-combo');
-                if (combo && !combo._listenerAdded) {
-                    combo._listenerAdded = true;
-                    const activeLang = document.querySelector('.lang-btn.active').getAttribute('data-lang');
-                    let code = activeLang === 'pt' ? 'pt' : (activeLang === 'en' ? 'en' : 'es');
-                    if (combo.value !== code) {
-                        combo.value = code;
-                        combo.dispatchEvent(new Event('change'));
+                    let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
+                    if (email && email.includes("@")) {
+                        localStorage.setItem("inquietacoes_logged", "true");
+                        alert("Login simulado com sucesso! Redirecionando para submissões.");
+                        window.location.href = "cadastro-login/submissoes.html";
+                    } else {
+                        alert("Acesso não autorizado. Cadastro/login necessário.");
                     }
                 }
             });
-            observer.observe(document.body, { childList: true, subtree: true });
-        })();
+        }
 
-        // Submissões com simulação de login
-        const submitBtn = document.getElementById("submitBtn");
-        submitBtn.addEventListener("click", (e) => {
-            e.preventDefault();
-            let logged = localStorage.getItem("inquietacoes_logged");
-            if (logged === "true") {
-                window.location.href = "cadastro-login/submissoes.html";
-            } else {
-                let email = prompt("🔐 Para submeter um artigo, faça login. Digite seu e-mail (simulação):");
-                if (email && email.includes("@")) {
-                    localStorage.setItem("inquietacoes_logged", "true");
-                    alert("Login simulado com sucesso! Redirecionando para submissões.");
-                    window.location.href = "cadastro-login/submissoes.html";
-                } else {
-                    alert("Acesso não autorizado. Cadastro/login necessário.");
-                }
-            }
-        });
-
-        // Gerador de referências simples (ABNT e BibTeX)
-        document.getElementById("copyRefBtn").addEventListener("click", () => {
+        // Copiar ABNT manual
+        document.getElementById("copyRefBtn")?.addEventListener("click", () => {
             const refs = [
-                "LEVITSKY, Steven; ZIBLATT, Daniel. How Democracies Die. New York: Crown Publishing Group, 2018.",
-                "LEVITSKY, Steven; ZIBLATT, Daniel. Como as democracias morrem. Rio de Janeiro: Zahar, 2018."
+                "SANTOS, Diego Vinícius Brito dos. Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt. Revista Inquietações, v. 1, n. 1, p. 11-45, 2026."
             ];
             navigator.clipboard.writeText(refs.join("\n")).then(() => alert("Referências ABNT copiadas."));
         });
-        document.getElementById("exportBibBtn").addEventListener("click", () => {
-            let bib = `@book{levitsky2018,
-  title={How Democracies Die},
-  author={Levitsky, Steven and Ziblatt, Daniel},
-  year={2018},
-  publisher={Crown Publishing Group}
+        document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+            let bib = `@article{santos2026democracias,
+  title={Quando as democracias se desgastam: uma releitura de Levitsky e Ziblatt},
+  author={Santos, Diego Vinícius Brito dos},
+  journal={Revista Inquietações},
+  volume={1},
+  number={1},
+  pages={11--45},
+  year={2026}
 }`;
             navigator.clipboard.writeText(bib).then(() => alert("BibTeX copiado (exemplo)."));
         });
@@ -938,10 +822,10 @@
                 copyBtn.addEventListener('click', () => {
                     const citationText = outputDiv.innerText;
                     navigator.clipboard.writeText(citationText).then(() => {
-                        feedback.textContent = '✓ Referência copiada para a área de transferência.';
-                        setTimeout(() => { feedback.textContent = ''; }, 3000);
+                        if (feedback) feedback.textContent = '✓ Referência copiada para a área de transferência.';
+                        setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
                     }).catch(() => {
-                        feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
+                        if (feedback) feedback.textContent = '✗ Erro ao copiar. Tente manualmente.';
                     });
                 });
             }

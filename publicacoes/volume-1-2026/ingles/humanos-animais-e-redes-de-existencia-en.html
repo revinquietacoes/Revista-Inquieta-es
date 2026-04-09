@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Humans, animals and networks of existence | Essay | Inquietações Journal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', sans-serif; background: radial-gradient(circle at 10% 20%, #2a2a1c, #1a1a0f); padding: 2rem 1.5rem; display: flex; justify-content: center; min-height: 100vh; }
+        .container { max-width: 1280px; width: 100%; background: rgba(255, 253, 245, 0.98); border-radius: 2rem; box-shadow: 0 30px 50px rgba(0,0,0,0.25), 0 0 0 1px rgba(180,150,100,0.3); overflow: hidden; }
+        .content-padding { padding: 2rem 2.5rem; }
+        .header { border-bottom: 2px solid #e0d6c0; margin-bottom: 1.8rem; }
+        .journal-badge { display: inline-block; background: #6b4c2c; color: #fef7e0; font-size: 0.7rem; letter-spacing: 1.5px; padding: 0.25rem 0.9rem; border-radius: 30px; text-transform: uppercase; font-weight: 600; }
+        .title { font-family: 'Cormorant Garamond', serif; font-size: 2.2rem; font-weight: 700; line-height: 1.2; margin-top: 1rem; color: #3a2a1a; }
+        .author-line { margin-top: 0.8rem; font-size: 0.95rem; color: #6b5a42; font-weight: 500; display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
+        .author-item { display: flex; align-items: center; gap: 10px; }
+        .avatar-circle { width: 42px; height: 42px; border-radius: 50%; overflow: hidden; background: #dcd0b8; box-shadow: 0 2px 6px rgba(0,0,0,0.1); border: 2px solid #c28a4e; }
+        .avatar-circle img { width: 100%; height: 100%; object-fit: cover; }
+        .action-buttons { display: flex; flex-wrap: wrap; gap: 1rem; margin: 1.5rem 0 1rem; }
+        .btn { display: inline-flex; align-items: center; gap: 8px; padding: 0.65rem 1.4rem; border-radius: 60px; font-weight: 600; font-size: 0.85rem; text-decoration: none; transition: 0.2s; background: #f0ede5; color: #2c3a2b; border: 1px solid #d6cdb5; cursor: pointer; }
+        .btn-pdf { background: #8b4513; color: white; border: none; }
+        .btn-doi { background: #2c6e5c; color: white; border: none; }
+        .btn-submit { background: #b87c3a; color: white; border: none; }
+        .btn:hover { transform: translateY(-2px); filter: brightness(1.05); box-shadow: 0 6px 14px rgba(0,0,0,0.1); }
+        .lang-buttons { display: flex; flex-wrap: wrap; gap: 0.8rem; margin: 1rem 0 0.5rem; justify-content: flex-start; }
+        .lang-btn { background: #f4efe2; border: 1px solid #c2b697; padding: 0.4rem 1rem; border-radius: 40px; font-size: 0.8rem; font-weight: 600; text-decoration: none; color: #4a3a2a; display: inline-block; transition: 0.1s; }
+        .lang-btn.active { background: #c28a4e; border-color: #8b5a2e; color: white; cursor: default; pointer-events: none; }
+        .lang-btn:hover { background: #e0d4bc; }
+        .panel { background: rgba(255,255,252,0.96); border-radius: 1.2rem; margin-bottom: 2rem; padding: 1.6rem 2rem; box-shadow: 0 6px 18px rgba(0,0,0,0.02); border: 1px solid #ece2d0; }
+        .panel h2 { font-size: 1.8rem; font-weight: 600; border-left: 5px solid #c28a4e; padding-left: 1rem; margin-bottom: 1.2rem; color: #4a3a2a; }
+        .article-text { font-size: 1.02rem; line-height: 1.7; color: #2a2a24; }
+        .article-text p { margin-bottom: 1.2rem; text-align: justify; }
+        .article-text h3 { font-size: 1.5rem; font-weight: 600; margin: 1.8rem 0 0.8rem; color: #9b5e2c; }
+        .article-text h4 { font-size: 1.2rem; margin: 1rem 0 0.5rem; color: #b47c48; }
+        .wikilink { text-decoration: none; background: linear-gradient(120deg, #ece3d0 0%, #ece3d0 40%, transparent 60%); padding: 0 2px; border-radius: 6px; color: #8b5a2e; font-weight: 500; border-bottom: 1px dotted #b89a6a; transition: 0.1s; }
+        .wikilink:hover { background: #e0d4bc; color: #4e3a22; }
+        .ref-list { list-style: none; margin-top: 1rem; }
+        .ref-list li { margin-bottom: 0.9rem; font-size: 0.85rem; border-left: 2px solid #dccfaf; padding-left: 1rem; }
+        .citation-actions { margin: 1rem 0 0.5rem; display: flex; gap: 12px; }
+        .cite-btn { background: #f4efdf; border: 1px solid #cfc2a0; padding: 6px 16px; border-radius: 40px; font-size: 0.7rem; cursor: pointer; }
+        .pdf-frame { border-radius: 1rem; overflow: hidden; border: 1px solid #e2dccf; }
+        iframe { width: 100%; height: 700px; border: none; }
+        footer { font-size: 0.7rem; text-align: center; border-top: 1px solid #e2d6c0; padding-top: 1.5rem; margin-top: 1rem; color: #7a6b53; }
+        @media (max-width: 800px) { body { padding: 1rem; } .content-padding { padding: 1.2rem; } .title { font-size: 1.8rem; } }
+        .bg-warm { background: #fefaf0; }
+        .citation-generator { background: #fefaf0; border: 1px solid #e2dac8; border-radius: 1.2rem; margin: 1.5rem 0 1rem 0; overflow: hidden; }
+        .citation-generator-head { background: #f4efe2; padding: 1rem 1.5rem; border-bottom: 1px solid #e2d6c0; }
+        .citation-generator-head h2 { font-size: 1.3rem; font-weight: 600; margin: 0; color: #4a3a2a; border-left: none; padding-left: 0; }
+        .citation-generator-body { padding: 1.2rem 1.5rem; }
+        .citation-generator-note { font-size: 0.85rem; color: #6b5a42; margin-bottom: 1rem; font-style: italic; }
+        .citation-controls { display: flex; flex-wrap: wrap; gap: 1rem; align-items: flex-end; margin-bottom: 1.2rem; }
+        .citation-field { flex: 2; min-width: 180px; }
+        .citation-field label { display: block; font-size: 0.75rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: #8b7355; margin-bottom: 0.3rem; }
+        .citation-select { width: 100%; padding: 0.6rem 0.8rem; background: white; border: 1px solid #d6cdb5; border-radius: 2rem; font-family: 'Inter', sans-serif; font-size: 0.85rem; cursor: pointer; }
+        .citation-btn { background: #2c5a4a; border: none; padding: 0.6rem 1.2rem; border-radius: 2rem; font-weight: 600; font-size: 0.8rem; color: white; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+        .citation-btn:hover { background: #1f4538; transform: translateY(-1px); }
+        .citation-output { background: #ffffff; border: 1px solid #e2dac8; border-radius: 1rem; padding: 1rem; font-size: 0.85rem; line-height: 1.5; font-family: 'Inter', monospace; margin-top: 1rem; }
+        .citation-feedback { font-size: 0.75rem; margin-top: 0.5rem; color: #9b5e2c; min-height: 1.8rem; }
+        @media (max-width: 700px) { .citation-controls { flex-direction: column; align-items: stretch; } .citation-actions { justify-content: stretch; } .citation-btn { justify-content: center; } }
+        .author-bio { margin-top: 1rem; padding-top: 1rem; border-top: 1px solid #e2d6c0; }
+        .autor-titulo { display: flex; align-items: center; gap: 10px; }
+        .autor-foto { width: 40px; height: 40px; border-radius: 50%; object-fit: cover; }
+    </style>
+</head>
+<body>
+<div class="container bg-warm">
+    <div class="content-padding">
+        <div class="header">
+            <div class="journal-badge"><i class="fas fa-feather-alt"></i> Inquietações Journal • v.1, n.1 • Section: Essays • Continuous flow • 2026</div>
+            <div class="title">Humans, animals and networks of existence:<br>rethinking humanism in the Anthropocene era</div>
+            <div class="author-line">
+                <div class="author-item">
+                    <div class="avatar-circle"><img src="/corpo%20editorial/diego.png" alt="Photo of Diego Vinícius" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:42px; width:100%; text-align:center; font-size:20px;\'></i>'"></div>
+                    <span><i class="fas fa-user-pen"></i> <strong>Diego Vinícius Brito dos Santos</strong></span>
+                </div>
+                <span style="font-size: 1.2rem;">&</span>
+                <div class="author-item">
+                    <div class="avatar-circle"><img src="/corpo editorial/taisa.png" alt="Photo of Taisa Maria Brito dos Santos" onerror="this.onerror=null; this.parentElement.style.background='#c28a4e'; this.parentElement.innerHTML='<i class=\'fas fa-user\' style=\'color:white; line-height:42px; width:100%; text-align:center; font-size:20px;\'></i>'"></div>
+                    <span><strong>Taisa Maria Brito dos Santos</strong></span>
+                </div>
+                <span><i class="fas fa-book-open"></i> DOI: 10.5281/zenodo.19012745</span>
+            </div>
+            <!-- Language buttons (static links) -->
+            <div class="lang-buttons">
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/Ensaios/humanos-animais-e-redes-de-existencia.html">🇧🇷 Portuguese</a>
+                <a class="lang-btn active" href="#">🇺🇸 English</a>
+                <a class="lang-btn" href="/publicacoes/volume-1-2026/espanhol/humanos-animais-e-redes-de-existencia-esp.html">🇪🇸 Spanish</a>
+            </div>
+            <div class="action-buttons">
+                <a class="btn btn-pdf" href="/arquivos/Humanos_Animais_Redes.pdf" target="_blank"><i class="fas fa-file-pdf"></i> Download PDF</a>
+                <a class="btn btn-doi" href="https://doi.org/10.5281/zenodo.19012745" target="_blank"><i class="fas fa-external-link-alt"></i> DOI</a>
+                <a class="btn btn-submit" href="#" id="submitBtn"><i class="fas fa-upload"></i> Submissions</a>
+            </div>
+        </div>
+
+        <!-- Abstract -->
+        <div class="panel">
+            <h2><i class="fas fa-align-left"></i> Abstract</h2>
+            <p>This essay analyzes the distinction between humans and animals in the Western philosophical tradition, taking as its starting point the contemporary debate known as the animal turn in the social sciences and humanities. Historically, modern humanism was founded on the opposition between nature and culture, attributing to human beings capacities considered exclusive, such as rationality, language, and morality. From this perspective, animals were often defined as natural and instinctive entities, serving as a negative reference for the definition of humanity. However, in recent decades, different fields of knowledge — especially philosophy, anthropology, and biology — have called this division into question. In this context, the essay discusses the contributions of authors such as Bruno Latour, Donna Haraway, Tim Ingold, and Philippe Descola, whose reflections problematize modern anthropocentrism and emphasize the interdependent relationships between humans and non-humans. Methodologically, the work is based on qualitative bibliographic research, involving the analysis of classical philosophical texts and contemporary works related to the animal turn. It is argued that recent approaches point to the need to reformulate humanism in relational terms, recognizing that humans and animals participate in shared ecological and social networks. The conclusion is that rethinking the relationships between humans and other species is a fundamental step towards understanding the ethical, philosophical, and political challenges posed by the contemporary environmental crisis and the Anthropocene era.</p>
+            <div class="keywords" style="display: flex; flex-wrap: wrap; gap: 8px; margin-top: 1rem;">
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Humanism</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Anthropocentrism</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Animal turn</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Human-animal relations</span>
+                <span class="keyword" style="background: #ece1cd; padding: 4px 12px; border-radius: 40px; font-size: 0.75rem;"><i class="fas fa-tag"></i> Contemporary philosophy</span>
+            </div>
+        </div>
+
+        <!-- Full essay text (English translation) -->
+        <div class="panel article-text">
+            <h2>Introduction</h2>
+            <p>The distinction between humans and animals occupies a central place in the history of Western thought. From ancient philosophy to modern formulations of humanism, the definition of the human has often been constructed through an ontological opposition to animality. Human beings have been attributed with characteristics considered exclusive — such as reason, symbolic language, morality, and political capacity — while animals were understood as essentially natural entities, governed by instincts and devoid of reflective interiority. This distinction structured not only the Western philosophical tradition but also the organization of modern sciences and the social institutions that derived from them (AGAMBEN, 2002; DESCOLA, 2005).</p>
+            <p>Within this tradition, a model of thought founded on the separation between nature and culture became established. Animals came to be associated with the domain of nature, while humans were defined as beings belonging to the domain of culture or society. Such dualism became one of the epistemological bases of modernity, sustaining both humanist philosophy and the disciplinary division between natural sciences and human sciences (LATOUR, 1994). As Bruno Latour observes, modernity built itself precisely on this “modern constitution,” which radically separates the natural world from the social world, while at the same time incessantly producing hybrids between these domains (LATOUR, 1994).</p>
+            <p>However, in recent decades, this conceptual framework has been widely questioned by different fields of knowledge. In philosophy, anthropology, and science and technology studies, a set of debates has emerged that is often identified as the “animal turn.” This intellectual movement seeks to reconsider the status of animals in the humanities and philosophical reflections, problematizing the ontological and epistemological centrality attributed to the human. Instead of treating animals only as objects of comparison or contrast, these approaches seek to understand the relationships between humans and non-humans as networks of interdependence and co‑constitution (MARRAS, 2014; HARAWAY, 2003).</p>
+            <p>In this context, several contemporary authors have contributed to redefining the terms of the debate. Philippe Descola (2005), for example, argues that the modern distinction between nature and culture is not universal but merely one among several possible ways of organizing the relationships between humans and non‑humans. Tim Ingold (2000), in turn, proposes understanding organisms and environments as interdependent processes, dissolving the rigid separation between subject and world. Donna Haraway (2003) introduces the notion of “companion species,” emphasizing that humans and animals mutually constitute each other throughout shared historical and evolutionary processes. Bruno Latour (2012) suggests that the social should be understood as a network of associations between humans and non‑humans, which implies expanding the very notion of collectivity.</p>
+            <p>These conceptual transformations become particularly relevant in the contemporary context, marked by the growing discussion about the Anthropocene. The notion of the Anthropocene refers to the idea that human activities have begun to exert a significant impact on planetary systems, profoundly altering the Earth's ecological balance. Paradoxically, this concept simultaneously highlights the transformative power of human action and the radical dependence of humans on multiple forms of life and natural processes. In this scenario, it becomes increasingly difficult to sustain a conception of humanity isolated from the rest of the living world (INGOLD, 2012).</p>
+            <p>Given this framework, this essay starts from the following research problem: modern humanism was historically constructed from a radical separation between humanity and animality, sustained by the opposition between nature and culture; however, different contemporary currents in philosophy, anthropology, and biology have called this division into question. Thus, it becomes necessary to investigate how these new approaches reconfigure the place of the human in the world.</p>
+            <p>From this problem, the following research question is formulated: how does the so‑called “animal turn” in the humanities and contemporary philosophy contribute to rethinking modern humanism and redefining the relationships between humans and animals? This question unfolds into other complementary inquiries: how did the Western philosophical tradition construct the separation between humans and animals? How do contemporary authors such as Bruno Latour, Donna Haraway, Tim Ingold, and Philippe Descola criticize modern anthropocentrism? And finally, what ethical and epistemological implications emerge from this redefinition of the relationships between humans and non‑humans?</p>
+            <p>The hypothesis guiding this essay is that the animal turn reveals the historically situated and conceptually fragile character of the modern separation between nature and culture. By questioning this division, such perspectives point to the need to formulate a new relational humanism, in which humans and non‑humans are understood as interdependent agents in shared networks of existence. Thus, the general objective of this work is to critically analyze the separation between humans and animals in the Western philosophical tradition and to discuss how the animal turn proposes new ways of understanding this relationship. To achieve this objective, three specific goals are established: to examine the philosophical construction of the difference between humans and animals in the Western tradition; to present the main contemporary criticisms of anthropocentrism; and to discuss theoretical proposals that point toward a redefinition of humanism.</p>
+            <p>From a methodological point of view, the essay is based on qualitative bibliographic research, focused on the analysis of philosophical and anthropological works that address the relationships between humans and animals. The methodological procedure involves three main stages. First, a survey and analysis of classical texts of Western philosophy that contributed to the formulation of the distinction between human and animal is carried out, such as the writings of Thomas Hobbes and Jean‑Jacques Rousseau. Next, a review of contemporary literature related to the animal turn is conducted, with emphasis on the contributions of Bruno Latour, Donna Haraway, Tim Ingold, and Philippe Descola. Finally, a critical interpretation of these approaches is developed, seeking to identify their implications for the understanding of humanism and for the redefinition of the relationships between humans and non‑humans.</p>
+            <p>The structure of the essay is organized into four main moments. After this introduction, the historical construction of the distinction between humans and animals in the Western philosophical tradition is examined. Next, the contemporary criticisms of anthropocentrism and the separation between nature and culture are presented. Subsequently, the role of the animal turn in redefining the relationships between humans and non‑humans is discussed. Finally, some considerations are offered on the possibility of a relational humanism capable of responding to the ethical and epistemological challenges posed by the Anthropocene era.</p>
+
+            <h3>The separation between humans and animals in the Western philosophical tradition</h3>
+            <p>The distinction between humans and animals constitutes one of the structuring axes of the Western philosophical tradition. Over centuries, different currents of thought elaborated conceptions that established boundaries between humanity and animality, generally attributing to humans characteristics considered exclusive, such as rationality, language, morality, and political capacity. In this context, animals came to function as a kind of constitutive alterity, that is, as the negative term from which human identity was defined. In other words, Western philosophy often constructed the notion of humanity through a systematic differentiation from the animal.</p>
+            <p>This form of thinking became particularly consolidated within classical humanism, which took reason as the distinctive attribute of the human. Such a perspective established a hierarchical scheme in which humans occupied the top of the order of beings, while animals were situated at lower levels, associated with nature, instinct, and irrationality. As Giorgio Agamben (2002) observes, much of the history of Western philosophy can be understood as an attempt to define the human through what he calls the “anthropological machine,” that is, a conceptual device that produces the difference between man and animal while keeping it in constant tension.</p>
+
+            <h4>Classical humanism and the hierarchy of beings</h4>
+            <p>Since ancient philosophy, the definition of the human was linked to the idea of a natural hierarchy among living beings. In Aristotle, for example, the different types of life are classified according to their capacities: plants possess only the vegetative soul, responsible for nutrition and growth; animals also possess the sensitive soul, which allows them perception and movement; humans, in turn, possess, in addition to these faculties, the rational soul, which distinguishes them from all other forms of life (ARISTOTLE, 2006).</p>
+            <p>This conception does not imply an absolute separation between humans and animals, but establishes a hierarchical gradation in which the human appears as the highest form of life. Still, Aristotle already introduces a principle that will be widely developed by the later tradition: the idea that rationality constitutes the fundamental criterion for distinguishing the human from the animal. During the Middle Ages, this perspective was reinterpreted in light of Christian theology. Thinkers such as Thomas Aquinas reaffirmed human superiority based on the possession of an immortal rational soul, created in the image of God. Animals, in turn, came to be conceived as creatures devoid of reason and destined for human use. This interpretation reinforced the ontological hierarchy between humans and non‑humans, while at the same time providing a theological foundation for human dominion over nature.</p>
+            <p>In modernity, this hierarchy took on an even more radical form, especially in Cartesian philosophy. René Descartes argued that animals should be understood as natural machines, devoid of consciousness or thought. For Descartes, only humans possess res cogitans, that is, a thinking substance capable of reflection and language. Animals, on the other hand, would be mere automata governed by bodily mechanisms (DESCARTES, 2001). This conception exerted great influence on the development of modern sciences, contributing to consolidate a mechanistic view of nature. At the same time, it reinforced the idea of an ontological rupture between humans and animals, in which rationality appears as the distinctive mark of humanity.</p>
+
+            <h4>Reason as the distinctive criterion of the human</h4>
+            <p>The centrality of reason in the definition of the human became one of the pillars of modern humanism. Rationality was often conceived as what allows humans to transcend their natural condition and build social institutions, moral systems, and complex forms of knowledge. In this sense, reason came to be seen as the foundation of human freedom and the organization of collective life. This conception finds particularly clear expression in modern political theories, which associate rationality with the capacity to establish social contracts and organize life in community. The idea that humans are capable of rationally deliberating about their actions became a central element in the definition of the political subject.</p>
+            <p>However, this valorization of rationality also had the consequence of marginalizing animals, often characterized as beings incapable of reflective thought. As Frans de Waal (2005) observes, the Western philosophical tradition frequently described animals as entities guided exclusively by instincts, denying them any significant form of intelligence or complex sociability. In recent years, research in ethology and animal cognition has called this view into question, demonstrating that many species possess sophisticated cognitive capacities, including forms of communication, cooperation, and problem‑solving. Nevertheless, the conceptual heritage of rationalist humanism continues to exert a strong influence on the way the relationship between humans and animals is thought.</p>
+
+            <h4>The animal as the “other” of the human</h4>
+            <p>Throughout the Western tradition, the animal often played the role of the constitutive other of humanity. In philosophical terms, this means that human identity was often defined in opposition to animality. The animal represented what the human should not be: irrational, instinctive, incapable of language or morality. This process of differentiation was fundamental for the consolidation of modern humanism. By defining the human as a being essentially distinct from other animals, modern philosophy established the foundations for an anthropocentric view of the world. In this model, humans appear as subjects endowed with intrinsic value, while animals are often treated as resources or objects of use.</p>
+            <p>Bruno Latour (1994) argues that this distinction is directly linked to the constitution of modernity. According to the author, modernity built itself on a radical separation between nature and society, which allowed humans to position themselves as observers and controllers of the natural world. Animals, in this context, were often situated on the side of nature, while humans were associated with the domain of culture. However, this separation has been increasingly questioned by different contemporary currents of thought. Authors such as Philippe Descola (2005) argue that the opposition between nature and culture is not universal but merely one among several possible ways of organizing the relationships between humans and non‑humans.</p>
+
+            <h4>Rousseau, Hobbes and the construction of the social contract</h4>
+            <p>The opposition between humans and animals also plays a central role in modern theories of the social contract. Thinkers such as Thomas Hobbes and Jean‑Jacques Rousseau used comparisons between humans and animals to reflect on the origin of society and political institutions. In Leviathan, Hobbes explicitly states that animals cannot participate in social contracts because they are incapable of understanding laws or rational commitments. For the philosopher, the social pact requires the ability to deliberate and recognize mutual obligations, something that, according to him, only humans possess. As Hobbes writes, “it is impossible to make a pact with animals, because they do not understand our language” (HOBBES, 1985, p. 197).</p>
+            <p>Rousseau, in turn, offers a more ambiguous perspective on the relationship between humans and animals. In his Discourse on the Origin of Inequality, he recognizes that humans and animals share certain capacities, such as sensitivity and self‑preservation. However, Rousseau maintains that humans possess a singular characteristic that distinguishes them from animals: perfectibility, that is, the capacity to transform themselves over time (ROUSSEAU, 1999). Despite their differences, both Hobbes and Rousseau use animals as a conceptual reference to define the human being. In both cases, the comparison with animality serves to clarify what makes humans unique. The animal thus functions as a negative mirror, through which modern philosophy delineates the contours of humanity.</p>
+
+            <h4>The animal as a negative reference for humanity</h4>
+            <p>The analysis of the Western philosophical tradition reveals that the distinction between humans and animals is not only a biological issue but also a profoundly philosophical and political problem. Throughout the history of Western thought, the animal was often mobilized as a conceptual figure intended to delimit the boundaries of humanity. This strategy allowed modern philosophy to consolidate an anthropocentric view of the world, in which the human appears as the privileged subject of knowledge, morality, and political action. However, as contemporary authors suggest, this conception has proven increasingly insufficient to understand the complex relationships between humans and non‑humans. In this sense, the critique of anthropocentrism constitutes one of the main starting points for the so‑called animal turn in the human sciences. By questioning the ontological centrality of the human, this approach opens the way for new ways of thinking about coexistence between species and for rethinking the very foundations of humanism.</p>
+
+            <h3>Crisis of modern anthropocentrism</h3>
+            <p>The consolidation of modern humanism was deeply associated with the idea that human beings occupy a privileged position in the natural world. This anthropocentric conception presupposes that humans constitute the center of value and meaning in the universe, being capable of knowing, dominating, and transforming nature through reason and technique. However, in recent decades, this model of thought has been widely questioned, especially in the face of the growing perception that human activities exert profound and often irreversible impacts on the planet's ecological systems. In this context, different currents of philosophy and anthropology have contributed to problematizing the foundations of modern anthropocentrism, proposing new ways of understanding the relationships between humans and non‑humans.</p>
+
+            <h4>Anthropocene and environmental crisis</h4>
+            <p>The notion of the Anthropocene reveals a radical transformation in the way the relationship between humanity and nature is understood. By recognizing that human activity has begun to influence geological and climatic processes on a planetary scale, this concept challenges the modern view that clearly separated the human domain from the natural domain. As Bruno Latour (2017) observes, the contemporary ecological crisis reveals that humans were never really outside nature, but were always part of complex networks of interactions involving multiple human and non‑human agents. In this sense, the Anthropocene represents not only a change in the Earth's geological history but also a crisis of the conceptual categories that structured modern thought. The idea of a passive nature manipulable by autonomous human subjects becomes increasingly difficult to sustain in the face of evidence that natural systems have their own dynamics and respond unpredictably to human interventions. Furthermore, the contemporary environmental crisis highlights the radical interdependence between different forms of life. Climate change, biodiversity loss, and ecosystem degradation demonstrate that human actions directly affect the survival of countless species, including humanity itself. In this context, it becomes necessary to reconsider the anthropocentric assumptions that sustained the modern project of dominating nature.</p>
+
+            <h4>The critique of the nature vs. culture dualism</h4>
+            <p>One of the main targets of contemporary critiques of anthropocentrism is the dualism between nature and culture that deeply marked modern thought. This dualism established a conceptual division between two distinct domains: on one side, nature, understood as a set of physical and biological processes governed by natural laws; on the other, culture or society, associated with human activities, language, and social institutions. Bruno Latour (1994) argues that this division constitutes one of the foundations of modernity. According to the author, modernity instituted a modern constitution that radically separates nature and society, allowing humans to position themselves simultaneously as subjects who produce scientific knowledge about nature and as agents capable of transforming it through technology. However, Latour maintains that this separation never effectively corresponded to reality, because the modern world always produced hybrids that mix natural and social elements, such as technologies, modified organisms, and complex ecological systems. For Latour, recognizing this hybrid condition implies abandoning the idea that nature and society constitute completely distinct domains. Instead, he proposes to understand the world as a network of associations between different human and non‑human entities. In this model, non‑humans, including animals, technical objects, and natural phenomena, come to be considered active participants in the networks that compose social reality.</p>
+
+            <h4>Contributions of contemporary anthropology</h4>
+            <p>In addition to philosophy, contemporary anthropology also played a fundamental role in the critique of the nature‑culture dualism and modern anthropocentrism. Among the authors who most contributed to this debate are Philippe Descola and Tim Ingold, whose works propose new ways of understanding the relationships between humans and non‑humans. Philippe Descola (2005), in his work Par‑delà nature et culture, argues that the distinction between nature and culture is not a universal characteristic of human thought but a particularity of the modern Western tradition. Based on ethnographic research carried out among Amazonian peoples, Descola demonstrates that many societies do not establish a rigid separation between humans and non‑humans. In various indigenous contexts, for example, animals, plants, and spirits are often conceived as entities endowed with intentionality and the capacity for social interaction.</p>
+            <p>Tim Ingold (2000), in turn, develops a similar critique from an ecological perspective of anthropology. For Ingold, the opposition between organism and environment, which is also associated with the nature‑culture dualism, should be replaced by a relational conception of life. According to the author, living beings do not exist as isolated entities that occasionally interact with the environment but as processes that continuously develop in relation to the world around them. This perspective leads Ingold to propose an understanding of life based on lines of relationships that connect organisms, environments, and social practices. In this model, humans and animals are not ontologically separate categories but participants in the same field of ecological and social relations. The contributions of Descola and Ingold, together with the reflections of Latour, indicate a significant transformation in the contemporary human sciences. Instead of treating humans as isolated subjects who dominate a passive nature, these approaches emphasize the interdependence between different forms of life and the multiple ties that connect humans and non‑humans.</p>
+
+            <h4>Beyond anthropocentrism</h4>
+            <p>The critique of modern anthropocentrism does not necessarily imply denying the specificities of human experience but questioning the idea that humans occupy an ontologically superior position in relation to other forms of life. Instead, contemporary perspectives suggest that humans should be understood as participants in complex networks of ecological, social, and technological relations. In this sense, the crisis of anthropocentrism opens the way for new ways of thinking about coexistence between species and for reconsidering the ethical and epistemological foundations of humanism. By recognizing the interdependence between humans and non‑humans, these approaches point to the need to build models of thought capable of dealing with the complexity of the relations that constitute the contemporary world. This conceptual transformation prepares the ground for the development of the so‑called animal turn in the human sciences, which seeks to rethink the status of animals and explore the multiple forms of interaction between humans and other species. It is in this context that it becomes possible to discuss new forms of humanism, in which the human is no longer conceived as the absolute center of the world and comes to be understood as part of a broader set of interconnected existences.</p>
+
+            <h3>The animal turn in the human sciences</h3>
+            <p>In recent decades, the human sciences have experienced a theoretical movement often described as the animal turn. This set of debates involves different areas of knowledge: philosophy, anthropology, sociology, history, and cultural studies, and aims to reconsider the place of animals in academic reflections as well as in social practices. Unlike traditional approaches, which often treated animals only as objects of analysis or metaphors for understanding human behavior, the animal turn seeks to understand animals as relevant agents in the networks of relations that constitute the social world.</p>
+            <p>This movement emerges, to a large extent, as a response to the limitations of modern anthropocentrism. By questioning the exclusive centrality of the human, the animal turn proposes to expand the field of the human sciences to also include the relationships between different species. As Stélio Marras (2014) observes, this is a significant epistemological shift: instead of considering animals merely as the backdrop to human history, they come to be recognized as active participants in ecological, social, cultural, and historical processes.</p>
+
+            <h4>Animal studies and the expansion of the human sciences</h4>
+            <p>The so‑called animal studies constitute an interdisciplinary field that seeks to investigate the relationships between humans and animals from critical perspectives. Originating in the context of Anglo‑Saxon humanities, this field brings together contributions from philosophy, sociology, literature, and anthropology, seeking to analyze the historical and cultural forms through which animals have been represented, used, and understood in human societies. One of the main characteristics of animal studies is the attempt to overcome the instrumental view of animals. Instead of treating them only as resources or objects of study, these approaches seek to recognize animals as subjects of experience and participants in complex social networks. This shift in perspective also implies rethinking traditional categories of the human sciences, such as society, culture, and agency.</p>
+            <p>Donna Haraway (2003) plays a central role in this debate by proposing the notion of companion species. In her analysis of the relationships between humans and dogs, the author argues that humans and animals should not be understood as separate entities that occasionally interact but as beings that mutually constitute each other throughout shared historical processes. According to Haraway, coexistence between different species produces specific forms of sociability, knowledge, and affectivity that challenge the traditional boundaries between nature and culture. By emphasizing these co‑evolutionary and co‑habitation relationships, Haraway helps to shift the focus of analysis from fixed identities to processes of interaction between species. In this sense, the author suggests that humans and animals form hybrid collectives, in which multiple forms of life participate in the production of the social world.</p>
+
+            <h4>New approaches to animality</h4>
+            <p>The animal turn also involves a reconsideration of the very notion of animality. For a long time, animals were defined mainly by what they lacked in relation to humans: reason, language, morality, or reflective consciousness. This form of negative definition contributed to consolidating the idea that animals occupy an inferior position in the hierarchy of beings. However, different authors have questioned this conception. Instead of defining animals based on their supposed absence of human capacities, these approaches seek to understand the specific forms of existence and experience proper to different species. In this sense, Tim Ingold (2000) proposes an ecological perspective that emphasizes the relational character of life. For Ingold, living beings cannot be understood as isolated entities that simply interact with an external environment. Rather, organisms and environments mutually constitute each other through continuous processes of interaction. This perspective dissolves the rigid separation between humans and animals, emphasizing that all living beings participate in similar processes of dwelling and engagement with the world.</p>
+
+            <h4>Networks between humans and non‑humans</h4>
+            <p>One of the most innovative aspects of the animal turn is the attempt to understand the relationships between humans and animals in terms of networks of interdependence. Instead of treating humans and animals as separate ontological categories, several authors have emphasized the multiple forms of interaction that connect different species. This perspective dialogues directly with contemporary approaches in sociology and anthropology that seek to expand the concept of the collective. Inspired in part by Bruno Latour's reflections, these approaches suggest that social reality is constituted by networks that include both humans and non‑humans. Donna Haraway (2008) emphasizes that these interactions should not be understood only in terms of domination or instrumentalization. Although power relations are often present in interactions between species, these relations also involve processes of cooperation, adaptation, and mutual learning. By highlighting these networks of interdependence, the animal turn helps to shift the analysis from fixed identities to the relational processes that constitute social life. In this sense, humans and animals appear as participants in shared ecological and social systems.</p>
+
+            <h4>Animal cognition and ethology</h4>
+            <p>Another important element of the animal turn is related to recent advances in the animal behavior sciences. Research in ethology and animal cognition has shown that many species possess much more complex cognitive capacities than traditionally assumed. Frans de Waal (2005), for example, argues that several primates exhibit behaviors that can be interpreted as rudimentary forms of empathy, cooperation, and morality. Studies on chimpanzees, bonobos, and other primates reveal the existence of sophisticated social structures, in which individuals establish alliances, resolve conflicts, and demonstrate caring behaviors toward group members. These findings challenge the traditional idea that morality is an exclusively human characteristic. For De Waal, many of the emotional bases of human morality, such as empathy and a sense of fairness, have evolutionary roots shared with other primates. This suggests that the differences between humans and animals may be better understood as differences in degree rather than absolute ruptures.</p>
+
+            <h4>Implications for the human sciences</h4>
+            <p>The animal turn has profound implications for the human sciences. By recognizing animals as active participants in the networks that constitute the social world, this approach challenges the exclusive centrality of the human in sociological, anthropological, and philosophical analyses. Instead of understanding society as an exclusively human domain, it becomes necessary to consider the multiple interactions between different forms of life. This perspective contributes to expanding the scope of the human sciences, allowing a more comprehensive understanding of the ecological, social, and cultural relations that structure the contemporary world. In this sense, the animal turn represents not only a new field of study but also a broader transformation in the way the relationship between humans and non‑humans is thought. By emphasizing the interdependence between species and the complexity of the networks that connect different forms of life, this approach paves the way for new reflections on ethics, politics, and coexistence in the context of the Anthropocene.</p>
+
+            <h3>Towards a new humanism</h3>
+            <p>The conceptual transformations discussed in the previous sections, particularly the critique of modern anthropocentrism and the emergence of the so‑called animal turn in the human sciences, call into question some of the central foundations of classical humanism. Throughout the Western philosophical tradition, humanism was often constructed from the idea that human beings occupy a unique and superior position in the entirety of life, defined by attributes such as rationality, language, and moral capacity. This conception contributed to consolidating a view of the human as an autonomous subject separate from the rest of the natural world. However, contemporary reflections in philosophy, anthropology, and biology have highlighted the limits of this perspective. The growing awareness of ecological interdependencies, as well as advances in the study of animal cognition and interspecies relations, suggest that the rigid separation between humans and non‑humans does not adequately correspond to the complexity of the living world. In this context, it becomes necessary to reconsider the assumptions of traditional humanism and explore new ways of understanding the place of the human in the world.</p>
+
+            <h4>Critique of classical humanism</h4>
+            <p>Classical humanism, particularly in its modern formulations, was based on a conception of humanity defined in opposition to animality. As discussed earlier, Western philosophy often attributed to humans qualities considered exclusive: reason, language, and morality, while animals were characterized as instinctive beings devoid of reflective interiority. According to Giorgio Agamben (2002), the Western philosophical tradition constructed the human through a continuous process of excluding animality. For the author, the definition of the human depends on a conceptual operation that separates what is considered properly human from what is identified as animal. This operation not only establishes ontological boundaries between human beings and animal beings but also profoundly influences the ways in which human societies organize their relations with the natural and living world. By positioning humans as autonomous subjects superior to “animals,” classical humanism contributed to legitimizing practices of exploitation and domination of nature. Moreover, the contemporary environmental crisis highlights the limits of this model of thought. The idea that humans can dominate nature without considering the ecological consequences of their actions has proven increasingly unsustainable. In this sense, the critique of anthropocentrism does not necessarily imply abandoning the notion of humanism but rethinking it in a broader and more inclusive way.</p>
+
+            <h4>The proposal of a relational humanism</h4>
+            <p>Given these conceptual transformations, several authors have proposed to reformulate humanism in more relational terms. Instead of understanding the human as an isolated entity that radically distinguishes itself from the rest of nature, these approaches emphasize the interdependence between different forms of life. This perspective can be described as a relational humanism, in which the human is conceived not as the absolute center of the world but as a participant in complex networks that involve humans, animals, plants, ecosystems, and technologies. In this model, human identity is not defined by opposition to animality but emerges from the multiple relations that connect different forms of existence. Tim Ingold (2000) contributes to this perspective by proposing a conception of life based on processes of dwelling and engagement with the environment. According to the author, living beings do not exist as separate entities that occasionally interact with the world but as processes that continuously develop in relation to other organisms and the environment. Similarly, Donna Haraway (2008) suggests that the relationships between humans and animals should be thought of in terms of coexistence and co‑evolution. By emphasizing the notion of companion species, Haraway highlights that different species have shared evolutionary and social histories that have shaped both humans and the animals with which they live. These perspectives suggest that humanism can be reformulated not as a philosophy of human superiority but as a reflection on the forms of coexistence between different species.</p>
+
+            <h4>Multispecies ethics</h4>
+            <p>The reformulation of humanism in relational terms also has important ethical implications. If humans and animals participate in networks of ecological and social interdependence, it becomes necessary to reconsider the foundations of moral relations between species. In this context, different authors have developed proposals that can be described as multispecies ethics. This approach seeks to expand the horizon of moral reflection to include not only human interests but also the interests of other forms of life. Frans de Waal (2005), for example, argues that the emotional bases of human morality have evolutionary roots shared with other primates. Empathy, which plays a central role in human ethics, can be observed in several animal species, suggesting that morality is not an exclusively human phenomenon. From this perspective, it becomes possible to conceive ethics not as a system of exclusively human norms but as a set of practices that emerge from the relationships between different living beings. This approach does not necessarily imply attributing the same rights or responsibilities to all species but recognizes that human decisions have significant consequences for other organisms and ecosystems. Thus, a multispecies ethics seeks to guide the relationships between humans and non‑humans in a more responsible and sensitive way, taking into account the interdependencies that characterize the contemporary world.</p>
+
+            <h4>Philosophical and political implications</h4>
+            <p>The emergence of a relational humanism and a multispecies ethics has important philosophical and political implications. First, these perspectives challenge the traditional conceptions of subject, agency, and community that structured much of modern philosophy. If social reality is composed of networks that include both humans and non‑humans, it becomes necessary to rethink the very notion of the collective. Bruno Latour (2012) suggests that contemporary collectives should be understood as assemblies that bring together multiple types of agents, including living organisms, technical objects, and natural processes. Moreover, the contemporary ecological crisis demands new forms of political organization capable of dealing with the challenges posed by global environmental changes. Issues such as climate change, biodiversity conservation, and natural resource management cannot be adequately addressed from strictly anthropocentric perspectives. In this context, reflection on the relationships between humans and non‑humans becomes a fundamental part of debates on sustainability, environmental justice, and global governance. By recognizing the interdependence between different forms of life, it becomes possible to develop more comprehensive approaches to face the challenges of the Anthropocene. In summary, the critique of anthropocentrism and the emergence of the animal turn in the human sciences point to the need to rethink the foundations of humanism. Far from implying the abandonment of reflection on the human condition, this movement suggests the possibility of a renewed humanism, capable of recognizing the complexity of the relations that connect humans, animals, and environments in the contemporary world.</p>
+
+            <h3>Final considerations</h3>
+            <p>This essay started from the observation that the Western philosophical tradition constructed, over centuries, a deep distinction between humans and animals. This distinction, often sustained by the opposition between nature and culture, became one of the central foundations of modern humanism. Rationality, language, and moral capacity were historically mobilized as criteria that would allow differentiating humans from other forms of life, contributing to consolidate an anthropocentric view of the world. In this model, animals were often defined through a negative reference, that is, as what humans would not be.</p>
+            <p>Given this context, the essay sought to answer the following research question: how does the so‑called animal turn in the human sciences and contemporary philosophy contribute to rethinking modern humanism and redefining the relationships between humans and animals? The analysis developed throughout the text indicated that this turn represents a significant transformation in the way the relationships between humans and non‑humans are understood.</p>
+            <p>In the first part of the work, we examined how the Western philosophical tradition contributed to consolidating the separation between humanity and animality. The analysis showed that classical authors often used animals as a conceptual reference to delimit what would make humans unique. Rationality and the capacity for political organization were presented as distinctive attributes of humanity, while animals were often associated with the domain of nature and instinct. Next, the contemporary crisis of modern anthropocentrism was discussed. The emergence of the notion of the Anthropocene and the growing perception of the global environmental crisis highlight the limits of the conception that radically separates humans and nature. The contributions of authors such as Bruno Latour, Philippe Descola, and Tim Ingold demonstrate that the dualism between nature and culture is a specific historical construction of Western modernity, not a universal characteristic of human experience. These perspectives emphasize the existence of complex networks of interdependence between different forms of life, questioning the exclusive centrality of the human in the organization of the world.</p>
+            <p>Subsequently, the so‑called animal turn in the human sciences was analyzed, highlighting the role of animal studies, new anthropological approaches to interspecies relations, and advances in ethology and animal cognition. The contributions of authors such as Donna Haraway, Frans de Waal, and Tim Ingold indicate that animals can no longer be understood only as passive or merely instinctive entities. On the contrary, different species demonstrate cognitive capacities and complex forms of sociability, actively participating in the ecological and social networks that constitute the contemporary world.</p>
+            <p>Finally, the possibility of reformulating humanism from a relational perspective was discussed. Instead of understanding the human as an isolated entity superior to other forms of life, relational humanism proposes to recognize the interdependence between different species. This perspective opens the way for the development of a multispecies ethics, capable of considering the moral implications of interactions between humans, animals, and environments.</p>
+            <p>The analysis carried out in this essay suggests that rethinking the place of the human in the world constitutes one of the central challenges of contemporary philosophical reflection. The global ecological crisis, as well as advances in scientific knowledge about other forms of life, indicate that the traditional conception of humanity as the absolute center of reality has become increasingly problematic. In this sense, the animal turn should not be understood as an attempt to deny the specificity of human experience but as an effort to situate this experience within a broader framework of ecological and social relations. By recognizing the complexity of interactions between different species, it becomes possible to develop more comprehensive forms of ethical and political reflection capable of responding to the challenges of the Anthropocene. Thus, reflection on the relationships between humans and animals concerns not only the status of animals but also the very understanding of the human condition. Rethinking these relationships means, ultimately, reconsidering the foundations of humanism and exploring new possibilities of coexistence between humans and non‑humans in a world increasingly marked by the interdependence between different forms of life.</p>
+        </div>
+
+        <!-- PDF Viewer -->
+        <div class="panel">
+            <h2><i class="fas fa-file-pdf"></i> Full essay (PDF)</h2>
+            <div class="pdf-frame">
+                <iframe src="/arquivos/Humanos_Animais_Redes.pdf" title="Humans, animals and networks of existence"></iframe>
+            </div>
+            <p style="margin-top: 0.5rem; font-size: 0.8rem; color: #8b7355;"><i class="fas fa-info-circle"></i> If the PDF is not displayed, <a href="arquivos/Humanos_Animais_Redes.pdf" target="_blank">click here to download</a>.</p>
+        </div>
+
+        <!-- References and citation generator -->
+        <div class="panel" id="references-panel">
+            <h2><i class="fas fa-quote-right"></i> References & Citation</h2>
+
+            <div class="citation-generator" data-authors='["SANTOS, Diego Vinícius Brito dos", "SANTOS, Taisa Maria Brito dos"]' data-title="Humans, animals and networks of existence: rethinking humanism in the Anthropocene era" data-url="https://revinquietacoes.github.io/Revista-Inquieta-es/publicacoes/volume-1-2026/ingles/humanos-animais-e-redes-de-existencia-en.html" data-volume="1" data-issue="1" data-pages="09-27" data-year="2026">
+                <div class="citation-generator-head">
+                    <h2><i class="fas fa-quote-left"></i> How to cite this essay</h2>
+                </div>
+                <div class="citation-generator-body">
+                    <p class="citation-generator-note">Select the desired style and automatically generate the bibliographic reference.</p>
+                    <div class="citation-controls">
+                        <div class="citation-field">
+                            <label for="citation-style">Citation style</label>
+                            <select id="citation-style" class="citation-select">
+                                <option value="abnt">ABNT</option><option value="apa">APA</option><option value="mla">MLA</option>
+                                <option value="chicago">Chicago</option><option value="harvard">Harvard</option>
+                                <option value="vancouver">Vancouver</option><option value="ieee">IEEE</option>
+                            </select>
+                        </div>
+                        <div class="citation-actions">
+                            <button class="citation-btn citation-copy" type="button"><i class="fas fa-copy"></i> Copy citation</button>
+                        </div>
+                    </div>
+                    <div aria-live="polite" class="citation-output" id="citationOutput"></div>
+                    <p class="citation-feedback"></p>
+                </div>
+            </div>
+
+            <div class="citation-actions">
+                <button class="cite-btn" id="copyRefBtn"><i class="fas fa-copy"></i> Copy ABNT (manual)</button>
+                <button class="cite-btn" id="exportBibBtn"><i class="fas fa-download"></i> Export BibTeX</button>
+            </div>
+            <ul class="ref-list">
+                <li><strong>AGAMBEN, Giorgio.</strong> <em>The Open: Man and Animal</em>. Stanford: Stanford University Press, 2004.</li>
+                <li><strong>ARISTOTLE.</strong> <em>De Anima (On the Soul)</em>. London: Penguin, 1987.</li>
+                <li><strong>DESCARTES, René.</strong> <em>Discourse on Method</em>. Indianapolis: Hackett, 1998.</li>
+                <li><strong>DESCOLA, Philippe.</strong> <em>Beyond Nature and Culture</em>. Chicago: University of Chicago Press, 2013.</li>
+                <li><strong>HARAWAY, Donna.</strong> <em>The Companion Species Manifesto: Dogs, People, and Significant Otherness</em>. Chicago: Prickly Paradigm Press, 2003.</li>
+                <li><strong>HARAWAY, Donna.</strong> <em>When Species Meet</em>. Minneapolis: University of Minnesota Press, 2008.</li>
+                <li><strong>HOBBES, Thomas.</strong> <em>Leviathan</em>. London: Penguin, 1985.</li>
+                <li><strong>INGOLD, Tim.</strong> <em>The Perception of the Environment: Essays on Livelihood, Dwelling and Skill</em>. London: Routledge, 2000.</li>
+                <li><strong>INGOLD, Tim.</strong> <em>Being Alive: Essays on Movement, Knowledge and Description</em>. London: Routledge, 2011.</li>
+                <li><strong>LATOUR, Bruno.</strong> <em>We Have Never Been Modern</em>. Cambridge, MA: Harvard University Press, 1993.</li>
+                <li><strong>LATOUR, Bruno.</strong> <em>Reassembling the Social: An Introduction to Actor-Network-Theory</em>. Oxford: Oxford University Press, 2005.</li>
+                <li><strong>LATOUR, Bruno.</strong> <em>Facing Gaia: Eight Lectures on the New Climatic Regime</em>. Cambridge: Polity Press, 2017.</li>
+                <li><strong>MARRAS, Stélio.</strong> <em>Animal Turn, Human Turn: Another Pact</em>. São Paulo: Ubu Editora, 2014. (in Portuguese)</li>
+                <li><strong>ROUSSEAU, Jean-Jacques.</strong> <em>Discourse on the Origin of Inequality</em>. Oxford: Oxford University Press, 1999.</li>
+                <li><strong>WAAL, Frans de.</strong> <em>Our Inner Ape: A Leading Primatologist Explains Why We Are Who We Are</em>. New York: Riverhead Books, 2005.</li>
+            </ul>
+            <p><small><i class="fas fa-info-circle"></i> Use the generator above to cite this essay in different styles (ABNT, APA, MLA, Chicago, Harvard, Vancouver, IEEE).</small></p>
+        </div>
+
+        <!-- About the authors -->
+        <div class="panel">
+            <h2 class="autor-titulo"><img src="/corpo editorial/diego.png" alt="Author photo Diego Vinícius" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> About the author</h2>
+            <div class="author-bio">
+                <p><strong>Diego Vinícius Brito dos Santos</strong> is a pedagogue and effective public servant, with experience teaching in early elementary school and early childhood education. He holds a Master’s degree in Philosophy from the Federal University of Rio Grande do Norte (UFRN, 2022), with research focused on the work and philosophy of Friedrich Nietzsche. He holds a Bachelor’s degree in Philosophy from the State University of Rio Grande do Norte (UERN, 2018) and a Bachelor’s degree in Pedagogy from the International University Center (UNINTER, 2022). He is the author of the book <em>Nietzsche e os valores modernos</em> (2022). He is dedicated to continuing education in areas such as Psychopedagogy, Neuropsicopedagogy, Inclusive Education, Specialized Educational Assistance (AEE), and Youth and Adult Education (EJA).</p>
+                <p><i class="fas fa-envelope"></i> Email: diego_svt@hotmail.com<br>
+                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-9064-0663" target="_blank">https://orcid.org/0000-0002-9064-0663</a><br>
+                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/4347574894656811" target="_blank">http://lattes.cnpq.br/4347574894656811</a></p>
+            </div>
+            <br>
+            <h2 class="autor-titulo"><img src="/corpo editorial/taisa.png" alt="Author photo Taisa Maria Brito dos Santos" class="autor-foto" onerror="this.onerror=null; this.style.display='none';"> About the author</h2>
+            <div class="author-bio">
+                <p><strong>Taisa Maria Brito dos Santos</strong> holds a Bachelor’s degree in Philosophy from the State University of Rio Grande do Norte (UERN) and is currently pursuing a Bachelor’s degree in Geography, continuing her academic education from an interdisciplinary perspective. In her trajectory in Philosophy, she dedicated herself to the study of Augustine’s philosophy, with emphasis on the problem of the origin of evil, and also developed research related to medieval mysticism, Christianity, and anthropology. She worked as a volunteer in the Institutional Program for Teaching Initiation Scholarships (PIBID/Philosophy/UERN) and as a teacher’s assistant at the Euvaldo Lodi Institute (IEL). In the field of education, she focuses especially on themes such as inclusive education, human rights, pedagogical methodologies, and Education 4.0, in dialogue with Paulo Freire’s pedagogy. Currently, her studies concentrate on the relations between territory, society, and nature, with an interest in oceanography and spatial dynamics.</p>
+                <p><i class="fas fa-envelope"></i> Email: taisamaria9090@gmail.com<br>
+                <i class="fab fa-orcid"></i> Orcid: <a href="https://orcid.org/0000-0002-8766-5683" target="_blank">https://orcid.org/0000-0002-8766-5683</a><br>
+                <i class="fas fa-graduation-cap"></i> Lattes: <a href="http://lattes.cnpq.br/6216572061896584" target="_blank">http://lattes.cnpq.br/6216572061896584</a></p>
+            </div>
+        </div>
+
+        <footer>
+            <i class="fas fa-university"></i> Inquietações Journal – Caicó, RN | v.1, n.1, 2026 | Section: Essays | DOI: 10.5281/zenodo.19012745<br>
+            Open access under a Creative Commons license.
+        </footer>
+    </div>
+</div>
+
+<script>
+    // Submissions with login simulation
+    const submitBtn = document.getElementById("submitBtn");
+    if (submitBtn) {
+        submitBtn.addEventListener("click", (e) => {
+            e.preventDefault();
+            let logged = localStorage.getItem("inquietacoes_logged");
+            if (logged === "true") {
+                window.location.href = "/cadastro-login/submissoes.html";
+            } else {
+                let email = prompt("🔐 To submit an article, please log in. Enter your email (simulation):");
+                if (email && email.includes("@")) {
+                    localStorage.setItem("inquietacoes_logged", "true");
+                    alert("Login successful! Redirecting to submissions.");
+                    window.location.href = "/cadastro-login/submissoes.html";
+                } else {
+                    alert("Unauthorized access. Registration/login required.");
+                }
+            }
+        });
+    }
+
+    // Copy ABNT manual (English)
+    document.getElementById("copyRefBtn")?.addEventListener("click", () => {
+        const refs = ["SANTOS, Diego Vinícius Brito dos; SANTOS, Taisa Maria Brito dos. Humans, animals and networks of existence: rethinking humanism in the Anthropocene era. Inquietações Journal, v. 1, n. 1, p. 09-27, 2026."];
+        navigator.clipboard.writeText(refs.join("\n")).then(() => alert("ABNT references copied."));
+    });
+    document.getElementById("exportBibBtn")?.addEventListener("click", () => {
+        let bib = `@article{santos2026humans,\n  title={Humans, animals and networks of existence: rethinking humanism in the Anthropocene era},\n  author={Santos, Diego Vinícius Brito dos and Santos, Taisa Maria Brito dos},\n  journal={Inquietações Journal},\n  volume={1},\n  number={1},\n  pages={09--27},\n  year={2026}\n}`;
+        navigator.clipboard.writeText(bib).then(() => alert("BibTeX copied (example)."));
+    });
+
+    // Citation generator (English)
+    (function () {
+        const generator = document.querySelector('.citation-generator');
+        if (!generator) return;
+        const authors = JSON.parse(generator.dataset.authors || '[]');
+        const title = generator.dataset.title || '';
+        const url = generator.dataset.url || '';
+        const volume = generator.dataset.volume || '';
+        const issue = generator.dataset.issue || '';
+        const pages = generator.dataset.pages || '';
+        const year = generator.dataset.year || '';
+        const journal = 'Inquietações Journal';
+        const accessDate = new Date().toLocaleDateString('en-US');
+
+        const styles = {
+            abnt: () => `${authors.join('; ')}. ${title}. ${journal}, ${year}. v. ${volume}, n. ${issue}, p. ${pages}. Available at: ${url}. Accessed: ${accessDate}.`,
+            apa: () => `${authors.join(', ')}. (${year}). ${title}. ${journal}, ${volume}(${issue}), ${pages}.`,
+            mla: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}.${issue} (${year}): ${pages}. Web. ${accessDate}.`,
+            chicago: () => `${authors.join(', ')}. "${title}." ${journal} ${volume}, no. ${issue} (${year}): ${pages}.`,
+            harvard: () => `${authors.join(', ')} (${year}) '${title}', ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}.`,
+            vancouver: () => `${authors.join(', ')}. ${title}. ${journal}. ${year};${volume}(${issue}):${pages}.`,
+            ieee: () => `${authors.join(', ')}, "${title}," ${journal}, vol. ${volume}, no. ${issue}, pp. ${pages}, ${year}.`
+        };
+
+        const select = document.getElementById('citation-style');
+        const outputDiv = document.getElementById('citationOutput');
+        const copyBtn = document.querySelector('.citation-copy');
+        const feedback = document.querySelector('.citation-feedback');
+
+        function updateCitation() {
+            const style = select.value;
+            const generatorFn = styles[style];
+            if (generatorFn) {
+                outputDiv.innerHTML = generatorFn();
+            } else {
+                outputDiv.innerHTML = styles.abnt();
+            }
+        }
+
+        if (select && outputDiv) {
+            select.addEventListener('change', updateCitation);
+            updateCitation();
+        }
+
+        if (copyBtn) {
+            copyBtn.addEventListener('click', () => {
+                const citationText = outputDiv.innerText;
+                navigator.clipboard.writeText(citationText).then(() => {
+                    if (feedback) feedback.textContent = '✓ Citation copied to clipboard.';
+                    setTimeout(() => { if (feedback) feedback.textContent = ''; }, 3000);
+                }).catch(() => {
+                    if (feedback) feedback.textContent = '✗ Error copying. Please try manually.';
+                });
+            });
+        }
+    })();
+</script>
+</body>
+</html>
