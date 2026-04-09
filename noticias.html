@@ -315,6 +315,139 @@
       color: white !important;
       border: none;
     }
+
+    /* ========== ESTILOS DO RODAPÉ MODERNIZADO (alinhado dentro do site-shell) ========== */
+    /* Remove conteúdo antigo do footer */
+    .footer p,
+    .footer .footer-meta {
+      display: none;
+    }
+
+    .footer-modern-panel {
+      position: relative;
+      background-image: url('/assets/paineis/borbuletas.gif');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      width: 100%;
+      padding: 1rem 2rem;
+      overflow: hidden;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 28px;
+      margin-top: 1rem;
+    }
+
+    /* Overlay claro/branco */
+    .footer-modern-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f8f9f9e3;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 1;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* Container dos botões: grade responsiva, botões reduzidos */
+    .footer-buttons-container {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.6rem;
+      max-width: 1100px;
+      margin: 0 auto 0.8rem auto;
+    }
+
+    /* Botões com gradiente, texto branco, tamanho pequeno */
+    .footer-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.4rem 0.6rem;
+      background: linear-gradient(105deg, #1e3a8a, #3b82f6);
+      color: white !important;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.7rem;
+      border-radius: 40px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      line-height: 1.2;
+      white-space: normal;
+      word-break: break-word;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .footer-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      filter: brightness(1.02);
+      text-decoration: none;
+    }
+
+    /* Créditos institucionais compactos */
+    .footer-credits {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #1e293b;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      margin-top: 0.2rem;
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+      backdrop-filter: blur(2px);
+    }
+
+    .footer-credits a,
+    .footer-credits span {
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .footer-credits a:hover {
+      text-decoration: underline;
+      color: #0f2b66;
+    }
+
+    /* Responsividade */
+    @media (max-width: 750px) {
+      .footer-buttons-container {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .footer-modern-panel {
+        padding: 0.8rem 1rem;
+        border-radius: 20px;
+      }
+
+      .footer-btn {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.65rem;
+      }
+
+      .footer-credits {
+        font-size: 0.6rem;
+        flex-direction: column;
+        gap: 0.3rem;
+        background: rgba(255, 255, 255, 0.8);
+      }
+    }
   </style>
 </head>
 
@@ -567,14 +700,38 @@
         </section>
       </main>
     </div>
-    <footer class="footer" id="rodape">
-      <p id="p-18"><strong>Revista Inquietações</strong>— Página de notícias, anúncios e comunicados oficiais.</p>
-      <div id="div-footer-meta" class="footer-meta"><a id="link-sobre-2" href="sobre.html">Sobre</a><a
-          id="link-submissoes-5" href="submissoes.html">Submissões</a><a id="link-contato-3"
-          href="contato.html">Contato</a><a id="link-code-of-conduct-md"
-          href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank"
-          rel="noopener noreferrer">Código de Conduta</a><a id="link-www-netlify-com" href="https://www.netlify.com"
-          target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div>
+    <!-- RODAPÉ MODERNIZADO (alinhado dentro do site-shell) -->
+    <footer id="rodape-principal" class="footer">
+      <div class="footer-modern-panel">
+        <div class="footer-buttons-container">
+          <a href="https://revista-inquietacoes.netlify.app/" class="footer-btn" target="_blank"
+            rel="noopener noreferrer">
+            Revista Inquietações — periódico científico em acesso aberto
+          </a>
+          <a href="https://revista-inquietacoes.netlify.app/codigo_de_conduta.html" class="footer-btn" target="_blank"
+            rel="noopener noreferrer">
+            Código de Conduta
+          </a>
+          <a href="https://www.netlify.com/" class="footer-btn" target="_blank" rel="noopener noreferrer">
+            Este site é desenvolvido com apoio de Netlify
+          </a>
+          <a href="https://revista-inquietacoes.netlify.app/sobre" class="footer-btn" target="_blank"
+            rel="noopener noreferrer">
+            Sobre
+          </a>
+          <a href="https://revista-inquietacoes.netlify.app/cadastro-login/editor-chefe-chat" class="footer-btn"
+            target="_blank" rel="noopener noreferrer">
+            Entrar em contato
+          </a>
+        </div>
+        <div class="footer-credits">
+          <span>© 2026 Revista Inquietações — ISSN 3086-4119</span>
+          <span>Organização editorial: Diego Vinícius Brito dos Santos • <a href="https://www.instagram.com/iamthed1/"
+              target="_blank" rel="noopener noreferrer">@iamthed1</a></span>
+          <span>Conteúdo sob <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="license">CC BY
+              4.0</a></span>
+        </div>
+      </div>
     </footer>
   </div>
   <script>

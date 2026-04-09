@@ -52,7 +52,6 @@
       width: 100%;
       height: 100%;
       background: rgba(18, 45, 82, 0.55);
-      /* tom azul escuro com transparência */
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
       border-radius: inherit;
@@ -156,7 +155,6 @@
       gap: 2px;
       padding: 8px;
       justify-content: center;
-      /* centraliza os itens horizontalmente */
     }
 
     .site-nav-menu::-webkit-scrollbar {
@@ -463,6 +461,155 @@
       color: white !important;
       border: none;
     }
+
+    /* ========== ESTILOS DO RODAPÉ MODERNIZADO (ALINHADO COM OS PAINÉIS) ========== */
+    .footer-ojs {
+      background: transparent;
+      padding: 0;
+      margin-top: 2rem;
+    }
+
+    /* Remove qualquer conteúdo antigo do footer */
+    .footer p,
+    .footer .footer-meta {
+      display: none;
+    }
+
+    .footer-modern-panel {
+      position: relative;
+      background-image: url('/assets/paineis/borbuletas.gif');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      width: 100%;
+      padding: 1rem 2rem;
+      overflow: hidden;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 28px;
+    }
+
+    /* Overlay claro/branco */
+    .footer-modern-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f8f9f9e3;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 1;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* Container dos botões: grade responsiva, botões reduzidos */
+    .footer-buttons-container {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.6rem;
+      max-width: 1100px;
+      margin: 0 auto 0.8rem auto;
+    }
+
+    /* Botões com gradiente, texto branco, tamanho pequeno */
+    .footer-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.4rem 0.6rem;
+      background: linear-gradient(105deg, #1e3a8a, #3b82f6);
+      color: white !important;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.7rem;
+      border-radius: 40px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      line-height: 1.2;
+      white-space: normal;
+      word-break: break-word;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .footer-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      filter: brightness(1.02);
+      text-decoration: none;
+    }
+
+    /* Créditos institucionais */
+    .footer-credits {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #1e293b;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      margin-top: 0.2rem;
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+      backdrop-filter: blur(2px);
+    }
+
+    .footer-credits a,
+    .footer-credits span {
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .footer-credits a:hover {
+      text-decoration: underline;
+      color: #0f2b66;
+    }
+
+    /* Responsividade */
+    @media (max-width: 750px) {
+      .footer-buttons-container {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .footer-modern-panel {
+        padding: 0.8rem 1rem;
+        border-radius: 20px;
+      }
+
+      .footer-btn {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.65rem;
+      }
+
+      .footer-credits {
+        font-size: 0.6rem;
+        flex-direction: column;
+        gap: 0.3rem;
+        background: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    /* Garantia de alinhamento com o container principal */
+    .site-shell {
+      max-width: 1380px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      background: transparent;
+      margin-top: 2rem;
+    }
   </style>
 </head>
 
@@ -477,8 +624,8 @@
     <div id="barra-superior" class="topbar">
       <div id="div-pill" class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
       <div id="div-pill-acesso-pill" class="pill acesso-pill">
-        <a id="link-cadastro" href="cadastro-login/cadastro.html" class="topbar-btn">Cadastrar-se</a>
-        <a id="link-login" href="cadastro-login/login.html" class="topbar-btn secondary">Entrar</a>
+        <a class='topbar-btn' href='/cadastro-login/cadastro' id='link-cadastro'>Cadastrar-se</a>
+        <a class='topbar-btn secondary' href='/cadastro-login/login' id='link-login'>Entrar</a>
       </div>
     </div>
     <header id="cabecalho-da-pagina" class="masthead">
@@ -496,7 +643,6 @@
           </div>
         </div>
         <div id="div-banner-card" class="banner-card">
-          <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
           <img id="imagem-logo-revista-png" src="assets/favicon.png" alt="Logo da Revista Inquietações">
         </div>
       </div>
@@ -504,19 +650,19 @@
     <nav class="site-nav site-nav-ojs" id="navegacao-principal" aria-label="Navegação principal">
       <button id="button-site-nav-toggle" class="site-nav-toggle" type="button">Menu</button>
       <div id="div-site-nav-menu" class="site-nav-menu">
-        <a id="link-index" href="index.html">Início</a>
-        <a id="link-edicao-atual" href="edicao-atual.html" class="active">Atual</a>
-        <a id="link-conteudos" href="conteudos.html">Conteúdos</a>
-        <a id="link-evento" href="evento.html">Cursos</a>
-        <a id="link-sobre" href="sobre.html">Sobre</a>
-        <a id="link-submissoes" href="submissoes.html">Submissões</a>
-        <a id="link-templates" href="templates.html">Templates</a>
-        <a id="link-politicas-editoriais" href="politicas-editoriais.html">Políticas</a>
-        <a id="link-diretrizes-autores" href="diretrizes-autores.html">Diretrizes</a>
-        <a id="link-equipe-editorial" href="equipe-editorial.html">Equipe Editorial</a>
-        <a id="link-homenagens" href="homenagens.html">Homenagens</a>
-        <a id="link-contato" href="contato.html">Contato</a>
-        <a id="link-noticias" href="noticias.html">Notícias</a>
+        <a href='/' id='link-index'>Início</a>
+        <a class='active' href='/edicao-atual' id='link-edicao-atual'>Atual</a>
+        <a href='/conteudos' id='link-conteudos'>Conteúdos</a>
+        <a href='/evento' id='link-evento'>Cursos</a>
+        <a href='/sobre' id='link-sobre'>Sobre</a>
+        <a href='/submissoes' id='link-submissoes'>Submissões</a>
+        <a href='/templates' id='link-templates'>Templates</a>
+        <a href='/politicas-editoriais' id='link-politicas-editoriais'>Políticas</a>
+        <a href='/diretrizes-autores' id='link-diretrizes-autores'>Diretrizes</a>
+        <a href='/equipe-editorial' id='link-equipe-editorial'>Equipe Editorial</a>
+        <a href='/homenagens' id='link-homenagens'>Homenagens</a>
+        <a href='/contato' id='link-contato'>Contato</a>
+        <a href='/noticias' id='link-noticias'>Notícias</a>
       </div>
     </nav>
 
@@ -605,8 +751,8 @@
                 edição, mensagem aos(às) autores(as) e leitores(as), artigos, resumos expandidos, ensaios, resenhas,
                 traduções, fotografia temática, relatos de experiência e homenagens.</div>
               <div id="div-cta-row" class="cta-row" style="margin-top: 16px;">
-                <a id="link-conteudos-2" class="btn" href="conteudos.html">Abrir página de conteúdos</a>
-                <a id="link-index-3" class="btn secondary" href="index.html">Voltar ao portal</a>
+                <a class='btn' href='/conteudos' id='link-conteudos-2'>Abrir página de conteúdos</a>
+                <a class='btn secondary' href='/' id='link-index-3'>Voltar ao portal</a>
               </div>
             </div>
           </div>
@@ -621,28 +767,28 @@
         </div>
         <div id="div-panel-body-3" class="panel-body">
           <div id="div-edicao-menu-lista" class="edicao-menu-lista">
-            <a id="link-conteudos-3" class="edicao-menu-link" href="conteudos.html#capa-edicao"><strong>Capa da edição —
+            <a class='edicao-menu-link' href='/conteudos#capa-edicao' id='link-conteudos-3'><strong>Capa da edição —
                 v. 1, n. 1 (2026)</strong><span>Abrir a seção da capa na página Conteúdos</span></a>
-            <a id="link-conteudos-4" class="edicao-menu-link"
-              href="conteudos.html#mensagem-autores-leitores"><strong>Mensagem aos(às) autores(as) e
+            <a class='edicao-menu-link' href='/conteudos#mensagem-autores-leitores'
+              id='link-conteudos-4'><strong>Mensagem aos(às) autores(as) e
                 leitores(as)</strong><span>Abrir a mensagem editorial</span></a>
-            <a id="link-conteudos-5" class="edicao-menu-link"
-              href="conteudos.html#artigos"><strong>Artigos</strong><span>Abrir a seção de artigos</span></a>
-            <a id="link-conteudos-6" class="edicao-menu-link" href="conteudos.html#resumos-expandidos"><strong>Resumos
+            <a class='edicao-menu-link' href='/conteudos#artigos'
+              id='link-conteudos-5'><strong>Artigos</strong><span>Abrir a seção de artigos</span></a>
+            <a class='edicao-menu-link' href='/conteudos#resumos-expandidos' id='link-conteudos-6'><strong>Resumos
                 expandidos</strong><span>Abrir a seção de resumos expandidos</span></a>
-            <a id="link-conteudos-7" class="edicao-menu-link"
-              href="conteudos.html#ensaios"><strong>Ensaios</strong><span>Abrir a seção de ensaios</span></a>
-            <a id="link-conteudos-8" class="edicao-menu-link"
-              href="conteudos.html#resenhas"><strong>Resenhas</strong><span>Abrir a seção de resenhas</span></a>
-            <a id="link-conteudos-9" class="edicao-menu-link"
-              href="conteudos.html#traducoes"><strong>Traduções</strong><span>Abrir a seção de traduções</span></a>
-            <a id="link-conteudos-10" class="edicao-menu-link"
-              href="conteudos.html#fotografia-tematica"><strong>Fotografia temática</strong><span>Abrir a seção de
+            <a class='edicao-menu-link' href='/conteudos#ensaios'
+              id='link-conteudos-7'><strong>Ensaios</strong><span>Abrir a seção de ensaios</span></a>
+            <a class='edicao-menu-link' href='/conteudos#resenhas'
+              id='link-conteudos-8'><strong>Resenhas</strong><span>Abrir a seção de resenhas</span></a>
+            <a class='edicao-menu-link' href='/conteudos#traducoes'
+              id='link-conteudos-9'><strong>Traduções</strong><span>Abrir a seção de traduções</span></a>
+            <a class='edicao-menu-link' href='/conteudos#fotografia-tematica' id='link-conteudos-10'><strong>Fotografia
+                temática</strong><span>Abrir a seção de
                 fotografia temática</span></a>
-            <a id="link-conteudos-11" class="edicao-menu-link" href="conteudos.html#relatos-experiencia"><strong>Relatos
+            <a class='edicao-menu-link' href='/conteudos#relatos-experiencia' id='link-conteudos-11'><strong>Relatos
                 de experiência</strong><span>Abrir a seção de relatos de experiência</span></a>
-            <a id="link-conteudos-12" class="edicao-menu-link"
-              href="homenagens.html"><strong>Homenagens</strong><span>Abrir a seção de homenagens</span></a>
+            <a class='edicao-menu-link' href='/homenagens' id='link-conteudos-12'><strong>Homenagens</strong><span>Abrir
+                a seção de homenagens</span></a>
           </div>
         </div>
       </section>
@@ -669,21 +815,41 @@
         </div>
       </section>
     </main>
-  </div>
 
-  <footer class="footer" id="rodape">
-    <p id="p-13"><strong>Revista Inquietações</strong>— Portal institucional do periódico</p>
-    <div id="div-footer-meta" class="footer-meta">
-      <a id="link-sobre-2" href="sobre.html">Sobre</a>
-      <a id="link-politicas-editoriais-2" href="politicas-editoriais.html">Políticas</a>
-      <a id="link-submissoes-2" href="submissoes.html">Submissões</a>
-      <a id="link-code-of-conduct-md"
-        href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank"
-        rel="noopener noreferrer">Código de Conduta</a>
-      <a id="link-www-netlify-com" href="https://www.netlify.com" target="_blank" rel="noopener noreferrer">Este site é
-        desenvolvido com apoio de Netlify</a>
-    </div>
-  </footer>
+    <!-- RODAPÉ MODERNIZADO (alinhado com os painéis, cantos arredondados, overlay claro) -->
+    <footer class="footer" id="rodape">
+      <div class="footer-modern-panel">
+        <div class="footer-buttons-container">
+          <a href="https://revista-inquietacoes.netlify.app/" class="footer-btn" target="_blank"
+            rel="noopener noreferrer">
+            Revista Inquietações — periódico científico em acesso aberto
+          </a>
+          <a href="https://revista-inquietacoes.netlify.app/codigo_de_conduta.html" class="footer-btn" target="_blank"
+            rel="noopener noreferrer">
+            Código de Conduta
+          </a>
+          <a href="https://www.netlify.com/" class="footer-btn" target="_blank" rel="noopener noreferrer">
+            Este site é desenvolvido com apoio de Netlify
+          </a>
+          <a href="https://revista-inquietacoes.netlify.app/sobre" class="footer-btn" target="_blank"
+            rel="noopener noreferrer">
+            Sobre
+          </a>
+          <a href="https://revista-inquietacoes.netlify.app/cadastro-login/editor-chefe-chat" class="footer-btn"
+            target="_blank" rel="noopener noreferrer">
+            Entrar em contato
+          </a>
+        </div>
+        <div class="footer-credits">
+          <span>© 2026 Revista Inquietações — ISSN 3086-4119</span>
+          <span>Organização editorial: Diego Vinícius Brito dos Santos • <a href="https://www.instagram.com/iamthed1/"
+              target="_blank" rel="noopener noreferrer">@iamthed1</a></span>
+          <span>Conteúdo sob <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="license">CC BY
+              4.0</a></span>
+        </div>
+      </div>
+    </footer>
+  </div>
 
   <script>
     const navToggle = document.querySelector('.site-nav-toggle');

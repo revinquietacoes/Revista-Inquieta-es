@@ -50,7 +50,8 @@
       left: 0;
       width: 100%;
       height: 100%;
-      background: rgba(18, 45, 82, 0.55); /* tom azul escuro com transparência */
+      background: rgba(18, 45, 82, 0.55);
+      /* tom azul escuro com transparência */
       backdrop-filter: blur(3px);
       -webkit-backdrop-filter: blur(3px);
       border-radius: inherit;
@@ -76,7 +77,7 @@
     .banner-card img {
       background: transparent;
       mix-blend-mode: normal;
-      filter: drop-shadow(0 4px 8px rgba(0,0,0,0.2));
+      filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
     }
 
     /* ========== ESTILOS EXISTENTES DA PÁGINA (mantidos) ========== */
@@ -742,6 +743,145 @@
       padding: 8px 8px;
       white-space: nowrap;
     }
+
+    /* ========== ESTILOS DO RODAPÉ MODERNIZADO (alinhado dentro do site-shell) ========== */
+    .footer-ojs {
+      background: transparent;
+      padding: 0;
+      margin-top: 2rem;
+    }
+
+    /* Remove conteúdo antigo do footer */
+    .footer p,
+    .footer .footer-meta {
+      display: none;
+    }
+
+    .footer-modern-panel {
+      position: relative;
+      background-image: url('/assets/paineis/borbuletas.gif');
+      background-size: cover;
+      background-position: center center;
+      background-repeat: no-repeat;
+      width: 100%;
+      padding: 1rem 2rem;
+      overflow: hidden;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+      border-radius: 28px;
+      margin-top: 1rem;
+    }
+
+    /* Overlay claro/branco */
+    .footer-modern-panel::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #f8f9f9e3;
+      backdrop-filter: blur(2px);
+      -webkit-backdrop-filter: blur(2px);
+      z-index: 1;
+      pointer-events: none;
+      border-radius: inherit;
+    }
+
+    /* Container dos botões: grade responsiva, botões reduzidos */
+    .footer-buttons-container {
+      position: relative;
+      z-index: 2;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+      gap: 0.6rem;
+      max-width: 1100px;
+      margin: 0 auto 0.8rem auto;
+    }
+
+    /* Botões com gradiente, texto branco, tamanho pequeno */
+    .footer-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 0.4rem 0.6rem;
+      background: linear-gradient(105deg, #1e3a8a, #3b82f6);
+      color: white !important;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.7rem;
+      border-radius: 40px;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      line-height: 1.2;
+      white-space: normal;
+      word-break: break-word;
+      font-family: 'Inter', system-ui, sans-serif;
+    }
+
+    .footer-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+      filter: brightness(1.02);
+      text-decoration: none;
+    }
+
+    /* Créditos institucionais compactos */
+    .footer-credits {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      font-size: 0.65rem;
+      color: #1e293b;
+      background: rgba(255, 255, 255, 0.6);
+      border-radius: 40px;
+      padding: 0.4rem 1rem;
+      margin-top: 0.2rem;
+      display: inline-flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.8rem;
+      width: auto;
+      margin-left: auto;
+      margin-right: auto;
+      backdrop-filter: blur(2px);
+    }
+
+    .footer-credits a,
+    .footer-credits span {
+      color: #1e3a8a;
+      text-decoration: none;
+    }
+
+    .footer-credits a:hover {
+      text-decoration: underline;
+      color: #0f2b66;
+    }
+
+    /* Responsividade */
+    @media (max-width: 750px) {
+      .footer-buttons-container {
+        grid-template-columns: 1fr;
+        gap: 0.5rem;
+      }
+
+      .footer-modern-panel {
+        padding: 0.8rem 1rem;
+        border-radius: 20px;
+      }
+
+      .footer-btn {
+        padding: 0.35rem 0.5rem;
+        font-size: 0.65rem;
+      }
+
+      .footer-credits {
+        font-size: 0.6rem;
+        flex-direction: column;
+        gap: 0.3rem;
+        background: rgba(255, 255, 255, 0.8);
+      }
+    }
   </style>
 </head>
 
@@ -753,7 +893,9 @@
         href="#barra-lateral">Ir para a barra lateral</a><a id="link-rodape" href="#rodape">Ir para o rodapé</a></nav>
     <div id="barra-superior" class="topbar">
       <div id="div-pill" class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-      <div id="div-pill-acesso-pill" class="pill acesso-pill"><a class='topbar-btn' href='/cadastro-login/cadastro.html' id='link-cadastro'>Cadastrar-se</a><a class='topbar-btn secondary' href='/cadastro-login/login.html' id='link-login'>Entrar</a></div>
+      <div id="div-pill-acesso-pill" class="pill acesso-pill"><a class='topbar-btn' href='/cadastro-login/cadastro'
+          id='link-cadastro'>Cadastrar-se</a><a class='topbar-btn secondary' href='/cadastro-login/login'
+          id='link-login'>Entrar</a></div>
     </div>
     <header id="cabecalho-da-pagina" class="masthead">
       <div id="div-masthead-inner" class="masthead-inner">
@@ -777,7 +919,15 @@
     </header>
     <nav class="site-nav" id="navegacao-principal" aria-label="Navegação principal"><button id="button-site-nav-toggle"
         class="site-nav-toggle" type="button" aria-expanded="false" aria-controls="site-menu">Menu</button>
-      <div class="site-nav-menu" id="site-menu"><a href='/' id='link-index'>Início</a><a href='/edicao-atual.html' id='link-edicao-atual'>Atual</a><a class='active' href='/conteudos' id='link-conteudos'>Conteúdos</a><a href='/evento' id='link-evento'>Evento</a><a href='/editora-revista-inquietacoes/' id='link-index-2'>Editora</a><a href='/sobre' id='link-sobre'>Sobre</a><a href='/equipe-editorial' id='link-equipe-editorial'>Equipe Editorial</a><a href='/noticias' id='link-noticias'>Notícias</a><a href='/politicas-editoriais' id='link-politicas-editoriais'>Políticas</a><a href='/diretrizes-autores' id='link-diretrizes-autores'>Diretrizes</a><a href='/submissoes' id='link-submissoes'>Submissões</a><a href='/templates' id='link-templates'>Templates</a><a href='/contato' id='link-contato'>Contato</a><a href='/homenagens' id='link-homenagens'>Homenagens</a></div>
+      <div class="site-nav-menu" id="site-menu"><a href='/' id='link-index'>Início</a><a href='/edicao-atual'
+          id='link-edicao-atual'>Atual</a><a class='active' href='/conteudos' id='link-conteudos'>Conteúdos</a><a
+          href='/evento' id='link-evento'>Evento</a><a href='/editora-revista-inquietacoes/'
+          id='link-index-2'>Editora</a><a href='/sobre' id='link-sobre'>Sobre</a><a href='/equipe-editorial'
+          id='link-equipe-editorial'>Equipe Editorial</a><a href='/noticias' id='link-noticias'>Notícias</a><a
+          href='/politicas-editoriais' id='link-politicas-editoriais'>Políticas</a><a href='/diretrizes-autores'
+          id='link-diretrizes-autores'>Diretrizes</a><a href='/submissoes' id='link-submissoes'>Submissões</a><a
+          href='/templates' id='link-templates'>Templates</a><a href='/contato' id='link-contato'>Contato</a><a
+          href='/homenagens' id='link-homenagens'>Homenagens</a></div>
     </nav>
     <div id="grade-do-portal" class="portal-grid sidebar-compact">
       <aside class="sidebar" id="barra-lateral">
@@ -826,10 +976,14 @@
                 <li id="li-article-item" class="article-item">
                   <div id="div-article-topline" class="article-topline"><span
                       class="section-badge badge-capa">Capa</span><span class="pages-chip">p. 1</span></div>
-                  <h3 id="h3-article-title" class="article-title"><a href='publicacoes/volume-1-2026/Capa da edicao/capa-da-edicao-v1n1-2026.html' id='link-capa-da-edicao-v1n1-2026'>Capa da edição v. 1, n. 1 (2026)</a></h3>
+                  <h3 id="h3-article-title" class="article-title"><a
+                      href='publicacoes/volume-1-2026/Capa da edicao/capa-da-edicao-v1n1-2026.html'
+                      id='link-capa-da-edicao-v1n1-2026'>Capa da edição v. 1, n. 1 (2026)</a></h3>
                   <div id="div-article-meta" class="article-meta">
                     <div id="div-article-authors" class="article-authors">Diego Vinícius Brito dos Santos</div>
-                    <div id="div-article-actions" class="article-actions"><a class='access-btn' href='publicacoes/volume-1-2026/Capa da edicao/capa-da-edicao-v1n1-2026.html' id='link-capa-da-edicao-v1n1-2026-2'>Acessar conteúdo</a></div>
+                    <div id="div-article-actions" class="article-actions"><a class='access-btn'
+                        href='publicacoes/volume-1-2026/Capa da edicao/capa-da-edicao-v1n1-2026.html'
+                        id='link-capa-da-edicao-v1n1-2026-2'>Acessar conteúdo</a></div>
                   </div>
                 </li>
               </ul>
@@ -845,13 +999,17 @@
                 <li id="li-article-item-2" class="article-item">
                   <div id="div-article-topline-2" class="article-topline"><span
                       class="section-badge badge-mensagem">Mensagem</span><span class="pages-chip">p. 1–7</span></div>
-                  <h3 id="h3-article-title-2" class="article-title"><a href='/publicacoes/volume-1-2026/Mensagem/mensagem-autores-leitores.html' id='link-mensagem-autores-leitores-2'>Mensagem aos(às) autores(as) e leitores(as)</a>
+                  <h3 id="h3-article-title-2" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/mensagem/mensagem-autores-leitores'
+                      id='link-mensagem-autores-leitores-2'>Mensagem aos(às) autores(as) e leitores(as)</a>
                   </h3>
                   <div id="div-article-meta-2" class="article-meta">
                     <div id="div-article-authors-2" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-2" class="article-actions"><a id="link-zenodo-18816235"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18816235" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Mensagem/mensagem-autores-leitores.html' id='link-mensagem-autores-leitores-3'>Acessar conteúdo</a></div>
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/mensagem/mensagem-autores-leitores'
+                        id='link-mensagem-autores-leitores-3'>Acessar conteúdo</a></div>
                   </div>
                 </li>
               </ul>
@@ -868,27 +1026,35 @@
                 <li id="li-article-item-3" class="article-item">
                   <div id="div-article-topline-3" class="article-topline"><span
                       class="section-badge badge-artigo">Artigo</span><span class="pages-chip">p. 1–30</span></div>
-                  <h3 id="h3-article-title-3" class="article-title"><a href='/publicacoes/volume-1-2026/Artigos/artigo-identidade-genero-disforia-educacao-inclusiva.html' id='link-artigo-identidade-genero-disforia-educacao-inclusiva'>IDENTIDADE DE GÊNERO,
+                  <h3 id="h3-article-title-3" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/artigos/artigo-identidade-genero-disforia-educacao-inclusiva'
+                      id='link-artigo-identidade-genero-disforia-educacao-inclusiva'>IDENTIDADE DE GÊNERO,
                       DISFORIA E EDUCAÇÃO INCLUSIVA<span class="article-subtitle">Desconstruindo binarismos e
                         respeitando a diversidade</span></a></h3>
                   <div id="div-article-meta-3" class="article-meta">
                     <div id="div-article-authors-3" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-3" class="article-actions"><a id="link-zenodo-18825993"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18825993" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Artigos/artigo-identidade-genero-disforia-educacao-inclusiva.html' id='link-artigo-identidade-genero-disforia-educacao-inclusiva-2'>Acessar
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/artigos/artigo-identidade-genero-disforia-educacao-inclusiva'
+                        id='link-artigo-identidade-genero-disforia-educacao-inclusiva-2'>Acessar
                         conteúdo</a></div>
                   </div>
                 </li>
                 <li id="li-article-item-4" class="article-item">
                   <div id="div-article-topline-4" class="article-topline"><span
                       class="section-badge badge-artigo">Artigo</span><span class="pages-chip">p. 31–42</span></div>
-                  <h3 id="h3-article-title-4" class="article-title"><a href='/publicacoes/volume-1-2026/Artigos/artigo-algoritmos-do-passado.html' id='link-artigo-algoritmos-do-passado'>Algoritmos do passado<span
-                        class="article-subtitle">como a IA está reescrevendo a história</span></a></h3>
+                  <h3 id="h3-article-title-4" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/artigos/artigo-algoritmos-do-passado'
+                      id='link-artigo-algoritmos-do-passado'>Algoritmos do passado<span class="article-subtitle">como a
+                        IA está reescrevendo a história</span></a></h3>
                   <div id="div-article-meta-4" class="article-meta">
                     <div id="div-article-authors-4" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-4" class="article-actions"><a id="link-zenodo-18836259"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18836259" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Artigos/artigo-algoritmos-do-passado.html' id='link-artigo-algoritmos-do-passado-2'>Acessar conteúdo</a></div>
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/artigos/artigo-algoritmos-do-passado'
+                        id='link-artigo-algoritmos-do-passado-2'>Acessar conteúdo</a></div>
                   </div>
                 </li>
               </ul>
@@ -906,13 +1072,17 @@
                       class="section-badge badge-resumo">Resumo expandido</span><span class="pages-chip">p.
                       1–5</span>
                   </div>
-                  <h3 id="h3-article-title-5" class="article-title"><a href='/publicacoes/volume-1-2026/Resumos expandidos/resumo-paulo-freire-4-0.html' id='link-resumo-paulo-freire-4-0'>Paulo Freire 4.0<span class="article-subtitle">o
+                  <h3 id="h3-article-title-5" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/Resumos expandidos/resumo-paulo-freire-4-0.html'
+                      id='link-resumo-paulo-freire-4-0'>Paulo Freire 4.0<span class="article-subtitle">o
                         ChatGPT e a materialização da educação bancária</span></a></h3>
                   <div id="div-article-meta-5" class="article-meta">
                     <div id="div-article-authors-5" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-5" class="article-actions"><a id="link-zenodo-18820608"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18820608" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Resumos expandidos/resumo-paulo-freire-4-0.html' id='link-resumo-paulo-freire-4-0-2'>Acessar conteúdo</a></div>
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/Resumos expandidos/resumo-paulo-freire-4-0.html'
+                        id='link-resumo-paulo-freire-4-0-2'>Acessar conteúdo</a></div>
                   </div>
                 </li>
               </ul>
@@ -929,20 +1099,26 @@
                 <li id="li-article-item-6" class="article-item">
                   <div id="div-article-topline-6" class="article-topline"><span
                       class="section-badge badge-ensaio">Ensaio</span><span class="pages-chip">p. 1–7</span></div>
-                  <h3 id="h3-article-title-6" class="article-title"><a href='/publicacoes/volume-1-2026/Ensaios/ensaio-maquiavel-e-a-liberdade-do-povo.html' id='link-ensaio-maquiavel-e-a-liberdade-do-povo'>MAQUIAVEL E A LIBERDADE DO POVO</a>
+                  <h3 id="h3-article-title-6" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/ensaios/ensaio-maquiavel-e-a-liberdade-do-povo'
+                      id='link-ensaio-maquiavel-e-a-liberdade-do-povo'>MAQUIAVEL E A LIBERDADE DO POVO</a>
                   </h3>
                   <div id="div-article-meta-6" class="article-meta">
                     <div id="div-article-authors-6" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-6" class="article-actions"><a id="link-zenodo-18846061"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18846061" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Ensaios/ensaio-maquiavel-e-a-liberdade-do-povo.html' id='link-ensaio-maquiavel-e-a-liberdade-do-povo-2'>Acessar
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/ensaios/ensaio-maquiavel-e-a-liberdade-do-povo'
+                        id='link-ensaio-maquiavel-e-a-liberdade-do-povo-2'>Acessar
                         conteúdo</a></div>
                   </div>
                 </li>
                 <li id="li-article-item-7" class="article-item">
                   <div id="div-article-topline-7" class="article-topline"><span
                       class="section-badge badge-ensaio">Ensaio</span><span class="pages-chip">p. 8–27</span></div>
-                  <h3 id="h3-article-title-7" class="article-title"><a href='/publicacoes/volume-1-2026/Ensaios/humanos-animais-e-redes-de-existencia.html' id='link-humanos-animais-e-redes-de-existencia'>Humanos, animais e redes de
+                  <h3 id="h3-article-title-7" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/ensaios/humanos-animais-e-redes-de-existencia'
+                      id='link-humanos-animais-e-redes-de-existencia'>Humanos, animais e redes de
                       existência<span class="article-subtitle">repensando o humanismo na era do Antropoceno</span></a>
                   </h3>
                   <div id="div-article-meta-7" class="article-meta">
@@ -950,7 +1126,9 @@
                       Brito dos Santos</div>
                     <div id="div-article-actions-7" class="article-actions"><a id="link-zenodo-19012745"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.19012745" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Ensaios/humanos-animais-e-redes-de-existencia.html' id='link-humanos-animais-e-redes-de-existencia-2'>Acessar
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/ensaios/humanos-animais-e-redes-de-existencia'
+                        id='link-humanos-animais-e-redes-de-existencia-2'>Acessar
                         conteúdo</a></div>
                   </div>
                 </li>
@@ -967,41 +1145,53 @@
                 <li id="li-article-item-8" class="article-item">
                   <div id="div-article-topline-8" class="article-topline"><span
                       class="section-badge badge-resenha">Resenha</span><span class="pages-chip">p. 1–5</span></div>
-                  <h3 id="h3-article-title-8" class="article-title"><a href='/publicacoes/volume-1-2026/Resenhas/resenha-sergio-buarque-estado-novo.html' id='link-resenha-sergio-buarque-estado-novo'>Revolução inconclusa e autoritarismo no
+                  <h3 id="h3-article-title-8" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/resenhas/resenha-sergio-buarque-estado-novo'
+                      id='link-resenha-sergio-buarque-estado-novo'>Revolução inconclusa e autoritarismo no
                       Brasil<span class="article-subtitle">notas sobre Sérgio Buarque de Holanda e o Estado
                         Novo</span></a></h3>
                   <div id="div-article-meta-8" class="article-meta">
                     <div id="div-article-authors-8" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-8" class="article-actions"><a id="link-zenodo-18845109"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18845109" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Resenhas/resenha-sergio-buarque-estado-novo.html' id='link-resenha-sergio-buarque-estado-novo-2'>Acessar
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/resenhas/resenha-sergio-buarque-estado-novo'
+                        id='link-resenha-sergio-buarque-estado-novo-2'>Acessar
                         conteúdo</a></div>
                   </div>
                 </li>
                 <li id="li-article-item-9" class="article-item">
                   <div id="div-article-topline-9" class="article-topline"><span
                       class="section-badge badge-resenha">Resenha</span><span class="pages-chip">p. 6–10</span></div>
-                  <h3 id="h3-article-title-9" class="article-title"><a href='/publicacoes/volume-1-2026/Resenhas/resenha-comissao-nacional-da-verdade.html' id='link-resenha-comissao-nacional-da-verdade'>Memória, justiça e transição
+                  <h3 id="h3-article-title-9" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/resenhas/resenha-comissao-nacional-da-verdade'
+                      id='link-resenha-comissao-nacional-da-verdade'>Memória, justiça e transição
                       democrática<span class="article-subtitle">uma leitura sobre a Comissão Nacional da
                         Verdade</span></a></h3>
                   <div id="div-article-meta-9" class="article-meta">
                     <div id="div-article-authors-9" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-9" class="article-actions"><a id="link-zenodo-18845488"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18845488" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Resenhas/resenha-comissao-nacional-da-verdade.html' id='link-resenha-comissao-nacional-da-verdade-2'>Acessar
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/resenhas/resenha-comissao-nacional-da-verdade'
+                        id='link-resenha-comissao-nacional-da-verdade-2'>Acessar
                         conteúdo</a></div>
                   </div>
                 </li>
                 <li id="li-article-item-10" class="article-item">
                   <div id="div-article-topline-10" class="article-topline"><span
                       class="section-badge badge-resenha">Resenha</span><span class="pages-chip">p. 11–36</span></div>
-                  <h3 id="h3-article-title-10" class="article-title"><a href='/publicacoes/volume-1-2026/Resenhas/resenha-como-as-democracias-morrem-Steven-Levitsky.html' id='link-resenha-como-as-democracias-morrem-steven-levitsky'>Quando as democracias
+                  <h3 id="h3-article-title-10" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/resenhas/resenha-como-as-democracias-morrem-steven-levitsky'
+                      id='link-resenha-como-as-democracias-morrem-steven-levitsky'>Quando as democracias
                       se desgastam<span class="article-subtitle">uma releitura de Levitsky e Ziblatt</span></a></h3>
                   <div id="div-article-meta-10" class="article-meta">
                     <div id="div-article-authors-10" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-10" class="article-actions"><a id="link-zenodo-18945739"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18945739" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Resenhas/resenha-como-as-democracias-morrem-Steven-Levitsky.html' id='link-resenha-como-as-democracias-morrem-steven-levitsky-2'>Acessar conteúdo</a>
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/resenhas/resenha-como-as-democracias-morrem-steven-levitsky'
+                        id='link-resenha-como-as-democracias-morrem-steven-levitsky-2'>Acessar conteúdo</a>
                     </div>
                   </div>
                 </li>
@@ -1019,28 +1209,36 @@
                 <li id="li-article-item-11" class="article-item">
                   <div id="div-article-topline-11" class="article-topline"><span
                       class="section-badge badge-traducao">Tradução</span><span class="pages-chip">p. 1–19</span></div>
-                  <h3 id="h3-article-title-11" class="article-title"><a href='/publicacoes/volume-1-2026/Traducoes/traducao-assistance-to-black-bodies.html' id='link-traducao-assistance-to-black-bodies'>Assistance to black bodies in health
+                  <h3 id="h3-article-title-11" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/traducoes/traducao-assistance-to-black-bodies'
+                      id='link-traducao-assistance-to-black-bodies'>Assistance to black bodies in health
                       establishments<span class="article-subtitle">deconstructing prejudices and promoting an ethics of
                         care</span></a></h3>
                   <div id="div-article-meta-11" class="article-meta">
                     <div id="div-article-authors-11" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-11" class="article-actions"><a id="link-zenodo-18841714"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18841714" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Traducoes/traducao-assistance-to-black-bodies.html' id='link-traducao-assistance-to-black-bodies-2'>Acessar
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/traducoes/traducao-assistance-to-black-bodies'
+                        id='link-traducao-assistance-to-black-bodies-2'>Acessar
                         conteúdo</a></div>
                   </div>
                 </li>
                 <li id="li-article-item-12" class="article-item">
                   <div id="div-article-topline-12" class="article-topline"><span
                       class="section-badge badge-traducao">Tradução</span><span class="pages-chip">p. 20–46</span></div>
-                  <h3 id="h3-article-title-12" class="article-title"><a href='/publicacoes/volume-1-2026/Traducoes/traducao-a-mulher-georg-groddeck.html' id='link-traducao-a-mulher-georg-groddeck'>A mulher (Die Frau)<span
-                        class="article-subtitle">de Georg Groddeck</span></a></h3>
+                  <h3 id="h3-article-title-12" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/traducoes/traducao-a-mulher-georg-groddeck'
+                      id='link-traducao-a-mulher-georg-groddeck'>A mulher (Die Frau)<span class="article-subtitle">de
+                        Georg Groddeck</span></a></h3>
                   <div id="div-article-meta-12" class="article-meta">
                     <div id="div-article-authors-12" class="article-authors">Georg Groddeck; tradução de Diego Vinícius
                       Brito dos Santos</div>
                     <div id="div-article-actions-12" class="article-actions"><a id="link-zenodo-18916814"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18916814" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Traducoes/traducao-a-mulher-georg-groddeck.html' id='link-traducao-a-mulher-georg-groddeck-2'>Acessar conteúdo</a>
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/traducoes/traducao-a-mulher-georg-groddeck'
+                        id='link-traducao-a-mulher-georg-groddeck-2'>Acessar conteúdo</a>
                     </div>
                   </div>
                 </li>
@@ -1059,26 +1257,34 @@
                   <div id="div-article-topline-13" class="article-topline"><span
                       class="section-badge badge-fotografia">Fotografia temática</span><span class="pages-chip">p.
                       1–30</span></div>
-                  <h3 id="h3-article-title-13" class="article-title"><a href='/publicacoes/volume-1-2026/Fotografia tematica/fotografia-diego-caico.html' id='link-fotografia-diego-caico'>O Patrimônio Arquitetônico de Caicó – RN<span
+                  <h3 id="h3-article-title-13" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/Fotografia tematica/fotografia-diego-caico.html'
+                      id='link-fotografia-diego-caico'>O Patrimônio Arquitetônico de Caicó – RN<span
                         class="article-subtitle">estudos fotográficos</span></a></h3>
                   <div id="div-article-meta-13" class="article-meta">
                     <div id="div-article-authors-13" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-13" class="article-actions"><a id="link-zenodo-18820588"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18820588" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Fotografia tematica/fotografia-diego-caico.html' id='link-fotografia-diego-caico-2'>Acessar conteúdo</a></div>
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/Fotografia tematica/fotografia-diego-caico.html'
+                        id='link-fotografia-diego-caico-2'>Acessar conteúdo</a></div>
                   </div>
                 </li>
                 <li id="li-article-item-14" class="article-item">
                   <div id="div-article-topline-14" class="article-topline"><span
                       class="section-badge badge-fotografia">Fotografia temática</span><span class="pages-chip">p.
                       31–37</span></div>
-                  <h3 id="h3-article-title-14" class="article-title"><a href='/publicacoes/volume-1-2026/Fotografia tematica/fotografia-geiza-caico.html' id='link-fotografia-geiza-caico'>O Patrimônio Arquitetônico de Caicó – RN<span
+                  <h3 id="h3-article-title-14" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/Fotografia tematica/fotografia-geiza-caico.html'
+                      id='link-fotografia-geiza-caico'>O Patrimônio Arquitetônico de Caicó – RN<span
                         class="article-subtitle">estudos fotográficos</span></a></h3>
                   <div id="div-article-meta-14" class="article-meta">
                     <div id="div-article-authors-14" class="article-authors">Geiza Venicia dos Santos</div>
                     <div id="div-article-actions-14" class="article-actions"><a id="link-zenodo-18841135"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18841135" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Fotografia tematica/fotografia-geiza-caico.html' id='link-fotografia-geiza-caico-2'>Acessar conteúdo</a></div>
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/Fotografia tematica/fotografia-geiza-caico.html'
+                        id='link-fotografia-geiza-caico-2'>Acessar conteúdo</a></div>
                   </div>
                 </li>
               </ul>
@@ -1096,13 +1302,17 @@
                   <div id="div-article-topline-15" class="article-topline"><span
                       class="section-badge badge-relato">Relato de experiência</span><span class="pages-chip">p.
                       1–23</span></div>
-                  <h3 id="h3-article-title-15" class="article-title"><a href='/publicacoes/volume-1-2026/Relatos de experiencia/relato-as-cartas-sociais-de-vinicius.html' id='link-relato-as-cartas-sociais-de-vinicius'>As cartas sociais de Vinícius</a>
+                  <h3 id="h3-article-title-15" class="article-title"><a
+                      href='/publicacoes/volume-1-2026/Relatos de experiencia/relato-as-cartas-sociais-de-vinicius.html'
+                      id='link-relato-as-cartas-sociais-de-vinicius'>As cartas sociais de Vinícius</a>
                   </h3>
                   <div id="div-article-meta-15" class="article-meta">
                     <div id="div-article-authors-15" class="article-authors">Diego Vinícius Brito dos Santos</div>
                     <div id="div-article-actions-15" class="article-actions"><a id="link-zenodo-18844651"
                         class="doi-link" href="https://doi.org/10.5281/zenodo.18844651" target="_blank"
-                        rel="noopener noreferrer">DOI</a><a class='access-btn' href='/publicacoes/volume-1-2026/Relatos de experiencia/relato-as-cartas-sociais-de-vinicius.html' id='link-relato-as-cartas-sociais-de-vinicius-2'>Acessar
+                        rel="noopener noreferrer">DOI</a><a class='access-btn'
+                        href='/publicacoes/volume-1-2026/Relatos de experiencia/relato-as-cartas-sociais-de-vinicius.html'
+                        id='link-relato-as-cartas-sociais-de-vinicius-2'>Acessar
                         conteúdo</a></div>
                   </div>
                 </li>
@@ -1184,12 +1394,32 @@
         </div>
       </main>
     </div>
+    <!-- RODAPÉ MODERNIZADO (alinhado dentro do site-shell) -->
     <footer class="footer" id="rodape">
-      <p id="p-6"><strong>Revista Inquietações</strong>— Portal institucional do periódico</p>
-      <div id="div-footer-meta" class="footer-meta"><a href='/sobre' id='link-sobre-2'>Sobre</a><a href='/politicas-editoriais' id='link-politicas-editoriais-2'>Políticas</a><a href='/submissoes' id='link-submissoes-2'>Submissões</a><a id="link-code-of-conduct-md"
-          href="https://github.com/revinquietacoes/Revista-Inquieta-es/blob/main/CODE_OF_CONDUCT.md" target="_blank"
-          rel="noopener noreferrer">Código de Conduta</a><a id="link-www-netlify-com" href="https://www.netlify.com"
-          target="_blank" rel="noopener noreferrer">Este site é desenvolvido com apoio de Netlify</a></div>
+      <div class="footer-modern-panel">
+        <div class="footer-buttons-container">
+          <a href="https://revista-inquietacoes.netlify.app/" class="footer-btn" target="_blank" rel="noopener noreferrer">
+            Revista Inquietações — periódico científico em acesso aberto
+          </a>
+          <a href="https://revista-inquietacoes.netlify.app/codigo_de_conduta.html" class="footer-btn" target="_blank" rel="noopener noreferrer">
+            Código de Conduta
+          </a>
+          <a href="https://www.netlify.com/" class="footer-btn" target="_blank" rel="noopener noreferrer">
+            Este site é desenvolvido com apoio de Netlify
+          </a>
+          <a href="https://revista-inquietacoes.netlify.app/sobre" class="footer-btn" target="_blank" rel="noopener noreferrer">
+            Sobre
+          </a>
+          <a href="https://revista-inquietacoes.netlify.app/cadastro-login/editor-chefe-chat" class="footer-btn" target="_blank" rel="noopener noreferrer">
+            Entrar em contato
+          </a>
+        </div>
+        <div class="footer-credits">
+          <span>© 2026 Revista Inquietações — ISSN 3086-4119</span>
+          <span>Organização editorial: Diego Vinícius Brito dos Santos • <a href="https://www.instagram.com/iamthed1/" target="_blank" rel="noopener noreferrer">@iamthed1</a></span>
+          <span>Conteúdo sob <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="license">CC BY 4.0</a></span>
+        </div>
+      </div>
     </footer>
   </div>
   <script>
