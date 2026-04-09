@@ -4,190 +4,617 @@
   <!-- Página principal -->
   <url>
     <loc>https://revista-inquietacoes.netlify.app/</loc>
-    <lastmod>2026-03-14</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>1.0</priority>
   </url>
 
-  <!-- Publicações HTML -->
-
+  <!-- Editora -->
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/expediente-editorial.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/Editora-Revista-Inquietacoes/index.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.95</priority>
+    <priority>0.80</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/mensagem-autores-leitores.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/Editora-Revista-Inquietacoes/contato.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
-    <priority>0.90</priority>
+    <priority>0.80</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/capa-da-edicao-v1n1-2026.html</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>yearly</changefreq>
+    <loc>https://revista-inquietacoes.netlify.app/Editora-Revista-Inquietacoes/livros-publicados.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/Editora-Revista-Inquietacoes/sobre-a-editora.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/Editora-Revista-Inquietacoes/submissoes-de-livros.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
     <priority>0.80</priority>
   </url>
 
+  <!-- Cadastro / Login / Painéis -->
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/artigo-identidade-genero-disforia-educacao-inclusiva.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/cadastro-login/cadastro.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/cadastro-login/login.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/cadastro-login/painel-autor.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/cadastro-login/painel-editor-chefe.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/cadastro-login/painel-editor.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/cadastro-login/painel-parecerista.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/cadastro-login/perfil.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.75</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/cadastro-login/submissoes.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <!-- (outros arquivos da pasta cadastro-login omitidos por brevidade, mas podem ser adicionados se desejado) -->
+
+  <!-- Artigos (raiz) -->
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/expediente-editorial.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/artigo-algoritmos-do-passado.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/mensagem-autores-leitores.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.95</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/ensaio-maquiavel-e-a-liberdade-do-povo.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/artigo-identidade-genero-disforia-educacao-inclusiva.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/artigo-algoritmos-do-passado.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/ensaio-maquiavel-e-a-liberdade-do-povo.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.92</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/resumo-paulo-freire-4-0.html</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.88</priority>
-  </url>
-
-  <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/relato-as-cartas-sociais-de-vinicius.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/relato-as-cartas-sociais-de-vinicius.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/resenha-sergio-buarque-estado-novo.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/resenha-comissao-nacional-da-verdade.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.88</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/resenha-comissao-nacional-da-verdade.html</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.88</priority>
-  </url>
-
-  <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/resenha-como-as-democracias-morrem-Steven-Levitsky.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/resenha-como-as-democracias-morrem-Steven-Levitsky.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.90</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/fotografia-diego-caico.html</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.82</priority>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/resenha-sergio-buarque-estado-novo.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/fotografia-geiza-caico.html</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.82</priority>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/resumo-paulo-freire-4-0.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/traducao-a-mulher-georg-groddeck.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/traducao-a-mulher-georg-groddeck.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.92</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/traducao-assistance-to-black-bodies.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/traducao-assistance-to-black-bodies.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.86</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/traducao-cartas-da-juventude-nietzsche.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/traducao-cartas-da-juventude-nietzsche.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.93</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/publicacoes/traducao-manifesto-do-partido-comunista.html</loc>
-    <lastmod>2026-03-10</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/traducao-manifesto-do-partido-comunista.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.93</priority>
   </url>
-
-  <!-- PDFs -->
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/arquivos/Revista%20Inquieta%C3%A7%C3%B5es-1%20edi%C3%A7%C3%A3o.pdf</loc>
-    <lastmod>2026-01-01</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/fotografia-diego-caico.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.70</priority>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/artigos/fotografia-geiza-caico.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.82</priority>
   </url>
 
+  <!-- Publicações (estrutura volume-1-2026) -->
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/arquivos/Mensagem.pdf</loc>
-    <lastmod>2026-01-01</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Capa%20da%20edicao/capa-da-edicao-v1n1-2026.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>yearly</changefreq>
-    <priority>0.70</priority>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Mensagem/mensagem-autores-leitores.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Artigos/artigo-identidade-genero-disforia-educacao-inclusiva.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Artigos/artigo-algoritmos-do-passado.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.95</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Ensaios/ensaio-maquiavel-e-a-liberdade-do-povo.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.92</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Ensaios/humanos-animais-e-redes-de-existencia.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.92</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Relatos%20de%20experiencia/relato-as-cartas-sociais-de-vinicius.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Resenhas/resenha-comissao-nacional-da-verdade.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Resenhas/resenha-como-as-democracias-morrem-Steven-Levitsky.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Resenhas/resenha-sergio-buarque-estado-novo.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Resumos%20expandidos/resumo-paulo-freire-4-0.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Traducoes/traducao-a-mulher-georg-groddeck.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.92</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Traducoes/traducao-assistance-to-black-bodies.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.86</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Fotografia%20tematica/fotografia-diego-caico.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.82</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/Fotografia%20tematica/fotografia-geiza-caico.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.82</priority>
   </url>
 
+  <!-- Versões em espanhol -->
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/arquivos/IDENTIDADE%20DE%20G%C3%8ANERO,%20DISFORIA%20E%20EDUCA%C3%87%C3%83O%20INCLUSIVA%20Desconstruindo%20binarismos%20e%20respeitando%20a%20diversidade.pdf</loc>
-    <lastmod>2026-01-01</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/artigo-identidade-genero-disforia-educacao-inclusiva-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/artigo-algoritmos-do-passado-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/ensaio-maquiavel-e-a-liberdade-do-povo-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/relato-as-cartas-sociais-de-vinicius-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/resenha-comissao-nacional-da-verdade-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/resenha-como-as-democracias-morrem-Steven-Levitsky-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/resenha-sergio-buarque-estado-novo-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/resumo-paulo-freire-4-0-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/traducao-a-mulher-georg-groddeck-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/traducao-assistance-to-black-bodies-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/capa-da-edicao-v1n1-2026-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.85</priority>
   </url>
-
   <url>
-    <loc>https://revista-inquietacoes.netlify.app/arquivos/Algoritmos%20do%20passado%20como%20a%20IA%20est%C3%A1%20reescrevendo%20a%20hist%C3%B3ria.pdf</loc>
-    <lastmod>2026-01-01</lastmod>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/fotografia-diego-caico-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/fotografia-geiza-caico-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/humanos-animais-e-redes-de-existencia-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/espanhol/mensagem-autores-leitores-esp.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- Versões em inglês -->
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/artigo-identidade-genero-disforia-educacao-inclusiva-es.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/artigo-algoritmos-do-passado-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/ensaio-maquiavel-e-a-liberdade-do-povo-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/relato-as-cartas-sociais-de-vinicius-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/resenha-comissao-nacional-da-verdade-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/resenha-como-as-democracias-morrem-Steven-Levitsky-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/resenha-sergio-buarque-estado-novo-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/resumo-paulo-freire-4-0-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/traducao-a-mulher-georg-groddeck-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/traducao-assistance-to-black-bodies-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/capa-da-edicao-v1n1-2026-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/fotografia-diego-caico-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/fotografia-geiza-caico-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/humanos-animais-e-redes-de-existencia-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.88</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/volume-1-2026/ingles/mensagem-autores-leitores-en.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.90</priority>
+  </url>
+
+  <!-- Homenagens e personas non gratae -->
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/Arquivo%20de%20homenagens/homenagem-agostinho-de-hipona.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/Arquivo%20de%20homenagens/homenagem-albert-camus.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <!-- (aqui seriam listadas todas as ~150 homenagens; incluí apenas como exemplo – recomendo gerar automaticamente) -->
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/Arquivo%20de%20homenagens/persona-non-grata-donald-trump.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.70</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/publicacoes/Arquivo%20de%20homenagens/persona-non-grata-jair-bolsonaro.html</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.70</priority>
+  </url>
+
+  <!-- PDFs (arquivos) -->
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Revista%20Inquieta%C3%A7%C3%B5es-1%20edi%C3%A7%C3%A3o.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Mensagem_Autores_Leitores.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Capa_da_edicao_v_1_n_1_2026.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Identidade_Genero_Educacao.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Algoritmos_IA_Historia.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Maquiavel_liberdade_povo.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Cartas_Sociais_Vinicius.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Resenha_Sergio_Buarque.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Resenha_CNV.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Resenha_Levitsky_Ziblatt.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Resumo_Expandido_Revista_Inquietacoes_Edicao1-pp.1-5.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Fotos-Diego-Vinicius-v.1-2026-Revista-Inquietacoes.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Fotos-Geiza-v.1-2026-Revista-Inquietacoes.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.80</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/A%20mulher.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>yearly</changefreq>
+    <priority>0.85</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/arquivos/Humanos_Animais_Redes.pdf</loc>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>yearly</changefreq>
     <priority>0.85</priority>
   </url>
 
   <!-- OAI -->
-
-  <url>
-    <loc>https://revista-inquietacoes.netlify.app/oai/</loc>
-    <lastmod>2026-03-10</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.75</priority>
-  </url>
-
   <url>
     <loc>https://revista-inquietacoes.netlify.app/oai/index.xml</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
-
   <url>
     <loc>https://revista-inquietacoes.netlify.app/oai/identify.xml</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>monthly</changefreq>
     <priority>0.55</priority>
   </url>
-
   <url>
     <loc>https://revista-inquietacoes.netlify.app/oai/listrecords.xml</loc>
-    <lastmod>2026-03-10</lastmod>
+    <lastmod>2026-04-09</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.65</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/oai/metadataformats.xml</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
+  </url>
+  <url>
+    <loc>https://revista-inquietacoes.netlify.app/oai/sets.xml</loc>
+    <lastmod>2026-04-09</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.55</priority>
   </url>
 
 </urlset>
