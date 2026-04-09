@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>Revista Inquietações · Código de Conduta</title>
+
+    <!-- Favicon / Logo -->
+    <link rel="icon" type="image/png" href="/assets/favicon.png">
+    <link rel="apple-touch-icon" href="/assets/favicon.png">
+
+    <!-- Google Fonts + Font Awesome 6 (modern icons) -->
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300;14..32,400;14..32,600;14..32,700;14..32,800&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: radial-gradient(circle at 10% 20%, #0b0a1a, #02010a);
+            color: #f0f0fc;
+            line-height: 1.5;
+            overflow-x: hidden;
+            position: relative;
+            scroll-behavior: smooth;
+        }
+
+        /* GIF de fundo animado (partículas flutuantes e ondas) */
+        .gif-bg {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+
+        .gif-bg .particles-gif {
+            position: absolute;
+            bottom: -10%;
+            right: -5%;
+            width: 55%;
+            opacity: 0.2;
+            transform: rotate(5deg);
+            mix-blend-mode: screen;
+            animation: floatParticles 18s infinite alternate ease-in-out;
+        }
+
+        .gif-bg .wave-gif {
+            position: absolute;
+            top: 15%;
+            left: -8%;
+            width: 50%;
+            opacity: 0.2;
+            transform: rotate(-8deg);
+            mix-blend-mode: overlay;
+            animation: slowDrift 22s infinite alternate;
+        }
+
+        /* segundo gif flutuante (estilo neon pulse) */
+        .gif-float {
+            position: fixed;
+            bottom: 6%;
+            right: 2%;
+            width: 110px;
+            z-index: 1;
+            pointer-events: none;
+            filter: drop-shadow(0 0 6px #ff66c0);
+            opacity: 0.55;
+            transition: 0.3s;
+            animation: levitate 6s infinite ease-in-out;
+        }
+
+        .gif-float-left {
+            left: 2%;
+            right: auto;
+            bottom: 12%;
+            width: 95px;
+            filter: drop-shadow(0 0 5px #3b82f6);
+            opacity: 0.5;
+            animation: levitate 7s infinite reverse;
+        }
+
+        @keyframes floatParticles {
+            0% {
+                transform: translate(0, 0) rotate(5deg) scale(1);
+            }
+
+            100% {
+                transform: translate(-3%, -4%) rotate(8deg) scale(1.02);
+            }
+        }
+
+        @keyframes slowDrift {
+            0% {
+                transform: translate(0, 0) rotate(-8deg);
+            }
+
+            100% {
+                transform: translate(2%, 3%) rotate(-5deg);
+            }
+        }
+
+        @keyframes levitate {
+            0% {
+                transform: translateY(0px);
+            }
+
+            50% {
+                transform: translateY(-12px);
+            }
+
+            100% {
+                transform: translateY(0px);
+            }
+        }
+
+        /* conteúdo principal - sobreposição */
+        .main-wrapper {
+            position: relative;
+            z-index: 2;
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 2rem 1.5rem 4rem;
+        }
+
+        /* header com logo e título moderno */
+        .hero {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-align: center;
+            margin-bottom: 3rem;
+            backdrop-filter: blur(2px);
+        }
+
+        .logo-container {
+            background: rgba(15, 12, 35, 0.5);
+            border-radius: 100px;
+            padding: 0.7rem;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            margin-bottom: 1.2rem;
+            transition: 0.3s;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.5);
+        }
+
+        .logo-img {
+            width: 90px;
+            height: auto;
+            display: block;
+            border-radius: 28px;
+            transition: transform 0.25s ease;
+        }
+
+        .logo-img:hover {
+            transform: scale(1.03) rotate(2deg);
+        }
+
+        .hero h1 {
+            font-size: 2.9rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #FFFFFF, #C084FC, #60A5FA);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            letter-spacing: -0.02em;
+            text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+        }
+
+        .hero .tagline {
+            font-size: 1.1rem;
+            font-weight: 400;
+            color: #b9c3e6;
+            margin-top: 0.6rem;
+            border-top: 1px dashed rgba(192, 132, 252, 0.5);
+            display: inline-block;
+            padding-top: 0.6rem;
+        }
+
+        /* card principal (glassmorphism + neon border) */
+        .card-code {
+            background: rgba(12, 10, 28, 0.65);
+            backdrop-filter: blur(14px);
+            border-radius: 3rem;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 25px 45px -12px rgba(0, 0, 0, 0.6), 0 0 0 1px rgba(192, 132, 252, 0.15) inset;
+            padding: 2.2rem 2rem;
+            margin-bottom: 2rem;
+            transition: all 0.3s;
+        }
+
+        .card-code:hover {
+            border-color: rgba(192, 132, 252, 0.5);
+            box-shadow: 0 30px 50px -18px #a855f740;
+        }
+
+        .intro-text {
+            font-size: 1.2rem;
+            font-weight: 400;
+            margin-bottom: 2rem;
+            border-left: 4px solid #c084fc;
+            padding-left: 1.2rem;
+            color: #e2e8ff;
+        }
+
+        .highlight-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            margin: 1.8rem 0 1rem 0;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .highlight-title i {
+            background: #2d2a4e;
+            padding: 10px;
+            border-radius: 60%;
+            font-size: 1.3rem;
+            color: #f0a6ff;
+        }
+
+        .list-violations {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0 2rem 0;
+        }
+
+        .violation-item {
+            background: rgba(0, 0, 0, 0.35);
+            border-radius: 2rem;
+            padding: 0.9rem 1.4rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-weight: 500;
+            border-left: 3px solid #ff4d6d;
+            transition: 0.2s;
+            backdrop-filter: blur(4px);
+        }
+
+        .violation-item i {
+            font-size: 1.5rem;
+            color: #ff7b9c;
+            width: 32px;
+            text-align: center;
+        }
+
+        .violation-item span {
+            flex: 1;
+            font-size: 1.05rem;
+        }
+
+        .consequences-box {
+            background: linear-gradient(120deg, #1e1a3a, #151229);
+            border-radius: 2rem;
+            padding: 1.4rem 1.8rem;
+            margin: 1.8rem 0;
+            border: 1px solid rgba(255, 190, 110, 0.3);
+        }
+
+        .consequences-box p {
+            display: flex;
+            gap: 12px;
+            align-items: baseline;
+            font-weight: 500;
+        }
+
+        .consequences-box i {
+            color: #fbbf24;
+            font-size: 1.6rem;
+        }
+
+        .principios {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 2rem 0 0.5rem;
+            justify-content: center;
+        }
+
+        .principio-badge {
+            background: rgba(96, 165, 250, 0.15);
+            border-radius: 60px;
+            padding: 0.5rem 1.2rem;
+            font-size: 0.9rem;
+            font-weight: 500;
+            backdrop-filter: blur(5px);
+            border: 1px solid rgba(96, 165, 250, 0.4);
+            transition: 0.2s;
+        }
+
+        .principio-badge i {
+            margin-right: 8px;
+            font-size: 0.85rem;
+        }
+
+        .principio-badge:hover {
+            background: rgba(192, 132, 252, 0.3);
+            transform: translateY(-3px);
+        }
+
+        /* rodapé ético */
+        .footer-note {
+            text-align: center;
+            margin-top: 3rem;
+            font-size: 0.85rem;
+            color: #8f9bb3;
+            border-top: 1px solid rgba(255, 255, 240, 0.1);
+            padding-top: 2rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .footer-note a {
+            color: #c4b5fd;
+            text-decoration: none;
+            transition: 0.2s;
+        }
+
+        .footer-note a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        /* responsividade */
+        @media (max-width: 750px) {
+            .main-wrapper {
+                padding: 1rem 1rem 3rem;
+            }
+
+            .hero h1 {
+                font-size: 2rem;
+            }
+
+            .card-code {
+                padding: 1.5rem;
+            }
+
+            .highlight-title {
+                font-size: 1.5rem;
+            }
+
+            .violation-item span {
+                font-size: 0.9rem;
+            }
+
+            .gif-float,
+            .gif-float-left {
+                width: 65px;
+                opacity: 0.35;
+            }
+
+            .gif-bg .particles-gif,
+            .gif-bg .wave-gif {
+                width: 80%;
+                opacity: 0.12;
+            }
+        }
+
+        /* animação de entrada suave */
+        @keyframes fadeUp {
+            0% {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            100% {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .card-code,
+        .hero {
+            animation: fadeUp 0.8s ease-out forwards;
+        }
+
+        /* scrollbar moderna */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #0c0a1f;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: #c084fc;
+            border-radius: 12px;
+        }
+    </style>
+</head>
+
+<body>
+
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <div class="main-wrapper">
+        <div class="hero">
+            <div class="logo-container">
+                <!-- Logo da revista: favicon.png -->
+                <img class="logo-img" src="/assets/favicon.png" alt="Logo Revista Inquietações"
+                    onerror="this.onerror=null; this.src='https://placehold.co/90x90?text=📚';">
+            </div>
+            <h1>Código de Conduta</h1>
+            <div class="tagline">
+                <i class="fas fa-feather-alt"></i> Revista Inquietações · Onde o saber encontra respeito
+            </div>
+        </div>
+
+        <div class="card-code">
+            <div class="intro-text">
+                <i class="fas fa-quote-left" style="margin-right: 8px; color:#c084fc;"></i>
+                A <strong>Revista Inquietações</strong> é um projeto acadêmico comprometido com o respeito, a ética, a
+                diversidade e a responsabilidade intelectual.
+                Esperamos que autores(as), pareceristas, editores(as), colaboradores(as) e demais participantes ajam com
+                cordialidade, respeito mútuo e integridade acadêmica.
+            </div>
+
+            <div class="highlight-title">
+                <i class="fas fa-ban"></i>
+                <span>Não serão tolerados:</span>
+            </div>
+
+            <div class="list-violations">
+                <div class="violation-item">
+                    <i class="fas fa-comment-slash"></i>
+                    <span>assédio, intimidação ou discriminação de qualquer natureza;</span>
+                </div>
+                <div class="violation-item">
+                    <i class="fas fa-angry"></i>
+                    <span>linguagem ofensiva, agressiva ou desrespeitosa;</span>
+                </div>
+                <div class="violation-item">
+                    <i class="fas fa-file-signature"></i>
+                    <span>condutas que comprometam a integridade acadêmica (plágio, falsificação, etc.);</span>
+                </div>
+                <div class="violation-item">
+                    <i class="fas fa-globe-americas"></i>
+                    <span>comportamentos incompatíveis com os direitos humanos e com a convivência ética.</span>
+                </div>
+            </div>
+
+            <div class="consequences-box">
+                <p>
+                    <i class="fas fa-gavel"></i>
+                    <strong>Consequências:</strong> Situações de violação poderão resultar em advertência, restrição de
+                    participação ou exclusão do projeto e de seus ambientes institucionais.
+                </p>
+            </div>
+
+            <div class="highlight-title" style="margin-top: 1rem;">
+                <i class="fas fa-hand-sparkles"></i>
+                <span>Nossos pilares</span>
+            </div>
+            <div class="principios">
+                <div class="principio-badge"><i class="fas fa-graduation-cap"></i> Ética acadêmica</div>
+                <div class="principio-badge"><i class="fas fa-heart"></i> Inclusão</div>
+                <div class="principio-badge"><i class="fas fa-globe"></i> Responsabilidade social</div>
+                <div class="principio-badge"><i class="fas fa-dove"></i> Respeito à pluralidade</div>
+                <div class="principio-badge"><i class="fas fa-chalkboard-user"></i> Integridade intelectual</div>
+            </div>
+
+            <div
+                style="margin-top: 2.2rem; font-style: italic; background: rgba(0,0,0,0.2); border-radius: 2rem; padding: 1rem 1.5rem; border-left: 4px solid #facc15;">
+                <i class="fas fa-leaf" style="margin-right: 12px; color: #9effcf;"></i>
+                Este projeto segue princípios de ética acadêmica, inclusão, responsabilidade social e respeito à
+                pluralidade.
+            </div>
+        </div>
+
+        <div class="footer-note">
+            <span><i class="far fa-comment-dots"></i> Denúncias e dúvidas: rev.inquietacoes@gmail.com</span>
+            <span><i class="fas fa-shield-alt"></i> Ambiente seguro para todas as vozes</span>
+            <span><i class="fas fa-mask"></i> Compromisso com a ciência aberta e diversa</span>
+        </div>
+    </div>
+
+    <!-- Script extra para garantir que o favicon como imagem apareça com fallback visual (caso não exista, mas o usuário possui) -->
+    <script>
+        (function () {
+            // Pequeno efeito para dar um toque de dinamismo (console friendly)
+            console.log("📖 Revista Inquietações — Código de Conduta carregado. Respeito e ética acima de tudo.");
+            // Adapta caso alguma imagem GIF demore, mas não essencial.
+            const logos = document.querySelectorAll('.logo-img');
+            logos.forEach(logo => {
+                logo.addEventListener('error', () => {
+                    // fallback: se o favicon não for encontrado, mostra emoji representativo mantendo estilo
+                    if (logo.src.includes('/assets/favicon.png')) {
+                        logo.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"%3E%3Ccircle cx="50" cy="50" r="45" fill="%236d28d9"/%3E%3Ctext x="50" y="70" font-size="50" text-anchor="middle" fill="white"%3E📚%3C/text%3E%3C/svg%3E';
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+
+</html>

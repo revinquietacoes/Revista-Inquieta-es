@@ -248,9 +248,12 @@
       padding: 0;
       margin-top: 2rem;
     }
-    .footer-ojs p, .footer-ojs .footer-meta {
+
+    .footer-ojs p,
+    .footer-ojs .footer-meta {
       display: none;
     }
+
     .footer-modern-panel {
       position: relative;
       background-image: url('/assets/paineis/borbuletas.gif');
@@ -264,6 +267,7 @@
       /* ARREDONDAMENTO DOS CANTOS (superiores e inferiores) */
       border-radius: 28px;
     }
+
     /* Overlay claro/branco conforme solicitado: #f8f9f9e3 */
     .footer-modern-panel::before {
       content: '';
@@ -277,8 +281,10 @@
       -webkit-backdrop-filter: blur(2px);
       z-index: 1;
       pointer-events: none;
-      border-radius: inherit; /* herda o mesmo arredondamento */
+      border-radius: inherit;
+      /* herda o mesmo arredondamento */
     }
+
     /* Container dos botões: grade responsiva, botões menores ainda */
     .footer-buttons-container {
       position: relative;
@@ -289,6 +295,7 @@
       max-width: 1100px;
       margin: 0 auto 0.8rem auto;
     }
+
     /* Botões com gradiente, texto branco, tamanho bastante reduzido */
     .footer-btn {
       display: flex;
@@ -309,12 +316,14 @@
       word-break: break-word;
       font-family: 'Inter', system-ui, sans-serif;
     }
+
     .footer-btn:hover {
       transform: translateY(-1px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
       filter: brightness(1.02);
       text-decoration: none;
     }
+
     /* Créditos institucionais compactos com fundo semi-transparente para melhor leitura */
     .footer-credits {
       position: relative;
@@ -335,29 +344,36 @@
       margin-right: auto;
       backdrop-filter: blur(2px);
     }
+
     .footer-credits a,
     .footer-credits span {
       color: #1e3a8a;
       text-decoration: none;
     }
+
     .footer-credits a:hover {
       text-decoration: underline;
       color: #0f2b66;
     }
+
     /* Responsividade */
     @media (max-width: 750px) {
       .footer-buttons-container {
         grid-template-columns: 1fr;
         gap: 0.5rem;
       }
+
       .footer-modern-panel {
         padding: 0.8rem 1rem;
-        border-radius: 20px; /* um pouco menor em mobile */
+        border-radius: 20px;
+        /* um pouco menor em mobile */
       }
+
       .footer-btn {
         padding: 0.35rem 0.5rem;
         font-size: 0.65rem;
       }
+
       .footer-credits {
         font-size: 0.6rem;
         flex-direction: column;
@@ -376,7 +392,9 @@
         href="#barra-lateral">Ir para a barra lateral</a><a id="link-rodape" href="#rodape">Ir para o rodapé</a></nav>
     <div id="barra-superior" class="topbar">
       <div id="div-pill" class="pill">Revista Inquietações • Periódico acadêmico em Ciências Humanas</div>
-      <div id="div-pill-acesso-pill" class="pill acesso-pill"><a class='topbar-btn' href='/cadastro-login/cadastro' id='link-cadastro'>Cadastrar-se</a><a class='topbar-btn secondary' href='/cadastro-login/login' id='link-login'>Entrar</a></div>
+      <div id="div-pill-acesso-pill" class="pill acesso-pill"><a class='topbar-btn' href='/cadastro-login/cadastro'
+          id='link-cadastro'>Cadastrar-se</a><a class='topbar-btn secondary' href='/cadastro-login/login'
+          id='link-login'>Entrar</a></div>
     </div>
     <header id="cabecalho-da-pagina" class="masthead masthead-ojs" role="banner">
       <div id="div-masthead-inner-masthead-inner-ojs" class="masthead-inner masthead-inner-ojs">
@@ -449,7 +467,9 @@
                     <p id="p-5">Pluralidade de formatos editoriais já incorporados ao portal.</p>
                   </div>
                 </div>
-                <div id="div-cta-row" class="cta-row"><a class='btn' href='/edicao-atual' id='link-edicao-atual-2'>Ver página da edição</a><a class='btn secondary' href='/conteudos' id='link-conteudos-2'>Ler conteúdos publicados</a></div>
+                <div id="div-cta-row" class="cta-row"><a class='btn' href='/edicao-atual' id='link-edicao-atual-2'>Ver
+                    página da edição</a><a class='btn secondary' href='/conteudos' id='link-conteudos-2'>Ler conteúdos
+                    publicados</a></div>
               </div>
             </div>
           </div>
@@ -460,12 +480,21 @@
             <p id="p-6">Páginas institucionais já disponíveis no portal.</p>
           </div>
           <div id="div-panel-body-2" class="panel-body">
-            <div id="div-card-grid-quick-grid" class="card-grid quick-grid"><a class='info-card info-link' href='/sobre' id='link-sobre-2'><strong>Sobre a revista</strong>Missão, escopo e
-                compromissos editoriais.</a><a class='info-card info-link' href='/equipe-editorial' id='link-equipe-editorial-2'><strong>Equipe editorial</strong>Estrutura acadêmica e
-                responsabilidades.</a><a class='info-card info-link' href='/politicas-editoriais' id='link-politicas-editoriais-2'><strong>Políticas editoriais</strong>Ética, acesso aberto e integridade
-                científica.</a><a class='info-card info-link' href='/diretrizes-autores' id='link-diretrizes-autores-2'><strong>Diretrizes para autores</strong>Normas de submissão e fluxo
-                editorial.</a><a class='info-card info-link' href='/templates' id='link-templates-2'><strong>Templates oficiais</strong>Modelos para preparação dos manuscritos.</a><a class='info-card info-link' href='/submissoes' id='link-submissoes-2'><strong>Submissões</strong>Formulário oficial de envio e links auxiliares.</a><a class='info-card info-link' href='/evento' id='link-evento-2'><strong>Mini-cursos</strong>Aulas
-                comentadas incorporadas ao portal.</a><a class='info-card info-link' href='/contato' id='link-contato-2'><strong>Contato</strong>Instagram, e-mail e canais institucionais.</a></div>
+            <div id="div-card-grid-quick-grid" class="card-grid quick-grid"><a class='info-card info-link' href='/sobre'
+                id='link-sobre-2'><strong>Sobre a revista</strong>Missão, escopo e
+                compromissos editoriais.</a><a class='info-card info-link' href='/equipe-editorial'
+                id='link-equipe-editorial-2'><strong>Equipe editorial</strong>Estrutura acadêmica e
+                responsabilidades.</a><a class='info-card info-link' href='/politicas-editoriais'
+                id='link-politicas-editoriais-2'><strong>Políticas editoriais</strong>Ética, acesso aberto e integridade
+                científica.</a><a class='info-card info-link' href='/diretrizes-autores'
+                id='link-diretrizes-autores-2'><strong>Diretrizes para autores</strong>Normas de submissão e fluxo
+                editorial.</a><a class='info-card info-link' href='/templates' id='link-templates-2'><strong>Templates
+                  oficiais</strong>Modelos para preparação dos manuscritos.</a><a class='info-card info-link'
+                href='/submissoes' id='link-submissoes-2'><strong>Submissões</strong>Formulário oficial de envio e links
+                auxiliares.</a><a class='info-card info-link' href='/evento'
+                id='link-evento-2'><strong>Mini-cursos</strong>Aulas
+                comentadas incorporadas ao portal.</a><a class='info-card info-link' href='/contato'
+                id='link-contato-2'><strong>Contato</strong>Instagram, e-mail e canais institucionais.</a></div>
           </div>
         </section>
       </main>
@@ -513,31 +542,37 @@
         </section>
       </aside>
     </div>
-    
-    <!-- RODAPÉ MODERNIZADO: cantos arredondados, overlay claro, botões reduzidos -->
-    <footer class="footer footer-ojs" id="rodape">
+
+    <!-- RODAPÉ MODERNIZADO (alinhado dentro do site-shell) -->
+    <footer id="rodape-principal" class="footer">
       <div class="footer-modern-panel">
         <div class="footer-buttons-container">
-          <a href="https://revista-inquietacoes.netlify.app/" class="footer-btn" target="_blank" rel="noopener noreferrer">
+          <a href="https://revista-inquietacoes.netlify.app/" class="footer-btn" target="_blank"
+            rel="noopener noreferrer">
             Revista Inquietações — periódico científico em acesso aberto
           </a>
-          <a href="https://revista-inquietacoes.netlify.app/codigo_de_conduta.html" class="footer-btn" target="_blank" rel="noopener noreferrer">
+          <a href="https://revista-inquietacoes.netlify.app/codigo_de_conduta.html" class="footer-btn" target="_blank"
+            rel="noopener noreferrer">
             Código de Conduta
           </a>
           <a href="https://www.netlify.com/" class="footer-btn" target="_blank" rel="noopener noreferrer">
             Este site é desenvolvido com apoio de Netlify
           </a>
-          <a href="https://revista-inquietacoes.netlify.app/sobre" class="footer-btn" target="_blank" rel="noopener noreferrer">
+          <a href="https://revista-inquietacoes.netlify.app/sobre" class="footer-btn" target="_blank"
+            rel="noopener noreferrer">
             Sobre
           </a>
-          <a href="https://revista-inquietacoes.netlify.app/cadastro-login/editor-chefe-chat" class="footer-btn" target="_blank" rel="noopener noreferrer">
+          <a href="https://revista-inquietacoes.netlify.app/cadastro-login/chat-interno" class="footer-btn"
+            target="_blank" rel="noopener noreferrer">
             Entrar em contato
           </a>
         </div>
         <div class="footer-credits">
           <span>© 2026 Revista Inquietações — ISSN 3086-4119</span>
-          <span>Organização editorial: Diego Vinícius Brito dos Santos • <a href="https://www.instagram.com/iamthed1/" target="_blank" rel="noopener noreferrer">@iamthed1</a></span>
-          <span>Conteúdo sob <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="license">CC BY 4.0</a></span>
+          <span>Organização editorial: Diego Vinícius Brito dos Santos • <a href="https://www.instagram.com/iamthed1/"
+              target="_blank" rel="noopener noreferrer">@iamthed1</a></span>
+          <span>Conteúdo sob <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="license">CC BY
+              4.0</a></span>
         </div>
       </div>
     </footer>
