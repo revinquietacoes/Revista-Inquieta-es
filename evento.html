@@ -1,4 +1,3 @@
-<!-- evento.html com a função de cópia no lugar do download -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -15,7 +14,7 @@
     <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
         type="image/png">
     <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
-    <!-- Bibliotecas para edição de DOCX (apenas leitura, não mais usado para escrita) -->
+    <!-- Bibliotecas para edição de DOCX (apenas leitura) -->
     <script src="https://cdn.jsdelivr.net/npm/mammoth@1.4.2/mammoth.browser.min.js"></script>
     <style>
         /* ========== ESTILOS BASE ========== */
@@ -38,6 +37,7 @@
             padding: 1rem;
         }
 
+        /* Topbar */
         .topbar {
             display: flex;
             justify-content: space-between;
@@ -84,48 +84,132 @@
             opacity: .95;
         }
 
+        /* ========== MASTHEAD (PAINEL DO TOPO) CORRIGIDO ========== */
         .masthead {
-            background: linear-gradient(135deg, #0f2b66, #1e3a8a);
-            border-radius: 2rem;
-            padding: 2rem;
-            margin-bottom: 2rem;
-            color: white;
             position: relative;
+            background: none !important;
+            background-image: url('https://s2.glbimg.com/FRyrYDBiOhDglCRobjP2Nxvg0Po=/e.glbimg.com/og/ed/f/original/2017/01/12/van-gogh.gif') !important;
+            background-size: cover !important;
+            background-position: center center !important;
+            background-repeat: no-repeat !important;
+            border-radius: 28px;
             overflow: hidden;
+            isolation: isolate;
+            margin-bottom: 2rem;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        /* Overlay com efeito vidro */
+        .masthead::before {
+            content: '';
+            position: absolute;
+            -webkit-backdrop-filter: blur(3px);
+            z-index: 0;
+            pointer-events: none;
         }
 
         .masthead-inner {
-            display: flex;
+            position: relative;
+            z-index: 2;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
             gap: 2rem;
-            position: relative;
-            z-index: 2;
+            padding: 2.5rem;
+        }
+
+        /* Conteúdo textual à esquerda */
+        .masthead-copy {
+            flex: 1;
+            color: white;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
         }
 
         .kicker {
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
             letter-spacing: 2px;
-            opacity: 0.8;
+            opacity: 0.9;
+            margin-bottom: 0.5rem;
         }
 
         .masthead h1 {
-            font-size: 2rem;
+            font-size: 2.2rem;
             margin: 0.5rem 0;
+            font-weight: 700;
         }
 
-        .hero-text {
-            max-width: 600px;
-            opacity: 0.9;
+        .masthead-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .masthead-card {
+            background: rgba(255, 255, 255, 0.15);
+
+            border-radius: 2rem;
+            padding: 0.4rem 1rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .masthead-card strong {
+            font-weight: 700;
+            margin-right: 0.5rem;
+        }
+
+        /* Logo à direita */
+        .banner-card {
+            flex-shrink: 0;
         }
 
         .banner-card img {
-            max-width: 100px;
+            width: 100%;
+            border-radius: 18px;
+            /* background: transparent; */
+            mix-blend-mode: normal;
+        }
+
+        .banner-card img {
+            background: transparent;
+            mix-blend-mode: normal;
             filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
         }
 
+        img {
+            max-width: 100%;
+            display: block;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        user agent stylesheet img {
+            overflow-clip-margin: content-box;
+            overflow: clip;
+        }
+
+        /* Responsividade do masthead */
+        @media (max-width: 768px) {
+            .masthead-inner {
+                flex-direction: column;
+                text-align: center;
+                padding: 1.8rem;
+            }
+
+            .masthead-meta {
+                justify-content: center;
+            }
+
+            .banner-card img {
+                max-width: 90px;
+            }
+        }
+
+        /* ========== NAVEGAÇÃO ========== */
         .site-nav {
             background: white;
             border-radius: 2rem;
@@ -156,6 +240,7 @@
             color: #1e3a8a;
         }
 
+        /* ========== GRID PRINCIPAL ========== */
         .portal-grid {
             display: grid;
             grid-template-columns: 260px 1fr;
@@ -196,6 +281,7 @@
             box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
         }
 
+        /* ========== BOTÕES DE AÇÃO ========== */
         .actions-grid {
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
@@ -240,7 +326,7 @@
             color: #475569;
         }
 
-        /* Modal do editor */
+        /* ========== MODAL DO EDITOR ========== */
         .modal {
             display: none;
             position: fixed;
@@ -316,34 +402,125 @@
             color: #1e293b;
         }
 
+        /* ========== RODAPÉ MODERNIZADO ========== */
+        .footer-modern-panel {
+            position: relative;
+            background-image: url('/assets/paineis/borbuletas.gif');
+            background-size: cover;
+            background-position: center center;
+            background-repeat: no-repeat;
+            width: 100%;
+            padding: 1rem 2rem;
+            overflow: hidden;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.05);
+            border-radius: 28px;
+            margin-top: 1rem;
+        }
+
+        .footer-modern-panel::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #f8f9f9e3;
+            backdrop-filter: blur(2px);
+            -webkit-backdrop-filter: blur(2px);
+            z-index: 1;
+            pointer-events: none;
+            border-radius: inherit;
+        }
+
+        .footer-buttons-container {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+            gap: 0.6rem;
+            max-width: 1100px;
+            margin: 0 auto 0.8rem auto;
+        }
+
+        .footer-btn {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 0.4rem 0.6rem;
+            background: linear-gradient(105deg, #1e3a8a, #3b82f6);
+            color: white !important;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.7rem;
+            border-radius: 40px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            line-height: 1.2;
+            white-space: normal;
+            word-break: break-word;
+        }
+
+        .footer-btn:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+            filter: brightness(1.02);
+        }
+
+        .footer-credits {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            font-size: 0.65rem;
+            color: #1e293b;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 40px;
+            padding: 0.4rem 1rem;
+            margin-top: 0.2rem;
+            display: inline-flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.8rem;
+            width: auto;
+            margin-left: auto;
+            margin-right: auto;
+            backdrop-filter: blur(2px);
+        }
+
+        .footer-credits a,
+        .footer-credits span {
+            color: #1e3a8a;
+            text-decoration: none;
+        }
+
+        .footer-credits a:hover {
+            text-decoration: underline;
+        }
+
         @media (max-width: 768px) {
             .portal-grid {
                 grid-template-columns: 1fr;
             }
 
-            .masthead-inner {
-                flex-direction: column;
-                text-align: center;
-            }
-
             .actions-grid {
                 grid-template-columns: 1fr;
             }
-        }
 
-        .footer-modern-panel {
-            background: #f1f5f9;
-            border-radius: 1.5rem;
-            padding: 1rem;
-            text-align: center;
-            font-size: 0.8rem;
-            margin-top: 2rem;
+            .footer-buttons-container {
+                grid-template-columns: 1fr;
+            }
+
+            .footer-modern-panel {
+                padding: 0.8rem 1rem;
+                border-radius: 20px;
+            }
         }
     </style>
 </head>
 
 <body>
     <div class="site-shell">
+        <!-- Topbar -->
         <div class="topbar">
             <div class="pill">Revista Inquietações • Formação acadêmica contínua</div>
             <div>
@@ -352,40 +529,49 @@
             </div>
         </div>
 
-        <header class="masthead">
+        <!-- Masthead corrigido: texto à esquerda, logo à direita -->
+        <header class="masthead" role="banner">
             <div class="masthead-inner">
-                <div>
-                    <p class="kicker">Portal científico • Acesso aberto</p>
-                    <h1>Cursos e atividades da Revista Inquietações</h1>
-                    <p class="hero-text">Formação contínua, certificados e interação acadêmica nas Ciências Humanas e
-                        Sociais.</p>
+                <div class="masthead-copy">
+                    <p class="kicker">Portal científico • acesso aberto</p>
+                    <h1>Eventos e Cursos</h1>
+                    <div class="masthead-meta">
+                        <div class="masthead-card"><strong>Status editorial</strong>Primeira edição</div>
+                        <div class="masthead-card"><strong>Periodicidade</strong>Fluxo contínuo</div>
+                        <div class="masthead-card"><strong>Área</strong>Ciências Humanas</div>
+                        <div class="masthead-card"><strong>ISSN</strong>3086-4119</div>
+                    </div>
                 </div>
                 <div class="banner-card">
-                    <img src="assets/favicon.png" alt="Logo">
+                    <img src="assets/favicon.png" alt="Logo da Revista Inquietações">
                 </div>
             </div>
         </header>
 
+        <!-- Navegação -->
         <nav class="site-nav">
             <div class="site-nav-menu">
                 <a href='/'>Início</a>
-                <a href='/conteudos'>Conteúdos</a>
                 <a href='/edicao-atual'>Atual</a>
+                <a href='/conteudos'>Conteúdos</a>
                 <a class='active' href='/evento'>Cursos</a>
                 <a href='/sobre'>Sobre</a>
                 <a href='/submissoes'>Submissões</a>
                 <a href='/templates'>Templates</a>
                 <a href='/politicas-editoriais'>Políticas</a>
                 <a href='/diretrizes-autores'>Diretrizes</a>
-                <a href='/equipe-editorial'>Equipe</a>
+                <a href='/equipe-editorial'>Equipe Editorial</a>
+                <a href='/homenagens'>Homenagens</a>
                 <a href='/contato'>Contato</a>
+                <a href='/noticias'>Notícias</a>
             </div>
         </nav>
 
+        <!-- Conteúdo principal -->
         <div class="portal-grid">
             <aside class="sidebar">
                 <h2>🔍 Atalhos</h2>
-                <a class="side-nav-link" href="#acoes">⚡Ações principais</a>
+                <a class="side-nav-link" href="#acoes">⚡ Ações principais</a>
                 <a class="side-nav-link" href="/cadastro-login/salas-de-aula">📚 Meus cursos</a>
                 <a class="side-nav-link" href="/cadastro-login/certificados">📜 Meus certificados</a>
                 <a class="side-nav-link" href="/validador">✅ Validar certificados</a>
@@ -441,13 +627,43 @@
             </main>
         </div>
 
-        <footer class="footer-modern-panel">
-            <p>© 2026 Revista Inquietações — ISSN 3086-4119 | Conteúdo sob CC BY 4.0</p>
-            <p>Organização: Diego Vinícius Brito dos Santos · <a href="https://www.netlify.com">Netlify</a></p>
+        <!-- Rodapé -->
+        <footer>
+            <div class="footer-modern-panel">
+                <div class="footer-buttons-container">
+                    <a href="https://revista-inquietacoes.netlify.app/" class="footer-btn" target="_blank"
+                        rel="noopener noreferrer">
+                        Revista Inquietações — periódico científico em acesso aberto
+                    </a>
+                    <a class='footer-btn' href='https://revista-inquietacoes.netlify.app/codigo_de_conduta'
+                        rel='noopener noreferrer' target='_blank'>
+                        Código de Conduta
+                    </a>
+                    <a href="https://www.netlify.com/" class="footer-btn" target="_blank" rel="noopener noreferrer">
+                        Este site é desenvolvido com apoio de Netlify
+                    </a>
+                    <a href="https://revista-inquietacoes.netlify.app/sobre" class="footer-btn" target="_blank"
+                        rel="noopener noreferrer">
+                        Sobre
+                    </a>
+                    <a href="https://revista-inquietacoes.netlify.app/cadastro-login/chat-interno" class="footer-btn"
+                        target="_blank" rel="noopener noreferrer">
+                        Entrar em contato
+                    </a>
+                </div>
+                <div class="footer-credits">
+                    <span>© 2026 Revista Inquietações — ISSN 3086-4119</span>
+                    <span>Organização editorial: Diego Vinícius Brito dos Santos • <a
+                            href="https://www.instagram.com/iamthed1/" target="_blank"
+                            rel="noopener noreferrer">@iamthed1</a></span>
+                    <span>Conteúdo sob <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank"
+                            rel="license">CC BY 4.0</a></span>
+                </div>
+            </div>
         </footer>
     </div>
 
-    <!-- Modal para edição do template -->
+    <!-- Modal do editor -->
     <div id="editorModal" class="modal">
         <div class="modal-content">
             <div class="modal-header">
@@ -466,7 +682,6 @@
     </div>
 
     <script>
-        // Script para edição do template .docx (apenas leitura e cópia)
         (function () {
             const modal = document.getElementById('editorModal');
             const editorTextarea = document.getElementById('docEditor');
@@ -497,7 +712,6 @@
                 }
             }
 
-            // Função para copiar o texto editado para a área de transferência
             async function copyEditedText() {
                 const editedText = editorTextarea.value;
                 if (!editedText.trim()) {
