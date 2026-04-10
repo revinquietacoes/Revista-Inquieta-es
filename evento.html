@@ -320,10 +320,12 @@
             .portal-grid {
                 grid-template-columns: 1fr;
             }
+
             .masthead-inner {
                 flex-direction: column;
                 text-align: center;
             }
+
             .actions-grid {
                 grid-template-columns: 1fr;
             }
@@ -355,7 +357,8 @@
                 <div>
                     <p class="kicker">Portal científico • Acesso aberto</p>
                     <h1>Cursos e atividades da Revista Inquietações</h1>
-                    <p class="hero-text">Formação contínua, certificados e interação acadêmica nas Ciências Humanas e Sociais.</p>
+                    <p class="hero-text">Formação contínua, certificados e interação acadêmica nas Ciências Humanas e
+                        Sociais.</p>
                 </div>
                 <div class="banner-card">
                     <img src="assets/favicon.png" alt="Logo">
@@ -397,12 +400,14 @@
                         <div class="action-title">Cursos</div>
                         <div class="action-desc">Acesse suas salas de aula</div>
                     </a>
-                    <a class='action-btn' href='https://revista-inquietacoes.netlify.app/cadastro-login/inscricao-eventos'>
+                    <a class='action-btn'
+                        href='https://revista-inquietacoes.netlify.app/cadastro-login/inscricao-eventos'>
                         <div class="action-emoji">📝</div>
                         <div class="action-title">Inscrição</div>
                         <div class="action-desc">Inscreva-se em eventos</div>
                     </a>
-                    <a href="https://revista-inquietacoes.netlify.app/cadastro-login/solicitacao-certificados" class="action-btn">
+                    <a href="https://revista-inquietacoes.netlify.app/cadastro-login/solicitacao-certificados"
+                        class="action-btn">
                         <div class="action-emoji">🎓</div>
                         <div class="action-title">Solicitar certificado</div>
                         <div class="action-desc">Peça seu certificado</div>
@@ -447,7 +452,8 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h3>Editar Modelo de Resumo Expandido</h3>
-                <button id="closeModal" style="background:none; border:none; color:white; font-size:1.5rem;">&times;</button>
+                <button id="closeModal"
+                    style="background:none; border:none; color:white; font-size:1.5rem;">&times;</button>
             </div>
             <div class="modal-body">
                 <textarea id="docEditor" class="editor-area" placeholder="Carregando conteúdo..."></textarea>
@@ -461,7 +467,7 @@
 
     <script>
         // Script para edição do template .docx (apenas leitura e cópia)
-        (function() {
+        (function () {
             const modal = document.getElementById('editorModal');
             const editorTextarea = document.getElementById('docEditor');
             const btnTemplate = document.getElementById('btnTemplate');
