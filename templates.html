@@ -13,6 +13,8 @@
   <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
     type="image/png">
   <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
+  <!-- Biblioteca para extrair texto de .docx -->
+  <script src="https://cdn.jsdelivr.net/npm/mammoth@1.4.2/mammoth.browser.min.js"></script>
   <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -24,13 +26,11 @@
 </script>
   <style>
     /* ========== SOBRESCRITA PARA O PAINEL PRINCIPAL COM GIF E EFEITO VIDRO ========== */
-    /* Remove os pseudo-elementos antigos do masthead (círculos decorativos) */
     .masthead::before,
     .masthead::after {
       display: none !important;
     }
 
-    /* Aplica o GIF de fundo no painel principal */
     .masthead {
       position: relative;
       background: none !important;
@@ -41,7 +41,6 @@
       isolation: isolate;
     }
 
-    /* Overlay com efeito glassmorphism (vidro) - ocupa 100% do painel */
     .masthead::after {
       content: '';
       position: absolute;
@@ -57,13 +56,11 @@
       pointer-events: none;
     }
 
-    /* Garante que todo o conteúdo do masthead fique acima do overlay */
     .masthead .masthead-inner {
       position: relative;
       z-index: 2;
     }
 
-    /* Ajuste de contraste para o texto sobre o fundo com vidro */
     .masthead .kicker,
     .masthead h1,
     .masthead .hero-text,
@@ -71,14 +68,13 @@
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
-    /* Estilo para o logo GIF – garante boa visibilidade */
     .banner-card img {
       background: transparent;
       mix-blend-mode: normal;
       filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
     }
 
-    /* ========== ESTILOS EXISTENTES DA PÁGINA (mantidos) ========== */
+    /* ========== ESTILOS EXISTENTES ========== */
     .template-grid {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -89,10 +85,10 @@
     .template-card {
       position: relative;
       background: #fff;
-      border: 1px solid var(--line);
+      border: 1px solid var(--line, #e2e8f0);
       border-radius: 18px;
       padding: 22px;
-      box-shadow: var(--shadow-soft);
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
       transition: transform .18s ease, box-shadow .18s ease;
       overflow: hidden;
     }
@@ -113,7 +109,7 @@
 
     .template-card h3 {
       margin-top: 0;
-      color: var(--brand);
+      color: #1e3a8a;
     }
 
     .template-card p {
@@ -122,6 +118,22 @@
 
     .template-card .btn {
       margin-top: 4px;
+      display: inline-block;
+      background: #1f3c88;
+      color: white;
+      padding: 8px 16px;
+      border-radius: 40px;
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.85rem;
+      transition: 0.2s;
+      border: none;
+      cursor: pointer;
+    }
+
+    .template-card .btn:hover {
+      background: #0f2b66;
+      transform: translateY(-1px);
     }
 
     /* cores dos cards */
@@ -161,13 +173,20 @@
       background: #e2c06f;
     }
 
-    /* NOVO: modificador para artigo de dossiê */
+    .template-card.traducao {
+      background: #e9eaff;
+      border-color: #d0d3f0;
+    }
+
+    .template-card.traducao::before {
+      background: #7c83c9;
+    }
+
     .template-card.artigo-dossie {
       background: #e7ccba;
       border-color: #d7ecdf;
     }
 
-    /* Se desejar uma cor diferente para o traço superior, adicione: */
     .template-card.artigo-dossie::before {
       background: #b88a5c;
     }
@@ -232,7 +251,6 @@
       gap: 2px;
       padding: 8px;
       justify-content: center;
-      /* centraliza os itens horizontalmente */
     }
 
     .site-nav-menu::-webkit-scrollbar {
@@ -243,34 +261,127 @@
       font-size: 0.88rem;
       padding: 8px 8px;
       white-space: nowrap;
+      text-decoration: none;
+      color: #1e293b;
+      border-radius: 2rem;
+      font-weight: 500;
     }
 
-    .sidebar-block {
-      padding: 16px;
+    .site-nav-menu a:hover,
+    .site-nav-menu a.active {
+      background: #eef2ff;
+      color: #1e3a8a;
     }
 
+    /* ========== ESTILOS DA NAVEGAÇÃO LATERAL (copiados do submissões.html) ========== */
     .sidebar-block {
       padding: 18px;
       border-radius: 18px;
       margin-bottom: 18px;
-    }
-
-    .sidebar-block,
-    .panel,
-    .sidebar,
-    .footer {
-      border: 1px solid var(--line);
       background: rgba(255, 255, 255, 0.9);
-      box-shadow: var(--shadow-soft);
+      border: 1px solid var(--line, #e2e8f0);
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
     }
 
-    /* ========== ESTILOS DO RODAPÉ MODERNIZADO (alinhado dentro do site-shell) ========== */
-    /* Remove conteúdo antigo do footer */
-    .footer p,
-    .footer .footer-meta {
+    .side-nav-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .side-nav-link {
+      display: block;
+      text-decoration: none;
+      padding: 11px 14px;
+      border-radius: 12px;
+      background: #f8fbff;
+      border: 1px solid #dbe6f2;
+      color: #1e3a8a;
+      font-weight: 500;
+      transition: background .18s ease, transform .18s ease;
+    }
+
+    .side-nav-link:hover {
+      background: #eef5fc;
+      transform: translateY(-1px);
+    }
+
+    /* Modal */
+    .modal {
       display: none;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 1000;
+      justify-content: center;
+      align-items: center;
     }
 
+    .modal-content {
+      background: white;
+      width: 90%;
+      max-width: 900px;
+      max-height: 90vh;
+      border-radius: 1.5rem;
+      overflow: hidden;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      padding: 1rem;
+      background: #1e3a8a;
+      color: white;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .modal-body {
+      padding: 1rem;
+      overflow-y: auto;
+      flex: 1;
+    }
+
+    .editor-area {
+      width: 100%;
+      min-height: 400px;
+      border: 1px solid #cbd5e1;
+      border-radius: 0.75rem;
+      padding: 1rem;
+      font-family: monospace;
+      font-size: 0.9rem;
+    }
+
+    .modal-footer {
+      padding: 1rem;
+      display: flex;
+      justify-content: flex-end;
+      gap: 1rem;
+      border-top: 1px solid #e2e8f0;
+    }
+
+    .btn-modal {
+      padding: 0.5rem 1rem;
+      border-radius: 2rem;
+      border: none;
+      font-weight: 600;
+      cursor: pointer;
+    }
+
+    .btn-primary {
+      background: #1e3a8a;
+      color: white;
+    }
+
+    .btn-secondary {
+      background: #e2e8f0;
+      color: #1e293b;
+    }
+
+    /* Rodapé modernizado */
     .footer-modern-panel {
       position: relative;
       background-image: url('/assets/paineis/borbuletas.gif');
@@ -285,7 +396,6 @@
       margin-top: 1rem;
     }
 
-    /* Overlay claro/branco */
     .footer-modern-panel::before {
       content: '';
       position: absolute;
@@ -295,13 +405,11 @@
       height: 100%;
       background: #f8f9f9e3;
       backdrop-filter: blur(2px);
-      -webkit-backdrop-filter: blur(2px);
       z-index: 1;
       pointer-events: none;
       border-radius: inherit;
     }
 
-    /* Container dos botões: grade responsiva, botões reduzidos */
     .footer-buttons-container {
       position: relative;
       z-index: 2;
@@ -312,7 +420,6 @@
       margin: 0 auto 0.8rem auto;
     }
 
-    /* Botões com gradiente, texto branco, tamanho pequeno */
     .footer-btn {
       display: flex;
       align-items: center;
@@ -326,21 +433,13 @@
       font-size: 0.7rem;
       border-radius: 40px;
       transition: transform 0.2s ease, box-shadow 0.2s ease;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-      line-height: 1.2;
-      white-space: normal;
-      word-break: break-word;
-      font-family: 'Inter', system-ui, sans-serif;
     }
 
     .footer-btn:hover {
       transform: translateY(-1px);
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
-      filter: brightness(1.02);
-      text-decoration: none;
     }
 
-    /* Créditos institucionais compactos */
     .footer-credits {
       position: relative;
       z-index: 2;
@@ -369,10 +468,8 @@
 
     .footer-credits a:hover {
       text-decoration: underline;
-      color: #0f2b66;
     }
 
-    /* Responsividade */
     @media (max-width: 750px) {
       .footer-buttons-container {
         grid-template-columns: 1fr;
@@ -392,8 +489,11 @@
       .footer-credits {
         font-size: 0.6rem;
         flex-direction: column;
-        gap: 0.3rem;
         background: rgba(255, 255, 255, 0.8);
+      }
+
+      .template-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -424,7 +524,6 @@
           </div>
         </div>
         <div id="div-banner-card" class="banner-card">
-          <!-- CAMINHO ATUALIZADO DO LOGO GIF (conforme solicitado) -->
           <img id="imagem-logo-revista-png" src="assets/favicon.png" alt="Logo da Revista Inquietações">
         </div>
       </div>
@@ -432,31 +531,44 @@
     <nav class="site-nav site-nav-ojs" id="navegacao-principal" aria-label="Navegação principal">
       <button id="button-site-nav-toggle" class="site-nav-toggle" type="button">Menu</button>
       <div id="div-site-nav-menu" class="site-nav-menu">
-        <a href='/' id='link-index'>Início</a>
-        <a href='/conteudos' id='link-conteudos'>Conteúdos</a>
-        <a href='/edicao-atual' id='link-edicao-atual'>Atual</a>
-        <a href='/evento' id='link-evento'>Cursos</a>
-        <a href='/sobre' id='link-sobre'>Sobre</a>
-        <a href='/submissoes' id='link-submissoes'>Submissões</a>
-        <a class='active' href='/templates' id='link-templates'>Templates</a>
-        <a href='/politicas-editoriais' id='link-politicas-editoriais'>Políticas</a>
-        <a href='/diretrizes-autores' id='link-diretrizes-autores'>Diretrizes</a>
-        <a href='/equipe-editorial' id='link-equipe-editorial'>Equipe Editorial</a>
-        <a href='/homenagens' id='link-homenagens'>Homenagens</a>
-        <a href='/contato' id='link-contato'>Contato</a>
-        <a href='/noticias' id='link-noticias'>Notícias</a>
+        <a href='/'>Início</a>
+        <a href='/conteudos'>Conteúdos</a>
+        <a href='/edicao-atual'>Atual</a>
+        <a href='/evento'>Cursos</a>
+        <a href='/sobre'>Sobre</a>
+        <a href='/submissoes'>Submissões</a>
+        <a class='active' href='/templates'>Templates</a>
+        <a href='/politicas-editoriais'>Políticas</a>
+        <a href='/diretrizes-autores'>Diretrizes</a>
+        <a href='/equipe-editorial'>Equipe Editorial</a>
+        <a href='/homenagens'>Homenagens</a>
+        <a href='/contato'>Contato</a>
+        <a href='/noticias'>Notícias</a>
       </div>
     </nav>
     <div id="grade-do-portal" class="portal-grid sidebar-compact">
       <aside class="sidebar" id="barra-lateral">
-        <section id="section-sidebar-block" class="sidebar-block">
-          <h2 id="h2-1">Navegação da página</h2>
-          <ul id="ul-info-links" class="info-links">
-            <li id="li-1"><a id="link-template-artigo" href="#template-artigo">Template de artigo</a></li>
-            <li id="li-2"><a id="link-template-resumo" href="#template-resumo">Template de resumo expandido</a></li>
-            <li id="li-3"><a id="link-template-ensaio" href="#template-ensaio">Template de ensaio</a></li>
-            <li id="li-4"><a id="link-template-relato" href="#template-relato">Relato de experiência</a></li>
-          </ul>
+        <!-- Navegação da página – mesmo estilo do submissões.html -->
+        <section class="sidebar-block">
+          <h2>Navegação da página</h2>
+          <div class="side-nav-card">
+            <a class="side-nav-link" href="#template-artigo">Template de artigo</a>
+            <a class="side-nav-link" href="#template-resumo">Template de resumo expandido</a>
+            <a class="side-nav-link" href="#template-ensaio">Template de ensaio</a>
+            <a class="side-nav-link" href="#template-relato">Relato de experiência</a>
+            <a class="side-nav-link" href="#template-traducao">Template de tradução</a>
+            <a class="side-nav-link" href="#template-artigo-dossie">Template para dossiê</a>
+          </div>
+        </section>
+        <!-- Contato institucional (opcional, para espelhar submissões) -->
+        <section class="sidebar-block">
+          <h2>Contato institucional</h2>
+          <div class="data-list">
+            <div><strong>Instagram:</strong> <a href="https://www.instagram.com/revistainquietacoes/" target="_blank"
+                rel="noopener noreferrer">@revistainquietacoes</a></div>
+            <div><strong>E-mail:</strong> <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a>
+            </div>
+          </div>
         </section>
       </aside>
       <main class="content" id="conteudo-principal">
@@ -467,61 +579,58 @@
           </div>
           <div id="div-panel-body" class="panel-body">
             <div id="div-template-grid" class="template-grid">
+              <!-- Template de Artigo -->
               <div class="template-card artigo" id="template-artigo">
-                <h3 id="h3-1">Template de Artigo</h3>
-                <p id="p-2">Modelo padrão para artigos científicos submetidos à Revista Inquietações. Inclui formatação
-                  de título, resumo, palavras-chave e referências.</p><a id="link-view" class="btn"
-                  href="https://drive.google.com/file/d/1Mhe6_JYAQgW9RujyZlPfL3gCmSXBXBEI/view?usp=drive_link"
-                  target="_blank" rel="noopener noreferrer">Baixar template</a>
+                <h3>Template de Artigo</h3>
+                <p>Modelo padrão para artigos científicos submetidos à Revista Inquietações. Inclui formatação de
+                  título, resumo, palavras-chave e referências.</p>
+                <button class="btn template-btn" data-path="/arquivos/modelos/Modelo-artigo.docx"
+                  data-name="Artigo">Editar e copiar</button>
               </div>
+              <!-- Template de Resumo Expandido -->
               <div class="template-card resumo" id="template-resumo">
-                <h3 id="h3-2">Template de Resumo Expandido</h3>
-                <p id="p-3">Modelo específico para submissão de resumos expandidos e comunicações acadêmicas.</p><a
-                  id="link-edit" class="btn"
-                  href="https://docs.google.com/document/d/1R1_RXqTW1uiS5oOnK9QPbpHKyg0vOxHl/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true"
-                  target="_blank" rel="noopener noreferrer">Baixar template</a>
+                <h3>Template de Resumo Expandido</h3>
+                <p>Modelo específico para submissão de resumos expandidos e comunicações acadêmicas.</p>
+                <button class="btn template-btn"
+                  data-path="/arquivos/modelos/Modelo-Resumo-Expandido-Revista-Inquietacoes.docx"
+                  data-name="Resumo Expandido">Editar e copiar</button>
               </div>
+              <!-- Template de Ensaio -->
               <div class="template-card ensaio" id="template-ensaio">
-                <h3 id="h3-3">Template de Ensaio</h3>
-                <p id="p-4">Modelo destinado à submissão de ensaios teóricos e textos reflexivos.</p><a id="link-edit-2"
-                  class="btn"
-                  href="https://docs.google.com/document/d/1wsjmOkjxZxksBNv5WuCPn1A5QthvNkcv/edit?usp=sharing&ouid=106454046870362039189&rtpof=true&sd=true"
-                  target="_blank" rel="noopener noreferrer">Baixar template</a>
+                <h3>Template de Ensaio</h3>
+                <p>Modelo destinado à submissão de ensaios teóricos e textos reflexivos.</p>
+                <button class="btn template-btn" data-path="/arquivos/modelos/Modelo-de-ensaio.docx"
+                  data-name="Ensaio">Editar e copiar</button>
               </div>
+              <!-- Relato de Experiência -->
               <div class="template-card relato" id="template-relato">
-                <h3 id="h3-4">Relato de Experiência</h3>
-                <p id="p-5">Modelo para submissão de relatos de experiência acadêmica ou pedagógica.</p><a
-                  id="link-edit-3" class="btn"
-                  href="https://docs.google.com/document/d/1jYV4ZzqAO1OGvELiMsHKNYTeWOYxBFPp/edit?usp=drive_link&ouid=106454046870362039189&rtpof=true&sd=true"
-                  target="_blank" rel="noopener noreferrer">Baixar template</a>
+                <h3>Relato de Experiência</h3>
+                <p>Modelo para submissão de relatos de experiência acadêmica ou pedagógica.</p>
+                <button class="btn template-btn" data-path="/arquivos/modelos/Modelo-Relato-de-Experiencia.docx"
+                  data-name="Relato de Experiência">Editar e copiar</button>
               </div>
-              <!-- CORREÇÃO: agora usando a classe padrão .template-card com modificador .artigo-dossie -->
-              <div class="template-card artigo-dossie" id="template-card-artigo-dossie">
+              <!-- Template de Tradução -->
+              <div class="template-card traducao" id="template-traducao">
+                <h3>Template de Tradução</h3>
+                <p>Modelo para submissão de traduções comentadas ou críticas.</p>
+                <button class="btn template-btn" data-path="/arquivos/modelos/Modelo-traducoes.docx"
+                  data-name="Tradução">Editar e copiar</button>
+              </div>
+              <!-- Template de Artigo para Dossiê -->
+              <div class="template-card artigo-dossie" id="template-artigo-dossie">
                 <h3>Template de Artigo para Dossiê</h3>
-                <p>Modelo destinado à submissão de artigos para dossiês.</p><a id="link-edit-4" class="btn"
-                  href="https://docs.google.com/document/d/1Z3vCTK6wAicnz8JgYidrEaKiIWDPpoAD/edit?usp=sharing&ouid=106454046870362039189&rtpof=true&sd=true"
-                  target="_blank" rel="noopener noreferrer">Baixar template</a>
+                <p>Modelo destinado à submissão de artigos para dossiês.</p>
+                <button class="btn template-btn" data-path="/arquivos/modelos/Modelo-artigo.docx"
+                  data-name="Artigo para Dossiê">Editar e copiar</button>
               </div>
             </div>
           </div>
         </section>
-        <section id="secao-observacoes" class="panel">
-          <div id="div-panel-head-2" class="panel-head">
-            <h2 id="h2-3">Observações</h2>
-          </div>
-          <div id="div-panel-body-2" class="panel-body">
-            <div id="div-template-note" class="template-note">
-              <p id="p-6">Recomenda-se que os autores utilizem os templates disponibilizados para garantir a
-                padronização editorial dos textos submetidos.</p>
-              <p id="p-7">O uso do template facilita o processo de avaliação e preparação editorial dos trabalhos
-                publicados.</p>
-            </div>
-          </div>
-        </section>
+
       </main>
     </div>
 
-    <!-- RODAPÉ MODERNIZADO (alinhado dentro do site-shell) -->
+    <!-- Rodapé modernizado -->
     <footer id="rodape-principal" class="footer">
       <div class="footer-modern-panel">
         <div class="footer-buttons-container">
@@ -529,8 +638,8 @@
             rel="noopener noreferrer">
             Revista Inquietações — periódico científico em acesso aberto
           </a>
-          <a href="https://revista-inquietacoes.netlify.app/codigo_de_conduta.html" class="footer-btn" target="_blank"
-            rel="noopener noreferrer">
+          <a class='footer-btn' href='https://revista-inquietacoes.netlify.app/codigo_de_conduta'
+            rel='noopener noreferrer' target='_blank'>
             Código de Conduta
           </a>
           <a href="https://www.netlify.com/" class="footer-btn" target="_blank" rel="noopener noreferrer">
@@ -555,18 +664,139 @@
       </div>
     </footer>
   </div>
-  <script>
-    const navToggle = document.querySelector(".site-nav-toggle")
-    const navMenu = document.querySelector(".site-nav-menu")
 
-    if (navToggle) {
-      navToggle.onclick = () => {
-        navMenu.classList.toggle("is-open")
+  <!-- Modal único para edição e visualização -->
+  <div id="templateModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 id="modalTitle">Editar Template</h3>
+        <button id="closeModalBtn"
+          style="background:none; border:none; color:white; font-size:1.8rem; cursor:pointer;">&times;</button>
+      </div>
+      <div class="modal-body">
+        <textarea id="editorTextarea" class="editor-area" placeholder="Carregando conteúdo..."></textarea>
+      </div>
+      <div class="modal-footer">
+        <button id="cancelModalBtn" class="btn-modal btn-secondary">Cancelar</button>
+        <button id="copyTextBtn" class="btn-modal btn-primary">Copiar texto editado</button>
+        <button id="downloadOriginalBtn" class="btn-modal btn-primary">Baixar template original</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function () {
+      const modal = document.getElementById('templateModal');
+      const modalTitle = document.getElementById('modalTitle');
+      const editorTextarea = document.getElementById('editorTextarea');
+      const closeModalBtn = document.getElementById('closeModalBtn');
+      const cancelModalBtn = document.getElementById('cancelModalBtn');
+      const copyTextBtn = document.getElementById('copyTextBtn');
+      const downloadOriginalBtn = document.getElementById('downloadOriginalBtn');
+
+      let currentFilePath = '';
+      let currentFileName = '';
+      let originalBlob = null;
+      let originalText = '';
+
+      function closeModal() {
+        modal.style.display = 'none';
+        editorTextarea.value = '';
+        currentFilePath = '';
+        currentFileName = '';
+        originalBlob = null;
+        originalText = '';
       }
+
+      async function openModal(filePath, templateName) {
+        modal.style.display = 'flex';
+        modalTitle.innerText = `Editar Template: ${templateName}`;
+        editorTextarea.value = 'Carregando template... Aguarde.';
+        currentFilePath = filePath;
+        currentFileName = templateName;
+
+        try {
+          const response = await fetch(filePath);
+          if (!response.ok) throw new Error(`Erro HTTP: ${response.status}`);
+          const arrayBuffer = await response.arrayBuffer();
+          originalBlob = new Blob([arrayBuffer], { type: 'application/vnd.openxmlformats-officedocument.wordprocessingml.document' });
+          const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
+          originalText = result.value;
+          editorTextarea.value = originalText;
+        } catch (error) {
+          console.error('Erro ao carregar template:', error);
+          editorTextarea.value = `Não foi possível carregar o template.\nCaminho: ${filePath}\nDetalhes: ${error.message}`;
+          originalBlob = null;
+          originalText = '';
+        }
+      }
+
+      async function copyEditedText() {
+        const editedText = editorTextarea.value;
+        if (!editedText.trim()) {
+          alert('Não há conteúdo para copiar.');
+          return;
+        }
+        try {
+          await navigator.clipboard.writeText(editedText);
+          alert('✅ Texto editado copiado para a área de transferência!');
+          closeModal();
+        } catch (err) {
+          console.error('Falha ao copiar:', err);
+          alert('Não foi possível copiar automaticamente. Use Ctrl+C manualmente.');
+        }
+      }
+
+      function downloadOriginal() {
+        if (!originalBlob) {
+          alert('Arquivo original não disponível. Tente recarregar o modal.');
+          return;
+        }
+        const link = document.createElement('a');
+        const url = URL.createObjectURL(originalBlob);
+        let filename = currentFilePath.split('/').pop();
+        if (!filename.endsWith('.docx')) filename += '.docx';
+        link.href = url;
+        link.download = filename;
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+        URL.revokeObjectURL(url);
+      }
+
+      closeModalBtn.addEventListener('click', closeModal);
+      cancelModalBtn.addEventListener('click', closeModal);
+      copyTextBtn.addEventListener('click', copyEditedText);
+      downloadOriginalBtn.addEventListener('click', downloadOriginal);
+
+      window.addEventListener('click', (e) => {
+        if (e.target === modal) closeModal();
+      });
+
+      const btns = document.querySelectorAll('.template-btn');
+      btns.forEach(btn => {
+        btn.addEventListener('click', (e) => {
+          const path = btn.getAttribute('data-path');
+          const name = btn.getAttribute('data-name');
+          if (path && name) {
+            openModal(path, name);
+          } else {
+            alert('Configuração inválida para este template.');
+          }
+        });
+      });
+    })();
+  </script>
+  <script>
+    const navToggle = document.querySelector(".site-nav-toggle");
+    const navMenu = document.querySelector(".site-nav-menu");
+    if (navToggle) {
+      navToggle.addEventListener('click', () => {
+        navMenu.classList.toggle("is-open");
+      });
     }
   </script>
-  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async="" src="//gc.zgo.at/count.js">
-  </script>
+  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 
 </html>

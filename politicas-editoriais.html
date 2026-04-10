@@ -13,17 +13,22 @@
   <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
     type="image/png">
   <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
-  <script
-    type="application/ld+json"> { "@context": "https://schema.org", "@type": "Organization", "name": "Revista Inquietações", "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/politicas-editoriais.html", "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png" } </script>
+  <script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Organization",
+  "name": "Revista Inquietações",
+  "url": "https://revinquietacoes.github.io/Revista-Inquieta-es/politicas-editoriais.html",
+  "logo": "https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
+}
+</script>
   <style>
     /* ========== SOBRESCRITA PARA O PAINEL PRINCIPAL COM GIF E EFEITO VIDRO ========== */
-    /* Remove os pseudo-elementos antigos do masthead (círculos decorativos) */
     .masthead::before,
     .masthead::after {
       display: none !important;
     }
 
-    /* Aplica o GIF de fundo no painel principal */
     .masthead {
       position: relative;
       background: none !important;
@@ -34,7 +39,6 @@
       isolation: isolate;
     }
 
-    /* Overlay com efeito glassmorphism (vidro) - ocupa 100% do painel */
     .masthead::after {
       content: '';
       position: absolute;
@@ -50,13 +54,11 @@
       pointer-events: none;
     }
 
-    /* Garante que todo o conteúdo do masthead fique acima do overlay */
     .masthead .masthead-inner {
       position: relative;
       z-index: 2;
     }
 
-    /* Ajuste de contraste para o texto sobre o fundo com vidro */
     .masthead .kicker,
     .masthead h1,
     .masthead .hero-text,
@@ -64,7 +66,6 @@
       text-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
     }
 
-    /* Estilo para o logo GIF – garante boa visibilidade */
     .banner-card img {
       background: transparent;
       mix-blend-mode: normal;
@@ -77,7 +78,6 @@
       gap: 2px;
       padding: 8px;
       justify-content: center;
-      /* centraliza os itens horizontalmente */
     }
 
     .site-nav-menu::-webkit-scrollbar {
@@ -88,6 +88,16 @@
       font-size: 0.88rem;
       padding: 8px 8px;
       white-space: nowrap;
+      text-decoration: none;
+      color: #1e293b;
+      border-radius: 2rem;
+      font-weight: 500;
+    }
+
+    .site-nav-menu a:hover,
+    .site-nav-menu a.active {
+      background: #eef2ff;
+      color: #1e3a8a;
     }
 
     .topbar {
@@ -137,8 +147,94 @@
       opacity: .95;
     }
 
-    /* ========== ESTILOS DO RODAPÉ MODERNIZADO (alinhado dentro do site-shell) ========== */
-    /* Remove conteúdo antigo do footer */
+    /* ========== ESTILOS DA BARRA LATERAL (padrão submissões) ========== */
+    .sidebar-block {
+      padding: 18px;
+      border-radius: 18px;
+      margin-bottom: 18px;
+      background: rgba(255, 255, 255, 0.9);
+      border: 1px solid #e2e8f0;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03);
+    }
+
+    .side-nav-card {
+      display: grid;
+      gap: 10px;
+    }
+
+    .side-nav-link {
+      display: block;
+      text-decoration: none;
+      padding: 11px 14px;
+      border-radius: 12px;
+      background: #f8fbff;
+      border: 1px solid #dbe6f2;
+      color: #1e3a8a;
+      font-weight: 500;
+      transition: background .18s ease, transform .18s ease;
+    }
+
+    .side-nav-link:hover {
+      background: #eef5fc;
+      transform: translateY(-1px);
+    }
+
+    .data-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .data-list div {
+      font-size: 0.9rem;
+      color: #334155;
+    }
+
+    .data-list a {
+      color: #1e3a8a;
+      text-decoration: none;
+      margin-left: 6px;
+    }
+
+    .data-list a:hover {
+      text-decoration: underline;
+    }
+
+    /* ========== ESTILOS DO CONTEÚDO PRINCIPAL ========== */
+    .panel {
+      background: white;
+      border-radius: 1.5rem;
+      padding: 1.5rem;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05);
+    }
+
+    .panel-head {
+      margin-bottom: 1rem;
+      border-bottom: 2px solid #eef2ff;
+      padding-bottom: 0.5rem;
+    }
+
+    .panel-head h2 {
+      color: #1e3a8a;
+      font-size: 1.4rem;
+    }
+
+    .panel-body p {
+      margin-bottom: 1rem;
+      line-height: 1.6;
+      color: #334155;
+    }
+
+    .panel-body ul {
+      margin: 1rem 0 1rem 1.5rem;
+      color: #334155;
+    }
+
+    .panel-body li {
+      margin-bottom: 0.3rem;
+    }
+
+    /* ========== ESTILOS DO RODAPÉ MODERNIZADO ========== */
     .footer p,
     .footer .footer-meta {
       display: none;
@@ -158,7 +254,6 @@
       margin-top: 1rem;
     }
 
-    /* Overlay claro/branco */
     .footer-modern-panel::before {
       content: '';
       position: absolute;
@@ -174,7 +269,6 @@
       border-radius: inherit;
     }
 
-    /* Container dos botões: grade responsiva, botões reduzidos */
     .footer-buttons-container {
       position: relative;
       z-index: 2;
@@ -185,7 +279,6 @@
       margin: 0 auto 0.8rem auto;
     }
 
-    /* Botões com gradiente, texto branco, tamanho pequeno */
     .footer-btn {
       display: flex;
       align-items: center;
@@ -213,7 +306,6 @@
       text-decoration: none;
     }
 
-    /* Créditos institucionais compactos */
     .footer-credits {
       position: relative;
       z-index: 2;
@@ -245,7 +337,6 @@
       color: #0f2b66;
     }
 
-    /* Responsividade */
     @media (max-width: 750px) {
       .footer-buttons-container {
         grid-template-columns: 1fr;
@@ -267,6 +358,20 @@
         flex-direction: column;
         gap: 0.3rem;
         background: rgba(255, 255, 255, 0.8);
+      }
+    }
+
+    /* Responsividade da grade */
+    .portal-grid {
+      display: grid;
+      grid-template-columns: 260px 1fr;
+      gap: 2rem;
+      margin-bottom: 3rem;
+    }
+
+    @media (max-width: 768px) {
+      .portal-grid {
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -298,7 +403,6 @@
           </div>
         </div>
         <div id="div-banner-card" class="banner-card">
-          <!-- CAMINHO ATUALIZADO DO LOGO GIF -->
           <img id="imagem-logo-revista-png" src="assets/favicon.png" alt="Logo da Revista Inquietações">
         </div>
       </div>
@@ -306,112 +410,112 @@
     <nav class="site-nav site-nav-ojs" id="navegacao-principal" aria-label="Navegação principal">
       <button id="button-site-nav-toggle" class="site-nav-toggle" type="button">Menu</button>
       <div id="div-site-nav-menu" class="site-nav-menu">
-        <a href='/' id='link-index'>Início</a>
-        <a href='/conteudos' id='link-conteudos'>Conteúdos</a>
-        <a href='/edicao-atual' id='link-edicao-atual'>Atual</a>
-        <a href='/evento' id='link-evento'>Cursos</a>
-        <a href='/sobre' id='link-sobre'>Sobre</a>
-        <a href='/submissoes' id='link-submissoes'>Submissões</a>
-        <a href='/templates' id='link-templates'>Templates</a>
-        <a class='active' href='/politicas-editoriais' id='link-politicas-editoriais'>Políticas</a>
-        <a href='/diretrizes-autores' id='link-diretrizes-autores'>Diretrizes</a>
-        <a href='/equipe-editorial' id='link-equipe-editorial'>Equipe Editorial</a>
-        <a href='/homenagens' id='link-homenagens'>Homenagens</a>
-        <a href='/contato' id='link-contato'>Contato</a>
-        <a href='/noticias' id='link-noticias'>Notícias</a>
+        <a href='/'>Início</a>
+        <a href='/conteudos'>Conteúdos</a>
+        <a href='/edicao-atual'>Atual</a>
+        <a href='/evento'>Cursos</a>
+        <a href='/sobre'>Sobre</a>
+        <a href='/submissoes'>Submissões</a>
+        <a href='/templates'>Templates</a>
+        <a class='active' href='/politicas-editoriais'>Políticas</a>
+        <a href='/diretrizes-autores'>Diretrizes</a>
+        <a href='/equipe-editorial'>Equipe Editorial</a>
+        <a href='/homenagens'>Homenagens</a>
+        <a href='/contato'>Contato</a>
+        <a href='/noticias'>Notícias</a>
       </div>
     </nav>
     <div id="grade-do-portal" class="portal-grid sidebar-compact">
       <aside class="sidebar" id="barra-lateral">
-        <section id="section-sidebar-block" class="sidebar-block">
-          <h2 id="h2-1">Navegação da página</h2>
-          <ul id="ul-info-links" class="info-links">
-            <li id="li-1"><a id="link-politica-editorial" href="#politica-editorial">Política editorial</a></li>
-            <li id="li-2"><a id="link-avaliacao" href="#avaliacao">Processo de avaliação</a></li>
-            <li id="li-3"><a id="link-etica" href="#etica">Ética em pesquisa</a></li>
-            <li id="li-4"><a id="link-acesso" href="#acesso">Política de acesso aberto</a></li>
-            <li id="li-5"><a id="link-direitos" href="#direitos">Direitos autorais</a></li>
-          </ul>
+        <!-- Navegação da página – mesmo estilo do submissões.html -->
+        <section class="sidebar-block">
+          <h2>Navegação da página</h2>
+          <div class="side-nav-card">
+            <a class="side-nav-link" href="#politica-editorial">Política editorial</a>
+            <a class="side-nav-link" href="#avaliacao">Processo de avaliação</a>
+            <a class="side-nav-link" href="#etica">Ética em pesquisa</a>
+            <a class="side-nav-link" href="#acesso">Política de acesso aberto</a>
+            <a class="side-nav-link" href="#direitos">Direitos autorais</a>
+          </div>
         </section>
-        <section id="section-sidebar-block-2" class="sidebar-block">
-          <h2 id="h2-2">Contato institucional</h2>
-          <div id="div-data-list" class="data-list">
-            <div id="div-2"><strong>Instagram:</strong><a id="link-revistainquietacoes"
-                href="https://www.instagram.com/revistainquietacoes/" target="_blank">@revistainquietacoes</a></div>
-            <div id="div-3"><strong>E-mail:</strong><a id="link-mailto-rev-inquietacoes-gmail-com"
-                href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a></div>
+        <!-- Contato institucional -->
+        <section class="sidebar-block">
+          <h2>Contato institucional</h2>
+          <div class="data-list">
+            <div><strong>Instagram:</strong> <a href="https://www.instagram.com/revistainquietacoes/" target="_blank" rel="noopener noreferrer">@revistainquietacoes</a></div>
+            <div><strong>E-mail:</strong> <a href="mailto:rev.inquietacoes@gmail.com">rev.inquietacoes@gmail.com</a></div>
           </div>
         </section>
       </aside>
       <main class="content" id="conteudo-principal">
         <section class="panel" id="politica-editorial">
-          <div id="div-panel-head" class="panel-head">
-            <h2 id="h2-3">Política editorial</h2>
+          <div class="panel-head">
+            <h2>Política editorial</h2>
           </div>
-          <div id="div-panel-body" class="panel-body">
-            <p id="p-1">A Revista Inquietações é um periódico acadêmico dedicado à publicação de trabalhos nas áreas das
+          <div class="panel-body">
+            <p>A Revista Inquietações é um periódico acadêmico dedicado à publicação de trabalhos nas áreas das
               Ciências Humanas e campos afins.</p>
-            <p id="p-2">O periódico tem como objetivo promover a circulação de pesquisas, ensaios teóricos, traduções
+            <p>O periódico tem como objetivo promover a circulação de pesquisas, ensaios teóricos, traduções
               acadêmicas, resenhas críticas e outras contribuições relevantes para o desenvolvimento do debate
               intelectual contemporâneo.</p>
           </div>
         </section>
         <section class="panel" id="avaliacao">
-          <div id="div-panel-head-2" class="panel-head">
-            <h2 id="h2-4">Processo de avaliação</h2>
+          <div class="panel-head">
+            <h2>Processo de avaliação</h2>
           </div>
-          <div id="div-panel-body-2" class="panel-body">
-            <p id="p-3">Os trabalhos submetidos à Revista Inquietações passam por avaliação editorial inicial e, quando
+          <div class="panel-body">
+            <p>Os trabalhos submetidos à Revista Inquietações passam por avaliação editorial inicial e, quando
               aprovados nessa etapa, seguem para avaliação por pares.</p>
-            <ul id="ul-clean" class="clean">
-              <li id="li-6">análise preliminar pela equipe editorial</li>
-              <li id="li-7">avaliação por pareceristas especializados</li>
-              <li id="li-8">decisão editorial baseada nos pareceres</li>
+            <ul>
+              <li>análise preliminar pela equipe editorial</li>
+              <li>avaliação por pareceristas especializados</li>
+              <li>decisão editorial baseada nos pareceres</li>
             </ul>
-            <p id="p-4">A revista busca garantir a qualidade científica, a relevância acadêmica e o rigor metodológico
+            <p>A revista busca garantir a qualidade científica, a relevância acadêmica e o rigor metodológico
               dos trabalhos publicados.</p>
           </div>
         </section>
         <section class="panel" id="etica">
-          <div id="div-panel-head-3" class="panel-head">
-            <h2 id="h2-5">Ética em pesquisa</h2>
+          <div class="panel-head">
+            <h2>Ética em pesquisa</h2>
           </div>
-          <div id="div-panel-body-3" class="panel-body">
-            <p id="p-5">A Revista Inquietações adota princípios de integridade acadêmica e boas práticas científicas,
+          <div class="panel-body">
+            <p>A Revista Inquietações adota princípios de integridade acadêmica e boas práticas científicas,
               estimulando a originalidade dos trabalhos e o respeito às normas éticas da pesquisa.</p>
-            <ul id="ul-clean-2" class="clean">
-              <li id="li-9">proibição de plágio</li>
-              <li id="li-10">declaração de autoria e responsabilidade</li>
-              <li id="li-11">respeito às normas acadêmicas de citação</li>
+            <ul>
+              <li>proibição de plágio</li>
+              <li>declaração de autoria e responsabilidade</li>
+              <li>respeito às normas acadêmicas de citação</li>
             </ul>
           </div>
         </section>
         <section class="panel" id="acesso">
-          <div id="div-panel-head-4" class="panel-head">
-            <h2 id="h2-6">Política de acesso aberto</h2>
+          <div class="panel-head">
+            <h2>Política de acesso aberto</h2>
           </div>
-          <div id="div-panel-body-4" class="panel-body">
-            <p id="p-6">A Revista Inquietações adota política de acesso aberto, permitindo a leitura e o download
+          <div class="panel-body">
+            <p>A Revista Inquietações adota política de acesso aberto, permitindo a leitura e o download
               gratuito de todos os conteúdos publicados.</p>
-            <p id="p-7">Essa política visa ampliar a circulação do conhecimento científico e facilitar o acesso público
+            <p>Essa política visa ampliar a circulação do conhecimento científico e facilitar o acesso público
               à produção acadêmica.</p>
           </div>
         </section>
         <section class="panel" id="direitos">
-          <div id="div-panel-head-5" class="panel-head">
-            <h2 id="h2-7">Direitos autorais</h2>
+          <div class="panel-head">
+            <h2>Direitos autorais</h2>
           </div>
-          <div id="div-panel-body-5" class="panel-body">
-            <p id="p-8">Os autores mantêm os direitos autorais de seus trabalhos, autorizando a Revista Inquietações a
+          <div class="panel-body">
+            <p>Os autores mantêm os direitos autorais de seus trabalhos, autorizando a Revista Inquietações a
               realizar a publicação e divulgação do material no portal do periódico.</p>
-            <p id="p-9">Os textos publicados podem ser compartilhados para fins acadêmicos e educacionais, desde que
+            <p>Os textos publicados podem ser compartilhados para fins acadêmicos e educacionais, desde que
               citada a fonte original.</p>
           </div>
         </section>
       </main>
     </div>
 
-    <!-- RODAPÉ MODERNIZADO (alinhado dentro do site-shell) -->
+    <!-- RODAPÉ MODERNIZADO -->
     <footer id="rodape-principal" class="footer">
       <div class="footer-modern-panel">
         <div class="footer-buttons-container">
@@ -419,8 +523,7 @@
             rel="noopener noreferrer">
             Revista Inquietações — periódico científico em acesso aberto
           </a>
-          <a href="https://revista-inquietacoes.netlify.app/codigo_de_conduta.html" class="footer-btn" target="_blank"
-            rel="noopener noreferrer">
+          <a class='footer-btn' href='https://revista-inquietacoes.netlify.app/codigo_de_conduta' rel='noopener noreferrer' target='_blank'>
             Código de Conduta
           </a>
           <a href="https://www.netlify.com/" class="footer-btn" target="_blank" rel="noopener noreferrer">
@@ -445,9 +548,16 @@
       </div>
     </footer>
   </div>
-  <script> const navToggle = document.querySelector(".site-nav-toggle") const navMenu = document.querySelector(".site-nav-menu") if (navToggle) { navToggle.onclick = () => { navMenu.classList.toggle("is-open") } } </script>
-  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async=""
-    src="//gc.zgo.at/count.js"> </script>
+  <script>
+    const navToggle = document.querySelector(".site-nav-toggle");
+    const navMenu = document.querySelector(".site-nav-menu");
+    if (navToggle) {
+      navToggle.onclick = () => {
+        navMenu.classList.toggle("is-open");
+      };
+    }
+  </script>
+  <script data-goatcounter="https://revinquietacoes.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 
 </html>
