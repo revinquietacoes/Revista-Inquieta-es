@@ -1,0 +1,384 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Anais de Cursos | Revista Inquietações</title>
+    <!-- Favicon -->
+    <link rel="icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Google Fonts: Inter + Playfair Display -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,300..700&family=Playfair+Display:wght@500;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', system-ui, -apple-system, sans-serif;
+            background: linear-gradient(145deg, #f6f9fc 0%, #edf2f7 100%);
+            color: #0a2540;
+            line-height: 1.5;
+        }
+
+        /* Padrão de fundo sutil (pontos) */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(#cbd5e1 1px, transparent 1px);
+            background-size: 28px 28px;
+            opacity: 0.3;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .site-shell {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Topbar moderna */
+        .topbar {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(12px);
+            border-radius: 80px;
+            padding: 0.6rem 1.5rem;
+            margin-bottom: 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.03);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+        }
+
+        .pill {
+            background: linear-gradient(120deg, #1e3a8a, #3b82f6);
+            padding: 0.4rem 1.2rem;
+            border-radius: 40px;
+            color: white;
+            font-weight: 600;
+            font-size: 0.85rem;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .topbar-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 0.5rem 1.2rem;
+            border-radius: 40px;
+            background: #1f3c88;
+            color: white !important;
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s ease;
+            border: none;
+        }
+
+        .topbar-btn.secondary {
+            background: #2c55a5;
+        }
+
+        .topbar-btn:hover {
+            transform: translateY(-2px);
+            background: #0f2b66;
+            box-shadow: 0 6px 14px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Masthead com gradiente e ícone decorativo */
+        .masthead {
+            background: linear-gradient(125deg, #0c2a5c, #1e4a8a, #2563eb);
+            border-radius: 2rem;
+            padding: 2.5rem;
+            margin-bottom: 2.5rem;
+            color: white;
+            box-shadow: 0 20px 35px -12px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .masthead::after {
+            content: "📑";
+            font-size: 8rem;
+            position: absolute;
+            bottom: -1rem;
+            right: -1rem;
+            opacity: 0.1;
+            pointer-events: none;
+        }
+
+        .masthead h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.8rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            letter-spacing: -0.01em;
+        }
+
+        .masthead p {
+            font-size: 1.1rem;
+            opacity: 0.9;
+            max-width: 70%;
+        }
+
+        /* Navegação estilo pills */
+        .site-nav {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 0.5rem;
+            margin-bottom: 2.5rem;
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(8px);
+            border-radius: 60px;
+            padding: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+        }
+
+        .site-nav a {
+            text-decoration: none;
+            padding: 0.6rem 1.3rem;
+            border-radius: 40px;
+            font-weight: 600;
+            color: #1e293b;
+            transition: all 0.2s;
+            font-size: 0.9rem;
+        }
+
+        .site-nav a:hover {
+            background: #eef2ff;
+            color: #1e3a8a;
+        }
+
+        .site-nav a.active {
+            background: #1e3a8a;
+            color: white;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Título da seção */
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            font-weight: 700;
+            margin: 2rem 0 1.2rem;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #0f2b66;
+            border-left: 6px solid #3b82f6;
+            padding-left: 1rem;
+        }
+
+        .section-title i {
+            font-size: 1.8rem;
+            color: #3b82f6;
+        }
+
+        /* Grid de edições */
+        .editions-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 2rem;
+            justify-content: center;
+            margin: 2rem 0 3rem;
+        }
+
+        /* Cards com efeito vidro */
+        .edition-card {
+            background: rgba(255, 255, 255, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 1.8rem;
+            padding: 2rem;
+            text-align: center;
+            text-decoration: none;
+            color: inherit;
+            width: 240px;
+            transition: all 0.35s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+            border: 1px solid rgba(255, 255, 255, 0.6);
+            box-shadow: 0 12px 28px -12px rgba(0, 0, 0, 0.12);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.8rem;
+        }
+
+        .edition-card:hover {
+            transform: translateY(-8px);
+            background: rgba(255, 255, 255, 0.96);
+            box-shadow: 0 28px 36px -16px rgba(0, 0, 0, 0.2);
+            border-color: #bfdbfe;
+        }
+
+        .edition-year {
+            font-size: 3.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #1e3a8a, #3b82f6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            line-height: 1;
+        }
+
+        .edition-icon {
+            font-size: 3rem;
+            color: #1e3a8a;
+        }
+
+        .edition-card span {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: #0f2b66;
+        }
+
+        .edition-card small {
+            font-size: 0.8rem;
+            color: #475569;
+        }
+
+        /* Rodapé melhorado */
+        .footer {
+            margin-top: 3rem;
+            text-align: center;
+            padding: 2rem 1rem;
+            background: rgba(15, 43, 102, 0.9);
+            backdrop-filter: blur(4px);
+            border-radius: 2rem;
+            color: #e2e8f0;
+        }
+
+        .footer a {
+            color: #bfdbfe;
+            text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
+        }
+
+        /* Responsividade */
+        @media (max-width: 768px) {
+            .site-shell {
+                padding: 1rem;
+            }
+            .masthead h1 {
+                font-size: 2rem;
+            }
+            .masthead p {
+                max-width: 100%;
+            }
+            .section-title {
+                font-size: 1.6rem;
+            }
+            .editions-grid {
+                gap: 1.2rem;
+            }
+            .edition-card {
+                width: 100%;
+                max-width: 280px;
+            }
+        }
+
+        /* Animação de entrada */
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .edition-card {
+            animation: fadeUp 0.5s ease-out forwards;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="site-shell">
+        <!-- Topbar com identidade -->
+        <div class="topbar">
+            <div class="pill">
+                <i class="fas fa-book-open"></i> Anais · Revista Inquietações
+            </div>
+            <div>
+                <a class='topbar-btn' href='/cadastro-login/cadastro'><i class="fas fa-user-plus"></i> Cadastrar-se</a>
+                <a class='topbar-btn secondary' href='/cadastro-login/login'><i class="fas fa-sign-in-alt"></i> Entrar</a>
+            </div>
+        </div>
+
+        <!-- Cabeçalho principal -->
+        <header class="masthead">
+            <h1>Anais de cursos e eventos</h1>
+            <p>Publicação dos trabalhos apresentados nos cursos, seminários e atividades acadêmicas da Revista Inquietações. Acesso aberto e gratuito.</p>
+        </header>
+
+        <!-- Navegação -->
+        <nav class="site-nav">
+            <a href="/"><i class="fas fa-home"></i> Início</a>
+            <a href="/evento"><i class="fas fa-chalkboard-user"></i> Cursos</a>
+            <a href="/anais-de-cursos" class="active"><i class="fas fa-book-open"></i> Anais</a>
+            <a href="/sobre"><i class="fas fa-info-circle"></i> Sobre</a>
+        </nav>
+
+        <main>
+            <div class="section-title">
+                <i class="fas fa-calendar-alt"></i>
+                <span>Edições disponíveis</span>
+            </div>
+
+            <div class="editions-grid">
+                <!-- Card para 2026 -->
+                <a href="/publicacoes/Anais/2026/anais-2026.html" class="edition-card">
+                    <div class="edition-icon"><i class="fas fa-chalkboard"></i></div>
+                    <div class="edition-year">2026</div>
+                    <span>Anais completos</span>
+                    <small><i class="fas fa-arrow-right"></i> Acessar publicações</small>
+                </a>
+
+                <!-- Exemplo de edição futura (comentada, pode ser ativada depois)
+                <a href="/publicacoes/Anais/2025/anais-2025.html" class="edition-card">
+                    <div class="edition-icon"><i class="fas fa-history"></i></div>
+                    <div class="edition-year">2025</div>
+                    <span>Edição anterior</span>
+                    <small><i class="fas fa-arrow-right"></i> Acessar</small>
+                </a>
+                -->
+            </div>
+
+            
+        </main>
+
+        <!-- Rodapé informativo -->
+        <footer class="footer">
+            <p><i class="far fa-copyright"></i> 2026 Revista Inquietações — Anais acadêmicos em acesso aberto</p>
+            <p style="margin-top: 0.5rem; font-size: 0.85rem;">
+                <a href="/contato"><i class="fas fa-envelope"></i> revista@inquietacoes.com</a> &nbsp;|&nbsp;
+                <a href="/politicas-editoriais"><i class="fas fa-scroll"></i> Políticas editoriais</a> &nbsp;|&nbsp;
+                <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank">CC BY 4.0</a>
+            </p>
+        </footer>
+    </div>
+</body>
+
+</html>
