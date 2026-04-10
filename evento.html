@@ -1,4 +1,4 @@
-<!-- evento.html -->
+<!-- evento.html com a função de cópia no lugar do download -->
 <!DOCTYPE html>
 <html lang="pt-BR">
 
@@ -15,11 +15,10 @@
     <link rel="shortcut icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png"
         type="image/png">
     <link rel="apple-touch-icon" href="https://revinquietacoes.github.io/Revista-Inquieta-es/assets/favicon.png">
-    <!-- Bibliotecas para edição de DOCX -->
+    <!-- Bibliotecas para edição de DOCX (apenas leitura, não mais usado para escrita) -->
     <script src="https://cdn.jsdelivr.net/npm/mammoth@1.4.2/mammoth.browser.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/docx@8.5.0/build/index.min.js"></script>
     <style>
-        /* ========== ESTILOS BASE (mesmos da página original, adaptados) ========== */
+        /* ========== ESTILOS BASE ========== */
         * {
             margin: 0;
             padding: 0;
@@ -398,7 +397,7 @@
                         <div class="action-title">Cursos</div>
                         <div class="action-desc">Acesse suas salas de aula</div>
                     </a>
-                    <a href="https://revista-inquietacoes.netlify.app/cadastro-login/inscricao-eventos.html" class="action-btn">
+                    <a class='action-btn' href='https://revista-inquietacoes.netlify.app/cadastro-login/inscricao-eventos'>
                         <div class="action-emoji">📝</div>
                         <div class="action-title">Inscrição</div>
                         <div class="action-desc">Inscreva-se em eventos</div>
@@ -431,7 +430,7 @@
                     <button id="btnTemplate" class="action-btn" style="background:#eef2ff; cursor:pointer;">
                         <div class="action-emoji">📄✏️</div>
                         <div class="action-title">Template para Resumos Expandidos</div>
-                        <div class="action-desc">Edite e baixe o modelo .docx</div>
+                        <div class="action-desc">Edite e copie o modelo</div>
                     </button>
                 </div>
             </main>
@@ -455,40 +454,35 @@
             </div>
             <div class="modal-footer">
                 <button id="cancelEdit" class="btn btn-secondary">Cancelar</button>
-                <button id="downloadEdit" class="btn btn-primary">Baixar versão editada</button>
+                <button id="copyEdit" class="btn btn-primary">Copiar texto editado</button>
             </div>
         </div>
     </div>
 
     <script>
-        // Script para edição do template .docx
+        // Script para edição do template .docx (apenas leitura e cópia)
         (function() {
             const modal = document.getElementById('editorModal');
             const editorTextarea = document.getElementById('docEditor');
             const btnTemplate = document.getElementById('btnTemplate');
             const closeModalBtn = document.getElementById('closeModal');
             const cancelBtn = document.getElementById('cancelEdit');
-            const downloadBtn = document.getElementById('downloadEdit');
-            let originalContent = ''; // guarda o texto extraído
+            const copyBtn = document.getElementById('copyEdit');
+            let originalContent = '';
 
-            // Fechar modal
             function closeModal() {
                 modal.style.display = 'none';
             }
 
-            // Abrir modal e carregar o .docx
             async function openEditor() {
                 modal.style.display = 'flex';
                 editorTextarea.value = 'Carregando modelo... Por favor, aguarde.';
                 try {
-                    // 1. Buscar o arquivo .docx do servidor
                     const response = await fetch('/arquivos/modelos/Modelo_Resumo_Expandido_Revista_Inquietacoes.docx');
                     if (!response.ok) throw new Error('Erro ao carregar o arquivo.');
                     const arrayBuffer = await response.arrayBuffer();
-
-                    // 2. Converter para HTML (mantém formatação básica) usando mammoth
                     const result = await mammoth.extractRawText({ arrayBuffer: arrayBuffer });
-                    originalContent = result.value; // texto puro
+                    originalContent = result.value;
                     editorTextarea.value = originalContent;
                 } catch (error) {
                     console.error(error);
@@ -497,54 +491,28 @@
                 }
             }
 
-            // Gerar novo .docx com o texto editado e baixar
-            async function downloadEdited() {
-                if (!editorTextarea.value.trim()) {
-                    alert('Nenhum conteúdo para salvar.');
+            // Função para copiar o texto editado para a área de transferência
+            async function copyEditedText() {
+                const editedText = editorTextarea.value;
+                if (!editedText.trim()) {
+                    alert('Não há conteúdo para copiar.');
                     return;
                 }
-                const editedText = editorTextarea.value;
-
-                // Usar a biblioteca docx para criar um documento simples
-                const { Document, Packer, Paragraph, TextRun, AlignmentType } = docx;
-                // Dividir o texto em linhas e criar parágrafos
-                const lines = editedText.split('\n');
-                const paragraphs = [];
-                for (let line of lines) {
-                    if (line.trim() === '') {
-                        paragraphs.push(new Paragraph({ children: [new TextRun({ text: '' })] }));
-                    } else {
-                        paragraphs.push(new Paragraph({
-                            children: [new TextRun({ text: line, size: 24 })],
-                            alignment: AlignmentType.LEFT,
-                            spacing: { after: 200 }
-                        }));
-                    }
+                try {
+                    await navigator.clipboard.writeText(editedText);
+                    alert('Texto copiado para a área de transferência! ✅');
+                    closeModal();
+                } catch (err) {
+                    console.error('Falha ao copiar: ', err);
+                    alert('Não foi possível copiar o texto. Use Ctrl+C manualmente.');
                 }
-                const doc = new Document({
-                    sections: [{
-                        properties: {},
-                        children: paragraphs
-                    }]
-                });
-                const blob = await Packer.toBlob(doc);
-                const link = document.createElement('a');
-                const url = URL.createObjectURL(blob);
-                link.href = url;
-                link.download = 'resumo-expandido-editado.docx';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
-                URL.revokeObjectURL(url);
-                closeModal();
             }
 
             btnTemplate.addEventListener('click', openEditor);
             closeModalBtn.addEventListener('click', closeModal);
             cancelBtn.addEventListener('click', closeModal);
-            downloadBtn.addEventListener('click', downloadEdited);
+            copyBtn.addEventListener('click', copyEditedText);
 
-            // Fechar ao clicar fora do conteúdo
             window.addEventListener('click', (e) => {
                 if (e.target === modal) closeModal();
             });
